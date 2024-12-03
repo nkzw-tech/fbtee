@@ -11,13 +11,6 @@
 
 'use strict';
 
-const moduleMap = Object.assign(
-  require('fbjs-scripts/third-party-module-map'),
-  {
-    invariant: 'invariant',
-    react: 'react',
-    ReactDOMLegacy_DEPRECATED: 'react-dom',
-  },
-);
+const moduleMap = {};
 
 module.exports = moduleMap;

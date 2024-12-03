@@ -9,10 +9,9 @@
 const path = require('path');
 const process = require('process');
 const runtimePaths = [
-  '<rootDir>/runtime/shared',
-  '<rootDir>/runtime/shared/FbtNumber',
-  '<rootDir>/runtime/nonfb',
-  '<rootDir>/runtime/nonfb/mocks',
+  '<rootDir>/runtime',
+  '<rootDir>/runtime/FbtNumber',
+  '<rootDir>/runtime/mocks',
 ];
 
 const globalConfig = {
@@ -23,7 +22,7 @@ const globalConfig = {
     '\\.js$': '<rootDir>/jest-preprocessor.js',
   },
   moduleNameMapper: {
-    '^FBLocaleToLang$': '<rootDir>/runtime/nonfb/FBLocaleToLang',
+    '^FBLocaleToLang$': '<rootDir>/runtime/FBLocaleToLang',
   },
   skipNodeResolution: true,
   testEnvironment: 'node',
@@ -58,28 +57,6 @@ module.exports = {
       modulePaths: ['<rootDir>/packages/fbt/lib'],
     },
     {
-      displayName: 'gulp-rewrite-flowtyped-modules',
-      roots: ['<rootDir>/packages/gulp-rewrite-flowtyped-modules'],
-    },
-    {
-      displayName: 'gulp-strip-docblock-pragmas',
-      roots: ['<rootDir>/packages/gulp-strip-docblock-pragmas'],
-    },
-    {
-      displayName: 'fb-tiger-hash',
-      roots: ['<rootDir>/packages/fb-tiger-hash'],
-      transform: {
-        '\\.js$': [
-          '<rootDir>/jest-preprocessor.js',
-          {
-            plugins: [
-              toAbsolutePath('node_modules', '@babel/plugin-syntax-bigint'),
-            ],
-          },
-        ],
-      },
-    },
-    {
       displayName: 'top-level',
       roots: ['__tests__'],
     },
@@ -109,19 +86,19 @@ module.exports = {
           {
             plugins: [
               [
-                toAbsolutePath('node_modules', 'babel-plugin-fbt'),
+                toAbsolutePath('packages', 'babel-plugin-fbt'),
                 {
                   fbtCommonPath: toAbsolutePath(
                     'demo-app',
-                    'common_strings.json',
+                    'common_strings.json'
                   ),
                   fbtEnumPath: toAbsolutePath(
                     'demo-app',
-                    '.enum_manifest.json',
+                    '.enum_manifest.json'
                   ),
                 },
               ],
-              toAbsolutePath('node_modules', 'babel-plugin-fbt-runtime'),
+              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
             ],
           },
         ],
@@ -129,5 +106,5 @@ module.exports = {
     },
   ]
     .filter(Boolean)
-    .map(project => ({...globalConfig, ...project})),
+    .map((project) => ({ ...globalConfig, ...project })),
 };

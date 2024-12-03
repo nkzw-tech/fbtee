@@ -1,0 +1,8 @@
+packages:
+  - 'demo-app'
+  - 'packages/babel-plugin-fbt-runtime'
+  - 'packages/babel-plugin-standalone'
+  - 'packages/babel-plugin-fbt'
+  - 'packages/default-collection-transform'
+  - 'packages/fb-babel-plugin-utils'
+  - 'packages/fbt'

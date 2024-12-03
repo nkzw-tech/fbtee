@@ -7,11 +7,13 @@
 
 jest.autoMockOff();
 
-const {transformSync: babelTransform} = require('@babel/core');
-const {
-  withFbtRequireStatement,
-} = require('babel-plugin-fbt/dist/__tests__/FbtTestUtil');
-const {TestUtil} = require('fb-babel-plugin-utils');
+const { transformSync: babelTransform } = require('@babel/core');
+const { TestUtil } = require('fb-babel-plugin-utils');
+
+function withFbtRequireStatement(code: string): string {
+  return `const fbt = require("fbt");
+  ${code}`;
+}
 
 function transform(source, pluginOptions, babelPluginFbtExtraOptions) {
   return babelTransform(source, {
@@ -21,7 +23,7 @@ function transform(source, pluginOptions, babelPluginFbtExtraOptions) {
       require('@babel/plugin-transform-react-jsx'),
       [
         require('babel-plugin-fbt'),
-        {...pluginOptions, extraOptions: babelPluginFbtExtraOptions},
+        { ...pluginOptions, extraOptions: babelPluginFbtExtraOptions },
       ],
       [require('../index'), pluginOptions],
     ],
@@ -32,7 +34,7 @@ function transform(source, pluginOptions, babelPluginFbtExtraOptions) {
 function runTest(data, isRN, babelPluginFbtExtraOptions) {
   TestUtil.assertSourceAstEqual(
     data.output,
-    transform(data.input, {reactNativeMode: isRN}, babelPluginFbtExtraOptions),
+    transform(data.input, { reactNativeMode: isRN }, babelPluginFbtExtraOptions)
   );
 }
 
@@ -62,7 +64,7 @@ lines">
             </b>
           </fbt:param>
           test
-        </fbt>;`,
+        </fbt>;`
       ),
       output: withFbtRequireStatement(
         `fbt._(
@@ -78,7 +80,7 @@ lines">
             ),
           ],
           {hk: '2xRGl8'},
-        );`,
+        );`
       ),
     };
     runTest(data, true);
@@ -91,7 +93,7 @@ describe('Test enum hash keys generation', () => {
     runTest(
       {
         input: withFbtRequireStatement(
-          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`,
+          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
         ),
         output: withFbtRequireStatement(
           `fbt._(
@@ -108,10 +110,10 @@ describe('Test enum hash keys generation', () => {
               })
             ],
             {hk: "NT3sR"},
-          );`,
+          );`
         ),
       },
-      false,
+      false
     );
   });
 
@@ -119,7 +121,7 @@ describe('Test enum hash keys generation', () => {
     runTest(
       {
         input: withFbtRequireStatement(
-          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`,
+          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
         ),
         output: withFbtRequireStatement(
           `fbt._(
@@ -142,10 +144,10 @@ describe('Test enum hash keys generation', () => {
                 c: "3eytjU"
               }
             },
-          );`,
+          );`
         ),
       },
-      true,
+      true
     );
   });
 
@@ -158,7 +160,7 @@ describe('Test enum hash keys generation', () => {
               ' Foo ' +
               fbt.enum('x', {x: 'X', y: 'Y', z: 'Z'}),
             'Bar',
-          );`,
+          );`
         ),
         output: withFbtRequireStatement(
           `fbt._(
@@ -210,10 +212,10 @@ describe('Test enum hash keys generation', () => {
                 },
               },
             },
-          );`,
+          );`
         ),
       },
-      true,
+      true
     );
   });
 });
@@ -231,7 +233,7 @@ describe('Test replacing clear token names with mangled tokens', () => {
             count={ex1.count}>
             a photo
           </fbt:plural>
-        </fbt>;`,
+        </fbt>;`
     ),
     output: `var fbt_sv_arg_0;
       const fbt = require("fbt");
@@ -289,7 +291,7 @@ describe('Test extra options generation', () => {
         fbt._('Foo', null, {eo: {locale: "ar_AR"}, hk: '3ktBJ2'});
       `),
     };
-    const validExtraOptions = {locale: true};
+    const validExtraOptions = { locale: true };
     runTest(data, true, validExtraOptions);
     runTest(data, false, validExtraOptions);
   });
@@ -306,7 +308,7 @@ lines">
             </b>
           </fbt:param>
           test
-        </fbt>;`,
+        </fbt>;`
       ),
       output: withFbtRequireStatement(
         `fbt._(
@@ -326,10 +328,10 @@ lines">
             ),
           ],
           {eo: {private: 'no'}, hk: '2xRGl8'},
-        );`,
+        );`
       ),
     };
-    const validExtraOptions = {private: {yes: true, no: true}};
+    const validExtraOptions = { private: { yes: true, no: true } };
     runTest(data, true, validExtraOptions);
     runTest(data, false, validExtraOptions);
   });
@@ -344,7 +346,7 @@ lines">
               an inner string
             </fbt:plural>
           </b>
-        </fbt>;`,
+        </fbt>;`
       ),
       output: `var fbt_sv_arg_0;
         const fbt = require("fbt");
@@ -375,7 +377,7 @@ lines">
           {eo: {private: 'no'}, hk: 'fglLv'},
         );`,
     };
-    const validExtraOptions = {private: {yes: true, no: true}};
+    const validExtraOptions = { private: { yes: true, no: true } };
     runTest(data, true, validExtraOptions);
     runTest(data, false, validExtraOptions);
   });

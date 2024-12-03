@@ -14,13 +14,15 @@
 
 /*eslint max-len: ["error", 100]*/
 
-import type {ValidPronounUsagesType} from '../../../runtime/shared/FbtRuntimeTypes';
+import type { ValidPronounUsagesType } from '../../../runtime/FbtRuntimeTypes';
 
 const keyMirror = require('./utils/keyMirror');
 
 export type FbtOptionValue = string | boolean | BabelNode;
-export type FbtOptionValues<K> = {|[K]: ?FbtOptionValue|};
-export type FbtOptionConfig<K> = {|[K]: {[optionValue: string]: true} | true|};
+export type FbtOptionValues<K> = {| [K]: ?FbtOptionValue |};
+export type FbtOptionConfig<K> = {|
+  [K]: { [optionValue: string]: true } | true,
+|};
 export type FbtExtraOptionConfig = FbtOptionConfig<string>;
 // export type FbtCallSiteOptions = {[$Keys<typeof ValidFbtOptions>]: ?FbtOptionValue};
 export type FbtCallSiteOptions = Partial<{|
@@ -79,8 +81,8 @@ const ValidPronounUsagesKeys: $KeyMirror<ValidPronounUsagesType> =
   keyMirror(ValidPronounUsages);
 
 const ValidPronounOptions = {
-  human: {true: true, false: true},
-  capitalize: {true: true, false: true},
+  human: { true: true, false: true },
+  capitalize: { true: true, false: true },
 };
 
 const PronounRequiredAttributes = {

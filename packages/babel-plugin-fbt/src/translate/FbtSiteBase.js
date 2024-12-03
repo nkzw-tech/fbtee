@@ -12,7 +12,7 @@ import type {
   FbtTableKey,
   PatternHash,
   PatternString,
-} from '../../../../runtime/shared/FbtTable';
+} from '../../../../runtime/FbtTable';
 import type {HashToLeaf} from '../bin/FbtCollector';
 import type {
   IntlFbtVariationTypeValue,

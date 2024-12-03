@@ -9,7 +9,7 @@
 
 'use strict';
 
-import type {FbtTableKey} from '../../../runtime/shared/FbtTable';
+import type { FbtTableKey } from '../../../runtime/FbtTable';
 import type {
   ObjectWithJSFBT,
   TableJSFBTTree,
@@ -22,7 +22,7 @@ const nullthrows = require('nullthrows');
  * @returns an TableJSFBTTreeLeaf object if the given object matches its shape, or null
  */
 function coerceToTableJSFBTTreeLeaf(
-  value: Partial<TableJSFBTTreeLeaf>,
+  value: Partial<TableJSFBTTreeLeaf>
 ): ?TableJSFBTTreeLeaf {
   return value &&
     typeof value === 'object' &&
@@ -36,7 +36,7 @@ function coerceToTableJSFBTTreeLeaf(
 
 function _runOnNormalizedJSFBTLeaves(
   value: $ReadOnly<TableJSFBTTree>,
-  callback: (leaf: TableJSFBTTreeLeaf) => void,
+  callback: (leaf: TableJSFBTTreeLeaf) => void
 ): void {
   // $FlowFixMe[incompatible-call]
   // $FlowFixMe[incompatible-indexer]
@@ -50,14 +50,14 @@ function _runOnNormalizedJSFBTLeaves(
     _runOnNormalizedJSFBTLeaves(
       // $FlowExpectedError[incompatible-call] `value` should now be an intermediate tree level
       nullthrows(value[k]),
-      callback,
+      callback
     );
   }
 }
 
 function onEachLeaf(
-  phrase: {...ObjectWithJSFBT, ...},
-  callback: (leaf: TableJSFBTTreeLeaf) => void,
+  phrase: { ...ObjectWithJSFBT, ... },
+  callback: (leaf: TableJSFBTTreeLeaf) => void
 ): void {
   _runOnNormalizedJSFBTLeaves(phrase.jsfbt.t, callback);
 }
@@ -68,7 +68,7 @@ function onEachLeaf(
  */
 function mapLeaves<NewLeaf>(
   tree: $ReadOnly<TableJSFBTTree>,
-  convertLeaf: (leaf: $ReadOnly<TableJSFBTTreeLeaf>) => NewLeaf,
+  convertLeaf: (leaf: $ReadOnly<TableJSFBTTreeLeaf>) => NewLeaf
 ):
   | NewLeaf
   | {|
@@ -82,7 +82,7 @@ function mapLeaves<NewLeaf>(
     return convertLeaf(leaflet);
   }
 
-  const newFbtTree: {[key: FbtTableKey]: NewLeaf} = {};
+  const newFbtTree: { [key: FbtTableKey]: NewLeaf } = {};
   for (const tableKey in tree) {
     // $FlowFixMe[incompatible-type]
     newFbtTree[tableKey] = mapLeaves(tree[tableKey], convertLeaf);

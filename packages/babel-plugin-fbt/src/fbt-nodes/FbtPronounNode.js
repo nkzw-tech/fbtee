@@ -10,11 +10,11 @@
 
 'use strict';
 
-import type {ValidPronounUsagesKey} from '../FbtConstants';
-import type {BabelNodeCallExpressionArg} from '../FbtUtil';
-import type {GenderConstEnum} from '../Gender';
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { ValidPronounUsagesKey } from '../FbtConstants';
+import type { BabelNodeCallExpressionArg } from '../FbtUtil';
+import type { GenderConstEnum } from '../Gender';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
 const {
   ValidPronounOptions,
@@ -31,11 +31,11 @@ const {
   varDump,
 } = require('../FbtUtil');
 const Gender = require('../Gender');
-const {GENDER_ANY} = require('../translate/IntlVariations');
-const {GenderStringVariationArg} = require('./FbtArguments');
+const { GENDER_ANY } = require('../translate/IntlVariations');
+const { GenderStringVariationArg } = require('./FbtArguments');
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
-const {createInstanceFromFbtConstructCallsite} = require('./FbtNodeUtil');
+const { createInstanceFromFbtConstructCallsite } = require('./FbtNodeUtil');
 const {
   identifier,
   isStringLiteral,
@@ -56,10 +56,9 @@ type Options = {|
   // Type of pronoun
   type: ValidPronounUsagesKey,
 |};
-const {GENDER_CONST} = Gender;
+const { GENDER_CONST } = Gender;
 
-const candidatePronounGenders: $ReadOnlyArray<GenderConstEnum> =
-  consolidatedPronounGenders();
+const candidatePronounGenders: $ReadOnlyArray<GenderConstEnum> = consolidatedPronounGenders();
 
 const HUMAN_OPTION = 'human';
 
@@ -71,7 +70,7 @@ class FbtPronounNode extends FbtNode<
   GenderStringVariationArg,
   BabelNodeCallExpression,
   null,
-  Options,
+  Options
 > {
   static +type: FbtNodeType = FbtNodeType.Pronoun;
 
@@ -87,11 +86,11 @@ class FbtPronounNode extends FbtNode<
   }
 
   getOptions(): Options {
-    const {moduleName} = this;
+    const { moduleName } = this;
     const rawOptions = collectOptionsFromFbtConstruct(
       moduleName,
       this.node,
-      ValidPronounOptions,
+      ValidPronounOptions
     );
 
     try {
@@ -101,16 +100,16 @@ class FbtPronounNode extends FbtNode<
         isStringLiteral(usageArg),
         '`usage`, the first argument of %s.pronoun() must be a `StringLiteral` but we got `%s`',
         moduleName,
-        usageArg?.type || 'unknown',
+        usageArg?.type || 'unknown'
       );
       const type = enforceStringEnum(
         usageArg.value,
         ValidPronounUsages,
-        `\`usage\`, the first argument of ${moduleName}.pronoun()`,
+        `\`usage\`, the first argument of ${moduleName}.pronoun()`
       );
       const gender = enforceBabelNodeCallExpressionArg(
         genderArg,
-        '`gender`, the second argument',
+        '`gender`, the second argument'
       );
       const mergedOptions = nullthrows(rawOptions);
       return {
@@ -129,7 +128,7 @@ class FbtPronounNode extends FbtNode<
     invariant(
       (args && (args.length === 2 || args.length === 3)) || !args,
       "Expected '(usage, gender [, options])' arguments to %s.pronoun()",
-      this.moduleName,
+      this.moduleName
     );
   }
 
@@ -137,19 +136,19 @@ class FbtPronounNode extends FbtNode<
     try {
       const svArg = argsMap.get(this);
       const svArgValue = nullthrows(svArg.value);
-      const {options} = this;
+      const { options } = this;
 
       const word = Gender.getData(
         svArgValue === GENDER_ANY
           ? GENDER_CONST.UNKNOWN_PLURAL
           : // $FlowExpectedError(incompatible-cast) We type-checked for `GENDER_ANY` just above
             (svArgValue: GenderConstEnum),
-        options.type,
+        options.type
       );
       invariant(
         typeof word === 'string',
         'Expected pronoun word to be a string but we got %s',
-        varDump(word),
+        varDump(word)
       );
 
       return options.capitalize
@@ -161,7 +160,7 @@ class FbtPronounNode extends FbtNode<
   }
 
   getArgsForStringVariationCalc(): $ReadOnlyArray<GenderStringVariationArg> {
-    const {options} = this;
+    const { options } = this;
     const candidates = new Set<GenderConstEnum | '*'>();
 
     for (const gender of candidatePronounGenders) {
@@ -172,7 +171,7 @@ class FbtPronounNode extends FbtNode<
       candidates.add(
         resolvedGender === GENDER_CONST.UNKNOWN_PLURAL
           ? GENDER_ANY
-          : resolvedGender,
+          : resolvedGender
       );
     }
 
@@ -180,13 +179,13 @@ class FbtPronounNode extends FbtNode<
       new GenderStringVariationArg(
         this,
         options.gender,
-        Array.from(candidates),
+        Array.from(candidates)
       ),
     ];
   }
 
   getFbtRuntimeArg(): BabelNodeCallExpression {
-    const {gender, human, type} = this.options;
+    const { gender, human, type } = this.options;
     const numericUsageExpr = numericLiteral(ValidPronounUsages[type]);
 
     const pronounArgs = [numericUsageExpr, gender];
@@ -194,7 +193,7 @@ class FbtPronounNode extends FbtNode<
       pronounArgs.push(
         objectExpression([
           objectProperty(identifier(HUMAN_OPTION), numericLiteral(1)),
-        ]),
+        ])
       );
     }
 
@@ -204,18 +203,18 @@ class FbtPronounNode extends FbtNode<
   getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): $ReadOnly<{
     [argName: string]: BabelNodeCallExpressionArg,
   }> {
-    return {gender: this.options.gender};
+    return { gender: this.options.gender };
   }
 }
 
 /**
  * Must match implementation from fbt.js
  * @see (FB) https://fburl.com/diffusion/3gbcj3aq
- * @see (OSS) https://github.com/facebook/fbt/blob/19531133625dab1d38995dcf578dcfdfa0b09048/runtime/shared/fbt.js#L316-L348
+ * @see (OSS) https://github.com/facebook/fbt/blob/19531133625dab1d38995dcf578dcfdfa0b09048/runtime/fbt.js#L316-L348
  */
 function getPronounGenderKey(
   usage: ValidPronounUsagesKey,
-  gender: GenderConstEnum,
+  gender: GenderConstEnum
 ): GenderConstEnum {
   switch (gender) {
     case GENDER_CONST.NOT_A_PERSON:
@@ -258,8 +257,8 @@ function consolidatedPronounGenders(): $ReadOnlyArray<GenderConstEnum> {
       set.add(
         getPronounGenderKey(
           ValidPronounUsagesKeys[usageKey],
-          GENDER_CONST[genderKey],
-        ),
+          GENDER_CONST[genderKey]
+        )
       );
     }
   }

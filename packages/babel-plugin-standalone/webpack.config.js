@@ -98,9 +98,6 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      // This is used by FbtCollector to read files on disk but not needed in browsers
-      'graceful-fs': 'empty',
-      // This is used only by fb-babel-plugin-utils/TestUtil but not needed in browsers
       'json-diff': 'empty',
       // Using a browser-friendly version of the Node `buffer` core module.
       // Adding the `/` suffix to force node.js to consider the custom "buffer" package
@@ -108,7 +105,6 @@ module.exports = {
       buffer: require.resolve('buffer/'),
     },
     fallback: {
-      'graceful-fs': false,
       'json-diff': false,
       fs: false,
       os: require.resolve('os-browserify/browser'),
@@ -153,15 +149,18 @@ module.exports = {
               require('@babel/plugin-proposal-class-properties'),
               require('@babel/plugin-proposal-nullish-coalescing-operator'),
               require('@babel/plugin-proposal-optional-chaining'),
-              [require('@babel/plugin-transform-classes'), {loose: true}],
+              [require('@babel/plugin-transform-classes'), { loose: true }],
               require('@babel/plugin-transform-object-super'),
               require('@babel/plugin-transform-shorthand-properties'),
               require('@babel/plugin-transform-computed-properties'),
               require('@babel/plugin-transform-flow-strip-types'),
               require('@babel/plugin-transform-for-of'),
-              [require('@babel/plugin-transform-spread'), {loose: true}],
+              [require('@babel/plugin-transform-spread'), { loose: true }],
               require('@babel/plugin-transform-parameters'),
-              [require('@babel/plugin-transform-destructuring'), {loose: true}],
+              [
+                require('@babel/plugin-transform-destructuring'),
+                { loose: true },
+              ],
               require('@babel/plugin-transform-block-scoping'),
               require('@babel/plugin-transform-modules-commonjs'),
               require('@babel/plugin-transform-member-expression-literals'),

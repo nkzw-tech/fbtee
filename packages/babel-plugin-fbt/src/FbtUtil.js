@@ -11,18 +11,18 @@
 
 'use strict';
 
-import type {PatternString} from '../../../runtime/shared/FbtTable';
-import type {AnyFbtNode} from './fbt-nodes/FbtNode';
+import type { PatternString } from '../../../runtime/FbtTable';
+import type { AnyFbtNode } from './fbt-nodes/FbtNode';
 import type {
   FbtOptionConfig,
   FbtOptionValue,
   FbtOptionValues,
   JSModuleNameType,
 } from './FbtConstants';
-import type {TokenAliases} from './index';
+import type { TokenAliases } from './index';
 import typeof BabelTypes from '@babel/types';
 
-const {JSModuleName, ModuleNameRegExp} = require('./FbtConstants');
+const { JSModuleName, ModuleNameRegExp } = require('./FbtConstants');
 const {
   arrayExpression,
   callExpression,
@@ -59,7 +59,7 @@ const nullthrows = require('nullthrows');
 const util = require('util');
 
 type BabelNodeJSXAttributes = $ReadOnlyArray<
-  $ElementType<$PropertyType<BabelNodeJSXOpeningElement, 'attributes'>, number>,
+  $ElementType<$PropertyType<BabelNodeJSXOpeningElement, 'attributes'>, number>
 >;
 export type BabelNodeCallExpressionArg =
   | BabelNodeExpression
@@ -68,15 +68,15 @@ export type BabelNodeCallExpressionArg =
   | BabelNodeArgumentPlaceholder;
 export type BabelNodeCallExpressionArgument = $ElementType<
   $PropertyType<BabelNodeCallExpression, 'arguments'>,
-  number,
+  number
 >;
-export type ParamSet = {[parameterName: string]: ?BabelNode};
-const {FBS, FBT} = JSModuleName;
+export type ParamSet = { [parameterName: string]: ?BabelNode };
+const { FBS, FBT } = JSModuleName;
 
 function normalizeSpaces(
   value: string,
   // TODO(T56277500) set better types for Fbt options object to use `preserveWhitespace?: ?boolean`
-  options: ?{preserveWhitespace?: ?FbtOptionValue},
+  options: ?{ preserveWhitespace?: ?FbtOptionValue }
 ): string {
   if (options && options.preserveWhitespace) {
     return value;
@@ -99,7 +99,7 @@ function normalizeSpaces(
  */
 function validateNamespacedFbtElement(
   moduleName: string,
-  node: BabelNode,
+  node: BabelNode
 ): string {
   let valid = false;
   let handlerName;
@@ -162,7 +162,7 @@ function setUniqueToken(
   node: BabelNode,
   moduleName: string,
   name: string,
-  paramSet: ParamSet,
+  paramSet: ParamSet
 ): void {
   const cachedNode = paramSet[name];
   if (cachedNode && cachedNode != node) {
@@ -170,7 +170,7 @@ function setUniqueToken(
       node,
       `There's already a token called "${name}" in this ${moduleName} call. ` +
         `Use ${moduleName}.sameParam if you want to reuse the same token name or ` +
-        `give this token a different name`,
+        `give this token a different name`
     );
   }
   paramSet[name] = node;
@@ -179,7 +179,7 @@ function setUniqueToken(
 function checkOption<K: string>(
   option: string,
   validOptions: FbtOptionConfig<K>,
-  value: ?BabelNode | string | boolean,
+  value: ?BabelNode | string | boolean
 ): K {
   // $FlowFixMe[incompatible-cast] consider
   const optionName = (option: K);
@@ -189,7 +189,7 @@ function checkOption<K: string>(
     throw errorAt(
       isNode(value) ? value : null,
       `Invalid option "${optionName}". ` +
-        `Only allowed: ${Object.keys(validOptions).join(', ')} `,
+        `Only allowed: ${Object.keys(validOptions).join(', ')} `
     );
   } else if (validValues !== true) {
     let valueStr;
@@ -205,8 +205,8 @@ function checkOption<K: string>(
         isNode(value) ? value : null,
         `Option "${optionName}" has an invalid value. ` +
           `Expected a string literal but value is \`${varDump(
-            value,
-          )}\` (${typeof value})`,
+            value
+          )}\` (${typeof value})`
       );
     }
 
@@ -214,7 +214,7 @@ function checkOption<K: string>(
       throw errorAt(
         isNode(value) ? value : null,
         `Option "${optionName}" has an invalid value: "${valueStr}". ` +
-          `Only allowed: ${Object.keys(validValues).join(', ')}`,
+          `Only allowed: ${Object.keys(validValues).join(', ')}`
       );
     }
   }
@@ -239,7 +239,7 @@ function getOptionsFromAttributes(
   t: BabelTypes,
   attributesNode: $FlowFixMe,
   validOptions: $FlowFixMe,
-  ignoredAttrs: $FlowFixMe,
+  ignoredAttrs: $FlowFixMe
 ): BabelNodeObjectExpression {
   const options = [];
 
@@ -274,8 +274,8 @@ function getOptionsFromAttributes(
       t.objectProperty(
         t.stringLiteral(checkOption(option, validOptions, value)),
         // $FlowFixMe[incompatible-call]
-        value,
-      ),
+        value
+      )
     );
   });
 
@@ -303,12 +303,12 @@ function errorAt(
   msgOrError: string | ErrorWithBabelNodeLocation = '',
   options: {
     suggestOSSWebsite?: boolean,
-  } = {},
+  } = {}
 ): ErrorWithBabelNodeLocation {
   let error;
   if (typeof msgOrError === 'string') {
     const newError = new Error(
-      createErrorMessageAtNode(astNode, msgOrError, options),
+      createErrorMessageAtNode(astNode, msgOrError, options)
     );
     // $FlowExpectedError[incompatible-exact] Allow setting some internal props on Error object
     error = (newError: ErrorWithBabelNodeLocation);
@@ -332,7 +332,7 @@ function createErrorMessageAtNode(
   msg: string = '',
   options: {
     suggestOSSWebsite?: boolean,
-  } = {},
+  } = {}
 ): string {
   const location = astNode && astNode.loc;
   const optionalMessage = options.suggestOSSWebsite
@@ -355,19 +355,19 @@ function createErrorMessageAtNode(
 function collectOptions<ValidOptions: FbtOptionConfig<string>>(
   moduleName: JSModuleNameType,
   options: ?BabelNodeObjectExpression,
-  validOptions: ValidOptions,
+  validOptions: ValidOptions
 ): FbtOptionValues<$Keys<ValidOptions>> {
   const key2value: FbtOptionValues<$Keys<ValidOptions>> = {};
   if (options == null) {
     return key2value;
   }
 
-  options.properties.forEach(option => {
+  options.properties.forEach((option) => {
     if (!isObjectProperty(option)) {
       throw errorAt(
         option,
         `options object must contain plain object properties. ` +
-          `No method definitions or spread operators.`,
+          `No method definitions or spread operators.`
       );
     }
 
@@ -380,7 +380,7 @@ function collectOptions<ValidOptions: FbtOptionConfig<string>>(
     } else {
       throw errorAt(
         option,
-        `Expected property name to be an identifier or a string literal.`,
+        `Expected property name to be an identifier or a string literal.`
       );
     }
     optionName = checkOption(optionName, validOptions, option.value);
@@ -388,7 +388,7 @@ function collectOptions<ValidOptions: FbtOptionConfig<string>>(
     if (isArrowFunctionExpression(option.value)) {
       throw errorAt(
         option,
-        `${moduleName}(...) does not allow an arrow function as an option value`,
+        `${moduleName}(...) does not allow an arrow function as an option value`
       );
     }
 
@@ -414,7 +414,7 @@ function collectOptionsFromFbtConstruct<ValidOptions: FbtOptionConfig<string>>(
   moduleName: JSModuleNameType,
   callsiteNode: ?BabelNodeCallExpression | BabelNodeJSXElement,
   validOptions: ValidOptions,
-  booleanOptions: ?{[$Keys<ValidOptions>]: mixed} = null,
+  booleanOptions: ?{ [$Keys<ValidOptions>]: mixed } = null
 ): FbtOptionValues<$Keys<ValidOptions>> {
   let optionsNode;
   let options = ({}: FbtOptionValues<$Keys<ValidOptions>>);
@@ -424,16 +424,16 @@ function collectOptionsFromFbtConstruct<ValidOptions: FbtOptionConfig<string>>(
   } else if (isJSXElement(callsiteNode)) {
     throw errorAt(
       callsiteNode,
-      'Collecting options from JSX element is not supported yet',
+      'Collecting options from JSX element is not supported yet'
     );
   }
 
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     if (booleanOptions && booleanOptions.hasOwnProperty(key)) {
       options[key] = getOptionBooleanValue(
         options,
         key,
-        optionsNode || callsiteNode,
+        optionsNode || callsiteNode
       );
     } else if (isBooleanLiteral(options[key])) {
       options[key] = options[key].value;
@@ -444,7 +444,7 @@ function collectOptionsFromFbtConstruct<ValidOptions: FbtOptionConfig<string>>(
 
 function getOptionsNodeFromCallExpression(
   moduleName: JSModuleNameType,
-  node: BabelNodeCallExpression,
+  node: BabelNodeCallExpression
 ): ?BabelNodeObjectExpression {
   const optionsNode = node.arguments[2];
   if (optionsNode == null) {
@@ -453,7 +453,7 @@ function getOptionsNodeFromCallExpression(
   if (!isObjectExpression(optionsNode)) {
     throw errorAt(
       optionsNode,
-      `${moduleName}(...) expects options as an ObjectExpression as its 3rd argument`,
+      `${moduleName}(...) expects options as an ObjectExpression as its 3rd argument`
     );
   }
   return optionsNode;
@@ -465,18 +465,18 @@ function getOptionsNodeFromCallExpression(
  */
 function expandStringConcat(
   moduleName: string,
-  node: BabelNode,
+  node: BabelNode
 ): BabelNodeStringLiteral | BabelNodeJSXText {
   if (isBinaryExpression(node)) {
     if (node.operator !== '+') {
       throw errorAt(
         node,
-        `Expected concatenation operator (+) but got ${node.operator}`,
+        `Expected concatenation operator (+) but got ${node.operator}`
       );
     }
     return stringLiteral(
       expandStringConcat(moduleName, node.left).value +
-        expandStringConcat(moduleName, node.right).value,
+        expandStringConcat(moduleName, node.right).value
     );
   } else if (isStringLiteral(node)) {
     return node;
@@ -499,7 +499,7 @@ function expandStringConcat(
           throw errorAt(
             node,
             `${moduleName} template placeholders only accept params wrapped in ` +
-              `${moduleName}.param. Expected StringLiteral got ${expr.type}`,
+              `${moduleName}.param. Expected StringLiteral got ${expr.type}`
           );
         }
         string += expr.value;
@@ -515,18 +515,20 @@ function expandStringConcat(
       `See the docs at https://facebook.github.io/fbt/ for more info. ` +
       `Expected StringLiteral, TemplateLiteral, or concatenation; ` +
       // $FlowExpectedError This BabelNode is unsupported so it may not even have a type property
-      `got "${node.type}"`,
+      `got "${node.type}"`
   );
 }
 
 function expandStringArray(
   moduleName: string,
-  node: BabelNodeArrayExpression,
+  node: BabelNodeArrayExpression
 ): BabelNodeStringLiteral {
   return stringLiteral(
     nullthrows(node.elements)
-      .map(element => expandStringConcat(moduleName, nullthrows(element)).value)
-      .join(''),
+      .map(
+        (element) => expandStringConcat(moduleName, nullthrows(element)).value
+      )
+      .join('')
   );
 }
 
@@ -535,7 +537,7 @@ function expandStringArray(
 function getOptionBooleanValue<K: string>(
   options: FbtOptionValues<K>,
   name: K,
-  node: ?BabelNode,
+  node: ?BabelNode
 ): boolean {
   if (!options.hasOwnProperty(name)) {
     return false;
@@ -550,7 +552,7 @@ function getOptionBooleanValue<K: string>(
   } else {
     throw errorAt(
       node,
-      `Value for option "${name}" must be Boolean literal 'true' or 'false'.`,
+      `Value for option "${name}" must be Boolean literal 'true' or 'false'.`
     );
   }
 }
@@ -561,7 +563,7 @@ function getOptionBooleanValue<K: string>(
 function getAttributeByNameOrThrow(
   attributes: BabelNodeJSXAttributes,
   name: string,
-  node: ?BabelNode = null,
+  node: ?BabelNode = null
 ): BabelNodeJSXAttribute {
   const attr = getAttributeByName(attributes, name);
   if (attr == undefined) {
@@ -572,7 +574,7 @@ function getAttributeByNameOrThrow(
 
 function getAttributeByName(
   attributes: BabelNodeJSXAttributes,
-  name: string,
+  name: string
 ): ?BabelNodeJSXAttribute {
   for (let i = 0; i < attributes.length; i++) {
     const attr = attributes[i];
@@ -584,9 +586,9 @@ function getAttributeByName(
 }
 
 function getOpeningElementAttributes(
-  node: BabelNodeJSXElement,
+  node: BabelNodeJSXElement
 ): $ReadOnlyArray<BabelNodeJSXAttribute> {
-  return node.openingElement.attributes.map(attribute => {
+  return node.openingElement.attributes.map((attribute) => {
     if (isJSXSpreadAttribute(attribute)) {
       throw errorAt(attribute, `Do no use the JSX spread attribute`);
     }
@@ -594,18 +596,20 @@ function getOpeningElementAttributes(
   });
 }
 
-function extractEnumRange(node: BabelNodeObjectExpression): {
+function extractEnumRange(
+  node: BabelNodeObjectExpression
+): {
   [name: string]: BabelNodeStringLiteral,
 } {
   return node.properties.reduce((acc, prop) => {
     if (!isObjectProperty(prop)) {
       throw new Error(
-        `fbt enum range properties must be ObjectProperty, got ${prop.type}`,
+        `fbt enum range properties must be ObjectProperty, got ${prop.type}`
       );
     }
     if (!isStringLiteral(prop.value)) {
       throw new Error(
-        `fbt enum range property values must be StringLiteral, got ${prop.value.type}`,
+        `fbt enum range property values must be StringLiteral, got ${prop.value.type}`
       );
     }
     acc[prop.key.name || prop.key.value] = prop.value.value;
@@ -623,8 +627,11 @@ function objMap<
   TKey: string | number,
   TValueIn,
   TValueOut,
-  TObj: {+[key: TKey]: TValueIn},
->(object: TObj, fn: (value: TValueIn, TKey) => TValueOut): {[TKey]: TValueOut} {
+  TObj: { +[key: TKey]: TValueIn }
+>(
+  object: TObj,
+  fn: (value: TValueIn, TKey) => TValueOut
+): { [TKey]: TValueOut } {
   // A Lame, non-exhaustive runtime check, but oh well.
   if (
     !(object instanceof Object) ||
@@ -633,7 +640,7 @@ function objMap<
   ) {
     throw new Error('Only use on simple objects');
   }
-  const toMap: {[TKey]: TValueOut} = {};
+  const toMap: { [TKey]: TValueOut } = {};
   for (const k in object) {
     // $FlowFixMe[incompatible-type]
     toMap[k] = fn(
@@ -641,7 +648,7 @@ function objMap<
         // `k` is normally a `string` but it is inferred to be TKey
         ((k: $FlowExpectedError): TKey)
       ],
-      ((k: $FlowExpectedError): TKey),
+      ((k: $FlowExpectedError): TKey)
     );
   }
   return toMap;
@@ -656,7 +663,7 @@ function objMap<
  * The micro-optimized equivalent of `Object.keys(o).length > 0` but
  * without the throw-away array
  */
-function hasKeys(o: {...}): boolean {
+function hasKeys(o: { ... }): boolean {
   for (const k in o) {
     return true;
   }
@@ -668,7 +675,7 @@ function getRawSource(src: string, node: BabelNode): string {
     // $FlowFixMe node.start might be undefined
     node.start,
     // $FlowFixMe node.end might be undefined
-    node.end,
+    node.end
   );
 }
 
@@ -676,9 +683,9 @@ function getRawSource(src: string, node: BabelNode): string {
  * Filter whitespace-only nodes from a list of nodes.
  */
 function filterEmptyNodes<B: BabelNode>(
-  nodes: $ReadOnlyArray<B>,
+  nodes: $ReadOnlyArray<B>
 ): $ReadOnlyArray<B> {
-  return nodes.filter(node => {
+  return nodes.filter((node) => {
     // Filter whitespace and comment block
     return !(
       (isJSXText(node) && node.value.match(/^\s+$/)) ||
@@ -701,13 +708,13 @@ function textContainsFbtLikeModule(text: string): boolean {
 
 function convertTemplateLiteralToArrayElements(
   moduleName: JSModuleNameType,
-  node: BabelNodeTemplateLiteral,
+  node: BabelNodeTemplateLiteral
 ): Array<
-  BabelNodeStringLiteral | BabelNodeCallExpression | BabelNodeJSXElement,
+  BabelNodeStringLiteral | BabelNodeCallExpression | BabelNodeJSXElement
 > {
-  const {expressions, quasis} = node;
+  const { expressions, quasis } = node;
   const nodes: Array<
-    BabelNodeStringLiteral | BabelNodeCallExpression | BabelNodeJSXElement,
+    BabelNodeStringLiteral | BabelNodeCallExpression | BabelNodeJSXElement
   > = [];
 
   let index = 0;
@@ -730,7 +737,7 @@ function convertTemplateLiteralToArrayElements(
           expression,
           `Unexpected node type: ${expression.type}. ${moduleName}() only supports ` +
             `the following syntax within template literals:` +
-            `string literal, a construct like ${moduleName}.param() or a JSX element.`,
+            `string literal, a construct like ${moduleName}.param() or a JSX element.`
         );
       }
     }
@@ -740,9 +747,9 @@ function convertTemplateLiteralToArrayElements(
 
 function getBinaryExpressionOperands(
   moduleName: JSModuleNameType,
-  node: BabelNodeExpression,
+  node: BabelNodeExpression
 ): Array<
-  BabelNodeCallExpression | BabelNodeStringLiteral | BabelNodeTemplateLiteral,
+  BabelNodeCallExpression | BabelNodeStringLiteral | BabelNodeTemplateLiteral
 > {
   switch (node.type) {
     case 'BinaryExpression':
@@ -762,7 +769,7 @@ function getBinaryExpressionOperands(
         node,
         `Unexpected node type: ${node.type}. ` +
           `The ${moduleName}() string concatenation pattern only supports ` +
-          ` string literals or constructs like ${moduleName}.param().`,
+          ` string literals or constructs like ${moduleName}.param().`
       );
   }
 }
@@ -771,8 +778,8 @@ function convertToStringArrayNodeIfNeeded(
   moduleName: JSModuleNameType,
   node: $ElementType<
     $PropertyType<BabelNodeCallExpression, 'arguments'>,
-    number,
-  >,
+    number
+  >
 ): BabelNodeArrayExpression {
   let initialElements;
   let didStartWithArray = false;
@@ -800,7 +807,7 @@ function convertToStringArrayNodeIfNeeded(
         node,
         `Unexpected node type: ${node.type}. ` +
           `${moduleName}()'s first argument should be a string literal, ` +
-          `a construct like ${moduleName}.param() or an array of those.`,
+          `a construct like ${moduleName}.param() or an array of those.`
       );
   }
 
@@ -809,40 +816,37 @@ function convertToStringArrayNodeIfNeeded(
   // We're not making this fully recursive since, from a syntax POV,
   // it wouldn't be elegant to allow developers to nest lots of template literals.
   return arrayExpression(
-    initialElements.reduce(
-      (elements, element) => {
-        if (element == null) {
-          return elements;
-        }
-        if (
-          didStartWithArray &&
-          (element.type === 'BinaryExpression' ||
-            (element.type === 'TemplateLiteral' && element.expressions.length))
-        ) {
-          throw errorAt(
-            element,
-            `${moduleName}(array) only supports items that are string literals, ` +
-              `template literals without any expressions, or fbt constructs`,
-          );
-        }
-        switch (element.type) {
-          case 'BinaryExpression': {
-            elements.push(...getBinaryExpressionOperands(moduleName, element));
-            break;
-          }
-          case 'TemplateLiteral': {
-            elements.push(
-              ...convertTemplateLiteralToArrayElements(moduleName, element),
-            );
-            break;
-          }
-          default:
-            elements.push(element);
-        }
+    initialElements.reduce((elements, element) => {
+      if (element == null) {
         return elements;
-      },
-      ([]: Array<null | BabelNodeExpression | BabelNodeSpreadElement>),
-    ),
+      }
+      if (
+        didStartWithArray &&
+        (element.type === 'BinaryExpression' ||
+          (element.type === 'TemplateLiteral' && element.expressions.length))
+      ) {
+        throw errorAt(
+          element,
+          `${moduleName}(array) only supports items that are string literals, ` +
+            `template literals without any expressions, or fbt constructs`
+        );
+      }
+      switch (element.type) {
+        case 'BinaryExpression': {
+          elements.push(...getBinaryExpressionOperands(moduleName, element));
+          break;
+        }
+        case 'TemplateLiteral': {
+          elements.push(
+            ...convertTemplateLiteralToArrayElements(moduleName, element)
+          );
+          break;
+        }
+        default:
+          elements.push(element);
+      }
+      return elements;
+    }, ([]: Array<null | BabelNodeExpression | BabelNodeSpreadElement>))
   );
 }
 
@@ -864,10 +868,10 @@ function convertToStringArrayNodeIfNeeded(
  */
 function compactBabelNodeProps(
   object: interface {},
-  serializeSourceCode: boolean = true,
-): {...} {
+  serializeSourceCode: boolean = true
+): { ... } {
   // $FlowExpectedError[cannot-spread-interface] Force-cast `interface` to an `object` type
-  const ret = {...object};
+  const ret = { ...object };
   for (const propName in ret) {
     if (ret.hasOwnProperty(propName)) {
       const propValue = ret[propName];
@@ -905,7 +909,7 @@ function enforceString(value: mixed, valueDesc: ?string): string {
     '%sExpected string value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value,
+    typeof value
   );
   return value;
 }
@@ -916,7 +920,7 @@ function enforceBoolean(value: mixed, valueDesc: ?string): boolean {
     '%sExpected boolean value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value,
+    typeof value
   );
   return value;
 }
@@ -927,43 +931,43 @@ function enforceBabelNode(value: mixed, valueDesc: ?string): BabelNode {
     '%sExpected BabelNode value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value,
+    typeof value
   );
   return value;
 }
 
 function enforceBabelNodeExpression(
   value: mixed,
-  valueDesc: ?string,
+  valueDesc: ?string
 ): BabelNodeExpression {
   invariant(
     isExpression(value),
     '%sExpected BabelNodeExpression value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value,
+    typeof value
   );
   return value;
 }
 
 function enforceBabelNodeCallExpressionArg(
   value: mixed,
-  valueDesc: ?string,
+  valueDesc: ?string
 ): BabelNodeCallExpressionArg {
   invariant(
     isBabelNodeCallExpressionArg(value),
     '%sExpected BabelNodeCallExpressionArg value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value,
+    typeof value
   );
   return value;
 }
 
 function enforceStringEnum<K: string>(
   value: mixed,
-  keys: {[K]: any},
-  valueDesc: ?string,
+  keys: { [K]: any },
+  valueDesc: ?string
 ): K {
   invariant(
     typeof value === 'string' && keys.hasOwnProperty(value),
@@ -971,7 +975,7 @@ function enforceStringEnum<K: string>(
     valueDesc ? valueDesc + ' - ' : '',
     Object.keys(keys).join(', '),
     varDump(value),
-    typeof value,
+    typeof value
   );
   // $FlowFixMe[incompatible-return] Value has been refined with the above invariant check
   return value;
@@ -982,46 +986,51 @@ function nullableTypeCheckerFactory<
   ArgVal,
   Args: $ReadOnlyArray<ArgVal>,
   Ret,
-  Val,
+  Val
 >(checker: (Val, ...args: Args) => Ret): (Val, ...args: Args) => ?Ret {
   return (value, ...args) => {
     return value == null ? null : checker(value, ...args);
   };
 }
 
-const enforceBabelNodeOrNull: (value: mixed, valueDesc: ?string) => ?BabelNode =
-  nullableTypeCheckerFactory(enforceBabelNode);
+const enforceBabelNodeOrNull: (
+  value: mixed,
+  valueDesc: ?string
+) => ?BabelNode = nullableTypeCheckerFactory(enforceBabelNode);
 enforceBabelNode.orNull = enforceBabelNodeOrNull;
 
 const enforceBabelNodeExpressionOrNull: (
   value: mixed,
-  valueDesc: ?string,
+  valueDesc: ?string
 ) => ?BabelNodeExpression = nullableTypeCheckerFactory(
-  enforceBabelNodeExpression,
+  enforceBabelNodeExpression
 );
 enforceBabelNodeExpression.orNull = enforceBabelNodeExpressionOrNull;
 
 const enforceBabelNodeCallExpressionArgOrNull: (
   value: mixed,
-  valueDesc: ?string,
+  valueDesc: ?string
 ) => ?BabelNodeCallExpressionArg = nullableTypeCheckerFactory(
-  enforceBabelNodeCallExpressionArg,
+  enforceBabelNodeCallExpressionArg
 );
-enforceBabelNodeCallExpressionArg.orNull =
-  enforceBabelNodeCallExpressionArgOrNull;
+enforceBabelNodeCallExpressionArg.orNull = enforceBabelNodeCallExpressionArgOrNull;
 
-const enforceBooleanOrNull: (value: mixed, valueDesc: ?string) => ?boolean =
-  nullableTypeCheckerFactory(enforceBoolean);
+const enforceBooleanOrNull: (
+  value: mixed,
+  valueDesc: ?string
+) => ?boolean = nullableTypeCheckerFactory(enforceBoolean);
 enforceBoolean.orNull = enforceBooleanOrNull;
 
-const enforceStringOrNull: (value: mixed, valueDesc: ?string) => ?string =
-  nullableTypeCheckerFactory(enforceString);
+const enforceStringOrNull: (
+  value: mixed,
+  valueDesc: ?string
+) => ?string = nullableTypeCheckerFactory(enforceString);
 enforceString.orNull = enforceStringOrNull;
 
 const enforceStringEnumOrNull: <K: string>(
   value: mixed,
-  keys: {[K]: any},
-  valueDesc: ?string,
+  keys: { [K]: any },
+  valueDesc: ?string
 ) => ?K = nullableTypeCheckerFactory(enforceStringEnum);
 enforceStringEnum.orNull = enforceStringEnumOrNull;
 
@@ -1035,7 +1044,7 @@ enforceStringEnum.orNull = enforceStringEnumOrNull;
 function createFbtRuntimeArgCallExpression(
   fbtNode: AnyFbtNode,
   args: Array<BabelNodeCallExpressionArg>,
-  overrideMethodName?: string,
+  overrideMethodName?: string
 ): BabelNodeCallExpression {
   return callExpression(
     memberExpression(
@@ -1045,11 +1054,11 @@ function createFbtRuntimeArgCallExpression(
           (overrideMethodName ||
             nullthrows(
               // $FlowExpectedError[prop-missing] using nullthrows() to detect if it's undefined
-              fbtNode.constructor.type,
-            )),
-      ),
+              fbtNode.constructor.type
+            ))
+      )
     ),
-    args,
+    args
   );
 }
 
@@ -1059,14 +1068,14 @@ function createFbtRuntimeArgCallExpression(
  */
 function replaceClearTokensWithTokenAliases(
   textOrTranslation: PatternString,
-  tokenAliases: ?TokenAliases,
+  tokenAliases: ?TokenAliases
 ): string {
   if (tokenAliases == null) {
     return textOrTranslation;
   }
 
   // avoid cyclic dependency
-  const {tokenNameToTextPattern} = require('./fbt-nodes/FbtNodeUtil');
+  const { tokenNameToTextPattern } = require('./fbt-nodes/FbtNodeUtil');
   return Object.keys(tokenAliases).reduce(
     (mangledText: string, clearToken: string) => {
       const clearTokenName = tokenNameToTextPattern(clearToken);
@@ -1076,7 +1085,7 @@ function replaceClearTokensWithTokenAliases(
       // `clearTokenName` is sufficient.
       return mangledText.replace(clearTokenName, mangledTokenName);
     },
-    textOrTranslation,
+    textOrTranslation
   );
 }
 

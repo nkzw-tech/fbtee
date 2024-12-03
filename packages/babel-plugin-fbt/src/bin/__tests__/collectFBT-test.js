@@ -7,13 +7,13 @@
 
 'use strict';
 
-const {packagerTypes} = require('../collectFbtConstants');
+const { packagerTypes } = require('../collectFbtConstants');
 const {
   buildCollectFbtOutput,
   getFbtCollector,
   getPackagers,
 } = require('../collectFbtUtils');
-const fs = require('graceful-fs');
+const fs = require('fs');
 const path = require('path');
 const fbtCommonPath = path.resolve(__dirname, 'FbtCommonForTests.json');
 
@@ -31,11 +31,11 @@ describe('collectFbt', () => {
     const packager = options.packagerType ?? packagerTypes.NONE;
     const packagers = getPackagers(
       packager,
-      path.join(__dirname, '../md5Texts'),
+      path.join(__dirname, '../md5Texts')
     );
     if (options.multipleFiles) {
       fs.hasOwnProperty = () => Object.hasOwnProperty; // For jest.spyOn
-      jest.spyOn(fs, 'readFileSync').mockImplementation(path => source[path]);
+      jest.spyOn(fs, 'readFileSync').mockImplementation((path) => source[path]);
       fbtCollector.collectFromFiles(Object.keys(source));
     } else {
       fbtCollector.collectFromOneFile(source);
@@ -50,14 +50,14 @@ describe('collectFbt', () => {
 
   it('should extract fbt strings', () => {
     const res = collect(
-      'const fbt = require(\'fbt\');<fbt desc="foo">bar</fbt>',
+      'const fbt = require(\'fbt\');<fbt desc="foo">bar</fbt>'
     );
     expect(res).toMatchSnapshot();
   });
 
   it('should extract fbs strings', () => {
     const res = collect(
-      'const fbs = require(\'fbs\');<fbs desc="foo">bar</fbs>',
+      'const fbs = require(\'fbs\');<fbs desc="foo">bar</fbs>'
     );
     expect(res).toMatchSnapshot();
   });
@@ -68,7 +68,7 @@ describe('collectFbt', () => {
         '// @fbt {"project": "someproject", "author": "Sponge Bob"}',
         "const fbt = require('fbt');",
         '<fbt desc="foo">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
     expect(res).toMatchSnapshot();
   });
@@ -79,7 +79,7 @@ describe('collectFbt', () => {
         '// @fbt {"project": "someproject", "doNotExtract": false}',
         "const fbt = require('fbt');",
         '<fbt desc="foo">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
     expect(res).toMatchSnapshot();
   });
@@ -90,7 +90,7 @@ describe('collectFbt', () => {
         '// @fbt {"project": "someproject", "doNotExtract": true}',
         "const fbt = require('fbt');",
         '<fbt desc="foo">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res.phrases.length).toEqual(0);
@@ -102,7 +102,7 @@ describe('collectFbt', () => {
         '// @fbt {"project": "someproject", "doNotExtract": true}',
         "const fbt = require('fbt');",
         '<fbt desc="foo" doNotExtract="false">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res.phrases.length).toEqual(1);
@@ -113,7 +113,7 @@ describe('collectFbt', () => {
       [
         "const fbt = require('fbt');",
         '<fbt desc="foo" doNotExtract="false">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res).toMatchSnapshot();
@@ -124,7 +124,7 @@ describe('collectFbt', () => {
       [
         "const fbt = require('fbt');",
         '<fbt desc="foo" doNotExtract="true">bar</fbt>',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res.phrases.length).toEqual(0);
@@ -135,7 +135,7 @@ describe('collectFbt', () => {
       [
         "const fbt = require('fbt');",
         'fbt("bar", "foo", {doNotExtract: false});',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res).toMatchSnapshot();
@@ -146,7 +146,7 @@ describe('collectFbt', () => {
       [
         "const fbt = require('fbt');",
         'fbt("bar", "foo", {doNotExtract: true});',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res.phrases.length).toEqual(0);
@@ -159,7 +159,7 @@ describe('collectFbt', () => {
         '/**@csx*/',
         '<fbt desc="foo">bar</fbt>;',
         '<Foo options:key="bar" />',
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res).toMatchSnapshot();
@@ -195,7 +195,7 @@ describe('collectFbt', () => {
         `    photo`,
         `  </fbt:plural>.`,
         `</fbt>`,
-      ].join('\n'),
+      ].join('\n')
     );
 
     expect(res).toMatchSnapshot();
@@ -208,7 +208,7 @@ describe('collectFbt', () => {
           "const fbt = require('fbt');",
           'const uh = 0;',
           'fbt(`simple`, "ok");',
-        ].join('\n'),
+        ].join('\n')
       );
 
       expect(res).toMatchSnapshot();
@@ -220,7 +220,7 @@ describe('collectFbt', () => {
           "const fbt = require('fbt');",
           'const uh = 0;',
           'fbt(`testing ${fbt.param("it", uh)} works`, "great");',
-        ].join('\n'),
+        ].join('\n')
       );
 
       expect(res).toMatchSnapshot();
@@ -232,7 +232,7 @@ describe('collectFbt', () => {
           "const fbt = require('fbt');",
           'const uh = 0;',
           'fbt(`${fbt.param("it", uh)} still works`, "well");',
-        ].join('\n'),
+        ].join('\n')
       );
 
       expect(res).toMatchSnapshot();
@@ -244,7 +244,7 @@ describe('collectFbt', () => {
           "const fbt = require('fbt');",
           'const uh = 0;',
           'fbt(`${fbt.param("1", uh)} ${fbt.param("2", uh)} ${fbt.sameParam("2")} 3`, "counting");',
-        ].join('\n'),
+        ].join('\n')
       );
 
       expect(res).toMatchSnapshot();
@@ -257,7 +257,7 @@ describe('collectFbt', () => {
           'const uh = 0;',
           "fbt(`${fbt.enum(uh, {0:'a', 1:'b'})} ${fbt.param(\"2\", uh)}\n" +
             '${fbt.sameParam("2")} 3`, "counting");',
-        ].join('\n'),
+        ].join('\n')
       );
       expect(res).toMatchSnapshot();
     });
@@ -269,7 +269,7 @@ describe('collectFbt', () => {
           "const IntlVariations = require('IntlVariations');",
           'const gender = IntlVariations.GENDER_FEMALE;',
           "fbt(`${fbt.name('name', 'Sally', gender)} sells ${fbt.pronoun('possessive', gender)} ${fbt.plural('item', 5)}`, 'desc');",
-        ].join('\n'),
+        ].join('\n')
       );
       expect(res).toMatchSnapshot();
     });
@@ -284,7 +284,7 @@ describe('collectFbt', () => {
         ].join('\n'),
         {
           react_native_mode: true,
-        },
+        }
       );
       expect(res).toMatchSnapshot();
     });
@@ -297,7 +297,7 @@ describe('collectFbt', () => {
           "const fbt = require('fbt');",
           'const bad = () => {};',
           'fbt(`dont do ${bad()} stuff`, "ok");',
-        ].join('\n'),
+        ].join('\n')
       );
     expect(test).toThrow();
   });
@@ -306,7 +306,7 @@ describe('collectFbt', () => {
     expect(
       collect('nothing in JS code', {
         customCollector: path.resolve(__dirname, 'CustomFbtCollector.js'),
-      }),
+      })
     ).toMatchSnapshot();
   });
 
@@ -320,8 +320,8 @@ describe('collectFbt', () => {
         </fbt>`,
         {
           genOuterTokenName: true,
-        },
-      ),
+        }
+      )
     ).toMatchSnapshot();
   });
 
@@ -333,8 +333,8 @@ describe('collectFbt', () => {
           Hello
           <i>World</i>
         </fbt>`,
-        {},
-      ),
+        {}
+      )
     ).toMatchSnapshot();
   });
 
@@ -346,8 +346,8 @@ describe('collectFbt', () => {
           You
           <i>see the world</i>
         </fbt>`,
-        {},
-      ),
+        {}
+      )
     ).toMatchSnapshot();
   });
 
@@ -372,8 +372,8 @@ describe('collectFbt', () => {
         },
         {
           multipleFiles: true,
-        },
-      ),
+        }
+      )
     ).toMatchSnapshot();
   });
 
@@ -387,10 +387,10 @@ describe('collectFbt', () => {
               link
             </a>
           </fbt>`,
-        {packagerType: packagerTypes.TEXT, genFbtNodes: true},
+        { packagerType: packagerTypes.TEXT, genFbtNodes: true }
       );
 
-      const {fbtElementNodes} = ret;
+      const { fbtElementNodes } = ret;
 
       // Check overall data structure
       expect(ret).toMatchSnapshot();
@@ -399,7 +399,7 @@ describe('collectFbt', () => {
       expect(fbtElementNodes.length).toBe(1);
       expect(fbtElementNodes[0].children[1].phraseIndex).toBe(1);
       expect(fbtElementNodes[0].phraseIndex).toBe(0);
-      expect(ret.childParentMappings).toEqual({1: 0});
+      expect(ret.childParentMappings).toEqual({ 1: 0 });
       expect(ret.phrases.length).toBe(2);
     });
 
@@ -423,10 +423,10 @@ describe('collectFbt', () => {
           </a>
           with you
         </fbt>;`,
-        {packagerType: packagerTypes.TEXT, genFbtNodes: true},
+        { packagerType: packagerTypes.TEXT, genFbtNodes: true }
       );
 
-      const {fbtElementNodes} = ret;
+      const { fbtElementNodes } = ret;
 
       // Check overall data structure
       expect(ret).toMatchSnapshot();

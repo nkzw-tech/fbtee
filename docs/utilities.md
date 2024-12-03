@@ -5,18 +5,23 @@ sidebar_label: Runtime Utilities
 ---
 
 Bundled with fbt come a few useful utilities for constructing strings.
+
 ### intlList(...)
-[`intlList`](https://github.com/facebook/fbt/blob/main/runtime/shared/intlList.js) creates `fbt` instances with selectable conjunctions given an array.
+
+[`intlList`](https://github.com/facebook/fbt/blob/main/runtime/intlList.js) creates `fbt` instances with selectable conjunctions given an array.
 
 As an example
+
 ```js
 const intlList = require('fbt/lib/intlList');
 const CONJUNCTIONS = intlList.CONJUNCTIONS;
 const DELIMITERS = intlList.DELIMITERS;
-let people = ['Adam', 'Becky', fbt('4 others', 'last item')]
+let people = ['Adam', 'Becky', fbt('4 others', 'last item')];
 intlList(people, CONJUNCTIONS.AND, DELIMITERS.COMMA);
 ```
+
 produces the fbt
+
 ```
 <fbt
   desc={
@@ -29,10 +34,12 @@ produces the fbt
   <fbt:param name="following items">{items[i]}</fbt:param>
 </fbt>
 ```
+
 recursively combining fbts.
 **Note that genders are not used in this `fbt:param` instances, so they default to `UNKNOWN`**
 
 ### intlNumUtils and intlSummarizeNumber
+
 There are a few utilities in both `intlNumUtils` and
 `intlSummarizeNumber` that are documented in the source.
 

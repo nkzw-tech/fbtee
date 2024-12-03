@@ -11,25 +11,22 @@
 
 'use strict';
 
-import type {
-  PatternHash,
-  PatternString,
-} from '../../../../runtime/shared/FbtTable';
-import type {PlainFbtNode} from '../fbt-nodes/FbtNode';
-import type {FbtExtraOptionConfig} from '../FbtConstants';
-import type {EnumManifest} from '../FbtEnumRegistrar';
-import type {BabelPluginFbt, Phrase, PluginOptions} from '../index';
-import type {BabelPluginList, BabelPresetList} from '@babel/core';
+import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
+import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
+import type { FbtExtraOptionConfig } from '../FbtConstants';
+import type { EnumManifest } from '../FbtEnumRegistrar';
+import type { BabelPluginFbt, Phrase, PluginOptions } from '../index';
+import type { BabelPluginList, BabelPresetList } from '@babel/core';
 
-const {extractEnumsAndFlattenPhrases} = require('../FbtShiftEnums');
+const { extractEnumsAndFlattenPhrases } = require('../FbtShiftEnums');
 const FbtUtil = require('../FbtUtil');
 const fbt = require('../index');
-const fs = require('graceful-fs');
+const fs = require('fs');
 
 export type ExternalTransform = (
   src: string,
   opts: TransformOptions,
-  filename: ?string,
+  filename: ?string
 ) => mixed;
 export type CollectorConfig = {|
   fbtCommonPath?: string,
@@ -43,7 +40,7 @@ type ParentPhraseIndex = number;
 export type ChildParentMappings = {
   [childPhraseIndex: number]: ParentPhraseIndex,
 };
-export type Errors = {[file: string]: Error};
+export type Errors = { [file: string]: Error };
 export type HashToLeaf = {
   [hash: PatternHash]: {|
     desc: string,
@@ -64,16 +61,16 @@ export type TransformOptions = $ReadOnly<{|
 export interface IFbtCollector {
   constructor(
     config: CollectorConfig,
-    extraOptions: FbtExtraOptionConfig,
+    extraOptions: FbtExtraOptionConfig
   ): void;
   collectFromOneFile(
     source: string,
     filename: ?string,
-    fbtEnumManifest?: EnumManifest,
+    fbtEnumManifest?: EnumManifest
   ): void;
   collectFromFiles(
     files: Array<string>,
-    fbtEnumManifest?: EnumManifest,
+    fbtEnumManifest?: EnumManifest
   ): boolean;
   getChildParentMappings(): ChildParentMappings;
   getErrors(): Errors;
@@ -99,7 +96,7 @@ class FbtCollector implements IFbtCollector {
   collectFromOneFile(
     source: string,
     filename: ?string,
-    fbtEnumManifest?: EnumManifest,
+    fbtEnumManifest?: EnumManifest
   ): void {
     const options = {
       collectFbt: true,
@@ -127,7 +124,7 @@ class FbtCollector implements IFbtCollector {
         // $FlowFixMe[incompatible-exact]
         options,
         this._config.plugins || [],
-        this._config.presets || [],
+        this._config.presets || []
       );
     }
 
@@ -141,7 +138,7 @@ class FbtCollector implements IFbtCollector {
     Object.entries(newChildParentMappings).forEach(
       ([childIndex, parentIndex]) => {
         this._childParentMappings[offset + +childIndex] = offset + parentIndex;
-      },
+      }
     );
 
     // PackagerPhrase is an extended type of Phrase
@@ -151,10 +148,10 @@ class FbtCollector implements IFbtCollector {
 
   collectFromFiles(
     files: Array<string>,
-    fbtEnumManifest?: EnumManifest,
+    fbtEnumManifest?: EnumManifest
   ): boolean {
     let hasFailure = false;
-    files.forEach(file => {
+    files.forEach((file) => {
       try {
         const source = fs.readFileSync(file, 'utf8');
         this.collectFromOneFile(source, file, fbtEnumManifest);

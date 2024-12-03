@@ -8,17 +8,14 @@
 
 /*eslint max-len: ["error", 100]*/
 
-import type {
-  PatternHash,
-  PatternString,
-} from '../../../../runtime/shared/FbtTable';
-import type {HashToLeaf, PackagerPhrase} from './FbtCollector';
+import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
+import type { HashToLeaf, PackagerPhrase } from './FbtCollector';
 
-const {onEachLeaf} = require('../JSFbtUtil');
+const { onEachLeaf } = require('../JSFbtUtil');
 
 export type HashFunction = (
   text: PatternString,
-  description: string,
+  description: string
 ) => PatternHash;
 
 /**
@@ -33,9 +30,9 @@ class TextPackager {
   }
 
   pack(phrases: Array<PackagerPhrase>): Array<PackagerPhrase> {
-    return phrases.map(phrase => {
+    return phrases.map((phrase) => {
       const hashToLeaf: HashToLeaf = {};
-      onEachLeaf(phrase, ({desc, text}) => {
+      onEachLeaf(phrase, ({ desc, text }) => {
         hashToLeaf[this._hash(text, desc)] = {
           text,
           desc,

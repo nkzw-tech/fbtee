@@ -267,10 +267,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 36,
+                      "index": 119,
                       "line": 4,
                     },
                     "start": Object {
                       "column": 15,
+                      "index": 98,
                       "line": 4,
                     },
                   },
@@ -279,10 +281,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 24,
+                        "index": 107,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 15,
+                        "index": 98,
                         "line": 4,
                       },
                     },
@@ -301,10 +305,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 36,
+                        "index": 119,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 25,
+                        "index": 108,
                         "line": 4,
                       },
                     },
@@ -318,10 +324,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 68,
+                      "index": 151,
                       "line": 4,
                     },
                     "start": Object {
                       "column": 37,
+                      "index": 120,
                       "line": 4,
                     },
                   },
@@ -330,10 +338,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 41,
+                        "index": 124,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 37,
+                        "index": 120,
                         "line": 4,
                       },
                     },
@@ -352,10 +362,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 68,
+                        "index": 151,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 42,
+                        "index": 125,
                         "line": 4,
                       },
                     },
@@ -369,10 +381,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 83,
+                      "index": 166,
                       "line": 4,
                     },
                     "start": Object {
                       "column": 69,
+                      "index": 152,
                       "line": 4,
                     },
                   },
@@ -381,10 +395,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 77,
+                        "index": 160,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 69,
+                        "index": 152,
                         "line": 4,
                       },
                     },
@@ -405,10 +421,12 @@ Object {
                       "loc": Object {
                         "end": Object {
                           "column": 82,
+                          "index": 165,
                           "line": 4,
                         },
                         "start": Object {
                           "column": 79,
+                          "index": 162,
                           "line": 4,
                         },
                       },
@@ -419,10 +437,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 83,
+                        "index": 166,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 78,
+                        "index": 161,
                         "line": 4,
                       },
                     },
@@ -435,10 +455,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 95,
+                      "index": 178,
                       "line": 4,
                     },
                     "start": Object {
                       "column": 84,
+                      "index": 167,
                       "line": 4,
                     },
                   },
@@ -447,10 +469,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 86,
+                        "index": 169,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 84,
+                        "index": 167,
                         "line": 4,
                       },
                     },
@@ -471,10 +495,12 @@ Object {
                       "loc": Object {
                         "end": Object {
                           "column": 94,
+                          "index": 177,
                           "line": 4,
                         },
                         "start": Object {
                           "column": 88,
+                          "index": 171,
                           "line": 4,
                         },
                       },
@@ -485,10 +511,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 95,
+                        "index": 178,
                         "line": 4,
                       },
                       "start": Object {
                         "column": 87,
+                        "index": 170,
                         "line": 4,
                       },
                     },
@@ -501,10 +529,12 @@ Object {
               "loc": Object {
                 "end": Object {
                   "column": 96,
+                  "index": 179,
                   "line": 4,
                 },
                 "start": Object {
                   "column": 12,
+                  "index": 95,
                   "line": 4,
                 },
               },
@@ -513,10 +543,12 @@ Object {
                 "loc": Object {
                   "end": Object {
                     "column": 14,
+                    "index": 97,
                     "line": 4,
                   },
                   "start": Object {
                     "column": 13,
+                    "index": 96,
                     "line": 4,
                   },
                 },
@@ -630,10 +662,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 20,
+                      "index": 320,
                       "line": 8,
                     },
                     "start": Object {
                       "column": 12,
+                      "index": 312,
                       "line": 8,
                     },
                   },
@@ -642,10 +676,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 19,
+                        "index": 319,
                         "line": 8,
                       },
                       "start": Object {
                         "column": 13,
+                        "index": 313,
                         "line": 8,
                       },
                     },
@@ -675,10 +711,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 34,
+                      "index": 262,
                       "line": 7,
                     },
                     "start": Object {
                       "column": 13,
+                      "index": 241,
                       "line": 7,
                     },
                   },
@@ -687,10 +725,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 22,
+                        "index": 250,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 13,
+                        "index": 241,
                         "line": 7,
                       },
                     },
@@ -709,10 +749,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 34,
+                        "index": 262,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 23,
+                        "index": 251,
                         "line": 7,
                       },
                     },
@@ -726,10 +768,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 43,
+                      "index": 271,
                       "line": 7,
                     },
                     "start": Object {
                       "column": 35,
+                      "index": 263,
                       "line": 7,
                     },
                   },
@@ -738,10 +782,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 39,
+                        "index": 267,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 35,
+                        "index": 263,
                         "line": 7,
                       },
                     },
@@ -760,10 +806,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 43,
+                        "index": 271,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 40,
+                        "index": 268,
                         "line": 7,
                       },
                     },
@@ -777,10 +825,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 58,
+                      "index": 286,
                       "line": 7,
                     },
                     "start": Object {
                       "column": 44,
+                      "index": 272,
                       "line": 7,
                     },
                   },
@@ -789,10 +839,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 52,
+                        "index": 280,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 44,
+                        "index": 272,
                         "line": 7,
                       },
                     },
@@ -813,10 +865,12 @@ Object {
                       "loc": Object {
                         "end": Object {
                           "column": 57,
+                          "index": 285,
                           "line": 7,
                         },
                         "start": Object {
                           "column": 54,
+                          "index": 282,
                           "line": 7,
                         },
                       },
@@ -827,10 +881,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 58,
+                        "index": 286,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 53,
+                        "index": 281,
                         "line": 7,
                       },
                     },
@@ -843,10 +899,12 @@ Object {
                   "loc": Object {
                     "end": Object {
                       "column": 70,
+                      "index": 298,
                       "line": 7,
                     },
                     "start": Object {
                       "column": 59,
+                      "index": 287,
                       "line": 7,
                     },
                   },
@@ -855,10 +913,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 61,
+                        "index": 289,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 59,
+                        "index": 287,
                         "line": 7,
                       },
                     },
@@ -879,10 +939,12 @@ Object {
                       "loc": Object {
                         "end": Object {
                           "column": 69,
+                          "index": 297,
                           "line": 7,
                         },
                         "start": Object {
                           "column": 63,
+                          "index": 291,
                           "line": 7,
                         },
                       },
@@ -893,10 +955,12 @@ Object {
                     "loc": Object {
                       "end": Object {
                         "column": 70,
+                        "index": 298,
                         "line": 7,
                       },
                       "start": Object {
                         "column": 62,
+                        "index": 290,
                         "line": 7,
                       },
                     },
@@ -909,10 +973,12 @@ Object {
               "loc": Object {
                 "end": Object {
                   "column": 71,
+                  "index": 299,
                   "line": 7,
                 },
                 "start": Object {
                   "column": 10,
+                  "index": 238,
                   "line": 7,
                 },
               },
@@ -921,10 +987,12 @@ Object {
                 "loc": Object {
                   "end": Object {
                     "column": 12,
+                    "index": 240,
                     "line": 7,
                   },
                   "start": Object {
                     "column": 11,
+                    "index": 239,
                     "line": 7,
                   },
                 },
@@ -1306,11 +1374,13 @@ Object {
         "loc": Object {
           "end": Object {
             "column": 52,
+            "index": 80,
             "line": 2,
           },
           "identifierName": "aSubject",
           "start": Object {
             "column": 44,
+            "index": 72,
             "line": 2,
           },
         },
@@ -1344,11 +1414,13 @@ Object {
         "loc": Object {
           "end": Object {
             "column": 52,
+            "index": 80,
             "line": 2,
           },
           "identifierName": "aSubject",
           "start": Object {
             "column": 44,
+            "index": 72,
             "line": 2,
           },
         },

@@ -2,7 +2,6 @@
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements and raw text 1`] = `
 const fbt = require("fbt");
-
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -30,8 +29,7 @@ var x = fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
+                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
                 text: "Where do",
               },
               m: [],
@@ -50,8 +48,7 @@ var x = fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
+                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
                 text: "spaces",
               },
               m: [],
@@ -70,8 +67,7 @@ var x = fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
+                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
                 text: "go?",
               },
               m: [],
@@ -90,8 +86,7 @@ var x = fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
+                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
                 text: "question",
               },
               m: [],
@@ -108,9 +103,7 @@ var x = fbt._(
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements and string variation arguments nested inside jsx element 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
@@ -119,8 +112,7 @@ var x =
         t: {
           "*": {
             desc: "d",
-            text:
-              "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}",
+            text: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -129,8 +121,7 @@ var x =
           },
           _1: {
             desc: "d",
-            text:
-              "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}",
+            text: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -154,13 +145,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
                     text: "OuterJsx1",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
                     text: "OuterJsx1",
                   },
                 },
@@ -182,13 +171,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
                     text: "OuterJsx2",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
                     text: "OuterJsx2",
                   },
                 },
@@ -210,14 +197,12 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
                     text: "{=InnerJsx1}(plural)s{=InnerJsx2}",
                     tokenAliases: { "=InnerJsx1": "=m1", "=InnerJsx2": "=m3" },
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
+                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
                     text: "{=InnerJsx1}(plural){=InnerJsx2}",
                     tokenAliases: { "=InnerJsx1": "=m1", "=InnerJsx2": "=m3" },
                   },
@@ -238,13 +223,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
+                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
                             text: "InnerJsx1",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
+                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
                             text: "InnerJsx1",
                           },
                         },
@@ -266,13 +249,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
+                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
                             text: "InnerJsx2",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
+                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
                             text: "InnerJsx2",
                           },
                         },
@@ -295,9 +276,7 @@ var x =
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements with string variation arguments 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count, "number")),
   fbt._(
@@ -334,8 +313,7 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=There should be}{=[number] spaces} !"',
+                    desc: 'In the phrase: "{=There should be}{=[number] spaces} !"',
                     text: "There should be",
                   },
                   _1: {
@@ -361,8 +339,7 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=There should be}{=[number] spaces} !"',
+                    desc: 'In the phrase: "{=There should be}{=[number] spaces} !"',
                     text: "{number} spaces",
                   },
                   _1: {
@@ -385,9 +362,7 @@ var x =
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should not preserve whitespace around text in JSXExpression 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
@@ -396,8 +371,7 @@ var x =
         t: {
           "*": {
             desc: "d",
-            text:
-              "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}",
+            text: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -407,8 +381,7 @@ var x =
           },
           _1: {
             desc: "d",
-            text:
-              "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}",
+            text: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -433,13 +406,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
                     text: "OuterJsx1",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
                     text: "OuterJsx1",
                   },
                 },
@@ -461,13 +432,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
                     text: "OuterJsx2",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
                     text: "OuterJsx2",
                   },
                 },
@@ -489,17 +458,13 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text:
-                      "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression",
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    text: "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression",
                     tokenAliases: { "=InnerJsx1": "=m2", "=InnerJsx2": "=m7" },
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text:
-                      "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression",
+                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
+                    text: "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression",
                     tokenAliases: { "=InnerJsx1": "=m2", "=InnerJsx2": "=m7" },
                   },
                 },
@@ -519,13 +484,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
+                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
                             text: "InnerJsx1",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
+                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
                             text: "InnerJsx1",
                           },
                         },
@@ -547,13 +510,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
+                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
                             text: "InnerJsx2",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
+                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
                             text: "InnerJsx2",
                           },
                         },
@@ -576,9 +537,7 @@ var x =
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should preserve voluntarily added spaces between NON-raw text 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
@@ -587,8 +546,7 @@ var x =
         t: {
           "*": {
             desc: "d",
-            text:
-              "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}",
+            text: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -597,8 +555,7 @@ var x =
           },
           _1: {
             desc: "d",
-            text:
-              "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}",
+            text: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}",
             tokenAliases: {
               "=OuterJsx1": "=m0",
               "=OuterJsx2": "=m2",
@@ -622,13 +579,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
                     text: "OuterJsx1",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
                     text: "OuterJsx1",
                   },
                 },
@@ -650,13 +605,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
                     text: "OuterJsx2",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
                     text: "OuterJsx2",
                   },
                 },
@@ -678,8 +631,7 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
                     text: "{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}",
                     tokenAliases: {
                       "=InnerJsx1": "=m2",
@@ -688,8 +640,7 @@ var x =
                     },
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
+                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
                     text: "{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}",
                     tokenAliases: {
                       "=InnerJsx1": "=m2",
@@ -714,13 +665,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx1",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx1",
                           },
                         },
@@ -742,13 +691,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx2",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx2",
                           },
                         },
@@ -770,13 +717,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx3",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
+                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
                             text: "InnerJsx3",
                           },
                         },
@@ -799,9 +744,7 @@ var x =
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should treat comments in JSXExpression like they are not here 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
@@ -843,13 +786,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
                     text: "OuterJsx1",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
                     text: "OuterJsx1",
                   },
                 },
@@ -871,13 +812,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
                     text: "OuterJsx2",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
                     text: "OuterJsx2",
                   },
                 },
@@ -899,14 +838,12 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
                     text: "{=InnerJsx1}(plural)s rawText",
                     tokenAliases: { "=InnerJsx1": "=m2" },
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
+                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
                     text: "{=InnerJsx1}(plural) rawText",
                     tokenAliases: { "=InnerJsx1": "=m2" },
                   },
@@ -927,13 +864,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural)s rawText"',
+                            desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural)s rawText"',
                             text: "InnerJsx1",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural) rawText"',
+                            desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural) rawText"',
                             text: "InnerJsx1",
                           },
                         },
@@ -956,9 +891,7 @@ var x =
 
 exports[`fbt preserveWhitespace argument should preserve whitespace around text with inner text and string variation 1`] = `
 var fbt_sv_arg_0;
-
 const fbt = require("fbt");
-
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
@@ -998,13 +931,11 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
+                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
                     text: "outerJsx",
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
+                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
                     text: "outerJsx",
                   },
                 },
@@ -1026,14 +957,12 @@ var x =
               jsfbt: {
                 t: {
                   "*": {
-                    desc:
-                      'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
+                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
                     text: "{=innerJsx} innerText (plural)s",
                     tokenAliases: { "=innerJsx": "=m1" },
                   },
                   _1: {
-                    desc:
-                      'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
+                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
                     text: "{=innerJsx} innerText (plural)",
                     tokenAliases: { "=innerJsx": "=m1" },
                   },
@@ -1054,13 +983,11 @@ var x =
                       jsfbt: {
                         t: {
                           "*": {
-                            desc:
-                              'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)s"',
+                            desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)s"',
                             text: "innerJsx",
                           },
                           _1: {
-                            desc:
-                              'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)"',
+                            desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)"',
                             text: "innerJsx",
                           },
                         },

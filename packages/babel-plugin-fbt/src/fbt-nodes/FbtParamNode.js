@@ -10,15 +10,15 @@
 
 'use strict';
 
-import type {ParamVariationType} from '../../../../runtime/shared/FbtRuntimeTypes';
+import type { ParamVariationType } from '../../../../runtime/FbtRuntimeTypes';
 import type {
   BabelNodeCallExpressionArg,
   BabelNodeCallExpressionArgument,
 } from '../FbtUtil';
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
-const {ValidParamOptions} = require('../FbtConstants');
+const { ValidParamOptions } = require('../FbtConstants');
 const {
   collectOptionsFromFbtConstruct,
   createFbtRuntimeArgCallExpression,
@@ -26,7 +26,7 @@ const {
   errorAt,
   varDump,
 } = require('../FbtUtil');
-const {GENDER_ANY, NUMBER_ANY} = require('../translate/IntlVariations');
+const { GENDER_ANY, NUMBER_ANY } = require('../translate/IntlVariations');
 const {
   GenderStringVariationArg,
   NumberStringVariationArg,
@@ -74,7 +74,7 @@ class FbtParamNode extends FbtNode<
   GenderStringVariationArg | NumberStringVariationArg,
   BabelNodeCallExpression,
   null,
-  Options,
+  Options
 > {
   static +type: FbtNodeType = FbtNodeType.Param;
 
@@ -83,7 +83,7 @@ class FbtParamNode extends FbtNode<
       const rawOptions = collectOptionsFromFbtConstruct(
         this.moduleName,
         this.node,
-        ValidParamOptions,
+        ValidParamOptions
       );
       const [arg0, arg1] = this.getCallNodeArguments() || [];
       const gender = enforceBabelNodeExpression.orNull(rawOptions.gender);
@@ -94,18 +94,18 @@ class FbtParamNode extends FbtNode<
 
       invariant(
         number !== false,
-        '`number` option must be an expression or `true`',
+        '`number` option must be an expression or `true`'
       );
       invariant(
         !gender || !number,
-        'Gender and number options must not be set at the same time',
+        'Gender and number options must not be set at the same time'
       );
 
       let name = typeof rawOptions.name === 'string' ? rawOptions.name : null;
       if (name == null || name === '') {
         invariant(
           isStringLiteral(arg0),
-          'First function argument must be a string literal',
+          'First function argument must be a string literal'
         );
         name = arg0.value;
       }
@@ -113,7 +113,7 @@ class FbtParamNode extends FbtNode<
 
       const value = nullthrows(
         arg1,
-        'The second function argument must not be null',
+        'The second function argument must not be null'
       );
 
       return {
@@ -139,13 +139,13 @@ class FbtParamNode extends FbtNode<
   }
 
   getArgsForStringVariationCalc(): $ReadOnlyArray<
-    GenderStringVariationArg | NumberStringVariationArg,
+    GenderStringVariationArg | NumberStringVariationArg
   > {
-    const {gender, number} = this.options;
+    const { gender, number } = this.options;
     const ret = [];
     invariant(
       !gender || !number,
-      'Gender and number options must not be set at the same time',
+      'Gender and number options must not be set at the same time'
     );
     if (gender) {
       ret.push(new GenderStringVariationArg(this, gender, [GENDER_ANY]));
@@ -153,7 +153,7 @@ class FbtParamNode extends FbtNode<
       ret.push(
         new NumberStringVariationArg(this, number === true ? null : number, [
           NUMBER_ANY,
-        ]),
+        ])
       );
     }
     return ret;
@@ -165,7 +165,7 @@ class FbtParamNode extends FbtNode<
 
   getText(argsMap: StringVariationArgsMap): string {
     try {
-      this.getArgsForStringVariationCalc().forEach(expectedArg => {
+      this.getArgsForStringVariationCalc().forEach((expectedArg) => {
         const svArg = argsMap.get(this);
         invariant(
           // $FlowExpectedError[method-unbinding] We're just comparing methods by reference
@@ -173,7 +173,7 @@ class FbtParamNode extends FbtNode<
           'Expected SVArgument instance of %s but got %s instead: %s',
           expectedArg.constructor.name || 'unknown',
           svArg.constructor.name || 'unknown',
-          varDump(svArg),
+          varDump(svArg)
         );
       });
       return tokenNameToTextPattern(this.getTokenName(argsMap));
@@ -183,7 +183,7 @@ class FbtParamNode extends FbtNode<
   }
 
   getFbtRuntimeArg(): BabelNodeCallExpression {
-    const {gender, name, number, value} = this.options;
+    const { gender, name, number, value } = this.options;
     let variationValues: Array<BabelNodeExpression>;
 
     if (number != null) {
@@ -203,18 +203,18 @@ class FbtParamNode extends FbtNode<
         stringLiteral(name),
         value,
         variationValues ? arrayExpression(variationValues) : null,
-      ].filter(Boolean),
+      ].filter(Boolean)
     );
   }
 
   getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): $ReadOnly<{
     [argName: string]: BabelNodeCallExpressionArg,
   }> {
-    const {gender, number} = this.options;
+    const { gender, number } = this.options;
     if (gender != null) {
-      return {gender};
+      return { gender };
     }
-    return isExpression(number) ? {number} : {};
+    return isExpression(number) ? { number } : {};
   }
 }
 

@@ -8,34 +8,31 @@
 
 'use strict';
 
-import type {
-  FbtTableKey,
-  PatternHash,
-} from '../../../../runtime/shared/FbtTable';
-import type {FbtSiteHashifiedTableJSFBTTree} from './FbtSiteBase';
+import type { FbtTableKey, PatternHash } from '../../../../runtime/FbtTable';
+import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase';
 import type {
   IntlVariationMaskValue,
   IntlVariationsEnum,
 } from './IntlVariations';
 import type TranslationConfig from './TranslationConfig';
-import type {ConstraintKey} from './VariationConstraintUtils';
+import type { ConstraintKey } from './VariationConstraintUtils';
 
-const {hasKeys, varDump} = require('../FbtUtil');
-const {replaceClearTokensWithTokenAliases} = require('../FbtUtil');
-const {FbtSite, FbtSiteMetaEntry} = require('./FbtSite');
+const { hasKeys, varDump } = require('../FbtUtil');
+const { replaceClearTokensWithTokenAliases } = require('../FbtUtil');
+const { FbtSite, FbtSiteMetaEntry } = require('./FbtSite');
 const IntlVariations = require('./IntlVariations');
 const TranslationData = require('./TranslationData');
-const {buildConstraintKey} = require('./VariationConstraintUtils');
+const { buildConstraintKey } = require('./VariationConstraintUtils');
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 
-const {EXACTLY_ONE, Mask, isValidValue} = IntlVariations;
+const { EXACTLY_ONE, Mask, isValidValue } = IntlVariations;
 
 /**
  * Map from a string's hash to its translation payload.
  * If the translation is string type, it implies it was machine generatd.
  */
-type HashToTranslation = {|[hash: PatternHash]: ?(TranslationData | string)|};
+type HashToTranslation = {| [hash: PatternHash]: ?(TranslationData | string) |};
 
 /**
  * Leaf can be either a string translation or
@@ -44,7 +41,7 @@ type HashToTranslation = {|[hash: PatternHash]: ?(TranslationData | string)|};
 type TranslationLeaf = ?string | [?string, PatternHash];
 
 type TranslationTree =
-  | {|[key: FbtTableKey]: TranslationTree|}
+  | {| [key: FbtTableKey]: TranslationTree |}
   | TranslationLeaf;
 
 /**
@@ -53,15 +50,15 @@ type TranslationTree =
  */
 export type TranslationResult =
   | TranslationTree
-  | {|[key: FbtTableKey]: TranslationTree, __vcg: number|};
+  | {| [key: FbtTableKey]: TranslationTree, __vcg: number |};
 
 type MetadataToken = string;
 
 /** e.g. {'name' => IntlGenderVariations.MALE} */
-type TokenToConstraint = {|[token: MetadataToken]: IntlVariationsEnum|};
+type TokenToConstraint = {| [token: MetadataToken]: IntlVariationsEnum |};
 
 /** e.g. {'name' => IntlVariationMask.GENDER} */
-type TokenToMask = {|[token: MetadataToken]: IntlVariationMaskValue|};
+type TokenToMask = {| [token: MetadataToken]: IntlVariationMaskValue |};
 
 /**
  * e.g. [['user', 2], ['count', 24]]
@@ -70,11 +67,11 @@ type TokenToMask = {|[token: MetadataToken]: IntlVariationMaskValue|};
  * format, let's allow a constraint to be string type for now.
  */
 export type TokenConstraintPairs = $ReadOnlyArray<
-  [MetadataToken, number | string],
+  [MetadataToken, number | string]
 >;
 
 /** e.g. 'user%2:count%24' => 'this is a translation string' */
-type ConstraintKeyToTranslation = {[constraint: ConstraintKey]: string};
+type ConstraintKeyToTranslation = { [constraint: ConstraintKey]: string };
 
 /**
  * Given an FbtSite (source payload) and the relevant translations,
@@ -85,7 +82,7 @@ class TranslationBuilder {
   +_fbtSite: FbtSite;
   /** Memoized function that returns the constraint to translation map for a hash */
   +_getConstraintMapWithMemoization: (
-    hash: PatternHash,
+    hash: PatternHash
   ) => ConstraintKeyToTranslation;
   +_hasTranslations: boolean;
   +_hasVCGenderVariation: boolean;
@@ -105,7 +102,7 @@ class TranslationBuilder {
     translations: $ReadOnly<HashToTranslation>,
     config: TranslationConfig,
     fbtSite: FbtSite,
-    inclHash: boolean,
+    inclHash: boolean
   ) {
     this._translations = translations;
     this._config = config;
@@ -115,13 +112,14 @@ class TranslationBuilder {
     this._tableOrHash = fbtSite.getTableOrHash();
     this._hasVCGenderVariation = this._findVCGenderVariation();
     this._hasTranslations = this._translationsExist();
-    this._getConstraintMapWithMemoization =
-      _createMemoizedConstraintMapGetter(this);
+    this._getConstraintMapWithMemoization = _createMemoizedConstraintMapGetter(
+      this
+    );
     this._inclHash = inclHash;
 
     // If a gender variation exists, add it to our table
     if (this._hasVCGenderVariation) {
-      this._tableOrHash = {'*': this._tableOrHash};
+      this._tableOrHash = { '*': this._tableOrHash };
       this._metadata = [
         FbtSiteMetaEntry.wrap({
           token: IntlVariations.VIEWING_USER,
@@ -136,12 +134,12 @@ class TranslationBuilder {
       if (metadata != null && metadata.hasVariationMask()) {
         const token = nullthrows(
           metadata.getToken(),
-          'Expect `token` to not be null as the metadata has variation mask.',
+          'Expect `token` to not be null as the metadata has variation mask.'
         );
         this._tokenToMask[token] = nullthrows(
           metadata.getVariationMask(),
           'Expect `metadata.getVariationMask()` to be nonnull because ' +
-            '`metadata.hasVariationMask() === true`.',
+            '`metadata.hasVariationMask() === true`.'
         );
       }
     }
@@ -157,11 +155,11 @@ class TranslationBuilder {
       invariant(
         table != null && typeof table !== 'string' && !Array.isArray(table),
         'Expect `table` to not be a TranslationLeaf when ' +
-          'the string has a hidden viewer context token.',
+          'the string has a hidden viewer context token.'
       );
       // This hidden key is checked during JS fbt runtime to signal that we
       // should access the first entry of our table with the viewer's gender
-      return {...table, __vcg: 1};
+      return { ...table, __vcg: 1 };
     }
     return table;
   }
@@ -210,7 +208,7 @@ class TranslationBuilder {
   _buildRecursive(
     hashOrTable: FbtSiteHashifiedTableJSFBTTree,
     tokenConstraints: TokenToConstraint = {},
-    levelIdx: number = 0,
+    levelIdx: number = 0
   ): TranslationTree {
     if (typeof hashOrTable === 'string') {
       return this._getLeafTranslation(hashOrTable, tokenConstraints);
@@ -222,7 +220,7 @@ class TranslationBuilder {
       let trans: TranslationTree = this._buildRecursive(
         branchOrLeaf,
         tokenConstraints,
-        levelIdx + 1,
+        levelIdx + 1
       );
       if (_shouldStore(trans)) {
         // $FlowFixMe[incompatible-use]
@@ -243,31 +241,31 @@ class TranslationBuilder {
       ) {
         const mask = nullthrows(
           metadata.getVariationMask(),
-          'Expect mask not to be null because metadata.hasVariationMask() returns true.',
+          'Expect mask not to be null because metadata.hasVariationMask() returns true.'
         );
         invariant(
           mask === Mask.NUMBER || mask === Mask.GENDER,
           'Unknown variation mask: %s (%s)',
           varDump(mask),
-          typeof mask,
+          typeof mask
         );
         invariant(
           isValidValue(key),
           'Expect variation keys to be coercible to IntlVariationsEnum: current key=%s (%s)',
           varDump(key),
-          typeof key,
+          typeof key
         );
         const token = nullthrows(
           metadata.getToken(),
-          'Expect `token` to not be falsy when the metadata has a variation mask.',
+          'Expect `token` to not be falsy when the metadata has a variation mask.'
         );
         const variationCandidates = _getTypesFromMask(mask);
-        variationCandidates.forEach(variationKey => {
+        variationCandidates.forEach((variationKey) => {
           tokenConstraints[token] = variationKey;
           trans = this._buildRecursive(
             branchOrLeaf,
             tokenConstraints,
-            levelIdx + 1,
+            levelIdx + 1
           );
           if (_shouldStore(trans)) {
             // $FlowFixMe[incompatible-use]
@@ -282,7 +280,7 @@ class TranslationBuilder {
 
   _getLeafTranslation(
     hash: PatternHash,
-    tokenConstraints: TokenToConstraint = {},
+    tokenConstraints: TokenToConstraint = {}
   ): TranslationLeaf {
     let translation;
     const transData: ?TranslationData | string = this._translations[hash];
@@ -310,7 +308,7 @@ class TranslationBuilder {
     if (translation != null) {
       translation = replaceClearTokensWithTokenAliases(
         translation,
-        this._fbtSite.getHashToTokenAliases()[hash],
+        this._fbtSite.getHashToTokenAliases()[hash]
       );
     }
 
@@ -328,7 +326,7 @@ class TranslationBuilder {
    */
   getConstrainedTranslation(
     hash: PatternHash,
-    tokenConstraints: TokenToConstraint,
+    tokenConstraints: TokenToConstraint
   ): ?string {
     const constraintKeys = [];
     for (const token in this._tokenToMask) {
@@ -365,7 +363,7 @@ class TranslationBuilder {
     constraintKeys: TokenConstraintPairs,
     constraintMap: ConstraintKeyToTranslation,
     translation: string,
-    defaultingLevel: number,
+    defaultingLevel: number
   ): void {
     const aggregateKey = buildConstraintKey(constraintKeys);
     if (constraintMap[aggregateKey]) {
@@ -375,7 +373,7 @@ class TranslationBuilder {
           '\nOriginal: ' +
           constraintMap[aggregateKey] +
           '\nNew ' +
-          translation,
+          translation
       );
       err.stack;
       throw err;
@@ -392,7 +390,7 @@ class TranslationBuilder {
           constraintKeys,
           constraintMap,
           translation,
-          ii + 1,
+          ii + 1
         );
         // $FlowFixMe[cannot-write]
         constraintKeys[ii] = [token, val]; // return the value back
@@ -455,7 +453,7 @@ class TranslationBuilder {
  *  }
  */
 function _createMemoizedConstraintMapGetter(
-  instance: TranslationBuilder,
+  instance: TranslationBuilder
 ): (hash: PatternHash) => ConstraintKeyToTranslation {
   // Yes this is hand-rolled memoization :(
   // TODO: T37795723 - Pull in a lightweight (not bloated) memoization library
@@ -463,7 +461,7 @@ function _createMemoizedConstraintMapGetter(
 
   // $FlowFixMe[missing-this-annot]
   return function getConstraintMap(
-    hash: PatternHash,
+    hash: PatternHash
   ): ConstraintKeyToTranslation {
     if (_mem[hash]) {
       return _mem[hash];
@@ -479,7 +477,7 @@ function _createMemoizedConstraintMapGetter(
 
     // For every possible variation combination, create a mapping to its
     // corresponding translation
-    transData.translations.forEach(translation => {
+    transData.translations.forEach((translation) => {
       const constraints = {};
       for (const idx in translation.variations) {
         const variation = translation.variations[idx];
@@ -514,7 +512,7 @@ function _createMemoizedConstraintMapGetter(
         constraintKeys,
         constraintMap,
         translation.translation,
-        0,
+        0
       );
     });
     // $FlowFixMe[prop-missing]
@@ -538,7 +536,7 @@ for (const k in IntlVariations.Number) {
 }
 
 function _getTypesFromMask(
-  mask: IntlVariationMaskValue,
+  mask: IntlVariationMaskValue
 ): $ReadOnlyArray<IntlVariationsEnum> {
   const type = IntlVariations.getType(mask);
   if (type === Mask.NUMBER) {

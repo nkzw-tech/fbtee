@@ -14,14 +14,14 @@ import type {
   FbtTableKey,
   PatternHash,
   PatternString,
-} from '../../../runtime/shared/FbtTable';
-import type {MetaPhrase} from './babel-processors/FbtFunctionCallProcessor';
-import type {AnyFbtNode, PlainFbtNode} from './fbt-nodes/FbtNode';
-import type {FbtCommonMap} from './FbtCommon';
-import type {FbtCallSiteOptions, FbtExtraOptionConfig} from './FbtConstants';
-import type {EnumManifest, EnumModule} from './FbtEnumRegistrar';
-import typeof {FbtVariationType} from './translate/IntlVariations';
-import type {BabelTransformPlugin, NodePathOf} from '@babel/core';
+} from '../../../runtime/FbtTable';
+import type { MetaPhrase } from './babel-processors/FbtFunctionCallProcessor';
+import type { AnyFbtNode, PlainFbtNode } from './fbt-nodes/FbtNode';
+import type { FbtCommonMap } from './FbtCommon';
+import type { FbtCallSiteOptions, FbtExtraOptionConfig } from './FbtConstants';
+import type { EnumManifest, EnumModule } from './FbtEnumRegistrar';
+import typeof { FbtVariationType } from './translate/IntlVariations';
+import type { BabelTransformPlugin, NodePathOf } from '@babel/core';
 import typeof BabelTypes from '@babel/types';
 
 const FbtCommonFunctionCallProcessor = require('./babel-processors/FbtCommonFunctionCallProcessor');
@@ -31,7 +31,7 @@ const FbtNodeUtil = require('./fbt-nodes/FbtNodeUtil');
 const FbtCommon = require('./FbtCommon');
 const {
   EXTRA_OPTIONS_KEY,
-  JSModuleName: {FBT},
+  JSModuleName: { FBT },
   ValidFbtOptions,
 } = require('./FbtConstants');
 const FbtEnumRegistrar = require('./FbtEnumRegistrar');
@@ -39,12 +39,12 @@ const fbtHashKey = require('./fbtHashKey');
 const FbtNodeChecker = require('./FbtNodeChecker');
 const FbtShiftEnums = require('./FbtShiftEnums');
 const FbtUtil = require('./FbtUtil');
-const {errorAt} = require('./FbtUtil');
+const { errorAt } = require('./FbtUtil');
 const JSFbtUtil = require('./JSFbtUtil');
 const {
-  RequireCheck: {isRequireAlias},
+  RequireCheck: { isRequireAlias },
 } = require('fb-babel-plugin-utils');
-const {parse: parseDocblock} = require('jest-docblock');
+const { parse: parseDocblock } = require('jest-docblock');
 
 type FbtEnumLoader = (enumFilePath: string) => EnumModule;
 export type PluginOptions = {|
@@ -66,7 +66,7 @@ export type PluginOptions = {|
   // Fbt enum file path
   fbtEnumPath?: ?string,
   // Object map of file paths keyed by fbt enum module names
-  fbtEnumToPath?: ?{[enumName: string]: string},
+  fbtEnumToPath?: ?{ [enumName: string]: string },
   fbtSentinel?: ?string,
   filename?: ?string,
   // If true, generate the `outerTokenName` property on the JSFbt tree leaves.
@@ -127,7 +127,7 @@ export type JSFBTMetaEntry = $ReadOnly<
   | {|
       // for enums
       range: $ReadOnlyArray<string>,
-    |},
+    |}
 >;
 export type TableJSFBT = $ReadOnly<{|
   t: $ReadOnly<TableJSFBTTree>,
@@ -146,14 +146,14 @@ export type Phrase = {|
   project: string,
   ...ObjectWithJSFBT,
 |};
-type ChildToParentMap = {[childIndex: number]: number};
+type ChildToParentMap = { [childIndex: number]: number };
 export type BabelPluginFbt = {
-  ({types: BabelTypes, ...}): BabelTransformPlugin,
+  ({ types: BabelTypes, ... }): BabelTransformPlugin,
   getExtractedStrings: () => Array<Phrase>,
   getChildToParentRelationships: () => ChildToParentMap,
   fbtHashKey: typeof fbtHashKey,
 };
-const {checkOption, objMap} = FbtUtil;
+const { checkOption, objMap } = FbtUtil;
 
 /**
  * Default options passed from a docblock.
@@ -168,14 +168,14 @@ let validFbtExtraOptions: $ReadOnly<FbtExtraOptionConfig>;
 /**
  * An array containing all collected phrases.
  */
-let allMetaPhrases: Array<{|...MetaPhrase, phrase: Phrase|}>;
+let allMetaPhrases: Array<{| ...MetaPhrase, phrase: Phrase |}>;
 
 /**
  * An array containing the child to parent relationships for implicit nodes.
  */
 let childToParent: ChildToParentMap;
 
-function FbtTransform(babel: {types: BabelTypes, ...}): BabelTransformPlugin {
+function FbtTransform(babel: { types: BabelTypes, ... }): BabelTransformPlugin {
   const t = babel.types;
 
   return {
@@ -270,7 +270,7 @@ function FbtTransform(babel: {types: BabelTypes, ...}): BabelTransformPlugin {
 
         root.throwIfExistsNestedFbtConstruct();
 
-        const {callNode, metaPhrases} = root.convertToFbtRuntimeCall();
+        const { callNode, metaPhrases } = root.convertToFbtRuntimeCall();
         path.replaceWith(callNode);
 
         if (pluginOptions.collectFbt) {
@@ -284,7 +284,7 @@ function FbtTransform(babel: {types: BabelTypes, ...}): BabelTransformPlugin {
             if (metaPhrase.parentIndex != null) {
               addEnclosingString(
                 index + initialPhraseCount,
-                metaPhrase.parentIndex + initialPhraseCount,
+                metaPhrase.parentIndex + initialPhraseCount
               );
             }
           });
@@ -304,7 +304,7 @@ function FbtTransform(babel: {types: BabelTypes, ...}): BabelTransformPlugin {
                   path.node,
                   `Fbt constructs can only be used within the scope of an fbt` +
                     ` string. I.e. It should be used directly inside an ` +
-                    `‹fbt› / ‹fbs› callsite`,
+                    `‹fbt› / ‹fbs› callsite`
                 );
               }
             },
@@ -316,7 +316,7 @@ function FbtTransform(babel: {types: BabelTypes, ...}): BabelTransformPlugin {
 }
 
 FbtTransform.getExtractedStrings = (): Array<Phrase> =>
-  allMetaPhrases.map(metaPhrase => metaPhrase.phrase);
+  allMetaPhrases.map((metaPhrase) => metaPhrase.phrase);
 
 FbtTransform.getChildToParentRelationships = (): ChildToParentMap =>
   childToParent || {};
@@ -324,14 +324,14 @@ FbtTransform.getChildToParentRelationships = (): ChildToParentMap =>
 FbtTransform.getFbtElementNodes = (): Array<PlainFbtNode> => {
   const FbtElementNode = require('./fbt-nodes/FbtElementNode');
   const phraseToIndexMap = new Map<AnyFbtNode, number>(
-    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index]),
+    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index])
   );
 
   return allMetaPhrases
-    .map(({fbtNode}) =>
+    .map(({ fbtNode }) =>
       fbtNode instanceof FbtElementNode
         ? FbtNodeUtil.toPlainFbtNodeTree(fbtNode, phraseToIndexMap)
-        : null,
+        : null
     )
     .filter(Boolean);
 };
@@ -349,7 +349,7 @@ function initDefaultOptions(state) {
   const fbtDocblockOptions = parseDocblock(docblock).fbt;
   if (fbtDocblockOptions) {
     defaultOptions = JSON.parse(fbtDocblockOptions);
-    Object.keys(defaultOptions).forEach(o => checkOption(o, ValidFbtOptions));
+    Object.keys(defaultOptions).forEach((o) => checkOption(o, ValidFbtOptions));
   }
   if (!defaultOptions.project) {
     defaultOptions.project = '';
@@ -358,7 +358,7 @@ function initDefaultOptions(state) {
 
 // $FlowFixMe[missing-local-annot]
 function addMetaPhrase(metaPhrase, pluginOptions) {
-  const {fbtNode} = metaPhrase;
+  const { fbtNode } = metaPhrase;
   allMetaPhrases.push({
     ...metaPhrase,
     phrase: {
@@ -382,7 +382,7 @@ function addEnclosingString(childIdx: number, parentIdx: number) {
 
 // $FlowFixMe[missing-local-annot]
 function getEnumManifest(opts): ?EnumManifest {
-  const {fbtEnumManifest, fbtEnumPath, fbtEnumToPath} = opts;
+  const { fbtEnumManifest, fbtEnumPath, fbtEnumToPath } = opts;
   if (fbtEnumManifest != null) {
     return fbtEnumManifest;
   } else if (fbtEnumPath != null) {

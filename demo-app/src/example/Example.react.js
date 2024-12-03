@@ -11,7 +11,7 @@
 
 import './css/Example.css';
 import classNames from 'classnames';
-import {GenderConst, IntlVariations, fbs, fbt, init} from 'fbt';
+import { GenderConst, IntlVariations, fbs, fbt, init } from 'fbt';
 import * as React from 'react';
 
 // eslint-disable-next-line fb-www/no-module-aliasing
@@ -106,7 +106,7 @@ export default class Example extends React.Component<Props, State> {
 
   setLocale(locale: Locale) {
     viewerContext.locale = locale;
-    this.setState({locale});
+    this.setState({ locale });
     const html = document.getElementsByTagName('html')[0];
     if (html != null) {
       html.lang = LOCALES[locale].bcp47;
@@ -120,7 +120,7 @@ export default class Example extends React.Component<Props, State> {
   }
 
   render() {
-    const {locale} = this.state;
+    const { locale } = this.state;
 
     return (
       <div>
@@ -146,7 +146,8 @@ export default class Example extends React.Component<Props, State> {
                       const vcGender = parseInt(event.target.value, 10);
                       viewerContext.GENDER = vcGender;
                       this.forceUpdate();
-                    }}>
+                    }}
+                  >
                     <option value={IntlVariations.GENDER_UNKNOWN}>
                       <fbt desc="Gender Select label">Your Gender:</fbt>
                     </option>
@@ -167,23 +168,25 @@ export default class Example extends React.Component<Props, State> {
             <fieldset>
               <span className={classNames('example_row', 'example_row--multi')}>
                 <span
-                  className={classNames('example_input', 'example_input--40')}>
+                  className={classNames('example_input', 'example_input--40')}
+                >
                   <input
                     name="name"
                     onChange={(event: SyntheticUIEvent<>) => {
-                      this.setState({ex1Name: event.target.value});
+                      this.setState({ ex1Name: event.target.value });
                     }}
                     placeholder={fbs('name', 'name field')}
                     type="text"
                   />
                 </span>
                 <span
-                  className={classNames('example_input', 'example_input--30')}>
+                  className={classNames('example_input', 'example_input--30')}
+                >
                   <input
                     name="count"
                     onChange={(event: SyntheticUIEvent<>) => {
                       const val = parseInt(event.target.value, 10);
-                      this.setState({ex1Count: isNaN(val) ? 1 : val});
+                      this.setState({ ex1Count: isNaN(val) ? 1 : val });
                     }}
                     placeholder={fbs('count', 'count field')}
                     type="number"
@@ -196,7 +199,8 @@ export default class Example extends React.Component<Props, State> {
                       this.setState({
                         ex1Gender: parseInt(event.target.value, 10),
                       });
-                    }}>
+                    }}
+                  >
                     <option value={IntlVariations.GENDER_UNKNOWN}>
                       <fbs desc="Gender Select label">Gender:</fbs>
                     </option>
@@ -225,7 +229,8 @@ export default class Example extends React.Component<Props, State> {
                     <fbt:plural
                       count={this.state.ex1Count}
                       many="photos"
-                      showCount="ifMany">
+                      showCount="ifMany"
+                    >
                       a photo
                     </fbt:plural>
                   </a>
@@ -237,24 +242,27 @@ export default class Example extends React.Component<Props, State> {
             <fieldset>
               <span className={classNames('example_row', 'example_row--multi')}>
                 <span
-                  className={classNames('example_input', 'example_input--40')}>
+                  className={classNames('example_input', 'example_input--40')}
+                >
                   <input
                     name="ex2Name"
                     onChange={(event: SyntheticUIEvent<>) => {
-                      this.setState({ex2Name: event.target.value});
+                      this.setState({ ex2Name: event.target.value });
                     }}
                     placeholder={fbs('name', 'name field')}
                     type="text"
                   />
                 </span>
                 <span
-                  className={classNames('example_input', 'example_input--20')}>
+                  className={classNames('example_input', 'example_input--20')}
+                >
                   <select
                     className="neatoSelect"
                     onChange={(event: SyntheticUIEvent<>) => {
-                      this.setState({ex2Object: event.target.value});
-                    }}>
-                    {Object.keys(ExampleEnum).map(k => (
+                      this.setState({ ex2Object: event.target.value });
+                    }}
+                  >
+                    {Object.keys(ExampleEnum).map((k) => (
                       <option key={k} value={k}>
                         {ExampleEnum[k]}
                       </option>
@@ -262,14 +270,16 @@ export default class Example extends React.Component<Props, State> {
                   </select>
                 </span>
                 <span
-                  className={classNames('example_row', 'example_input--20')}>
+                  className={classNames('example_row', 'example_input--20')}
+                >
                   <select
                     className="neatoSelect"
                     onChange={(event: SyntheticUIEvent<>) => {
                       this.setState({
                         ex2Pronoun: parseInt(event.target.value, 10),
                       });
-                    }}>
+                    }}
+                  >
                     <option value={GenderConst.UNKNOWN_PLURAL}>
                       <fbs desc="Gender Select label">Gender:</fbs>
                     </option>
@@ -325,10 +335,11 @@ export default class Example extends React.Component<Props, State> {
               <span className="example_row">
                 <button
                   className="bottom"
-                  onClick={e => {
+                  onClick={(e) => {
                     window.open('https://github.com/facebook/fbt', '_blank');
                   }}
-                  type="submit">
+                  type="submit"
+                >
                   {fbt('Try it out!', 'Sign up button')}
                 </button>
               </span>
@@ -336,7 +347,7 @@ export default class Example extends React.Component<Props, State> {
           </form>
         </div>
         <ul className="languages">
-          {Object.keys(LOCALES).map(loc => (
+          {Object.keys(LOCALES).map((loc) => (
             <li key={loc} value={loc}>
               {locale === loc ? (
                 LOCALES[loc].displayName
@@ -346,7 +357,8 @@ export default class Example extends React.Component<Props, State> {
                   onClick={(event: SyntheticUIEvent<>) => {
                     event.preventDefault();
                     this.setLocale(loc);
-                  }}>
+                  }}
+                >
                   {LOCALES[loc].displayName}
                 </a>
               )}

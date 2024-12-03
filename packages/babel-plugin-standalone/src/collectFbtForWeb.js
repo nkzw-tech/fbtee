@@ -14,7 +14,7 @@
 import type {
   PatternHash,
   PatternString,
-} from '../../../runtime/shared/FbtTable';
+} from '../../../runtime/FbtTable';
 import type {CollectFbtOutput} from 'babel-plugin-fbt/dist/bin/collectFbt';
 import type {FbtExtraOptionConfig} from 'babel-plugin-fbt/dist/FbtConstants';
 

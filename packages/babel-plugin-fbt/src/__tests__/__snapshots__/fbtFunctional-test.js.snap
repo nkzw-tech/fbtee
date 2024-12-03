@@ -896,25 +896,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -945,25 +942,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -991,25 +985,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -2705,25 +2696,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -2754,25 +2742,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -2800,25 +2785,22 @@ Array [
     "project": "",
     "subject": Node {
       "end": 594,
-      "extra": undefined,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
+          "index": 594,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
+          "index": 582,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "range": undefined,
       "start": 582,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -3618,12 +3600,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A string that moved files'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -3654,7 +3634,7 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects (react native) for scenario "should avoid creating identifers with conflicted name when there exist inner strings and string variations" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt([fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+  "__nodeCode": "fbt([fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\" tabindex={123} id={\\"uniq\\"}>
               <strong>
@@ -3692,10 +3672,9 @@ FbtElementNode {
     "=a photo": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 })",
       "__stringVariationArgs": Array [
@@ -3710,7 +3689,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -3719,7 +3697,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "this.state.ex1Gender",
-        "__valueCode": "<b>this.state.ex1Name</b>",
+        "__valueCode": "<b className=\\"padRight\\">{this.state.ex1Name}</b>",
         "gender": "BabelNode[type=MemberExpression]",
         "name": "name",
         "number": null,
@@ -3730,7 +3708,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -3766,12 +3743,10 @@ FbtElementNode {
         "=[number] photos": "BabelNode[type=JSXElement]",
         "=a photo": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -3804,12 +3779,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "number": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -3837,7 +3810,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -3857,7 +3829,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -3879,7 +3850,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -3901,7 +3871,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" with you \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -3935,12 +3904,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A nested string'], 'nested!')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A nested string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -3974,12 +3941,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4046,12 +4011,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4081,7 +4044,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -4102,7 +4064,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4132,7 +4093,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -4153,7 +4113,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4187,12 +4146,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['Also simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Also simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4225,7 +4182,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 FbtElementNode {
   "__nodeCode": "fbt([<b className=\\"padRight\\">
           {fbt.enum(enumVal, ['today', 'yesterday'])}
-        </b>, \\", \\", fbt.param(\\"name\\", <b>viewerName</b>, {
+        </b>, \\", \\", fbt.param(\\"name\\", <b className=\\"padRight\\">{viewerName}</b>, {
   \\"gender\\": viewerGender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\">
           {fbt.plural(\\" a photo\\", photoCount, {
@@ -4296,7 +4253,6 @@ FbtElementNode {
     "=yesterday": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtImplicitParamNode {
       "__nodeCode": "<b className=\\"padRight\\">
@@ -4316,12 +4272,10 @@ FbtElementNode {
         },
       ],
       "_tokenSet": Object {},
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4346,7 +4300,6 @@ FbtElementNode {
               "value": undefined,
             },
           ],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=CallExpression]",
@@ -4366,7 +4319,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4388,7 +4340,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\", \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4399,7 +4350,7 @@ FbtElementNode {
       "parent": "FbtElementNode",
     },
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>viewerName</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{viewerName}</b>, {
   \\"gender\\": viewerGender
 })",
       "__stringVariationArgs": Array [
@@ -4414,7 +4365,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -4423,7 +4373,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "viewerGender",
-        "__valueCode": "<b>viewerName</b>",
+        "__valueCode": "<b className=\\"padRight\\">{viewerName}</b>",
         "gender": "BabelNode[type=Identifier]",
         "name": "name",
         "number": null,
@@ -4434,7 +4384,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4488,12 +4437,10 @@ FbtElementNode {
         "=them": "BabelNode[type=JSXElement]",
         "number": "BabelNode[type=CallExpression]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4521,7 +4468,6 @@ FbtElementNode {
               "value": undefined,
             },
           ],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=CallExpression]",
@@ -4541,7 +4487,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "' '",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=StringLiteral]",
@@ -4554,7 +4499,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "with",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4585,12 +4529,10 @@ FbtElementNode {
             },
           ],
           "_tokenSet": Object {},
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -4618,7 +4560,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -4637,7 +4578,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -4659,7 +4599,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4699,7 +4638,7 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects (react native) for scenario "should handle JSX fbt with two nested React elements" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt([fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+  "__nodeCode": "fbt([fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\" tabindex={123} id={\\"uniq\\"}>
           <strong>
@@ -4737,10 +4676,9 @@ FbtElementNode {
     "=a photo": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 })",
       "__stringVariationArgs": Array [
@@ -4755,7 +4693,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -4764,7 +4701,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "this.state.ex1Gender",
-        "__valueCode": "<b>this.state.ex1Name</b>",
+        "__valueCode": "<b className=\\"padRight\\">{this.state.ex1Name}</b>",
         "gender": "BabelNode[type=MemberExpression]",
         "name": "name",
         "number": null,
@@ -4775,7 +4712,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4811,12 +4747,10 @@ FbtElementNode {
         "=[number] photos": "BabelNode[type=JSXElement]",
         "=a photo": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4849,12 +4783,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "number": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -4882,7 +4814,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -4902,7 +4833,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -4924,7 +4854,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -4946,7 +4875,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" with you \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -4981,7 +4909,8 @@ FbtElementNode {
             B1
             <b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -5026,12 +4955,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "=B1 C1 [paramName] C2 B2": "BabelNode[type=JSXElement]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A1 '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5046,7 +4973,8 @@ FbtElementNode {
             B1
             <b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -5079,12 +5007,10 @@ FbtElementNode {
       "_tokenSet": Object {
         "=C1 [paramName] C2": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "B1",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -5097,7 +5023,8 @@ FbtElementNode {
         FbtImplicitParamNode {
           "__nodeCode": "<b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+    // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
     // like FbtElement to work with React components
   }
               {fbt.param('paramName', paramValue)}
@@ -5118,12 +5045,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "paramName": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "C1",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -5136,7 +5061,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -5149,7 +5073,6 @@ FbtElementNode {
             FbtParamNode {
               "__nodeCode": "fbt.param('paramName', paramValue)",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -5168,7 +5091,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "C2",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -5190,7 +5112,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "B2",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -5212,7 +5133,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' A2'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5280,12 +5200,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5315,7 +5233,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5336,7 +5253,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5366,7 +5282,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5387,7 +5302,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5434,12 +5348,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5465,7 +5377,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5520,12 +5431,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5551,7 +5460,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5610,12 +5518,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5645,7 +5551,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5700,12 +5605,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Hello, '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5731,7 +5634,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5752,7 +5654,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5816,12 +5717,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5848,7 +5747,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5883,7 +5781,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -5937,12 +5834,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You just friended '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -5966,7 +5861,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6020,12 +5914,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'I know '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6052,7 +5944,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6071,7 +5962,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6107,12 +5997,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "personName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A parameterized message to '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6125,7 +6013,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('personName', truthy ? ifTrue : ifFalse)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6197,7 +6084,6 @@ FbtElementNode {
     "cat_token": "BabelNode[type=CallExpression]",
     "dog_token": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPluralNode {
       "__nodeCode": "fbt.plural('cat', catCount, {
@@ -6217,7 +6103,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6237,7 +6122,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6265,7 +6149,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6337,12 +6220,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6370,7 +6251,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6405,7 +6285,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6459,12 +6338,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'It is '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6490,7 +6367,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6509,7 +6385,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6573,7 +6448,6 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPronounNode {
       "__nodeCode": "fbt.pronoun('subject', gender, {
@@ -6594,7 +6468,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6613,7 +6486,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' wished '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6641,7 +6513,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6660,7 +6531,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' a happy birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6708,12 +6578,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You have '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6738,7 +6606,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6757,7 +6624,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes. Comment on it to get more than '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6770,7 +6636,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('count')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6785,7 +6650,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6833,12 +6697,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6863,7 +6725,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -6882,7 +6743,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' links'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6916,12 +6776,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6934,7 +6792,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6947,7 +6804,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6960,7 +6816,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -6994,12 +6849,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7012,7 +6865,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7025,7 +6877,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7038,7 +6889,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7072,12 +6922,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7090,7 +6938,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7103,7 +6950,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7116,7 +6962,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7152,12 +6997,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7176,7 +7019,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7189,7 +7031,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('name1')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7228,12 +7069,10 @@ FbtElementNode {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', foo ? /*#__PURE__*/React.createElement(\\"a\\", null, \\"bar\\") : qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7252,7 +7091,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' blah '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7265,7 +7103,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7305,12 +7142,10 @@ FbtElementNode {
   "__nodeCode": "fbt([\\"A simple string...\\\\nwith some other stuff.\\"], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"A simple string...\\\\nwith some other stuff.\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7341,19 +7176,18 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects (react native) for scenario "should maintain newlines within arguments" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ', // comments
+  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ',
+// comments
 ' d ', fbt.param('name2', val2), ' e '], 'a')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7366,7 +7200,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7379,7 +7212,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7398,7 +7230,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' c '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7412,7 +7243,6 @@ FbtElementNode {
       "__nodeCode": "// comments
 ' d '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7425,7 +7255,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7444,7 +7273,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' e '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7518,12 +7346,10 @@ FbtElementNode {
     "=B1 C1 [count] C2 [cat_token] cats B2": "BabelNode[type=JSXElement]",
     "=B1 C1 [count] C2 cat B2": "BabelNode[type=JSXElement]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A1 '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7577,12 +7403,10 @@ FbtElementNode {
         "=C1 [count] C2 [cat_token] cats": "BabelNode[type=JSXElement]",
         "=C1 [count] C2 cat": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "B1",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -7632,12 +7456,10 @@ FbtElementNode {
             "cat_token": "BabelNode[type=CallExpression]",
             "count": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "C1",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -7662,7 +7484,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -7681,7 +7502,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "C2",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -7711,7 +7531,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -7732,7 +7551,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -7754,7 +7572,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "B2",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -7776,7 +7593,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' A2'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7823,12 +7639,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7852,7 +7666,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7871,7 +7684,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7907,12 +7719,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "paramName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('paramName', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -7954,12 +7764,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A doNotExtract string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -7996,12 +7804,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A string that moved files'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8032,7 +7838,7 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects for scenario "should avoid creating identifers with conflicted name when there exist inner strings and string variations" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt([fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+  "__nodeCode": "fbt([fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\" tabindex={123} id={\\"uniq\\"}>
               <strong>
@@ -8070,10 +7876,9 @@ FbtElementNode {
     "=a photo": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 })",
       "__stringVariationArgs": Array [
@@ -8088,7 +7893,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -8097,7 +7901,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "this.state.ex1Gender",
-        "__valueCode": "<b>this.state.ex1Name</b>",
+        "__valueCode": "<b className=\\"padRight\\">{this.state.ex1Name}</b>",
         "gender": "BabelNode[type=MemberExpression]",
         "name": "name",
         "number": null,
@@ -8108,7 +7912,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8144,12 +7947,10 @@ FbtElementNode {
         "=[number] photos": "BabelNode[type=JSXElement]",
         "=a photo": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8182,12 +7983,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "number": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -8215,7 +8014,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -8235,7 +8033,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -8257,7 +8054,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8279,7 +8075,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" with you \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8313,12 +8108,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A nested string'], 'nested!')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A nested string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8352,12 +8145,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8424,12 +8215,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8459,7 +8248,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -8480,7 +8268,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8510,7 +8297,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -8531,7 +8317,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8565,12 +8350,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['Also simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Also simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8603,7 +8386,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 FbtElementNode {
   "__nodeCode": "fbt([<b className=\\"padRight\\">
           {fbt.enum(enumVal, ['today', 'yesterday'])}
-        </b>, \\", \\", fbt.param(\\"name\\", <b>viewerName</b>, {
+        </b>, \\", \\", fbt.param(\\"name\\", <b className=\\"padRight\\">{viewerName}</b>, {
   \\"gender\\": viewerGender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\">
           {fbt.plural(\\" a photo\\", photoCount, {
@@ -8674,7 +8457,6 @@ FbtElementNode {
     "=yesterday": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtImplicitParamNode {
       "__nodeCode": "<b className=\\"padRight\\">
@@ -8694,12 +8476,10 @@ FbtElementNode {
         },
       ],
       "_tokenSet": Object {},
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8724,7 +8504,6 @@ FbtElementNode {
               "value": undefined,
             },
           ],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=CallExpression]",
@@ -8744,7 +8523,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8766,7 +8544,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\", \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8777,7 +8554,7 @@ FbtElementNode {
       "parent": "FbtElementNode",
     },
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>viewerName</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{viewerName}</b>, {
   \\"gender\\": viewerGender
 })",
       "__stringVariationArgs": Array [
@@ -8792,7 +8569,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -8801,7 +8577,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "viewerGender",
-        "__valueCode": "<b>viewerName</b>",
+        "__valueCode": "<b className=\\"padRight\\">{viewerName}</b>",
         "gender": "BabelNode[type=Identifier]",
         "name": "name",
         "number": null,
@@ -8812,7 +8588,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -8866,12 +8641,10 @@ FbtElementNode {
         "=them": "BabelNode[type=JSXElement]",
         "number": "BabelNode[type=CallExpression]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8899,7 +8672,6 @@ FbtElementNode {
               "value": undefined,
             },
           ],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=CallExpression]",
@@ -8919,7 +8691,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "' '",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=StringLiteral]",
@@ -8932,7 +8703,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "with",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -8963,12 +8733,10 @@ FbtElementNode {
             },
           ],
           "_tokenSet": Object {},
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -8996,7 +8764,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -9015,7 +8782,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9037,7 +8803,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -9077,7 +8842,7 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects for scenario "should handle JSX fbt with two nested React elements" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt([fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+  "__nodeCode": "fbt([fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 }), \\" has shared \\", <a className=\\"neatoLink\\" href=\\"#\\" tabindex={123} id={\\"uniq\\"}>
           <strong>
@@ -9115,10 +8880,9 @@ FbtElementNode {
     "=a photo": "BabelNode[type=JSXElement]",
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
-      "__nodeCode": "fbt.param(\\"name\\", <b>this.state.ex1Name</b>, {
+      "__nodeCode": "fbt.param(\\"name\\", <b className=\\"padRight\\">{this.state.ex1Name}</b>, {
   \\"gender\\": this.state.ex1Gender
 })",
       "__stringVariationArgs": Array [
@@ -9133,7 +8897,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -9142,7 +8905,7 @@ FbtElementNode {
       },
       "options": Object {
         "__genderCode": "this.state.ex1Gender",
-        "__valueCode": "<b>this.state.ex1Name</b>",
+        "__valueCode": "<b className=\\"padRight\\">{this.state.ex1Name}</b>",
         "gender": "BabelNode[type=MemberExpression]",
         "name": "name",
         "number": null,
@@ -9153,7 +8916,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" has shared \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9189,12 +8951,10 @@ FbtElementNode {
         "=[number] photos": "BabelNode[type=JSXElement]",
         "=a photo": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -9227,12 +8987,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "number": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9260,7 +9018,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -9280,7 +9037,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9302,7 +9058,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -9324,7 +9079,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\" with you \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9359,7 +9113,8 @@ FbtElementNode {
             B1
             <b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -9404,12 +9159,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "=B1 C1 [paramName] C2 B2": "BabelNode[type=JSXElement]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A1 '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9424,7 +9177,8 @@ FbtElementNode {
             B1
             <b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -9457,12 +9211,10 @@ FbtElementNode {
       "_tokenSet": Object {
         "=C1 [paramName] C2": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "B1",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -9475,7 +9227,8 @@ FbtElementNode {
         FbtImplicitParamNode {
           "__nodeCode": "<b>
               C1
-              {// TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+              {
+    // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
     // like FbtElement to work with React components
   }
               {fbt.param('paramName', paramValue)}
@@ -9496,12 +9249,10 @@ FbtElementNode {
           "_tokenSet": Object {
             "paramName": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "C1",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9514,7 +9265,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9527,7 +9277,6 @@ FbtElementNode {
             FbtParamNode {
               "__nodeCode": "fbt.param('paramName', paramValue)",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -9546,7 +9295,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "C2",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -9568,7 +9316,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "B2",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -9590,7 +9337,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' A2'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9658,12 +9404,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9693,7 +9437,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -9714,7 +9457,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9744,7 +9486,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -9765,7 +9506,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9812,12 +9552,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9843,7 +9581,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -9898,12 +9635,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -9929,7 +9664,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -9988,12 +9722,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10023,7 +9755,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10078,12 +9809,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Hello, '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10109,7 +9838,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10130,7 +9858,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10194,12 +9921,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10226,7 +9951,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10261,7 +9985,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10315,12 +10038,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You just friended '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10344,7 +10065,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10398,12 +10118,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'I know '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10430,7 +10148,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10449,7 +10166,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10485,12 +10201,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "personName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A parameterized message to '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10503,7 +10217,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('personName', truthy ? ifTrue : ifFalse)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10575,7 +10288,6 @@ FbtElementNode {
     "cat_token": "BabelNode[type=CallExpression]",
     "dog_token": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPluralNode {
       "__nodeCode": "fbt.plural('cat', catCount, {
@@ -10595,7 +10307,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10615,7 +10326,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10643,7 +10353,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10715,12 +10424,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10748,7 +10455,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10783,7 +10489,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10837,12 +10542,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'It is '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10868,7 +10571,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10887,7 +10589,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -10951,7 +10652,6 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPronounNode {
       "__nodeCode": "fbt.pronoun('subject', gender, {
@@ -10972,7 +10672,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -10991,7 +10690,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' wished '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11019,7 +10717,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11038,7 +10735,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' a happy birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11086,12 +10782,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You have '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11116,7 +10810,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11135,7 +10828,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes. Comment on it to get more than '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11148,7 +10840,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('count')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11163,7 +10854,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11211,12 +10901,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11241,7 +10929,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11260,7 +10947,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' links'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11294,12 +10980,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11312,7 +10996,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11325,7 +11008,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11338,7 +11020,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11372,12 +11053,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11390,7 +11069,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11403,7 +11081,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11416,7 +11093,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11450,12 +11126,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11468,7 +11142,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11481,7 +11154,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11494,7 +11166,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11530,12 +11201,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11554,7 +11223,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11567,7 +11235,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('name1')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11606,12 +11273,10 @@ FbtElementNode {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', foo ? /*#__PURE__*/React.createElement(\\"a\\", null, \\"bar\\") : qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11630,7 +11295,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' blah '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11643,7 +11307,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11683,12 +11346,10 @@ FbtElementNode {
   "__nodeCode": "fbt([\\"A simple string...\\\\nwith some other stuff.\\"], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"A simple string...\\\\nwith some other stuff.\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11719,19 +11380,18 @@ FbtElementNode {
 
 exports[`Functional FBT API using array arguments: Meta-data collection should create correct FbtNode objects for scenario "should maintain newlines within arguments" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ', // comments
+  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ',
+// comments
 ' d ', fbt.param('name2', val2), ' e '], 'a')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11744,7 +11404,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11757,7 +11416,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11776,7 +11434,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' c '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11790,7 +11447,6 @@ FbtElementNode {
       "__nodeCode": "// comments
 ' d '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11803,7 +11459,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -11822,7 +11477,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' e '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11896,12 +11550,10 @@ FbtElementNode {
     "=B1 C1 [count] C2 [cat_token] cats B2": "BabelNode[type=JSXElement]",
     "=B1 C1 [count] C2 cat B2": "BabelNode[type=JSXElement]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A1 '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -11955,12 +11607,10 @@ FbtElementNode {
         "=C1 [count] C2 [cat_token] cats": "BabelNode[type=JSXElement]",
         "=C1 [count] C2 cat": "BabelNode[type=JSXElement]",
       },
-      "_variationFactorValues": Array [],
       "children": Array [
         FbtTextNode {
           "__nodeCode": "B1",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -12010,12 +11660,10 @@ FbtElementNode {
             "cat_token": "BabelNode[type=CallExpression]",
             "count": "BabelNode[type=CallExpression]",
           },
-          "_variationFactorValues": Array [],
           "children": Array [
             FbtTextNode {
               "__nodeCode": "C1",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -12040,7 +11688,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -12059,7 +11706,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "C2",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -12089,7 +11735,6 @@ FbtElementNode {
                   "value": undefined,
                 },
               ],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=CallExpression]",
@@ -12110,7 +11755,6 @@ FbtElementNode {
             FbtTextNode {
               "__nodeCode": "",
               "__stringVariationArgs": Array [],
-              "_variationFactorValues": Array [],
               "children": Array [],
               "moduleName": "fbt",
               "node": "BabelNode[type=JSXText]",
@@ -12132,7 +11776,6 @@ FbtElementNode {
         FbtTextNode {
           "__nodeCode": "B2",
           "__stringVariationArgs": Array [],
-          "_variationFactorValues": Array [],
           "children": Array [],
           "moduleName": "fbt",
           "node": "BabelNode[type=JSXText]",
@@ -12154,7 +11797,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' A2'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -12201,12 +11843,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -12230,7 +11870,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -12249,7 +11888,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -12285,12 +11923,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "paramName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('paramName', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -12332,12 +11968,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A doNotExtract string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14128,12 +13762,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A string that moved files'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14167,12 +13799,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A short string'], 'With a ridiculously long description that' + ' requires concatenation')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A short string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14206,12 +13836,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A nested string'], 'nested!')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A nested string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14245,12 +13873,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14317,12 +13943,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"Look!  \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14352,7 +13976,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14373,7 +13996,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\"  and  \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14403,7 +14025,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14424,7 +14045,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\"!\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14491,12 +14111,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14526,7 +14144,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14547,7 +14164,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14577,7 +14193,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14598,7 +14213,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14632,12 +14246,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['Also simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Also simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14704,12 +14316,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14739,7 +14349,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14760,7 +14369,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14790,7 +14398,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14811,7 +14418,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14858,12 +14464,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14889,7 +14493,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -14944,12 +14547,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -14975,7 +14576,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15034,12 +14634,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15069,7 +14667,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15124,12 +14721,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Hello, '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15155,7 +14750,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15176,7 +14770,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15240,12 +14833,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15272,7 +14863,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15307,7 +14897,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15361,12 +14950,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You just friended '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15390,7 +14977,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15444,12 +15030,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'I know '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15476,7 +15060,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15495,7 +15078,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15531,12 +15113,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "personName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A parameterized message to '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15549,7 +15129,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('personName', truthy ? ifTrue : ifFalse)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15621,7 +15200,6 @@ FbtElementNode {
     "cat_token": "BabelNode[type=CallExpression]",
     "dog_token": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPluralNode {
       "__nodeCode": "fbt.plural('cat', catCount, {
@@ -15641,7 +15219,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15661,7 +15238,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15689,7 +15265,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15761,12 +15336,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15794,7 +15367,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15829,7 +15401,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15883,12 +15454,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'It is '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15914,7 +15483,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -15933,7 +15501,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -15997,7 +15564,6 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPronounNode {
       "__nodeCode": "fbt.pronoun('subject', gender, {
@@ -16018,7 +15584,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16037,7 +15602,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' wished '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16065,7 +15629,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16084,7 +15647,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' a happy birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16132,12 +15694,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You have '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16162,7 +15722,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16181,7 +15740,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes. Comment on it to get more than '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16194,7 +15752,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('count')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16209,7 +15766,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16257,12 +15813,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16287,7 +15841,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16306,7 +15859,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' links'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16340,12 +15892,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16358,7 +15908,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16371,7 +15920,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16384,7 +15932,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16418,12 +15965,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16436,7 +15981,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16449,7 +15993,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16462,7 +16005,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16496,12 +16038,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16514,7 +16054,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16527,7 +16066,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16540,7 +16078,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16576,12 +16113,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16600,7 +16135,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16613,7 +16147,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('name1')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16652,12 +16185,10 @@ FbtElementNode {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', foo ? /*#__PURE__*/React.createElement(\\"a\\", null, \\"bar\\") : qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16676,7 +16207,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' blah '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16689,7 +16219,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16729,12 +16258,10 @@ FbtElementNode {
   "__nodeCode": "fbt([\\"A simple string...\\\\nwith some other stuff.\\"], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"A simple string...\\\\nwith some other stuff.\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16765,19 +16292,18 @@ FbtElementNode {
 
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should create correct FbtNode objects (react native) for scenario "should maintain newlines within arguments" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ', // comments
+  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ',
+// comments
 ' d ', fbt.param('name2', val2), ' e '], 'a')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16790,7 +16316,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16803,7 +16328,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16822,7 +16346,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' c '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16836,7 +16359,6 @@ FbtElementNode {
       "__nodeCode": "// comments
 ' d '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16849,7 +16371,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -16868,7 +16389,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' e '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16902,12 +16422,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string... ', 'with some other stuff.'], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string... '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16920,7 +16438,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'with some other stuff.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16967,12 +16484,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -16996,7 +16511,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17015,7 +16529,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17051,12 +16564,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "paramName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('paramName', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17098,12 +16609,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A doNotExtract string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17140,12 +16649,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A string that moved files'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17179,12 +16686,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A short string'], 'With a ridiculously long description that' + ' requires concatenation')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A short string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17218,12 +16723,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A nested string'], 'nested!')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A nested string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17257,12 +16760,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17329,12 +16830,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"Look!  \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17364,7 +16863,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17385,7 +16883,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\"  and  \\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17415,7 +16912,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17436,7 +16932,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "\\"!\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17503,12 +16998,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17538,7 +17031,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17559,7 +17051,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17589,7 +17080,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17610,7 +17100,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17644,12 +17133,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['Also simple string'], \\"It's simple\\")",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Also simple string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17716,12 +17203,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Look! '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17751,7 +17236,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17772,7 +17256,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17802,7 +17285,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17823,7 +17305,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17870,12 +17351,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17901,7 +17380,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -17956,12 +17434,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -17987,7 +17463,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18046,12 +17521,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18081,7 +17554,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18136,12 +17608,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Hello, '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18167,7 +17637,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18188,7 +17657,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'!'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18252,12 +17720,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18284,7 +17750,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18319,7 +17784,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18373,12 +17837,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You just friended '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18402,7 +17864,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18456,12 +17917,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'I know '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18488,7 +17947,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18507,7 +17965,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18543,12 +18000,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "personName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A parameterized message to '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18561,7 +18016,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('personName', truthy ? ifTrue : ifFalse)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18633,7 +18087,6 @@ FbtElementNode {
     "cat_token": "BabelNode[type=CallExpression]",
     "dog_token": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPluralNode {
       "__nodeCode": "fbt.plural('cat', catCount, {
@@ -18653,7 +18106,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18673,7 +18125,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18701,7 +18152,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18773,12 +18223,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "number": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'There '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18806,7 +18254,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18841,7 +18288,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18895,12 +18341,10 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'It is '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -18926,7 +18370,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -18945,7 +18388,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19009,7 +18451,6 @@ FbtElementNode {
     },
   ],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtPronounNode {
       "__nodeCode": "fbt.pronoun('subject', gender, {
@@ -19030,7 +18471,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19049,7 +18489,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' wished '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19077,7 +18516,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19096,7 +18534,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' a happy birthday.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19144,12 +18581,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'You have '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19174,7 +18609,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19193,7 +18627,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes. Comment on it to get more than '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19206,7 +18639,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('count')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19221,7 +18653,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' likes'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19269,12 +18700,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "count": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'Click to see '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19299,7 +18728,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19318,7 +18746,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' links'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19352,12 +18779,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19370,7 +18795,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19383,7 +18807,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19396,7 +18819,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19430,12 +18852,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19448,7 +18868,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19461,7 +18880,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19474,7 +18892,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19508,12 +18925,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['foo', 'bar', 'baz', 'qux'], 'desc')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'foo'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19526,7 +18941,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'bar'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19539,7 +18953,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'baz'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19552,7 +18965,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'qux'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19588,12 +19000,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19612,7 +19022,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' and '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19625,7 +19034,6 @@ FbtElementNode {
     FbtSameParamNode {
       "__nodeCode": "fbt.sameParam('name1')",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19664,12 +19072,10 @@ FbtElementNode {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', foo ? /*#__PURE__*/React.createElement(\\"a\\", null, \\"bar\\") : qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19688,7 +19094,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' blah '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19701,7 +19106,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', qux)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19741,12 +19145,10 @@ FbtElementNode {
   "__nodeCode": "fbt([\\"A simple string...\\\\nwith some other stuff.\\"], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "\\"A simple string...\\\\nwith some other stuff.\\"",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19777,19 +19179,18 @@ FbtElementNode {
 
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should create correct FbtNode objects for scenario "should maintain newlines within arguments" 1`] = `
 FbtElementNode {
-  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ', // comments
+  "__nodeCode": "fbt(['a', ' b ', fbt.param('name1', val1), ' c ',
+// comments
 ' d ', fbt.param('name2', val2), ' e '], 'a')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {
     "name1": "BabelNode[type=CallExpression]",
     "name2": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19802,7 +19203,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19815,7 +19215,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name1', val1)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19834,7 +19233,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' c '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19848,7 +19246,6 @@ FbtElementNode {
       "__nodeCode": "// comments
 ' d '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19861,7 +19258,6 @@ FbtElementNode {
     FbtParamNode {
       "__nodeCode": "fbt.param('name2', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -19880,7 +19276,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' e '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19914,12 +19309,10 @@ FbtElementNode {
   "__nodeCode": "fbt(['A simple string... ', 'with some other stuff.'], 'blah')",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A simple string... '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19932,7 +19325,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "'with some other stuff.'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -19979,12 +19371,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "name": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'a '",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -20008,7 +19398,6 @@ FbtElementNode {
           "value": undefined,
         },
       ],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -20027,7 +19416,6 @@ FbtElementNode {
     FbtTextNode {
       "__nodeCode": "' b'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",
@@ -20063,12 +19451,10 @@ FbtElementNode {
   "_tokenSet": Object {
     "paramName": "BabelNode[type=CallExpression]",
   },
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtParamNode {
       "__nodeCode": "fbt.param('paramName', val2)",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=CallExpression]",
@@ -20110,12 +19496,10 @@ FbtElementNode {
 })",
   "__stringVariationArgs": Array [],
   "_tokenSet": Object {},
-  "_variationFactorValues": Array [],
   "children": Array [
     FbtTextNode {
       "__nodeCode": "'A doNotExtract string'",
       "__stringVariationArgs": Array [],
-      "_variationFactorValues": Array [],
       "children": Array [],
       "moduleName": "fbt",
       "node": "BabelNode[type=StringLiteral]",

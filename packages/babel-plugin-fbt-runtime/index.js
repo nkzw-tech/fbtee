@@ -19,7 +19,7 @@
 import typeof BabelTypes from '@babel/types';
 import type {BabelTransformPlugin} from '@babel/core';
 import type {SentinelPayload} from 'babel-plugin-fbt/dist/babel-processors/FbtFunctionCallProcessor';
-import type {FbtTableKey, PatternString} from '../../runtime/shared/FbtTable';
+import type {FbtTableKey, PatternString} from '../../runtime/FbtTable';
 import type {TableJSFBTTree, TableJSFBTTreeLeaf, TableJSFBT} from 'babel-plugin-fbt';
 import type {FbtRuntimeInput} from 'FbtHooks';
 
@@ -30,14 +30,14 @@ export type PluginOptions = {|
 |};
 */
 
-const {isObjectExpression} = require('@babel/types');
+const { isObjectExpression } = require('@babel/types');
 const {
-  FbtUtil: {replaceClearTokensWithTokenAliases, varDump},
-  JSFbtUtil: {mapLeaves},
+  FbtUtil: { replaceClearTokensWithTokenAliases, varDump },
+  JSFbtUtil: { mapLeaves },
   fbtHashKey: jenkinsHashKey,
 } = require('babel-plugin-fbt');
-const {shiftEnumsToTop} = require('babel-plugin-fbt').FbtShiftEnums;
-const {SENTINEL} = require('babel-plugin-fbt/dist/FbtConstants');
+const { shiftEnumsToTop } = require('babel-plugin-fbt').FbtShiftEnums;
+const { SENTINEL } = require('babel-plugin-fbt/dist/FbtConstants');
 const invariant = require('invariant');
 
 let fbtHashKey /*: typeof jenkinsHashKey */ = jenkinsHashKey;
@@ -45,12 +45,16 @@ let fbtHashKey /*: typeof jenkinsHashKey */ = jenkinsHashKey;
 /**
  * Utility function to cast the Babel transform plugin options to the right type
  */
-function getPluginOptions(plugin /*: Partial<{opts: ?PluginOptions}> */) /*: PluginOptions */ {
-  const {opts} = plugin;
+function getPluginOptions(
+  plugin /*: Partial<{opts: ?PluginOptions}> */
+) /*: PluginOptions */ {
+  const { opts } = plugin;
   if (opts == null || typeof opts !== 'object') {
     // eslint-disable-next-line fb-www/no-new-error
-    throw new Error(`Expected to opts property to be an object. `
-      + `Current value is ${String(opts)} (${typeof opts})`);
+    throw new Error(
+      `Expected to opts property to be an object. ` +
+        `Current value is ${String(opts)} (${typeof opts})`
+    );
   }
   // $FlowExpectedError[prop-missing]
   // $FlowExpectedError[incompatible-exact]
@@ -63,25 +67,32 @@ function getPluginOptions(plugin /*: Partial<{opts: ?PluginOptions}> */) /*: Plu
  *    for runtime and only keep the `text` key.
  *  2. Replacing clear token names in the text with mangled tokens.
  */
-function convertJSFBTLeafToRuntimeInputText(leaf /*: $ReadOnly<TableJSFBTTreeLeaf> */) /* : PatternString */ {
+function convertJSFBTLeafToRuntimeInputText(
+  leaf /*: $ReadOnly<TableJSFBTTreeLeaf> */
+) /* : PatternString */ {
   return replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases);
 }
 
-module.exports = function BabelPluginFbtRuntime(babel /*: {
+module.exports = function BabelPluginFbtRuntime(
+  babel /*: {
   types: BabelTypes,
-} */) /*: BabelTransformPlugin */ {
+} */
+) /*: BabelTransformPlugin */ {
   const t = babel.types;
 
   // Need to extract this as a standalone function for Flow type check refinements
-  const {isCallExpression} = t;
+  const { isCallExpression } = t;
 
   function _buildEnumToHashKeyObjectExpression(
     curLevel /*: PatternString | $ReadOnly<TableJSFBTTree> */,
-    enumsLeft /*: number */,
+    enumsLeft /*: number */
   ) /*: BabelNodeObjectExpression */ {
     const properties = [];
-    invariant(typeof curLevel === 'object',
-      'Expected curLevel to be an object instead of %s', typeof curLevel);
+    invariant(
+      typeof curLevel === 'object',
+      'Expected curLevel to be an object instead of %s',
+      typeof curLevel
+    );
     for (const enumKey in curLevel) {
       properties.push(
         t.objectProperty(
@@ -89,12 +100,12 @@ module.exports = function BabelPluginFbtRuntime(babel /*: {
           enumsLeft === 1
             ? t.stringLiteral(fbtHashKey(curLevel[enumKey]))
             : _buildEnumToHashKeyObjectExpression(
-              // TODO(T86653403) Add support for consolidated JSFBT structure to RN
-              // $FlowFixMe[incompatible-call]
-              curLevel[enumKey],
-              enumsLeft - 1,
-            ),
-        ),
+                // TODO(T86653403) Add support for consolidated JSFBT structure to RN
+                // $FlowFixMe[incompatible-call]
+                curLevel[enumKey],
+                enumsLeft - 1
+              )
+        )
       );
     }
 
@@ -104,37 +115,31 @@ module.exports = function BabelPluginFbtRuntime(babel /*: {
   function _appendHashKeyOption(
     optionsNode /*: ?BabelNodeObjectExpression */,
     jsfbt /*: TableJSFBT */,
-    reactNativeMode /*: ?boolean */,
+    reactNativeMode /*: ?boolean */
   ) /* : BabelNodeObjectExpression */ {
     let shiftedJsfbt;
     let enumCount = 0;
     if (reactNativeMode) {
-      ({enumCount, shiftedJsfbt} = shiftEnumsToTop(jsfbt));
+      ({ enumCount, shiftedJsfbt } = shiftEnumsToTop(jsfbt));
     }
 
     const options = optionsNode == null ? [] : [...optionsNode.properties];
     if (enumCount > 0) {
-      invariant(
-        shiftedJsfbt != null,
-        'Expecting shiftedJsfbt to be defined',
-      );
+      invariant(shiftedJsfbt != null, 'Expecting shiftedJsfbt to be defined');
       options.push(
         // $FlowFixMe[incompatible-call]
         t.objectProperty(
           t.identifier('ehk'), // enumHashKey
-          _buildEnumToHashKeyObjectExpression(
-            shiftedJsfbt,
-            enumCount,
-          ),
-        ),
+          _buildEnumToHashKeyObjectExpression(shiftedJsfbt, enumCount)
+        )
       );
     } else {
       options.push(
         // $FlowFixMe[incompatible-call]
         t.objectProperty(
           t.identifier('hk'),
-          t.stringLiteral(fbtHashKey(jsfbt.t)),
-        ),
+          t.stringLiteral(fbtHashKey(jsfbt.t))
+        )
       );
     }
 
@@ -178,11 +183,13 @@ module.exports = function BabelPluginFbtRuntime(babel /*: {
        */
       StringLiteral(path) {
         // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
-        const {fbtSentinel, reactNativeMode} = getPluginOptions(this);
+        const { fbtSentinel, reactNativeMode } = getPluginOptions(this);
         if (fbtSentinel == null || fbtSentinel.trim() == '') {
           // eslint-disable-next-line fb-www/no-new-error
-          throw new Error(`fbtSentinel must be a non-empty string. `
-            + `Current value is ${String(fbtSentinel)} (${typeof fbtSentinel})`);
+          throw new Error(
+            `fbtSentinel must be a non-empty string. ` +
+              `Current value is ${String(fbtSentinel)} (${typeof fbtSentinel})`
+          );
         }
         const sentinelLength = fbtSentinel.length;
         let phrase = path.node.value;
@@ -195,20 +202,22 @@ module.exports = function BabelPluginFbtRuntime(babel /*: {
         }
 
         phrase = (JSON.parse(
-          phrase.slice(sentinelLength, phrase.length - sentinelLength),
+          phrase.slice(sentinelLength, phrase.length - sentinelLength)
           // $FlowFixMe[incompatible-type]
         ) /*: SentinelPayload */);
 
         const runtimeInput = mapLeaves(
           phrase.jsfbt.t,
-          convertJSFBTLeafToRuntimeInputText,
+          convertJSFBTLeafToRuntimeInputText
         );
         // $FlowFixMe[prop-missing] replaceWithSourceString's type is not defined yet
         path.replaceWithSourceString(JSON.stringify(runtimeInput));
 
         const parentNode = path.parentPath && path.parentPath.node;
-        invariant(isCallExpression(parentNode),
-          'Expected parent node to be a BabelNodeCallExpression');
+        invariant(
+          isCallExpression(parentNode),
+          'Expected parent node to be a BabelNodeCallExpression'
+        );
 
         // Append runtime options - key for runtime dictionary lookup
         if (parentNode.arguments.length === 1) {
@@ -223,13 +232,13 @@ module.exports = function BabelPluginFbtRuntime(babel /*: {
           optionsNode == null || isObjectExpression(optionsNode),
           'Expect options node to be either null or an object expression but got %s (%s)',
           varDump(optionsNode),
-          typeof optionsNode,
+          typeof optionsNode
         );
         // $FlowFixMe[cannot-write]
         parentNode.arguments[2] = _appendHashKeyOption(
           optionsNode,
           phrase.jsfbt,
-          reactNativeMode,
+          reactNativeMode
         );
       },
     },

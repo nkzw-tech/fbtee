@@ -2,7 +2,6 @@
 
 exports[`Test double-lined params should remove the new line for param names that are two lines 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { t: { desc: "d", text: "{two lines} test" }, m: [] },
@@ -29,7 +28,6 @@ fbt._(
 
 exports[`fbt variable binding detection should handle commonJS require() 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { t: { desc: "Bar", text: "Foo" }, m: [] },
@@ -41,7 +39,6 @@ fbt._(
 
 exports[`fbt variable binding detection using ES6 should handle fbt default export 1`] = `
 import fbt from "fbt";
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { t: { desc: "Bar", text: "Foo" }, m: [] },
@@ -53,7 +50,6 @@ fbt._(
 
 exports[`fbt variable binding detection using ES6 should handle the named fbt export 1`] = `
 import { fbt } from "fbt";
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { t: { desc: "Bar", text: "Foo" }, m: [] },
@@ -65,7 +61,6 @@ fbt._(
 
 exports[`fbt() API:  using FBT subject should accept "subject" as a parameter 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -81,7 +76,6 @@ fbt._(
 
 exports[`fbt() API:  using FBT subject with string templates should accept "subject" as a parameter 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -97,7 +91,6 @@ fbt._(
 
 exports[`fbt() API:  using extraOptions JSX fbt should accept extra options with limited value set 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -135,8 +128,7 @@ fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "This is an {=inner string} and a {token}"',
+                desc: 'In the phrase: "This is an {=inner string} and a {token}"',
                 text: "inner string",
               },
               m: [],
@@ -164,7 +156,6 @@ fbt._(
 
 exports[`fbt() API:  using extraOptions JSX fbt should pass top-level extra options to children inner strings 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -187,8 +178,7 @@ fbt._(
           /* __FBT__ start */ {
             jsfbt: {
               t: {
-                desc:
-                  'In the phrase: "This is {=an inner string and another inner string}"',
+                desc: 'In the phrase: "This is {=an inner string and another inner string}"',
                 text: "an inner string and {=another inner string}",
                 tokenAliases: { "=another inner string": "=m1" },
               },
@@ -206,8 +196,7 @@ fbt._(
                   /* __FBT__ start */ {
                     jsfbt: {
                       t: {
-                        desc:
-                          'In the phrase: "This is an inner string and {=another inner string}"',
+                        desc: 'In the phrase: "This is an inner string and {=another inner string}"',
                         text: "another inner string",
                       },
                       m: [],
@@ -244,7 +233,6 @@ fbt._(
 
 exports[`fbt() API:  using extraOptions functional fbt should accept "locale" extra option 1`] = `
 const fbt = require("fbt");
-
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { t: { desc: "Bar", text: "Foo" }, m: [] },

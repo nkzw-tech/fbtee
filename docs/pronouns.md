@@ -4,7 +4,8 @@ title: Pronouns
 sidebar_label: Pronouns
 ---
 
-`fbt:pronoun` and `fbt.pronoun` both take a required `PRONOUN_USAGE` enum and a [`GenderConst`](https://github.com/facebook/fbt/blob/main/runtime/nonfb/GenderConst.js) enum:
+`fbt:pronoun` and `fbt.pronoun` both take a required `PRONOUN_USAGE` enum and a [`GenderConst`](https://github.com/facebook/fbt/blob/main/runtime/GenderConst.js) enum:
+
 ```
 const PRONOUN_USAGE = {
   OBJECT: 0,
@@ -32,7 +33,6 @@ const GenderConst = {
 **<span style={{ color: "red" }}>NOTE: This is not the same gender as used in `fbt:param`, `fbt:name`, or `subject`!</span>**<br/>
 The `IntlVariations` used in those cases only has `GENDER_MALE`, `GENDER_FEMALE`, and `GENDER_UNKNOWN`.
 
-
 ## Pronoun example:
 
 ```
@@ -45,10 +45,12 @@ The `IntlVariations` used in those cases only has `GENDER_MALE`, `GENDER_FEMALE`
 ```
 
 ### Optional attributes
-* **capitalize** `bool`: Whether to capitalize the pronoun in the source string.
-* **human** `bool`: Whether to elide the NOT_A_PERSON option in the text variations generated.
+
+- **capitalize** `bool`: Whether to capitalize the pronoun in the source string.
+- **human** `bool`: Whether to elide the NOT_A_PERSON option in the text variations generated.
 
 The example above generates:
+
 ```
 {
   "hashToLeaf": {
@@ -81,9 +83,10 @@ The example above generates:
 ```
 
 ## Combinations
+
 Conceptually, pronouns work as though there was an `enum` supplied for the given `type`.
 Below is the table of possible values for their various types.
-*Note how `reflexive` and `object` have 4 types*
+_Note how `reflexive` and `object` have 4 types_
 
     subject:    he/she/they
     possessive: his/her/their

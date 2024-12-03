@@ -8,12 +8,9 @@
 
 'use strict';
 
-import type {TokenAliases} from '..';
-import type {
-  PatternHash,
-  PatternString,
-} from '../../../../runtime/shared/FbtTable';
-import type {CollectFbtOutputPhrase} from '../bin/collectFbt.js';
+import type { TokenAliases } from '..';
+import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
+import type { CollectFbtOutputPhrase } from '../bin/collectFbt.js';
 import type {
   JSFBTMetaEntry,
   TableJSFBTTree,
@@ -28,14 +25,14 @@ import type {
   IntlVariationMaskValue,
 } from './IntlVariations';
 
-const {objMap} = require('../FbtUtil');
-const {coerceToTableJSFBTTreeLeaf, onEachLeaf} = require('../JSFbtUtil');
+const { objMap } = require('../FbtUtil');
+const { coerceToTableJSFBTTreeLeaf, onEachLeaf } = require('../JSFbtUtil');
 const {
   FbtSiteBase,
   FbtSiteMetaEntryBase,
   getVariationMaskFromType,
 } = require('./FbtSiteBase');
-const {FbtVariationType} = require('./IntlVariations');
+const { FbtVariationType } = require('./IntlVariations');
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 
@@ -81,13 +78,13 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
       t: FbtSiteHashifiedTableJSFBTTree,
     |},
     project: string,
-    hashToTokenAliases: FbtSiteHashToTokenAliases,
+    hashToTokenAliases: FbtSiteHashToTokenAliases
   ) {
     super(
       hashToTextAndDesc,
       tableData.t,
       FbtSiteMetadata.wrap(tableData.m),
-      project,
+      project
     );
     this._hashToTokenAliases = hashToTokenAliases;
   }
@@ -98,17 +95,17 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
 
   static fromScan(json: CollectFbtOutputPhrase): FbtSite {
     const textAndDescToHash: TextAndDescToHash = {};
-    const {hashToLeaf, jsfbt} = json;
+    const { hashToLeaf, jsfbt } = json;
     invariant(hashToLeaf != null, 'Expected hashToLeaf to be defined');
     invariant(jsfbt != null, 'Expect a non-void jsfbt table');
     for (const hash in hashToLeaf) {
       const textAndDesc = this._serializeTextAndDesc(
         hashToLeaf[hash].text,
-        hashToLeaf[hash].desc,
+        hashToLeaf[hash].desc
       );
       invariant(
         textAndDescToHash[textAndDesc] == null,
-        "Duplicate text+desc pairs pointing to different hashes shouldn't be possible",
+        "Duplicate text+desc pairs pointing to different hashes shouldn't be possible"
       );
       textAndDescToHash[textAndDesc] = hash;
     }
@@ -117,7 +114,7 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
       m: jsfbt.m,
     };
     const hashToTokenAliases: FbtSiteHashToTokenAliases = {};
-    onEachLeaf({jsfbt}, leaf => {
+    onEachLeaf({ jsfbt }, (leaf) => {
       const hash =
         textAndDescToHash[this._serializeTextAndDesc(leaf.text, leaf.desc)];
       if (leaf.tokenAliases != null) {
@@ -135,7 +132,7 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
    */
   static _hashifyLeaves(
     entry: $ReadOnly<TableJSFBTTree>,
-    textAndDescToHash: $ReadOnly<TextAndDescToHash>,
+    textAndDescToHash: $ReadOnly<TextAndDescToHash>
   ): FbtSiteHashifiedTableJSFBTTree {
     // $FlowFixMe[incompatible-indexer]
     // $FlowFixMe[incompatible-variance]
@@ -146,7 +143,7 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
       : objMap(
           // $FlowExpectedError[incompatible-cast] `entry` must be TableJSFBTTreeBranch type
           (entry: $ReadOnly<TableJSFBTTreeBranch>),
-          branch => FbtSite._hashifyLeaves(branch, textAndDescToHash),
+          (branch) => FbtSite._hashifyLeaves(branch, textAndDescToHash)
         );
   }
 
@@ -165,9 +162,9 @@ class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
    */
   static _serializeTextAndDesc(
     text: PatternString,
-    desc: string,
+    desc: string
   ): TextAndDescConcatenation {
-    return JSON.stringify({text, desc});
+    return JSON.stringify({ text, desc });
   }
 }
 
@@ -178,7 +175,7 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
   constructor(
     type: ?IntlFbtVariationTypeValue,
     token: ?string,
-    range: ?$ReadOnlyArray<string>,
+    range: ?$ReadOnlyArray<string>
   ) {
     super(type, token);
     this._range = range;
@@ -191,7 +188,7 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
   getVariationMask(): IntlVariationMaskValue {
     invariant(
       this.hasVariationMask(),
-      'check hasVariationMask to avoid this invariant',
+      'check hasVariationMask to avoid this invariant'
     );
     return nullthrows(getVariationMaskFromType(this.type));
   }
@@ -201,12 +198,12 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     return new this(
       entry.type || null,
       entry.token != null ? entry.token : null,
-      entry.range || null,
+      entry.range || null
     );
   }
 
   unwrap(): JSFBTMetaEntry {
-    const {token, type} = this;
+    const { token, type } = this;
 
     if (type === FbtVariationType.NUMBER) {
       return {
@@ -218,20 +215,20 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     if (type === FbtVariationType.GENDER) {
       invariant(
         token != null,
-        'token should be specified for gender variation',
+        'token should be specified for gender variation'
       );
-      return {type: FbtVariationType.GENDER, token};
+      return { type: FbtVariationType.GENDER, token };
     }
 
     if (type === FbtVariationType.PRONOUN) {
-      return {type: FbtVariationType.PRONOUN};
+      return { type: FbtVariationType.PRONOUN };
     }
 
     invariant(
       this._range != null,
-      'range should be specified for enum variation',
+      'range should be specified for enum variation'
     );
-    return {range: this._range};
+    return { range: this._range };
   }
 
   static _validate(entry: $ReadOnly<JSFBTMetaEntry>): void {
@@ -241,18 +238,18 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     if (type === null) {
       invariant(
         range !== null,
-        'if no type is provided, this must be enum variation and thus range must be specified ',
+        'if no type is provided, this must be enum variation and thus range must be specified '
       );
     } else {
       if (type === FbtVariationType.GENDER) {
         invariant(
           token !== null,
-          'token should be specified for gender variation',
+          'token should be specified for gender variation'
         );
       } else if (type === FbtVariationType.PRONOUN) {
         invariant(
           token === null,
-          'token should not be specified for pronoun variation',
+          'token should not be specified for pronoun variation'
         );
       }
     }
@@ -261,13 +258,13 @@ class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
 
 const FbtSiteMetadata = {
   wrap(rawEntries: $ReadOnlyArray<?JSFBTMetaEntry>): Array<?FbtSiteMetaEntry> {
-    return rawEntries.map(entry => entry && FbtSiteMetaEntry.wrap(entry));
+    return rawEntries.map((entry) => entry && FbtSiteMetaEntry.wrap(entry));
   },
 
   unwrap(
-    metaEntries: $ReadOnlyArray<?FbtSiteMetaEntry>,
+    metaEntries: $ReadOnlyArray<?FbtSiteMetaEntry>
   ): Array<?JSFBTMetaEntry> {
-    return metaEntries.map(entry => (entry == null ? null : entry.unwrap()));
+    return metaEntries.map((entry) => (entry == null ? null : entry.unwrap()));
   },
 };
 
