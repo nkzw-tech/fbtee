@@ -14,7 +14,7 @@
 
 'use strict';
 
-const {Gender} = require('../IntlVariations');
+const { Gender } = require('../IntlVariations');
 
 const IntlDefaultGenderType = {
   getFallback(): typeof Gender.UNKNOWN {

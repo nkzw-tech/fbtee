@@ -5,8 +5,6 @@
  * @oncall i18n_fbt_js
  */
 
-jest.autoMockOff();
-
 const {
   jsCodeFbtCallSerializer,
   snapshotTransform,
@@ -30,12 +28,12 @@ describe('fbt() API: ', () => {
       runTest(
         {
           input: withFbtRequireStatement(
-            `fbt("Foo", "Bar", {locale: "ar_AR", private: "yes"});`,
+            `fbt("Foo", "Bar", {locale: "ar_AR", private: "yes"});`
           ),
         },
         {
-          extraOptions: {locale: true, private: {yes: true}},
-        },
+          extraOptions: { locale: true, private: { yes: true } },
+        }
       );
     });
 
@@ -52,12 +50,12 @@ describe('fbt() API: ', () => {
                   another string
                 </fbt>
               </fbt:param>
-            </fbt>;`,
+            </fbt>;`
           ),
         },
         {
-          extraOptions: {locale: true, private: {yes: true}},
-        },
+          extraOptions: { locale: true, private: { yes: true } },
+        }
       );
     });
 
@@ -73,12 +71,12 @@ describe('fbt() API: ', () => {
                   another inner string
                 </b>
               </b>
-            </fbt>`,
+            </fbt>`
           ),
         },
         {
-          extraOptions: {myOption: true},
-        },
+          extraOptions: { myOption: true },
+        }
       );
     });
 
@@ -86,13 +84,13 @@ describe('fbt() API: ', () => {
       runTest(
         {
           input: withFbtRequireStatement(
-            `fbt("Foo", "Bar", {locale: "ar_AR"});`,
+            `fbt("Foo", "Bar", {locale: "ar_AR"});`
           ),
           throws: `Invalid option "locale". Only allowed: author, common, doNotExtract, preserveWhitespace, project, subject `,
         },
         {
           extraOptions: {},
-        },
+        }
       );
     });
 
@@ -102,13 +100,13 @@ describe('fbt() API: ', () => {
           input: withFbtRequireStatement(
             `<fbt desc='d' locale='ar_AR' private='true'>
               This is a string
-            </fbt>;`,
+            </fbt>;`
           ),
           throws: `Invalid option "locale". Only allowed: private, author, common, doNotExtract, preserveWhitespace, project, subject `,
         },
         {
-          extraOptions: {private: true},
-        },
+          extraOptions: { private: true },
+        }
       );
     });
 
@@ -116,13 +114,13 @@ describe('fbt() API: ', () => {
       runTest(
         {
           input: withFbtRequireStatement(
-            `fbt("Foo", "Bar", {private: "yes"});`,
+            `fbt("Foo", "Bar", {private: "yes"});`
           ),
           throws: `Option "private" has an invalid value: "yes". Only allowed: no`,
         },
         {
-          extraOptions: {private: {no: true}},
-        },
+          extraOptions: { private: { no: true } },
+        }
       );
     });
 
@@ -132,13 +130,13 @@ describe('fbt() API: ', () => {
           input: withFbtRequireStatement(
             `<fbt desc='d' private='aRandomValue'>
               This is a string
-            </fbt>;`,
+            </fbt>;`
           ),
           throws: `Option "private" has an invalid value: "aRandomValue". Only allowed: yes, no`,
         },
         {
-          extraOptions: {private: {yes: true, no: true}},
-        },
+          extraOptions: { private: { yes: true, no: true } },
+        }
       );
     });
   });
@@ -173,7 +171,7 @@ describe('Test double-lined params', () => {
             </b>
           </fbt:param>
           test
-        </fbt>`,
+        </fbt>`
       ),
     });
   });

@@ -10,12 +10,12 @@
 
 'use strict';
 
-import type {EnumModule} from '../FbtEnumRegistrar';
-import type {BabelNodeCallExpressionArg} from '../FbtUtil';
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { EnumModule } from '../FbtEnumRegistrar';
+import type { BabelNodeCallExpressionArg } from '../FbtUtil';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
-const {FBT_ENUM_MODULE_SUFFIX} = require('../FbtConstants');
+const { FBT_ENUM_MODULE_SUFFIX } = require('../FbtConstants');
 const FbtEnumRegistrar = require('../FbtEnumRegistrar');
 const {
   createFbtRuntimeArgCallExpression,
@@ -24,10 +24,10 @@ const {
   errorAt,
   varDump,
 } = require('../FbtUtil');
-const {EnumStringVariationArg} = require('./FbtArguments');
+const { EnumStringVariationArg } = require('./FbtArguments');
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
-const {createInstanceFromFbtConstructCallsite} = require('./FbtNodeUtil');
+const { createInstanceFromFbtConstructCallsite } = require('./FbtNodeUtil');
 const {
   isArrayExpression,
   isIdentifier,
@@ -57,7 +57,7 @@ class FbtEnumNode extends FbtNode<
   EnumStringVariationArg,
   BabelNodeCallExpression,
   null,
-  Options,
+  Options
 > {
   static +type: FbtNodeType = FbtNodeType.Enum;
 
@@ -83,29 +83,29 @@ class FbtEnumNode extends FbtNode<
       if (isArrayExpression(rangeNode)) {
         invariant(
           rangeNode.elements && rangeNode.elements.length,
-          'List of enum entries must not be empty',
+          'List of enum entries must not be empty'
         );
-        rangeNode.elements.forEach(item => {
+        rangeNode.elements.forEach((item) => {
           invariant(
             isStringLiteral(item),
-            'Enum values must be string literals',
+            'Enum values must be string literals'
           );
           // $FlowFixMe[cannot-write] Force write here to assemble the range object
           // $FlowFixMe[prop-missing]
           range[item.value] = item.value;
         });
       } else if (isObjectExpression(rangeNode)) {
-        rangeNode.properties.forEach(prop => {
+        rangeNode.properties.forEach((prop) => {
           invariant(
             isObjectProperty(prop),
             'Enum entries must be standard object properties. ' +
-              'Method or spread expressions are forbidden',
+              'Method or spread expressions are forbidden'
           );
           const valueNode = prop.value;
           const keyNode: mixed = prop.key;
           invariant(
             isStringLiteral(valueNode),
-            'Enum values must be string literals',
+            'Enum values must be string literals'
           );
           if (isStringLiteral(keyNode) || isNumericLiteral(keyNode)) {
             // $FlowFixMe[cannot-write] Force write here to assemble the range object
@@ -117,7 +117,7 @@ class FbtEnumNode extends FbtNode<
               'Enum keys must be string literals instead of `%s` ' +
                 'when using an object with computed property names',
               // $FlowFixMe[incompatible-use] BabelNode child classes have a "type" property
-              keyNode.type,
+              keyNode.type
             );
             // $FlowFixMe[cannot-write] Force write here to assemble the range object
             range[keyNode.name] = valueNode.value;
@@ -125,19 +125,19 @@ class FbtEnumNode extends FbtNode<
         });
         invariant(
           Object.keys(range).length,
-          'Map of enum entries must not be empty',
+          'Map of enum entries must not be empty'
         );
       } else {
         invariant(
           isIdentifier(rangeNode),
           'Expected enum range (second argument) to be an array, object or ' +
-            'a variable referring to an fbt enum',
+            'a variable referring to an fbt enum'
         );
 
         const manifest = nullthrows(
           FbtEnumRegistrar.getEnum(rangeNode.name),
           `Fbt Enum \`${rangeNode.name}\` not registered; ensure the enum ` +
-            `was correctly imported and that it has the ${FBT_ENUM_MODULE_SUFFIX} suffix.`,
+            `was correctly imported and that it has the ${FBT_ENUM_MODULE_SUFFIX} suffix.`
         );
         range = manifest;
       }
@@ -157,7 +157,7 @@ class FbtEnumNode extends FbtNode<
       const svArgValue = nullthrows(svArg.value);
       return nullthrows(
         this.options.range[svArgValue],
-        `Unable to find enum text for key=${varDump(svArgValue)}`,
+        `Unable to find enum text for key=${varDump(svArgValue)}`
       );
     } catch (error) {
       throw errorAt(this.node, error);
@@ -169,7 +169,7 @@ class FbtEnumNode extends FbtNode<
       new EnumStringVariationArg(
         this,
         this.options.value,
-        Object.keys(this.options.range),
+        Object.keys(this.options.range)
       ),
     ];
   }
@@ -181,11 +181,11 @@ class FbtEnumNode extends FbtNode<
     if (isIdentifier(rangeArg)) {
       runtimeRange = rangeArg;
     } else {
-      const {range} = this.options;
+      const { range } = this.options;
       runtimeRange = objectExpression(
-        Object.keys(range).map(key =>
-          objectProperty(stringLiteral(key), stringLiteral(range[key])),
-        ),
+        Object.keys(range).map((key) =>
+          objectProperty(stringLiteral(key), stringLiteral(range[key]))
+        )
       );
     }
 
@@ -198,7 +198,7 @@ class FbtEnumNode extends FbtNode<
   getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): $ReadOnly<{
     [argName: string]: BabelNodeCallExpressionArg,
   }> {
-    return {value: this.options.value};
+    return { value: this.options.value };
   }
 }
 

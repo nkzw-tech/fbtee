@@ -43,7 +43,7 @@ function isTableJSFBTTreeLeaf(value) {
 }
 
 function jsfbtLeafToPatternString(leaf) {
-  const {tokenAliases} = leaf;
+  const { tokenAliases } = leaf;
   return tokenAliases
     ? Object.keys(tokenAliases).reduce((mangledText, clearToken) => {
         const clearTokenName = `{${clearToken}}`;
@@ -88,7 +88,7 @@ function unwrap(json) {
       error.message += `\nJSFBT payload was: ${JSON.stringify(
         payload.jsfbt,
         null,
-        2,
+        2
       )}`;
       throw error;
     }
@@ -106,12 +106,12 @@ fbt._ = jest.fn().mockImplementation(
     return fbtRuntime._.call(
       this,
       unwrappedJson.type === 'text' ? jsfbt : jsfbt.t,
-      args,
+      args
     );
-  },
+  }
 );
 
-fbt._.getCallString = index => unwrap(fbt._.mock.calls[index][0]);
+fbt._.getCallString = (index) => unwrap(fbt._.mock.calls[index][0]);
 
 [
   '_enum',
@@ -123,11 +123,11 @@ fbt._.getCallString = index => unwrap(fbt._.mock.calls[index][0]);
   '_subject',
   '_wrapContent',
   'isFbtInstance',
-].forEach(methodName => {
+].forEach((methodName) => {
   invariant(
     typeof fbtRuntime[methodName] === 'function',
     'Expected method fbt.%s() to be defined',
-    methodName,
+    methodName
   );
   fbt[methodName] = fbtRuntime[methodName];
 });

@@ -5,8 +5,6 @@
  * @oncall i18n_fbt_js
  */
 
-jest.autoMockOff();
-
 const TestData_IntlNumberType = require('../__data__/TestData_IntlNumberType');
 const IntlNumberType = require('../IntlNumberType');
 const assert = require('assert');

@@ -77,7 +77,7 @@
 
 'use strict';
 
-const {processFiles, processJSON} = require('./translateUtils');
+const { processFiles, processJSON } = require('./translateUtils');
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
@@ -103,7 +103,7 @@ const argv = yargs
     'By default, we output the translations as an associative array whose ' +
       "indices match the phrases provided.  If instead, you'd like a mapping " +
       'from the associated "jenkins" hash to translation payload (for use in ' +
-      'babel-fbt-runtime plugin, for instance) you can use this',
+      'babel-fbt-runtime plugin, for instance) you can use this'
   )
   .string(args.HASH)
   .default(args.HASH, false)
@@ -111,26 +111,26 @@ const argv = yargs
     args.HASH,
     `Similar to --${args.JENKINS}, but pass the hash-module of your choice.  The ` +
       'module should export a function with the same signature and operation ' +
-      'of fbt-hash-module',
+      'of fbt-hash-module'
   )
   .boolean(args.STDIN)
   .default(args.STDIN, false)
   .describe(
     args.STDIN,
     'Instead of reading translation files and source file separately, read ' +
-      'from STDIN as a monolithic JSON payload',
+      'from STDIN as a monolithic JSON payload'
   )
   .string(args.SRC)
   .default(args.SRC, '.source_strings.json')
   .describe(
     args.SRC,
-    'The file containing source strings, as collected by collectFbt.js',
+    'The file containing source strings, as collected by collectFbt.js'
   )
   .array(args.TRANSLATIONS)
   .default(args.TRANSLATIONS, null)
   .describe(
     args.TRANSLATIONS,
-    'The translation files containing translations corresponding to source-strings',
+    'The translation files containing translations corresponding to source-strings'
   )
   .boolean(args.PRETTY)
   .default(args.PRETTY, false)
@@ -144,14 +144,14 @@ const argv = yargs
     args.OUTPUT_DIR,
     'By default, we write the output to stdout. If you instead would like to split ' +
       'the output by locale you can use this arg to specify an output directory. ' +
-      'This is useful when you want to lazy load translations per locale.',
+      'This is useful when you want to lazy load translations per locale.'
   )
   .boolean(args.STRICT)
   .default(args.STRICT, false)
   .describe(
     args.STRICT,
     'By default, we log missing values in the translation file to stderr. ' +
-      'If you instead would like to stop execution on missing values you can use this.',
+      'If you instead would like to stop execution on missing values you can use this.'
   ).argv;
 
 function createJSON(obj) {
@@ -161,12 +161,12 @@ function createJSON(obj) {
 function writeOutput(output) {
   const outputDir = yargs.argv[args.OUTPUT_DIR];
   if (outputDir) {
-    fs.mkdirSync(outputDir, {recursive: true});
+    fs.mkdirSync(outputDir, { recursive: true });
 
-    Object.keys(output).forEach(locale => {
+    Object.keys(output).forEach((locale) => {
       fs.writeFileSync(
         path.join(outputDir, `${locale}.json`),
-        createJSON({[locale]: output[locale]}),
+        createJSON({ [locale]: output[locale] })
       );
     });
   } else {
@@ -198,6 +198,6 @@ if (argv[args.STDIN]) {
     });
 } else {
   writeOutput(
-    processFiles(argv[args.SRC], argv[args.TRANSLATIONS], translationOptions),
+    processFiles(argv[args.SRC], argv[args.TRANSLATIONS], translationOptions)
   );
 }

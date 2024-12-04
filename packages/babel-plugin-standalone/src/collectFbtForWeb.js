@@ -11,12 +11,9 @@
 
 /* eslint max-len: ["warn", 120] */
 
-import type {
-  PatternHash,
-  PatternString,
-} from '../../../runtime/FbtTable';
-import type {CollectFbtOutput} from 'babel-plugin-fbt/dist/bin/collectFbt';
-import type {FbtExtraOptionConfig} from 'babel-plugin-fbt/dist/FbtConstants';
+import type { CollectFbtOutput } from 'babel-plugin-fbt/dist/bin/collectFbt';
+import type { FbtExtraOptionConfig } from 'babel-plugin-fbt/dist/FbtConstants';
+import type { PatternHash, PatternString } from '../../../runtime/FbtTable';
 
 const SparkMD5 = require('./SparkMD5');
 const {
@@ -41,10 +38,10 @@ function collectFbtPayloadFromSource(
     genFbtNodes: boolean,
     terse?: boolean,
   |},
-  extraOptions: FbtExtraOptionConfig,
+  extraOptions: FbtExtraOptionConfig
 ): CollectFbtOutput {
   const fileName = 'dummy_file';
-  const {genFbtNodes, terse, ...collectorConfig} = config;
+  const { genFbtNodes, terse, ...collectorConfig } = config;
   const fbtCollector = new FbtCollector(collectorConfig, extraOptions);
 
   fbtCollector.collectFromOneFile(source, fileName);
@@ -54,7 +51,7 @@ function collectFbtPayloadFromSource(
     {
       terse: !!terse,
       genFbtNodes,
-    },
+    }
   );
 
   const extractionError = fbtCollector.getErrors()[fileName];

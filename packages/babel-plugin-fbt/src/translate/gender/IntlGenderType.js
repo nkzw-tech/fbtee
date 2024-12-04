@@ -18,30 +18,32 @@ const FBLocaleToLang = require('../FBLocaleToLang');
 const IntlDefaultGenderType = require('./IntlDefaultGenderType');
 const IntlMergedUnknownGenderType = require('./IntlMergedUnknownGenderType');
 
-export type IntlGenderTypeImpl = typeof IntlMergedUnknownGenderType | typeof IntlDefaultGenderType;
+export type IntlGenderTypeImpl =
+  | typeof IntlMergedUnknownGenderType
+  | typeof IntlDefaultGenderType;
 
 const _mergedLocales = {
-    "ar_AR": 1,
-    "ks_IN": 1,
-    "lv_LV": 1,
-    "ps_AF": 1,
-    "qk_DZ": 1,
-    "qs_DE": 1,
-    "qv_IT": 1,
-    "sq_AL": 1,
-    "ti_ET": 1
+  ar_AR: 1,
+  ks_IN: 1,
+  lv_LV: 1,
+  ps_AF: 1,
+  qk_DZ: 1,
+  qs_DE: 1,
+  qv_IT: 1,
+  sq_AL: 1,
+  ti_ET: 1,
 };
 
 const _mergedLangs = {
-    "ar": 1,
-    "ks": 1,
-    "lv": 1,
-    "ps": 1,
-    "kab": 1,
-    "dsb": 1,
-    "vec": 1,
-    "sq": 1,
-    "ti": 1
+  ar: 1,
+  ks: 1,
+  lv: 1,
+  ps: 1,
+  kab: 1,
+  dsb: 1,
+  vec: 1,
+  sq: 1,
+  ti: 1,
 };
 
 const IntlGenderType = {

@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {TableJSFBTTree} from './index';
+import type { TableJSFBTTree } from './index';
 
 const fbtJenkinsHash = require('./fbtJenkinsHash');
 

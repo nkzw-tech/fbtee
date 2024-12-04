@@ -20,10 +20,10 @@
   <img src="https://facebook.github.io/fbt/img/fbt.png" height="150" width="150" alt="FBT"/>
 </h1>
 
-
 ## Standalone FBT Babel Transform
 
-This is a browser-friendly bundled version of the *main* FBT Babel transform.
+This is a browser-friendly bundled version of the _main_ FBT Babel transform.
 
 ## Full documentation
+
 https://facebook.github.io/fbt

@@ -7,7 +7,7 @@
 // flow-typed signature: 1f51ede354b708d1bf2ac3d98fd21d0b
 // flow-typed version: fe275d55fd/yargs_v15.x.x/flow_>=v0.118.x
 
-declare module "yargs" {
+declare module 'yargs' {
   declare type Argv = {
     [key: string]: any,
     _: Array<string>,
@@ -20,7 +20,7 @@ declare module "yargs" {
     array: boolean,
     boolean: boolean,
     choices: Array<mixed>,
-    coerce: (arg: {[key: string]: any, ...} | any) => mixed,
+    coerce: (arg: { [key: string]: any, ... } | any) => mixed,
     config: boolean,
     configParser: (configPath: string) => { [key: string]: mixed, ... },
     conflicts: string | Array<string> | { [key: string]: string, ... },
@@ -41,30 +41,32 @@ declare module "yargs" {
     requiresArg: boolean,
     skipValidation: boolean,
     string: boolean,
-    type: "array" | "boolean" | "count" | "number" | "string",
+    type: 'array' | 'boolean' | 'count' | 'number' | 'string',
     ...
   }>;
 
   declare type CommonModuleObject = {
     command?: string | Array<string>,
     aliases?: Array<string> | string,
-    builder?: { [key: string]: Options, ... } | ((yargsInstance: Yargs) => mixed),
-    handler?: ((argv: Argv) => void) | ((argv: Argv) => Promise<void>)
+    builder?:
+      | { [key: string]: Options, ... }
+      | ((yargsInstance: Yargs) => mixed),
+    handler?: ((argv: Argv) => void) | ((argv: Argv) => Promise<void>),
   };
 
   declare type ModuleObjectDesc = {
     ...CommonModuleObject,
-    desc?: string | false
+    desc?: string | false,
   };
 
   declare type ModuleObjectDescribe = {
     ...CommonModuleObject,
-    describe?: string | false
+    describe?: string | false,
   };
 
   declare type ModuleObjectDescription = {
     ...CommonModuleObject,
-    description?: string | false
+    description?: string | false,
   };
 
   declare type ModuleObject =
@@ -72,9 +74,10 @@ declare module "yargs" {
     | ModuleObjectDescribe
     | ModuleObjectDescription;
 
-  declare type MiddleWareCallback =
-    | (argv: Argv, yargsInstance?: Yargs) => void
-    | (argv: Argv, yargsInstance?: Yargs) => Promise<void>;
+  declare type MiddleWareCallback = (
+    argv: Argv,
+    yargsInstance?: Yargs,
+  ) => void | ((argv: Argv, yargsInstance?: Yargs) => Promise<void>);
 
   declare type Middleware = MiddleWareCallback | Array<MiddleWareCallback>;
 
@@ -96,14 +99,16 @@ declare module "yargs" {
     command(
       cmd: string | Array<string>,
       desc: string | false,
-      builder?: { [key: string]: Options, ... } | ((yargsInstance: Yargs) => mixed),
-      handler?: Function
+      builder?:
+        | { [key: string]: Options, ... }
+        | ((yargsInstance: Yargs) => mixed),
+      handler?: Function,
     ): this;
 
     command(
       cmd: string | Array<string>,
       desc: string | false,
-      module: ModuleObject
+      module: ModuleObject,
     ): this;
 
     command(module: ModuleObject): this;
@@ -122,26 +127,29 @@ declare module "yargs" {
 
     completion(
       cmd?: string,
-      description?: string | false | (
-        current: string,
-        argv: Argv,
-        done: (compeltion: Array<string>) => void
-      ) => ?(Array<string> | Promise<Array<string>>),
+      description?:
+        | string
+        | false
+        | ((
+            current: string,
+            argv: Argv,
+            done: (compeltion: Array<string>) => void,
+          ) => ?(Array<string> | Promise<Array<string>>)),
       fn?: (
         current: string,
         argv: Argv,
-        done: (completion: Array<string>) => void
-      ) => ?(Array<string> | Promise<Array<string>>)
+        done: (completion: Array<string>) => void,
+      ) => ?(Array<string> | Promise<Array<string>>),
     ): this;
 
     config(
       key?: string,
       description?: string,
-      parseFn?: (configPath: string) => { [key: string]: mixed, ... }
+      parseFn?: (configPath: string) => { [key: string]: mixed, ... },
     ): this;
     config(
       key: string,
-      parseFn?: (configPath: string) => { [key: string]: mixed, ... }
+      parseFn?: (configPath: string) => { [key: string]: mixed, ... },
     ): this;
     config(config: { [key: string]: mixed, ... }): this;
 
@@ -165,7 +173,7 @@ declare module "yargs" {
       min: number,
       max: number,
       minMsg?: string,
-      maxMsg?: string
+      maxMsg?: string,
     ): this;
 
     describe(key: string, description: string): this;
@@ -200,25 +208,26 @@ declare module "yargs" {
     implies(keys: { [key: string]: string | Array<string>, ... }): this;
 
     locale(
-      locale: | "de"
-      | "en"
-      | "es"
-      | "fr"
-      | "hi"
-      | "hu"
-      | "id"
-      | "it"
-      | "ja"
-      | "ko"
-      | "nb"
-      | "pirate"
-      | "pl"
-      | "pt"
-      | "pt_BR"
-      | "ru"
-      | "th"
-      | "tr"
-      | "zh_CN"
+      locale:
+        | 'de'
+        | 'en'
+        | 'es'
+        | 'fr'
+        | 'hi'
+        | 'hu'
+        | 'id'
+        | 'it'
+        | 'ja'
+        | 'ko'
+        | 'nb'
+        | 'pirate'
+        | 'pl'
+        | 'pt'
+        | 'pt_BR'
+        | 'ru'
+        | 'th'
+        | 'tr'
+        | 'zh_CN',
     ): this;
     locale(): string;
 
@@ -244,14 +253,14 @@ declare module "yargs" {
     parse(
       args?: string | Array<string>,
       context?: { [key: string]: any, ... },
-      parseCallback?: (err: Error, argv: Argv, output?: string) => void
+      parseCallback?: (err: Error, argv: Argv, output?: string) => void,
     ): Argv;
     parse(
       args?: string | Array<string>,
-      parseCallback?: (err: Error, argv: Argv, output?: string) => void
+      parseCallback?: (err: Error, argv: Argv, output?: string) => void,
     ): Argv;
 
-    parserConfiguration(configuration: {[key: string]: any, ...}): this;
+    parserConfiguration(configuration: { [key: string]: any, ... }): this;
 
     pkgConf(key: string, cwd?: string): this;
 
@@ -271,7 +280,7 @@ declare module "yargs" {
 
     showCompletionScript(): this;
 
-    showHelp(consoleLevel?: "error" | "warn" | "log"): this;
+    showHelp(consoleLevel?: 'error' | 'warn' | 'log'): this;
     showHelp(printCallback: (usageData: string) => void): this;
 
     showHelpOnFail(enable: boolean, message?: string): this;
@@ -297,7 +306,7 @@ declare module "yargs" {
     version(
       option: string | (() => string),
       description: string | (() => string),
-      version: string
+      version: string,
     ): this;
 
     wrap(columns: number | null): this;

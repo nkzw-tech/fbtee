@@ -12,7 +12,7 @@ import type {
   LangToNumberTypeValues,
   LocaleToNumberTypeValues,
 } from './CLDR/IntlNumberType';
-import type {IntlGenderTypeImpl} from './gender/IntlGenderType';
+import type { IntlGenderTypeImpl } from './gender/IntlGenderType';
 import type {
   IntlVariationMaskValue,
   IntlVariationsEnum,
@@ -20,7 +20,7 @@ import type {
 
 const IntlNumberType = require('./CLDR/IntlNumberType');
 const IntlGenderType = require('./gender/IntlGenderType');
-const {EXACTLY_ONE, FbtVariationType} = require('./IntlVariations');
+const { EXACTLY_ONE, FbtVariationType } = require('./IntlVariations');
 const invariant = require('invariant');
 
 /**
@@ -33,14 +33,14 @@ class TranslationConfig {
 
   constructor(
     numberType: LangToNumberTypeValues | LocaleToNumberTypeValues,
-    genderType: IntlGenderTypeImpl,
+    genderType: IntlGenderTypeImpl
   ) {
     this.numberType = numberType;
     this.genderType = genderType;
   }
 
   getTypesFromMask(
-    mask: IntlVariationMaskValue,
+    mask: IntlVariationMaskValue
   ): $ReadOnlyArray<IntlVariationsEnum | typeof EXACTLY_ONE> {
     if (mask === FbtVariationType.NUMBER) {
       return [EXACTLY_ONE].concat(this.numberType.getNumberVariations());
@@ -59,7 +59,7 @@ class TranslationConfig {
         typeof variation === 'string',
         'Expect keys in translated payload to be either string or number type ' +
           'but got a key of type `%s`',
-        variation,
+        variation
       );
       value = Number.parseInt(variation, 10);
     }
@@ -75,7 +75,7 @@ class TranslationConfig {
   static fromFBLocale(locale: string): TranslationConfig {
     return new TranslationConfig(
       IntlNumberType.forLocale(locale),
-      IntlGenderType.forLocale(locale),
+      IntlGenderType.forLocale(locale)
     );
   }
 }

@@ -17,7 +17,7 @@ describe('Test FbtEnumRegistrar', () => {
 
     FbtEnumRegistrar.setModuleAlias(
       'bar',
-      '../some/../redundant/../path/xyz$FbtEnum',
+      '../some/../redundant/../path/xyz$FbtEnum'
     );
     expect(FbtEnumRegistrar.getModuleName('bar')).toBe('xyz$FbtEnum');
   });

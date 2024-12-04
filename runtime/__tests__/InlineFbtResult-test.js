@@ -1,3 +1,5 @@
+import { cleanup, render, screen } from '@testing-library/react';
+
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
@@ -6,8 +8,6 @@
  */
 
 jest.disableAutomock();
-
-import { cleanup, render, screen } from '@testing-library/react';
 
 const InlineFbtResult = require('../InlineFbtResult');
 

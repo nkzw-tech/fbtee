@@ -15,9 +15,7 @@ const runtimePaths = [
 ];
 
 const globalConfig = {
-  setupFiles: ['fbjs-scripts/jest/environment.js'],
   testMatch: ['**/__tests__/**/*-test.js'],
-  timers: 'fake',
   transform: {
     '\\.js$': '<rootDir>/jest-preprocessor.js',
   },
@@ -58,10 +56,7 @@ module.exports = {
     },
     {
       displayName: 'demo-app',
-      setupFiles: [
-        'fbjs-scripts/jest/environment.js',
-        '<rootDir>/demo-app/run_all.js',
-      ],
+      setupFiles: ['<rootDir>/demo-app/run_all.js'],
       roots: ['<rootDir>/demo-app'],
       modulePaths: [
         '<rootDir>/demo-app/src',
@@ -75,7 +70,6 @@ module.exports = {
         ...globalConfig.moduleNameMapper,
         '\\.(css)$': '<rootDir>/demo-app/jest/css.js',
       },
-      timers: 'fake',
       transform: {
         '\\.js$': [
           '<rootDir>/jest-preprocessor.js',

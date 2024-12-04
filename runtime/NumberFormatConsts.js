@@ -13,8 +13,8 @@
 'use strict';
 
 import type {
-  StandardDecimalPatternInfo,
   NumberingSystemData,
+  StandardDecimalPatternInfo,
 } from './intlNumUtils';
 
 type NumberConfig = {|

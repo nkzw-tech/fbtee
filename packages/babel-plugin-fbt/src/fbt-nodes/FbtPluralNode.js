@@ -10,9 +10,9 @@
 
 'use strict';
 
-import type {BabelNodeCallExpressionArg} from '../FbtUtil';
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { BabelNodeCallExpressionArg } from '../FbtUtil';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
 const {
   PLURAL_PARAM_TOKEN,
@@ -28,15 +28,15 @@ const {
   errorAt,
   varDump,
 } = require('../FbtUtil');
-const {EXACTLY_ONE, NUMBER_ANY} = require('../translate/IntlVariations');
-const {NumberStringVariationArg} = require('./FbtArguments');
+const { EXACTLY_ONE, NUMBER_ANY } = require('../translate/IntlVariations');
+const { NumberStringVariationArg } = require('./FbtArguments');
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
 const {
   createInstanceFromFbtConstructCallsite,
   tokenNameToTextPattern,
 } = require('./FbtNodeUtil');
-const {isStringLiteral, stringLiteral} = require('@babel/types');
+const { isStringLiteral, stringLiteral } = require('@babel/types');
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 
@@ -60,7 +60,7 @@ class FbtPluralNode extends FbtNode<
   NumberStringVariationArg,
   BabelNodeCallExpression,
   null,
-  Options,
+  Options
 > {
   static +type: FbtNodeType = FbtNodeType.Plural;
 
@@ -79,20 +79,20 @@ class FbtPluralNode extends FbtNode<
     const rawOptions = collectOptionsFromFbtConstruct(
       this.moduleName,
       this.node,
-      ValidPluralOptions,
+      ValidPluralOptions
     );
 
     try {
       const [_, countArg] = this.getCallNodeArguments() || [];
       const count = enforceBabelNodeCallExpressionArg(
         countArg,
-        '`count`, the second function argument',
+        '`count`, the second function argument'
       );
       const showCount =
         enforceStringEnum.orNull(
           rawOptions.showCount,
           ValidPluralOptions.showCount,
-          '`showCount` option',
+          '`showCount` option'
         ) || ShowCountKeys.no;
       const name =
         enforceString.orNull(rawOptions.name, '`name` option') ||
@@ -104,7 +104,7 @@ class FbtPluralNode extends FbtNode<
         showCount,
         value: enforceBabelNodeCallExpressionArg.orNull(
           rawOptions.value,
-          '`value` option',
+          '`value` option'
         ),
       };
     } catch (error) {
@@ -117,7 +117,7 @@ class FbtPluralNode extends FbtNode<
     scenario: {|
       exactlyOne: () => T,
       anyNumber: () => T,
-    |},
+    |}
   ): T {
     const svArg = argsMap.get(this);
     const svArgValue = nullthrows(svArg.value);
@@ -133,7 +133,7 @@ class FbtPluralNode extends FbtNode<
         invariant(
           false,
           'Unsupported string variation value: %s',
-          varDump(svArgValue),
+          varDump(svArgValue)
         );
     }
   }
@@ -155,7 +155,7 @@ class FbtPluralNode extends FbtNode<
 
   getText(argsMap: StringVariationArgsMap): string {
     try {
-      const {showCount} = this.options;
+      const { showCount } = this.options;
       return this._branchByNumberVariation(argsMap, {
         exactlyOne: () =>
           (showCount === ShowCountKeys.yes ? '1 ' : '') +
@@ -177,7 +177,7 @@ class FbtPluralNode extends FbtNode<
     invariant(
       isStringLiteral(callArg0),
       'Expected a StringLiteral but got "%s" instead',
-      callArg0.type,
+      callArg0.type
     );
     return callArg0.value;
   }
@@ -192,14 +192,14 @@ class FbtPluralNode extends FbtNode<
   }
 
   getFbtRuntimeArg(): BabelNodeCallExpression {
-    const {count, name, showCount, value} = this.options;
+    const { count, name, showCount, value } = this.options;
 
     const pluralArgs = [count];
     if (showCount !== ShowCountKeys.no) {
       invariant(
         name != null,
         'name must be defined when showCount=%s',
-        showCount,
+        showCount
       );
       pluralArgs.push(stringLiteral(name));
       if (value) {
@@ -212,7 +212,7 @@ class FbtPluralNode extends FbtNode<
   getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): $ReadOnly<{
     [argName: string]: BabelNodeCallExpressionArg,
   }> {
-    return {count: this.options.count};
+    return { count: this.options.count };
   }
 }
 

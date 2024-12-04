@@ -10,12 +10,12 @@
 
 'use strict';
 
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
-const {isJSXText, isStringLiteral} = require('@babel/types');
+const { isJSXText, isStringLiteral } = require('@babel/types');
 
 /**
  * Represents the text literals present within <fbt> or fbt() callsites.
@@ -31,7 +31,7 @@ class FbtTextNode extends FbtNode<
   empty,
   BabelNodeStringLiteral | BabelNodeJSXText,
   null,
-  null,
+  null
 > {
   static +type: FbtNodeType = FbtNodeType.Text;
 

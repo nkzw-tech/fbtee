@@ -10,14 +10,14 @@
 
 'use strict';
 
-import type {JSModuleNameType} from '../FbtConstants';
-import type {NodePathOf} from '@babel/core';
+import type { NodePathOf } from '@babel/core';
 import typeof BabelTypes from '@babel/types';
+import type { JSModuleNameType } from '../FbtConstants';
 
 const FbtCommon = require('../FbtCommon');
-const {CommonOption} = require('../FbtConstants');
+const { CommonOption } = require('../FbtConstants');
 const FbtNodeChecker = require('../FbtNodeChecker');
-const {errorAt, expandStringConcat, normalizeSpaces} = require('../FbtUtil');
+const { errorAt, expandStringConcat, normalizeSpaces } = require('../FbtUtil');
 
 type NodePath = NodePathOf<BabelNodeCallExpression>;
 
@@ -67,23 +67,23 @@ class FbtCommonFunctionCallProcessor {
    * Converts an Fbt common call of the form `fbt.c(text)` to the basic form `fbt(text, desc)`
    */
   convertToNormalCall(): BabelNodeCallExpression {
-    const {moduleName, node, t} = this;
+    const { moduleName, node, t } = this;
     if (node.arguments.length !== 1) {
       throw errorAt(
         node,
-        `Expected ${moduleName}.c to have exactly 1 argument. ${node.arguments.length} was given.`,
+        `Expected ${moduleName}.c to have exactly 1 argument. ${node.arguments.length} was given.`
       );
     }
 
     const text = normalizeSpaces(
-      expandStringConcat(moduleName, node.arguments[0]).value,
+      expandStringConcat(moduleName, node.arguments[0]).value
     ).trim();
 
     const desc = FbtCommon.getDesc(text);
     if (desc == null || desc === '') {
       throw errorAt(
         node,
-        FbtCommon.getUnknownCommonStringErrorMessage(moduleName, text),
+        FbtCommon.getUnknownCommonStringErrorMessage(moduleName, text)
       );
     }
 

@@ -10,12 +10,13 @@
 
 'use strict';
 
-import type {FbtExtraOptionConfig, JSModuleNameType} from '../FbtConstants';
+import type { Scope } from '@babel/core';
+import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';
 import type {
   BabelNodeCallExpressionArg,
   BabelNodeCallExpressionArgument,
 } from '../FbtUtil';
-import type {TokenAliases} from '../index.js';
+import type { TokenAliases } from '../index.js';
 import type {
   AnyStringVariationArg,
   StringVariationArgsMap,
@@ -28,13 +29,12 @@ import type FbtPluralNode from './FbtPluralNode';
 import type FbtPronounNode from './FbtPronounNode';
 import type FbtSameParamNode from './FbtSameParamNode';
 import type FbtTextNode from './FbtTextNode';
-import type {Scope} from '@babel/core';
 
 const FbtNodeChecker = require('../FbtNodeChecker');
-const {compactBabelNodeProps, errorAt, varDump} = require('../FbtUtil');
+const { compactBabelNodeProps, errorAt, varDump } = require('../FbtUtil');
 const FbtNodeType = require('./FbtNodeType');
-const {default: traverse} = require('@babel/traverse');
-const {isCallExpression, isNewExpression} = require('@babel/types');
+const { default: traverse } = require('@babel/traverse');
+const { isCallExpression, isNewExpression } = require('@babel/types');
 const invariant = require('invariant');
 
 export type FbtChildNode =
@@ -74,7 +74,7 @@ export type PlainJSXNode = {|
    * how we'd want to represent other more complex types of attribute values.
    * If more complex types are needed, the Babel AST is available off the `babelNode` field.
    */
-  props: $ReadOnly<{[name: string]: string | number}>,
+  props: $ReadOnly<{ [name: string]: string | number }>,
 |};
 
 /**
@@ -182,7 +182,7 @@ class FbtNode<
   SVArgument: AnyStringVariationArg | empty = empty,
   CurBabelNode: BabelNode = BabelNode,
   MaybeChildNode: ?FbtChildNode = null,
-  Options: ?{...} = null, // See related docs of this.options
+  Options: ?{ ... } = null // See related docs of this.options
 > {
   +moduleName: JSModuleNameType;
   +children: Array<MaybeChildNode>;
@@ -238,7 +238,7 @@ class FbtNode<
   getOptions(_validExtraOptions?: $ReadOnly<FbtExtraOptionConfig>): Options {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      'This method must be implemented in a child class'
     );
   }
 
@@ -270,14 +270,14 @@ class FbtNode<
   getArgsForStringVariationCalc(): $ReadOnlyArray<SVArgument> {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      'This method must be implemented in a child class'
     );
   }
 
   getText(_argsMap: StringVariationArgsMap): string {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      'This method must be implemented in a child class'
     );
   }
 
@@ -310,7 +310,7 @@ class FbtNode<
     } catch (error) {
       if (
         error.message.includes(
-          'This method must be implemented in a child class',
+          'This method must be implemented in a child class'
         )
       ) {
         stringVariationArgs = error;
@@ -319,7 +319,7 @@ class FbtNode<
       }
     }
 
-    const ret: {options?: ?{...}, ...} = {
+    const ret: { options?: ?{ ... }, ... } = {
       ...compactBabelNodeProps(this),
       __stringVariationArgs: stringVariationArgs,
       // Avoid cyclic recursion issues
@@ -349,14 +349,14 @@ class FbtNode<
   toPlainFbtNode(): PlainFbtNode {
     const type = FbtNodeType.cast(
       // $FlowExpectedError[prop-missing] FbtNode child classes have a `type` static property
-      this.constructor.type,
+      this.constructor.type
     );
     invariant(
       type != null,
       'Expected instance constructor.type property to be a string instead of `%s`',
-      varDump(type),
+      varDump(type)
     );
-    return {type};
+    return { type };
   }
 
   /**
@@ -384,7 +384,7 @@ class FbtNode<
    * Returns the first parent FbtNode that is an instance of the given class.
    */
   getFirstAncestorOfType<N>(ancestorConstructor: Class<N>): ?N {
-    for (let {parent} = this; parent != null; parent = parent.parent) {
+    for (let { parent } = this; parent != null; parent = parent.parent) {
       if (parent instanceof ancestorConstructor) {
         return parent;
       }
@@ -406,7 +406,7 @@ class FbtNode<
   getFbtRuntimeArg(): ?BabelNodeCallExpression {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      'This method must be implemented in a child class'
     );
   }
 
@@ -423,7 +423,7 @@ class FbtNode<
    *  fbt:pronoun: the 'gender' value
    */
   throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(
-    scope: Scope<BabelNodeCallExpression>,
+    scope: Scope<BabelNodeCallExpression>
   ): void {
     const argsToCheck =
       this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
@@ -434,7 +434,7 @@ class FbtNode<
           this.node,
           `Expected string variation runtime argument "${argumentName}" ` +
             `to not be a function call or class instantiation expression. ` +
-            `See https://fburl.com/i18n_js_fbt_extraction_limits`,
+            `See https://fburl.com/i18n_js_fbt_extraction_limits`
         );
       }
       // Look for function or class call nested in the argument
@@ -446,11 +446,11 @@ class FbtNode<
               path.node,
               `Expected string variation runtime argument "${argumentName}" ` +
                 `to not contain a function call or class instantiation expression. ` +
-                `See https://fburl.com/i18n_js_fbt_extraction_limits`,
+                `See https://fburl.com/i18n_js_fbt_extraction_limits`
             );
           },
         },
-        scope,
+        scope
       );
     }
   }

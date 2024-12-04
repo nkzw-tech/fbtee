@@ -30,7 +30,7 @@ const paths = {
 };
 
 const checksumFile = '.checksums';
-const once = () => gulpOnce({file: path.join(__dirname, checksumFile)});
+const once = () => gulpOnce({ file: path.join(__dirname, checksumFile) });
 
 const src = (glob, opts) =>
   gulp.src(glob, {
@@ -55,14 +55,14 @@ const babelPluginFbt_buildDistJS = () =>
         plugins: [
           require('@babel/plugin-proposal-optional-catch-binding'),
           require('@babel/plugin-proposal-class-properties'),
-          [require('@babel/plugin-syntax-flow'), {enums: true}],
+          [require('@babel/plugin-syntax-flow'), { enums: true }],
           require('babel-plugin-transform-flow-enums'),
           require('babel-preset-fbjs/plugins/dev-expression'),
           require('@babel/plugin-proposal-nullish-coalescing-operator'),
           require('@babel/plugin-proposal-optional-chaining'),
           require('@babel/plugin-transform-flow-strip-types'),
         ],
-      }),
+      })
     )
     .pipe(dest(paths.dist));
 
@@ -70,21 +70,21 @@ const babelPluginFbt_buildDistFlowJS = () =>
   src(paths.src.js, {
     follow: true,
   })
-    .pipe(rename({extname: '.js.flow'}))
+    .pipe(rename({ extname: '.js.flow' }))
     .pipe(once())
     .pipe(setGeneratedFilePragmas(ONCALL_ID))
     .pipe(dest(paths.dist));
 
 const babelPluginFbt_copyJsonToDist = () =>
-  src(paths.src.json, {follow: true}).pipe(once()).pipe(dest(paths.dist));
+  src(paths.src.json, { follow: true }).pipe(once()).pipe(dest(paths.dist));
 
 gulp.task(
   'build',
   gulp.parallel(
     babelPluginFbt_buildDistJS,
     babelPluginFbt_buildDistFlowJS,
-    babelPluginFbt_copyJsonToDist,
-  ),
+    babelPluginFbt_copyJsonToDist
+  )
 );
 
 gulp.task('watch', () => {
@@ -96,14 +96,14 @@ gulp.task('watch', () => {
     },
     function watchBabelPluginFbt(done) {
       gulp.task('build')(done);
-    },
+    }
   );
 });
 
 const babelPluginFbt_clean = () =>
   del(
     [path.join(__dirname, checksumFile), path.join(__dirname, paths.dist, '*')],
-    {force: true},
+    { force: true }
   );
 gulp.task('clean', gulp.series(babelPluginFbt_clean));
 

@@ -10,6 +10,5 @@
  */
 
 module.exports = {
-  RequireCheck: require('./RequireCheck'),
   TestUtil: require('./TestUtil'),
 };

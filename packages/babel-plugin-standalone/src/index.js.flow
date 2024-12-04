@@ -50,7 +50,7 @@ type PlainFbtNode = {|
   type: FbtNodeType,
   wrapperNode?: ?{|
     babelNode: BabelNodeJSXOpeningElement,
-    props: $ReadOnly<{[name: string]: string | number}>,
+    props: $ReadOnly<{ [name: string]: string | number }>,
     type: string,
   |},
 |};
@@ -65,9 +65,9 @@ type TableJSFBTTree =
       hash?: string,
       outerTokenName?: string,
       text: string,
-      tokenAliases?: {[clearTokenName: string]: string},
+      tokenAliases?: { [clearTokenName: string]: string },
     |}
-  | {[key: string | number]: TableJSFBTTree};
+  | { [key: string | number]: TableJSFBTTree };
 
 /**
  * Summarized flow types from collectFbtPayloadFromSource() function
@@ -94,16 +94,16 @@ declare function collectFbtPayloadFromSource(
     genFbtNodes: boolean,
     terse?: boolean,
   |},
-  extraOptions: {[optionName: string]: boolean},
+  extraOptions: { [optionName: string]: boolean }
 ): {|
-  childParentMappings: {[prop: number]: number},
+  childParentMappings: { [prop: number]: number },
   fbtElementNodes?: ?Array<{|
     +children?: $ReadOnlyArray<PlainFbtNode>,
     phraseIndex?: ?number,
     type: FbtNodeType,
     wrapperNode?: ?{|
       babelNode: BabelNodeJSXOpeningElement,
-      props: $ReadOnly<{[name: string]: string | number}>,
+      props: $ReadOnly<{ [name: string]: string | number }>,
       type: string,
     |},
   |}>,
@@ -128,24 +128,24 @@ declare function collectFbtPayloadFromSource(
             singular?: true,
             token?: string,
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'NUMBER',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'NUMBER'
             >,
           |}
         | {|
             token: string,
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'GENDER',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'GENDER'
             >,
           |}
         | {|
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'PRONOUN',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'PRONOUN'
             >,
           |}
-        | {|range: $ReadOnlyArray<string>|},
+        | {| range: $ReadOnlyArray<string> |}
       >>,
       t: $ReadOnly<
         | {|
@@ -153,38 +153,38 @@ declare function collectFbtPayloadFromSource(
             hash?: string,
             outerTokenName?: string,
             text: string,
-            tokenAliases?: {[clearTokenName: string]: string},
+            tokenAliases?: { [clearTokenName: string]: string },
           |}
-        | {[key: string | number]: TableJSFBTTree},
+        | { [key: string | number]: TableJSFBTTree }
       >,
     |}>,
     hash_key?: string,
     hash_code?: number,
-    hashToLeaf?: {[hash: string]: {|desc: string, text: string|}},
+    hashToLeaf?: { [hash: string]: {| desc: string, text: string |} },
     jsfbt?: $ReadOnly<{|
       m: $ReadOnlyArray<?$ReadOnly<
         | {|
             singular?: true,
             token?: string,
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'NUMBER',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'NUMBER'
             >,
           |}
         | {|
             token: string,
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'GENDER',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'GENDER'
             >,
           |}
         | {|
             type: $PropertyType<
-              {|+GENDER: 1, +NUMBER: 2, +PRONOUN: 3|},
-              'PRONOUN',
+              {| +GENDER: 1, +NUMBER: 2, +PRONOUN: 3 |},
+              'PRONOUN'
             >,
           |}
-        | {|range: $ReadOnlyArray<string>|},
+        | {| range: $ReadOnlyArray<string> |}
       >>,
       t: $ReadOnly<
         | {|
@@ -192,9 +192,9 @@ declare function collectFbtPayloadFromSource(
             hash?: string,
             outerTokenName?: string,
             text: string,
-            tokenAliases?: {[clearTokenName: string]: string},
+            tokenAliases?: { [clearTokenName: string]: string },
           |}
-        | {[key: string | number]: TableJSFBTTree},
+        | { [key: string | number]: TableJSFBTTree }
       >,
     |}>,
   |}>,

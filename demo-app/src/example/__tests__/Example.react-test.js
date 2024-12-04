@@ -5,9 +5,9 @@
  * @oncall i18n_fbt_js
  */
 
-import Example from '../Example.react';
 import * as React from 'react';
 import renderer from 'react-test-renderer';
+import Example from '../Example.react';
 
 describe('Example.react', () => {
   it('renders the example', () => {

@@ -6,9 +6,6 @@
  * @oncall i18n_fbt_js
  */
 
-/* eslint max-len: ["warn", 120] */
-/* eslint-disable fb-www/gender-neutral-language */
-
 'use strict';
 
 type GenderConfig = {|
@@ -46,7 +43,7 @@ const GENDER_CONST = Object.freeze({
   UNKNOWN_PLURAL: ((11: $FlowExpectedError): GenderConstEnum),
 });
 
-const data: {[GenderConstEnum]: GenderConfig} = {
+const data: { [GenderConstEnum]: GenderConfig } = {
   // $FlowExpectedError[invalid-computed-prop] Tolerate using an opaque type as an object key
   [GENDER_CONST.NOT_A_PERSON]: {
     is_male: false,
@@ -231,11 +228,11 @@ const data: {[GenderConstEnum]: GenderConfig} = {
 
 function getData(
   gender: GenderConstEnum,
-  usage: $Keys<GenderConfig>,
+  usage: $Keys<GenderConfig>
 ): boolean | string {
   return data[gender]
     ? data[gender][usage]
     : data[GENDER_CONST.NOT_A_PERSON][usage];
 }
 
-module.exports = {getData, GENDER_CONST};
+module.exports = { getData, GENDER_CONST };

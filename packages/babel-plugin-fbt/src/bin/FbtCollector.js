@@ -11,12 +11,12 @@
 
 'use strict';
 
+import type { BabelPluginList, BabelPresetList } from '@babel/core';
 import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
 import type { FbtExtraOptionConfig } from '../FbtConstants';
 import type { EnumManifest } from '../FbtEnumRegistrar';
 import type { BabelPluginFbt, Phrase, PluginOptions } from '../index';
-import type { BabelPluginList, BabelPresetList } from '@babel/core';
 
 const { extractEnumsAndFlattenPhrases } = require('../FbtShiftEnums');
 const FbtUtil = require('../FbtUtil');

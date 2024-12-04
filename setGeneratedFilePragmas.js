@@ -13,7 +13,7 @@
 
 const each = require('gulp-each');
 const invariant = require('invariant');
-const {parseWithComments, print} = require('jest-docblock');
+const { parseWithComments, print } = require('jest-docblock');
 
 // Inspired from https://stackoverflow.com/a/36328890/104598
 const DOCBLOCK_PATTERN = /(\/\*\*[^*]*\*+(?:[^/*][^*]*\*+)*\/)([\s\S]*)/;
@@ -25,7 +25,7 @@ function setGeneratedFilePragmas(oncallID) {
     const [_, docblockStr, code] = matches || [];
     invariant(!!docblockStr, "No docblock in '%s'", file);
     const docblock = parseWithComments(docblockStr);
-    STRIPPED_PRAGMAS.forEach(key => delete docblock.pragmas[key]);
+    STRIPPED_PRAGMAS.forEach((key) => delete docblock.pragmas[key]);
     Object.assign(docblock.pragmas, {
       oncall: docblock.pragmas.oncall || oncallID,
       generated: '', // remove any "SignedSource" value to avoid lint issues

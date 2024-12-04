@@ -8,13 +8,13 @@
 
 'use strict';
 
-import type {Phrase, TableJSFBT, TableJSFBTTree} from '../index';
+import type { Phrase, TableJSFBT, TableJSFBTTree } from '../index';
 
 const {
   extractEnumsAndFlattenPhrases,
   shiftEnumsToTop,
 } = require('../FbtShiftEnums');
-const {FbtVariationType} = require('../translate/IntlVariations');
+const { FbtVariationType } = require('../translate/IntlVariations');
 
 const extractEnumsAndFlattenPhrasesTestData: Array<{
   name: string,
@@ -966,11 +966,11 @@ const extractEnumsAndFlattenPhrasesTestData: Array<{
 ];
 
 describe('Test removeEnumsFromPhrases', () => {
-  extractEnumsAndFlattenPhrasesTestData.forEach(data =>
+  extractEnumsAndFlattenPhrasesTestData.forEach((data) =>
     it(data.name, () =>
       // $FlowFixMe[incompatible-call]
-      expect(extractEnumsAndFlattenPhrases(data.input)).toEqual(data.output),
-    ),
+      expect(extractEnumsAndFlattenPhrases(data.input)).toEqual(data.output)
+    )
   );
 });
 
@@ -1539,9 +1539,9 @@ const shiftEnumsToTopTestData: Array<{
 ];
 
 describe('Test shiftEnumsToTop', () => {
-  shiftEnumsToTopTestData.forEach(data =>
+  shiftEnumsToTopTestData.forEach((data) =>
     it(data.name, () =>
-      expect(shiftEnumsToTop(data.input)).toEqual(data.output),
-    ),
+      expect(shiftEnumsToTop(data.input)).toEqual(data.output)
+    )
   );
 });

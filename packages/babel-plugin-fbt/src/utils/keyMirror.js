@@ -31,7 +31,7 @@ function keyMirror<T: {}>(obj: T): $KeyMirror<T> {
   let key;
   invariant(
     obj instanceof Object && !Array.isArray(obj),
-    'keyMirror(...): Argument must be an object.',
+    'keyMirror(...): Argument must be an object.'
   );
   for (key in obj) {
     if (!obj.hasOwnProperty(key)) {

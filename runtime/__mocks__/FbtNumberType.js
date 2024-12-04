@@ -5,9 +5,11 @@
  * @format
  * @oncall i18n_fbt_js
  */
-import type { IntlVariationsEnum } from '../IntlVariations';
-
-import { NUMBER_ONE, NUMBER_OTHER } from '../IntlVariations';
+import {
+  NUMBER_ONE,
+  NUMBER_OTHER,
+  type IntlVariationsEnum,
+} from '../IntlVariations';
 
 const FbtNumberType: {
   getVariation: JestMockFn<$ReadOnlyArray<number>, IntlVariationsEnum>,

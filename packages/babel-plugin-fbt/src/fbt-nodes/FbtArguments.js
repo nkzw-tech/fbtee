@@ -10,16 +10,16 @@
 
 'use strict';
 
-import type {EnumKey} from '../FbtEnumRegistrar';
-import type {GenderConstEnum} from '../Gender';
+import type { EnumKey } from '../FbtEnumRegistrar';
+import type { GenderConstEnum } from '../Gender';
 import typeof {
   EXACTLY_ONE,
   GENDER_ANY,
   NUMBER_ANY,
 } from '../translate/IntlVariations';
-import type FbtNode, {AnyFbtNode} from './FbtNode';
+import type FbtNode, { AnyFbtNode } from './FbtNode';
 
-const {compactBabelNodeProps, getRawSource, varDump} = require('../FbtUtil');
+const { compactBabelNodeProps, getRawSource, varDump } = require('../FbtUtil');
 const invariant = require('invariant');
 
 export type AnyStringVariationArg =
@@ -69,7 +69,7 @@ class FbtArgumentBase<B: ?BabelNode> {
    * See snapshot `fbtFunctional-test.js.snap` to find output examples.
    */
   __toJSONForTestsOnly(): mixed {
-    const {fbtNode} = this;
+    const { fbtNode } = this;
     const ret = compactBabelNodeProps({
       ...this,
       fbtNode: fbtNode != null ? fbtNode.constructor.name : fbtNode,
@@ -89,7 +89,7 @@ class FbtArgumentBase<B: ?BabelNode> {
     invariant(
       !!this.node,
       'Unable to find Babel node object from string variation argument: %s',
-      varDump(this),
+      varDump(this)
     );
     // $FlowFixMe[incompatible-call]
     return getRawSource(code, this.node);
@@ -140,7 +140,7 @@ class GenericArg extends FbtArgumentBase<BabelNode> {}
  */
 class StringVariationArg<
   Value,
-  B: ?BabelNode = BabelNode,
+  B: ?BabelNode = BabelNode
 > extends FbtArgumentBase<B> {
   /**
    * List of candidate values that this SVArgument might have.
@@ -165,7 +165,7 @@ class StringVariationArg<
     node: B,
     candidateValues: $ReadOnlyArray<Value>,
     value: ?Value,
-    isCollapsible: boolean = false,
+    isCollapsible: boolean = false
   ) {
     super(fbtNode, node);
     this.candidateValues = candidateValues;
@@ -179,7 +179,7 @@ class StringVariationArg<
       this.node,
       this.candidateValues,
       value,
-      isCollapsible,
+      isCollapsible
     );
   }
 }
@@ -197,7 +197,7 @@ class EnumStringVariationArg extends StringVariationArg<EnumKey> {
  * String variation argument that produces variations based on genders
  */
 class GenderStringVariationArg extends StringVariationArg<
-  GenderConstEnum | GENDER_ANY,
+  GenderConstEnum | GENDER_ANY
 > {
   static assert(value: mixed): GenderStringVariationArg {
     return assertInstanceOf(value, GenderStringVariationArg);
@@ -209,7 +209,7 @@ class GenderStringVariationArg extends StringVariationArg<
  */
 class NumberStringVariationArg extends StringVariationArg<
   NUMBER_ANY | EXACTLY_ONE,
-  ?BabelNode,
+  ?BabelNode
 > {
   static assert(value: mixed): NumberStringVariationArg {
     return assertInstanceOf(value, NumberStringVariationArg);
@@ -218,14 +218,14 @@ class NumberStringVariationArg extends StringVariationArg<
 
 function assertInstanceOf<C: interface {}>(
   value: mixed,
-  Constructor: Class<C> & {name: string, ...},
+  Constructor: Class<C> & { name: string, ... }
 ): C {
   invariant(
     value instanceof Constructor,
     'Expected instance of %s but got instead: (%s) %s',
     Constructor.name,
     typeof value,
-    varDump(value),
+    varDump(value)
   );
   return value;
 }
@@ -237,13 +237,13 @@ class StringVariationArgsMap {
   +_map: Map<AnyFbtNode, AnyStringVariationArg>;
 
   constructor(svArgs: $ReadOnlyArray<AnyStringVariationArg>): void {
-    this._map = new Map(svArgs.map(arg => [arg.fbtNode, arg]));
+    this._map = new Map(svArgs.map((arg) => [arg.fbtNode, arg]));
     invariant(
       svArgs.length === this._map.size,
       'Expected only one StringVariationArg per FbtNode. ' +
         'Input array length=%s but resulting map size=%s',
       svArgs.length,
-      this._map.size,
+      this._map.size
     );
   }
 
@@ -255,7 +255,7 @@ class StringVariationArgsMap {
     invariant(
       ret != null,
       'Unable to find entry for FbtNode: %s',
-      varDump(fbtNode),
+      varDump(fbtNode)
     );
     // $FlowFixMe[incompatible-return] the found SVArgument came from the same fbtNode
     return ret;
@@ -265,7 +265,7 @@ class StringVariationArgsMap {
    * @throws if the given FbtNode cannot be found
    */
   mustHave<SV: AnyStringVariationArg>(
-    fbtNode: FbtNode<SV, any, any, any>,
+    fbtNode: FbtNode<SV, any, any, any>
   ): void {
     this.get(fbtNode);
   }

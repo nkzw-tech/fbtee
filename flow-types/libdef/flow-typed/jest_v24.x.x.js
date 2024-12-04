@@ -217,19 +217,19 @@ type EnzymeMatchersType = {
   toHaveClassName: (className: string) => void,
   toHaveHTML: (html: string) => void,
   toHaveProp: ((propKey: string, propValue?: any) => void) &
-    ((props: {...}) => void),
+    ((props: { ... }) => void),
   toHaveRef: (refName: string) => void,
   toHaveState: ((stateKey: string, stateValue?: any) => void) &
-    ((state: {...}) => void),
+    ((state: { ... }) => void),
   toHaveStyle: ((styleKey: string, styleValue?: any) => void) &
-    ((style: {...}) => void),
+    ((style: { ... }) => void),
   toHaveTagName: (tagName: string) => void,
   toHaveText: (text: string) => void,
   toHaveValue: (value: any) => void,
   toIncludeText: (text: string) => void,
   toMatchElement: (
     element: React$Element<any>,
-    options?: {|ignoreProps?: boolean, verbose?: boolean|},
+    options?: {| ignoreProps?: boolean, verbose?: boolean |},
   ) => void,
   toMatchSelector: (selector: string) => void,
   // 7.x
@@ -257,11 +257,11 @@ type DomTestingLibraryType = {
   toHaveAttribute: (attr: string, value?: any) => void,
   toHaveClass: (...classNames: Array<string>) => void,
   toHaveFocus: () => void,
-  toHaveFormValues: (expectedValues: {[name: string]: any, ...}) => void,
+  toHaveFormValues: (expectedValues: { [name: string]: any, ... }) => void,
   toHaveStyle: (css: string) => void,
   toHaveTextContent: (
     text: string | RegExp,
-    options?: {normalizeWhitespace: boolean, ...},
+    options?: { normalizeWhitespace: boolean, ... },
   ) => void,
   toHaveValue: (value?: string | Array<string> | number) => void,
   ...
@@ -279,7 +279,7 @@ type JestJQueryMatchersType = {
   toHaveText: (text: string | RegExp) => void,
   toHaveData: (key: string, val?: any) => void,
   toHaveValue: (val: any) => void,
-  toHaveCss: (css: {[key: string]: any, ...}) => void,
+  toHaveCss: (css: { [key: string]: any, ... }) => void,
   toBeChecked: () => void,
   toBeDisabled: () => void,
   toBeEmpty: () => void,
@@ -938,7 +938,7 @@ type JestObjectType = {
   ...
 };
 
-type JestSpyType = {calls: JestCallsType, ...};
+type JestSpyType = { calls: JestCallsType, ... };
 
 type JestDoneFn = {|
   (error?: Error): void,
@@ -1120,9 +1120,9 @@ type JestPrettyFormatColors = {
   ...
 };
 
-type JestPrettyFormatIndent = string => string;
+type JestPrettyFormatIndent = (string) => string;
 type JestPrettyFormatRefs = Array<any>;
-type JestPrettyFormatPrint = any => string;
+type JestPrettyFormatPrint = (any) => string;
 type JestPrettyFormatStringOrNull = string | null;
 
 type JestPrettyFormatOptions = {|
@@ -1153,7 +1153,7 @@ type JestPrettyFormatPlugin = {
     opts: JestPrettyFormatOptions,
     colors: JestPrettyFormatColors,
   ) => string,
-  test: any => boolean,
+  test: (any) => boolean,
   ...
 };
 
@@ -1173,7 +1173,7 @@ declare var expect: {
     JestExtendedMatchersType &
     SnapshotDiffType,
   /** Add additional Jasmine matchers to Jest's roster */
-  extend(matchers: {[name: string]: JestMatcher, ...}): void,
+  extend(matchers: { [name: string]: JestMatcher, ... }): void,
   /** Add a module that formats application-specific data structures. */
   addSnapshotSerializer(pluginModule: JestPrettyFormatPlugin): void,
   assertions(expectedAssertions: number): void,
@@ -1187,7 +1187,7 @@ declare var expect: {
   stringMatching(value: string | RegExp): string,
   not: {
     arrayContaining: (value: $ReadOnlyArray<mixed>) => Array<mixed>,
-    objectContaining: (value: {...}) => Object,
+    objectContaining: (value: { ... }) => Object,
     stringContaining: (value: string) => string,
     stringMatching: (value: string | RegExp) => string,
     ...
@@ -1216,7 +1216,7 @@ declare var jasmine: {
   createSpyObj(
     baseName: string,
     methodNames: Array<string>,
-  ): {[methodName: string]: JestSpyType, ...},
+  ): { [methodName: string]: JestSpyType, ... },
   objectContaining(value: Object): Object,
   stringMatching(value: string): string,
   ...

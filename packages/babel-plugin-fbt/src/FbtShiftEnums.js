@@ -8,9 +8,14 @@
 
 'use strict';
 
-import type {JSFBTMetaEntry, Phrase, TableJSFBT, TableJSFBTTree} from './index';
+import type {
+  JSFBTMetaEntry,
+  Phrase,
+  TableJSFBT,
+  TableJSFBTTree,
+} from './index';
 
-const {coerceToTableJSFBTTreeLeaf} = require('./JSFbtUtil');
+const { coerceToTableJSFBTTreeLeaf } = require('./JSFbtUtil');
 const invariant = require('invariant');
 
 /**
@@ -18,12 +23,12 @@ const invariant = require('invariant');
  * See FbtShiftEnumsTest for example input and output.
  */
 function extractEnumsAndFlattenPhrases(
-  phrases: $ReadOnlyArray<Phrase>,
+  phrases: $ReadOnlyArray<Phrase>
 ): Array<Phrase> {
-  return _flatMap<Phrase, Phrase>(phrases, phrase => {
-    const {jsfbt} = phrase;
-    const {enums, metadata} = _extractEnumsFromMetadata(jsfbt.m);
-    return _buildTablesWithoutEnums(jsfbt.t, enums, []).map(table => {
+  return _flatMap<Phrase, Phrase>(phrases, (phrase) => {
+    const { jsfbt } = phrase;
+    const { enums, metadata } = _extractEnumsFromMetadata(jsfbt.m);
+    return _buildTablesWithoutEnums(jsfbt.t, enums, []).map((table) => {
       // $FlowFixMe[incompatible-indexer]
       // $FlowFixMe[incompatible-variance]
       // $FlowFixMe[incompatible-call]
@@ -32,7 +37,7 @@ function extractEnumsAndFlattenPhrases(
         (metadata.length === 0) === (leaf != null),
         'If the JSFBT table depth is 1, then the metadata array should be empty; ' +
           'otherwise, when the depth is greater than 1, the metadata array should not be empty. Metadata length: %s, ',
-        metadata.length,
+        metadata.length
       );
       return {
         ...phrase,
@@ -54,9 +59,9 @@ function shiftEnumsToTop(jsfbt: TableJSFBT): {|
   enumCount: number,
 |} {
   if (typeof jsfbt === 'string') {
-    return {shiftedJsfbt: jsfbt, enumCount: 0};
+    return { shiftedJsfbt: jsfbt, enumCount: 0 };
   } else {
-    const {enums} = _extractEnumsFromMetadata(jsfbt.m);
+    const { enums } = _extractEnumsFromMetadata(jsfbt.m);
     return {
       // $FlowFixMe[incompatible-call]
       shiftedJsfbt: _shiftEnumsToTop(enums, [], jsfbt.t),
@@ -68,20 +73,20 @@ function shiftEnumsToTop(jsfbt: TableJSFBT): {|
 function _extractEnumsFromMetadata(metadata: $ReadOnlyArray<?JSFBTMetaEntry>) {
   const enums: Array<$ReadOnlyArray<string>> = [];
   const metadataWithoutEnums = [];
-  metadata.forEach(entry => {
+  metadata.forEach((entry) => {
     if (entry?.range) {
       enums.push(entry.range);
     } else {
       metadataWithoutEnums.push(entry);
     }
   });
-  return {enums, metadata: metadataWithoutEnums};
+  return { enums, metadata: metadataWithoutEnums };
 }
 
 function _buildTablesWithoutEnums(
   table: $ReadOnly<TableJSFBTTree>,
   enums: Array<$ReadOnlyArray<string>>,
-  currentEnumKeys: $ReadOnlyArray<string>,
+  currentEnumKeys: $ReadOnlyArray<string>
 ): Array<$ReadOnly<TableJSFBTTree>> {
   if (enums.length === 0) {
     return [table];
@@ -92,15 +97,15 @@ function _buildTablesWithoutEnums(
     return [_buildTableWithoutEnums(table, currentEnumKeys, 0)];
   }
 
-  return _flatMap<string, $ReadOnly<TableJSFBTTree>>(enums[index], enumKey =>
-    _buildTablesWithoutEnums(table, enums, currentEnumKeys.concat([enumKey])),
+  return _flatMap<string, $ReadOnly<TableJSFBTTree>>(enums[index], (enumKey) =>
+    _buildTablesWithoutEnums(table, enums, currentEnumKeys.concat([enumKey]))
   );
 }
 
 function _shiftEnumsToTop(
   allEnums: Array<$ReadOnlyArray<string>>,
   currentEnumKeys: $ReadOnlyArray<string>,
-  table: TableJSFBTTree,
+  table: TableJSFBTTree
 ): $ReadOnly<TableJSFBTTree> {
   if (allEnums.length === 0) {
     return table;
@@ -117,7 +122,7 @@ function _shiftEnumsToTop(
     newTable[enumKey] = _shiftEnumsToTop(
       allEnums,
       currentEnumKeys.concat([enumKey]),
-      table,
+      table
     );
   }
   return newTable;
@@ -126,7 +131,7 @@ function _shiftEnumsToTop(
 function _buildTableWithoutEnums(
   curLevel: $ReadOnly<TableJSFBTTree>,
   enums: $ReadOnlyArray<string>,
-  index: number,
+  index: number
 ): TableJSFBTTree {
   // $FlowFixMe[incompatible-indexer]
   // $FlowFixMe[incompatible-variance]
@@ -152,7 +157,7 @@ function _buildTableWithoutEnums(
  */
 function _flatMap<V, O>(
   arr: $ReadOnlyArray<V>,
-  f: V => O | Array<O>,
+  f: (V) => O | Array<O>
 ): Array<O> {
   return arr.map(f).reduce((arr1, arr2) => arr1.concat(arr2), []);
 }

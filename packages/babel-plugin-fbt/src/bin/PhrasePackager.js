@@ -8,7 +8,7 @@
 
 /* eslint max-len: ["warn", 100] */
 
-import type {PackagerPhrase} from './FbtCollector';
+import type { PackagerPhrase } from './FbtCollector';
 
 const fbtHashKey = require('../fbtHashKey');
 const jenkinsHash = require('../fbtJenkinsHash');
@@ -19,7 +19,7 @@ const jenkinsHash = require('../fbtJenkinsHash');
  */
 class PhrasePackager {
   pack(phrases: Array<PackagerPhrase>): Array<PackagerPhrase> {
-    return phrases.map(phrase => {
+    return phrases.map((phrase) => {
       return {
         hash_key: fbtHashKey(phrase.jsfbt.t),
         hash_code: jenkinsHash(phrase.jsfbt.t),

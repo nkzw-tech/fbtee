@@ -16,13 +16,12 @@
 
 // flowlint ambiguous-object-type:error
 
+import invariant from 'invariant';
 import {
-  PUNCT_CHAR_CLASS,
   applyPhonologicalRules,
   dedupeStops,
+  PUNCT_CHAR_CLASS,
 } from './IntlPunctuation';
-
-import invariant from 'invariant';
 
 /*
  * $FlowFixMe[method-unbinding] Use original method in case the token names contain

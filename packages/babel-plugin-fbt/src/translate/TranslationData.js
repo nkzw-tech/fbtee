@@ -8,7 +8,7 @@
 
 'use strict';
 
-import type {IntlFbtVariationTypeValue} from './IntlVariations';
+import type { IntlFbtVariationTypeValue } from './IntlVariations';
 import type TranslationConfig from './TranslationConfig';
 
 /**
@@ -19,7 +19,7 @@ type Translation = {|
   id?: number,
   // Allow variation enum values to be stored in string or number type,
   // and we will parse it into IntlVariationEnumValue in config.isDefaultVariation()
-  variations: {[index: string]: number | string},
+  variations: { [index: string]: number | string },
 |};
 
 export type SerializedTranslationData = {|
@@ -37,21 +37,22 @@ class TranslationData {
   constructor(
     tokens: $ReadOnlyArray<string>,
     types: $ReadOnlyArray<IntlFbtVariationTypeValue>,
-    translations: $ReadOnlyArray<Translation>,
+    translations: $ReadOnlyArray<Translation>
   ) {
     this.tokens = tokens;
     this.types = types;
     this.translations = translations;
   }
 
-  static fromJSON: (json: ?SerializedTranslationData) => ?TranslationData =
-    json => {
-      if (json == null) {
-        // Hash key is logged to stderr in `processTranslations`
-        return null;
-      }
-      return new TranslationData(json.tokens, json.types, json.translations);
-    };
+  static fromJSON: (json: ?SerializedTranslationData) => ?TranslationData = (
+    json
+  ) => {
+    if (json == null) {
+      // Hash key is logged to stderr in `processTranslations`
+      return null;
+    }
+    return new TranslationData(json.tokens, json.types, json.translations);
+  };
 
   hasTranslation(): boolean {
     return this.translations.length > 0;

@@ -31,7 +31,7 @@ if (__DEV__) {
         enumerable: false,
         writable: false,
         value: 'foo',
-      },
+      }
     );
     canDefineProperty = true;
   } catch {
@@ -43,7 +43,7 @@ const FbtReactUtil = {
   REACT_ELEMENT_TYPE,
 
   injectReactShim(fbtResult: IFbtResultBase) {
-    const reactObj = {validated: true};
+    const reactObj = { validated: true };
 
     if (canDefineProperty) {
       Object.defineProperty(fbtResult, '_store', {

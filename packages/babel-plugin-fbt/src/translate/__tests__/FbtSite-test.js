@@ -6,9 +6,7 @@
  * @oncall i18n_fbt_js
  */
 
-jest.autoMockOff();
-
-const {FbtSite} = require('../FbtSite');
+const { FbtSite } = require('../FbtSite');
 
 describe('FbtSite: testing fromScan', () => {
   let fbtSite;

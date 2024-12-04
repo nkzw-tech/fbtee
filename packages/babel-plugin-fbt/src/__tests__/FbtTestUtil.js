@@ -10,11 +10,11 @@
 
 'use strict';
 
-const {SENTINEL} = require('../FbtConstants');
-const {transformSync} = require('@babel/core');
+const { SENTINEL } = require('../FbtConstants');
+const { transformSync } = require('@babel/core');
 const prettier = require('prettier');
 
-function payload(obj: {project: string}): string {
+function payload(obj: { project: string }): string {
   obj.project = obj.project || '';
   return JSON.stringify(`__FBT__${JSON.stringify(obj)}__FBT__`);
 }
@@ -37,10 +37,13 @@ function transform(source: string, pluginOptions: $FlowFixMe): string {
 }
 
 function snapshotTransform(source: string, pluginOptions: $FlowFixMe): string {
-  return transform(source, {fbtBase64: true, ...pluginOptions});
+  return transform(source, { fbtBase64: true, ...pluginOptions });
 }
 
-function transformKeepJsx(source: string, pluginOptions: $FlowFixMe): string {
+async function transformKeepJsx(
+  source: string,
+  pluginOptions: $FlowFixMe
+): string {
   return prettier.format(
     transformSync(source, {
       ast: false,
@@ -50,14 +53,14 @@ function transformKeepJsx(source: string, pluginOptions: $FlowFixMe): string {
       ],
       sourceType: 'module',
     }).code,
-    {parser: 'babel'},
+    { parser: 'babel' }
   );
 }
 
 const snapshotTransformKeepJsx = (
   source: string,
-  pluginOptions: $FlowFixMe,
-): string => transformKeepJsx(source, {fbtBase64: true, ...pluginOptions});
+  pluginOptions: $FlowFixMe
+): string => transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
 
 function withFbsRequireStatement(code: string): string {
   return `const fbs = require("fbs");
@@ -84,9 +87,9 @@ const jsCodeFbtCallSerializer = {
       (_match, _quote, body) => {
         const json = Buffer.from(body, 'base64').toString('utf8');
         return `/* ${SENTINEL} start */ ${json} /* ${SENTINEL} end */`;
-      },
+      }
     );
-    return prettier.format(decoded, {parser: 'babel'});
+    return prettier.format(decoded, { parser: 'babel' });
   },
 
   test(rawValue) {
@@ -105,7 +108,7 @@ const jsCodeNonASCIICharSerializer = {
   serialize(rawValue) {
     return JSON.stringify(rawValue).replace(
       nonASCIICharRegex,
-      char => '\\u' + char.charCodeAt().toString(16).padStart(4, '0'),
+      (char) => '\\u' + char.charCodeAt().toString(16).padStart(4, '0')
     );
   },
 
@@ -121,7 +124,6 @@ module.exports = {
   snapshotTransform,
   snapshotTransformKeepJsx,
   transform,
-  transformKeepJsx,
   withFbsRequireStatement,
   withFbtRequireStatement,
 };

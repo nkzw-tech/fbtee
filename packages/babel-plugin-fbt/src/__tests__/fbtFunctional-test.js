@@ -4,25 +4,26 @@
  * @format
  * @oncall i18n_fbt_js
  */
-/* eslint-disable fb-www/gender-neutral-language */
-
-jest.autoMockOff();
 
 const TestFbtEnumManifest = require('TestFbtEnumManifest');
 
-const {FbtVariationType} = require('../translate/IntlVariations');
-const {payload, transform, withFbtRequireStatement} = require('./FbtTestUtil');
-const {TestUtil} = require('fb-babel-plugin-utils');
+const { FbtVariationType } = require('../translate/IntlVariations');
+const {
+  payload,
+  transform,
+  withFbtRequireStatement,
+} = require('./FbtTestUtil');
+const { TestUtil } = require('fb-babel-plugin-utils');
 
 // Given a test config's "filter" status, decides whether we should run it with
 // jest's it/fit/xit function.
 // This is useful when you want to run only a subset of unit tests from a testData object.
-const {$it} = TestUtil;
+const { $it } = TestUtil;
 
 const generalTestData = {
   'should convert simple strings': {
     input: withFbtRequireStatement(
-      `var x = fbt('A simple string', "It's simple");`,
+      `var x = fbt('A simple string', "It's simple");`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -31,7 +32,7 @@ const generalTestData = {
           'A simple string',
         ],
         "It's simple",
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -45,13 +46,13 @@ const generalTestData = {
             m: [],
           },
         })},
-      );`,
+      );`
     ),
   },
 
   'should respect the doNotExtract option': {
     input: withFbtRequireStatement(
-      `var x = fbt('A doNotExtract string', "should not be extracted", {doNotExtract: true});`,
+      `var x = fbt('A doNotExtract string', "should not be extracted", {doNotExtract: true});`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -61,7 +62,7 @@ const generalTestData = {
         ],
         "should not be extracted",
         {doNotExtract: true}
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -75,7 +76,7 @@ const generalTestData = {
             m: [],
           },
         })},
-      );`,
+      );`
     ),
   },
 
@@ -85,7 +86,7 @@ const generalTestData = {
         'A short string',
         'With a ridiculously long description that' +
           ' requires concatenation',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -99,7 +100,7 @@ const generalTestData = {
             m: [],
           },
         })},
-      );`,
+      );`
     ),
   },
 
@@ -110,7 +111,7 @@ const generalTestData = {
         'with some other stuff.',
         'blah'
       );
-      baz();`,
+      baz();`
     ),
 
     output: withFbtRequireStatement(
@@ -125,7 +126,7 @@ const generalTestData = {
           },
         })},
       );
-      baz();`,
+      baz();`
     ),
   },
 
@@ -142,7 +143,7 @@ const generalTestData = {
         fbt.param('name2', val2) +
         ' e ',
         'a',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -157,7 +158,7 @@ const generalTestData = {
           fbt.param('name2', val2),
           ' e ',
         ], 'a',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -172,7 +173,7 @@ const generalTestData = {
           },
         })},
         [fbt._param('name1', val1), fbt._param('name2', val2)],
-      );`,
+      );`
     ),
   },
 
@@ -184,7 +185,7 @@ const generalTestData = {
         fbt.param('name', val2) +
         ' b',
         'desc',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -195,7 +196,7 @@ const generalTestData = {
           fbt.param('name', val2),
           ' b',
         ], 'desc',
-      );`,
+      );`
     ),
 
     throws: `There's already a token called "name" in this fbt call`,
@@ -217,7 +218,7 @@ const generalTestData = {
         fbt.param('name', fbt.param('name2', val2)) +
         ' b',
         'desc',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -227,7 +228,7 @@ const generalTestData = {
           fbt.param('name', fbt.param('name2', val2)),
           ' b',
         ], 'desc',
-      );`,
+      );`
     ),
 
     throws:
@@ -242,7 +243,7 @@ const generalTestData = {
         fbt.name('name', fbt.param('paramName', val2), gender) +
         ' b',
         'desc',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -252,7 +253,7 @@ const generalTestData = {
           fbt.name('name', fbt.param('paramName', val2), gender),
           ' b',
         ], 'desc',
-      );`,
+      );`
     ),
 
     throws:
@@ -275,7 +276,7 @@ const generalTestData = {
         ) +
         ' b',
         'desc',
-      );`,
+      );`
       ),
 
       inputWithArraySyntax: withFbtRequireStatement(
@@ -292,7 +293,7 @@ const generalTestData = {
           ),
           ' b',
         ], 'desc',
-      );`,
+      );`
       ),
 
       output: withFbtRequireStatement(
@@ -333,7 +334,7 @@ const generalTestData = {
             gender,
           ),
         ],
-      );`,
+      );`
       ),
     },
 
@@ -354,7 +355,7 @@ const generalTestData = {
           ' blah ' +
           fbt.param('name2', qux),
         'a',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -373,7 +374,7 @@ const generalTestData = {
           ' blah ',
           fbt.param('name2', qux),
         ], 'a',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -400,19 +401,19 @@ const generalTestData = {
           ),
           fbt._param('name2', qux),
         ],
-      );`,
+      );`
     ),
   },
 
   'should be able to nest within React nodes': {
     input: withFbtRequireStatement(
       `var React = require('react');
-      var x = <div>{fbt('A nested string', 'nested!')}</div>;`,
+      var x = <div>{fbt('A nested string', 'nested!')}</div>;`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
       `var React = require('react');
-      var x = <div>{fbt(['A nested string'], 'nested!')}</div>;`,
+      var x = <div>{fbt(['A nested string'], 'nested!')}</div>;`
     ),
 
     output: withFbtRequireStatement(
@@ -431,7 +432,7 @@ const generalTestData = {
             },
           })},
         ),
-      );`,
+      );`
     ),
   },
 
@@ -460,7 +461,7 @@ const generalTestData = {
         {
           subject: subjectValue,
         }
-      );`,
+      );`
     ),
 
     output: `
@@ -474,10 +475,10 @@ const generalTestData = {
               '*': {
                 desc: 'string with nested JSX fragments',
                 text: 'A1 {=B1 C1 [paramName] C2 B2} A2',
-                tokenAliases: {'=B1 C1 [paramName] C2 B2': '=m1'},
+                tokenAliases: { '=B1 C1 [paramName] C2 B2': '=m1' },
               },
             },
-            m: [{token: '__subject__', type: 1}],
+            m: [{ token: '__subject__', type: 1 }],
           },
         })},
         [
@@ -494,10 +495,10 @@ const generalTestData = {
                       '*': {
                         desc: 'In the phrase: "A1 {=B1 C1 [paramName] C2 B2} A2"',
                         text: 'B1 {=C1 [paramName] C2} B2',
-                        tokenAliases: {'=C1 [paramName] C2': '=m1'},
+                        tokenAliases: { '=C1 [paramName] C2': '=m1' },
                       },
                     },
-                    m: [{token: '__subject__', type: 1}],
+                    m: [{ token: '__subject__', type: 1 }],
                   },
                 })},
                 [
@@ -516,7 +517,7 @@ const generalTestData = {
                                 text: 'C1 {paramName} C2',
                               },
                             },
-                            m: [{token: '__subject__', type: 1}],
+                            m: [{ token: '__subject__', type: 1 }],
                           },
                         })},
                         [
@@ -558,7 +559,7 @@ const generalTestData = {
             </a>
             with you
           </fbt>;
-        }`,
+        }`
       ),
 
       output: withFbtRequireStatement(
@@ -586,12 +587,12 @@ const generalTestData = {
                     '*': {
                       desc: 'example 1',
                       text: '{name} has shared {=[number] photos} with you',
-                      tokenAliases: {'=[number] photos': '=m2'},
+                      tokenAliases: { '=[number] photos': '=m2' },
                     },
                     _1: {
                       desc: 'example 1',
                       text: '{name} has shared {=a photo} with you',
-                      tokenAliases: {'=a photo': '=m2'},
+                      tokenAliases: { '=a photo': '=m2' },
                     },
                   },
                 },
@@ -630,12 +631,12 @@ const generalTestData = {
                             '*': {
                               desc: 'In the phrase: "{name} has shared {=[number] photos} with you"',
                               text: '{=[number] photos}',
-                              tokenAliases: {'=[number] photos': '=m1'},
+                              tokenAliases: { '=[number] photos': '=m1' },
                             },
                             _1: {
                               desc: 'In the phrase: "{name} has shared {=a photo} with you"',
                               text: '{=a photo}',
-                              tokenAliases: {'=a photo': '=m1'},
+                              tokenAliases: { '=a photo': '=m1' },
                             },
                           },
                         },
@@ -703,7 +704,7 @@ const generalTestData = {
               )
             ]
           ));
-        }`,
+        }`
       ),
     },
 
@@ -727,7 +728,7 @@ const generalTestData = {
           </strong>
         </a>
         with you
-      </fbt>;`,
+      </fbt>;`
     ),
 
     output: `
@@ -753,12 +754,12 @@ const generalTestData = {
                 '*': {
                   desc: 'example 1',
                   text: '{name} has shared {=[number] photos} with you',
-                  tokenAliases: {'=[number] photos': '=m2'},
+                  tokenAliases: { '=[number] photos': '=m2' },
                 },
                 _1: {
                   desc: 'example 1',
                   text: '{name} has shared {=a photo} with you',
-                  tokenAliases: {'=a photo': '=m2'},
+                  tokenAliases: { '=a photo': '=m2' },
                 },
               },
             },
@@ -797,12 +798,12 @@ const generalTestData = {
                         '*': {
                           desc: 'In the phrase: "{name} has shared {=[number] photos} with you"',
                           text: '{=[number] photos}',
-                          tokenAliases: {'=[number] photos': '=m1'},
+                          tokenAliases: { '=[number] photos': '=m1' },
                         },
                         _1: {
                           desc: 'In the phrase: "{name} has shared {=a photo} with you"',
                           text: '{=a photo}',
-                          tokenAliases: {'=a photo': '=m1'},
+                          tokenAliases: { '=a photo': '=m1' },
                         },
                       },
                     },
@@ -895,7 +896,7 @@ const generalTestData = {
               human="true" />
           </strong>
         </a>
-      </fbt>;`,
+      </fbt>;`
     ),
     output: `
       var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3;
@@ -920,7 +921,7 @@ const generalTestData = {
               today: {
                 '*': {
                   '*': {
-                    '1': {
+                    1: {
                       desc: 'example 1',
                       text: '{=today}, {name} has shared {=[number] photos with her}',
                       tokenAliases: {
@@ -928,7 +929,7 @@ const generalTestData = {
                         '=[number] photos with her': '=m4',
                       },
                     },
-                    '2': {
+                    2: {
                       desc: 'example 1',
                       text: '{=today}, {name} has shared {=[number] photos with him}',
                       tokenAliases: {
@@ -946,7 +947,7 @@ const generalTestData = {
                     },
                   },
                   _1: {
-                    '1': {
+                    1: {
                       desc: 'example 1',
                       text: '{=today}, {name} has shared {=a photo with her}',
                       tokenAliases: {
@@ -954,7 +955,7 @@ const generalTestData = {
                         '=a photo with her': '=m4',
                       },
                     },
-                    '2': {
+                    2: {
                       desc: 'example 1',
                       text: '{=today}, {name} has shared {=a photo with him}',
                       tokenAliases: {
@@ -976,7 +977,7 @@ const generalTestData = {
               yesterday: {
                 '*': {
                   '*': {
-                    '1': {
+                    1: {
                       desc: 'example 1',
                       text: '{=yesterday}, {name} has shared {=[number] photos with her}',
                       tokenAliases: {
@@ -984,7 +985,7 @@ const generalTestData = {
                         '=[number] photos with her': '=m4',
                       },
                     },
-                    '2': {
+                    2: {
                       desc: 'example 1',
                       text: '{=yesterday}, {name} has shared {=[number] photos with him}',
                       tokenAliases: {
@@ -1002,7 +1003,7 @@ const generalTestData = {
                     },
                   },
                   _1: {
-                    '1': {
+                    1: {
                       desc: 'example 1',
                       text: '{=yesterday}, {name} has shared {=a photo with her}',
                       tokenAliases: {
@@ -1010,7 +1011,7 @@ const generalTestData = {
                         '=a photo with her': '=m4',
                       },
                     },
-                    '2': {
+                    2: {
                       desc: 'example 1',
                       text: '{=yesterday}, {name} has shared {=a photo with him}',
                       tokenAliases: {
@@ -1032,8 +1033,8 @@ const generalTestData = {
             },
             m: [
               null,
-              {token: 'name', type: 1},
-              {token: 'number', type: 2, singular: true},
+              { token: 'name', type: 1 },
+              { token: 'number', type: 2, singular: true },
               null,
             ],
           },
@@ -1056,11 +1057,11 @@ const generalTestData = {
                     today: {
                       '*': {
                         '*': {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=[number] photos with her}"',
                             text: 'today',
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=[number] photos with him}"',
                             text: 'today',
                           },
@@ -1070,11 +1071,11 @@ const generalTestData = {
                           },
                         },
                         _1: {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=a photo with her}"',
                             text: 'today',
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=a photo with him}"',
                             text: 'today',
                           },
@@ -1088,11 +1089,11 @@ const generalTestData = {
                     yesterday: {
                       '*': {
                         '*': {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=[number] photos with her}"',
                             text: 'yesterday',
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=[number] photos with him}"',
                             text: 'yesterday',
                           },
@@ -1102,11 +1103,11 @@ const generalTestData = {
                           },
                         },
                         _1: {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=a photo with her}"',
                             text: 'yesterday',
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=a photo with him}"',
                             text: 'yesterday',
                           },
@@ -1120,8 +1121,8 @@ const generalTestData = {
                   },
                   m: [
                     null,
-                    {token: 'name', type: 1},
-                    {token: 'number', type: 2, singular: true},
+                    { token: 'name', type: 1 },
+                    { token: 'number', type: 2, singular: true },
                     null,
                   ],
                 },
@@ -1149,37 +1150,37 @@ const generalTestData = {
                     today: {
                       '*': {
                         '*': {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=[number] photos with her}"',
                             text: '{number} photos with {=her}',
-                            tokenAliases: {'=her': '=m4'},
+                            tokenAliases: { '=her': '=m4' },
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=[number] photos with him}"',
                             text: '{number} photos with {=him}',
-                            tokenAliases: {'=him': '=m4'},
+                            tokenAliases: { '=him': '=m4' },
                           },
                           '*': {
                             desc: 'In the phrase: "{=today}, {name} has shared {=[number] photos with them}"',
                             text: '{number} photos with {=them}',
-                            tokenAliases: {'=them': '=m4'},
+                            tokenAliases: { '=them': '=m4' },
                           },
                         },
                         _1: {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=a photo with her}"',
                             text: 'a photo with {=her}',
-                            tokenAliases: {'=her': '=m4'},
+                            tokenAliases: { '=her': '=m4' },
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=today}, {name} has shared {=a photo with him}"',
                             text: 'a photo with {=him}',
-                            tokenAliases: {'=him': '=m4'},
+                            tokenAliases: { '=him': '=m4' },
                           },
                           '*': {
                             desc: 'In the phrase: "{=today}, {name} has shared {=a photo with them}"',
                             text: 'a photo with {=them}',
-                            tokenAliases: {'=them': '=m4'},
+                            tokenAliases: { '=them': '=m4' },
                           },
                         },
                       },
@@ -1187,37 +1188,37 @@ const generalTestData = {
                     yesterday: {
                       '*': {
                         '*': {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=[number] photos with her}"',
                             text: '{number} photos with {=her}',
-                            tokenAliases: {'=her': '=m4'},
+                            tokenAliases: { '=her': '=m4' },
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=[number] photos with him}"',
                             text: '{number} photos with {=him}',
-                            tokenAliases: {'=him': '=m4'},
+                            tokenAliases: { '=him': '=m4' },
                           },
                           '*': {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=[number] photos with them}"',
                             text: '{number} photos with {=them}',
-                            tokenAliases: {'=them': '=m4'},
+                            tokenAliases: { '=them': '=m4' },
                           },
                         },
                         _1: {
-                          '1': {
+                          1: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=a photo with her}"',
                             text: 'a photo with {=her}',
-                            tokenAliases: {'=her': '=m4'},
+                            tokenAliases: { '=her': '=m4' },
                           },
-                          '2': {
+                          2: {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=a photo with him}"',
                             text: 'a photo with {=him}',
-                            tokenAliases: {'=him': '=m4'},
+                            tokenAliases: { '=him': '=m4' },
                           },
                           '*': {
                             desc: 'In the phrase: "{=yesterday}, {name} has shared {=a photo with them}"',
                             text: 'a photo with {=them}',
-                            tokenAliases: {'=them': '=m4'},
+                            tokenAliases: { '=them': '=m4' },
                           },
                         },
                       },
@@ -1225,8 +1226,8 @@ const generalTestData = {
                   },
                   m: [
                     null,
-                    {token: 'name', type: 1},
-                    {token: 'number', type: 2, singular: true},
+                    { token: 'name', type: 1 },
+                    { token: 'number', type: 2, singular: true },
                     null,
                   ],
                 },
@@ -1249,11 +1250,11 @@ const generalTestData = {
                             today: {
                               '*': {
                                 '*': {
-                                  '1': {
+                                  1: {
                                     desc: 'In the phrase: "{=today}, {name} has shared {number} photos with {=her}"',
                                     text: 'her',
                                   },
-                                  '2': {
+                                  2: {
                                     desc: 'In the phrase: "{=today}, {name} has shared {number} photos with {=him}"',
                                     text: 'him',
                                   },
@@ -1263,11 +1264,11 @@ const generalTestData = {
                                   },
                                 },
                                 _1: {
-                                  '1': {
+                                  1: {
                                     desc: 'In the phrase: "{=today}, {name} has shared a photo with {=her}"',
                                     text: 'her',
                                   },
-                                  '2': {
+                                  2: {
                                     desc: 'In the phrase: "{=today}, {name} has shared a photo with {=him}"',
                                     text: 'him',
                                   },
@@ -1281,11 +1282,11 @@ const generalTestData = {
                             yesterday: {
                               '*': {
                                 '*': {
-                                  '1': {
+                                  1: {
                                     desc: 'In the phrase: "{=yesterday}, {name} has shared {number} photos with {=her}"',
                                     text: 'her',
                                   },
-                                  '2': {
+                                  2: {
                                     desc: 'In the phrase: "{=yesterday}, {name} has shared {number} photos with {=him}"',
                                     text: 'him',
                                   },
@@ -1295,11 +1296,11 @@ const generalTestData = {
                                   },
                                 },
                                 _1: {
-                                  '1': {
+                                  1: {
                                     desc: 'In the phrase: "{=yesterday}, {name} has shared a photo with {=her}"',
                                     text: 'her',
                                   },
-                                  '2': {
+                                  2: {
                                     desc: 'In the phrase: "{=yesterday}, {name} has shared a photo with {=him}"',
                                     text: 'him',
                                   },
@@ -1313,8 +1314,8 @@ const generalTestData = {
                           },
                           m: [
                             null,
-                            {token: 'name', type: 1},
-                            {token: 'number', type: 2, singular: true},
+                            { token: 'name', type: 1 },
+                            { token: 'number', type: 2, singular: true },
                             null,
                           ],
                         },
@@ -1346,7 +1347,7 @@ const generalTestData = {
           ' ',
           <a>world</a>,
         ], 'token name collision due to autoparam',
-      );`,
+      );`
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -1364,7 +1365,7 @@ const generalTestData = {
             fbt.enum(value, ['world'])
           }</a>,
         ], 'token name collision due to autoparam',
-      );`,
+      );`
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -1380,7 +1381,7 @@ const generalTestData = {
           ' ',
           fbt.param('=world', value),
         ], 'token name collision due to autoparam',
-      );`,
+      );`
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -1398,7 +1399,7 @@ const generalTestData = {
             {fbt.plural('world', value)}
           </b>,
         ], 'token name collision due to autoparam',
-      );`,
+      );`
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -1410,7 +1411,7 @@ const generalTestData = {
         'A parameterized message to ' +
           fbt.param('personName', truthy ? ifTrue : ifFalse),
         'Moar params',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1420,7 +1421,7 @@ const generalTestData = {
           fbt.param('personName', truthy ? ifTrue : ifFalse),
         ],
         'Moar params',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1435,7 +1436,7 @@ const generalTestData = {
           },
         })},
         [fbt._param('personName', truthy ? ifTrue : ifFalse)],
-      );`,
+      );`
     ),
   },
 
@@ -1444,14 +1445,14 @@ const generalTestData = {
       `fbt('A string that moved files', 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
-      });`,
+      });`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
       `fbt(['A string that moved files'], 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
-      });`,
+      });`
     ),
 
     output: withFbtRequireStatement(
@@ -1466,7 +1467,7 @@ const generalTestData = {
           },
           project: 'Super Secret',
         })},
-      );`,
+      );`
     ),
   },
 
@@ -1475,7 +1476,7 @@ const generalTestData = {
       `var x = fbt(
         'Click to see ' + fbt.enum('groups', ['groups', 'photos', 'videos']),
         'enum as an array',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1485,7 +1486,7 @@ const generalTestData = {
           fbt.enum('groups', ['groups', 'photos', 'videos']),
         ],
         'enum as an array',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1516,7 +1517,7 @@ const generalTestData = {
             "videos": 'videos',
           }),
         ],
-      );`,
+      );`
     ),
   },
 
@@ -1526,7 +1527,7 @@ const generalTestData = {
         'Click to see ' +
           fbt.enum('id1', {id1: 'groups', id2: 'photos', id3: 'videos'}),
         'enum as an object',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1536,7 +1537,7 @@ const generalTestData = {
           fbt.enum('id1', {id1: 'groups', id2: 'photos', id3: 'videos'}),
         ],
         'enum as an object',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1567,7 +1568,7 @@ const generalTestData = {
             "id3": 'videos'
           })
         ],
-      );`,
+      );`
     ),
   },
 
@@ -1579,7 +1580,7 @@ const generalTestData = {
       var x = fbt(
         'Click to see ' + fbt.enum('id1', aEnum),
         'enum as an array',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1590,7 +1591,7 @@ const generalTestData = {
           fbt.enum('id1', aEnum),
         ],
         'enum as an array',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1616,7 +1617,7 @@ const generalTestData = {
           },
         })},
         [fbt._enum('id1', aEnum)],
-      );`,
+      );`
     ),
   },
 
@@ -1627,7 +1628,7 @@ const generalTestData = {
         ' and ' +
         fbt.plural('dog', dogCount, {name: 'dog_token', showCount: 'yes'}),
         'plurals',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1638,7 +1639,7 @@ const generalTestData = {
           fbt.plural('dog', dogCount, {name: 'dog_token', showCount: 'yes'}),
         ],
         'plurals',
-      )`,
+      )`
     ),
 
     output: withFbtRequireStatement(
@@ -1686,7 +1687,7 @@ const generalTestData = {
           fbt._plural(catCount, 'cat_token'),
           fbt._plural(dogCount, 'dog_token'),
         ],
-      );`,
+      );`
     ),
   },
 
@@ -1697,7 +1698,7 @@ const generalTestData = {
           fbt.plural('was ', count, {showCount: 'no', many: 'were '}) +
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         'plurals',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1708,7 +1709,7 @@ const generalTestData = {
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         ],
         'plurals',
-      )`,
+      )`
     ),
 
     output: withFbtRequireStatement(
@@ -1740,7 +1741,7 @@ const generalTestData = {
           },
         })},
         [fbt._plural(count), fbt._plural(count, 'number')],
-      );`,
+      );`
     ),
   },
 
@@ -1751,7 +1752,7 @@ const generalTestData = {
         fbt.plural('is ', count, {many: 'are '}) +
         fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         'plurals',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1761,7 +1762,7 @@ const generalTestData = {
           fbt.plural('is ', count, {many: 'are '}),
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         ], 'plurals',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1793,7 +1794,7 @@ const generalTestData = {
           },
         })},
         [fbt._plural(count), fbt._plural(count, 'number')],
-      );`,
+      );`
     ),
   },
 
@@ -1802,7 +1803,7 @@ const generalTestData = {
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {showCount: 'badkey'}),
         'plurals',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1811,7 +1812,7 @@ const generalTestData = {
           'There were ',
           fbt.plural('a like', count, {showCount: 'badkey'}),
         ], 'plurals',
-      );`,
+      );`
     ),
 
     throws: `Option "showCount" has an invalid value: "badkey". Only allowed: yes, no, ifMany`,
@@ -1822,7 +1823,7 @@ const generalTestData = {
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {whatisthis: 'huh?'}),
         'plurals',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1831,7 +1832,7 @@ const generalTestData = {
           'There were ',
           fbt.plural('a like', count, {whatisthis: 'huh?'}),
         ], 'plurals',
-      );`,
+      );`
     ),
 
     throws: `Invalid option "whatisthis". Only allowed: value, showCount, name, many, count`,
@@ -1842,7 +1843,7 @@ const generalTestData = {
       `var x = fbt(
         'You just friended ' + fbt.name('name', personname, gender),
         'names',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1851,7 +1852,7 @@ const generalTestData = {
           'You just friended ',
           fbt.name('name', personname, gender),
         ], 'names',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1873,7 +1874,7 @@ const generalTestData = {
           },
         })},
         [fbt._name('name', personname, gender)],
-      );`,
+      );`
     ),
   },
 
@@ -1882,7 +1883,7 @@ const generalTestData = {
       `var x = fbt(
         'Click to see ' + fbt.param('count', c, {number: true}) + ' links',
         'variations!',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1892,7 +1893,7 @@ const generalTestData = {
           fbt.param('count', c, {number: true}),
           ' links',
         ], 'variations!',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -1914,7 +1915,7 @@ const generalTestData = {
           },
         })},
         [fbt._param('count', c, [0])],
-      );`,
+      );`
     ),
   },
 
@@ -1923,7 +1924,7 @@ const generalTestData = {
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name2'),
         'd',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1933,7 +1934,7 @@ const generalTestData = {
           ' and ',
           fbt.sameParam('name2'),
         ], 'd',
-      );`,
+      );`
     ),
 
     throws:
@@ -1953,7 +1954,7 @@ const generalTestData = {
             {fbt.sameParam('name1')}
           </b>,
         ], 'd',
-      );`,
+      );`
       ),
 
       throws:
@@ -1966,7 +1967,7 @@ const generalTestData = {
       `var z = fbt(
         fbt.plural('cat', count, {value: someValueFunction(), name: 'tokenName', showCount: 'yes'}) + ' and ' + fbt.sameParam('tokenName'),
         'd',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1976,7 +1977,7 @@ const generalTestData = {
           ' and ',
           fbt.sameParam('tokenName'),
         ], 'd',
-      );`,
+      );`
     ),
 
     throws:
@@ -1989,7 +1990,7 @@ const generalTestData = {
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name1'),
         'd',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1999,7 +2000,7 @@ const generalTestData = {
           ' and ',
           fbt.sameParam('name1'),
         ], 'd',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2014,7 +2015,7 @@ const generalTestData = {
           },
         })},
         [fbt._param('name1', val1)],
-      );`,
+      );`
     ),
   },
 
@@ -2028,7 +2029,7 @@ const generalTestData = {
         fbt.sameParam('count') +
         ' likes',
         'test variations + sameParam',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2041,7 +2042,7 @@ const generalTestData = {
           fbt.sameParam('count'),
           ' likes',
         ], 'test variations + sameParam',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2064,19 +2065,19 @@ const generalTestData = {
           },
         })},
         [fbt._param('count', val, [0])],
-      );`,
+      );`
     ),
   },
 
   'should get project from docblock': {
     input: `/** @fbt {"project": "dev"}*/
       ${withFbtRequireStatement(
-        `var x = fbt('Also simple string', "It's simple");`,
+        `var x = fbt('Also simple string', "It's simple");`
       )}`,
 
     inputWithArraySyntax: `/** @fbt {"project": "dev"}*/
       ${withFbtRequireStatement(
-        `var x = fbt(['Also simple string'], "It's simple");`,
+        `var x = fbt(['Also simple string'], "It's simple");`
       )}`,
 
     output: `/** @fbt {"project": "dev"}*/
@@ -2092,7 +2093,7 @@ const generalTestData = {
             },
             project: 'dev',
           })},
-        );`,
+        );`
       )}`,
   },
 
@@ -2100,7 +2101,7 @@ const generalTestData = {
     input: withFbtRequireStatement(
       `var x = fbt('foo' + 'bar' + 'baz' + 'qux', 'desc');
       var y = fbt('foo' + ('bar' + 'baz' + 'qux'), 'desc');
-      var q = fbt('foo' + 'bar' + ('baz' + 'qux'), 'desc');`,
+      var q = fbt('foo' + 'bar' + ('baz' + 'qux'), 'desc');`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2127,7 +2128,7 @@ const generalTestData = {
           ('baz'),
           ('qux'),
         ], 'desc'
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2163,7 +2164,7 @@ const generalTestData = {
             m: [],
           },
         })},
-      );`,
+      );`
     ),
   },
 
@@ -2172,7 +2173,7 @@ const generalTestData = {
       `var x = fbt(
         'Hello, ' + fbt.enum('groups', ['groups', 'photos', 'videos']) + '!',
         'enums!',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2182,7 +2183,7 @@ const generalTestData = {
           fbt.enum('groups', ['groups', 'photos', 'videos']),
           '!',
         ], 'enums!',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2213,7 +2214,7 @@ const generalTestData = {
             "videos": 'videos',
           }),
         ],
-      );`,
+      );`
     ),
   },
 
@@ -2234,7 +2235,7 @@ const generalTestData = {
           }) +
           '!',
         'enums!',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2255,7 +2256,7 @@ const generalTestData = {
           '!',
         ],
         'enums!',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2286,7 +2287,7 @@ const generalTestData = {
             "videos": 'Videos',
           }),
         ],
-      );`,
+      );`
     ),
   },
 
@@ -2297,7 +2298,7 @@ const generalTestData = {
             fbt.pronoun('object', gender) +
             '.',
           'object pronoun',
-        );`,
+        );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2308,7 +2309,7 @@ const generalTestData = {
             '.'
           ],
           'object pronoun',
-        );`,
+        );`
     ),
 
     output: withFbtRequireStatement(
@@ -2316,15 +2317,15 @@ const generalTestData = {
         ${payload({
           jsfbt: {
             t: {
-              '0': {
+              0: {
                 desc: 'object pronoun',
                 text: 'I know this.',
               },
-              '1': {
+              1: {
                 desc: 'object pronoun',
                 text: 'I know her.',
               },
-              '2': {
+              2: {
                 desc: 'object pronoun',
                 text: 'I know him.',
               },
@@ -2337,7 +2338,7 @@ const generalTestData = {
           },
         })},
         [fbt._pronoun(0, gender)],
-      );`,
+      );`
     ),
   },
 
@@ -2351,7 +2352,7 @@ const generalTestData = {
             fbt.pronoun('reflexive', gender, {human: true}) +
             ' a happy birthday.',
           'subject+reflexive pronouns',
-        );`,
+        );`
       ),
 
     inputWithArraySyntax:
@@ -2364,7 +2365,7 @@ const generalTestData = {
             fbt.pronoun('reflexive', gender, {human: true}),
             ' a happy birthday.'
           ], 'subject+reflexive pronouns',
-        );`,
+        );`
       ),
 
     output: withFbtRequireStatement(
@@ -2372,14 +2373,14 @@ const generalTestData = {
         ${payload({
           jsfbt: {
             t: {
-              '1': {
-                '1': {
+              1: {
+                1: {
                   desc: 'subject+reflexive pronouns',
                   text: 'She wished herself a happy birthday.',
                 },
               },
-              '2': {
-                '2': {
+              2: {
+                2: {
                   desc: 'subject+reflexive pronouns',
                   text: 'He wished himself a happy birthday.',
                 },
@@ -2398,7 +2399,7 @@ const generalTestData = {
           fbt._pronoun(3, gender, {human: 1}),
           fbt._pronoun(2, gender, {human: 1})
         ],
-      );`,
+      );`
     ),
   },
 
@@ -2409,7 +2410,7 @@ const generalTestData = {
         `var x = fbt(
           'It is ' + fbt.pronoun('possessive', gender) + ' birthday.',
           'possessive pronoun',
-        );`,
+        );`
       ),
 
     inputWithArraySyntax:
@@ -2421,7 +2422,7 @@ const generalTestData = {
             fbt.pronoun('possessive', gender),
             ' birthday.'
           ], 'possessive pronoun',
-        );`,
+        );`
       ),
 
     output: withFbtRequireStatement(
@@ -2429,11 +2430,11 @@ const generalTestData = {
         ${payload({
           jsfbt: {
             t: {
-              '1': {
+              1: {
                 desc: 'possessive pronoun',
                 text: 'It is her birthday.',
               },
-              '2': {
+              2: {
                 desc: 'possessive pronoun',
                 text: 'It is his birthday.',
               },
@@ -2446,7 +2447,7 @@ const generalTestData = {
           },
         })},
         [fbt._pronoun(1, gender)],
-      );`,
+      );`
     ),
   },
 
@@ -2458,7 +2459,7 @@ const generalTestData = {
         var x = fbt(
           'It is ' + fbt.pronoun(u, gender) + ' birthday.',
           'throw not StringLiteral',
-        );`,
+        );`
       ),
 
     inputWithArraySyntax:
@@ -2471,7 +2472,7 @@ const generalTestData = {
             fbt.pronoun(u, gender),
             ' birthday.',
           ], 'throw not StringLiteral',
-        );`,
+        );`
       ),
 
     throws:
@@ -2485,7 +2486,7 @@ const generalTestData = {
         `var x = fbt(
           'It is ' + fbt.pronoun('POSSESSION', gender) + ' birthday.',
           'throw because of unknown pronoun type',
-        );`,
+        );`
       ),
 
     inputWithArraySyntax:
@@ -2497,7 +2498,7 @@ const generalTestData = {
             fbt.pronoun('POSSESSION', gender),
             ' birthday.'
           ], 'throw because of unknown pronoun type',
-        );`,
+        );`
       ),
 
     throws:
@@ -2513,7 +2514,7 @@ const generalTestData = {
           [
             'It is ' + fbt.pronoun('possessive', gender) + ' birthday.'
           ], 'throw because fbt constructs should be used as array items only',
-        );`,
+        );`
       ),
 
       throws:
@@ -2541,7 +2542,7 @@ const generalTestData = {
           {
             subject: subjectValue(),
           }
-        );`,
+        );`
       ),
 
       throws:
@@ -2567,7 +2568,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2592,7 +2593,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2617,7 +2618,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2642,7 +2643,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2667,7 +2668,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2692,7 +2693,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2718,7 +2719,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       throws:
@@ -2746,7 +2747,7 @@ const generalTestData = {
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`,
+        );`
       ),
 
       output: `var fbt_sv_arg_0, fbt_sv_arg_1;
@@ -2769,13 +2770,13 @@ const generalTestData = {
                 _1: {
                   desc: 'string with nested JSX fragments',
                   text: 'A1 {=B1 C1 [count] C2 cat B2} A2',
-                  tokenAliases: {'=B1 C1 [count] C2 cat B2': '=m1'},
+                  tokenAliases: { '=B1 C1 [count] C2 cat B2': '=m1' },
                 },
               },
             },
             m: [
-              {token: 'count', type: 2},
-              {token: 'cat_token', type: 2, singular: true},
+              { token: 'count', type: 2 },
+              { token: 'cat_token', type: 2, singular: true },
             ],
           },
           project: '',
@@ -2791,22 +2792,24 @@ const generalTestData = {
                     '*': {
                       desc: 'In the phrase: "A1 {=B1 C1 [count] C2 [cat_token] cats B2} A2"',
                       text: 'B1 {=C1 [count] C2 [cat_token] cats} B2',
-                      tokenAliases: {'=C1 [count] C2 [cat_token] cats': '=m1'},
+                      tokenAliases: {
+                        '=C1 [count] C2 [cat_token] cats': '=m1',
+                      },
                     },
                     _1: {
                       desc: 'In the phrase: "A1 {=B1 C1 [count] C2 cat B2} A2"',
                       text: 'B1 {=C1 [count] C2 cat} B2',
-                      tokenAliases: {'=C1 [count] C2 cat': '=m1'},
+                      tokenAliases: { '=C1 [count] C2 cat': '=m1' },
                     },
                   },
                 },
                 m: [
-                  {token: 'count', type: 2},
-                  {token: 'cat_token', type: 2, singular: true},
+                  { token: 'count', type: 2 },
+                  { token: 'cat_token', type: 2, singular: true },
                 ],
               },
               project: '',
-            },
+            }
           )},
           [
             fbt_sv_arg_0,
@@ -2827,12 +2830,12 @@ const generalTestData = {
                     },
                   },
                   m: [
-                    {token: 'count', type: 2},
-                    {token: 'cat_token', type: 2, singular: true},
+                    { token: 'count', type: 2 },
+                    { token: 'cat_token', type: 2, singular: true },
                   ],
                 },
                 project: '',
-              },
+              }
             )}, [fbt_sv_arg_0, fbt_sv_arg_1])))])))]));`,
     },
 
@@ -2846,7 +2849,7 @@ const generalTestData = {
 with some other stuff.\`,
         'blah',
       );
-      baz();`,
+      baz();`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2857,7 +2860,7 @@ with some other stuff.\`
         ],
         'blah',
       );
-      baz();`,
+      baz();`
     ),
 
     output: withFbtRequireStatement(
@@ -2872,7 +2875,7 @@ with some other stuff.\`
           },
         })},
       );
-      baz();`,
+      baz();`
     ),
   },
 
@@ -2890,7 +2893,7 @@ with some other stuff.\`
             "videos": 'videos',
           })}!\`,
           'enums!',
-        );`,
+        );`
       ),
 
       output: withFbtRequireStatement(
@@ -2921,7 +2924,7 @@ with some other stuff.\`
             "videos": 'Videos',
           }),
         ],
-      );`,
+      );`
       ),
     },
 
@@ -2942,7 +2945,7 @@ with some other stuff.\`
           }) +
           '!',
         'enums!',
-      );`,
+      );`
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2962,7 +2965,7 @@ with some other stuff.\`
           }),
           '!'
         ], 'enums!',
-      );`,
+      );`
     ),
 
     output: withFbtRequireStatement(
@@ -2993,7 +2996,7 @@ with some other stuff.\`
             "videos": 'Videos',
           }),
         ],
-      );`,
+      );`
     ),
   },
 };
@@ -3017,7 +3020,7 @@ function describeTestScenarios(testData) {
   describe('Translation transform', () => {
     const filteredTestData = {};
     for (const title in testData) {
-      const scenario = {...testData[title]};
+      const scenario = { ...testData[title] };
       if (scenario.runWithTestFbtEnumManifest) {
         scenario.options = {
           fbtEnumManifest: scenario.runWithTestFbtEnumManifest,
@@ -3064,7 +3067,7 @@ function describeTestScenarios(testData) {
           };
           transform(singleTestData.input, pluginOptions);
           expect(fbtTransform.getExtractedStrings()).toMatchSnapshot();
-        }),
+        })
       );
     }
 
@@ -3073,7 +3076,7 @@ function describeTestScenarios(testData) {
     });
 
     describe('should collect correct meta data (react native)', () => {
-      forEachTestScenario(testFbtMetaData, {reactNativeMode: true});
+      forEachTestScenario(testFbtMetaData, { reactNativeMode: true });
     });
 
     function testFbtNodeCreation(title, singleTestData, options) {
@@ -3083,7 +3086,7 @@ function describeTestScenarios(testData) {
           const FbtFunctionCallProcessor = require('../babel-processors/FbtFunctionCallProcessor');
           const spy = jest.spyOn(
             FbtFunctionCallProcessor.prototype,
-            '_convertToFbtNode',
+            '_convertToFbtNode'
           );
 
           const pluginOptions = {
@@ -3100,7 +3103,7 @@ function describeTestScenarios(testData) {
               expect(result.value).toMatchSnapshot();
             }
           }
-        }),
+        })
       );
     }
 
@@ -3109,7 +3112,7 @@ function describeTestScenarios(testData) {
     });
 
     describe('should create correct FbtNode objects (react native)', () => {
-      forEachTestScenario(testFbtNodeCreation, {reactNativeMode: true});
+      forEachTestScenario(testFbtNodeCreation, { reactNativeMode: true });
     });
   });
 }

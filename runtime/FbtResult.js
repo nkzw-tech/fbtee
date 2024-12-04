@@ -15,8 +15,8 @@
  */
 
 // flowlint ambiguous-object-type:error
-import type { FbtResolvedPayload } from './FbtHooks';
 import type { RefSetter } from 'react';
+import type { FbtResolvedPayload } from './FbtHooks';
 
 const FbtReactUtil = require('./FbtReactUtil');
 const FbtResultBase = require('./FbtResultBase');

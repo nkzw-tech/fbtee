@@ -2,8 +2,20 @@
   "name": "@fbtjs/default-collection-transform",
   "version": "1.0.0",
   "description": "The default collection transform to run for FBT collection",
+  "keywords": [
+    "fbt"
+  ],
+  "homepage": "https://github.com/facebook/fbt#readme",
+  "bugs": {
+    "url": "https://github.com/facebook/fbt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/fbt.git"
+  },
   "license": "MIT",
   "main": "index.js",
+  "scripts": {},
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/generator": "^7.0.0",
@@ -19,17 +31,5 @@
   },
   "peerDependencies": {
     "babel-plugin-fbt": "^1.0.0"
-  },
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/facebook/fbt.git"
-  },
-  "keywords": [
-    "fbt"
-  ],
-  "bugs": {
-    "url": "https://github.com/facebook/fbt/issues"
-  },
-  "homepage": "https://github.com/facebook/fbt#readme"
+  }
 }

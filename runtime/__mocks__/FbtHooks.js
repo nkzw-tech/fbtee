@@ -6,8 +6,7 @@
  * @oncall i18n_fbt_js
  */
 
-import type { FbtResolvedPayload } from '../FbtHooks';
-import typeof FbtHooks from '../FbtHooks';
+import type FbtHooks, { FbtResolvedPayload } from '../FbtHooks';
 import typeof getFbsResult from '../getFbsResult';
 
 jest.unmock('../FbtEnv').unmock('../FbtHooksImpl');

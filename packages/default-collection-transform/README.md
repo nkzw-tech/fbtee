@@ -20,7 +20,6 @@
   <img src="https://facebook.github.io/fbt/img/fbt.png" height="150" width="150" alt="FBT"/>
 </h1>
 
-
 ## FBT Default collection transform
 
 This convenience module provides a default Babel transform implementation for the FBT collection transform when not using `--transform` or `--custom-collector` custom transform options from the collection script.

@@ -54,7 +54,7 @@ function stripMeta(node, options) {
   } else {
     ignoreKeys = [...IGNORE_KEYS, 'leadingComments', 'trailingComments'];
   }
-  ignoreKeys.forEach(key => delete node[key]);
+  ignoreKeys.forEach((key) => delete node[key]);
   for (const p in node) {
     if (node[p] && typeof node[p] === 'object') {
       stripMeta(node[p], options);
@@ -75,7 +75,7 @@ function parse(code) {
   if ((typeof code !== 'string' && typeof code !== 'object') || code == null) {
     // eslint-disable-next-line fb-www/no-new-error
     throw new Error(
-      `Code must be a string or AST object but got: ${typeof code}`,
+      `Code must be a string or AST object but got: ${typeof code}`
     );
   }
   return babelParser.parse(code, {
@@ -94,7 +94,7 @@ function parse(code) {
  * @return {string} JS source code
  */
 function generateFormattedCodeFromAST(babelNode) {
-  return generate(babelNode, {comments: true}, '').code.trim();
+  return generate(babelNode, { comments: true }, '').code.trim();
 }
 
 function formatSourceCode(input) {
@@ -125,7 +125,7 @@ function normalizeSourceCode(sourceCode /*: string */) /*: string */ {
       comments: true,
       quotes: 'single',
     },
-    sourceCode,
+    sourceCode
   ).code.trim();
 }
 
@@ -134,7 +134,7 @@ function normalizeSourceCode(sourceCode /*: string */) /*: string */ {
  * jest's it/fit/xit function.
  */
 function getJestUnitTestFunction(
-  testEntry /*: TestEntry */,
+  testEntry /*: TestEntry */
 ) /*: (title: string, callback: () => void) => void */ {
   switch (testEntry.filter) {
     case 'focus':
@@ -170,11 +170,11 @@ module.exports = {
   assertSourceAstEqual(expected, actual, options) {
     const expectedTree = stripMeta(
       parse(normalizeSourceCode(expected)).program,
-      options,
+      options
     );
     const actualTree = stripMeta(
       parse(normalizeSourceCode(actual)).program,
-      options,
+      options
     );
     try {
       assert.deepStrictEqual(actualTree, expectedTree);
@@ -184,16 +184,16 @@ module.exports = {
       const actualFormattedCode = formatSourceCode(actual);
       const commonStr = firstCommonSubstring(
         expectedFormattedCode,
-        actualFormattedCode,
+        actualFormattedCode
       );
       const excerptLength = 60;
       const excerptDiffFromExpected = expectedFormattedCode.substr(
         commonStr.length,
-        excerptLength,
+        excerptLength
       );
       const excerptDiffFromActual = actualFormattedCode.substr(
         commonStr.length,
-        excerptLength,
+        excerptLength
       );
 
       const errMessage = `deepEqual node AST assert failed for the following code:
@@ -226,12 +226,53 @@ ${jsonDiff.diffString(expectedTree, actualTree)}
   // Alias of `getJestUnitTestFunction`
   $it: getJestUnitTestFunction,
 
+  testSectionAsync(
+    testData /*: TestData */,
+    transform /*: Function */, // Babel transform function
+    options /*: {
+      comments?: boolean, // if true, strip comments from Babel transform output
+    } */
+  ) /*: void */ {
+    Object.entries(testData).forEach(([title, testInfo]) => {
+      getJestUnitTestFunction(testInfo)(title, async () => {
+        if (testInfo.throws === true) {
+          await expect(
+            transform(testInfo.input, testInfo.options)
+          ).rejects.toThrow();
+        } else if (typeof testInfo.throws === 'string') {
+          await expect(
+            transform(testInfo.input, testInfo.options)
+          ).rejects.toThrow(testInfo.throws);
+        } else {
+          expect(
+            (async () => {
+              const transformOutput = await transform(
+                testInfo.input,
+                testInfo.options
+              );
+              if (options && options.matchSnapshot) {
+                expect(transformOutput).toMatchSnapshot();
+              } else {
+                this.assertSourceAstEqual(
+                  testInfo.output,
+                  transformOutput,
+                  options
+                );
+              }
+              return true;
+            })()
+          ).resolves.toBe(true);
+        }
+      });
+    });
+  },
+
   testSection(
     testData /*: TestData */,
     transform /*: Function */, // Babel transform function
     options /*: {
       comments?: boolean, // if true, strip comments from Babel transform output
-    } */,
+    } */
   ) /*: void */ {
     Object.entries(testData).forEach(([title, testInfo]) => {
       getJestUnitTestFunction(testInfo)(title, () => {
@@ -239,10 +280,8 @@ ${jsonDiff.diffString(expectedTree, actualTree)}
           expect(() => transform(testInfo.input, testInfo.options)).toThrow();
         } else if (typeof testInfo.throws === 'string') {
           expect(() => transform(testInfo.input, testInfo.options)).toThrow(
-            testInfo.throws,
+            testInfo.throws
           );
-        } else if (testInfo.throws === false) {
-          transform(testInfo.input, testInfo.options);
         } else {
           expect(() => {
             const transformOutput = transform(testInfo.input, testInfo.options);
@@ -252,7 +291,7 @@ ${jsonDiff.diffString(expectedTree, actualTree)}
               this.assertSourceAstEqual(
                 testInfo.output,
                 transformOutput,
-                options,
+                options
               );
             }
           }).not.toThrow();
@@ -266,10 +305,10 @@ ${jsonDiff.diffString(expectedTree, actualTree)}
       this.testSection(
         testData,
         getDefaultTransformForPlugins(plugins),
-        options,
-      ),
+        options
+      )
     );
   },
 
-  __parse__FOR_UNIT_TESTS: parse,
+  parse,
 };

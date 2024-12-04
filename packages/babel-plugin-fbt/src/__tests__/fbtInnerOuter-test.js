@@ -5,7 +5,7 @@
  * @oncall i18n_fbt_js
  */
 
-const {transform, withFbtRequireStatement} = require('./FbtTestUtil');
+const { transform, withFbtRequireStatement } = require('./FbtTestUtil');
 const assert = require('assert');
 
 function testChildToParentRelationships(testData, expected) {
@@ -20,12 +20,12 @@ function testChildToParentRelationships(testData, expected) {
     return agg + input.replace(/\/\*\*(?:\/|[^*]|\*+[^*\/])*\*+\//, '');
   }, '');
 
-  transform(body, {collectFbt: true});
+  transform(body, { collectFbt: true });
 
   try {
     assert.equal(
       JSON.stringify(expected, null, ' '),
-      JSON.stringify(fbt.getChildToParentRelationships(), null, ' '),
+      JSON.stringify(fbt.getChildToParentRelationships(), null, ' ')
     );
     // eslint-disable-next-line fb-www/no-unused-catch-bindings
   } catch (e) {
@@ -35,7 +35,7 @@ function testChildToParentRelationships(testData, expected) {
         '\n' +
         'Expected:\n' +
         JSON.stringify(expected, null, ' ') +
-        '\n',
+        '\n'
     );
   }
 }
@@ -47,7 +47,7 @@ const testData = [
         `<fbt desc="d">
             <link href="#">Your friends</link>
             liked your video
-          </fbt>;`,
+          </fbt>;`
       ),
     },
   },
@@ -60,7 +60,7 @@ const testData = [
               <b>liked</b>
             </Link>
             your video
-          </fbt>;`,
+          </fbt>;`
       ),
     },
   },
@@ -74,7 +74,7 @@ const testData = [
             <div>
               phrase 3<div>phrase 4</div>
             </div>
-          </fbt>;`,
+          </fbt>;`
       ),
     },
   },
@@ -96,7 +96,7 @@ const testData = [
               </div>
             </fbt:param>
             <div href="#">another child!</div>
-          </fbt>;`,
+          </fbt>;`
       ),
     },
   },
@@ -110,18 +110,18 @@ const testData = [
             <fbt desc="phrase 2">
               <div href="#">phrase 3</div>
             </fbt>
-          </div>;`,
+          </div>;`
       ),
     },
   },
 ];
 
 const expectedRelationships = [
-  {'1': 0},
-  {'1': 0, '2': 1},
-  {'1': 0, '2': 1, '3': 0, '4': 3},
-  {'1': 0, '4': 3},
-  {'1': 0, '3': 2},
+  { 1: 0 },
+  { 1: 0, 2: 1 },
+  { 1: 0, 2: 1, 3: 0, 4: 3 },
+  { 1: 0, 4: 3 },
+  { 1: 0, 3: 2 },
 ];
 
 describe('Test inner-outer strings in JS', () => {

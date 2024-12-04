@@ -8,8 +8,6 @@
 
 'use strict';
 
-jest.autoMockOff();
-
 let ClientSideIntlVariations;
 let IntlVariations;
 

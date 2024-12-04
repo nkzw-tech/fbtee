@@ -71,10 +71,10 @@ const invariant = require('invariant');
  *   }
  *
  */
-function addLeafToTree<V, T: {...}>(
+function addLeafToTree<V, T: { ... }>(
   tree: T,
   keys: $ReadOnlyArray<string | number>,
-  leaf: V,
+  leaf: V
 ): void {
   let branch = tree;
 
@@ -84,7 +84,7 @@ function addLeafToTree<V, T: {...}>(
       // $FlowFixMe[invalid-computed-prop]
       !isLast || branch[key] == null,
       'Overwriting an existing tree leaf is not allowed. keys=`%s`',
-      JSON.stringify(keys),
+      JSON.stringify(keys)
     );
     // $FlowFixMe[invalid-computed-prop]
     if (branch[key] == null) {

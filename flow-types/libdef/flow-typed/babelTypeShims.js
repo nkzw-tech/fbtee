@@ -79,7 +79,7 @@ declare module '@babel/core' {
     skipKeys: ?[];
     type: B['type'];
     replaceWith(replacement: BabelNode): this;
-    traverse<State: {...}>(transform: BabelTransform, state?: State): void;
+    traverse<State: { ... }>(transform: BabelTransform, state?: State): void;
     skip(): void;
     buildCodeFrameError<E: Class<SyntaxError> = Class<SyntaxError>>(
       message: string,
@@ -107,7 +107,7 @@ declare module '@babel/core' {
   }>;
 
   declare export type BabelPluginList = $ReadOnlyArray<
-    string | [string] | [string, {+[option: string]: mixed}],
+    string | [string] | [string, { +[option: string]: mixed }],
   >;
 
   declare export type BabelPresetList = BabelPluginList;

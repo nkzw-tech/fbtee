@@ -11,7 +11,7 @@
 
 import './css/Example.css';
 import classNames from 'classnames';
-import { GenderConst, IntlVariations, fbs, fbt, init } from 'fbt';
+import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
 import * as React from 'react';
 
 // eslint-disable-next-line fb-www/no-module-aliasing

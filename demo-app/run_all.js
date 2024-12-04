@@ -6,7 +6,9 @@
  * @oncall i18n_fbt_js
  */
 
-const {execSync} = require('child_process');
+global.__DEV__ = true;
+
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 

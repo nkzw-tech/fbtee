@@ -6,7 +6,6 @@
  * @oncall i18n_fbt_js
  */
 const babel = require('@babel/core');
-const createCacheKeyFunction = require('fbjs-scripts/jest/createCacheKeyFunction');
 
 const cacheKeyPackages = [
   'babel-preset-fbjs',
@@ -19,8 +18,6 @@ const cacheKeyPackages = [
   require.resolve(`${name}/package.json`),
 );
 
-// This is basically fbjs-scripts/jest/preprocessor, but with the
-// ability to specify additional plugins
 function createTransformer(opts /*: Object */ = {}) {
   return {
     process(src /*: string */, filename /*: string */) {
@@ -34,13 +31,8 @@ function createTransformer(opts /*: Object */ = {}) {
         retainLines: true,
       };
 
-      return babel.transform(src, options).code;
+      return babel.transform(src, options);
     },
-
-    // Generate a cache key that is based on the contents of this file,
-    // babel-preset-fbjs, and the plugins passed in as options and fbjs (used as
-    // a proxy for determining if the preset has changed configuration at all).
-    getCacheKey: createCacheKeyFunction([__filename].concat(cacheKeyPackages)),
   };
 }
 

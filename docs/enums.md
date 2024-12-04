@@ -4,11 +4,14 @@ title: Enumerations
 sidebar_label: Enumerations
 ---
 
-Enumerations eliminate a lot of UI code duplication while enabling accurate translations.  `<fbt:enum>` and `fbt.enum` both provide the ability to add your ad-hoc or pre-defined and shared enumerations.
+Enumerations eliminate a lot of UI code duplication while enabling accurate translations. `<fbt:enum>` and `fbt.enum` both provide the ability to add your ad-hoc or pre-defined and shared enumerations.
 
 ## Adhoc enums
+
 Adhoc enums can be provided inline to the `enum-range` attribute or as the second parameter to `fbt.enum`.
+
 ### Enum map
+
 ```
 <fbt desc="buy prompt">
   Buy a new
@@ -33,7 +36,9 @@ fbt(
 ```
 
 ### Shorthand array (keys = values)
+
 The shorthand array adhoc enum functions as though you had a `{value: value}` map.
+
 ```
 <fbt desc="buy prompt">
   Buy a new
@@ -75,7 +80,8 @@ All the above examples [extract](collection.md) the same 4 separate strings for 
       ...
     },
 ```
---------------------------------------------------------------------------------
+
+---
 
 ## Shared enums
 
@@ -109,6 +115,7 @@ const Example$FbtEnum = require('Example$FbtEnum');
   to share!
 </fbt>
 ```
+
 ### ES6 Import/export syntax
 
 ES6 import/export syntax is supported but the Enum must be exported as a

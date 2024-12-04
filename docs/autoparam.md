@@ -10,9 +10,8 @@ sidebar_label: Auto-parameterization
 
 `<fbt>` will automatically wrap any non-fbt children in the top-level
 `<fbt>` as though they were written with an `<fbt:param>` with a
-`name` attribute containing the child's text.  It will pull any child
+`name` attribute containing the child's text. It will pull any child
 text into the parameter name, including those of recursive structures.
-
 
 - JSX fbt syntax:
 
@@ -35,7 +34,7 @@ fbt(
       <span>awesome</span> vacation
     </a>,
   ],
-  'auto-wrap example',
+  'auto-wrap example'
 );
 ```
 
@@ -80,16 +79,16 @@ When extracted for translation, the result is:
 ```
 
 Notice the description for "vacation" is auto-generated with an `"In
-the phrase: ..."` prefix.  Additionally, we use a convention of adding an equal sign (`=`)
+the phrase: ..."` prefix. Additionally, we use a convention of adding an equal sign (`=`)
 prefix in the interpolation `{=awesome vacation}` to signal to the
 translator that this exact word or phrase goes in the associated outer
 sentence.
 
 Furthermore, we provide a mapping `{<childIndex>: <parentIndex>}` in
-the collection output `childParentMappings`.  At Meta, we use
+the collection output `childParentMappings`. At Meta, we use
 these to display all relevant inner and outer strings when translating
-any given piece of text.  We recommend you do the same in whatever
-translation framework you use.  Context is crucial for accurate
+any given piece of text. We recommend you do the same in whatever
+translation framework you use. Context is crucial for accurate
 translations.
 
 ## Advanced scenario: string with nested fbt constructs
@@ -97,6 +96,7 @@ translations.
 You can still use fbt constructs that produce multiple strings (e.g. `<fbt:pronoun>`) and expect the Auto Parameterization to work.
 
 **Example with fbt:pronoun and fbt:plural**
+
 ```js
 <fbt desc="advanced rich content example">
   <b>
@@ -138,16 +138,16 @@ Group 1                 Group 2         Group 3                   Group 4
 **Extracted top-level strings by string variation criteria:**
 
 1. Female:
-    1. Single: `"{=She} uploaded {=one photo} that you haven't seen yet."`
-    1. Plural: `"{=She} uploaded {=[number] photos} that you haven't seen yet."`
+   1. Single: `"{=She} uploaded {=one photo} that you haven't seen yet."`
+   1. Plural: `"{=She} uploaded {=[number] photos} that you haven't seen yet."`
 1. Male:
-    1. Single: `"{=He} uploaded {=one photo} that you haven't seen yet."`
-    1. Plural: `"{=He} uploaded {=[number] photos} that you haven't seen yet."`
+   1. Single: `"{=He} uploaded {=one photo} that you haven't seen yet."`
+   1. Plural: `"{=He} uploaded {=[number] photos} that you haven't seen yet."`
 1. Unknown:
-    1. Single: `"{=They} uploaded {=one photo} that you haven't seen yet."`
-    1. Plural: `"{=They} uploaded {=[number] photos} that you haven't seen yet."`
+   1. Single: `"{=They} uploaded {=one photo} that you haven't seen yet."`
+   1. Plural: `"{=They} uploaded {=[number] photos} that you haven't seen yet."`
 
-*NOTE: all these strings have the same description: `"advanced rich content example"`*
+_NOTE: all these strings have the same description: `"advanced rich content example"`_
 
 ### Combinations of nested strings
 
@@ -178,6 +178,7 @@ To support this use case, as part of the `fbt-collect` output, we expose the rel
 in the `childParentMappings` property.
 
 For each mapping entry:
+
 - the key represents the index of the child phrase
 - the value represents the index of the parent phrase
 
@@ -195,7 +196,7 @@ For each mapping entry:
 }
 ```
 
-----
+---
 
 ### `fbt-collect` output example
 

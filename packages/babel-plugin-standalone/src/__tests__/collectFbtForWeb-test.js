@@ -20,9 +20,8 @@ describe('collectFbtForWeb', () => {
     // It's expected since we only generate `dist/index.js` after running `yarn build`
     // upon publishing this package to npm.
     // $FlowExpectedError[unsupported-syntax]
-    const fbtStandaloneDist: FbtStandalone = require(
-      '../..' + /* force dynamic import */ '/dist',
-    );
+    const fbtStandaloneDist: FbtStandalone = require('../..' +
+      /* force dynamic import */ '/dist');
 
     // $FlowFixMe[missing-local-annot]
     function collect(fbtStandalone, source) {
@@ -31,7 +30,7 @@ describe('collectFbtForWeb', () => {
         {
           genFbtNodes: true,
         },
-        {},
+        {}
       );
     }
 
@@ -61,10 +60,10 @@ describe('collectFbtForWeb', () => {
       const expectedErrorMessage = 'Unable to find attribute "type"';
 
       expect(() => collect(fbtStandaloneSrc, code)).toThrow(
-        expectedErrorMessage,
+        expectedErrorMessage
       );
       expect(() => collect(fbtStandaloneDist, code)).toThrow(
-        expectedErrorMessage,
+        expectedErrorMessage
       );
     });
   });

@@ -71,7 +71,7 @@ const SPECIALS = {
 };
 
 function getType(
-  n: $Values<typeof IntlVariationMask>,
+  n: $Values<typeof IntlVariationMask>
 ): $Values<typeof IntlVariationMask> {
   invariant(isValidValue(n), 'Invalid NumberType: %s', n);
 

@@ -30,7 +30,7 @@ class FbtResultBase implements IFbtResultBase {
 
   constructor(
     contents: $NestedFbtContentItems,
-    errorListener: ?IFbtErrorListener,
+    errorListener: ?IFbtErrorListener
   ) {
     this._contents = contents;
     this.__errorListener = errorListener;
@@ -90,7 +90,7 @@ class FbtResultBase implements IFbtResultBase {
   }
 
   static flattenToArray(
-    contents: $NestedFbtContentItems,
+    contents: $NestedFbtContentItems
   ): Array<$FbtContentItem> {
     const result = [];
     for (let ii = 0; ii < contents.length; ++ii) {
@@ -154,7 +154,7 @@ class FbtResultBase implements IFbtResultBase {
   'trim',
   'trimLeft',
   'trimRight',
-].forEach(methodName => {
+].forEach((methodName) => {
   /* eslint-disable fb-www/should-use-class */
   // $FlowFixMe[prop-missing] index signature
   /* $FlowFixMe[missing-this-annot] The 'this' type annotation(s) required by

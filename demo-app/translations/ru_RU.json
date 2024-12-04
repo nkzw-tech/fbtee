@@ -362,9 +362,7 @@
       "types": []
     },
     "PqPPir8Kg9xSlqdednPFOg==": {
-      "tokens": [
-        "name"
-      ],
+      "tokens": ["name"],
       "translations": [
         {
           "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0430\u0441\u044c \u0441 \u0432\u0430\u043c\u0438 {=a photo}",
@@ -385,9 +383,7 @@
           }
         }
       ],
-      "types": [
-        3
-      ]
+      "types": [3]
     },
     "PvA+AsZdpZXw81g/J3Ow0Q==": {
       "tokens": [],
@@ -520,9 +516,7 @@
       "types": []
     },
     "gVKMc/8jq5vnYR5v2bb32g==": {
-      "tokens": [
-        "name"
-      ],
+      "tokens": ["name"],
       "translations": [
         {
           "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0441\u044f \u0441 \u0432\u0430\u043c\u0438 {=[number] photos}",
@@ -543,9 +537,7 @@
           }
         }
       ],
-      "types": [
-        3
-      ]
+      "types": [3]
     },
     "kFRDiDKN3KACFyC0YzbdDg==": {
       "tokens": [],

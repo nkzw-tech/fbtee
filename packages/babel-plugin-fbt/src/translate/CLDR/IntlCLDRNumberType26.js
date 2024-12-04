@@ -15,7 +15,7 @@
 
 'use strict';
 
-import type {IntlVariationsEnum} from '../IntlVariations';
+import type { IntlVariationsEnum } from '../IntlVariations';
 
 const IntlCLDRNumberType26 = {
   getNumberVariations(): Array<IntlVariationsEnum> {
@@ -26,7 +26,7 @@ const IntlCLDRNumberType26 = {
   getFallback(): IntlVariationsEnum {
     // $FlowExpectedError[incompatible-return] Force cast number to IntlVariationsEnum
     return 12;
-  }
+  },
 };
 
 module.exports = IntlCLDRNumberType26;

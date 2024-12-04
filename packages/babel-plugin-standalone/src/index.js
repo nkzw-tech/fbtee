@@ -12,7 +12,7 @@
 /* eslint-disable fb-flow/use-exact-by-default-object-type */
 /* eslint max-len: ["warn", 120] */
 
-const {collectFbtPayloadFromSource} = require('./collectFbtForWeb');
+const { collectFbtPayloadFromSource } = require('./collectFbtForWeb');
 
 module.exports = {
   collectFbtPayloadFromSource,

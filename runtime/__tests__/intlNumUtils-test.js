@@ -603,7 +603,7 @@ describe('intlNumUtils:', () => {
 
   describe('intNumUtils.getIntegerString', function () {
     it('Should throw in __DEV__ if thousandDelimiter is empty', function () {
-      expect(() => u.getIntegerString(1000, '')).toThrowError(
+      expect(() => u.getIntegerString(1000, '')).toThrow(
         'thousandDelimiter cannot be empty string'
       );
     });

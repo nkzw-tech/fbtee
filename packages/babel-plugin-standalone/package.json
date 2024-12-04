@@ -1,10 +1,22 @@
 {
+  "name": "@fbtjs/babel-plugin-standalone",
+  "version": "0.0.1",
+  "description": "The standalone version of the FBT Babel localization transform, intended for browsers or non-Node.js environments",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/fbt.git",
+    "directory": "packages/babel-plugin-standalone"
+  },
   "license": "MIT",
   "main": "src/index.js",
-  "name": "@fbtjs/babel-plugin-standalone",
-  "description": "The standalone version of the FBT Babel localization transform, intended for browsers or non-Node.js environments",
-  "//version": "Follow SemVer specs at https://semver.org/",
-  "version": "0.0.1",
+  "scripts": {
+    "build": "yarn webpack && yarn copy-flow-definitions",
+    "copy-flow-definitions": "cp src/index.js.flow dist/index.js.flow && sed -i 's/ \\* @format/ \\* @format\\n \\* @generated/' dist/index.js.flow",
+    "prepack": "yarn build",
+    "test": "BABEL_PLUGIN_STANDALONE_TEST=1 yarn --cwd ../.. jest babel-plugin-standalone",
+    "watch": "yarn webpack --watch"
+  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
@@ -34,10 +46,10 @@
     "@babel/plugin-transform-shorthand-properties": "^7.12.0",
     "@babel/plugin-transform-spread": "^7.12.0",
     "@babel/plugin-transform-template-literals": "^7.12.0",
-    "babel-plugin-syntax-trailing-function-commas": "^7.0.0-beta.0",
     "@babel/standalone": "^7.0.0",
     "babel-loader": "8.0.4",
     "babel-plugin-fbt": "x.x.x",
+    "babel-plugin-syntax-trailing-function-commas": "^7.0.0-beta.0",
     "babel-preset-fbjs": "^3.1.2",
     "buffer": "^6.0.3",
     "os-browserify": "^0.3.0",
@@ -45,17 +57,5 @@
     "replace-in-file-webpack-plugin": "^1.0.6",
     "webpack": "^5.4.0"
   },
-  "dependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/facebook/fbt.git",
-    "directory": "packages/babel-plugin-standalone"
-  },
-  "scripts": {
-    "build": "yarn webpack && yarn copy-flow-definitions",
-    "copy-flow-definitions": "cp src/index.js.flow dist/index.js.flow && sed -i 's/ \\* \u0040format/ \\* \u0040format\\n \\* \u0040generated/' dist/index.js.flow",
-    "prepack": "yarn build",
-    "test": "BABEL_PLUGIN_STANDALONE_TEST=1 yarn --cwd ../.. jest babel-plugin-standalone",
-    "watch": "yarn webpack --watch"
-  }
+  "//version": "Follow SemVer specs at https://semver.org/"
 }

@@ -8,7 +8,7 @@
 
 'use strict';
 
-import type {EnumManifest, EnumModule} from '../FbtEnumRegistrar';
+import type { EnumManifest, EnumModule } from '../FbtEnumRegistrar';
 
 const {
   FBT_ENUM_MODULE_SUFFIX: ENUM_FILE,
@@ -25,10 +25,10 @@ const FILE_EXT = '.@(js|jsx|ts|tsx)';
 function generateManifest(
   enumManifestPath: string,
   srcPaths: $ReadOnlyArray<string>,
-  cwd: string = process.cwd(),
+  cwd: string = process.cwd()
 ): {
   enumManifest: EnumManifest,
-  srcManifest: {[enumManifestPath: string]: Array<string>},
+  srcManifest: { [enumManifestPath: string]: Array<string> },
 } {
   // Register babel-plugins with node to enable parsing flow types, etc.
   // $FlowFixMe[untyped-import]
@@ -44,13 +44,13 @@ function generateManifest(
   });
 
   // Find enum files
-  const enumManifest: {[enumModuleName: string]: EnumModule} = {};
+  const enumManifest: { [enumModuleName: string]: EnumModule } = {};
   for (const src of srcPaths) {
     const enumFiles: Array<string> = glob.sync(
       path.resolve(cwd, src) + '/**/*' + ENUM_FILE + FILE_EXT,
       {
         nodir: true,
-      },
+      }
     );
     for (const filepath of enumFiles) {
       // Infer module name from filename.
@@ -64,32 +64,32 @@ function generateManifest(
         enumValue != null,
         'No valid enum found for `%s`, ensure you are exporting your enum ' +
           'via `module.exports = { ... };` or `export default { ... };`',
-        name,
+        name
       );
       enumManifest[name] = enumValue;
     }
   }
 
   // Find source files that are fbt-containing candidates
-  const getFiles: string => Array<string> = src =>
-    glob.sync(path.resolve(cwd, src) + '/**/*' + FILE_EXT, {nodir: true});
+  const getFiles: (string) => Array<string> = (src) =>
+    glob.sync(path.resolve(cwd, src) + '/**/*' + FILE_EXT, { nodir: true });
 
   const srcFiles = []
     // $FlowFixMe[incompatible-call]
     .concat(...srcPaths.map(getFiles))
-    .filter(filepath =>
+    .filter((filepath) =>
       fs
         .readFileSync(filepath)
         .toString('utf8')
         .split('\n')
-        .some(line => ModuleNameRegExp.test(line)),
+        .some((line) => ModuleNameRegExp.test(line))
     )
-    .map(filepath => path.relative(cwd, filepath));
+    .map((filepath) => path.relative(cwd, filepath));
 
   return {
     enumManifest,
-    srcManifest: {[enumManifestPath]: srcFiles},
+    srcManifest: { [enumManifestPath]: srcFiles },
   };
 }
 
-module.exports = {generateManifest};
+module.exports = { generateManifest };

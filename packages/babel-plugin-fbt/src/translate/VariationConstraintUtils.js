@@ -8,7 +8,7 @@
 
 'use strict';
 
-import type {TokenConstraintPairs} from './TranslationBuilder';
+import type { TokenConstraintPairs } from './TranslationBuilder';
 
 /**
  * Concatenation of `TokenConstraintPairs` through `buildConstraintKey` method
@@ -21,9 +21,9 @@ export opaque type ConstraintKey: string = string;
  * constraint map maps the given constraints to the appropriate translation
  */
 function buildConstraintKey(
-  constraintKeys: TokenConstraintPairs,
+  constraintKeys: TokenConstraintPairs
 ): ConstraintKey {
-  return constraintKeys.map(kv => kv[0] + '%' + kv[1]).join(':');
+  return constraintKeys.map((kv) => kv[0] + '%' + kv[1]).join(':');
 }
 
 module.exports = {

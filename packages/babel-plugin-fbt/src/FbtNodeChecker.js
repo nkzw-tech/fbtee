@@ -10,14 +10,14 @@
 
 'use strict';
 
-import type {JSModuleNameType} from './FbtConstants';
-import type {NodePathOf} from '@babel/core';
+import type { NodePathOf } from '@babel/core';
+import type { JSModuleNameType } from './FbtConstants';
 
 const FbtNodeType = require('./fbt-nodes/FbtNodeType');
 const {
-  JSModuleName: {FBS, FBT, REACT_FBT},
+  JSModuleName: { FBS, FBT, REACT_FBT },
 } = require('./FbtConstants');
-const {assertModuleName, errorAt} = require('./FbtUtil');
+const { assertModuleName, errorAt } = require('./FbtUtil');
 const {
   isCallExpression,
   isIdentifier,
@@ -117,7 +117,7 @@ class FbtNodeChecker {
    */
   assertNoNestedFbts(node: BabelNodeJSXElement): void {
     const moduleName = this.moduleName;
-    node.children.forEach(child => {
+    node.children.forEach((child) => {
       if (
         isJSXElement(child) &&
         (fbtChecker.isJSXElement(child) || fbsChecker.isJSXElement(child))
@@ -133,7 +133,7 @@ class FbtNodeChecker {
           child,
           `Don't put <${nestedJSXElementName}> directly within <${rootJSXElementName}>. ` +
             `This is redundant. The text is already translated so you don't need ` +
-            `to translate it again`,
+            `to translate it again`
         );
       } else {
         const otherChecker = moduleName === FBT ? fbsChecker : fbtChecker;
@@ -146,7 +146,7 @@ class FbtNodeChecker {
             child,
             `Don't mix <fbt> and <fbs> JSX namespaces. ` +
               `Found a <${jsxNamespacedName.namespace.name}:${jsxNamespacedName.name.name}> ` +
-              `directly within a <${moduleName}>`,
+              `directly within a <${moduleName}>`
           );
         }
       }

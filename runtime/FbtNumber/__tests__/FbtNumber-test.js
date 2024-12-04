@@ -12,7 +12,7 @@ jest.disableAutomock();
 const FbtNumberConsistency = require('../__mocks__/FbtNumberConsistency');
 
 describe('FbtNumber consistency', function () {
-  FbtNumberConsistency.dataModuleNames.forEach(dataModuleName => {
+  FbtNumberConsistency.dataModuleNames.forEach((dataModuleName) => {
     /* eslint-disable fb-www/require-args */
     const path = require.resolve('../__mocks__/' + dataModuleName);
     const dataModule = require(path);
@@ -27,7 +27,7 @@ describe('FbtNumber consistency', function () {
         jsType = jsType === '*' ? null : jsType;
         expect(jsType).toBe(
           phpNumberTypes[ii],
-          ii + ' failed in ' + dataModuleName,
+          ii + ' failed in ' + dataModuleName
         );
       }
     });

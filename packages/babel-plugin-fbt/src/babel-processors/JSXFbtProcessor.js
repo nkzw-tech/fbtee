@@ -10,9 +10,9 @@
 
 'use strict';
 
-import type {FbtExtraOptionConfig, JSModuleNameType} from '../FbtConstants';
-import type {NodePathOf} from '@babel/core';
+import type { NodePathOf } from '@babel/core';
 import typeof BabelTypes from '@babel/types';
+import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';
 
 const FbtCommon = require('../FbtCommon');
 const {
@@ -52,7 +52,7 @@ const invariant = require('invariant');
 type NodePath = NodePathOf<BabelNodeJSXElement>;
 type BabelNodeJSXElementChild = $ElementType<
   $PropertyType<BabelNodeJSXElement, 'children'>,
-  number,
+  number
 >;
 
 class JSXFbtProcessor {
@@ -105,12 +105,12 @@ class JSXFbtProcessor {
 
   _getText(
     childNodes: $ReadOnlyArray<
-      BabelNodeCallExpression | BabelNodeJSXElement | BabelNodeStringLiteral,
-    >,
+      BabelNodeCallExpression | BabelNodeJSXElement | BabelNodeStringLiteral
+    >
   ): BabelNodeArrayExpression {
     return convertToStringArrayNodeIfNeeded(
       this.moduleName,
-      arrayExpression(childNodes),
+      arrayExpression(childNodes)
     );
   }
 
@@ -118,20 +118,20 @@ class JSXFbtProcessor {
    * @returns the description of the <fbt> as a BabelNode, or null if it's a common string.
    */
   _getDescription(
-    texts: BabelNodeArrayExpression,
+    texts: BabelNodeArrayExpression
   ): BabelNodeStringLiteral | BabelNodeExpression {
-    const {moduleName, node} = this;
+    const { moduleName, node } = this;
     const commonAttributeValue = this._getCommonAttributeValue();
     let desc;
 
     if (commonAttributeValue && commonAttributeValue.value) {
       const rawTextValue = (texts.elements || [])
-        .map(stringNode => {
+        .map((stringNode) => {
           try {
             invariant(
               isStringLiteral(stringNode),
               'Expected a StringLiteral but found `%s` instead',
-              stringNode?.type || 'unknown',
+              stringNode?.type || 'unknown'
             );
             return stringNode.value;
           } catch (error) {
@@ -145,13 +145,13 @@ class JSXFbtProcessor {
       if (descValue == null || descValue === '') {
         throw errorAt(
           node,
-          FbtCommon.getUnknownCommonStringErrorMessage(moduleName, textValue),
+          FbtCommon.getUnknownCommonStringErrorMessage(moduleName, textValue)
         );
       }
       if (getAttributeByName(this._getOpeningElementAttributes(), 'desc')) {
         throw errorAt(
           node,
-          `<${moduleName} common={true}> must not have "desc" attribute`,
+          `<${moduleName} common={true}> must not have "desc" attribute`
         );
       }
       desc = stringLiteral(descValue);
@@ -170,8 +170,8 @@ class JSXFbtProcessor {
         ? getOptionsFromAttributes(
             this.t,
             attrs,
-            {...this.validFbtExtraOptions, ...ValidFbtOptions},
-            FbtRequiredAttributes,
+            { ...this.validFbtExtraOptions, ...ValidFbtOptions },
+            FbtRequiredAttributes
           )
         : null;
     return (options?.properties.length ?? 0) > 0 ? options : null;
@@ -182,35 +182,33 @@ class JSXFbtProcessor {
       return this._openingElementAttributes;
     }
 
-    const {node} = this;
+    const { node } = this;
     this._openingElementAttributes = node.openingElement.attributes.map(
-      attribute => {
+      (attribute) => {
         if (attribute.type === 'JSXSpreadAttribute') {
           throw errorAt(
             node,
-            `<${this.moduleName}> does not support JSX spread attribute`,
+            `<${this.moduleName}> does not support JSX spread attribute`
           );
         }
         return attribute;
-      },
+      }
     );
     return this._openingElementAttributes;
   }
 
   _assertHasMandatoryAttributes(): void {
     if (
-      this._getOpeningElementAttributes().find(attribute =>
-        FbtCallMustHaveAtLeastOneOfTheseAttributes.includes(
-          attribute.name.name,
-        ),
+      this._getOpeningElementAttributes().find((attribute) =>
+        FbtCallMustHaveAtLeastOneOfTheseAttributes.includes(attribute.name.name)
       ) == null
     ) {
       throw errorAt(
         this.node,
         `<${this.moduleName}> must have at least ` +
           `one of these attributes: ${FbtCallMustHaveAtLeastOneOfTheseAttributes.join(
-            ', ',
-          )}`,
+            ', '
+          )}`
       );
     }
   }
@@ -224,7 +222,7 @@ class JSXFbtProcessor {
     options: BabelNodeObjectExpression | null,
     text: BabelNodeArrayExpression,
   }): BabelNodeCallExpression | BabelNodeJSXExpressionContainer {
-    const {moduleName, node, path} = this;
+    const { moduleName, node, path } = this;
     invariant(text != null, 'text cannot be null');
     invariant(desc != null, 'desc cannot be null');
     const args = [text, desc];
@@ -249,14 +247,14 @@ class JSXFbtProcessor {
   }
 
   _transformChildrenForFbtCallSyntax(): Array<
-    BabelNodeCallExpression | BabelNodeJSXElement | BabelNodeStringLiteral,
+    BabelNodeCallExpression | BabelNodeJSXElement | BabelNodeStringLiteral
   > {
     this.path.traverse(jsxFbtConstructToFunctionalFormTransform, {
       moduleName: this.moduleName,
     });
     return (filterEmptyNodes(
-      this.node.children,
-    ): $ReadOnlyArray<BabelNodeJSXElementChild>).map(node => {
+      this.node.children
+    ): $ReadOnlyArray<BabelNodeJSXElementChild>).map((node) => {
       try {
         switch (node.type) {
           case 'JSXElement':
@@ -265,11 +263,11 @@ class JSXFbtProcessor {
           case 'JSXText':
             return stringLiteral(normalizeSpaces(node.value));
           case 'JSXExpressionContainer': {
-            const {expression} = node;
+            const { expression } = node;
 
             if (
               this.nodeChecker.getFbtConstructNameFromFunctionCall(
-                expression,
+                expression
               ) != null
             ) {
               // preserve fbt construct's function calls intact
@@ -277,7 +275,7 @@ class JSXFbtProcessor {
                 isCallExpression(expression),
                 'Expected BabelNodeCallExpression value but received `%s` (%s)',
                 varDump(expression),
-                typeof expression,
+                typeof expression
               );
               return expression;
             }
@@ -285,14 +283,14 @@ class JSXFbtProcessor {
             // otherwise, assume that we have textual nodes to return
             return stringLiteral(
               normalizeSpaces(
-                expandStringConcat(this.moduleName, node.expression).value,
-              ),
+                expandStringConcat(this.moduleName, node.expression).value
+              )
             );
           }
           default:
             throw errorAt(
               node,
-              `Unsupported JSX element child type '${node.type}'`,
+              `Unsupported JSX element child type '${node.type}'`
             );
         }
       } catch (error) {
@@ -302,12 +300,12 @@ class JSXFbtProcessor {
   }
 
   _getDescAttributeValue(): BabelNodeExpression {
-    const {moduleName} = this;
+    const { moduleName } = this;
     const descAttr = getAttributeByNameOrThrow(
       this._getOpeningElementAttributes(),
-      'desc',
+      'desc'
     );
-    const {node} = this;
+    const { node } = this;
     if (!descAttr || descAttr.value == null) {
       throw errorAt(node, `<${moduleName}> requires a "desc" attribute`);
     }
@@ -316,7 +314,7 @@ class JSXFbtProcessor {
         // @babel/parser should not allow this scenario normally
         invariant(
           descAttr.value.expression.type !== 'JSXEmptyExpression',
-          'unexpected',
+          'unexpected'
         );
         return descAttr.value.expression;
       case 'StringLiteral':
@@ -325,14 +323,14 @@ class JSXFbtProcessor {
     throw errorAt(
       node,
       `<${moduleName}> "desc" attribute must be a string literal ` +
-        `or a non-empty JSX expression`,
+        `or a non-empty JSX expression`
     );
   }
 
   _getCommonAttributeValue(): null | BabelNodeBooleanLiteral {
     const commonAttr = getAttributeByName(
       this._getOpeningElementAttributes(),
-      CommonOption,
+      CommonOption
     );
     if (commonAttr == null) {
       return null;
@@ -354,7 +352,7 @@ class JSXFbtProcessor {
     }
 
     throw new Error(
-      `\`${CommonOption}\` attribute for <${this.moduleName}> requires boolean literal`,
+      `\`${CommonOption}\` attribute for <${this.moduleName}> requires boolean literal`
     );
   }
 
@@ -372,7 +370,7 @@ class JSXFbtProcessor {
         text,
         desc: description,
         options: this._getOptions(),
-      }),
+      })
     );
   }
 }
@@ -383,18 +381,18 @@ class JSXFbtProcessor {
  */
 const jsxFbtConstructToFunctionalFormTransform = {
   JSXElement(path: NodePathOf<BabelNodeJSXElement>) {
-    const {node} = path;
+    const { node } = path;
     // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
     const moduleName = (this.moduleName: JSModuleNameType);
     const name = validateNamespacedFbtElement(
       moduleName,
-      node.openingElement.name,
+      node.openingElement.name
     );
     if (name !== 'implicitParamMarker') {
       const args = getNamespacedArgs(moduleName)[name](node);
       let fbtConstructCall = callExpression(
         memberExpression(identifier(moduleName), identifier(name), false),
-        args,
+        args
       );
       if (isJSXElement(path.parent)) {
         // $FlowFixMe[incompatible-type]

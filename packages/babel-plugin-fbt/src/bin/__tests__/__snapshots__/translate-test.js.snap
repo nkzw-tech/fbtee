@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`translate-test.js should translate new jsfbt payload with option={"jenkins":false,"hashModule":false,"strict":false}: should not throw on missing translations 1`] = `
-Array [
-  Object {
+[
+  {
     "fb-locale": "fb_HX",
-    "translatedPhrases": Array [
+    "translatedPhrases": [
       "Your FBT Demo",
     ],
   },
@@ -12,11 +12,11 @@ Array [
 `;
 
 exports[`translate-test.js should translate new jsfbt payload with option={"jenkins":false,"hashModule":false,"strict":false}: should translate string with enum 1`] = `
-Array [
-  Object {
+[
+  {
     "fb-locale": "fb_HX",
-    "translatedPhrases": Array [
-      Object {
+    "translatedPhrases": [
+      {
         "LINK": "translation is: {name} has a link to share",
         "PAGE": "translation is: {name} has a page to share",
         "PHOTO": "translation is: {name} has a photo to share",
@@ -29,11 +29,11 @@ Array [
 `;
 
 exports[`translate-test.js should translate new jsfbt payload with option={"jenkins":false,"hashModule":false,"strict":false}: should translate string with metadata entries that create no hidden variation. Note: this string was collected in RN mode. 1`] = `
-Array [
-  Object {
+[
+  {
     "fb-locale": "fb_HX",
-    "translatedPhrases": Array [
-      Object {
+    "translatedPhrases": [
+      {
         "*": "translation is: they shared a photo",
         "1": "translation is: she shared a photo",
         "2": "translation is: he shared a photo",
@@ -44,10 +44,10 @@ Array [
 `;
 
 exports[`translate-test.js should translate new jsfbt payload with option={"jenkins":false,"hashModule":false,"strict":false}: should translate string with no variation 1`] = `
-Array [
-  Object {
+[
+  {
     "fb-locale": "fb_HX",
-    "translatedPhrases": Array [
+    "translatedPhrases": [
       "Translation data for Your FBT Demo",
     ],
   },
@@ -55,18 +55,18 @@ Array [
 `;
 
 exports[`translate-test.js should translate new jsfbt payload with option={"jenkins":false,"hashModule":false,"strict":false}: should translate string with variations and inner strings 1`] = `
-Array [
-  Object {
+[
+  {
     "fb-locale": "fb_HX",
-    "translatedPhrases": Array [
-      Object {
-        "*": Object {
+    "translatedPhrases": [
+      {
+        "*": {
           "*": "translation is: {name} has shared {=m2}. View =[number] photos",
           "_1": "translation is: {name} has shared {=m2}. View a photo",
         },
       },
-      Object {
-        "*": Object {
+      {
+        "*": {
           "*": "translation is: {number} photos",
           "_1": "translation is: a photo",
         },

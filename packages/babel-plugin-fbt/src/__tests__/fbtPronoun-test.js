@@ -5,11 +5,13 @@
  * @oncall i18n_fbt_js
  */
 
-jest.autoMockOff();
-
-const {FbtVariationType} = require('../translate/IntlVariations');
-const {payload, transform, withFbtRequireStatement} = require('./FbtTestUtil');
-const {TestUtil} = require('fb-babel-plugin-utils');
+const { FbtVariationType } = require('../translate/IntlVariations');
+const {
+  payload,
+  transform,
+  withFbtRequireStatement,
+} = require('./FbtTestUtil');
+const { TestUtil } = require('fb-babel-plugin-utils');
 
 function runTest(data, extra) {
   var expected = data.output;
@@ -34,7 +36,7 @@ describe('fbt pronoun support', () => {
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
             'Capitalized possessive pronoun',
-          );`,
+          );`
         ),
 
       output: withFbtRequireStatement(
@@ -42,11 +44,11 @@ describe('fbt pronoun support', () => {
           ${payload({
             jsfbt: {
               t: {
-                '1': {
+                1: {
                   desc: 'Capitalized possessive pronoun',
                   text: 'Her birthday is today.',
                 },
-                '2': {
+                2: {
                   desc: 'Capitalized possessive pronoun',
                   text: 'His birthday is today.',
                 },
@@ -59,7 +61,7 @@ describe('fbt pronoun support', () => {
             },
           })},
           [fbt._pronoun(1, gender)],
-        );`,
+        );`
       ),
     });
   });
@@ -72,10 +74,10 @@ describe('fbt pronoun support', () => {
           fbt.pronoun('possessive', gender, {human: 'true'}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input)).toThrowError(
-      "Expected boolean value instead of 'true' (string)",
+    expect(() => transform(input)).toThrow(
+      "Expected boolean value instead of 'true' (string)"
     );
   });
 
@@ -87,10 +89,10 @@ describe('fbt pronoun support', () => {
           human: 'true',
         })} a happy birthday.\`,
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input)).toThrowError(
-      "Expected boolean value instead of 'true' (string)",
+    expect(() => transform(input)).toThrow(
+      "Expected boolean value instead of 'true' (string)"
     );
   });
 
@@ -102,11 +104,11 @@ describe('fbt pronoun support', () => {
           fbt.pronoun('possession', gender, {human: false}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input)).toThrowError(
+    expect(() => transform(input)).toThrow(
       '`usage`, the first argument of fbt.pronoun() - Expected value to be ' +
-        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead",
+        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead"
     );
   });
 
@@ -120,7 +122,7 @@ describe('fbt pronoun support', () => {
               fbt.pronoun('object', gender, {human: true}) +
               ' a happy birthday.',
             'Elided false option',
-          );`,
+          );`
         ),
 
       output: withFbtRequireStatement(
@@ -128,11 +130,11 @@ describe('fbt pronoun support', () => {
           ${payload({
             jsfbt: {
               t: {
-                '1': {
+                1: {
                   desc: 'Elided false option',
                   text: 'Wish her a happy birthday.',
                 },
-                '2': {
+                2: {
                   desc: 'Elided false option',
                   text: 'Wish him a happy birthday.',
                 },
@@ -145,7 +147,7 @@ describe('fbt pronoun support', () => {
             },
           })},
           [fbt._pronoun(0, gender, {human: 1})],
-        );`,
+        );`
       ),
     });
   });
@@ -162,7 +164,7 @@ describe('fbt pronoun support (react native)', () => {
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
             'Capitalized possessive pronoun',
-          );`,
+          );`
         ),
 
       output: withFbtRequireStatement(
@@ -170,11 +172,11 @@ describe('fbt pronoun support (react native)', () => {
           ${payload({
             jsfbt: {
               t: {
-                '1': {
+                1: {
                   desc: 'Capitalized possessive pronoun',
                   text: 'Her birthday is today.',
                 },
-                '2': {
+                2: {
                   desc: 'Capitalized possessive pronoun',
                   text: 'His birthday is today.',
                 },
@@ -191,7 +193,7 @@ describe('fbt pronoun support (react native)', () => {
             },
           })},
           [fbt._pronoun(1, gender)],
-        );`,
+        );`
       ),
     });
   });
@@ -204,10 +206,10 @@ describe('fbt pronoun support (react native)', () => {
           fbt.pronoun('possessive', gender, {human: 'true'}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input, {reactNativeMode: true})).toThrowError(
-      "Expected boolean value instead of 'true' (string)",
+    expect(() => transform(input, { reactNativeMode: true })).toThrow(
+      "Expected boolean value instead of 'true' (string)"
     );
   });
 
@@ -219,10 +221,10 @@ describe('fbt pronoun support (react native)', () => {
           human: 'true',
         })} a happy birthday.\`,
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input, {reactNativeMode: true})).toThrowError(
-      "Expected boolean value instead of 'true' (string)",
+    expect(() => transform(input, { reactNativeMode: true })).toThrow(
+      "Expected boolean value instead of 'true' (string)"
     );
   });
 
@@ -234,11 +236,11 @@ describe('fbt pronoun support (react native)', () => {
           fbt.pronoun('possession', gender, {human: false}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`,
+      );`
     );
-    expect(() => transform(input, {reactNativeMode: true})).toThrowError(
+    expect(() => transform(input, { reactNativeMode: true })).toThrow(
       '`usage`, the first argument of fbt.pronoun() - Expected value to be ' +
-        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead",
+        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead"
     );
   });
 
@@ -252,7 +254,7 @@ describe('fbt pronoun support (react native)', () => {
               fbt.pronoun('object', gender, {human: true}) +
               ' a happy birthday.',
             'Elided false option',
-          );`,
+          );`
         ),
 
       output: withFbtRequireStatement(
@@ -260,11 +262,11 @@ describe('fbt pronoun support (react native)', () => {
           ${payload({
             jsfbt: {
               t: {
-                '1': {
+                1: {
                   desc: 'Elided false option',
                   text: 'Wish her a happy birthday.',
                 },
-                '2': {
+                2: {
                   desc: 'Elided false option',
                   text: 'Wish him a happy birthday.',
                 },
@@ -281,7 +283,7 @@ describe('fbt pronoun support (react native)', () => {
             },
           })},
           [fbt._pronoun(0, gender, {human: 1})],
-        );`,
+        );`
       ),
     });
   });

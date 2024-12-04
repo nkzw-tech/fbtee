@@ -9,7 +9,7 @@
 
 jest.disableAutomock();
 
-const {generateManifest} = require('../manifestUtils');
+const { generateManifest } = require('../manifestUtils');
 const path = require('path');
 
 describe('manifest', () => {
@@ -17,10 +17,10 @@ describe('manifest', () => {
     const srcPath = 'bin/__fixtures__';
     const enumManifestPath = path.join(srcPath, '.enum_manifest.json');
 
-    const {enumManifest, srcManifest} = generateManifest(
+    const { enumManifest, srcManifest } = generateManifest(
       enumManifestPath,
       [srcPath],
-      __dirname + '/../..',
+      __dirname + '/../..'
     );
 
     expect(JSON.stringify(srcManifest, null, 2)).toMatchSnapshot();

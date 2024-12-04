@@ -10,17 +10,17 @@
 
 'use strict';
 
-import type {StringVariationArgsMap} from './FbtArguments';
-import type {FromBabelNodeFunctionArgs} from './FbtNodeUtil';
+import type { StringVariationArgsMap } from './FbtArguments';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 
-const {errorAt} = require('../FbtUtil');
+const { errorAt } = require('../FbtUtil');
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
 const {
   createInstanceFromFbtConstructCallsite,
   tokenNameToTextPattern,
 } = require('./FbtNodeUtil');
-const {isStringLiteral} = require('@babel/types');
+const { isStringLiteral } = require('@babel/types');
 const invariant = require('invariant');
 
 type Options = {|
@@ -35,7 +35,7 @@ class FbtSameParamNode extends FbtNode<
   empty,
   BabelNodeCallExpression,
   null,
-  Options,
+  Options
 > {
   static +type: FbtNodeType = FbtNodeType.SameParam;
 
@@ -57,9 +57,9 @@ class FbtSameParamNode extends FbtNode<
         isStringLiteral(name),
         'Expected first argument of %s.sameParam to be a string literal, but got `%s`',
         this.moduleName,
-        (name && name.type) || 'unknown',
+        (name && name.type) || 'unknown'
       );
-      return {name: name.value};
+      return { name: name.value };
     } catch (error) {
       throw errorAt(this.node, error);
     }

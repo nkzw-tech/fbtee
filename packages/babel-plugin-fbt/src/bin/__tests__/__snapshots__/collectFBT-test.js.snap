@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`collectFbt When using string templates should extract correctly multiple params 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 86,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "counting",
           "text": "{1} {2} {2} 3",
         },
@@ -23,53 +23,53 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly name, pronoun, plural (react native) 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 119,
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "name",
             "type": 1,
           },
-          Object {
+          {
             "type": 3,
           },
-          Object {
+          {
             "type": 2,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
-              "*": Object {
+        "t": {
+          "*": {
+            "*": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells their items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells their item",
               },
             },
-            "1": Object {
-              "*": Object {
+            "1": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells her items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells her item",
               },
             },
-            "2": Object {
-              "*": Object {
+            "2": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells his items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells his item",
               },
@@ -86,49 +86,49 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly name, pronoun, plural 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 119,
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "name",
             "type": 1,
           },
           null,
           null,
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
-              "*": Object {
+        "t": {
+          "*": {
+            "*": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells their items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells their item",
               },
             },
-            "1": Object {
-              "*": Object {
+            "1": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells her items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells her item",
               },
             },
-            "2": Object {
-              "*": Object {
+            "2": {
+              "*": {
                 "desc": "desc",
                 "text": "{name} sells his items",
               },
-              "_1": Object {
+              "_1": {
                 "desc": "desc",
                 "text": "{name} sells his item",
               },
@@ -145,22 +145,22 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly supports tables ie fbt:enum 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 37,
-      "jsfbt": Object {
-        "m": Array [
+      "jsfbt": {
+        "m": [
           null,
         ],
-        "t": Object {
-          "0": Object {
+        "t": {
+          "0": {
             "desc": "counting",
             "text": "a {2} {2} 3",
           },
-          "1": Object {
+          "1": {
             "desc": "counting",
             "text": "b {2} {2} 3",
           },
@@ -175,15 +175,15 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly with a param 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 52,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "great",
           "text": "testing {it} works",
         },
@@ -197,15 +197,15 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly with just string contents 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 19,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "ok",
           "text": "simple",
         },
@@ -219,15 +219,15 @@ Object {
 `;
 
 exports[`collectFbt When using string templates should extract correctly with the param being first 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 49,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "well",
           "text": "{it} still works",
         },
@@ -241,50 +241,50 @@ Object {
 `;
 
 exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
   },
-  "fbtElementNodes": Array [
-    Object {
-      "children": Array [
-        Object {
+  "fbtElementNodes": [
+    {
+      "children": [
+        {
           "type": "text",
         },
-        Object {
-          "children": Array [
-            Object {
+        {
+          "children": [
+            {
               "type": "text",
             },
           ],
           "phraseIndex": 1,
           "type": "implicitParam",
-          "wrapperNode": Object {
-            "babelNode": Object {
-              "attributes": Array [
-                Object {
+          "wrapperNode": {
+            "babelNode": {
+              "attributes": [
+                {
                   "end": 119,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 36,
                       "index": 119,
                       "line": 4,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 15,
                       "index": 98,
                       "line": 4,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 107,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 24,
                         "index": 107,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 15,
                         "index": 98,
                         "line": 4,
@@ -296,19 +296,19 @@ Object {
                   },
                   "start": 98,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 119,
-                    "extra": Object {
-                      "raw": "\\"neatoLink\\"",
+                    "extra": {
+                      "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 36,
                         "index": 119,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 25,
                         "index": 108,
                         "line": 4,
@@ -319,29 +319,29 @@ Object {
                     "value": "neatoLink",
                   },
                 },
-                Object {
+                {
                   "end": 151,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 68,
                       "index": 151,
                       "line": 4,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 37,
                       "index": 120,
                       "line": 4,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 124,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 41,
                         "index": 124,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 37,
                         "index": 120,
                         "line": 4,
@@ -353,19 +353,19 @@ Object {
                   },
                   "start": 120,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 151,
-                    "extra": Object {
-                      "raw": "\\"https://somewhere.random\\"",
+                    "extra": {
+                      "raw": ""https://somewhere.random"",
                       "rawValue": "https://somewhere.random",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 68,
                         "index": 151,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 42,
                         "index": 125,
                         "line": 4,
@@ -376,29 +376,29 @@ Object {
                     "value": "https://somewhere.random",
                   },
                 },
-                Object {
+                {
                   "end": 166,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 83,
                       "index": 166,
                       "line": 4,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 69,
                       "index": 152,
                       "line": 4,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 160,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 77,
                         "index": 160,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 69,
                         "index": 152,
                         "line": 4,
@@ -410,21 +410,21 @@ Object {
                   },
                   "start": 152,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 166,
-                    "expression": Object {
+                    "expression": {
                       "end": 165,
-                      "extra": Object {
+                      "extra": {
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "loc": Object {
-                        "end": Object {
+                      "loc": {
+                        "end": {
                           "column": 82,
                           "index": 165,
                           "line": 4,
                         },
-                        "start": Object {
+                        "start": {
                           "column": 79,
                           "index": 162,
                           "line": 4,
@@ -434,13 +434,13 @@ Object {
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 83,
                         "index": 166,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 78,
                         "index": 161,
                         "line": 4,
@@ -450,29 +450,29 @@ Object {
                     "type": "JSXExpressionContainer",
                   },
                 },
-                Object {
+                {
                   "end": 178,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 95,
                       "index": 178,
                       "line": 4,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 84,
                       "index": 167,
                       "line": 4,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 169,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 86,
                         "index": 169,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 84,
                         "index": 167,
                         "line": 4,
@@ -484,21 +484,21 @@ Object {
                   },
                   "start": 167,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 178,
-                    "expression": Object {
+                    "expression": {
                       "end": 177,
-                      "extra": Object {
-                        "raw": "\\"uniq\\"",
+                      "extra": {
+                        "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "loc": Object {
-                        "end": Object {
+                      "loc": {
+                        "end": {
                           "column": 94,
                           "index": 177,
                           "line": 4,
                         },
-                        "start": Object {
+                        "start": {
                           "column": 88,
                           "index": 171,
                           "line": 4,
@@ -508,13 +508,13 @@ Object {
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 95,
                         "index": 178,
                         "line": 4,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 87,
                         "index": 170,
                         "line": 4,
@@ -526,27 +526,27 @@ Object {
                 },
               ],
               "end": 179,
-              "loc": Object {
-                "end": Object {
+              "loc": {
+                "end": {
                   "column": 96,
                   "index": 179,
                   "line": 4,
                 },
-                "start": Object {
+                "start": {
                   "column": 12,
                   "index": 95,
                   "line": 4,
                 },
               },
-              "name": Object {
+              "name": {
                 "end": 97,
-                "loc": Object {
-                  "end": Object {
+                "loc": {
+                  "end": {
                     "column": 14,
                     "index": 97,
                     "line": 4,
                   },
-                  "start": Object {
+                  "start": {
                     "column": 13,
                     "index": 96,
                     "line": 4,
@@ -560,7 +560,7 @@ Object {
               "start": 95,
               "type": "JSXOpeningElement",
             },
-            "props": Object {
+            "props": {
               "className": "neatoLink",
               "href": "https://somewhere.random",
               "tabindex": 123,
@@ -573,22 +573,22 @@ Object {
       "type": "element",
     },
   ],
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 10,
       "col_end": 16,
-      "hashToLeaf": Object {
-        "6CzFRF22gqmcMT9hNd4lFQ==": Object {
+      "hashToLeaf": {
+        "6CzFRF22gqmcMT9hNd4lFQ==": {
           "desc": "some desc",
           "text": "This is a {=link}",
         },
       },
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "some desc",
           "text": "This is a {=link}",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=link": "=m1",
           },
         },
@@ -597,19 +597,19 @@ Object {
       "line_end": 7,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 12,
       "col_end": 16,
-      "hashToLeaf": Object {
-        "vInz7SvwK8Zthis7azxV9Q==": Object {
-          "desc": "In the phrase: \\"This is a {=link}\\"",
+      "hashToLeaf": {
+        "vInz7SvwK8Zthis7azxV9Q==": {
+          "desc": "In the phrase: "This is a {=link}"",
           "text": "link",
         },
       },
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"This is a {=link}\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "This is a {=link}"",
           "text": "link",
         },
       },
@@ -622,64 +622,64 @@ Object {
 `;
 
 exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are two nested React elements 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
     "2": 1,
   },
-  "fbtElementNodes": Array [
-    Object {
-      "children": Array [
-        Object {
+  "fbtElementNodes": [
+    {
+      "children": [
+        {
           "type": "param",
         },
-        Object {
+        {
           "type": "text",
         },
-        Object {
-          "children": Array [
-            Object {
+        {
+          "children": [
+            {
               "type": "text",
             },
-            Object {
-              "children": Array [
-                Object {
+            {
+              "children": [
+                {
                   "type": "text",
                 },
-                Object {
+                {
                   "type": "plural",
                 },
-                Object {
+                {
                   "type": "text",
                 },
               ],
               "phraseIndex": 2,
               "type": "implicitParam",
-              "wrapperNode": Object {
-                "babelNode": Object {
-                  "attributes": Array [],
+              "wrapperNode": {
+                "babelNode": {
+                  "attributes": [],
                   "end": 320,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 20,
                       "index": 320,
                       "line": 8,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 12,
                       "index": 312,
                       "line": 8,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 319,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 19,
                         "index": 319,
                         "line": 8,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 13,
                         "index": 313,
                         "line": 8,
@@ -693,42 +693,42 @@ Object {
                   "start": 312,
                   "type": "JSXOpeningElement",
                 },
-                "props": Object {},
+                "props": {},
                 "type": "strong",
               },
             },
-            Object {
+            {
               "type": "text",
             },
           ],
           "phraseIndex": 1,
           "type": "implicitParam",
-          "wrapperNode": Object {
-            "babelNode": Object {
-              "attributes": Array [
-                Object {
+          "wrapperNode": {
+            "babelNode": {
+              "attributes": [
+                {
                   "end": 262,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 34,
                       "index": 262,
                       "line": 7,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 13,
                       "index": 241,
                       "line": 7,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 250,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 22,
                         "index": 250,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 13,
                         "index": 241,
                         "line": 7,
@@ -740,19 +740,19 @@ Object {
                   },
                   "start": 241,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 262,
-                    "extra": Object {
-                      "raw": "\\"neatoLink\\"",
+                    "extra": {
+                      "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 34,
                         "index": 262,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 23,
                         "index": 251,
                         "line": 7,
@@ -763,29 +763,29 @@ Object {
                     "value": "neatoLink",
                   },
                 },
-                Object {
+                {
                   "end": 271,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 43,
                       "index": 271,
                       "line": 7,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 35,
                       "index": 263,
                       "line": 7,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 267,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 39,
                         "index": 267,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 35,
                         "index": 263,
                         "line": 7,
@@ -797,19 +797,19 @@ Object {
                   },
                   "start": 263,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 271,
-                    "extra": Object {
-                      "raw": "\\"#\\"",
+                    "extra": {
+                      "raw": ""#"",
                       "rawValue": "#",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 43,
                         "index": 271,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 40,
                         "index": 268,
                         "line": 7,
@@ -820,29 +820,29 @@ Object {
                     "value": "#",
                   },
                 },
-                Object {
+                {
                   "end": 286,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 58,
                       "index": 286,
                       "line": 7,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 44,
                       "index": 272,
                       "line": 7,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 280,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 52,
                         "index": 280,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 44,
                         "index": 272,
                         "line": 7,
@@ -854,21 +854,21 @@ Object {
                   },
                   "start": 272,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 286,
-                    "expression": Object {
+                    "expression": {
                       "end": 285,
-                      "extra": Object {
+                      "extra": {
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "loc": Object {
-                        "end": Object {
+                      "loc": {
+                        "end": {
                           "column": 57,
                           "index": 285,
                           "line": 7,
                         },
-                        "start": Object {
+                        "start": {
                           "column": 54,
                           "index": 282,
                           "line": 7,
@@ -878,13 +878,13 @@ Object {
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 58,
                         "index": 286,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 53,
                         "index": 281,
                         "line": 7,
@@ -894,29 +894,29 @@ Object {
                     "type": "JSXExpressionContainer",
                   },
                 },
-                Object {
+                {
                   "end": 298,
-                  "loc": Object {
-                    "end": Object {
+                  "loc": {
+                    "end": {
                       "column": 70,
                       "index": 298,
                       "line": 7,
                     },
-                    "start": Object {
+                    "start": {
                       "column": 59,
                       "index": 287,
                       "line": 7,
                     },
                   },
-                  "name": Object {
+                  "name": {
                     "end": 289,
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 61,
                         "index": 289,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 59,
                         "index": 287,
                         "line": 7,
@@ -928,21 +928,21 @@ Object {
                   },
                   "start": 287,
                   "type": "JSXAttribute",
-                  "value": Object {
+                  "value": {
                     "end": 298,
-                    "expression": Object {
+                    "expression": {
                       "end": 297,
-                      "extra": Object {
-                        "raw": "\\"uniq\\"",
+                      "extra": {
+                        "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "loc": Object {
-                        "end": Object {
+                      "loc": {
+                        "end": {
                           "column": 69,
                           "index": 297,
                           "line": 7,
                         },
-                        "start": Object {
+                        "start": {
                           "column": 63,
                           "index": 291,
                           "line": 7,
@@ -952,13 +952,13 @@ Object {
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "loc": Object {
-                      "end": Object {
+                    "loc": {
+                      "end": {
                         "column": 70,
                         "index": 298,
                         "line": 7,
                       },
-                      "start": Object {
+                      "start": {
                         "column": 62,
                         "index": 290,
                         "line": 7,
@@ -970,27 +970,27 @@ Object {
                 },
               ],
               "end": 299,
-              "loc": Object {
-                "end": Object {
+              "loc": {
+                "end": {
                   "column": 71,
                   "index": 299,
                   "line": 7,
                 },
-                "start": Object {
+                "start": {
                   "column": 10,
                   "index": 238,
                   "line": 7,
                 },
               },
-              "name": Object {
+              "name": {
                 "end": 240,
-                "loc": Object {
-                  "end": Object {
+                "loc": {
+                  "end": {
                     "column": 12,
                     "index": 240,
                     "line": 7,
                   },
-                  "start": Object {
+                  "start": {
                     "column": 11,
                     "index": 239,
                     "line": 7,
@@ -1004,7 +1004,7 @@ Object {
               "start": 238,
               "type": "JSXOpeningElement",
             },
-            "props": Object {
+            "props": {
               "className": "neatoLink",
               "href": "#",
               "tabindex": 123,
@@ -1012,7 +1012,7 @@ Object {
             "type": "a",
           },
         },
-        Object {
+        {
           "type": "text",
         },
       ],
@@ -1020,45 +1020,45 @@ Object {
       "type": "element",
     },
   ],
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 8,
       "col_end": 14,
-      "hashToLeaf": Object {
-        "PqPPir8Kg9xSlqdednPFOg==": Object {
+      "hashToLeaf": {
+        "PqPPir8Kg9xSlqdednPFOg==": {
           "desc": "example 1",
           "text": "{name} has shared {=a photo} with you",
         },
-        "gVKMc/8jq5vnYR5v2bb32g==": Object {
+        "gVKMc/8jq5vnYR5v2bb32g==": {
           "desc": "example 1",
           "text": "{name} has shared {=[number] photos} with you",
         },
       },
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "name",
             "type": 1,
           },
-          Object {
+          {
             "singular": true,
             "token": "number",
             "type": 2,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
+        "t": {
+          "*": {
+            "*": {
               "desc": "example 1",
               "text": "{name} has shared {=[number] photos} with you",
-              "tokenAliases": Object {
+              "tokenAliases": {
                 "=[number] photos": "=m2",
               },
             },
-            "_1": Object {
+            "_1": {
               "desc": "example 1",
               "text": "{name} has shared {=a photo} with you",
-              "tokenAliases": Object {
+              "tokenAliases": {
                 "=a photo": "=m2",
               },
             },
@@ -1069,44 +1069,44 @@ Object {
       "line_end": 18,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 10,
       "col_end": 14,
-      "hashToLeaf": Object {
-        "2u1unDTClahYJKZKS5RVCQ==": Object {
-          "desc": "In the phrase: \\"{name} has shared {=[number] photos} with you\\"",
+      "hashToLeaf": {
+        "2u1unDTClahYJKZKS5RVCQ==": {
+          "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
           "text": "{=[number] photos}",
         },
-        "dO3IlAx8hzcJVQxeQOUhkg==": Object {
-          "desc": "In the phrase: \\"{name} has shared {=a photo} with you\\"",
+        "dO3IlAx8hzcJVQxeQOUhkg==": {
+          "desc": "In the phrase: "{name} has shared {=a photo} with you"",
           "text": "{=a photo}",
         },
       },
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "name",
             "type": 1,
           },
-          Object {
+          {
             "singular": true,
             "token": "number",
             "type": 2,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
-              "desc": "In the phrase: \\"{name} has shared {=[number] photos} with you\\"",
+        "t": {
+          "*": {
+            "*": {
+              "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
               "text": "{=[number] photos}",
-              "tokenAliases": Object {
+              "tokenAliases": {
                 "=[number] photos": "=m1",
               },
             },
-            "_1": Object {
-              "desc": "In the phrase: \\"{name} has shared {=a photo} with you\\"",
+            "_1": {
+              "desc": "In the phrase: "{name} has shared {=a photo} with you"",
               "text": "{=a photo}",
-              "tokenAliases": Object {
+              "tokenAliases": {
                 "=a photo": "=m1",
               },
             },
@@ -1117,39 +1117,39 @@ Object {
       "line_end": 16,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 12,
       "col_end": 21,
-      "hashToLeaf": Object {
-        "Q9mOAQ+ogHG20z2QkEkNmQ==": Object {
-          "desc": "In the phrase: \\"{name} has shared {=a photo} with you\\"",
+      "hashToLeaf": {
+        "Q9mOAQ+ogHG20z2QkEkNmQ==": {
+          "desc": "In the phrase: "{name} has shared {=a photo} with you"",
           "text": "a photo",
         },
-        "tYYOLLMbffdJQQlSVEVv/A==": Object {
-          "desc": "In the phrase: \\"{name} has shared {=[number] photos} with you\\"",
+        "tYYOLLMbffdJQQlSVEVv/A==": {
+          "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
           "text": "{number} photos",
         },
       },
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "name",
             "type": 1,
           },
-          Object {
+          {
             "singular": true,
             "token": "number",
             "type": 2,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
-              "desc": "In the phrase: \\"{name} has shared {=[number] photos} with you\\"",
+        "t": {
+          "*": {
+            "*": {
+              "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
               "text": "{number} photos",
             },
-            "_1": Object {
-              "desc": "In the phrase: \\"{name} has shared {=a photo} with you\\"",
+            "_1": {
+              "desc": "In the phrase: "{name} has shared {=a photo} with you"",
               "text": "a photo",
             },
           },
@@ -1164,23 +1164,23 @@ Object {
 `;
 
 exports[`collectFbt should create correct child parent mapping for multiple files 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
     "2": 1,
     "4": 3,
   },
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 12,
       "col_end": 18,
       "filepath": "example1.react.js",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "some desc",
           "text": "This is a {=bold with italic inside}.",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=bold with italic inside": "=m2",
           },
         },
@@ -1189,16 +1189,16 @@ Object {
       "line_end": 8,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 14,
       "col_end": 18,
       "filepath": "example1.react.js",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"This is a {=bold with italic inside}.\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "This is a {=bold with italic inside}."",
           "text": "bold with {=italic inside}",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=italic inside": "=m1",
           },
         },
@@ -1207,14 +1207,14 @@ Object {
       "line_end": 7,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 26,
       "col_end": 46,
       "filepath": "example1.react.js",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"This is a bold with {=italic inside}.\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "This is a bold with {=italic inside}."",
           "text": "italic inside",
         },
       },
@@ -1222,16 +1222,16 @@ Object {
       "line_end": 6,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 12,
       "col_end": 18,
       "filepath": "./example2.react.js.in",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "some desc",
           "text": "Link: {=link}",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=link": "=m1",
           },
         },
@@ -1240,14 +1240,14 @@ Object {
       "line_end": 6,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 14,
       "col_end": 57,
       "filepath": "./example2.react.js.in",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"Link: {=link}\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "Link: {=link}"",
           "text": "link",
         },
       },
@@ -1260,30 +1260,30 @@ Object {
 `;
 
 exports[`collectFbt should dedupe fbt:plurals 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 6,
-      "jsfbt": Object {
-        "m": Array [
+      "jsfbt": {
+        "m": [
           null,
-          Object {
+          {
             "singular": true,
             "token": "number",
             "type": 2,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "*": Object {
+        "t": {
+          "*": {
+            "*": {
               "desc": "desc...",
               "text": "There are {number} photos.",
             },
           },
-          "_1": Object {
-            "_1": Object {
+          "_1": {
+            "_1": {
               "desc": "desc...",
               "text": "There is 1 photo.",
             },
@@ -1299,20 +1299,20 @@ Object {
 `;
 
 exports[`collectFbt should expose the outer token names if needed 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
   },
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 8,
       "col_end": 14,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "Expose outer token name when script option is given",
           "text": "Hello {=World}",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=World": "=m1",
           },
         },
@@ -1321,13 +1321,13 @@ Object {
       "line_end": 5,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 10,
       "col_end": 22,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"Hello {=World}\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "Hello {=World}"",
           "outerTokenName": "=World",
           "text": "World",
         },
@@ -1341,26 +1341,26 @@ Object {
 `;
 
 exports[`collectFbt should expose the subject option on top level and inner phrases 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
   },
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 8,
       "col_end": 14,
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "__subject__",
             "type": 1,
           },
         ],
-        "t": Object {
-          "*": Object {
+        "t": {
+          "*": {
             "desc": "expose subject",
             "text": "You {=see the world}",
-            "tokenAliases": Object {
+            "tokenAliases": {
               "=see the world": "=m1",
             },
           },
@@ -1369,16 +1369,16 @@ Object {
       "line_beg": 2,
       "line_end": 5,
       "project": "",
-      "subject": Object {
+      "subject": {
         "end": 80,
-        "loc": Object {
-          "end": Object {
+        "loc": {
+          "end": {
             "column": 52,
             "index": 80,
             "line": 2,
           },
           "identifierName": "aSubject",
-          "start": Object {
+          "start": {
             "column": 44,
             "index": 72,
             "line": 2,
@@ -1389,19 +1389,19 @@ Object {
         "type": "Identifier",
       },
     },
-    Object {
+    {
       "col_beg": 10,
       "col_end": 30,
-      "jsfbt": Object {
-        "m": Array [
-          Object {
+      "jsfbt": {
+        "m": [
+          {
             "token": "__subject__",
             "type": 1,
           },
         ],
-        "t": Object {
-          "*": Object {
-            "desc": "In the phrase: \\"You {=see the world}\\"",
+        "t": {
+          "*": {
+            "desc": "In the phrase: "You {=see the world}"",
             "text": "see the world",
           },
         },
@@ -1409,16 +1409,16 @@ Object {
       "line_beg": 4,
       "line_end": 4,
       "project": "",
-      "subject": Object {
+      "subject": {
         "end": 80,
-        "loc": Object {
-          "end": Object {
+        "loc": {
+          "end": {
             "column": 52,
             "index": 80,
             "line": 2,
           },
           "identifierName": "aSubject",
-          "start": Object {
+          "start": {
             "column": 44,
             "index": 72,
             "line": 2,
@@ -1434,16 +1434,16 @@ Object {
 `;
 
 exports[`collectFbt should extract common strings from <fbt common={true}> 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 6,
       "col_end": 39,
       "common": true,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "Indicates an editor field is required.",
           "text": "Required",
         },
@@ -1457,15 +1457,15 @@ Object {
 `;
 
 exports[`collectFbt should extract fbs strings 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 27,
       "col_end": 52,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1479,15 +1479,15 @@ Object {
 `;
 
 exports[`collectFbt should extract fbt strings 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 27,
       "col_end": 52,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1501,16 +1501,16 @@ Object {
 `;
 
 exports[`collectFbt should extract fbt.c strings 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 6,
       "col_end": 23,
       "common": true,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "Indicates an editor field is required.",
           "text": "Required",
         },
@@ -1524,38 +1524,38 @@ Object {
 `;
 
 exports[`collectFbt should extract strings from a custom collector 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
   },
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 8,
       "col_end": 14,
       "filepath": "",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "description",
           "text": "Hello {=World}!",
-          "tokenAliases": Object {},
+          "tokenAliases": {},
         },
       },
       "line_beg": 3,
       "line_end": 5,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 16,
       "col_end": 38,
       "filepath": "",
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"Hello {=World}!\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "Hello {=World}!"",
           "outerTokenName": "=World",
           "text": "World",
-          "tokenAliases": Object {},
+          "tokenAliases": {},
         },
       },
       "line_beg": 4,
@@ -1567,16 +1567,16 @@ Object {
 `;
 
 exports[`collectFbt should extract the author from Docblock 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "author": "Sponge Bob",
       "col_beg": 0,
       "col_end": 25,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1590,20 +1590,20 @@ Object {
 `;
 
 exports[`collectFbt should not expose the outer token names by default 1`] = `
-Object {
-  "childParentMappings": Object {
+{
+  "childParentMappings": {
     "1": 0,
   },
-  "phrases": Array [
-    Object {
+  "phrases": [
+    {
       "col_beg": 8,
       "col_end": 14,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "Do not expose outer token name by default",
           "text": "Hello {=World}",
-          "tokenAliases": Object {
+          "tokenAliases": {
             "=World": "=m1",
           },
         },
@@ -1612,13 +1612,13 @@ Object {
       "line_end": 5,
       "project": "",
     },
-    Object {
+    {
       "col_beg": 10,
       "col_end": 22,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
-          "desc": "In the phrase: \\"Hello {=World}\\"",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "In the phrase: "Hello {=World}"",
           "text": "World",
         },
       },
@@ -1631,15 +1631,15 @@ Object {
 `;
 
 exports[`collectFbt should not throw because of CSX 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 25,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1653,15 +1653,15 @@ Object {
 `;
 
 exports[`collectFbt should still extract strings if fbt call param doNotExtract is set to false 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 40,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1675,15 +1675,15 @@ Object {
 `;
 
 exports[`collectFbt should still extract strings if file-level doNotExtract is set to false 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 25,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },
@@ -1697,15 +1697,15 @@ Object {
 `;
 
 exports[`collectFbt should still extract strings if in-line doNotExtract is set to false 1`] = `
-Object {
-  "childParentMappings": Object {},
-  "phrases": Array [
-    Object {
+{
+  "childParentMappings": {},
+  "phrases": [
+    {
       "col_beg": 0,
       "col_end": 46,
-      "jsfbt": Object {
-        "m": Array [],
-        "t": Object {
+      "jsfbt": {
+        "m": [],
+        "t": {
           "desc": "foo",
           "text": "bar",
         },

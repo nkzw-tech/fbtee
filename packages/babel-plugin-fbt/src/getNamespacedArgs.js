@@ -33,7 +33,7 @@ const {
   normalizeSpaces,
 } = require('./FbtUtil');
 const t = require('@babel/types');
-const {jsxExpressionContainer, stringLiteral} = t;
+const { jsxExpressionContainer, stringLiteral } = t;
 
 const getNamespacedArgs = function (moduleName) {
   return {
@@ -47,17 +47,16 @@ const getNamespacedArgs = function (moduleName) {
         t,
         attributes,
         ValidParamOptions,
-        RequiredParamOptions,
+        RequiredParamOptions
       );
 
-      let paramChildren = filterEmptyNodes(node.children).filter(
-        function (child) {
-          return (
-            child.type === 'JSXExpressionContainer' ||
-            child.type === 'JSXElement'
-          );
-        },
-      );
+      let paramChildren = filterEmptyNodes(node.children).filter(function (
+        child
+      ) {
+        return (
+          child.type === 'JSXExpressionContainer' || child.type === 'JSXElement'
+        );
+      });
 
       // <fbt:param> </fbt:param>
       // should be the equivalent of
@@ -76,7 +75,7 @@ const getNamespacedArgs = function (moduleName) {
       if (paramChildren.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:param expects an {expression} or JSX element, and only one`,
+          `${moduleName}:param expects an {expression} or JSX element, and only one`
         );
       }
 
@@ -105,7 +104,7 @@ const getNamespacedArgs = function (moduleName) {
         t,
         attributes,
         PluralOptions,
-        PluralRequiredAttributes,
+        PluralRequiredAttributes
       );
       const countAttr = getAttributeByNameOrThrow(attributes, 'count').value;
       const children = filterEmptyNodes(node.children);
@@ -117,16 +116,16 @@ const getNamespacedArgs = function (moduleName) {
       if (pluralChildren.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:plural expects text or an expression, and only one`,
+          `${moduleName}:plural expects text or an expression, and only one`
         );
       }
       const singularNode = pluralChildren[0];
       const singularText = expandStringConcat(
         moduleName,
-        singularNode.expression || singularNode,
+        singularNode.expression || singularNode
       );
       const singularArg = stringLiteral(
-        normalizeSpaces(singularText.value).trimRight(),
+        normalizeSpaces(singularText.value).trimRight()
       );
       return [singularArg, countAttr.expression, options];
     },
@@ -138,7 +137,7 @@ const getNamespacedArgs = function (moduleName) {
       if (!node.openingElement.selfClosing) {
         throw errorAt(
           node,
-          `${moduleName}:pronoun must be a self-closing element`,
+          `${moduleName}:pronoun must be a self-closing element`
         );
       }
 
@@ -148,7 +147,7 @@ const getNamespacedArgs = function (moduleName) {
       if (typeAttr.type !== 'StringLiteral') {
         throw errorAt(
           node,
-          `${moduleName}:pronoun attribute "type" must have StringLiteral content`,
+          `${moduleName}:pronoun attribute "type" must have StringLiteral content`
         );
       }
       if (!ValidPronounUsages.hasOwnProperty(typeAttr.value)) {
@@ -156,7 +155,7 @@ const getNamespacedArgs = function (moduleName) {
           node,
           `${moduleName}:pronoun attribute "type" must be one of [` +
             Object.keys(ValidPronounUsages) +
-            ']',
+            ']'
         );
       }
       const result = [stringLiteral(typeAttr.value)];
@@ -168,7 +167,7 @@ const getNamespacedArgs = function (moduleName) {
         t,
         attributes,
         ValidPronounOptions,
-        PronounRequiredAttributes,
+        PronounRequiredAttributes
       );
       if (0 < options.properties.length) {
         result.push(options);
@@ -185,7 +184,7 @@ const getNamespacedArgs = function (moduleName) {
       const nameAttribute = getAttributeByNameOrThrow(attributes, 'name').value;
       const genderAttribute = getAttributeByNameOrThrow(
         attributes,
-        'gender',
+        'gender'
       ).value;
 
       const children = filterEmptyNodes(node.children);
@@ -197,7 +196,7 @@ const getNamespacedArgs = function (moduleName) {
       if (nameChildren.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:name expects text or an expression, and only one`,
+          `${moduleName}:name expects text or an expression, and only one`
         );
       }
 
@@ -216,13 +215,13 @@ const getNamespacedArgs = function (moduleName) {
       if (!node.openingElement.selfClosing) {
         throw errorAt(
           node,
-          `Expected ${moduleName}:same-param to be selfClosing.`,
+          `Expected ${moduleName}:same-param to be selfClosing.`
         );
       }
 
       const nameAttr = getAttributeByNameOrThrow(
         node.openingElement.attributes,
-        'name',
+        'name'
       );
 
       return [nameAttr.value];
@@ -238,20 +237,20 @@ const getNamespacedArgs = function (moduleName) {
 
       const rangeAttr = getAttributeByNameOrThrow(
         node.openingElement.attributes,
-        'enum-range',
+        'enum-range'
       );
 
       if (rangeAttr.value.type !== 'JSXExpressionContainer') {
         throw errorAt(
           node,
           'Expected JSX Expression for enum-range attribute but got ' +
-            rangeAttr.value.type,
+            rangeAttr.value.type
         );
       }
 
       const valueAttr = getAttributeByNameOrThrow(
         node.openingElement.attributes,
-        'value',
+        'value'
       );
 
       if (valueAttr.value.type === 'JSXExpressionContainer') {
@@ -263,7 +262,7 @@ const getNamespacedArgs = function (moduleName) {
       throw errorAt(
         node,
         `Expected value attribute of <${moduleName}:enum> to be an expression ` +
-          `but got ${valueAttr.value.type}`,
+          `but got ${valueAttr.value.type}`
       );
     },
   };

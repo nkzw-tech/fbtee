@@ -1,9 +1,7 @@
 {
-  "//": "Copyright (c) Meta Platforms, Inc. and affiliates.",
   "name": "fbt",
-  "description": "The fbt i18n framework JS runtime.",
-  "//version": "Follow SemVer specs at https://semver.org/",
   "version": "1.0.2",
+  "description": "The fbt i18n framework JS runtime.",
   "keywords": [
     "facebook",
     "fbt",
@@ -16,27 +14,29 @@
   ],
   "homepage": "https://facebook.github.io/fbt/",
   "bugs": "https://github.com/facebook/fbt/issues",
-  "main": "lib/FbtPublic.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/fbt",
     "directory": "packages/fbt"
   },
   "license": "MIT",
+  "main": "lib/FbtPublic.js",
+  "scripts": {
+    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
+  },
   "dependencies": {
     "invariant": "^2.2.4"
   },
+  "devDependencies": {},
   "peerDependencies": {
     "babel-plugin-fbt": "^1.0.0",
     "babel-plugin-fbt-runtime": "^1.0.0",
     "react": "^18.0.0 || ^19.0.0"
   },
-  "devDependencies": {},
+  "//": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+  "//version": "Follow SemVer specs at https://semver.org/",
   "devEngines": {
     "node": "6.x || 7.x || 8.x || 9.x || 10.x || 11.x || 12.x",
     "npm": "6.x"
-  },
-  "scripts": {
-    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
   }
 }

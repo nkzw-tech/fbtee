@@ -22,7 +22,8 @@
 
 ## FBT Babel Runtime transform
 
-This is the *secondary* FBT Babel transform.  Because of the way `fbt` is used internally at Facebook, by itself, the [fbt-babel-plugin](https://www.npmjs.com/package/babel-plugin-fbt-runtime) does not transpile `fbt._(...)` arguments to payloads that the [fbt runtime](https://www.npmjs.com/package/fbt) understands.  This transform takes care of that.
+This is the _secondary_ FBT Babel transform. Because of the way `fbt` is used internally at Facebook, by itself, the [fbt-babel-plugin](https://www.npmjs.com/package/babel-plugin-fbt-runtime) does not transpile `fbt._(...)` arguments to payloads that the [fbt runtime](https://www.npmjs.com/package/fbt) understands. This transform takes care of that.
 
 ## Full documentation
+
 https://facebook.github.io/fbt

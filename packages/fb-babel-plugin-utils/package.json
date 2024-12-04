@@ -1,9 +1,16 @@
 {
   "name": "fb-babel-plugin-utils",
-  "//version": "Follow SemVer specs at https://semver.org/",
   "version": "0.13.1",
   "description": "Common Babel 7 utils for FB",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/fbt",
+    "directory": "packages/fb-babel-plugin-utils"
+  },
   "license": "MIT",
+  "scripts": {
+    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
+  },
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/generator": "^7.0.0",
@@ -18,12 +25,5 @@
     "@babel/plugin-syntax-optional-chaining": "^7.0.0",
     "json-diff": "^0.5.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/facebook/fbt",
-    "directory": "packages/fb-babel-plugin-utils"
-  },
-  "scripts": {
-    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
-  }
+  "//version": "Follow SemVer specs at https://semver.org/"
 }

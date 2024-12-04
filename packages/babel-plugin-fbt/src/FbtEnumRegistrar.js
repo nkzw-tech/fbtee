@@ -8,9 +8,9 @@
 
 'use strict';
 
-import type {NodePathOf} from '@babel/core';
+import type { NodePathOf } from '@babel/core';
 
-const {FBT_ENUM_MODULE_SUFFIX} = require('./FbtConstants');
+const { FBT_ENUM_MODULE_SUFFIX } = require('./FbtConstants');
 const t = require('@babel/types');
 const path = require('path');
 
@@ -18,10 +18,10 @@ type NodeCallExpression = NodePathOf<BabelNodeCallExpression>;
 type NodeImportDeclaration = NodePathOf<BabelNodeImportDeclaration>;
 export type EnumKey = string;
 type EnumValue = string;
-export type EnumModule = {|+[EnumKey]: EnumValue|};
-export type EnumManifest = {+[enumModuleName: string]: ?EnumModule};
+export type EnumModule = {| +[EnumKey]: EnumValue |};
+export type EnumManifest = { +[enumModuleName: string]: ?EnumModule };
 
-const fbtEnumMapping: {[enumAlias: string]: ?string} = {};
+const fbtEnumMapping: { [enumAlias: string]: ?string } = {};
 
 let enumManifest: ?EnumManifest;
 
@@ -67,7 +67,7 @@ class FbtEnumRegistrar {
    * @param path Babel path of a `require(...)` call expression
    */
   registerRequireIfApplicable(path: NodeCallExpression): void {
-    const {node} = path;
+    const { node } = path;
     const firstArgument = node.arguments[0];
     if (firstArgument.type !== 'StringLiteral') {
       return;
@@ -89,7 +89,7 @@ class FbtEnumRegistrar {
    * @param path Babel path of a `import` statement
    */
   registerImportIfApplicable(path: NodeImportDeclaration): void {
-    const {node} = path;
+    const { node } = path;
 
     if (node.specifiers.length > 1) {
       return;

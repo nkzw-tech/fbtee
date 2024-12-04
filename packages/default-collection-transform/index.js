@@ -18,7 +18,7 @@ import type {BabelPluginFbt, PluginOptions} from "babel-plugin-fbt";
 
 const defaultSyntaxPlugins = [
   require('@babel/plugin-syntax-class-properties'),
-  [require('@babel/plugin-syntax-flow'), {enums: true}],
+  [require('@babel/plugin-syntax-flow'), { enums: true }],
   require('@babel/plugin-syntax-jsx'),
   require('@babel/plugin-syntax-object-rest-spread'),
   require('@babel/plugin-syntax-numeric-separator'),
@@ -31,18 +31,15 @@ function transform(
   code /*: string */,
   options /*: TransformOptions */,
   plugins /*: BabelPluginList */,
-  presets /*: BabelPresetList */,
+  presets /*: BabelPresetList */
 ) /*: void */ {
-  const {fbtModule, ...pluginOptions} = options;
+  const { fbtModule, ...pluginOptions } = options;
   const opts = {
     ast: false,
     code: false,
     filename: options.filename,
     plugins: defaultSyntaxPlugins.concat(plugins, [
-      [
-        (fbtModule /*: BabelPluginFbt */),
-        (pluginOptions /*: PluginOptions */)
-      ],
+      [(fbtModule /*: BabelPluginFbt */), (pluginOptions /*: PluginOptions */)],
     ]),
     presets,
     sourceType: 'unambiguous',

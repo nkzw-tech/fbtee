@@ -10,16 +10,16 @@
 
 'use strict';
 
-import type {JSModuleNameType} from '../FbtConstants';
-import type {TokenAliases} from '../index';
-import type {StringVariationArgsMap} from './FbtArguments';
+import type { JSModuleNameType } from '../FbtConstants';
+import type { TokenAliases } from '../index';
+import type { StringVariationArgsMap } from './FbtArguments';
 import type FbtElementNode from './FbtElementNode';
 import type FbtImplicitParamNodeType from './FbtImplicitParamNode';
-import type {AnyFbtNode, FbtChildNode, PlainFbtNode} from './FbtNode';
+import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode';
 import type FbtNodeType from './FbtNodeType';
 
 const FbtNodeChecker = require('../FbtNodeChecker');
-const {errorAt, normalizeSpaces, varDump} = require('../FbtUtil');
+const { errorAt, normalizeSpaces, varDump } = require('../FbtUtil');
 const invariant = require('invariant');
 
 export type FromBabelNodeFunctionArgs = {|
@@ -30,7 +30,7 @@ export type FromBabelNodeFunctionArgs = {|
 function createInstanceFromFbtConstructCallsite<N: AnyFbtNode>(
   moduleName: JSModuleNameType,
   node: BabelNode,
-  Constructor: Class<N> & $ReadOnly<{type: FbtNodeType, ...}>,
+  Constructor: Class<N> & $ReadOnly<{ type: FbtNodeType, ... }>
 ): ?N {
   const checker = FbtNodeChecker.forModule(moduleName);
   const constructName = checker.getFbtConstructNameFromFunctionCall(node);
@@ -46,7 +46,7 @@ function createInstanceFromFbtConstructCallsite<N: AnyFbtNode>(
  * Returns the closest ancestor node of type: FbtElementNode | FbtImplicitParamNode
  */
 function getClosestElementOrImplicitParamNodeAncestor(
-  startNode: AnyFbtNode,
+  startNode: AnyFbtNode
 ): FbtElementNode | FbtImplicitParamNodeType {
   const ret =
     startNode.getFirstAncestorOfType(require('./FbtImplicitParamNode')) ||
@@ -54,14 +54,14 @@ function getClosestElementOrImplicitParamNodeAncestor(
   invariant(
     ret != null,
     'Unable to find closest ancestor of type FbtElementNode or FbtImplicitParamNode for node: %s',
-    varDump(startNode),
+    varDump(startNode)
   );
   return ret;
 }
 
 function runOnNestedChildren(
   node: AnyFbtNode,
-  callback: (node: AnyFbtNode) => void,
+  callback: (node: AnyFbtNode) => void
 ): void {
   for (const child of node.children) {
     callback(child);
@@ -73,13 +73,13 @@ function runOnNestedChildren(
 
 function toPlainFbtNodeTree(
   fbtNode: AnyFbtNode,
-  phraseToIndexMap: Map<AnyFbtNode, number>,
+  phraseToIndexMap: Map<AnyFbtNode, number>
 ): PlainFbtNode {
   const ret = {
     phraseIndex: phraseToIndexMap.get(fbtNode),
     children: (fbtNode.children
-      .map(child =>
-        child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null,
+      .map((child) =>
+        child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null
       )
       .filter(Boolean): $ReadOnlyArray<PlainFbtNode> | void),
     ...fbtNode.toPlainFbtNode(),
@@ -105,7 +105,7 @@ function toPlainFbtNodeTree(
  * @example `convertToTokenName('Hello {name}') === '=Hello [name]'`
  */
 function convertToTokenName(text: string): string {
-  return `=${text.replace(/[{}]/g, m => (m === '{' ? '[' : ']'))}`;
+  return `=${text.replace(/[{}]/g, (m) => (m === '{' ? '[' : ']'))}`;
 }
 
 function tokenNameToTextPattern(tokenName: string): string {
@@ -135,15 +135,15 @@ function getTextFromFbtNodeTree(
   preserveWhitespace: boolean,
   getChildNodeText: (
     argsMap: StringVariationArgsMap,
-    child: FbtChildNode,
-  ) => string,
+    child: FbtChildNode
+  ) => string
 ): string {
   try {
     if (subject) {
       argsMap.mustHave(instance);
     }
     const texts = instance.children.map(getChildNodeText.bind(null, argsMap));
-    return normalizeSpaces(texts.join(''), {preserveWhitespace}).trim();
+    return normalizeSpaces(texts.join(''), { preserveWhitespace }).trim();
   } catch (error) {
     throw errorAt(instance.node, error);
   }
@@ -151,7 +151,7 @@ function getTextFromFbtNodeTree(
 
 function getChildNodeText(
   argsMap: StringVariationArgsMap,
-  child: FbtChildNode,
+  child: FbtChildNode
 ): string {
   const FbtImplicitParamNode = require('./FbtImplicitParamNode');
   return child instanceof FbtImplicitParamNode
@@ -161,10 +161,10 @@ function getChildNodeText(
 
 function getTokenAliasesFromFbtNodeTree(
   instance: FbtElementNode | FbtImplicitParamNodeType,
-  argsMap: StringVariationArgsMap,
+  argsMap: StringVariationArgsMap
 ): ?TokenAliases {
   const childrentokenAliases = instance.children.map((node, tokenIndex) =>
-    getChildNodeTokenAliases(argsMap, node, tokenIndex),
+    getChildNodeTokenAliases(argsMap, node, tokenIndex)
   );
   const tokenAliases = Object.assign({}, ...childrentokenAliases);
   return Object.keys(tokenAliases).length ? tokenAliases : null;
@@ -173,7 +173,7 @@ function getTokenAliasesFromFbtNodeTree(
 function getChildNodeTokenAliases(
   argsMap: StringVariationArgsMap,
   child: FbtChildNode,
-  tokenIndex: number,
+  tokenIndex: number
 ): TokenAliases {
   const FbtImplicitParamNode = require('./FbtImplicitParamNode');
   if (child instanceof FbtImplicitParamNode) {
@@ -181,7 +181,7 @@ function getChildNodeTokenAliases(
     invariant(
       childToken != null,
       'The token of FbtImplicitParamNode %s is expected to be non-null',
-      varDump(child),
+      varDump(child)
     );
     return {
       [childToken]: convertIndexInSiblingsArrayToOuterTokenAlias(tokenIndex),
@@ -193,7 +193,7 @@ function getChildNodeTokenAliases(
 function getChildNodeTextForDescription(
   targetFbtNode: FbtImplicitParamNodeType,
   argsMap: StringVariationArgsMap,
-  child: FbtChildNode,
+  child: FbtChildNode
 ): string {
   const FbtImplicitParamNode = require('./FbtImplicitParamNode');
   if (child instanceof FbtImplicitParamNode) {
@@ -231,14 +231,14 @@ function getChildNodeTextForDescription(
  */
 function buildFbtNodeMapForSameParam(
   fbtNode: FbtElementNode,
-  argsMap: StringVariationArgsMap,
-): {|[string]: FbtChildNode|} {
+  argsMap: StringVariationArgsMap
+): {| [string]: FbtChildNode |} {
   // Importing this module only here to avoid dependency cycle
   const FbtImplicitParamNode = require('./FbtImplicitParamNode');
   const FbtSameParamNode = require('./FbtSameParamNode');
   const tokenNameToFbtNode = {};
-  const tokenNameToSameParamNode: {[string]: FbtSameParamNode} = {};
-  runOnNestedChildren(fbtNode, child => {
+  const tokenNameToSameParamNode: { [string]: FbtSameParamNode } = {};
+  runOnNestedChildren(fbtNode, (child) => {
     if (child instanceof FbtSameParamNode) {
       tokenNameToSameParamNode[child.getTokenName(argsMap)] = child;
       return;
@@ -263,7 +263,7 @@ function buildFbtNodeMapForSameParam(
         fbtNode.moduleName,
         fbtNode.moduleName,
         varDump(existingFbtNode),
-        varDump(child),
+        varDump(child)
       );
       // $FlowFixMe[prop-missing]
       tokenNameToFbtNode[tokenName] = child;
@@ -277,7 +277,7 @@ function buildFbtNodeMapForSameParam(
       realFbtNode != null,
       'Expected fbt `sameParam` construct with name=`%s` to refer to a ' +
         '`name` or `param` construct using the same token name',
-      sameParamTokenName,
+      sameParamTokenName
     );
     // $FlowFixMe[prop-missing]
     sameParamTokenNameToRealFbtNode[sameParamTokenName] = realFbtNode;

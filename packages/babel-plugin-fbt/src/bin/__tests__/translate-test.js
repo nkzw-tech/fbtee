@@ -8,15 +8,15 @@
 
 'use strict';
 
-const {jsCodeNonASCIICharSerializer} = require('../../__tests__/FbtTestUtil');
-const {processJSON} = require('../translateUtils');
+const { jsCodeNonASCIICharSerializer } = require('../../__tests__/FbtTestUtil');
+const { processJSON } = require('../translateUtils');
 
 expect.addSnapshotSerializer(jsCodeNonASCIICharSerializer);
 
 describe('translate-test.js', () => {
   describe('should translate new jsfbt payload', () => {
     for (const options of [
-      {jenkins: false, hashModule: false, strict: false},
+      { jenkins: false, hashModule: false, strict: false },
     ]) {
       describe(`with option=${JSON.stringify(options)}:`, () => {
         testTranslateNewPhrases(options);
@@ -62,7 +62,7 @@ describe('translate-test.js', () => {
               },
             ],
           },
-          options,
+          options
         );
         expect(result).toMatchSnapshot();
       });
@@ -112,7 +112,7 @@ describe('translate-test.js', () => {
               },
             ],
           },
-          options,
+          options
         );
         expect(result).toMatchSnapshot();
       });
@@ -228,19 +228,19 @@ describe('translate-test.js', () => {
                         translation:
                           'translation is: {name} has shared {=[number] photos}. View =[number] photos',
                         id: 108537963,
-                        variations: {'0': 2},
+                        variations: { '0': 2 },
                       },
                       {
                         translation:
                           'translation is: {name} has shared {=[number] photos}. View =[number] photos',
                         id: 108537953,
-                        variations: {'0': 1},
+                        variations: { '0': 1 },
                       },
                       {
                         translation:
                           'translation is: {name} has shared {=[number] photos}. View =[number] photos',
                         id: 108537972,
-                        variations: {'0': 3},
+                        variations: { '0': 3 },
                       },
                     ],
                   },
@@ -252,19 +252,19 @@ describe('translate-test.js', () => {
                         translation:
                           'translation is: {name} has shared {=a photo}. View a photo',
                         id: 108537963,
-                        variations: {'0': 2},
+                        variations: { '0': 2 },
                       },
                       {
                         translation:
                           'translation is: {name} has shared {=a photo}. View a photo',
                         id: 108537953,
-                        variations: {'0': 1},
+                        variations: { '0': 1 },
                       },
                       {
                         translation:
                           'translation is: {name} has shared {=a photo}. View a photo',
                         id: 108537972,
-                        variations: {'0': 3},
+                        variations: { '0': 3 },
                       },
                     ],
                   },
@@ -294,7 +294,7 @@ describe('translate-test.js', () => {
               },
             ],
           },
-          options,
+          options
         );
         expect(result).toMatchSnapshot();
       });
@@ -394,10 +394,10 @@ describe('translate-test.js', () => {
                 },
               ],
             },
-            options,
+            options
           );
           expect(result).toMatchSnapshot();
-        },
+        }
       );
 
       it('should translate string with enum', () => {
@@ -523,7 +523,7 @@ describe('translate-test.js', () => {
               },
             ],
           },
-          options,
+          options
         );
         expect(result).toMatchSnapshot();
       });

@@ -23,7 +23,7 @@ type PhonologicalRewriteMap = $ReadOnly<{|
   unknown?: StringToStringMap,
 |}>;
 
-const REWRITES: {[string]: PhonologicalRewriteMap} = {
+const REWRITES: { [string]: PhonologicalRewriteMap } = {
   en_GB: {
     meta: {},
     patterns: {
@@ -255,7 +255,7 @@ const GLOBAL_REWRITES: PhonologicalRewriteMap = {
     '/_\u0001([^\u0001]*)\u0001/': 'javascript',
   },
 };
-const EMPTY_REWRITES = {meta: {}, patterns: {}};
+const EMPTY_REWRITES = { meta: {}, patterns: {} };
 const DEFAULT_LOCALE = 'en_US';
 
 const IntlPhonologicalRewrites = {
@@ -263,8 +263,8 @@ const IntlPhonologicalRewrites = {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
     const rewrites = REWRITES[key] || EMPTY_REWRITES;
     return {
-      meta: {...rewrites.meta, ...GLOBAL_REWRITES.meta},
-      patterns: {...rewrites.patterns, ...GLOBAL_REWRITES.patterns},
+      meta: { ...rewrites.meta, ...GLOBAL_REWRITES.meta },
+      patterns: { ...rewrites.patterns, ...GLOBAL_REWRITES.patterns },
     };
   },
 };

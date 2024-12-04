@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type { BabelTransformPlugin, NodePathOf } from '@babel/core';
+import typeof BabelTypes from '@babel/types';
 import type {
   FbtTableKey,
   PatternHash,
@@ -21,8 +23,6 @@ import type { FbtCommonMap } from './FbtCommon';
 import type { FbtCallSiteOptions, FbtExtraOptionConfig } from './FbtConstants';
 import type { EnumManifest, EnumModule } from './FbtEnumRegistrar';
 import typeof { FbtVariationType } from './translate/IntlVariations';
-import type { BabelTransformPlugin, NodePathOf } from '@babel/core';
-import typeof BabelTypes from '@babel/types';
 
 const FbtCommonFunctionCallProcessor = require('./babel-processors/FbtCommonFunctionCallProcessor');
 const FbtFunctionCallProcessor = require('./babel-processors/FbtFunctionCallProcessor');
@@ -41,10 +41,34 @@ const FbtShiftEnums = require('./FbtShiftEnums');
 const FbtUtil = require('./FbtUtil');
 const { errorAt } = require('./FbtUtil');
 const JSFbtUtil = require('./JSFbtUtil');
-const {
-  RequireCheck: { isRequireAlias },
-} = require('fb-babel-plugin-utils');
 const { parse: parseDocblock } = require('jest-docblock');
+
+function isRequireCall(node) {
+  return (
+    node.type === 'CallExpression' &&
+    node.callee.type === 'Identifier' &&
+    node.callee.name === 'require' &&
+    node.arguments.length === 1 &&
+    node.arguments[0].type === 'StringLiteral'
+  );
+}
+
+// Detects `const foo = require('bar')`
+function isRequireAlias(path) {
+  const grandParent = path.parentPath.parent;
+  const parent = path.parent;
+  const node = path.node;
+
+  return (
+    grandParent.type === 'Program' &&
+    parent.type === 'VariableDeclaration' &&
+    node.type === 'VariableDeclarator' &&
+    node.id.type === 'Identifier' &&
+    node.init &&
+    isRequireCall(node.init) &&
+    !node.init._isGeneratedInlinedRequire
+  );
+}
 
 type FbtEnumLoader = (enumFilePath: string) => EnumModule;
 export type PluginOptions = {|

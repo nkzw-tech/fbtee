@@ -13,13 +13,13 @@ import type {
   PatternHash,
   PatternString,
 } from '../../../../runtime/FbtTable';
-import type {HashToLeaf} from '../bin/FbtCollector';
+import type { HashToLeaf } from '../bin/FbtCollector';
 import type {
   IntlFbtVariationTypeValue,
   IntlVariationMaskValue,
 } from './IntlVariations';
 
-const {FbtVariationType, Mask} = require('./IntlVariations');
+const { FbtVariationType, Mask } = require('./IntlVariations');
 
 export type FbtSiteHashToLeaf = FbtSiteHashToTextAndDesc | FbtSiteHashToText;
 
@@ -45,7 +45,7 @@ export type FbtSiteHashToText = {|
  */
 export type FbtSiteHashifiedTableJSFBTTree =
   | PatternHash
-  | {[FbtTableKey]: FbtSiteHashifiedTableJSFBTTree};
+  | { [FbtTableKey]: FbtSiteHashifiedTableJSFBTTree };
 
 /**
  * Represents a fbt() or <fbt /> source data from a callsite and all
@@ -58,7 +58,7 @@ export type FbtSiteHashifiedTableJSFBTTree =
  */
 class FbtSiteBase<
   MetaDataEntry: FbtSiteMetaEntryBase,
-  HashToLeaf: FbtSiteHashToLeaf,
+  HashToLeaf: FbtSiteHashToLeaf
 > {
   +hashToLeaf: HashToLeaf;
   +project: string;
@@ -69,7 +69,7 @@ class FbtSiteBase<
     hashToLeaf: HashToLeaf,
     table: FbtSiteHashifiedTableJSFBTTree,
     metadata: $ReadOnlyArray<?MetaDataEntry>,
-    project: string,
+    project: string
   ) {
     this.hashToLeaf = hashToLeaf;
     this.table = table;
@@ -132,7 +132,7 @@ class FbtSiteMetaEntryBase {
 }
 
 function getVariationMaskFromType(
-  type: ?IntlFbtVariationTypeValue,
+  type: ?IntlFbtVariationTypeValue
 ): ?IntlVariationMaskValue {
   switch (type) {
     case FbtVariationType.GENDER:

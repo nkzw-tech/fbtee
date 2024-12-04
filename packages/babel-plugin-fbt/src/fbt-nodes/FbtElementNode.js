@@ -10,16 +10,16 @@
 
 'use strict';
 
-import type {FbtExtraOptionConfig, JSModuleNameType} from '../FbtConstants';
-import type {BabelNodeCallExpressionArg, ParamSet} from '../FbtUtil';
-import type {TokenAliases} from '../index.js';
+import type { ExtraOptionValues } from 'FbtHooks';
+import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';
+import type { BabelNodeCallExpressionArg, ParamSet } from '../FbtUtil';
+import type { TokenAliases } from '../index.js';
 import type {
   AnyStringVariationArg,
   StringVariationArgsMap,
 } from './FbtArguments';
 import type FbtImplicitParamNodeType from './FbtImplicitParamNode';
-import type {AnyFbtNode, FbtChildNode} from './FbtNode';
-import type {ExtraOptionValues} from 'FbtHooks';
+import type { AnyFbtNode, FbtChildNode } from './FbtNode';
 
 const {
   FbtBooleanOptions,
@@ -41,8 +41,8 @@ const {
   normalizeSpaces,
   setUniqueToken,
 } = require('../FbtUtil');
-const {GENDER_ANY} = require('../translate/IntlVariations');
-const {GenderStringVariationArg} = require('./FbtArguments');
+const { GENDER_ANY } = require('../translate/IntlVariations');
+const { GenderStringVariationArg } = require('./FbtArguments');
 const FbtNode = require('./FbtNode');
 const FbtNodeType = require('./FbtNodeType');
 const {
@@ -136,7 +136,7 @@ class FbtElementNode
     AnyStringVariationArg,
     BabelNodeCallExpression,
     FbtChildNode,
-    Options,
+    Options
   >
   implements IFbtElementNode
 {
@@ -145,8 +145,8 @@ class FbtElementNode
   _tokenSet: ParamSet = {};
 
   getOptions(validExtraOptions?: $ReadOnly<FbtExtraOptionConfig>): Options {
-    const {node} = this;
-    const allValidOptions = {...validExtraOptions, ...ValidFbtOptions};
+    const { node } = this;
+    const allValidOptions = { ...validExtraOptions, ...ValidFbtOptions };
     const rawOptions = collectOptionsFromFbtConstruct(
       this.moduleName,
       node,
@@ -156,7 +156,7 @@ class FbtElementNode
        * which is an object
        */
       allValidOptions,
-      FbtBooleanOptions,
+      FbtBooleanOptions
     );
 
     // Build extra options
@@ -171,7 +171,7 @@ class FbtElementNode
         typeof extraOptionValue === 'string',
         'Expected extra option values to be strings but got `%s` (%s)',
         varDump(extraOptionValue),
-        typeof extraOptionValue,
+        typeof extraOptionValue
       );
       extraOptions[optionName] = extraOptionValue;
     }
@@ -193,13 +193,13 @@ class FbtElementNode
   }
 
   getExtraOptionsNode(): ?BabelNodeObjectExpression {
-    const {extraOptions} = this.options;
+    const { extraOptions } = this.options;
     const extraOptionsObjectProperties = Object.keys(extraOptions).map(
-      optionName =>
+      (optionName) =>
         objectProperty(
           identifier(optionName),
-          stringLiteral(extraOptions[optionName]),
-        ),
+          stringLiteral(extraOptions[optionName])
+        )
     );
     return extraOptionsObjectProperties.length
       ? objectExpression(extraOptionsObjectProperties)
@@ -208,19 +208,21 @@ class FbtElementNode
 
   static getArgsForStringVariationCalcForFbtElement(
     instance: FbtElementNode | FbtImplicitParamNodeType,
-    subject: ?BabelNode,
+    subject: ?BabelNode
   ): $ReadOnlyArray<AnyStringVariationArg> {
     return (
       isNode(subject)
         ? [new GenderStringVariationArg(instance, subject, [GENDER_ANY])]
         : []
-    ).concat(...instance.children.map(c => c.getArgsForStringVariationCalc()));
+    ).concat(
+      ...instance.children.map((c) => c.getArgsForStringVariationCalc())
+    );
   }
 
   getArgsForStringVariationCalc(): $ReadOnlyArray<AnyStringVariationArg> {
     return this.constructor.getArgsForStringVariationCalcForFbtElement(
       this,
-      this.options.subject,
+      this.options.subject
     );
   }
 
@@ -230,10 +232,10 @@ class FbtElementNode
    */
   static beforeGetTextSanityCheck(
     instance: FbtElementNode | FbtImplicitParamNodeType,
-    argsMap: StringVariationArgsMap,
+    argsMap: StringVariationArgsMap
   ): void {
     const FbtSameParamNode = require('./FbtSameParamNode');
-    instance.children.forEach(child => {
+    instance.children.forEach((child) => {
       const tokenName = child.getTokenName(argsMap);
       // FbtSameParamNode token names are allowed to be redundant by design
       if (tokenName != null && !(child instanceof FbtSameParamNode)) {
@@ -258,7 +260,7 @@ class FbtElementNode
         argsMap,
         this.options.subject,
         this.options.preserveWhitespace,
-        getChildNodeText,
+        getChildNodeText
       );
     } catch (error) {
       throw errorAt(this.node, error);
@@ -267,14 +269,14 @@ class FbtElementNode
 
   getTextForDescription(
     argsMap: StringVariationArgsMap,
-    targetFbtNode: FbtImplicitParamNodeType,
+    targetFbtNode: FbtImplicitParamNodeType
   ): string {
     return getTextFromFbtNodeTree(
       this,
       argsMap,
       this.options.subject,
       this.options.preserveWhitespace,
-      getChildNodeTextForDescription.bind(null, targetFbtNode),
+      getChildNodeTextForDescription.bind(null, targetFbtNode)
     );
   }
 
@@ -285,12 +287,12 @@ class FbtElementNode
     const [_, descriptionNode] = this.getCallNodeArguments() || [];
     invariant(
       descriptionNode != null,
-      'fbt description argument cannot be found',
+      'fbt description argument cannot be found'
     );
 
     return normalizeSpaces(
       expandStringConcat(this.moduleName, descriptionNode).value,
-      {preserveWhitespace: !!this.options.preserveWhitespace},
+      { preserveWhitespace: !!this.options.preserveWhitespace }
     ).trim();
   }
 
@@ -326,7 +328,7 @@ class FbtElementNode
     if (!isArrayExpression(fbtContentsNode)) {
       throw errorAt(
         node,
-        `${moduleName}: expected callsite's first argument to be an array`,
+        `${moduleName}: expected callsite's first argument to be an array`
       );
     }
 
@@ -341,7 +343,7 @@ class FbtElementNode
         this.createChildNode({
           moduleName,
           node: elementChild,
-        }),
+        })
       );
     }
     return fbtElement;
@@ -381,7 +383,7 @@ class FbtElementNode
     ];
 
     for (const Constructor of fbtChildNodeClasses) {
-      fbtChildNode = Constructor.fromBabelNode({moduleName, node});
+      fbtChildNode = Constructor.fromBabelNode({ moduleName, node });
       if (fbtChildNode != null) {
         break;
       }
@@ -392,7 +394,7 @@ class FbtElementNode
       // Later on, we should only allow non-fbt JSX elements here for auto-wrapping.
       // fbt:param, fbt:pronoun, etc... should appear as children of it.
       // $FlowFixMe[incompatible-type]
-      fbtChildNode = FbtImplicitParamNode.fromBabelNode({moduleName, node});
+      fbtChildNode = FbtImplicitParamNode.fromBabelNode({ moduleName, node });
     }
 
     if (fbtChildNode != null) {
@@ -407,7 +409,7 @@ class FbtElementNode
     // Importing this module only here to avoid dependency cycle
     const FbtImplicitParamNode = require('./FbtImplicitParamNode');
     const ret = [];
-    runOnNestedChildren(this, child => {
+    runOnNestedChildren(this, (child) => {
       if (child instanceof FbtImplicitParamNode) {
         ret.push(child);
       }
@@ -416,21 +418,21 @@ class FbtElementNode
   }
 
   getFbtRuntimeArg(): ?BabelNodeCallExpression {
-    const {subject} = this.options;
+    const { subject } = this.options;
     return subject == null
       ? null
       : createFbtRuntimeArgCallExpression(
           this,
           [subject],
-          ValidPronounUsagesKeys.subject,
+          ValidPronounUsagesKeys.subject
         );
   }
 
   getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): $ReadOnly<{
     [argName: string]: BabelNodeCallExpressionArg,
   }> {
-    const {subject} = this.options;
-    return subject != null ? {subject} : {};
+    const { subject } = this.options;
+    return subject != null ? { subject } : {};
   }
 
   /**
@@ -446,7 +448,7 @@ class FbtElementNode
         typeof obj === 'object' &&
         typeof obj._tokenSet === 'object' &&
         obj._tokenSet,
-      'Expected _tokenSet property to be defined',
+      'Expected _tokenSet property to be defined'
     );
     // $FlowFixMe[cannot-write] Flow refines mixed to an read-only object for some unknown reason...
     obj._tokenSet = compactBabelNodeProps(obj._tokenSet, false);
@@ -462,9 +464,9 @@ class FbtElementNode
   }
 
   assertNoOverallTokenNameCollision(
-    argsMapList: $ReadOnlyArray<StringVariationArgsMap>,
+    argsMapList: $ReadOnlyArray<StringVariationArgsMap>
   ): void {
-    argsMapList.forEach(argsMap => {
+    argsMapList.forEach((argsMap) => {
       buildFbtNodeMapForSameParam(this, argsMap);
     });
   }

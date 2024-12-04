@@ -22,7 +22,7 @@ function toUtf8(str: string) {
       result.push(
         0xe0 | (charcode >> 12),
         0x80 | ((charcode >> 6) & 0x3f),
-        0x80 | (charcode & 0x3f),
+        0x80 | (charcode & 0x3f)
       );
     } else {
       i++;
@@ -32,7 +32,7 @@ function toUtf8(str: string) {
         0xf0 | (charcode >> 18),
         0x80 | ((charcode >> 12) & 0x3f),
         0x80 | ((charcode >> 6) & 0x3f),
-        0x80 | (charcode & 0x3f),
+        0x80 | (charcode & 0x3f)
       );
     }
   }

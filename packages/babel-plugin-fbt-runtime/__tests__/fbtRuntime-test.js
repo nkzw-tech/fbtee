@@ -5,8 +5,6 @@
  * @oncall i18n_fbt_js
  */
 
-jest.autoMockOff();
-
 const { transformSync: babelTransform } = require('@babel/core');
 const { TestUtil } = require('fb-babel-plugin-utils');
 

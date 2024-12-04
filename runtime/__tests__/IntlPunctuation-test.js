@@ -1,3 +1,5 @@
+import { dedupeStops } from '../IntlPunctuation';
+
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
@@ -9,8 +11,6 @@
 /* eslint-disable fb-www/check-unicode-format */
 
 jest.disableAutomock();
-
-import { dedupeStops } from '../IntlPunctuation';
 
 const FW_Q_MARK = '\u{ff1f}';
 const FW_BANG = '\u{ff01}';

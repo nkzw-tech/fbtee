@@ -6,7 +6,7 @@
  * @oncall i18n_fbt_js
  */
 
-import type {HashFunction} from './TextPackager';
+import type { HashFunction } from './TextPackager';
 
 const crypto = require('crypto');
 

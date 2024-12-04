@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {JSModuleName, ModuleNameRegExp} = require('../FbtConstants');
+const { JSModuleName, ModuleNameRegExp } = require('../FbtConstants');
 
 describe('FbtConstants', () => {
   it('JSModuleName enum values should have the same string length', () => {

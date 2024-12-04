@@ -11,6 +11,7 @@
 
 'use strict';
 
+import typeof BabelTypes from '@babel/types';
 import type { PatternString } from '../../../runtime/FbtTable';
 import type { AnyFbtNode } from './fbt-nodes/FbtNode';
 import type {
@@ -20,7 +21,6 @@ import type {
   JSModuleNameType,
 } from './FbtConstants';
 import type { TokenAliases } from './index';
-import typeof BabelTypes from '@babel/types';
 
 const { JSModuleName, ModuleNameRegExp } = require('./FbtConstants');
 const {
@@ -306,6 +306,7 @@ function errorAt(
   } = {}
 ): ErrorWithBabelNodeLocation {
   let error;
+
   if (typeof msgOrError === 'string') {
     const newError = new Error(
       createErrorMessageAtNode(astNode, msgOrError, options)
@@ -596,9 +597,7 @@ function getOpeningElementAttributes(
   });
 }
 
-function extractEnumRange(
-  node: BabelNodeObjectExpression
-): {
+function extractEnumRange(node: BabelNodeObjectExpression): {
   [name: string]: BabelNodeStringLiteral,
 } {
   return node.properties.reduce((acc, prop) => {
@@ -993,10 +992,8 @@ function nullableTypeCheckerFactory<
   };
 }
 
-const enforceBabelNodeOrNull: (
-  value: mixed,
-  valueDesc: ?string
-) => ?BabelNode = nullableTypeCheckerFactory(enforceBabelNode);
+const enforceBabelNodeOrNull: (value: mixed, valueDesc: ?string) => ?BabelNode =
+  nullableTypeCheckerFactory(enforceBabelNode);
 enforceBabelNode.orNull = enforceBabelNodeOrNull;
 
 const enforceBabelNodeExpressionOrNull: (
@@ -1013,18 +1010,15 @@ const enforceBabelNodeCallExpressionArgOrNull: (
 ) => ?BabelNodeCallExpressionArg = nullableTypeCheckerFactory(
   enforceBabelNodeCallExpressionArg
 );
-enforceBabelNodeCallExpressionArg.orNull = enforceBabelNodeCallExpressionArgOrNull;
+enforceBabelNodeCallExpressionArg.orNull =
+  enforceBabelNodeCallExpressionArgOrNull;
 
-const enforceBooleanOrNull: (
-  value: mixed,
-  valueDesc: ?string
-) => ?boolean = nullableTypeCheckerFactory(enforceBoolean);
+const enforceBooleanOrNull: (value: mixed, valueDesc: ?string) => ?boolean =
+  nullableTypeCheckerFactory(enforceBoolean);
 enforceBoolean.orNull = enforceBooleanOrNull;
 
-const enforceStringOrNull: (
-  value: mixed,
-  valueDesc: ?string
-) => ?string = nullableTypeCheckerFactory(enforceString);
+const enforceStringOrNull: (value: mixed, valueDesc: ?string) => ?string =
+  nullableTypeCheckerFactory(enforceString);
 enforceString.orNull = enforceStringOrNull;
 
 const enforceStringEnumOrNull: <K: string>(
