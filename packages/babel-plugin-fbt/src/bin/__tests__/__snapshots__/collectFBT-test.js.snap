@@ -22,69 +22,6 @@ exports[`collectFbt When using string templates should extract correctly multipl
 }
 `;
 
-exports[`collectFbt When using string templates should extract correctly name, pronoun, plural (react native) 1`] = `
-{
-  "childParentMappings": {},
-  "phrases": [
-    {
-      "col_beg": 0,
-      "col_end": 119,
-      "jsfbt": {
-        "m": [
-          {
-            "token": "name",
-            "type": 1,
-          },
-          {
-            "type": 3,
-          },
-          {
-            "type": 2,
-          },
-        ],
-        "t": {
-          "*": {
-            "*": {
-              "*": {
-                "desc": "desc",
-                "text": "{name} sells their items",
-              },
-              "_1": {
-                "desc": "desc",
-                "text": "{name} sells their item",
-              },
-            },
-            "1": {
-              "*": {
-                "desc": "desc",
-                "text": "{name} sells her items",
-              },
-              "_1": {
-                "desc": "desc",
-                "text": "{name} sells her item",
-              },
-            },
-            "2": {
-              "*": {
-                "desc": "desc",
-                "text": "{name} sells his items",
-              },
-              "_1": {
-                "desc": "desc",
-                "text": "{name} sells his item",
-              },
-            },
-          },
-        },
-      },
-      "line_beg": 4,
-      "line_end": 4,
-      "project": "",
-    },
-  ],
-}
-`;
-
 exports[`collectFbt When using string templates should extract correctly name, pronoun, plural 1`] = `
 {
   "childParentMappings": {},

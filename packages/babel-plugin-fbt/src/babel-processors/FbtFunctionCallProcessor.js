@@ -460,11 +460,7 @@ class FbtFunctionCallProcessor {
    */
   _metaPhrases(fbtElement: FbtElementNode): $ReadOnlyArray<MetaPhrase> {
     const stringVariationArgs = fbtElement.getArgsForStringVariationCalc();
-    const jsfbtBuilder = new JSFbtBuilder(
-      this.fileSource,
-      stringVariationArgs,
-      this.pluginOptions.reactNativeMode
-    );
+    const jsfbtBuilder = new JSFbtBuilder(this.fileSource, stringVariationArgs);
     const argsCombinations = jsfbtBuilder.getStringVariationCombinations();
     const compactStringVariations = this._compactStringVariationArgs(
       argsCombinations[0] || []

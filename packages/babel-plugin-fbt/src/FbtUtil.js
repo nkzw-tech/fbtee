@@ -51,9 +51,7 @@ const {
   memberExpression,
   stringLiteral,
 } = require('@babel/types');
-const {
-  generateFormattedCodeFromAST,
-} = require('fb-babel-plugin-utils/TestUtil');
+const TestUtil = require('../../../test/TestUtil');
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 const util = require('util');
@@ -347,7 +345,7 @@ function createErrorMessageAtNode(
     msg +
     (optionalMessage ? `\n${optionalMessage}` : '') +
     (astNode != null
-      ? `\n---\n${generateFormattedCodeFromAST(astNode)}\n---`
+      ? `\n---\n${TestUtil.generateFormattedCodeFromAST(astNode)}\n---`
       : '')
   );
 }
@@ -878,7 +876,8 @@ function compactBabelNodeProps(
         continue;
       }
       if (serializeSourceCode) {
-        ret[`__${propName}Code`] = generateFormattedCodeFromAST(propValue);
+        ret[`__${propName}Code`] =
+          TestUtil.generateFormattedCodeFromAST(propValue);
       }
       // $FlowFixMe[incompatible-type]
       // $FlowFixMe[prop-missing]

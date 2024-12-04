@@ -18,7 +18,6 @@ import type { FbtExtraOptionConfig } from '../FbtConstants';
 import type { EnumManifest } from '../FbtEnumRegistrar';
 import type { BabelPluginFbt, Phrase, PluginOptions } from '../index';
 
-const { extractEnumsAndFlattenPhrases } = require('../FbtShiftEnums');
 const FbtUtil = require('../FbtUtil');
 const fbt = require('../index');
 const fs = require('fs');
@@ -32,7 +31,6 @@ export type CollectorConfig = {|
   fbtCommonPath?: string,
   plugins?: BabelPluginList,
   presets?: BabelPresetList,
-  reactNativeMode?: boolean,
   transform?: ?ExternalTransform,
   generateOuterTokenName?: boolean,
 |};
@@ -102,7 +100,6 @@ class FbtCollector implements IFbtCollector {
       fbtModule: fbt,
       filename,
       generateOuterTokenName: this._config.generateOuterTokenName,
-      reactNativeMode: this._config.reactNativeMode,
     };
 
     if (!FbtUtil.textContainsFbtLikeModule(source)) {
@@ -125,10 +122,6 @@ class FbtCollector implements IFbtCollector {
     }
 
     let newPhrases = fbt.getExtractedStrings();
-    if (this._config.reactNativeMode) {
-      newPhrases = extractEnumsAndFlattenPhrases(newPhrases);
-    }
-
     const newChildParentMappings = fbt.getChildToParentRelationships();
     const offset = this._phrases.length;
     Object.entries(newChildParentMappings).forEach(

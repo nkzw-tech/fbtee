@@ -10,7 +10,7 @@ const {
   snapshotTransformKeepJsx,
   withFbtRequireStatement,
 } = require('./FbtTestUtil');
-const { TestUtil } = require('fb-babel-plugin-utils');
+const TestUtil = require('../../../../test/TestUtil');
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
@@ -351,18 +351,6 @@ const testData = {
     ),
   },
 
-  'should handle object pronoun (react native)': {
-    input: withFbtRequireStatement(
-      `<fbt desc={"d"} project={"p"}>
-          I know <fbt:pronoun type="object" gender={gender}/>.
-        </fbt>;`
-    ),
-
-    options: {
-      reactNativeMode: true,
-    },
-  },
-
   'should handle subject+reflexive pronouns': {
     input:
       // She wished herself a happy birthday.
@@ -372,23 +360,6 @@ const testData = {
           wished <fbt:pronoun type="reflexive" gender={gender} human={true}/> a happy birthday.
         </fbt>;`
       ),
-  },
-
-  'should handle subject+reflexive pronouns (react native)': {
-    input:
-      // She wished herself a happy birthday.
-      withFbtRequireStatement(
-        `<fbt desc={"d"} project={"p"}>
-          <fbt:pronoun type="subject" gender={gender} capitalize={true} human={true}/>
-          wished
-          <fbt:pronoun type="reflexive" gender={gender} human={true}/>
-          a happy birthday.
-        </fbt>;`
-      ),
-
-    options: {
-      reactNativeMode: true,
-    },
   },
 
   'fbt:param with multiple children should error': {

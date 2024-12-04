@@ -12,9 +12,6 @@
     "@babel/core": "^7.26.0",
     "invariant": "^2.2.4"
   },
-  "devDependencies": {
-    "fb-babel-plugin-utils": "^0.13.0"
-  },
   "peerDependencies": {
     "babel-plugin-fbt": "^1.0.0"
   }

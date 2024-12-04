@@ -68,21 +68,15 @@ class JSFbtBuilder {
     [pronounsArgCode: string]: GenderConstEnum | typeof GENDER_ANY,
   };
   /**
-   * Set this to `true` if we're extracting strings for React Native
-   */
-  +reactNativeMode: boolean;
-  /**
    * List of string variation arguments from a given fbt callsite
    */
   +stringVariationArgs: $ReadOnlyArray<AnyStringVariationArg>;
 
   constructor(
     fileSource: string,
-    stringVariationArgs: $ReadOnlyArray<AnyStringVariationArg>,
-    reactNativeMode?: boolean
+    stringVariationArgs: $ReadOnlyArray<AnyStringVariationArg>
   ): void {
     this.fileSource = fileSource;
-    this.reactNativeMode = !!reactNativeMode;
     this.stringVariationArgs = stringVariationArgs;
     this.usedEnums = {};
     this.usedPlurals = {};
@@ -109,9 +103,7 @@ class JSFbtBuilder {
             singular: true,
           };
         } else {
-          return this.reactNativeMode
-            ? { type: FbtVariationType.NUMBER }
-            : null;
+          return null;
         }
       }
 
@@ -126,7 +118,7 @@ class JSFbtBuilder {
       }
 
       if (fbtNode instanceof FbtPronounNode) {
-        return this.reactNativeMode ? { type: FbtVariationType.PRONOUN } : null;
+        return null;
       }
 
       if (svArg instanceof EnumStringVariationArg) {
@@ -151,10 +143,7 @@ class JSFbtBuilder {
         // Expected metadata entry:
         //   for non-RN -> `null`
         //   for RN     -> `{range: ['groups', 'photos', 'videos']}`
-        return this.reactNativeMode
-          ? // Enum range will later be used to extract enums from the payload for React Native
-            { range: Object.keys(fbtNode.options.range) }
-          : null;
+        return null;
       }
 
       if (

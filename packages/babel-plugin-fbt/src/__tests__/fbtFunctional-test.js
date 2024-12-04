@@ -13,7 +13,7 @@ const {
   transform,
   withFbtRequireStatement,
 } = require('./FbtTestUtil');
-const { TestUtil } = require('fb-babel-plugin-utils');
+const TestUtil = require('../../../../test/TestUtil');
 
 // Given a test config's "filter" status, decides whether we should run it with
 // jest's it/fit/xit function.
@@ -3062,7 +3062,6 @@ function describeTestScenarios(testData) {
           const pluginOptions = {
             collectFbt: true,
             generateOuterTokenName: true,
-            reactNativeMode: options.reactNativeMode || false,
             fbtEnumManifest: singleTestData.runWithTestFbtEnumManifest,
           };
           transform(singleTestData.input, pluginOptions);
@@ -3073,10 +3072,6 @@ function describeTestScenarios(testData) {
 
     describe('should collect correct meta data', () => {
       forEachTestScenario(testFbtMetaData);
-    });
-
-    describe('should collect correct meta data (react native)', () => {
-      forEachTestScenario(testFbtMetaData, { reactNativeMode: true });
     });
 
     function testFbtNodeCreation(title, singleTestData, options) {
@@ -3092,7 +3087,6 @@ function describeTestScenarios(testData) {
           const pluginOptions = {
             collectFbt: true,
             generateOuterTokenName: true,
-            reactNativeMode: options.reactNativeMode || false,
             fbtEnumManifest: singleTestData.runWithTestFbtEnumManifest,
           };
           transform(singleTestData.input, pluginOptions);
@@ -3109,10 +3103,6 @@ function describeTestScenarios(testData) {
 
     describe('should create correct FbtNode objects', () => {
       forEachTestScenario(testFbtNodeCreation);
-    });
-
-    describe('should create correct FbtNode objects (react native)', () => {
-      forEachTestScenario(testFbtNodeCreation, { reactNativeMode: true });
     });
   });
 }

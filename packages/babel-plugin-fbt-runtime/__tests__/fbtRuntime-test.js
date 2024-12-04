@@ -6,14 +6,14 @@
  */
 
 const { transformSync: babelTransform } = require('@babel/core');
-const { TestUtil } = require('fb-babel-plugin-utils');
+const TestUtil = require('../../../test/TestUtil');
 
-function withFbtRequireStatement(code: string): string {
+function withFbtRequireStatement(code) {
   return `const fbt = require("fbt");
   ${code}`;
 }
 
-function transform(source, pluginOptions, babelPluginFbtExtraOptions) {
+function transform(source, babelPluginFbtExtraOptions) {
   return babelTransform(source, {
     ast: false,
     plugins: [
@@ -21,18 +21,18 @@ function transform(source, pluginOptions, babelPluginFbtExtraOptions) {
       require('@babel/plugin-transform-react-jsx'),
       [
         require('babel-plugin-fbt'),
-        { ...pluginOptions, extraOptions: babelPluginFbtExtraOptions },
+        { extraOptions: babelPluginFbtExtraOptions },
       ],
-      [require('../index'), pluginOptions],
+      require('../index'),
     ],
     sourceType: 'module',
   }).code;
 }
 
-function runTest(data, isRN, babelPluginFbtExtraOptions) {
+function runTest(data, babelPluginFbtExtraOptions) {
   TestUtil.assertSourceAstEqual(
     data.output,
-    transform(data.input, { reactNativeMode: isRN }, babelPluginFbtExtraOptions)
+    transform(data.input, babelPluginFbtExtraOptions)
   );
 }
 
@@ -46,8 +46,7 @@ describe('Test hash key generation', () => {
         fbt._('Foo', null, {hk: '3ktBJ2'});
       `),
     };
-    runTest(data, true);
-    runTest(data, false);
+    runTest(data);
   });
 
   it('should generate hash key for nested fbts', () => {
@@ -81,20 +80,18 @@ lines">
         );`
       ),
     };
-    runTest(data, true);
-    runTest(data, false);
+    runTest(data);
   });
 });
 
 describe('Test enum hash keys generation', () => {
   it('should generate single hash key for fbt with enum under regular mode', () => {
-    runTest(
-      {
-        input: withFbtRequireStatement(
-          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
-        ),
-        output: withFbtRequireStatement(
-          `fbt._(
+    runTest({
+      input: withFbtRequireStatement(
+        `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
+      ),
+      output: withFbtRequireStatement(
+        `fbt._(
             {
               "a": "Foo A",
               "b": "Foo B",
@@ -109,112 +106,8 @@ describe('Test enum hash keys generation', () => {
             ],
             {hk: "NT3sR"},
           );`
-        ),
-      },
-      false
-    );
-  });
-
-  it('should generate hash key for fbt with enum', () => {
-    runTest(
-      {
-        input: withFbtRequireStatement(
-          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
-        ),
-        output: withFbtRequireStatement(
-          `fbt._(
-            {
-              "a": 'Foo A',
-              "b": 'Foo B',
-              "c": 'Foo C'
-            },
-            [
-              fbt._enum('a', {
-                "a": 'A',
-                "b": 'B',
-                "c": 'C'
-              })
-            ],
-            {
-              ehk: {
-                a: "2gRMkN",
-                b: "3NsO2f",
-                c: "3eytjU"
-              }
-            },
-          );`
-        ),
-      },
-      true
-    );
-  });
-
-  it('should generate hash key for fbt with multiple enums', () => {
-    runTest(
-      {
-        input: withFbtRequireStatement(
-          `fbt(
-            fbt.enum('a', {a: 'A', b: 'B', c: 'C'}) +
-              ' Foo ' +
-              fbt.enum('x', {x: 'X', y: 'Y', z: 'Z'}),
-            'Bar',
-          );`
-        ),
-        output: withFbtRequireStatement(
-          `fbt._(
-            {
-              "a": {
-                "x": "A Foo X",
-                "y": "A Foo Y",
-                "z": "A Foo Z"
-              },
-              "b": {
-                "x": "B Foo X",
-                "y": "B Foo Y",
-                "z": "B Foo Z"
-              },
-              "c": {
-                "x": "C Foo X",
-                "y": "C Foo Y",
-                "z": "C Foo Z"
-              },
-            },
-            [
-              fbt._enum('a', {
-                "a": 'A',
-                "b": 'B',
-                "c": 'C'
-              }),
-              fbt._enum('x', {
-                "x": 'X',
-                "y": 'Y',
-                "z": 'Z'
-              }),
-            ],
-            {
-              ehk: {
-                a: {
-                  x: "5Lquv",
-                  y: "3RQlhz",
-                  z: "3ZpRpY"
-                },
-                b: {
-                  x: "djeja",
-                  y: "1Cl3e7",
-                  z: "31zfrM"
-                },
-                c: {
-                  x: "2z0mci",
-                  y: "2xJRMx",
-                  z: "HAwfA"
-                },
-              },
-            },
-          );`
-        ),
-      },
-      true
-    );
+      ),
+    });
   });
 });
 
@@ -277,8 +170,7 @@ describe('Test replacing clear token names with mangled tokens', () => {
         {hk: "2mDoBt"},
       );`,
   };
-  runTest(data, true);
-  runTest(data, false);
+  runTest(data);
 });
 
 describe('Test extra options generation', () => {
@@ -290,8 +182,7 @@ describe('Test extra options generation', () => {
       `),
     };
     const validExtraOptions = { locale: true };
-    runTest(data, true, validExtraOptions);
-    runTest(data, false, validExtraOptions);
+    runTest(data, validExtraOptions);
   });
 
   it('should generate extra options for nested fbts', () => {
@@ -330,8 +221,7 @@ lines">
       ),
     };
     const validExtraOptions = { private: { yes: true, no: true } };
-    runTest(data, true, validExtraOptions);
-    runTest(data, false, validExtraOptions);
+    runTest(data, validExtraOptions);
   });
 
   it('should generate extra options for nested strings', () => {
@@ -376,7 +266,6 @@ lines">
         );`,
     };
     const validExtraOptions = { private: { yes: true, no: true } };
-    runTest(data, true, validExtraOptions);
-    runTest(data, false, validExtraOptions);
+    runTest(data, validExtraOptions);
   });
 });

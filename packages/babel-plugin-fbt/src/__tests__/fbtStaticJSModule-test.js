@@ -12,7 +12,7 @@ const {
   transform,
   withFbtRequireStatement,
 } = require('./FbtTestUtil');
-const { TestUtil } = require('fb-babel-plugin-utils');
+const TestUtil = require('../../../../test/TestUtil');
 
 function runTest(data, extra) {
   var expected = data.output;

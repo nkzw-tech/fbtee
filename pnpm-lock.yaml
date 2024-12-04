@@ -196,9 +196,6 @@ importers:
       '@fbtjs/default-collection-transform':
         specifier: ^1.0.0
         version: 1.0.0(babel-plugin-fbt@1.0.0)
-      fb-babel-plugin-utils:
-        specifier: workspace:*
-        version: link:../fb-babel-plugin-utils
       flow-enums-runtime:
         specifier: ^0.0.6
         version: 0.0.6
@@ -245,10 +242,6 @@ importers:
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
-    devDependencies:
-      fb-babel-plugin-utils:
-        specifier: ^0.13.0
-        version: 0.13.1
 
   packages/default-collection-transform:
     dependencies:
@@ -264,21 +257,6 @@ importers:
       babel-plugin-fbt:
         specifier: ^1.0.0
         version: 1.0.0(@fbtjs/default-collection-transform@1.0.0)
-
-  packages/fb-babel-plugin-utils:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.26.0
-        version: 7.26.0
-      '@babel/generator':
-        specifier: ^7.0.0
-        version: 7.26.2
-      '@babel/parser':
-        specifier: ^7.7.4
-        version: 7.26.2
-      json-diff:
-        specifier: ^0.5.4
-        version: 0.5.5
 
   packages/fbt:
     dependencies:

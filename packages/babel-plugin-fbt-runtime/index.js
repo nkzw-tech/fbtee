@@ -26,7 +26,6 @@ import type {FbtRuntimeInput} from 'FbtHooks';
 export type PluginOptions = {|
   fbtHashKeyModule?: string,
   fbtSentinel?: string,
-  reactNativeMode?: boolean,
 |};
 */
 
@@ -36,7 +35,6 @@ const {
   JSFbtUtil: { mapLeaves },
   fbtHashKey: jenkinsHashKey,
 } = require('babel-plugin-fbt');
-const { shiftEnumsToTop } = require('babel-plugin-fbt').FbtShiftEnums;
 const { SENTINEL } = require('babel-plugin-fbt/dist/FbtConstants');
 const invariant = require('invariant');
 
@@ -114,14 +112,10 @@ module.exports = function BabelPluginFbtRuntime(
 
   function _appendHashKeyOption(
     optionsNode /*: ?BabelNodeObjectExpression */,
-    jsfbt /*: TableJSFBT */,
-    reactNativeMode /*: ?boolean */
+    jsfbt /*: TableJSFBT */
   ) /* : BabelNodeObjectExpression */ {
     let shiftedJsfbt;
     let enumCount = 0;
-    if (reactNativeMode) {
-      ({ enumCount, shiftedJsfbt } = shiftEnumsToTop(jsfbt));
-    }
 
     const options = optionsNode == null ? [] : [...optionsNode.properties];
     if (enumCount > 0) {
@@ -183,7 +177,7 @@ module.exports = function BabelPluginFbtRuntime(
        */
       StringLiteral(path) {
         // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
-        const { fbtSentinel, reactNativeMode } = getPluginOptions(this);
+        const { fbtSentinel } = getPluginOptions(this);
         if (fbtSentinel == null || fbtSentinel.trim() == '') {
           // eslint-disable-next-line fb-www/no-new-error
           throw new Error(
@@ -237,8 +231,7 @@ module.exports = function BabelPluginFbtRuntime(
         // $FlowFixMe[cannot-write]
         parentNode.arguments[2] = _appendHashKeyOption(
           optionsNode,
-          phrase.jsfbt,
-          reactNativeMode
+          phrase.jsfbt
         );
       },
     },

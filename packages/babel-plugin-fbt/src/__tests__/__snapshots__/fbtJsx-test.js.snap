@@ -273,26 +273,6 @@ var x = fbt._(
 
 `;
 
-exports[`Test declarative (jsx) fbt syntax translation should handle object pronoun (react native) 1`] = `
-const fbt = require("fbt");
-fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      t: {
-        0: { desc: "d", text: "I know this." },
-        1: { desc: "d", text: "I know her." },
-        2: { desc: "d", text: "I know him." },
-        "*": { desc: "d", text: "I know them." },
-      },
-      m: [{ type: 3 }],
-    },
-    project: "p",
-  } /* __FBT__ end */,
-  [fbt._pronoun(0, gender)]
-);
-
-`;
-
 exports[`Test declarative (jsx) fbt syntax translation should handle object pronoun 1`] = `
 const fbt = require("fbt");
 fbt._(
@@ -338,34 +318,6 @@ fbt._(
     jsfbt: { t: { desc: "foo", text: "foobar" }, m: [] },
     project: "",
   } /* __FBT__ end */
-);
-
-`;
-
-exports[`Test declarative (jsx) fbt syntax translation should handle subject+reflexive pronouns (react native) 1`] = `
-const fbt = require("fbt");
-fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      t: {
-        1: { 1: { desc: "d", text: "She wished herself a happy birthday." } },
-        2: { 2: { desc: "d", text: "He wished himself a happy birthday." } },
-        "*": {
-          "*": { desc: "d", text: "They wished themselves a happy birthday." },
-        },
-      },
-      m: [{ type: 3 }, { type: 3 }],
-    },
-    project: "p",
-  } /* __FBT__ end */,
-  [
-    fbt._pronoun(3, gender, {
-      human: 1,
-    }),
-    fbt._pronoun(2, gender, {
-      human: 1,
-    }),
-  ]
 );
 
 `;

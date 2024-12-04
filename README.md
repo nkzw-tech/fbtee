@@ -90,8 +90,6 @@ See [CHANGELOG](CHANGELOG.md).
   - See [package.json](packages/babel-plugin-fbt-runtime/package.json)
 - [@fbtjs/default-collection-transform](https://www.npmjs.com/package/@fbtjs/default-collection-transform) (build-time)
   - See [package.json](packages/default-collection-transform/package.json)
-- [fb-babel-plugin-utils](https://www.npmjs.com/package/fb-babel-plugin-utils) (server-side, used by `babel-plugin-fbt-runtime`)
-  - See [package.json](packages/fb-babel-plugin-utils/package.json)
 - [fbt](https://www.npmjs.com/package/fbt) (client-side)
   - See [package.json](packages/fbt/package.json)
 
