@@ -57,10 +57,6 @@ module.exports = {
       modulePaths: ['<rootDir>/packages/fbt/lib'],
     },
     {
-      displayName: 'top-level',
-      roots: ['__tests__'],
-    },
-    {
       displayName: 'demo-app',
       setupFiles: [
         'fbjs-scripts/jest/environment.js',

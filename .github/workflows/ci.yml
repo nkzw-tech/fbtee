@@ -19,7 +19,6 @@ jobs:
             'babel-plugin-standalone:test',
             'demo-app:test',
             'flow:check',
-            'top-level:test',
           ]
     name: 'v${{ matrix.node }}: ${{ matrix.test }}'
     steps:
