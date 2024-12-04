@@ -1,8 +1,6 @@
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
- * @format
- * @oncall i18n_fbt_js
  */
 
 const { FbtVariationType } = require('../translate/IntlVariations');

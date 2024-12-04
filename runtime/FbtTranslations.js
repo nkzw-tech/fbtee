@@ -4,8 +4,6 @@
  * Dummy class on www. Fetches translations from language packs on RN/CS.
  *
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 'use strict';

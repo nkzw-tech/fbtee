@@ -2,7 +2,6 @@
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
  * @noflow
- * @oncall i18n_fbt_js
  */
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');

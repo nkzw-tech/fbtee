@@ -8,7 +8,6 @@
  * !! Do not modify it manually                                     !!
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * @codegen-command: scripts/intl/generate_fbt_number_consistency.php
- * @oncall i18n_fbt_oss
  */
 
 'use strict';

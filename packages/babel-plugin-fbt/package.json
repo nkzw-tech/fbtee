@@ -16,7 +16,6 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.0.0",
-    "@babel/register": "^7.0.0",
     "@babel/traverse": "^7.2.2",
     "@babel/types": "^7.2.2",
     "flow-enums-runtime": "^0.0.6",

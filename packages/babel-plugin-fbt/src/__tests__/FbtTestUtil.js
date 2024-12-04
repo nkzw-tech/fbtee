@@ -3,9 +3,7 @@
  *
  * Utility functions to test the Fbt Babel transform plugin
  *
- * @format
  * @noflow
- * @oncall i18n_fbt_js
  */
 
 'use strict';

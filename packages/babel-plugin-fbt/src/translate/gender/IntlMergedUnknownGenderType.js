@@ -9,7 +9,6 @@
  * Run `phps GenderGenScript` to regenerate this file.
  *
  * @flow strict-local
- * @oncall i18n_fbt_oss
  */
 
 'use strict';

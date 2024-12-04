@@ -4,8 +4,6 @@
  * - Changed default generics for `jest.fn` from `mixed` to `any`
  *
  * @flow strict
- * @format
- * @oncall i18n_fbt_js
  */
 
 type JestMockFn<TArguments: $ReadOnlyArray<any>, TReturn> = {

@@ -4,22 +4,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @noflow
- * @oncall i18n_devex
  */
 
 'use strict';
 
-const setGeneratedFilePragmas = require('../../setGeneratedFilePragmas');
 const del = require('del');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const gulpOnce = require('gulp-once');
 const rename = require('gulp-rename');
 const path = require('path');
-
-const ONCALL_ID = 'i18n_fbt_oss';
 
 const paths = {
   src: {
@@ -49,7 +44,6 @@ const babelPluginFbt_buildDistJS = () =>
     follow: true,
   })
     .pipe(once())
-    .pipe(setGeneratedFilePragmas(ONCALL_ID))
     .pipe(
       babel({
         plugins: [
@@ -67,7 +61,6 @@ const babelPluginFbt_buildDistFlowJS = () =>
   })
     .pipe(rename({ extname: '.js.flow' }))
     .pipe(once())
-    .pipe(setGeneratedFilePragmas(ONCALL_ID))
     .pipe(dest(paths.dist));
 
 const babelPluginFbt_copyJsonToDist = () =>
@@ -82,19 +75,6 @@ gulp.task(
   )
 );
 
-gulp.task('watch', () => {
-  gulp.watch(
-    paths.src.js.concat(paths.src.json),
-    {
-      cwd: __dirname,
-      ignoreInitial: false,
-    },
-    function watchBabelPluginFbt(done) {
-      gulp.task('build')(done);
-    }
-  );
-});
-
 const babelPluginFbt_clean = () =>
   del(
     [path.join(__dirname, checksumFile), path.join(__dirname, paths.dist, '*')],
@@ -107,5 +87,4 @@ gulp.task('default', gulp.series('build'));
 module.exports = {
   build: gulp.task('build'),
   clean: gulp.task('clean'),
-  watch: gulp.task('watch'),
 };

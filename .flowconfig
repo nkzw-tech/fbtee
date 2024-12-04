@@ -31,7 +31,7 @@ module.name_mapper='^babel-plugin-fbt$' -> '<PROJECT_ROOT>/packages/babel-plugin
 module.name_mapper='^\(babel-plugin-fbt\)/dist/\(.*\)$' -> '<PROJECT_ROOT>/packages/\1/src/\2'
 
 # Import 3rd party node modules used by Babel transforms and runtime tests
-module.name_mapper='^\(\(invariant\|optimist\|@babel\|jest-docblock\)\(/.*\)?\)$' -> '<PROJECT_ROOT>/node_modules/\1'
+module.name_mapper='^\(\(invariant\|optimist\|@babel\)\(/.*\)?\)$' -> '<PROJECT_ROOT>/node_modules/\1'
 
 # Redirect non-FB JS modules to a dedicated folder
 module.name_mapper='^\(FBLocaleToLang\|fbtInit\|FbtEnv\|FbtPublic\|FbtTranslations\|GenderConst\|intlInlineMode\|IntlNumberType\|IntlPhonologicalRewrites\|IntlRedundantStops\|IntlVariationResolver\|IntlVariations\|NumberFormatConsts\)$' -> '<PROJECT_ROOT>/runtime/\1'

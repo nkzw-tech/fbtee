@@ -3,9 +3,7 @@
  *
  * See https://jestjs.io/docs/en/configuration#snapshotresolver-string
  *
- * @format
  * @noflow
- * @oncall i18n_fbt_js
  */
 
 'use strict';

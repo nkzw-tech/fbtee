@@ -2,9 +2,7 @@
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * @fbt {"project": "fbt-demo-project"}
- * @format
  * @noflow
- * @oncall i18n_fbt_js
  */
 
 /* eslint-disable fb-flow/use-exact-by-default-object-type */

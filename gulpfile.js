@@ -4,9 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @noflow
- * @oncall i18n_fbt_oss
  */
 
 'use strict';
@@ -14,7 +12,6 @@
 const moduleMap = require('./moduleMap');
 const babelPluginFbtGulp = require('./packages/babel-plugin-fbt/gulpfile');
 const { version } = require('./packages/fbt/package.json');
-const setGeneratedFilePragmas = require('./setGeneratedFilePragmas');
 const del = require('del');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
@@ -34,7 +31,6 @@ const paths = {
   lib: 'packages/fbt/lib',
   license: 'LICENSE',
   runtime: [
-    // Individually listing subfolders of `runtime` to allow watching through these symlinks
     'runtime/**/*.js',
     '!runtime/**/__tests__/*',
     '!runtime/**/__mocks__/*',
@@ -44,21 +40,13 @@ const paths = {
   typedModules: ['flow-types/typed-js-modules/*.flow'],
 };
 
-const COPYRIGHT = 'Copyright (c) Meta Platforms, Inc. and affiliates.';
-const ONCALL_ID = 'i18n_fbt_oss';
-
 const COPYRIGHT_HEADER = `/**
  * fbt v<%= version %>
  *
- * ${COPYRIGHT}
+ * Copyright (c) Christoph Nakazawa & Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @${'generated'}
- * @${'nolint'}
- * @${'nogrep'}
- * @oncall ${ONCALL_ID}
  */
 `;
 
@@ -81,7 +69,7 @@ const buildDist = function (opts) {
       }),
     ],
     optimization: {
-      minimize: !opts.debug,
+      minimize: false,
     },
   };
 
@@ -139,7 +127,6 @@ const transformTests = (src, dest) =>
     .pipe(once())
     .pipe(babel(babelTestPresets))
     .pipe(flatten())
-    .pipe(setGeneratedFilePragmas())
     .pipe(gulp.dest(dest));
 
 const buildRuntimeTests = () =>
@@ -166,15 +153,6 @@ const buildDistTask = () =>
 
 gulp.task('dist', gulp.series('modules', buildDistTask));
 
-const buildDistMinTask = () =>
-  gulp
-    .src('./packages/fbt/lib/FbtPublic.js')
-    .pipe(buildDist({ debug: false, output: 'fbt.min.js' }))
-    .pipe(gulpif('*.js', header(COPYRIGHT_HEADER, { version })))
-    .pipe(gulp.dest(paths.dist));
-
-gulp.task('dist:min', gulp.series('modules', buildDistMinTask));
-
 const cleanTask = () =>
   del([
     '.checksums',
@@ -187,26 +165,5 @@ gulp.task('clean', gulp.parallel(babelPluginFbtGulp.clean, cleanTask));
 
 gulp.task(
   'build-runtime',
-  gulp.series(
-    gulp.parallel('license', 'modules', 'test-modules'),
-    gulp.series('dist', 'dist:min')
-  )
+  gulp.series(gulp.parallel('license', 'modules', 'test-modules'))
 );
-
-gulp.task('watch-runtime', () => {
-  gulp.watch(
-    [paths.license].concat(
-      paths.runtime,
-      paths.runtimeTests,
-      paths.runtimeMocks,
-      paths.typedModules
-    ),
-    {
-      cwd: __dirname,
-      ignoreInitial: false,
-    },
-    function watchRuntimeFbt(done) {
-      gulp.task('build-runtime')(done);
-    }
-  );
-});

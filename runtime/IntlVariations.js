@@ -4,7 +4,6 @@
  * @generated SignedSource<<b429366ac6a902a3f3cbc2f475a0a4dd>>
  *
  * @flow strict
- * @oncall i18n_fbt_oss
  * @codegen-command: JSModulesToClientScript
  */
 

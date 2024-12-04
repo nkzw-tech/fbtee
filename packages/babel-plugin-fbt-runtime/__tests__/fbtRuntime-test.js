@@ -1,8 +1,6 @@
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * @format
- * @oncall i18n_fbt_js
  */
 
 const { transformSync: babelTransform } = require('@babel/core');

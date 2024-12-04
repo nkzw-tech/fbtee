@@ -16,8 +16,6 @@
  *
  * @fbt {"project": "intl-core"}
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 // flowlint ambiguous-object-type:error

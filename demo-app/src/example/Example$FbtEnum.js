@@ -2,7 +2,6 @@
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * @flow strict
- * @oncall i18n_fbt_js
  */
 
 const Example$FbtEnum = {

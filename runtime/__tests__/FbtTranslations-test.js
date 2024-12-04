@@ -2,7 +2,6 @@
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
  * @flow
- * @oncall i18n_fbt_js
  */
 
 import FbtTranslations from '../FbtTranslations';

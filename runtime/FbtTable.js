@@ -5,8 +5,6 @@
  * recursively accessing the table entries and returning the leaves
  *
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 'use strict';

@@ -2,8 +2,6 @@
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 /*eslint max-len: ["error", 100]*/

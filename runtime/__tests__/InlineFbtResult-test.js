@@ -3,8 +3,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
- * @format
- * @oncall i18n_fbt_js
  */
 
 jest.disableAutomock();

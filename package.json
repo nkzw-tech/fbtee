@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.2.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.25.9",
@@ -49,7 +50,6 @@
     "gulp-util": "^3.0.8",
     "invariant": "^2.2.4",
     "jest": "^30.0.0-alpha.6",
-    "jest-docblock": "^30.0.0-alpha.6",
     "nullthrows": "^1.1.1",
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.5.6",

@@ -4,8 +4,6 @@
  * Wrapper module for fbt.js (the implementation)
  *
  * @flow
- * @format
- * @oncall i18n_fbt_js
  */
 
 import type { ExtraOptionValues } from './FbtHooks';

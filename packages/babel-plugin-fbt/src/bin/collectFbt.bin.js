@@ -6,8 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 'use strict';

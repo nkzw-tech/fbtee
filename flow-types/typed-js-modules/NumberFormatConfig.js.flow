@@ -10,8 +10,6 @@
  *   js1 upgrade www-shared -p intl_shared_flow --local ~/www
  *
  * @flow strict
- * @format
- * @oncall i18n_fbt_oss
  */
 
 // flowlint ambiguous-object-type:error

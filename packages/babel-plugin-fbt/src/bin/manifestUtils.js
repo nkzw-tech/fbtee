@@ -2,8 +2,6 @@
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
  * @flow strict-local
- * @format
- * @oncall i18n_fbt_js
  */
 
 'use strict';
@@ -30,15 +28,6 @@ function generateManifest(
   enumManifest: EnumManifest,
   srcManifest: { [enumManifestPath: string]: Array<string> },
 } {
-  // Register babel-plugins with node to enable parsing flow types, etc.
-  // $FlowFixMe[untyped-import]
-  require('@babel/register')({
-    // Ensure babel resolves paths relative to our package directory so the
-    // plugins can always be resolved to this node_modules directory.
-    cwd: path.resolve(__dirname, '../'),
-    plugins: ['@babel/plugin-transform-flow-strip-types'],
-  });
-
   // Find enum files
   const enumManifest: { [enumModuleName: string]: EnumModule } = {};
   for (const src of srcPaths) {

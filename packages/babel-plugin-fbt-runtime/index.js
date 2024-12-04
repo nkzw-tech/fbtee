@@ -7,7 +7,6 @@
  *
  * @flow
  * @noformat
- * @oncall i18n_fbt_js
  */
 
 'use strict';

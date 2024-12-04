@@ -10,8 +10,6 @@
  *   js1 upgrade www-shared -p fbt --local ~/www
  *
  * @flow strict
- * @format
- * @oncall i18n_fbt_js
  */
 
 'use strict';

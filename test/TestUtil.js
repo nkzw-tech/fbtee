@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @noflow
- * @oncall i18n_fbt_js
  */
 /*eslint max-len: ["error", 100]*/
 

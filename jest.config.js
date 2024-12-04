@@ -1,9 +1,7 @@
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
- * @format
  * @noflow
- * @oncall i18n_fbt_js
  */
 
 const path = require('path');
@@ -56,10 +54,6 @@ module.exports = {
         '<rootDir>/demo-app/src',
         '<rootDir>/demo-app/src/example',
       ].concat(runtimePaths),
-      transformIgnorePatterns: [
-        '/node_modules/',
-        '<rootDir>/demo-app/run_all\\.js',
-      ],
       moduleNameMapper: {
         ...globalConfig.moduleNameMapper,
         '\\.(css)$': '<rootDir>/demo-app/jest/css.js',

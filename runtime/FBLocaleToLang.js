@@ -3,10 +3,8 @@
  *
  * @generated SignedSource<<585c149cb12bb49abe7cb55d3245f468>>
  *
- * @codegen-command : phps FBLocToLangScript
  *
  * @flow strict
- * @oncall i18n_fbt_oss
  */
 
 const locToLang = {
