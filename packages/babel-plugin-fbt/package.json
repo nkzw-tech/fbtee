@@ -1,11 +1,10 @@
 {
   "name": "babel-plugin-fbt",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "The FBT Babel localization transform",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/fbt.git",
-    "directory": "packages/babel-plugin-fbt"
+    "url": "https://github.com/facebook/fbt.git"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -14,36 +13,22 @@
     "fbt-manifest": "dist/bin/manifest.bin.js",
     "fbt-translate": "dist/bin/translate.bin.js"
   },
-  "scripts": {
-    "prepack": "gulp --series clean build",
-    "publish_to_npm_latest": "yarn publish . && git push --tags && git push",
-    "watch": "gulp watch"
-  },
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.26.0",
     "@babel/generator": "^7.0.0",
-    "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/register": "^7.0.0",
     "@babel/traverse": "^7.2.2",
     "@babel/types": "^7.2.2",
     "fb-babel-plugin-utils": "workspace:*",
-    "flow-enums-runtime": "^0.0.4",
+    "flow-enums-runtime": "^0.0.6",
     "glob": "^7.1.6",
     "invariant": "^2.2.4",
-    "jest-docblock": "^26.0.0",
+    "jest-docblock": "^30.0.0-alpha.6",
     "nullthrows": "^1.1.1",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "7.1.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
-    "@babel/plugin-proposal-optional-catch-binding": "^7.2.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
-    "@babel/plugin-syntax-flow": "^7.2.0",
     "babel-plugin-transform-flow-enums": "^0.0.2",
-    "babel-preset-fbjs": "^3.1.2",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-once": "^2.1.1",
@@ -51,9 +36,5 @@
   },
   "peerDependencies": {
     "@fbtjs/default-collection-transform": "^1.0.0"
-  },
-  "engines": {
-    "node": ">= 12.16.0"
-  },
-  "//version": "Follow SemVer specs at https://semver.org/"
+  }
 }

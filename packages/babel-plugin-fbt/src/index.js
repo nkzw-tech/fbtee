@@ -37,7 +37,6 @@ const {
 const FbtEnumRegistrar = require('./FbtEnumRegistrar');
 const fbtHashKey = require('./fbtHashKey');
 const FbtNodeChecker = require('./FbtNodeChecker');
-const FbtShiftEnums = require('./FbtShiftEnums');
 const FbtUtil = require('./FbtUtil');
 const { errorAt } = require('./FbtUtil');
 const JSFbtUtil = require('./JSFbtUtil');
@@ -95,7 +94,6 @@ export type PluginOptions = {|
   filename?: ?string,
   // If true, generate the `outerTokenName` property on the JSFbt tree leaves.
   generateOuterTokenName?: boolean,
-  reactNativeMode?: boolean,
 |};
 /**
  * Token alias (aka mangled token name)
@@ -423,7 +421,6 @@ function getEnumManifest(opts): ?EnumManifest {
 }
 
 FbtTransform.fbtHashKey = fbtHashKey;
-FbtTransform.FbtShiftEnums = FbtShiftEnums;
 FbtTransform.JSFbtUtil = JSFbtUtil;
 FbtTransform.FbtUtil = FbtUtil;
 FbtTransform.FbtNodeUtil = FbtNodeUtil;

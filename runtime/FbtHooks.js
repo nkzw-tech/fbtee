@@ -44,14 +44,9 @@ export type FbtTranslatedInput = {
   args: ?FbtTableArgs,
   ...
 };
-/**
- * In ReactNative and OSS, there is a per-fbt-callsite hash (defaults to Jenkins
- * hash) for looking up fbt translation payloads per callsite.  There is also an
- * enum hash key used to access the pre-calculated table given a set of
- * enumeration values.
- */
+
 export type FbtEnumHashKeyTable = {
-  [key: FbtTableKey]: PatternString | FbtEnumHashKeyTable,
+  [key: FbtTableKey]: PatternString,
   ...
 };
 export type FbtInputOpts = {

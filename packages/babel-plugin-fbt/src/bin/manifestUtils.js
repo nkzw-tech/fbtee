@@ -36,11 +36,7 @@ function generateManifest(
     // Ensure babel resolves paths relative to our package directory so the
     // plugins can always be resolved to this node_modules directory.
     cwd: path.resolve(__dirname, '../'),
-    plugins: [
-      '@babel/plugin-syntax-object-rest-spread',
-      '@babel/plugin-transform-flow-strip-types',
-      '@babel/plugin-transform-modules-commonjs',
-    ],
+    plugins: ['@babel/plugin-transform-flow-strip-types'],
   });
 
   // Find enum files

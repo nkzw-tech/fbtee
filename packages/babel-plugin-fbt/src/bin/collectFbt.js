@@ -102,7 +102,6 @@ const args = {
   PLUGINS: 'plugins',
   PRESETS: 'presets',
   PRETTY: 'pretty',
-  REACT_NATIVE_MODE: 'react-native-mode',
   TERSE: 'terse',
   TRANSFORM: 'transform',
 };
@@ -135,14 +134,6 @@ const argv = yargs
       'to minify the amount of I/O processing needed for scraping source ' +
       'into a data store to share with translators, where this auxiliary data ' +
       "isn't necessary."
-  )
-  .boolean(args.REACT_NATIVE_MODE)
-  .default(args.REACT_NATIVE_MODE, false)
-  .describe(
-    args.REACT_NATIVE_MODE,
-    'By default, we include enums in the jsfbt payload we produce. However, ' +
-      'Flatbuffer language packs only work with predefined keys, so we need to ' +
-      'move enums out of the jsfbt payload and output leaf payloads instead.'
   )
   .describe(args.HELP, 'Display usage message')
   .alias(args.HELP, 'help')
@@ -233,7 +224,6 @@ const fbtCollector = getFbtCollector(
     generateOuterTokenName: argv[args.GEN_OUTER_TOKEN_NAME],
     plugins: argv[args.PLUGINS].map(require),
     presets: argv[args.PRESETS].map(require),
-    reactNativeMode: argv[args.REACT_NATIVE_MODE],
     transform,
     fbtCommonPath: argv[args.COMMON_STRINGS],
   },

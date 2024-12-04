@@ -43,12 +43,6 @@ module.exports = {
       displayName: 'babel-plugin-fbt-runtime',
       roots: ['<rootDir>/packages/babel-plugin-fbt-runtime'],
     },
-    process.env.BABEL_PLUGIN_STANDALONE_TEST
-      ? {
-          displayName: 'babel-plugin-standalone',
-          roots: [`<rootDir>/packages/babel-plugin-standalone`],
-        }
-      : null,
     {
       displayName: 'fbt-runtime',
       roots: ['<rootDir>/packages/fbt/lib'],

@@ -238,10 +238,6 @@ type $GenericFbtFunctionAPI<Input, Output, ParamInput, ParamOutput> = {
   c: (text: string) => Output,
   jsonEncode: boolean,
   replaceParams: boolean,
-  // Only used in React Native in fbsource
-  enableJsonExportMode: () => void,
-  // Only used in React Native in fbsource
-  disableJsonExportMode: () => void,
   isFbtInstance: (value: mixed) => value is $FbtResultBase,
   ...
 };

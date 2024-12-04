@@ -11,7 +11,6 @@
 
 'use strict';
 
-const { PLUGINS } = require('./babelPlugins');
 const moduleMap = require('./moduleMap');
 const babelPluginFbtGulp = require('./packages/babel-plugin-fbt/gulpfile');
 const { version } = require('./packages/fbt/package.json');
@@ -107,12 +106,14 @@ const buildModules = () =>
     .pipe(once())
     .pipe(
       babel({
+        presets: [
+          require('@babel/preset-env'),
+          require('@babel/preset-react'),
+          require('@babel/preset-flow'),
+        ],
         plugins: [
-          ...PLUGINS,
-          require('@babel/plugin-syntax-jsx'),
           require('babel-plugin-fbt'),
           require('babel-plugin-fbt-runtime'),
-          require('@babel/plugin-transform-react-jsx'),
         ],
       })
     )
@@ -121,15 +122,14 @@ const buildModules = () =>
 gulp.task('modules', gulp.series(babelPluginFbtGulp.build, buildModules));
 
 const babelTestPresets = {
+  presets: [
+    require('@babel/preset-env'),
+    require('@babel/preset-react'),
+    require('@babel/preset-flow'),
+  ],
   plugins: [
-    ...PLUGINS,
-    '@babel/plugin-syntax-jsx',
-    // TODO #81682213 - Bring in shared runtime tests
-    // The fbtCommon map below is only applicable to fbt-test.js, which doesn't
-    // yet run in github
     ['babel-plugin-fbt', { fbtCommon: { Accept: '...' } }],
     'babel-plugin-fbt-runtime',
-    '@babel/plugin-transform-react-jsx',
   ],
 };
 

@@ -35,7 +35,6 @@ It helps with the following:
 ## Examples
 
 - [See our demo here](demo-app/src/example/Example.react.js)
-- [See our React Native demo here](https://github.com/facebook/fbt/tree/rn-demo-app)
 
 ## Requirements
 

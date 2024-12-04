@@ -4,16 +4,12 @@
   "description": "The secondary FBT Babel transform, for E2E use",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/fbt.git",
-    "directory": "packages/babel-plugin-fbt-runtime"
+    "url": "https://github.com/facebook/fbt.git"
   },
   "license": "MIT",
   "main": "index.js",
-  "scripts": {
-    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
-  },
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.26.0",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
@@ -21,6 +17,5 @@
   },
   "peerDependencies": {
     "babel-plugin-fbt": "^1.0.0"
-  },
-  "//version": "Follow SemVer specs at https://semver.org/"
+  }
 }

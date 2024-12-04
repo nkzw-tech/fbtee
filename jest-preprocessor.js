@@ -8,7 +8,6 @@
 const babel = require('@babel/core');
 
 const cacheKeyPackages = [
-  'babel-preset-fbjs',
   'babel-plugin-fbt',
   'babel-plugin-fbt-runtime',
 ].map(name =>
@@ -24,7 +23,6 @@ function createTransformer(opts /*: Object */ = {}) {
       const options = {
         presets: [
           [require('@babel/preset-react'), {throwIfNamespace: false}],
-          require('babel-preset-fbjs'),
         ],
         plugins: opts.plugins || [],
         filename,

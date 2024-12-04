@@ -4,26 +4,13 @@
   "description": "Common Babel 7 utils for FB",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/fbt",
-    "directory": "packages/fb-babel-plugin-utils"
+    "url": "https://github.com/facebook/fbt"
   },
   "license": "MIT",
-  "scripts": {
-    "publish_to_npm_latest": "yarn publish . && git push --tags && git push"
-  },
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.26.0",
     "@babel/generator": "^7.0.0",
     "@babel/parser": "^7.7.4",
-    "@babel/plugin-syntax-class-properties": "^7.0.0",
-    "@babel/plugin-syntax-flow": "^7.7.4",
-    "@babel/plugin-syntax-jsx": "^7.0.0",
-    "@babel/plugin-syntax-nullish-coalescing-operator": "^7.0.0",
-    "@babel/plugin-syntax-numeric-separator": "^7.2.0",
-    "@babel/plugin-syntax-object-rest-spread": "^7.0.0",
-    "@babel/plugin-syntax-optional-catch-binding": "^7.0.0",
-    "@babel/plugin-syntax-optional-chaining": "^7.0.0",
     "json-diff": "^0.5.4"
-  },
-  "//version": "Follow SemVer specs at https://semver.org/"
+  }
 }

@@ -23,7 +23,6 @@ describe('collectFbt', () => {
       generateOuterTokenName: options.genOuterTokenName,
       plugins: [],
       presets: [],
-      reactNativeMode: options.react_native_mode,
       transform: null,
       fbtCommonPath,
     };
@@ -270,21 +269,6 @@ describe('collectFbt', () => {
           'const gender = IntlVariations.GENDER_FEMALE;',
           "fbt(`${fbt.name('name', 'Sally', gender)} sells ${fbt.pronoun('possessive', gender)} ${fbt.plural('item', 5)}`, 'desc');",
         ].join('\n')
-      );
-      expect(res).toMatchSnapshot();
-    });
-
-    it('should extract correctly name, pronoun, plural (react native)', () => {
-      const res = collect(
-        [
-          "const fbt = require('fbt');",
-          "const IntlVariations = require('IntlVariations');",
-          'const gender = IntlVariations.GENDER_FEMALE;',
-          "fbt(`${fbt.name('name', 'Sally', gender)} sells ${fbt.pronoun('possessive', gender)} ${fbt.plural('item', 5)}`, 'desc');",
-        ].join('\n'),
-        {
-          react_native_mode: true,
-        }
       );
       expect(res).toMatchSnapshot();
     });
