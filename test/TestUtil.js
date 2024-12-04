@@ -4,28 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
  */
 
 'use strict';
-
-/*global expect, it, describe*/
-
-/*::
-type TestEntry = {
-  // Test case filter:
-  // If `focus` is set, only run tests where `filter='focus'`
-  // If `skip` is set, this test entry won't be executed
-  filter?: 'focus' | 'skip',
-  input: string, // Input JS code to test
-  options?: {...}, // Babel transform options
-  output: string, // expected output code
-  // Set to `true` if an error is expected.
-  // You can also set an expected error string.
-  throws?: string | boolean,
-};
-type TestData = {[testTitle: string]: TestEntry};
-*/
 
 const babel = require('@babel/core');
 const generate = require('@babel/generator').default;

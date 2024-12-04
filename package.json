@@ -10,15 +10,10 @@
     "build": "gulp --series clean build-runtime",
     "build-runtime": "gulp build-runtime",
     "clean": "gulp clean",
-    "clean-build": "pnpm install && cd ./demo-app && clean-build",
-    "clean-test": "pnpm clean-build && pnpm test",
-    "demo-app:test": "cd ./demo-app && pnpm test",
-    "dev": "cd demo-app && pnpm dev",
+    "dev": "cd example && pnpm dev",
     "fbt:test": "jest packages/fbt",
     "fbt:watch": "gulp watch-runtime",
-    "flow:check": "flow check --show-all-errors",
-    "flow:watch": "yarn watch 'yarn flow stop && yarn flow check --show-all-errors 2>&1 | tee .flow-results' . --ignoreDotFiles",
-    "test": "cd ./demo-app test-build-scripts && cd .. && jest && pnpm flow:check",
+    "test": "cd ./example test-build-scripts && cd .. && jest && pnpm tsc",
     "test:watch": "jest --watch",
     "top-level:test": "pnpm jest __tests__/*"
   },
@@ -29,14 +24,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/generator": "^7.2.0",
+    "@babel/generator": "^7.26.3",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-react": "^7.26.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@testing-library/react": "^16.0.1",
     "del": "^3.0.0",
-    "flow-bin": "0.225.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
@@ -55,6 +49,7 @@
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.5.6",
     "react-dom": "^18.0.0",
+    "typescript": "^5.7.2",
     "webpack-stream": "^7.0.0"
   }
 }

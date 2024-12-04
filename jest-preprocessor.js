@@ -1,13 +1,12 @@
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * @noflow
  */
 const babel = require('@babel/core');
 
-function createTransformer(opts /*: Object */ = {}) {
+function createTransformer(opts = {}) {
   return {
-    process(src /*: string */, filename /*: string */) {
+    process(src, filename) {
       const options = {
         presets: [
           require('@babel/preset-env'),

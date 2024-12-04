@@ -1,6 +1,7 @@
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
+ * @flow strict
  */
 
 import getFbtResult from '../__mocks__/getFbtResult';

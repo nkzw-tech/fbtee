@@ -18,14 +18,6 @@ sidebar_label: Enforcing plain-text strings
   - It’s a subset of fbt which can also represent rich text contents (i.e. a mix of text and React components)
 - `fbs` means something like "FB string", it’s not a true acronym. 😅
 
-## Why using it?
-
-- Enforce plain text only translatable strings, which is useful for:
-  - Writing localizable HTML attributes like `title`, `label`, `placeholder`, etc...
-    - Why again? Because those HTML attributes only expect a string value; no HTML!
-      - **Note that if you’re using `<fbt>` with embedded arbitrary HTML/React components, we’re dropping the inner texts so chances are that the final localized text is _incomplete! (See [onStringSerializationError hook](https://github.com/facebook/fbt/blob/09ad3546a2f02c53af4c031113989564872eba34/flow-types/libdef/fbt.js#L109-L131) for more info)_**
-  - React components or any JS code where you need to enforce those same constraints
-
 ## How to use it?
 
 - Use the `fbs()` functional API _(recommended)_
@@ -83,15 +75,3 @@ document.title = myPlainTranslatedText.toString();
   - `const someFbt: Fbt = fbs(...) // is Flow valid`
 - `fbt` values CANNOT be used in lieu of `fbs` values (as expected)
   - `const plainText: Fbs = fbt(...) // is Flow invalid`
-
-### What Flow type to use for my React props?
-
-Use the [`Fbs`](https://github.com/facebook/fbt/blob/09ad3546a2f02c53af4c031113989564872eba34/flow-types/libdef/fbt.js#L63-L69) flow type.
-
-_Example:_
-
-```js
-type Props = {
-  title: Fbs,
-};
-```

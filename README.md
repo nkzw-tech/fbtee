@@ -34,12 +34,11 @@ It helps with the following:
 
 ## Examples
 
-- [See our demo here](demo-app/src/example/Example.react.js)
+- [See our demo here](example/src/example/Example.react.jsx)
 
 ## Requirements
 
 - [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
 - [Babel](https://babeljs.io/)
 
 ## Building the fbt library
@@ -47,14 +46,7 @@ It helps with the following:
 ```
 git clone git@github.com:facebook/fbt.git
 cd fbt
-yarn install
-```
-
-**NOTE:** if you make changes to the fbt runtime that you'd like to
-test in the demo-app, be sure to run this command to rebuild the JS code:
-
-```
-yarn build-runtime
+pnpm install
 ```
 
 ## How FBT works

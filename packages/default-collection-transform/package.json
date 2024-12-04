@@ -18,8 +18,8 @@
   "scripts": {},
   "dependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/generator": "^7.0.0",
-    "@babel/parser": "^7.7.4"
+    "@babel/generator": "^7.26.3",
+    "@babel/parser": "^7.26.3"
   },
   "peerDependencies": {
     "babel-plugin-fbt": "^1.0.0"

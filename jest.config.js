@@ -1,7 +1,6 @@
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
- * @noflow
  */
 
 const path = require('path');
@@ -65,11 +64,11 @@ module.exports = {
       },
     },
     {
-      displayName: 'demo-app',
-      roots: ['<rootDir>/demo-app'],
+      displayName: 'example',
+      roots: ['<rootDir>/example'],
       modulePaths: [
-        '<rootDir>/demo-app/src',
-        '<rootDir>/demo-app/src/example',
+        '<rootDir>/example/src',
+        '<rootDir>/example/src/example',
         '<rootDir>/packages/fbt/src',
       ],
       transform: {
@@ -81,13 +80,10 @@ module.exports = {
                 toAbsolutePath('packages', 'babel-plugin-fbt'),
                 {
                   fbtCommonPath: toAbsolutePath(
-                    'demo-app',
+                    'example',
                     'common_strings.json'
                   ),
-                  fbtEnumPath: toAbsolutePath(
-                    'demo-app',
-                    '.enum_manifest.json'
-                  ),
+                  fbtEnumPath: toAbsolutePath('example', '.enum_manifest.json'),
                 },
               ],
               toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),

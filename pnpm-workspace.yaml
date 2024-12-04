@@ -1,5 +1,5 @@
 packages:
-  - 'demo-app'
+  - 'example'
   - 'packages/babel-plugin-fbt-runtime'
   - 'packages/babel-plugin-fbt'
   - 'packages/default-collection-transform'

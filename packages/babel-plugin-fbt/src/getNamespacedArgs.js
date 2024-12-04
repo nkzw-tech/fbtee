@@ -1,11 +1,6 @@
 /**
  * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
  *
- * Fbt JSX namespaced elements handler.
- *
- * Disabling typing since this file will be deprecated by the fbt-autoparam project
- *
- * @noflow
  */
 
 'use strict';

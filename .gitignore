@@ -3,8 +3,6 @@
 node_modules
 **/node_modules
 
-yarn-error.log
-.flow-results
 # file checksums used by gulp-once
 .checksums
 # Ignore npm pack files generated during npm publish testing
@@ -13,25 +11,16 @@ yarn-error.log
 # MacOS
 .DS_Store
 
-# demo-app build artifacts
-demo-app/.enum_manifest.json
-demo-app/.source_strings.json
-demo-app/.src_manifest.json
-demo-app/output
-demo-app/source_strings.json
-demo-app/src/translatedFbts
-demo-app/src/translatedFbts.json
-demo-app/yarn-error.log
-
-live-demo-app/.enum_manifest.json
-live-demo-app/.source_strings.json
-live-demo-app/.src_manifest.json
-live-demo-app/output
-live-demo-app/src/translatedFbts.json
-live-demo-app/yarn-error.log
+# example build artifacts
+example/.enum_manifest.json
+example/.source_strings.json
+example/.src_manifest.json
+example/output
+example/source_strings.json
+example/src/translatedFbts
+example/src/translatedFbts.json
 
 # fbt runtime package
-packages/fbt/lib/**/*.js.flow
 packages/fbt/dist
 packages/fbt/lib
 packages/fbt/LICENSE

@@ -2,7 +2,6 @@
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * @fbt {"project": "fbt-demo-project"}
- * @noflow
  */
 
 import classNames from 'classnames';

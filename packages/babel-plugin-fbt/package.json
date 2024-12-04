@@ -15,14 +15,14 @@
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/generator": "^7.0.0",
-    "@babel/traverse": "^7.2.2",
-    "@babel/types": "^7.2.2",
+    "@babel/generator": "^7.26.3",
+    "@babel/traverse": "^7.26.3",
+    "@babel/types": "^7.26.3",
     "glob": "^7.1.6",
     "invariant": "^2.2.4",
     "jest-docblock": "^30.0.0-alpha.6",
     "nullthrows": "^1.1.1",
-    "yargs": "^15.4.1"
+    "yargs": "^17.7.2"
   },
   "peerDependencies": {
     "@fbtjs/default-collection-transform": "^1.0.0"
