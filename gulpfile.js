@@ -31,12 +31,10 @@ const paths = {
   lib: 'packages/fbt/lib',
   license: 'LICENSE',
   runtime: [
-    'runtime/**/*.js',
-    '!runtime/**/__tests__/*',
-    '!runtime/**/__mocks__/*',
+    'packages/fbt/src/**/*.js',
+    '!packages/fbt/src/**/__tests__/*',
+    '!packages/fbt/src/**/__mocks__/*',
   ],
-  runtimeTests: ['runtime/nonfb/**/__tests__/*'],
-  runtimeMocks: ['runtime/nonfb/**/__mocks__/*'],
   typedModules: ['flow-types/typed-js-modules/*.flow'],
 };
 
@@ -129,20 +127,6 @@ const transformTests = (src, dest) =>
     .pipe(flatten())
     .pipe(gulp.dest(dest));
 
-const buildRuntimeTests = () =>
-  transformTests(paths.runtimeTests, paths.lib + '/__tests__');
-
-const buildRuntimeMocks = () =>
-  transformTests(paths.runtimeMocks, paths.lib + '/__mocks__');
-
-gulp.task(
-  'test-modules',
-  gulp.series(
-    babelPluginFbtGulp.build,
-    gulp.parallel(buildRuntimeTests, buildRuntimeMocks)
-  )
-);
-
 const buildDistTask = () =>
   gulp
     .src('./packages/fbt/lib/FbtPublic.js')
@@ -156,14 +140,12 @@ gulp.task('dist', gulp.series('modules', buildDistTask));
 const cleanTask = () =>
   del([
     '.checksums',
-    paths.published + '/*',
+    paths.published + '/dist',
+    paths.published + '/lib',
     '!' + paths.published + '/package.json',
     '!' + paths.published + '/README.md',
   ]);
 
 gulp.task('clean', gulp.parallel(babelPluginFbtGulp.clean, cleanTask));
 
-gulp.task(
-  'build-runtime',
-  gulp.series(gulp.parallel('license', 'modules', 'test-modules'))
-);
+gulp.task('build-runtime', gulp.series(gulp.parallel('license', 'modules')));
