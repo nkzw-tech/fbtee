@@ -10,11 +10,11 @@
 
 'use strict';
 
-import type {PlainFbtNode} from '../fbt-nodes/FbtNode';
-import type {TableJSFBT} from '../index';
-import type {ChildParentMappings, PackagerPhrase} from './FbtCollector';
+import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
+import type { TableJSFBT } from '../index';
+import type { ChildParentMappings, PackagerPhrase } from './FbtCollector';
 
-const {packagerTypes} = require('./collectFbtConstants');
+const { packagerTypes } = require('./collectFbtConstants');
 const {
   buildCollectFbtOutput,
   getFbtCollector,
@@ -86,7 +86,7 @@ export type CollectFbtOutput = {|
 
 export type CollectFbtOutputPhrase = $ElementType<
   $PropertyType<CollectFbtOutput, 'phrases'>,
-  number,
+  number
 >;
 
 const args = {
@@ -118,12 +118,12 @@ const argv = yargs
       "  'text' - hashing is done at the text (or leaf) level (more granular)\n" +
       "'phrase' - hashing is done at the phrase (entire fbt callsite) level\n" +
       "  'both' - Both phrase and text hashing are performed\n" +
-      "  'none' - No hashing or alteration of phrase data\n",
+      "  'none' - No hashing or alteration of phrase data\n"
   )
   .choices(
     args.PACKAGER,
     // $FlowFixMe[incompatible-cast] needed because Object.values() returns mixed only...
-    (Object.values(packagerTypes): Array<$Values<typeof packagerTypes>>),
+    (Object.values(packagerTypes): Array<$Values<typeof packagerTypes>>)
   )
   .boolean(args.TERSE)
   .default(args.TERSE, false)
@@ -134,7 +134,7 @@ const argv = yargs
       'hashes, texts, and descriptions of the fbt callsite. The goal being ' +
       'to minify the amount of I/O processing needed for scraping source ' +
       'into a data store to share with translators, where this auxiliary data ' +
-      "isn't necessary.",
+      "isn't necessary."
   )
   .boolean(args.REACT_NATIVE_MODE)
   .default(args.REACT_NATIVE_MODE, false)
@@ -142,7 +142,7 @@ const argv = yargs
     args.REACT_NATIVE_MODE,
     'By default, we include enums in the jsfbt payload we produce. However, ' +
       'Flatbuffer language packs only work with predefined keys, so we need to ' +
-      'move enums out of the jsfbt payload and output leaf payloads instead.',
+      'move enums out of the jsfbt payload and output leaf payloads instead.'
   )
   .describe(args.HELP, 'Display usage message')
   .alias(args.HELP, 'help')
@@ -151,14 +151,14 @@ const argv = yargs
   .describe(
     args.MANIFEST,
     'Interpret stdin as JSON map of {<enum-manifest-file>: ' +
-      '[<source_file1>, ...]}. Otherwise stdin itself will be parsed',
+      '[<source_file1>, ...]}. Otherwise stdin itself will be parsed'
   )
   .string(args.COMMON_STRINGS)
   .default(args.COMMON_STRINGS, null)
   .describe(
     args.COMMON_STRINGS,
     'Optional path to the common strings module. ' +
-      'This is a map from {[text]: [description]}.',
+      'This is a map from {[text]: [description]}.'
   )
   .boolean(args.PRETTY)
   .default(args.PRETTY, false)
@@ -170,13 +170,13 @@ const argv = yargs
     'Generate the outer token name of an inner string in the JSON output. ' +
       'E.g. For the fbt string `<fbt>Hello <i>World</i></fbt>`, ' +
       'the outer string is "Hello {=World}", and the inner string is: "World". ' +
-      'So the outer token name of the inner string will be "=World"',
+      'So the outer token name of the inner string will be "=World"'
   )
   .boolean(args.GEN_FBT_NODES)
   .default(args.GEN_FBT_NODES, false)
   .describe(
     args.GEN_FBT_NODES,
-    'Generate the abstract representation of the fbt callsites as FbtNode trees.',
+    'Generate the abstract representation of the fbt callsites as FbtNode trees.'
   )
   .string(args.TRANSFORM)
   .default(args.TRANSFORM, null)
@@ -184,27 +184,27 @@ const argv = yargs
     args.TRANSFORM,
     'A custom transform to call into rather than the default provided. ' +
       'Expects a signature of (source, options, filename) => mixed, and ' +
-      'for babel-pluginf-fbt to be run within the transform.',
+      'for babel-pluginf-fbt to be run within the transform.'
   )
   .array(args.PLUGINS)
   .default(args.PLUGINS, [])
   .describe(
     args.PLUGINS,
     'List of auxiliary Babel plugins to enable for parsing source.\n' +
-      'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator',
+      'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator'
   )
   .array(args.PRESETS)
   .default(args.PRESETS, [])
   .describe(
     args.PRESETS,
     'List of auxiliary Babel presets to enable for parsing source.\n' +
-      'E.g. --presets @babel/preset-typescript',
+      'E.g. --presets @babel/preset-typescript'
   )
   .string(args.OPTIONS)
   .describe(
     args.OPTIONS,
     'additional options that fbt(..., {can: "take"}).  ' +
-      `i.e. --${args.OPTIONS} "locale,qux,id"`,
+      `i.e. --${args.OPTIONS} "locale,qux,id"`
   )
   .string(args.CUSTOM_COLLECTOR)
   .describe(
@@ -213,7 +213,7 @@ const argv = yargs
       `the input JS is not flexible enough. As an alternative, you can provide your own ` +
       `implementation of the FbtCollector module. ` +
       `It must at least expose the same public methods to expose the extract fbt phrases.\n` +
-      `i.e. --${args.CUSTOM_COLLECTOR} myFbtCollector.js`,
+      `i.e. --${args.CUSTOM_COLLECTOR} myFbtCollector.js`
   ).argv;
 
 const extraOptions = {};
@@ -238,7 +238,7 @@ const fbtCollector = getFbtCollector(
     fbtCommonPath: argv[args.COMMON_STRINGS],
   },
   extraOptions,
-  argv[args.CUSTOM_COLLECTOR],
+  argv[args.CUSTOM_COLLECTOR]
 );
 
 function processJsonSource(source: string) {
@@ -249,7 +249,11 @@ function processJsonSource(source: string) {
       // $FlowFixMe[unsupported-syntax]
       manifest = require(path.resolve(process.cwd(), manifest_path));
     }
-    fbtCollector.collectFromFiles(json[manifest_path], manifest);
+    const sources = [];
+    for (const file of json[manifest_path]) {
+      sources.push([file, fs.readFileSync(file, 'utf8')]);
+    }
+    fbtCollector.collectFromFiles(sources, manifest);
   });
 }
 
@@ -262,8 +266,8 @@ function writeOutput() {
   process.stdout.write(
     JSON.stringify(
       (output: CollectFbtOutput),
-      ...(argv[args.PRETTY] ? [null, ' '] : []),
-    ),
+      ...(argv[args.PRETTY] ? [null, ' '] : [])
+    )
   );
   process.stdout.write('\n');
 
@@ -280,7 +284,7 @@ function writeOutput() {
     }
     const overallError = new Error(
       `Failed in ${errCount} file(s).` +
-        `\nCurrent working directory: '${process.cwd()}'`,
+        `\nCurrent working directory: '${process.cwd()}'`
     );
     // $FlowExpectedError[prop-missing] Adding a custom error field
     overallError.childErrorMessages = childErrorMessages;
@@ -313,6 +317,10 @@ if (argv[args.HELP]) {
 } else {
   // Files given as arguments, read from those one-by-one, then write output as
   // a whole.
-  fbtCollector.collectFromFiles(argv._);
+  const sources = [];
+  for (const file of argv._) {
+    sources.push([file, fs.readFileSync(file, 'utf8')]);
+  }
+  fbtCollector.collectFromFiles(sources);
   writeOutput();
 }

@@ -8,17 +8,17 @@
 'use strict';
 
 const { packagerTypes } = require('../collectFbtConstants');
-const {
-  buildCollectFbtOutput,
-  getFbtCollector,
-  getPackagers,
-} = require('../collectFbtUtils');
-const fs = require('fs');
 const path = require('path');
 const fbtCommonPath = path.resolve(__dirname, 'FbtCommonForTests.json');
 
 describe('collectFbt', () => {
-  function collect(source, options = {}) {
+  function collect(source: Array<[string, string]> | string, options = {}) {
+    const {
+      buildCollectFbtOutput,
+      getFbtCollector,
+      getPackagers,
+    } = require('../collectFbtUtils');
+
     const opts = {
       generateOuterTokenName: options.genOuterTokenName,
       plugins: [],
@@ -33,13 +33,13 @@ describe('collectFbt', () => {
       packager,
       path.join(__dirname, '../md5Texts')
     );
-    if (options.multipleFiles) {
-      fs.hasOwnProperty = () => Object.hasOwnProperty; // For jest.spyOn
-      jest.spyOn(fs, 'readFileSync').mockImplementation((path) => source[path]);
-      fbtCollector.collectFromFiles(Object.keys(source));
+
+    if (Array.isArray(source)) {
+      fbtCollector.collectFromFiles(source);
     } else {
       fbtCollector.collectFromOneFile(source);
     }
+
     const output = buildCollectFbtOutput(fbtCollector, packagers, {
       terse: options.terse,
       genFbtNodes: options.genFbtNodes,
@@ -353,9 +353,10 @@ describe('collectFbt', () => {
 
   it('should create correct child parent mapping for multiple files', () => {
     expect(
-      collect(
-        {
-          'example1.react.js': `
+      collect([
+        [
+          'example1.react.js',
+          `
             const fbt = require('fbt');
             <fbt desc="some desc">
               This is a{' '}
@@ -363,17 +364,17 @@ describe('collectFbt', () => {
                 bold with <i>italic inside</i>
               </b>.
             </fbt>`,
-          './example2.react.js.in': `
+        ],
+        [
+          './example2.react.js.in',
+          `
             const fbt = require('fbt');
             <fbt desc="some desc">
               Link:
               <a href="https://somewhere.random">link</a>
             </fbt>`,
-        },
-        {
-          multipleFiles: true,
-        }
-      )
+        ],
+      ])
     ).toMatchSnapshot();
   });
 

@@ -40,7 +40,6 @@ type ParentPhraseIndex = number;
 export type ChildParentMappings = {
   [childPhraseIndex: number]: ParentPhraseIndex,
 };
-export type Errors = { [file: string]: Error };
 export type HashToLeaf = {
   [hash: PatternHash]: {|
     desc: string,
@@ -69,11 +68,10 @@ export interface IFbtCollector {
     fbtEnumManifest?: EnumManifest
   ): void;
   collectFromFiles(
-    files: Array<string>,
+    files: Array<[string, string]>,
     fbtEnumManifest?: EnumManifest
-  ): boolean;
+  ): void;
   getChildParentMappings(): ChildParentMappings;
-  getErrors(): Errors;
   getFbtElementNodes(): Array<PlainFbtNode>;
   getPhrases(): Array<PackagerPhrase>;
 }
@@ -81,14 +79,12 @@ export interface IFbtCollector {
 class FbtCollector implements IFbtCollector {
   _phrases: Array<PackagerPhrase>;
   _childParentMappings: ChildParentMappings;
-  _errors: Errors;
   _extraOptions: FbtExtraOptionConfig;
   _config: CollectorConfig;
 
   constructor(config: CollectorConfig, extraOptions: FbtExtraOptionConfig) {
     this._phrases = [];
     this._childParentMappings = {};
-    this._errors = {};
     this._extraOptions = extraOptions;
     this._config = config;
   }
@@ -147,21 +143,12 @@ class FbtCollector implements IFbtCollector {
   }
 
   collectFromFiles(
-    files: Array<string>,
+    files: Array<[string, string]>,
     fbtEnumManifest?: EnumManifest
-  ): boolean {
-    let hasFailure = false;
-    files.forEach((file) => {
-      try {
-        const source = fs.readFileSync(file, 'utf8');
-        this.collectFromOneFile(source, file, fbtEnumManifest);
-      } catch (e) {
-        this._errors[file] = e;
-        hasFailure = true;
-      }
+  ) {
+    files.forEach(([file, source]) => {
+      this.collectFromOneFile(source, file, fbtEnumManifest);
     });
-
-    return !hasFailure;
   }
 
   getPhrases(): Array<PackagerPhrase> {
@@ -170,10 +157,6 @@ class FbtCollector implements IFbtCollector {
 
   getChildParentMappings(): ChildParentMappings {
     return this._childParentMappings;
-  }
-
-  getErrors(): Errors {
-    return this._errors;
   }
 
   getFbtElementNodes(): Array<PlainFbtNode> {
