@@ -5,8 +5,6 @@
  * @noformat
  */
 
-/* eslint max-len: ["warn", 120] */
-
 'use strict';
 
 import type { BabelPluginList, BabelPresetList } from '@babel/core';

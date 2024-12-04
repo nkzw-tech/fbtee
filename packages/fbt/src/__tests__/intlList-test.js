@@ -13,18 +13,19 @@
 
 'use strict';
 
-const init = require('../fbtInit');
-const IntlViewerContext = require('../IntlViewerContext');
+import getFbtResult from '../__mocks__/getFbtResult';
+import fbt from '../fbt';
+import init from '../fbtInit';
+import intlList from '../intlList';
+import IntlViewerContext from '../IntlViewerContext';
+
 init({
   translations: { en_US: {} },
   hooks: {
-    getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
+    getFbtResult,
     getViewerContext: () => IntlViewerContext,
   },
 });
-
-const fbt = require('../fbt');
-const intlList = require('../intlList');
 
 describe('intlList', () => {
   // Settings for fbt mock

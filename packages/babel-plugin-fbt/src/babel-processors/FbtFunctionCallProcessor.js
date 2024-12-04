@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/*eslint max-len: ["error", 100]*/
-
 'use strict';
 
 import type { NodePathOf } from '@babel/core';
@@ -582,8 +580,6 @@ class FbtFunctionCallProcessor {
     this.path.traverse(
       {
         CallExpression(path: NodePathOf<BabelNodeCallExpression>) {
-          // eslint-disable-next-line max-len
-          // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
           const nodeChecker = (this.nodeChecker: FbtNodeChecker);
           const constructs = [
             FbtNodeType.Enum,

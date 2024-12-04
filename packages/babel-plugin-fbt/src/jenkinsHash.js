@@ -3,9 +3,6 @@
  *
  * @flow strict
  */
-/* eslint no-bitwise: 0 */
-
-'use strict';
 
 function toUtf8(str: string) {
   const result = [];

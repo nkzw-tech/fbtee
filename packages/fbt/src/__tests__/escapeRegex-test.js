@@ -6,7 +6,7 @@
 
 'use strict';
 
-const escapeRegex = require('../escapeRegex');
+import escapeRegex from '../escapeRegex';
 
 describe('escapeRegex', () => {
   it('escapes individual special characters', () => {

@@ -10,8 +10,6 @@
  * @flow strict-local
  */
 
-/*eslint max-len: ["error", 100]*/
-
 import type { ValidPronounUsagesType } from '../../../runtime/FbtRuntimeTypes';
 
 const keyMirror = require('./utils/keyMirror');

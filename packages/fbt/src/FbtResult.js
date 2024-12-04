@@ -15,15 +15,14 @@
 // flowlint ambiguous-object-type:error
 import type { RefSetter } from 'react';
 import type { FbtResolvedPayload } from './FbtHooks';
-
-const FbtReactUtil = require('./FbtReactUtil');
-const FbtResultBase = require('./FbtResultBase');
+import FbtReactUtil from './FbtReactUtil';
+import FbtResultBase from './FbtResultBase';
 
 const FbtResultComponent = (props: Props): mixed => props.content;
 
 type Props = $ReadOnly<{ content: $NestedFbtContentItems, ... }>;
 
-class FbtResult extends FbtResultBase {
+export default class FbtResult extends FbtResultBase {
   $$typeof: symbol | number = FbtReactUtil.REACT_ELEMENT_TYPE;
   key: ?string = null;
   props: Props;
@@ -48,5 +47,3 @@ class FbtResult extends FbtResultBase {
     return new FbtResult(input.contents, input.errorListener);
   }
 }
-
-module.exports = FbtResult;

@@ -14,7 +14,7 @@
 
 'use strict';
 
-class FbtResultBase implements IFbtResultBase {
+export default class FbtResultBase implements IFbtResultBase {
   _contents: $NestedFbtContentItems;
   _stringValue: ?string;
   // Helps detect infinite recursion cycles with toString()
@@ -158,7 +158,3 @@ class FbtResultBase implements IFbtResultBase {
     return String.prototype[methodName].apply(this, args);
   };
 });
-
-// $FlowFixMe[incompatible-type]
-const out: Class<$FbtResultBase> = FbtResultBase;
-module.exports = out;

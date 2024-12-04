@@ -12,10 +12,6 @@
  * @flow strict-local
  */
 
-const FbtResult = require('./FbtResult');
+import FbtResult from './FbtResult';
 
-class FbtPureStringResultImpl extends FbtResult {}
-
-// $FlowExpectedError Force exported type to match FbtPureStringResult from the fbt.js libdef
-const out: Class<FbtPureStringResult> = FbtPureStringResultImpl;
-module.exports = out;
+export default class FbtPureStringResultImpl extends FbtResult {}

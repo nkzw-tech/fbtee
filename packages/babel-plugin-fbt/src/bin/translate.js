@@ -4,7 +4,6 @@
  * @noflow
  */
 
-/* eslint max-len: ["warn", 120] */
 /**
  * Reads the JSON payload of the source strings of the following form:
  *

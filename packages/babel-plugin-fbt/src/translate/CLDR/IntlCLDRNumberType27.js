@@ -13,7 +13,7 @@
 
 import type { IntlVariationsEnum } from '../IntlVariations';
 
-const IntlCLDRNumberType27 = {
+export default {
   getNumberVariations(): Array<IntlVariationsEnum> {
     // $FlowExpectedError[incompatible-return] Force cast numbers to IntlVariationsEnum
     return [4, 20, 12, 24];
@@ -24,5 +24,3 @@ const IntlCLDRNumberType27 = {
     return 12;
   },
 };
-
-module.exports = IntlCLDRNumberType27;

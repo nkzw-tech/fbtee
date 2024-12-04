@@ -73,7 +73,6 @@ function getType(
 ): $Values<typeof IntlVariationMask> {
   invariant(isValidValue(n), 'Invalid NumberType: %s', n);
 
-  /*eslint no-bitwise: 0*/
   return n & IntlVariationMask.NUMBER
     ? IntlVariationMask.NUMBER
     : IntlVariationMask.GENDER;
@@ -81,9 +80,7 @@ function getType(
 
 function isValidValue(value: string | number): boolean {
   const num = Number(value);
-  /*eslint no-bitwise: 0*/
   return (
-    // $FlowFixMe[invalid-computed-prop]
     SPECIALS[value] ||
     (num & IntlVariationMask.NUMBER && !(num & ~IntlVariationMask.NUMBER)) ||
     (num & IntlVariationMask.GENDER && !(num & ~IntlVariationMask.GENDER))

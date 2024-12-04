@@ -13,7 +13,7 @@ import type { FbtSubstitution, FbtTableKey } from './FbtTable';
 
 export type FbtTableArg = [?Array<FbtTableKey>, ?FbtSubstitution];
 
-const FbtTableAccessor = {
+export default {
   getEnumResult(value: FbtTableKey): FbtTableArg {
     return [[value], null];
   },
@@ -47,5 +47,3 @@ const FbtTableAccessor = {
     return [[genderKey, '*'], null];
   },
 };
-
-module.exports = FbtTableAccessor;

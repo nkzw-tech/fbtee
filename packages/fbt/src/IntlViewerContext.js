@@ -4,17 +4,10 @@
  * @flow strict
  */
 
-// flowlint ambiguous-object-type:error
+import IntlVariations from './IntlVariations';
 
-const IntlVariations = require('./IntlVariations');
-
-// Keep this in sync with IntlViewerContext.js.flow
-// It's almost the same except that the `locale` field is optional on www
-// and required in the OSS version
-const IntlViewerContext = {
+export default {
   GENDER: IntlVariations.GENDER_UNKNOWN,
   regionalLocale: 'en_US',
   locale: 'en_US',
 };
-
-module.exports = IntlViewerContext;

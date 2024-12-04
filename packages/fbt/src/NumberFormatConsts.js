@@ -379,12 +379,10 @@ const localeToIdx = {
   zz_TR: 0,
 };
 
-const NumberFormatConsts = {
+export default {
   get(localeTag: ?string): NumberConfig {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
     const idx = localeToIdx[key];
     return idx !== undefined ? configs[idx] : DEFAULT_CONFIG;
   },
 };
-
-module.exports = NumberFormatConsts;

@@ -14,6 +14,9 @@
 
 'use strict';
 
+import invariant from 'invariant';
+import GenderConst from './GenderConst';
+
 type DisplayGenderConstType = 'UNKNOWN' | 'FEMALE' | 'MALE' | 'NEUTER';
 
 const DisplayGenderConst = Object.freeze({
@@ -22,10 +25,6 @@ const DisplayGenderConst = Object.freeze({
   MALE: 'MALE',
   NEUTER: 'NEUTER',
 });
-
-const GenderConst = require('./GenderConst');
-
-const invariant = require('invariant');
 
 /**
  * Map an array of genders to a single value.

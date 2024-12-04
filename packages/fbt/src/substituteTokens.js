@@ -76,7 +76,7 @@ function markAsSafeForReact<T: MaybeReactComponent>(object: T): T {
  * Does the token substitution fbt() but without the string lookup.
  * Used for in-place substitutions in translation mode.
  */
-function substituteTokens<Arg: mixed>(
+export default function substituteTokens<Arg: mixed>(
   template: string,
   args: { [paramName: string]: Arg, ... },
   errorListener?: ?IFbtErrorListener
@@ -141,5 +141,3 @@ function substituteTokens<Arg: mixed>(
   }
   return pieces;
 }
-
-module.exports = substituteTokens;

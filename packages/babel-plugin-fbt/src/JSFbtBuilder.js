@@ -4,10 +4,6 @@
  * @flow strict-local
  */
 
-/* eslint max-len: ["warn", 120] */
-
-'use strict';
-
 import type { AnyStringVariationArg } from './fbt-nodes/FbtArguments';
 import type { EnumKey } from './FbtEnumRegistrar';
 import type { GenderConstEnum } from './Gender';

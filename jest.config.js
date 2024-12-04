@@ -17,8 +17,6 @@ const globalConfig = {
   testEnvironment: 'node',
 };
 
-// We need to use absolute paths in order to use this jest config from other working directories.
-// See D28405950 for more info.
 const toAbsolutePath = (...args) => path.resolve(__dirname, ...args);
 
 module.exports = {
@@ -68,19 +66,14 @@ module.exports = {
     },
     {
       displayName: 'demo-app',
-      setupFiles: ['<rootDir>/demo-app/run_all.js'],
       roots: ['<rootDir>/demo-app'],
       modulePaths: [
         '<rootDir>/demo-app/src',
         '<rootDir>/demo-app/src/example',
         '<rootDir>/packages/fbt/src',
       ],
-      moduleNameMapper: {
-        ...globalConfig.moduleNameMapper,
-        '\\.(css)$': '<rootDir>/demo-app/jest/css.js',
-      },
       transform: {
-        '\\.js$': [
+        '\\.jsx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
             plugins: [

@@ -11,53 +11,54 @@
 
 'use strict';
 
-const IntlCLDRNumberType01 = require('./IntlCLDRNumberType01');
-const IntlCLDRNumberType02 = require('./IntlCLDRNumberType02');
-const IntlCLDRNumberType03 = require('./IntlCLDRNumberType03');
-const IntlCLDRNumberType04 = require('./IntlCLDRNumberType04');
-const IntlCLDRNumberType05 = require('./IntlCLDRNumberType05');
-const IntlCLDRNumberType06 = require('./IntlCLDRNumberType06');
-const IntlCLDRNumberType07 = require('./IntlCLDRNumberType07');
-const IntlCLDRNumberType08 = require('./IntlCLDRNumberType08');
-const IntlCLDRNumberType09 = require('./IntlCLDRNumberType09');
-const IntlCLDRNumberType10 = require('./IntlCLDRNumberType10');
-const IntlCLDRNumberType11 = require('./IntlCLDRNumberType11');
-const IntlCLDRNumberType12 = require('./IntlCLDRNumberType12');
-const IntlCLDRNumberType13 = require('./IntlCLDRNumberType13');
-const IntlCLDRNumberType14 = require('./IntlCLDRNumberType14');
-const IntlCLDRNumberType15 = require('./IntlCLDRNumberType15');
-const IntlCLDRNumberType16 = require('./IntlCLDRNumberType16');
-const IntlCLDRNumberType17 = require('./IntlCLDRNumberType17');
-const IntlCLDRNumberType18 = require('./IntlCLDRNumberType18');
-const IntlCLDRNumberType19 = require('./IntlCLDRNumberType19');
-const IntlCLDRNumberType20 = require('./IntlCLDRNumberType20');
-const IntlCLDRNumberType21 = require('./IntlCLDRNumberType21');
-const IntlCLDRNumberType22 = require('./IntlCLDRNumberType22');
-const IntlCLDRNumberType23 = require('./IntlCLDRNumberType23');
-const IntlCLDRNumberType24 = require('./IntlCLDRNumberType24');
-const IntlCLDRNumberType25 = require('./IntlCLDRNumberType25');
-const IntlCLDRNumberType26 = require('./IntlCLDRNumberType26');
-const IntlCLDRNumberType27 = require('./IntlCLDRNumberType27');
-const IntlCLDRNumberType28 = require('./IntlCLDRNumberType28');
-const IntlCLDRNumberType29 = require('./IntlCLDRNumberType29');
-const IntlCLDRNumberType30 = require('./IntlCLDRNumberType30');
-const IntlCLDRNumberType31 = require('./IntlCLDRNumberType31');
-const IntlCLDRNumberType32 = require('./IntlCLDRNumberType32');
-const IntlCLDRNumberType33 = require('./IntlCLDRNumberType33');
-const IntlCLDRNumberType34 = require('./IntlCLDRNumberType34');
-const IntlCLDRNumberType35 = require('./IntlCLDRNumberType35');
-const IntlCLDRNumberType36 = require('./IntlCLDRNumberType36');
-const IntlCLDRNumberType37 = require('./IntlCLDRNumberType37');
-const IntlCLDRNumberType38 = require('./IntlCLDRNumberType38');
-const IntlCLDRNumberType39 = require('./IntlCLDRNumberType39');
-const IntlCLDRNumberType40 = require('./IntlCLDRNumberType40');
-const IntlCLDRNumberType41 = require('./IntlCLDRNumberType41');
-const IntlCLDRNumberType42 = require('./IntlCLDRNumberType42');
-const IntlCLDRNumberType43 = require('./IntlCLDRNumberType43');
-const IntlCLDRNumberType44 = require('./IntlCLDRNumberType44');
-const IntlCLDRNumberType45 = require('./IntlCLDRNumberType45');
-const IntlCLDRNumberType46 = require('./IntlCLDRNumberType46');
-const IntlCLDRNumberType47 = require('./IntlCLDRNumberType47');
+import FBLocaleToLang from '../FBLocaleToLang';
+import IntlCLDRNumberType01 from './IntlCLDRNumberType01';
+import IntlCLDRNumberType02 from './IntlCLDRNumberType02';
+import IntlCLDRNumberType03 from './IntlCLDRNumberType03';
+import IntlCLDRNumberType04 from './IntlCLDRNumberType04';
+import IntlCLDRNumberType05 from './IntlCLDRNumberType05';
+import IntlCLDRNumberType06 from './IntlCLDRNumberType06';
+import IntlCLDRNumberType07 from './IntlCLDRNumberType07';
+import IntlCLDRNumberType08 from './IntlCLDRNumberType08';
+import IntlCLDRNumberType09 from './IntlCLDRNumberType09';
+import IntlCLDRNumberType10 from './IntlCLDRNumberType10';
+import IntlCLDRNumberType11 from './IntlCLDRNumberType11';
+import IntlCLDRNumberType12 from './IntlCLDRNumberType12';
+import IntlCLDRNumberType13 from './IntlCLDRNumberType13';
+import IntlCLDRNumberType14 from './IntlCLDRNumberType14';
+import IntlCLDRNumberType15 from './IntlCLDRNumberType15';
+import IntlCLDRNumberType16 from './IntlCLDRNumberType16';
+import IntlCLDRNumberType17 from './IntlCLDRNumberType17';
+import IntlCLDRNumberType18 from './IntlCLDRNumberType18';
+import IntlCLDRNumberType19 from './IntlCLDRNumberType19';
+import IntlCLDRNumberType20 from './IntlCLDRNumberType20';
+import IntlCLDRNumberType21 from './IntlCLDRNumberType21';
+import IntlCLDRNumberType22 from './IntlCLDRNumberType22';
+import IntlCLDRNumberType23 from './IntlCLDRNumberType23';
+import IntlCLDRNumberType24 from './IntlCLDRNumberType24';
+import IntlCLDRNumberType25 from './IntlCLDRNumberType25';
+import IntlCLDRNumberType26 from './IntlCLDRNumberType26';
+import IntlCLDRNumberType27 from './IntlCLDRNumberType27';
+import IntlCLDRNumberType28 from './IntlCLDRNumberType28';
+import IntlCLDRNumberType29 from './IntlCLDRNumberType29';
+import IntlCLDRNumberType30 from './IntlCLDRNumberType30';
+import IntlCLDRNumberType31 from './IntlCLDRNumberType31';
+import IntlCLDRNumberType32 from './IntlCLDRNumberType32';
+import IntlCLDRNumberType33 from './IntlCLDRNumberType33';
+import IntlCLDRNumberType34 from './IntlCLDRNumberType34';
+import IntlCLDRNumberType35 from './IntlCLDRNumberType35';
+import IntlCLDRNumberType36 from './IntlCLDRNumberType36';
+import IntlCLDRNumberType37 from './IntlCLDRNumberType37';
+import IntlCLDRNumberType38 from './IntlCLDRNumberType38';
+import IntlCLDRNumberType39 from './IntlCLDRNumberType39';
+import IntlCLDRNumberType40 from './IntlCLDRNumberType40';
+import IntlCLDRNumberType41 from './IntlCLDRNumberType41';
+import IntlCLDRNumberType42 from './IntlCLDRNumberType42';
+import IntlCLDRNumberType43 from './IntlCLDRNumberType43';
+import IntlCLDRNumberType44 from './IntlCLDRNumberType44';
+import IntlCLDRNumberType45 from './IntlCLDRNumberType45';
+import IntlCLDRNumberType46 from './IntlCLDRNumberType46';
+import IntlCLDRNumberType47 from './IntlCLDRNumberType47';
 
 const localeToNumberType = {
   pt_PT: IntlCLDRNumberType05,
@@ -300,8 +301,6 @@ const langToNumberType = {
 
 export type LangToNumberTypeValues = $Values<typeof langToNumberType>;
 export type LocaleToNumberTypeValues = $Values<typeof localeToNumberType>;
-
-const FBLocaleToLang = require('../FBLocaleToLang');
 
 function _getNumberModuleForLang(lang: string): LangToNumberTypeValues {
   return langToNumberType[lang] || IntlCLDRNumberType01;

@@ -257,7 +257,7 @@ const GLOBAL_REWRITES: PhonologicalRewriteMap = {
 const EMPTY_REWRITES = { meta: {}, patterns: {} };
 const DEFAULT_LOCALE = 'en_US';
 
-const IntlPhonologicalRewrites = {
+export default {
   get(localeTag: ?string): PhonologicalRewriteMap {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
     const rewrites = REWRITES[key] || EMPTY_REWRITES;
@@ -267,4 +267,3 @@ const IntlPhonologicalRewrites = {
     };
   },
 };
-module.exports = IntlPhonologicalRewrites;

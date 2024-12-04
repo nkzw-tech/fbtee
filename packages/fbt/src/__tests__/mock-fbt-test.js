@@ -3,17 +3,18 @@
  *
  */
 
-const init = require('../fbtInit');
-const IntlViewerContext = require('../IntlViewerContext');
+import getFbtResult from '../__mocks__/getFbtResult';
+import fbt from '../fbt';
+import init from '../fbtInit';
+import IntlViewerContext from '../IntlViewerContext';
+
 init({
   translations: { en_US: {} },
   hooks: {
-    getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
+    getFbtResult,
     getViewerContext: () => IntlViewerContext,
   },
 });
-
-const fbt = require('../fbt');
 
 // Note that running the typechecker in jst turns on fbt preprocessing so we
 // have two almost identical test files: typechecked and not typechecked.

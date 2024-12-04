@@ -1,4 +1,4 @@
-# Babel/Webpack/React OSS FBT Demo
+# Babel/React OSS FBT Demo
 
 ## Building and starting the demo app
 

@@ -17,7 +17,7 @@
     "url": "https://github.com/facebook/fbt"
   },
   "license": "MIT",
-  "main": "lib/FbtPublic.js",
+  "main": "src/FbtPublic.js",
   "dependencies": {
     "invariant": "^2.2.4"
   },

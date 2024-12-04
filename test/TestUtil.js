@@ -6,7 +6,6 @@
  *
  * @noflow
  */
-/*eslint max-len: ["error", 100]*/
 
 'use strict';
 

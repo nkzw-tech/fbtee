@@ -4,22 +4,15 @@
  * @flow strict-local
  */
 
-const FbtResult = require('./FbtResult');
-const FbtTranslations = require('./FbtTranslations');
-const GenderConst = require('./GenderConst');
-const IntlVariations = require('./IntlVariations');
+import fbs from './fbs';
+import fbt from './fbt';
+import init from './fbtInit';
+import FbtResult from './FbtResult';
+import FbtTranslations from './FbtTranslations';
+import GenderConst from './GenderConst';
+import IntlVariations from './IntlVariations';
 
-const fbs = require('./fbs');
-const fbt = require('./fbt');
-const init = require('./fbtInit');
-
-/**
- * fbt's public-facing module.  Intended use:
- * const {fbt, IntlVariations} = require('fbt');
- */
-const FbtPublic = {
-  __esModule: true,
-  default: fbt,
+export {
   fbs,
   fbt,
   FbtResult,
@@ -28,4 +21,3 @@ const FbtPublic = {
   init,
   IntlVariations,
 };
-module.exports = FbtPublic;

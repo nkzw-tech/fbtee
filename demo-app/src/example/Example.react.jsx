@@ -5,14 +5,11 @@
  * @noflow
  */
 
-/* eslint-disable fb-flow/use-exact-by-default-object-type */
-
-import './css/Example.css';
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
 import * as React from 'react';
-
-const ExampleEnum = require('./Example$FbtEnum');
+import translations from '../translatedFbts.json';
+import ExampleEnum from './Example$FbtEnum';
 
 const viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
@@ -20,7 +17,7 @@ const viewerContext = {
 };
 
 init({
-  translations: require('../translatedFbts.json'),
+  translations,
   hooks: {
     getViewerContext: () => viewerContext,
   },

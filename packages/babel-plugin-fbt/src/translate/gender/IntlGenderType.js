@@ -13,7 +13,8 @@
 
 'use strict';
 
-const FBLocaleToLang = require('../FBLocaleToLang');
+import FBLocaleToLang from '../FBLocaleToLang';
+
 const IntlDefaultGenderType = require('./IntlDefaultGenderType');
 const IntlMergedUnknownGenderType = require('./IntlMergedUnknownGenderType');
 

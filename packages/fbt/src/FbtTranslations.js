@@ -8,9 +8,10 @@
 
 'use strict';
 
-import type { FbtRuntimeCallInput, FbtTranslatedInput } from './FbtHooks';
-
-const FbtHooks = require('./FbtHooks');
+import FbtHooks, {
+  type FbtRuntimeCallInput,
+  type FbtTranslatedInput,
+} from './FbtHooks';
 
 let translatedFbts: TranslationDict = {};
 
@@ -23,7 +24,7 @@ export type TranslationDict = {
 
 const DEFAULT_SRC_LOCALE = 'en_US';
 
-const FbtTranslations = {
+export default {
   getTranslatedInput(input: FbtRuntimeCallInput): ?FbtTranslatedInput {
     const { args, options } = input;
     const hashKey = options?.hk;
@@ -61,5 +62,3 @@ const FbtTranslations = {
     });
   },
 };
-
-module.exports = FbtTranslations;

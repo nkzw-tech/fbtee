@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/*eslint max-len: ["error", 100]*/
-
 'use strict';
 
 import type { NodePathOf } from '@babel/core';

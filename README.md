@@ -57,10 +57,6 @@ test in the demo-app, be sure to run this command to rebuild the JS code:
 yarn build-runtime
 ```
 
-## Using fbt
-
-See how to use the source directly with Babel and Webpack in [our demo-app](demo-app#babelwebpackreact-oss-fbt-demo).
-
 ## How FBT works
 
 FBT works by transforming your `<fbt>` and `fbt(...)` constructs via

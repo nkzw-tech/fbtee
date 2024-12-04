@@ -4,10 +4,6 @@
  * @flow
  */
 
-/* eslint max-len: ["warn", 120] */
-
-'use strict';
-
 import type { PlainFbtNode } from '../../fbt-nodes/FbtNode';
 import type { EnumManifest } from '../../FbtEnumRegistrar';
 import type {
@@ -77,7 +73,6 @@ class CustomFbtCollector implements IFbtCollector {
   getChildParentMappings(): ChildParentMappings {
     return {
       // We need an object keyed by numbers only
-      // eslint-disable-next-line no-useless-computed-key
       [1]: 0,
     };
   }

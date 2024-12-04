@@ -6,14 +6,14 @@
 
 'use strict';
 
-const FbtNumberConsistency = require('../__mocks__/FbtNumberConsistency');
+import FbtNumberConsistency from '../__mocks__/FbtNumberConsistency';
 
 describe('FbtNumber consistency', function () {
   FbtNumberConsistency.dataModuleNames.forEach((dataModuleName) => {
     const path = require.resolve('../__mocks__/' + dataModuleName);
     const dataModule = require(path);
     const jsModulePath = require.resolve('../' + dataModule.jsModule);
-    const jsModule = require(jsModulePath);
+    const jsModule = require(jsModulePath).default;
     const phpNumberTypes = dataModule.numberTypes;
     it('should be consistent with PHP in ' + dataModuleName, function () {
       for (let ii = 0; ii < phpNumberTypes.length; ++ii) {

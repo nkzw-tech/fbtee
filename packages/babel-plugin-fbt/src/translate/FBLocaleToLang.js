@@ -49,7 +49,7 @@ const locToLang = {
   zz_TR: 'zza',
 };
 
-const FBLocaleToLang = {
+export default {
   /**
    * If given an fb-locale ("xx_XX"), try to map it to a language. Otherwise return "xx".
    * If no '_' is found, return locale as-is.
@@ -62,5 +62,3 @@ const FBLocaleToLang = {
     return idx >= 0 ? locale.substr(0, idx) : locale;
   },
 };
-
-module.exports = FBLocaleToLang;

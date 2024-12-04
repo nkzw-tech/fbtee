@@ -16,7 +16,8 @@ describe('IntlVariations', () => {
 
   describe('when compared with the client-side IntlVariations', () => {
     beforeEach(() => {
-      ClientSideIntlVariations = require('../../../../fbt/src/IntlVariations');
+      ClientSideIntlVariations =
+        require('../../../../fbt/src/IntlVariations').default;
     });
 
     // $FlowFixMe[missing-local-annot]

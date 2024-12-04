@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-const FbtReactUtil = {
+export default {
   REACT_ELEMENT_TYPE,
 
   injectReactShim(fbtResult: IFbtResultBase) {
@@ -55,5 +55,3 @@ const FbtReactUtil = {
     }
   },
 };
-
-module.exports = FbtReactUtil;

@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/* eslint no-bitwise: 0 */
-
 'use strict';
 
 import type { TableJSFBTTree } from './index';

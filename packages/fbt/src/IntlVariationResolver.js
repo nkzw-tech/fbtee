@@ -3,41 +3,34 @@
  *
  * @flow strict-local
  */
-const FbtHooks = require('./FbtHooks');
-const IntlNumberType = require('./IntlNumberType');
-const IntlVariations = require('./IntlVariations');
+import invariant from 'invariant';
+import FbtHooks from './FbtHooks';
+import IntlNumberType from './IntlNumberType';
+import IntlVariations from './IntlVariations';
 
-const invariant = require('invariant');
+export const EXACTLY_ONE = '_1';
 
-const EXACTLY_ONE = '_1';
+export function getNumberVariations(
+  number: number
+): Array<$FlowFixMe | string> {
+  const numType = IntlNumberType.get(
+    FbtHooks.getViewerContext().locale
+  ).getVariation(number);
+  invariant(
+    numType & IntlVariations.BITMASK_NUMBER,
+    'Invalid number provided: %s (%s)',
+    numType,
+    typeof numType
+  );
+  return number === 1 ? [EXACTLY_ONE, numType, '*'] : [numType, '*'];
+}
 
-const IntlVariationResolver = {
-  EXACTLY_ONE,
-
-  getNumberVariations(number: number): Array<$FlowFixMe | string> {
-    const numType = IntlNumberType.get(
-      FbtHooks.getViewerContext().locale
-    ).getVariation(number);
-    invariant(
-      // eslint-disable-next-line no-bitwise
-      numType & IntlVariations.BITMASK_NUMBER,
-      'Invalid number provided: %s (%s)',
-      numType,
-      typeof numType
-    );
-    return number === 1 ? [EXACTLY_ONE, numType, '*'] : [numType, '*'];
-  },
-
-  getGenderVariations(gender: number): Array<string | number> {
-    invariant(
-      // eslint-disable-next-line no-bitwise
-      gender & IntlVariations.BITMASK_GENDER,
-      'Invalid gender provided: %s (%s)',
-      gender,
-      typeof gender
-    );
-    return [gender, '*'];
-  },
-};
-
-module.exports = IntlVariationResolver;
+export function getGenderVariations(gender: number): Array<string | number> {
+  invariant(
+    gender & IntlVariations.BITMASK_GENDER,
+    'Invalid gender provided: %s (%s)',
+    gender,
+    typeof gender
+  );
+  return [gender, '*'];
+}

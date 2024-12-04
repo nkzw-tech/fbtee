@@ -6,7 +6,7 @@ sidebar_label: Web
 
 ## Try the Demo
 
-Check out our [Github](https://github.com/facebook/fbt) repository and run the Webpack demo app.
+Check out our [Github](https://github.com/facebook/fbt) repository and run the demo app.
 See ["Building and starting the demo app"](https://github.com/facebook/fbt/tree/main/demo-app#building-and-starting-the-demo-app)
 
 # Integrating into your app
@@ -47,11 +47,6 @@ To work around this you can use Babel's `passPerPreset` option, and ensure `babe
   })
 ```
 
-### Webpack Example
-
-You'll need to add the fbt babel transforms in a manner similar to our demo-app.
-[See our demo-app's Webpack config](https://github.com/facebook/fbt/blob/543e0a9c5b5c74e2094da3b94e3828c1dccacb7a/demo-app/webpack.config.js#L54-L59)
-
 ## Build-time / offline processes
 
 ### Collection
@@ -75,8 +70,6 @@ These are:
 ### How to use these scripts
 
 You can see how the demo-app [calls into these scripts here](https://github.com/facebook/fbt/blob/3a5441708ca6b71c2c18fe5a952d1058a22306d1/demo-app/package.json#L11-L14).
-
-The demo app [runs all these in another script, here](https://github.com/facebook/fbt/blob/3a5441708ca6b71c2c18fe5a952d1058a22306d1/demo-app/run_all.js)
 
 ## Runtime
 

@@ -13,19 +13,17 @@
 
 export type GenderConstEnum = $GenderConstEnum;
 
-const GenderConst = Object.freeze({
-  NOT_A_PERSON: ((0: $FlowFixMe): GenderConstEnum),
-  FEMALE_SINGULAR: ((1: $FlowFixMe): GenderConstEnum),
-  MALE_SINGULAR: ((2: $FlowFixMe): GenderConstEnum),
-  FEMALE_SINGULAR_GUESS: ((3: $FlowFixMe): GenderConstEnum),
-  MALE_SINGULAR_GUESS: ((4: $FlowFixMe): GenderConstEnum),
-  MIXED_UNKNOWN: ((5: $FlowFixMe): GenderConstEnum),
-  NEUTER_SINGULAR: ((6: $FlowFixMe): GenderConstEnum),
-  UNKNOWN_SINGULAR: ((7: $FlowFixMe): GenderConstEnum),
-  FEMALE_PLURAL: ((8: $FlowFixMe): GenderConstEnum),
-  MALE_PLURAL: ((9: $FlowFixMe): GenderConstEnum),
-  NEUTER_PLURAL: ((10: $FlowFixMe): GenderConstEnum),
-  UNKNOWN_PLURAL: ((11: $FlowFixMe): GenderConstEnum),
+export default Object.freeze({
+  NOT_A_PERSON: 0,
+  FEMALE_SINGULAR: 1,
+  MALE_SINGULAR: 2,
+  FEMALE_SINGULAR_GUESS: 3,
+  MALE_SINGULAR_GUESS: 4,
+  MIXED_UNKNOWN: 5,
+  NEUTER_SINGULAR: 6,
+  UNKNOWN_SINGULAR: 7,
+  FEMALE_PLURAL: 8,
+  MALE_PLURAL: 9,
+  NEUTER_PLURAL: 10,
+  UNKNOWN_PLURAL: 11,
 });
-
-module.exports = GenderConst;

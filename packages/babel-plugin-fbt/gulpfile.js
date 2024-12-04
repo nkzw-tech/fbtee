@@ -47,19 +47,11 @@ const babelPluginFbt_buildDistJS = () =>
     .pipe(
       babel({
         plugins: [
-          [require('@babel/plugin-syntax-flow'), { enums: true }],
+          require('@babel/plugin-syntax-flow'),
           require('@babel/plugin-transform-flow-strip-types'),
         ],
       })
     )
-    .pipe(dest(paths.dist));
-
-const babelPluginFbt_buildDistFlowJS = () =>
-  src(paths.src.js, {
-    follow: true,
-  })
-    .pipe(rename({ extname: '.js.flow' }))
-    .pipe(once())
     .pipe(dest(paths.dist));
 
 const babelPluginFbt_copyJsonToDist = () =>
@@ -67,11 +59,7 @@ const babelPluginFbt_copyJsonToDist = () =>
 
 gulp.task(
   'build',
-  gulp.parallel(
-    babelPluginFbt_buildDistJS,
-    babelPluginFbt_buildDistFlowJS,
-    babelPluginFbt_copyJsonToDist
-  )
+  gulp.parallel(babelPluginFbt_buildDistJS, babelPluginFbt_copyJsonToDist)
 );
 
 const babelPluginFbt_clean = () =>

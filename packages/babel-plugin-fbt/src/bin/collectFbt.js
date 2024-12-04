@@ -4,10 +4,6 @@
  * @flow
  */
 
-/* eslint max-len: ["warn", 120] */
-
-'use strict';
-
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
 import type { TableJSFBT } from '../index';
 import type { ChildParentMappings, PackagerPhrase } from './FbtCollector';

@@ -7,34 +7,28 @@
 'use strict';
 
 import typeof intlNumUtilsType from 'intlNumUtils';
-
+import fbtRuntime from '../fbt';
+import FbtHooks from '../FbtHooks';
+import FbtResult from '../FbtResult';
+import intlNumUtils from '../intlNumUtils';
 // Warning: importing JS modules outside of beforeEach blocks is generally bad practice
 // in jest tests. We might need to move these modules inside beforeEach().
 // These ones can stay here for now since they have a consistent behavior across this test suite.
-const IntlVariations = require('../IntlVariations');
-const IntlViewerContext = require('../IntlViewerContext');
+import IntlVariations from '../IntlVariations';
+import IntlViewerContext from '../IntlViewerContext';
 
 const ONE = String(IntlVariations.NUMBER_ONE);
 const FEW = String(IntlVariations.NUMBER_FEW);
 const MALE = String(IntlVariations.GENDER_MALE);
 const FEMALE = String(IntlVariations.GENDER_FEMALE);
 
-let fbtRuntime;
-let intlNumUtils;
+FbtHooks.register({
+  getFbtResult: FbtResult.get,
+});
 
 describe('fbt', () => {
-  beforeEach(() => {
-    jest.resetModules();
-
-    require('../FbtHooks').register({
-      getFbtResult: require('../FbtResult').get,
-    });
-    intlNumUtils = require('../intlNumUtils');
-    fbtRuntime = require('../fbt');
-  });
-
   it('should handle variated numbers', function () {
-    require('../FbtHooks').register({
+    FbtHooks.register({
       // IntlCLDRNumberType31
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'br_FR' }),
     });
@@ -58,13 +52,13 @@ describe('fbt', () => {
   });
 
   it('should access table with fallback logic', function () {
-    const FbtHooks = require('../FbtHooks');
     let genderMock;
-    // $FlowFixMe[cannot-write] We need to mock this method
-    FbtHooks.getViewerContext = jest.fn(() => ({
-      GENDER: genderMock,
-      locale: 'ro_RO', // IntlCLDRNumberType19
-    }));
+    FbtHooks.register({
+      getViewerContext: jest.fn(() => ({
+        GENDER: genderMock,
+        locale: 'ro_RO', // IntlCLDRNumberType19
+      })),
+    });
 
     const table: $FlowFixMe = {
       __vcg: 1, // viewer-context gender

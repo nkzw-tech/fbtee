@@ -6,17 +6,14 @@
  * @flow
  */
 
-import type { ExtraOptionValues } from './FbtHooks';
+import invariant from 'invariant';
+import fbt from './fbt';
+import FbtHooks, { type ExtraOptionValues } from './FbtHooks';
+import FbtPureStringResult from './FbtPureStringResult';
 import type { ParamVariationType } from './FbtRuntimeTypes';
 import type { PatternHash, PatternString } from './FbtTable';
 import type { FbtTableArg } from './FbtTableAccessor';
 import type { GenderConstEnum } from './GenderConst';
-
-const FbtHooks = require('./FbtHooks');
-const FbtPureStringResult = require('./FbtPureStringResult');
-
-const fbt = require('./fbt');
-const invariant = require('invariant');
 
 const cachedFbsResults: { [patternStr: PatternString]: Fbt } = {};
 
@@ -81,7 +78,4 @@ const FbsImpl = {
   cachedResults: cachedFbsResults,
 };
 
-// $FlowFixMe[incompatible-type]
-// $FlowFixMe[prop-missing]
-const out: $FbsFunctionAPI = FbsImpl;
-module.exports = out;
+export default FbsImpl;

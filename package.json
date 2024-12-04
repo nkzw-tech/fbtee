@@ -13,7 +13,7 @@
     "clean-build": "pnpm install && cd ./demo-app && clean-build",
     "clean-test": "pnpm clean-build && pnpm test",
     "demo-app:test": "cd ./demo-app && pnpm test",
-    "dev": "cd demo-app && pnpm start",
+    "dev": "cd demo-app && pnpm dev",
     "fbt:test": "jest packages/fbt",
     "fbt:watch": "gulp watch-runtime",
     "flow:check": "flow check --show-all-errors",
@@ -30,7 +30,6 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.2.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.25.9",
@@ -56,7 +55,6 @@
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.5.6",
     "react-dom": "^18.0.0",
-    "webpack": "^5.76.0",
     "webpack-stream": "^7.0.0"
   }
 }

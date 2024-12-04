@@ -12,7 +12,9 @@
  * @flow strict-local
  */
 
-// flowlint ambiguous-object-type:error
+import escapeRegex from './escapeRegex';
+import FbtHooks from './FbtHooks';
+import NumberFormatConsts from './NumberFormatConsts';
 
 export type StandardDecimalPatternInfo = {|
   primaryGroupSize: number,
@@ -22,11 +24,6 @@ export type StandardDecimalPatternInfo = {|
 export type NumberingSystemData = {|
   digits: string,
 |};
-
-const FbtHooks = require('./FbtHooks');
-const NumberFormatConsts = require('./NumberFormatConsts');
-
-const escapeRegex = require('./escapeRegex');
 
 const DEFAULT_GROUPING_SIZE = 3;
 
@@ -425,7 +422,7 @@ function parseNumber(text: string): ?number {
   );
 }
 
-const intlNumUtils = {
+export default {
   formatNumber,
   formatNumberRaw,
   formatNumberWithThousandDelimiters,
@@ -483,5 +480,3 @@ const intlNumUtils = {
     return str;
   },
 };
-
-module.exports = intlNumUtils;

@@ -22,9 +22,9 @@
 
 'use strict';
 
-const fbt = require('./fbt');
-const invariant = require('invariant');
-const React = require('react');
+import invariant from 'invariant';
+import * as React from 'react';
+import fbt from './fbt';
 
 const CONJUNCTIONS: $ReadOnly<{| AND: 'AND', NONE: 'NONE', OR: 'OR' |}> = {
   AND: 'AND',

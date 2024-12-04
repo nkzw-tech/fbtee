@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/* eslint max-len: ["warn", 120] */
-
 import type { FbtExtraOptionConfig } from '../FbtConstants.js';
 import type { CollectFbtOutput } from './collectFbt';
 import type {

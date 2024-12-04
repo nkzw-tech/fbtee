@@ -14,8 +14,8 @@
 
 'use strict';
 
-const fbs = require('./fbs');
-const intlNumUtils = require('./intlNumUtils');
+import fbs from './fbs';
+import intlNumUtils from './intlNumUtils';
 
 function formatNumber(value: number, decimals?: ?number): string {
   return intlNumUtils.formatNumber(value, decimals);
@@ -70,4 +70,4 @@ formatNumber.withThousandDelimiters =
 formatNumber.withMaxLimit = formatNumberWithMaxLimit;
 formatNumber.withMinLimit = formatNumberWithMinLimit;
 
-module.exports = formatNumber;
+export default formatNumber;

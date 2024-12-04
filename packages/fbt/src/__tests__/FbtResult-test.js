@@ -12,17 +12,14 @@
  * @flow
  */
 
-const FbtHooks = require('../FbtHooks');
-const FbtResult = require('../FbtResult');
-
-const nullthrows = require('nullthrows');
+import nullthrows from 'nullthrows';
+import FbtHooks from '../FbtHooks';
+import FbtResult from '../FbtResult';
 
 let _errorListener;
 
 describe('FbtResult', function () {
   beforeEach(() => {
-    jest.resetModules();
-
     FbtHooks.register({
       errorListener: () => ({}),
     });

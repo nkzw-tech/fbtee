@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/*eslint max-len: ["error", 100]*/
-
 import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
 import type { HashToLeaf, PackagerPhrase } from './FbtCollector';
 

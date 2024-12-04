@@ -9,9 +9,8 @@
 
 'use strict';
 
+import invariant from 'invariant';
 import type { FbtRuntimeInput, FbtTableArgs } from './FbtHooks';
-
-const invariant = require('invariant');
 
 /**
  * A leaf "pattern string" in our FbtInputTable that represents an Fbt UI text string.
@@ -132,4 +131,4 @@ const FbtTable = {
   },
 };
 
-module.exports = FbtTable;
+export default FbtTable;

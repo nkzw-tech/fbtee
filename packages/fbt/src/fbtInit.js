@@ -7,15 +7,11 @@
  * @flow strict-local
  */
 
-import type { FbtHookRegistrations } from './FbtHooks';
-import type { TranslationDict } from './FbtTranslations';
-
-const FbtHooks = require('./FbtHooks');
-const FbtResult = require('./FbtResult');
-const FbtTranslations = require('./FbtTranslations');
-const IntlViewerContext = require('./IntlViewerContext'); // default VC
-
-const getFbsResult = require('./getFbsResult');
+import FbtHooks, { type FbtHookRegistrations } from './FbtHooks';
+import FbtResult from './FbtResult';
+import FbtTranslations, { type TranslationDict } from './FbtTranslations';
+import getFbsResult from './getFbsResult';
+import IntlViewerContext from './IntlViewerContext';
 
 export type FbtInitInput = {
   hooks?: ?FbtHookRegistrations,
@@ -25,7 +21,7 @@ export type FbtInitInput = {
 // Using "auto-bind" to avoid Flow "method-unbinding" issue
 const getFbtResult = FbtResult.get.bind(FbtResult);
 
-function fbtInit(input: FbtInitInput): void {
+export default function fbtInit(input: FbtInitInput): void {
   FbtTranslations.registerTranslations(input.translations);
 
   // Hookup default implementations
@@ -49,5 +45,3 @@ function fbtInit(input: FbtInitInput): void {
 
   FbtHooks.register(hooks);
 }
-
-module.exports = fbtInit;

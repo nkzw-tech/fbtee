@@ -3,7 +3,6 @@
  *
  * @flow strict
  */
-/* eslint max-len: ["warn", 120] */
 
 const packagerTypes = {
   TEXT: 'text',

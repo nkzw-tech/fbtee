@@ -4,12 +4,10 @@
  * @flow strict
  */
 
-const Example$FbtEnum = {
+export default {
   LINK: 'link',
   PAGE: 'page',
   PHOTO: 'photo',
   POST: 'post',
   VIDEO: 'video',
 };
-
-module.exports = Example$FbtEnum;

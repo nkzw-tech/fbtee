@@ -88,7 +88,7 @@ export type FbtHookRegistrations = Partial<{|
 
 const _registrations: FbtHookRegistrations = {};
 
-module.exports = {
+export default {
   getErrorListener(context: FbtErrorContext): ?IFbtErrorListener {
     return _registrations.errorListener?.(context);
   },

@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-/* eslint max-len: ["warn", 100] */
-
 import type { PackagerPhrase } from './FbtCollector';
 
 const fbtHashKey = require('../fbtHashKey');

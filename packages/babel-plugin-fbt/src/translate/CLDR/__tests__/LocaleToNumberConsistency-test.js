@@ -3,14 +3,14 @@
  *
  */
 
-const TestData_IntlNumberType = require('../__data__/TestData_IntlNumberType');
-const IntlNumberType = require('../IntlNumberType');
-const assert = require('assert');
+import assert from 'assert';
+import TestData_IntlNumberType from '../__data__/TestData_IntlNumberType';
+import IntlNumberType from '../IntlNumberType';
 
 describe('Test Fbt Enum', () => {
   it('Should maintain consistency with server-side locale data', () => {
     for (const locale in TestData_IntlNumberType) {
-      const expected = require('../' + TestData_IntlNumberType[locale]);
+      const expected = require('../' + TestData_IntlNumberType[locale]).default;
       const actual = IntlNumberType._getNumberModuleForLocale(locale);
       if (actual !== expected) {
         throw new assert.AssertionError({

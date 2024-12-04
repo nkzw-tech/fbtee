@@ -9,7 +9,6 @@
 
 'use strict';
 
-const moduleMap = require('./moduleMap');
 const babelPluginFbtGulp = require('./packages/babel-plugin-fbt/gulpfile');
 const { version } = require('./packages/fbt/package.json');
 const del = require('del');
@@ -35,13 +34,12 @@ const paths = {
     '!packages/fbt/src/**/__tests__/*',
     '!packages/fbt/src/**/__mocks__/*',
   ],
-  typedModules: ['flow-types/typed-js-modules/*.flow'],
 };
 
 const COPYRIGHT_HEADER = `/**
  * fbt v<%= version %>
  *
- * Copyright (c) Christoph Nakazawa & Meta Platforms, Inc. and affiliates.
+ * Copyright (c) Nakazawa Tech & Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.

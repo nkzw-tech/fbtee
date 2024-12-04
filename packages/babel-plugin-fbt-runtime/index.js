@@ -9,11 +9,6 @@
  * @noformat
  */
 
-'use strict';
-
-/* eslint consistent-return: 0 */
-/* eslint max-len: ["warn", 120] */
-
 /*::
 import typeof BabelTypes from '@babel/types';
 import type {BabelTransformPlugin} from '@babel/core';
@@ -52,8 +47,6 @@ function getPluginOptions(
         `Current value is ${String(opts)} (${typeof opts})`
     );
   }
-  // $FlowExpectedError[prop-missing]
-  // $FlowExpectedError[incompatible-exact]
   return opts;
 }
 

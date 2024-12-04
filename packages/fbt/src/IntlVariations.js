@@ -13,7 +13,7 @@
 
 export type IntlVariationsEnum = $IntlVariationsEnum;
 
-const IntlVariations = Object.freeze({
+export default Object.freeze({
   BITMASK_NUMBER: ((28: $FlowFixMe): IntlVariationsEnum),
   BITMASK_GENDER: ((3: $FlowFixMe): IntlVariationsEnum),
   NUMBER_ZERO: ((16: $FlowFixMe): IntlVariationsEnum),
@@ -26,5 +26,3 @@ const IntlVariations = Object.freeze({
   GENDER_FEMALE: ((2: $FlowFixMe): IntlVariationsEnum),
   GENDER_UNKNOWN: ((3: $FlowFixMe): IntlVariationsEnum),
 });
-
-module.exports = IntlVariations;

@@ -16,33 +16,31 @@
  * @flow strict-local
  */
 
-import type {
-  ExtraOptionValues,
-  FbtInputOpts,
-  FbtRuntimeInput,
-  FbtTableArgs,
+import invariant from 'invariant';
+import FbtHooks, {
+  type ExtraOptionValues,
+  type FbtInputOpts,
+  type FbtRuntimeInput,
+  type FbtTableArgs,
 } from './FbtHooks';
+import FbtResultBase from './FbtResultBase';
 import type {
   ParamVariationType,
   ValidPronounUsagesType,
 } from './FbtRuntimeTypes';
-import type { FbtTableKey, PatternHash, PatternString } from './FbtTable';
-import type { FbtTableArg } from './FbtTableAccessor';
-import type { GenderConstEnum } from './GenderConst';
-
-const FbtHooks = require('./FbtHooks');
-const FbtResultBase = require('./FbtResultBase');
-const FbtTable = require('./FbtTable');
-const FbtTableAccessor = require('./FbtTableAccessor');
-const GenderConst = require('./GenderConst');
-const {
+import FbtTable, {
+  type FbtTableKey,
+  type PatternHash,
+  type PatternString,
+} from './FbtTable';
+import FbtTableAccessor, { type FbtTableArg } from './FbtTableAccessor';
+import GenderConst, { type GenderConstEnum } from './GenderConst';
+import intlNumUtils from './intlNumUtils';
+import {
   getGenderVariations,
   getNumberVariations,
-} = require('./IntlVariationResolver');
-
-const intlNumUtils = require('./intlNumUtils');
-const invariant = require('invariant');
-const substituteTokens = require('./substituteTokens');
+} from './IntlVariationResolver';
+import substituteTokens from './substituteTokens';
 
 /*
  * $FlowFixMe[method-unbinding] Use original method in case the token names contain
@@ -95,8 +93,7 @@ const cachedFbtResults: { [patternStr: PatternString]: Fbt } = {};
  * contains a structured enums to hash keys map which will later be traversed
  * to look up enum-less translated payload.
  */
-/* $FlowFixMe[missing-this-annot] The 'this' type annotation(s) required by
- * Flow's LTI update could not be added via codemod */
+
 function fbtCallsite(
   inputTable: FbtRuntimeInput,
   inputArgs: ?FbtTableArgs,
@@ -323,8 +320,7 @@ function fbtParam(
 /**
  * fbt._implicitParam() behaves like fbt._param()
  */
-/* $FlowFixMe[missing-this-annot] The 'this' type annotation(s) required by
- * Flow's LTI update could not be added via codemod */
+
 function fbtImplicitParam(
   label: string,
   value: mixed,
@@ -487,7 +483,4 @@ fbt._getCachedFbt =
       }
     : undefined;
 
-// $FlowFixMe[incompatible-type]
-// $FlowFixMe[prop-missing]
-const out: $FbtFunctionAPI = fbt;
-module.exports = out;
+export default fbt;

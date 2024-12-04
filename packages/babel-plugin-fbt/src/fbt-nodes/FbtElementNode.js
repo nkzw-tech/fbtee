@@ -4,8 +4,6 @@
  * @flow
  */
 
-/*eslint max-len: ["error", 100]*/
-
 'use strict';
 
 import type { ExtraOptionValues } from 'FbtHooks';

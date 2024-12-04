@@ -6,39 +6,35 @@
 
 'use strict';
 
-import type {
-  FbtResolvedPayload,
-  FbtRuntimeCallInput,
-  FbtTranslatedInput,
+import { render } from '@testing-library/react';
+import * as React from 'react';
+import getFbtResult from '../__mocks__/getFbtResult';
+import fbt from '../fbt';
+import FbtHooks, {
+  type FbtResolvedPayload,
+  type FbtRuntimeCallInput,
+  type FbtTranslatedInput,
 } from '../FbtHooks';
-import type { IntlVariationsEnum } from '../IntlVariations';
+import init from '../fbtInit';
+import FbtResult from '../FbtResult';
+import FbtTranslations from '../FbtTranslations';
+import GenderConst from '../GenderConst';
+import IntlVariations, { type IntlVariationsEnum } from '../IntlVariations';
+import IntlViewerContext from '../IntlViewerContext';
 
-const GenderConst = require('../GenderConst');
-const IntlVariations = require('../IntlVariations');
-
-const { render } = require('@testing-library/react');
-const React = require('react');
-
+init({
+  translations: { en_US: {} },
+});
 let domContainer;
-let fbt;
-let fbtRuntime;
 
 describe('fbt', () => {
   beforeEach(() => {
-    jest.resetModules();
-    const init = require('../fbtInit');
-    const IntlViewerContext = require('../IntlViewerContext');
-    init({
-      translations: { en_US: {} },
-      hooks: {
-        getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
-        getViewerContext: () => IntlViewerContext,
-      },
-    });
-
-    fbt = require('../fbt');
-    fbtRuntime = jest.requireActual<any>('../fbt');
     domContainer = document.createElement('div');
+
+    FbtHooks.register({
+      getFbtResult,
+      getTranslatedInput: FbtTranslations.getTranslatedInput,
+    });
   });
 
   it('should memoize new strings', function () {
@@ -131,15 +127,15 @@ describe('fbt', () => {
     // structures. If that happens, the React components should retain
     // their state even though they change order. We mock out a fake
     // string table to test this special case.
-    const fbtFragment = fbtRuntime._(
+    const fbtFragment = fbt._(
       {
         A: 'preamble {tokenA} is before {tokenB}',
         B: 'preamble {tokenB} is after {tokenA}',
       },
       [
-        fbtRuntime._param('tokenA', childA),
-        fbtRuntime._param('tokenB', childB),
-        fbtRuntime._enum(value, { A: 'is before', B: 'is after' }),
+        fbt._param('tokenA', childA),
+        fbt._param('tokenB', childB),
+        fbt._enum(value, { A: 'is before', B: 'is after' }),
       ]
     );
     return <div>{fbtFragment}</div>;
@@ -231,9 +227,9 @@ describe('fbt', () => {
   describe('when encountering duplicate token substitutions', () => {
     it('should log the duplicate token coming from the same type of construct', () => {
       expect(() =>
-        fbtRuntime._('Just a {tokenName}', [
-          fbtRuntime._param('tokenName', 'substitute'),
-          fbtRuntime._param('tokenName', 'substitute'),
+        fbt._('Just a {tokenName}', [
+          fbt._param('tokenName', 'substitute'),
+          fbt._param('tokenName', 'substitute'),
         ])
       ).toThrowErrorMatchingInlineSnapshot(
         `"Cannot register a substitution with token=\`tokenName\` more than once"`
@@ -242,13 +238,9 @@ describe('fbt', () => {
 
     it('should log the duplicate token coming from the different constructs', () => {
       expect(() =>
-        fbtRuntime._('Just a {tokenName}', [
-          fbtRuntime._param('tokenName', 'substitute'),
-          fbtRuntime._name(
-            'tokenName',
-            'person name',
-            IntlVariations.GENDER_UNKNOWN
-          ),
+        fbt._('Just a {tokenName}', [
+          fbt._param('tokenName', 'substitute'),
+          fbt._name('tokenName', 'person name', IntlVariations.GENDER_UNKNOWN),
         ])
       ).toThrowErrorMatchingInlineSnapshot(
         `"Cannot register a substitution with token=\`tokenName\` more than once"`
@@ -262,11 +254,11 @@ describe('fbt', () => {
       const errorListener = jest.fn().mockImplementation(() => ({
         onMissingParameterError,
       }));
-      require('../FbtHooks').register({
+      FbtHooks.register({
         errorListener,
       });
       const pattern = 'Just a {tokenName}';
-      fbtRuntime._(pattern, []);
+      fbt._(pattern, []);
       expect(errorListener).toHaveBeenLastCalledWith({
         translation: pattern,
       });
@@ -275,17 +267,17 @@ describe('fbt', () => {
   });
 
   it('should create a tuple for fbt.subject if valid', function () {
-    expect(fbtRuntime._subject(IntlVariations.GENDER_MALE)).toEqual([
+    expect(fbt._subject(IntlVariations.GENDER_MALE)).toEqual([
       [IntlVariations.GENDER_MALE, '*'],
       null,
     ]);
-    expect(() => fbtRuntime._subject(0)).toThrow('Invalid gender provided');
+    expect(() => fbt._subject(0)).toThrow('Invalid gender provided');
   });
 
   it('should leave non-QuickTranslation strings alone', function () {
-    expect(
-      fbtRuntime._(["This isn't", '8b0c31a270a324f26d2417a358106612'])
-    ).toEqual("This isn't");
+    expect(fbt._(["This isn't", '8b0c31a270a324f26d2417a358106612'])).toEqual(
+      "This isn't"
+    );
   });
 
   it('should access table with multiple tokens containing subject', function () {
@@ -303,20 +295,19 @@ describe('fbt', () => {
   });
 
   it('should defer to FbtHooks.getTranslatedInput', () => {
-    require('../FbtHooks').register({
+    FbtHooks.register({
       getTranslatedInput(_input: FbtRuntimeCallInput): FbtTranslatedInput {
         return { table: 'ALL YOUR TRANSLATION ARE BELONG TO US', args: null };
       },
     });
-    expect(fbtRuntime._('sample string', null, null)).toEqual(
+    expect(fbt._('sample string', null, null)).toEqual(
       'ALL YOUR TRANSLATION ARE BELONG TO US'
     );
   });
 
   it('should pass extra options to FbtHooks.getFbtResult', () => {
-    require('../FbtHooks').register({
+    FbtHooks.register({
       getFbtResult(input: FbtResolvedPayload): mixed {
-        const FbtResult = require('../FbtResult');
         const { extraOptions } = input;
         const fbtResult = FbtResult.get(input).toString();
         if (extraOptions?.renderStringInBracket === 'yes') {
@@ -325,9 +316,9 @@ describe('fbt', () => {
         return fbtResult;
       },
     });
-    expect(fbtRuntime._('A simple string', null)).toEqual('A simple string');
+    expect(fbt._('A simple string', null)).toEqual('A simple string');
     expect(
-      fbtRuntime._('Another simple string', null, {
+      fbt._('Another simple string', null, {
         eo: { renderStringInBracket: 'yes' },
       })
     ).toEqual('[Another simple string]');
@@ -446,11 +437,7 @@ describe('fbt', () => {
       combinations.ownerGenders.forEach((ownerGender) =>
         combinations.objects.forEach((object) =>
           combinations.counts.forEach((count) =>
-            describe(`where
-              viewer=${viewer.name},
-              ownerGender=${ownerGender},
-              object=${object},
-              count=${count}\n`, () =>
+            describe(`where viewer=${viewer.name}, ownerGender=${ownerGender}, object=${object}, count=${count}\n`, () =>
               it(`should produce proper nested fbt results`, () => {
                 expect(
                   getFbt({

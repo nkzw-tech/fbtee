@@ -7,27 +7,19 @@
 'use strict';
 
 import React from 'react';
+import fbs from '../fbs';
+import fbt from '../fbt';
+import init from '../fbtInit';
+import IntlViewerContext from '../IntlViewerContext';
+
+init({
+  translations: { en_US: {} },
+  hooks: {
+    getViewerContext: () => IntlViewerContext,
+  },
+});
 
 describe('fbs', () => {
-  let fbs;
-  let fbt;
-
-  beforeEach(() => {
-    jest.resetModules();
-    const init = require('../fbtInit');
-    const IntlViewerContext = require('../IntlViewerContext');
-    init({
-      translations: { en_US: {} },
-      hooks: {
-        getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
-        getViewerContext: () => IntlViewerContext,
-      },
-    });
-
-    fbs = require('../fbs');
-    fbt = require('../fbt');
-  });
-
   it('should have consistent Flow checks', () => {});
 
   describe('when using plain text contents', () => {

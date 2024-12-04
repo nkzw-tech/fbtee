@@ -3,7 +3,7 @@
  *
  */
 
-const FBLocaleToLang = require('../FBLocaleToLang');
+import FBLocaleToLang from '../FBLocaleToLang';
 
 describe('Test FBLocaleToLang', () => {
   it('should map a locale', () => {

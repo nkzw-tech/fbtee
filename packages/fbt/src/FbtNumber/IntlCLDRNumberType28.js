@@ -11,9 +11,9 @@
 
 'use strict';
 
-const IntlVariations = require('../IntlVariations');
+import IntlVariations from '../IntlVariations';
 
-const IntlCLDRNumberType28 = {
+export default {
   getVariation(n: number): $Values<typeof IntlVariations> {
     if (n % 10 === 1 && (n % 100 < 11 || n % 100 > 19)) {
       return IntlVariations.NUMBER_ONE;
@@ -24,5 +24,3 @@ const IntlCLDRNumberType28 = {
     }
   },
 };
-
-module.exports = IntlCLDRNumberType28;
