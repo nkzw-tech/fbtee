@@ -48,7 +48,7 @@ const intlList = function <TItem: React.Node>(
   delimiter: ?$Keys<typeof DELIMITERS>
 ): TItem | Fbt {
   const items = items_.filter(Boolean);
-  if (__DEV__) {
+  if (process.env.NODE_ENV === 'development') {
     items.forEach(function (item) {
       invariant(
         typeof item === 'string' || React.isValidElement(item),

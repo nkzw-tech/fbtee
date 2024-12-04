@@ -6,10 +6,6 @@ import { dedupeStops } from '../IntlPunctuation';
  * @flow strict-local
  */
 
-/* eslint-disable fb-www/check-unicode-format */
-
-jest.disableAutomock();
-
 const FW_Q_MARK = '\u{ff1f}';
 const FW_BANG = '\u{ff01}';
 const HINDI_FS = '\u{0964}';

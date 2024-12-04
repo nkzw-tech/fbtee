@@ -35,12 +35,11 @@ class FbtResult extends FbtResultBase {
     errorListener: ?IFbtErrorListener
   ) {
     super(contents, errorListener);
-    /* eslint-disable fb-www/react-state-props-mutation */
     this.props = {
       content: contents,
     };
 
-    if (__DEV__) {
+    if (process.env.NODE_ENV === 'development') {
       FbtReactUtil.injectReactShim(this);
     }
   }

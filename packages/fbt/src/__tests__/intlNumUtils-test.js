@@ -4,13 +4,13 @@
  * @flow strict-local
  */
 
-jest.disableAutomock();
-
 describe('intlNumUtils:', () => {
   let u;
 
   beforeEach(() => {
     jest.resetModules();
+    const init = require('../fbtInit');
+    init({});
     u = require('../intlNumUtils');
   });
 
@@ -600,7 +600,7 @@ describe('intlNumUtils:', () => {
   });
 
   describe('intNumUtils.getIntegerString', function () {
-    it('Should throw in __DEV__ if thousandDelimiter is empty', function () {
+    it('Should throw in development if thousandDelimiter is empty', function () {
       expect(() => u.getIntegerString(1000, '')).toThrow(
         'thousandDelimiter cannot be empty string'
       );

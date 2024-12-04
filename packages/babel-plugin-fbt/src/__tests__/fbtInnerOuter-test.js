@@ -25,7 +25,6 @@ function testChildToParentRelationships(testData, expected) {
       JSON.stringify(expected, null, ' '),
       JSON.stringify(fbt.getChildToParentRelationships(), null, ' ')
     );
-    // eslint-disable-next-line fb-www/no-unused-catch-bindings
   } catch (e) {
     throw new Error(
       'Actual:\n' +

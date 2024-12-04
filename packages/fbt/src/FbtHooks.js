@@ -8,9 +8,6 @@ import type { FbtTableKey, PatternHash, PatternString } from './FbtTable';
 import type { FbtTableArg } from './FbtTableAccessor';
 import typeof IntlViewerContext from './IntlViewerContext';
 
-const FbtEnv = require('./FbtEnv');
-const FbtHooksImpl = require('./FbtHooksImpl');
-
 // TODO T61557741: Move these types to fbt.js when it's flow strict
 export type FbtResolvedPayload = {|
   contents: $NestedFbtContentItems,
@@ -78,7 +75,7 @@ export type FbtImpressionOptions = {
   inputTable: FbtRuntimeInput,
   tokens: Array<FbtTableKey>,
 };
-// TODO: T61015960 - getFb[st]Result should return types that are locked down
+
 export type FbtHookRegistrations = Partial<{|
   errorListener: ?(context: FbtErrorContext) => IFbtErrorListener,
   getFbsResult: (input: FbtResolvedPayload) => mixed,
@@ -89,6 +86,43 @@ export type FbtHookRegistrations = Partial<{|
   onTranslationOverride: ?(hash: string) => void,
 |}>;
 
-module.exports = FbtHooksImpl;
+const _registrations: FbtHookRegistrations = {};
 
-FbtEnv.setupOnce();
+module.exports = {
+  getErrorListener(context: FbtErrorContext): ?IFbtErrorListener {
+    return _registrations.errorListener?.(context);
+  },
+
+  logImpression(hash: string, options?: FbtImpressionOptions): void {
+    _registrations.logImpression?.(hash, options);
+  },
+
+  onTranslationOverride(hash: string): void {
+    _registrations.onTranslationOverride?.(hash);
+  },
+
+  // TODO: T61015960 - get off `mixed` and onto something more locked down (Fbs)
+  getFbsResult(input: FbtResolvedPayload): mixed {
+    // $FlowFixMe[not-a-function]
+    return _registrations.getFbsResult(input);
+  },
+
+  // TODO: T61015960 - get off `mixed` and onto something more locked down (Fbt)
+  getFbtResult(input: FbtResolvedPayload): mixed {
+    // $FlowFixMe[not-a-function]
+    return _registrations.getFbtResult(input);
+  },
+
+  getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {
+    return _registrations.getTranslatedInput?.(input) ?? input;
+  },
+
+  getViewerContext(): IntlViewerContext {
+    // $FlowFixMe[not-a-function]
+    return _registrations.getViewerContext();
+  },
+
+  register(registrations: FbtHookRegistrations): void {
+    Object.assign(_registrations, registrations);
+  },
+};

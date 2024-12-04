@@ -6,12 +6,10 @@
 
 'use strict';
 
-jest.disableAutomock();
 const FbtNumberConsistency = require('../__mocks__/FbtNumberConsistency');
 
 describe('FbtNumber consistency', function () {
   FbtNumberConsistency.dataModuleNames.forEach((dataModuleName) => {
-    /* eslint-disable fb-www/require-args */
     const path = require.resolve('../__mocks__/' + dataModuleName);
     const dataModule = require(path);
     const jsModulePath = require.resolve('../' + dataModule.jsModule);

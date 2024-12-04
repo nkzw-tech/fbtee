@@ -29,7 +29,7 @@ const FbtTranslations = {
     const hashKey = options?.hk;
     const { locale } = FbtHooks.getViewerContext();
     const table = translatedFbts[locale];
-    if (__DEV__) {
+    if (process.env.NODE_ENV === 'development') {
       if (!table && locale !== DEFAULT_SRC_LOCALE) {
         console.warn('Translations have not been provided');
       }

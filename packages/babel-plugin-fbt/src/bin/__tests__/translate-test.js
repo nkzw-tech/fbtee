@@ -307,12 +307,10 @@ describe('translate-test.js', () => {
                 {
                   hashToLeaf: {
                     'vHtEb4ph7GJGeRkjtEHcPA==': {
-                      // eslint-disable-next-line fb-www/gender-neutral-language
                       text: 'she shared a photo.',
                       desc: 'Example enum',
                     },
                     'j9fTl1uOEIuslim41sMkdQ==': {
-                      // eslint-disable-next-line fb-www/gender-neutral-language
                       text: 'he shared a photo.',
                       desc: 'Example enum',
                     },
@@ -331,12 +329,10 @@ describe('translate-test.js', () => {
                     t: {
                       '1': {
                         desc: 'Example enum',
-                        // eslint-disable-next-line fb-www/gender-neutral-language
                         text: 'she shared a photo.',
                       },
                       '2': {
                         desc: 'Example enum',
-                        // eslint-disable-next-line fb-www/gender-neutral-language
                         text: 'he shared a photo.',
                       },
                       '*': {
@@ -361,7 +357,6 @@ describe('translate-test.js', () => {
                       types: [],
                       translations: [
                         {
-                          // eslint-disable-next-line fb-www/gender-neutral-language
                           translation: 'translation is: she shared a photo',
                           variations: {},
                         },
@@ -372,7 +367,6 @@ describe('translate-test.js', () => {
                       types: [],
                       translations: [
                         {
-                          // eslint-disable-next-line fb-www/gender-neutral-language
                           translation: 'translation is: he shared a photo',
                           variations: {},
                         },

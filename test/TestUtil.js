@@ -72,7 +72,6 @@ function getDefaultTransformForPlugins(plugins) {
 
 function parse(code) {
   if ((typeof code !== 'string' && typeof code !== 'object') || code == null) {
-    // eslint-disable-next-line fb-www/no-new-error
     throw new Error(
       `Code must be a string or AST object but got: ${typeof code}`
     );

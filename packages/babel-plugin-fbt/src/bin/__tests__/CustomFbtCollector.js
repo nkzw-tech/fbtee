@@ -117,10 +117,6 @@ class CustomFbtCollector implements IFbtCollector {
       },
     ];
   }
-
-  getErrors(): Errors {
-    return {};
-  }
 }
 
 module.exports = CustomFbtCollector;

@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-global.__DEV__ = true;
-
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');

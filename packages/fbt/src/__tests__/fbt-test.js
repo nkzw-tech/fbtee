@@ -4,27 +4,20 @@
  * @flow
  */
 
-/* eslint-disable fb-www/fbt-no-project */
-
 'use strict';
 
 import type {
   FbtResolvedPayload,
   FbtRuntimeCallInput,
   FbtTranslatedInput,
-} from 'FbtHooks';
+} from '../FbtHooks';
 import type { IntlVariationsEnum } from '../IntlVariations';
 
 const GenderConst = require('../GenderConst');
-// Warning: importing JS modules outside of beforeEach blocks is generally bad practice
-// in jest tests. We might need to move these modules inside beforeEach().
-// These ones can stay here for now since they have a consistent behavior across this test suite.
 const IntlVariations = require('../IntlVariations');
 
 const { render } = require('@testing-library/react');
 const React = require('react');
-
-jest.mock('../FbtNumberType');
 
 let domContainer;
 let fbt;
@@ -33,17 +26,25 @@ let fbtRuntime;
 describe('fbt', () => {
   beforeEach(() => {
     jest.resetModules();
-    fbtRuntime = jest.requireActual<any>('../fbt');
+    const init = require('../fbtInit');
+    const IntlViewerContext = require('../IntlViewerContext');
+    init({
+      translations: { en_US: {} },
+      hooks: {
+        getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
+        getViewerContext: () => IntlViewerContext,
+      },
+    });
+
     fbt = require('../fbt');
+    fbtRuntime = jest.requireActual<any>('../fbt');
     domContainer = document.createElement('div');
   });
 
   it('should memoize new strings', function () {
-    expect(fbtRuntime._getCachedFbt('sample string')).toEqual(undefined);
+    expect(fbt._getCachedFbt('sample string')).toEqual(undefined);
 
-    expect(fbtRuntime._('sample string')).toEqual(
-      fbtRuntime._getCachedFbt('sample string')
-    );
+    expect(fbt._('sample string')).toEqual(fbt._getCachedFbt('sample string'));
   });
 
   it('should trivially handle tokenless strings', function () {
@@ -271,41 +272,6 @@ describe('fbt', () => {
       });
       expect(onMissingParameterError).toHaveBeenCalledWith([], 'tokenName');
     });
-  });
-
-  it('should replace QuickTranslation strings', function () {
-    expect(
-      fbtRuntime._(['This is a QT string', '8b0c31a270a324f26d2417a358106611'])
-    ).toEqual('override');
-  });
-
-  it('should replace QuickTranslation strings with params', function () {
-    expect(
-      fbtRuntime._(
-        ['Just a {param}', 'fakeHash3'],
-        [fbtRuntime._param('param', 'substitute')]
-      )
-    ).toEqual('Override a substitute');
-  });
-
-  it('should replace QuickTranslation "trees"', function () {
-    const runtimeArg = {
-      s: ['This is a QT with a {param}', 'fakeHash1'],
-      p: ['These are QTs with a {param}', 'fakeHash2'],
-    };
-    expect(
-      fbtRuntime._(runtimeArg, [
-        fbtRuntime._param('param', 'word'),
-        fbtRuntime._enum('s', { s: 'one', p: 'other' }),
-      ])
-    ).toEqual('This is an override with a word');
-
-    expect(
-      fbtRuntime._(runtimeArg, [
-        fbtRuntime._param('param', 'test'),
-        fbtRuntime._enum('p', { s: 'one', p: 'other' }),
-      ])
-    ).toEqual('These are overrides and a test');
   });
 
   it('should create a tuple for fbt.subject if valid', function () {

@@ -6,21 +6,14 @@
 
 const path = require('path');
 const process = require('process');
-const runtimePaths = [
-  '<rootDir>/runtime',
-  '<rootDir>/runtime/FbtNumber',
-  '<rootDir>/runtime/mocks',
-];
+
+process.env.NODE_ENV = 'development';
 
 const globalConfig = {
   testMatch: ['**/__tests__/**/*-test.js'],
   transform: {
     '\\.js$': '<rootDir>/jest-preprocessor.js',
   },
-  moduleNameMapper: {
-    '^FBLocaleToLang$': '<rootDir>/runtime/FBLocaleToLang',
-  },
-  skipNodeResolution: true,
   testEnvironment: 'node',
 };
 
@@ -33,18 +26,45 @@ module.exports = {
   projects: [
     {
       displayName: 'babel-plugin-fbt',
-      roots: ['<rootDir>/packages/babel-plugin-fbt/dist'],
-      snapshotResolver:
-        '<rootDir>/packages/babel-plugin-fbt/jest.snapshotResolver.js',
+      roots: ['<rootDir>/packages/babel-plugin-fbt/src'],
+      transform: {
+        '\\.js$': [
+          '<rootDir>/jest-preprocessor.js',
+          {
+            plugins: [
+              [
+                toAbsolutePath('packages', 'babel-plugin-fbt'),
+                { fbtCommon: { Accept: '...' } },
+              ],
+              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
+            ],
+          },
+        ],
+      },
     },
     {
       displayName: 'babel-plugin-fbt-runtime',
       roots: ['<rootDir>/packages/babel-plugin-fbt-runtime'],
     },
     {
-      displayName: 'fbt-runtime',
-      roots: ['<rootDir>/packages/fbt/lib'],
-      modulePaths: ['<rootDir>/packages/fbt/lib'],
+      displayName: 'fbt',
+      testEnvironment: 'jsdom',
+      roots: ['<rootDir>/packages/fbt/src'],
+      modulePaths: ['<rootDir>/packages/fbt/src'],
+      transform: {
+        '\\.js$': [
+          '<rootDir>/jest-preprocessor.js',
+          {
+            plugins: [
+              [
+                toAbsolutePath('packages', 'babel-plugin-fbt'),
+                { fbtCommon: { Accept: '...' } },
+              ],
+              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
+            ],
+          },
+        ],
+      },
     },
     {
       displayName: 'demo-app',
@@ -53,7 +73,8 @@ module.exports = {
       modulePaths: [
         '<rootDir>/demo-app/src',
         '<rootDir>/demo-app/src/example',
-      ].concat(runtimePaths),
+        '<rootDir>/packages/fbt/src',
+      ],
       moduleNameMapper: {
         ...globalConfig.moduleNameMapper,
         '\\.(css)$': '<rootDir>/demo-app/jest/css.js',

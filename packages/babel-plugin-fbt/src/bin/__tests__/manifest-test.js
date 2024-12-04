@@ -5,8 +5,6 @@
 
 'use strict';
 
-jest.disableAutomock();
-
 const { generateManifest } = require('../manifestUtils');
 const path = require('path');
 

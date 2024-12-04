@@ -258,26 +258,6 @@ function writeOutput() {
     )
   );
   process.stdout.write('\n');
-
-  const errs = fbtCollector.getErrors();
-  const errCount = Object.keys(errs).length;
-  if (errCount > 0) {
-    const childErrorMessages = [];
-    for (const filePath in errs) {
-      const error = errs[filePath];
-      const childErrorMessage =
-        `[file="${filePath}"]:\n\t` + String(error.stack || error);
-      process.stderr.write(childErrorMessage + '\n');
-      childErrorMessages.push(childErrorMessage);
-    }
-    const overallError = new Error(
-      `Failed in ${errCount} file(s).` +
-        `\nCurrent working directory: '${process.cwd()}'`
-    );
-    // $FlowExpectedError[prop-missing] Adding a custom error field
-    overallError.childErrorMessages = childErrorMessages;
-    throw overallError;
-  }
 }
 
 function processSource(source: string) {

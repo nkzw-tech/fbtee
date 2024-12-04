@@ -34,14 +34,12 @@ module.name_mapper='^\(babel-plugin-fbt\)/dist/\(.*\)$' -> '<PROJECT_ROOT>/packa
 module.name_mapper='^\(\(invariant\|optimist\|@babel\)\(/.*\)?\)$' -> '<PROJECT_ROOT>/node_modules/\1'
 
 # Redirect non-FB JS modules to a dedicated folder
-module.name_mapper='^\(FBLocaleToLang\|fbtInit\|FbtEnv\|FbtPublic\|FbtTranslations\|GenderConst\|intlInlineMode\|IntlNumberType\|IntlPhonologicalRewrites\|IntlRedundantStops\|IntlVariationResolver\|IntlVariations\|NumberFormatConsts\)$' -> '<PROJECT_ROOT>/runtime/\1'
+module.name_mapper='^\(FBLocaleToLang\|fbtInit\|FbtPublic\|FbtTranslations\|GenderConst\|intlInlineMode\|IntlNumberType\|IntlPhonologicalRewrites\|IntlRedundantStops\|IntlVariationResolver\|IntlVariations\|NumberFormatConsts\)$' -> '<PROJECT_ROOT>/runtime/\1'
 module.name_mapper='^\(cx\|FBLogger\|FBLogMessage\|FbtQTOverrides\|FbtResultGK\|IntlViewerContext\|killswitch\)$' -> '<PROJECT_ROOT>/runtime/mocks/\1'
 
 # Redirect public JS modules to a dedicated folder
-module.name_mapper='^\(escapeRegex\|fbs\|fbt\|FbtHooks\|FbtHooksImpl\|FbtPureStringResult\|FbtReactUtil\|FbtResultBase\|FbtResult\|FbtRuntimeTypes\|FbtTable\|FbtTableAccessor\|formatNumber\|getFbsResult\|IntlGender\|intlList\|intlNumUtils\|IntlPunctuation\|IntlVariationResolverImpl\|substituteTokens\)$' -> '<PROJECT_ROOT>/runtime/\1'
+module.name_mapper='^\(escapeRegex\|fbs\|fbt\|FbtHooks\|FbtPureStringResult\|FbtReactUtil\|FbtResultBase\|FbtResult\|FbtRuntimeTypes\|FbtTable\|FbtTableAccessor\|formatNumber\|getFbsResult\|IntlGender\|intlList\|intlNumUtils\|IntlPunctuation\|IntlVariationResolverImpl\|substituteTokens\)$' -> '<PROJECT_ROOT>/runtime/\1'
 module.name_mapper='^\(IntlCLDRNumberType[0-9][0-9]\)$' -> '<PROJECT_ROOT>/runtime/FbtNumber/\1'
-# This Jest mock file is only used for testing, we don't need it on the OSS side
-module.name_mapper='^\(FbtNumberType\)$' -> '<PROJECT_ROOT>/runtime/__mocks__/\1'
 
 # Redirect typed JS Modules
 module.name_mapper='^\(NumberFormatConfig\)$' -> '<PROJECT_ROOT>/flow-types/typed-js-modules/\1.js.flow'

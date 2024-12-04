@@ -17,7 +17,7 @@ const REACT_ELEMENT_TYPE: symbol | 0xeac7 =
   0xeac7;
 
 let canDefineProperty = false;
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   try {
     Object.defineProperty(
       {},

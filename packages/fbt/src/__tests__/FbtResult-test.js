@@ -12,8 +12,6 @@
  * @flow
  */
 
-jest.disableAutomock();
-
 const FbtHooks = require('../FbtHooks');
 const FbtResult = require('../FbtResult');
 
@@ -24,6 +22,11 @@ let _errorListener;
 describe('FbtResult', function () {
   beforeEach(() => {
     jest.resetModules();
+
+    FbtHooks.register({
+      errorListener: () => ({}),
+    });
+
     _errorListener = FbtHooks.getErrorListener({
       hash: 'h',
       translation: 't',

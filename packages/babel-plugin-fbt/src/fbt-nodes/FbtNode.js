@@ -345,10 +345,7 @@ class FbtNode<
    * NOTE: this only represents the current node but not its children!
    */
   toPlainFbtNode(): PlainFbtNode {
-    const type = FbtNodeType.cast(
-      // $FlowExpectedError[prop-missing] FbtNode child classes have a `type` static property
-      this.constructor.type
-    );
+    const type = FbtNodeType[this.constructor.type];
     invariant(
       type != null,
       'Expected instance constructor.type property to be a string instead of `%s`',

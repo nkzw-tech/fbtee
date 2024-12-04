@@ -7,7 +7,6 @@
 import type FbtHooks, { FbtResolvedPayload } from '../FbtHooks';
 import typeof getFbsResult from '../getFbsResult';
 
-jest.unmock('../FbtEnv').unmock('../FbtHooksImpl');
 const actualGetFbsResult = jest.requireActual<getFbsResult>('../getFbsResult');
 const ActualFbtHooks = jest.requireActual<FbtHooks>('../FbtHooks');
 

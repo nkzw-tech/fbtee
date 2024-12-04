@@ -5,19 +5,6 @@
 
 const invariant = require('invariant');
 
-jest
-  .unmock('FbtEnv')
-  .unmock('FbtTable')
-  .unmock('FbtTableAccessor')
-  .unmock('intlNumUtils')
-  .unmock('IntlPhonologicalRewrites')
-  .unmock('IntlPunctuation')
-  .unmock('IntlVariationResolver')
-  .unmock('IntlVariationResolverImpl')
-  .unmock('NumberFormatConsts')
-  .unmock('substituteTokens')
-  .mock('FbtNumberType');
-
 const fbtRuntime = jest.requireActual('fbt');
 
 const WRAPPER = '__FBT__';

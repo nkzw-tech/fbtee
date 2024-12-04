@@ -13,7 +13,15 @@
 
 'use strict';
 
-jest.disableAutomock();
+const init = require('../fbtInit');
+const IntlViewerContext = require('../IntlViewerContext');
+init({
+  translations: { en_US: {} },
+  hooks: {
+    getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
+    getViewerContext: () => IntlViewerContext,
+  },
+});
 
 const fbt = require('../fbt');
 const intlList = require('../intlList');

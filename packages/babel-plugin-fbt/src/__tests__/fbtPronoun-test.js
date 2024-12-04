@@ -20,16 +20,13 @@ function runTest(data, extra) {
 describe('fbt pronoun support', () => {
   it('"capitalize" option accepts boolean literal true', () => {
     runTest({
-      input:
-        // eslint-disable-next-line fb-www/gender-neutral-language
-        // I.e. Her birthday is today.
-        withFbtRequireStatement(
-          `var x = fbt(
+      input: withFbtRequireStatement(
+        `var x = fbt(
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
             'Capitalized possessive pronoun',
           );`
-        ),
+      ),
 
       output: withFbtRequireStatement(
         `var x = fbt._(

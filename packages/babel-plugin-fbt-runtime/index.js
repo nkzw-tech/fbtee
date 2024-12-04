@@ -47,7 +47,6 @@ function getPluginOptions(
 ) /*: PluginOptions */ {
   const { opts } = plugin;
   if (opts == null || typeof opts !== 'object') {
-    // eslint-disable-next-line fb-www/no-new-error
     throw new Error(
       `Expected to opts property to be an object. ` +
         `Current value is ${String(opts)} (${typeof opts})`
@@ -178,7 +177,6 @@ module.exports = function BabelPluginFbtRuntime(
         // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
         const { fbtSentinel } = getPluginOptions(this);
         if (fbtSentinel == null || fbtSentinel.trim() == '') {
-          // eslint-disable-next-line fb-www/no-new-error
           throw new Error(
             `fbtSentinel must be a non-empty string. ` +
               `Current value is ${String(fbtSentinel)} (${typeof fbtSentinel})`

@@ -14,7 +14,6 @@
 export type IntlVariationsEnum = $IntlVariationsEnum;
 
 const IntlVariations = Object.freeze({
-  /* eslint-disable fb-www/no-flowfixme-in-flow-strict */
   BITMASK_NUMBER: ((28: $FlowFixMe): IntlVariationsEnum),
   BITMASK_GENDER: ((3: $FlowFixMe): IntlVariationsEnum),
   NUMBER_ZERO: ((16: $FlowFixMe): IntlVariationsEnum),
@@ -26,7 +25,6 @@ const IntlVariations = Object.freeze({
   GENDER_MALE: ((1: $FlowFixMe): IntlVariationsEnum),
   GENDER_FEMALE: ((2: $FlowFixMe): IntlVariationsEnum),
   GENDER_UNKNOWN: ((3: $FlowFixMe): IntlVariationsEnum),
-  /* eslint-enable fb-www/no-flowfixme-in-flow-strict */
 });
 
 module.exports = IntlVariations;

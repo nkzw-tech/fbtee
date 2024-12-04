@@ -16,7 +16,6 @@
  * @flow strict-local
  */
 
-/* eslint-disable fb-www/order-requires */
 import type {
   ExtraOptionValues,
   FbtInputOpts,
@@ -30,9 +29,6 @@ import type {
 import type { FbtTableKey, PatternHash, PatternString } from './FbtTable';
 import type { FbtTableArg } from './FbtTableAccessor';
 import type { GenderConstEnum } from './GenderConst';
-
-const FbtEnv = require('./FbtEnv');
-FbtEnv.setupOnce();
 
 const FbtHooks = require('./FbtHooks');
 const FbtResultBase = require('./FbtResultBase');
@@ -106,17 +102,15 @@ function fbtCallsite(
   inputArgs: ?FbtTableArgs,
   options: ?FbtInputOpts
 ): Fbt {
-  // TODO T61652022: Remove this when no longer used in fbsource
-  // $FlowFixMe[sketchy-null-string]
+  /*
   if (options?.hk || options?.ehk) {
-    /* $FlowFixMe[incompatible-return] : breaking typing because this should
-     * never happen */
     return {
       text: inputTable,
       fbt: true,
       hashKey: options.hk,
     };
   }
+  */
 
   // Adapt the input payload to the translated table and arguments we expect
   //
@@ -190,7 +184,6 @@ function fbtCallsite(
     );
   }
 
-  // eslint-disable-next-line fb-www/avoid-this-outside-classes
   const cachedFbt = this.cachedResults[patternString];
   const hasSubstitutions = _hasKeys(allSubstitutions);
 
@@ -213,7 +206,6 @@ function fbtCallsite(
       options?.eo
     );
     if (!hasSubstitutions) {
-      // eslint-disable-next-line fb-www/avoid-this-outside-classes
       this.cachedResults[patternString] = result;
     }
     return result;
@@ -263,7 +255,7 @@ function fbtEnum(
   value: FbtTableKey,
   range: { [enumKey: string]: string }
 ): FbtTableArg {
-  if (__DEV__) {
+  if (process.env.NODE_ENV === 'development') {
     invariant(value in range, 'invalid value: %s', value);
   }
   return FbtTableAccessor.getEnumResult(value);
@@ -487,13 +479,13 @@ fbt._wrapContent = wrapContent;
 fbt.isFbtInstance = isFbtInstance;
 fbt.cachedResults = cachedFbtResults;
 
-fbt._getCachedFbt = __DEV__
-  ? // $FlowExpectedError[missing-this-annot]
-    function (s: string): Fbt {
-      // eslint-disable-next-line fb-www/avoid-this-outside-classes
-      return this.cachedResults[s];
-    }
-  : undefined;
+fbt._getCachedFbt =
+  process.env.NODE_ENV === 'development'
+    ? // $FlowExpectedError[missing-this-annot]
+      function (s: string): Fbt {
+        return this.cachedResults[s];
+      }
+    : undefined;
 
 // $FlowFixMe[incompatible-type]
 // $FlowFixMe[prop-missing]

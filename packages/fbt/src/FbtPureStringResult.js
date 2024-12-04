@@ -12,8 +12,6 @@
  * @flow strict-local
  */
 
-/* eslint-disable fb-www/no-commonjs */
-
 const FbtResult = require('./FbtResult');
 
 class FbtPureStringResultImpl extends FbtResult {}

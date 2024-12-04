@@ -4,9 +4,6 @@
  * @flow strict
  */
 
-// eslint-disable-next-line fb-www/check-dev-condition
-declare var __DEV__: boolean;
-
 // Augmented definition from: https://github.com/facebook/flow/blob/main/lib/react.js#L15-L23
 declare type React$Node =
   | void

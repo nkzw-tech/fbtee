@@ -38,20 +38,6 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             plugins: [
-              [
-                'minify-replace',
-                {
-                  replacements: [
-                    {
-                      identifierName: '__DEV__',
-                      replacement: {
-                        type: 'booleanLiteral',
-                        value: true,
-                      },
-                    },
-                  ],
-                },
-              ],
               '@babel/plugin-transform-flow-strip-types',
               [
                 'babel-plugin-fbt',

@@ -14,6 +14,16 @@ describe('fbs', () => {
 
   beforeEach(() => {
     jest.resetModules();
+    const init = require('../fbtInit');
+    const IntlViewerContext = require('../IntlViewerContext');
+    init({
+      translations: { en_US: {} },
+      hooks: {
+        getFbtResult: require('../__mocks__/FbtHooks').getFbtResult,
+        getViewerContext: () => IntlViewerContext,
+      },
+    });
+
     fbs = require('../fbs');
     fbt = require('../fbt');
   });

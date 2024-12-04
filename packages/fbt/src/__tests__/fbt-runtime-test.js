@@ -25,15 +25,16 @@ let intlNumUtils;
 describe('fbt', () => {
   beforeEach(() => {
     jest.resetModules();
-    jest
-      .requireActual<$FlowFixMe>('../FbtHooks')
-      .register({ getFbtResult: require('../FbtResult').get });
-    intlNumUtils = jest.requireActual<intlNumUtilsType>('../intlNumUtils');
-    fbtRuntime = jest.requireActual<$FlowFixMe>('../fbt').fbt;
+
+    require('../FbtHooks').register({
+      getFbtResult: require('../FbtResult').get,
+    });
+    intlNumUtils = require('../intlNumUtils');
+    fbtRuntime = require('../fbt');
   });
 
   it('should handle variated numbers', function () {
-    jest.requireActual<$FlowFixMe>('../FbtHooks').register({
+    require('../FbtHooks').register({
       // IntlCLDRNumberType31
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'br_FR' }),
     });

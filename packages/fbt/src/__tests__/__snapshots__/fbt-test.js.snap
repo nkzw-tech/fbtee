@@ -6,7 +6,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     her
@@ -29,7 +29,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     her
@@ -52,7 +52,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     her
@@ -75,7 +75,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     her
@@ -98,7 +98,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     his
@@ -121,7 +121,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     his
@@ -144,7 +144,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     his
@@ -167,7 +167,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     his
@@ -190,7 +190,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     their
@@ -213,7 +213,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     their
@@ -236,7 +236,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     their
@@ -259,7 +259,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Betty clicked on ",
   <strong>
     their
@@ -282,7 +282,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     her
@@ -305,7 +305,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     her
@@ -328,7 +328,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     her
@@ -351,7 +351,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     her
@@ -374,7 +374,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     his
@@ -397,7 +397,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     his
@@ -420,7 +420,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     his
@@ -443,7 +443,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     his
@@ -466,7 +466,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     their
@@ -489,7 +489,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     their
@@ -512,7 +512,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     their
@@ -535,7 +535,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Bob clicked on ",
   <strong>
     their
@@ -558,7 +558,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     her
@@ -581,7 +581,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     her
@@ -604,7 +604,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     her
@@ -627,7 +627,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     her
@@ -650,7 +650,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     his
@@ -673,7 +673,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     his
@@ -696,7 +696,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     his
@@ -719,7 +719,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     his
@@ -742,7 +742,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     their
@@ -765,7 +765,7 @@ exports[`fbt : given a string with implicit parameters where
               object=comment,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     their
@@ -788,7 +788,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=1
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     their
@@ -811,7 +811,7 @@ exports[`fbt : given a string with implicit parameters where
               object=photo,
               count=10
  should produce proper nested fbt results 1`] = `
-Array [
+[
   "Kim clicked on ",
   <strong>
     their

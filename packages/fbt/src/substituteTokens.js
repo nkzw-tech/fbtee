@@ -47,7 +47,7 @@ type MaybeReactComponent = Partial<{
 
 // Hack into React internals to avoid key warnings
 function markAsSafeForReact<T: MaybeReactComponent>(object: T): T {
-  if (__DEV__) {
+  if (process.env.NODE_ENV === 'development') {
     // If this looks like a ReactElement, mark it as safe to silence any
     // key warnings.
 

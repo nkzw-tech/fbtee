@@ -12,7 +12,6 @@ import classNames from 'classnames';
 import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
 import * as React from 'react';
 
-// eslint-disable-next-line fb-www/no-module-aliasing
 const ExampleEnum = require('./Example$FbtEnum');
 
 const viewerContext = {
@@ -53,7 +52,6 @@ const LOCALES = Object.freeze({
     rtl: true,
   }),
   he_IL: Object.freeze({
-    /* eslint-disable-next-line fb-www/gender-neutral-language */
     bcp47: 'he',
     displayName: '\u05E2\u05D1\u05E8\u05D9\u05EA',
     englishName: 'Hebrew',

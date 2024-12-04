@@ -10,8 +10,8 @@ describe('FbtTranslations', () => {
   it('can register and get back translations', () => {
     FbtTranslations.registerTranslations({ en_US: { c1: 'aaa' } });
     expect(FbtTranslations.getRegisteredTranslations()).toMatchInlineSnapshot(`
-    Object {
-      "en_US": Object {
+    {
+      "en_US": {
         "c1": "aaa",
       },
     }
@@ -22,8 +22,8 @@ describe('FbtTranslations', () => {
     FbtTranslations.registerTranslations({ en_US: { c1: 'aaa' } });
     FbtTranslations.mergeTranslations({ en_US: { c2: 'bbb' } });
     expect(FbtTranslations.getRegisteredTranslations()).toMatchInlineSnapshot(`
-    Object {
-      "en_US": Object {
+    {
+      "en_US": {
         "c1": "aaa",
         "c2": "bbb",
       },
@@ -38,14 +38,14 @@ describe('FbtTranslations', () => {
       cs_CZ: { c1: 'ccc' },
     });
     expect(FbtTranslations.getRegisteredTranslations()).toMatchInlineSnapshot(`
-    Object {
-      "cs_CZ": Object {
+    {
+      "cs_CZ": {
         "c1": "ccc",
       },
-      "en_US": Object {
+      "en_US": {
         "c1": "aaa",
       },
-      "es_MX": Object {
+      "es_MX": {
         "c1": "bbb",
       },
     }
@@ -56,8 +56,8 @@ describe('FbtTranslations', () => {
     FbtTranslations.registerTranslations({ en_US: { c1: 'aaa', c2: 'bbb' } });
     FbtTranslations.mergeTranslations({ en_US: { c1: 'ccc' } });
     expect(FbtTranslations.getRegisteredTranslations()).toMatchInlineSnapshot(`
-    Object {
-      "en_US": Object {
+    {
+      "en_US": {
         "c1": "ccc",
         "c2": "bbb",
       },

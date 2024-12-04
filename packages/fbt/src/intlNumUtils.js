@@ -469,7 +469,7 @@ const intlNumUtils = {
   getIntegerString(num: string | number, thousandDelimiter: string): string {
     let delim = thousandDelimiter;
     if (delim === '') {
-      if (__DEV__) {
+      if (process.env.NODE_ENV === 'development') {
         throw new Error('thousandDelimiter cannot be empty string!');
       }
       delim = ',';

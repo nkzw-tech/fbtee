@@ -14,7 +14,6 @@
 export type GenderConstEnum = $GenderConstEnum;
 
 const GenderConst = Object.freeze({
-  /* eslint-disable fb-www/no-flowfixme-in-flow-strict */
   NOT_A_PERSON: ((0: $FlowFixMe): GenderConstEnum),
   FEMALE_SINGULAR: ((1: $FlowFixMe): GenderConstEnum),
   MALE_SINGULAR: ((2: $FlowFixMe): GenderConstEnum),
@@ -27,7 +26,6 @@ const GenderConst = Object.freeze({
   MALE_PLURAL: ((9: $FlowFixMe): GenderConstEnum),
   NEUTER_PLURAL: ((10: $FlowFixMe): GenderConstEnum),
   UNKNOWN_PLURAL: ((11: $FlowFixMe): GenderConstEnum),
-  /* eslint-enable fb-www/no-flowfixme-in-flow-strict */
 });
 
 module.exports = GenderConst;

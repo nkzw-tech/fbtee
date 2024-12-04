@@ -48,7 +48,6 @@ const babelPluginFbt_buildDistJS = () =>
       babel({
         plugins: [
           [require('@babel/plugin-syntax-flow'), { enums: true }],
-          require('babel-plugin-transform-flow-enums'),
           require('@babel/plugin-transform-flow-strip-types'),
         ],
       })

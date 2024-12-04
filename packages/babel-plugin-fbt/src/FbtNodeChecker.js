@@ -76,7 +76,7 @@ class FbtNodeChecker {
         // $FlowFixMe[prop-missing]
         isIdentifier(node.callee.property) &&
         typeof node.callee.property.name === 'string' &&
-        FbtNodeType.cast(node.callee.property.name)) ||
+        FbtNodeType[node.callee.property.name]) ||
       null
     );
   }
@@ -206,7 +206,7 @@ class FbtNodeChecker {
         // $FlowFixMe[prop-missing]
         typeof node.callee.property.name === 'string' &&
         // $FlowFixMe[prop-missing]
-        FbtNodeType.cast(node.callee.property.name)) ||
+        FbtNodeType[node.callee.property.name]) ||
       null
     );
   }
