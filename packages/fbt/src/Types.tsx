@@ -205,13 +205,6 @@ type $StringBasedFbtFunctionAPI<Output, ParamInput, ParamOutput> = FbtAPIT<
   ParamOutput
 >;
 
-/**
- * NOTE how the fbs() functional API relies on using an array of content items
- * instead of the legacy string concatenation pattern.
- *
- * This is needed because we have to define the accepted types of the array items in Flow
- * (which isn't possible if we used the string concatenation code pattern)
- */
 export type $ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
   Output,
   ParamInput,

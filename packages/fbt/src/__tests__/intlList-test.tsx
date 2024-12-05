@@ -1,9 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- * @flow strict
- */
-
 import getFbtResult from '../__mocks__/getFbtResult';
 import init from '../fbtInit';
 import intlList, { Conjunctions, Delimiters } from '../intlList';

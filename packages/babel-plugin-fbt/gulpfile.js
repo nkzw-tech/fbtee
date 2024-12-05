@@ -15,7 +15,7 @@ const path = require('path');
 
 const paths = {
   src: {
-    js: ['src/**/*.js', '!dist/**', '!gulpfile.js', '!node_modules/**'],
+    js: ['src/**/*.tsx', '!dist/**', '!gulpfile.js', '!node_modules/**'],
     json: ['src/**/*.json', '!dist/**', '!node_modules/**'],
   },
   dist: 'dist',
@@ -43,9 +43,9 @@ const babelPluginFbt_buildDistJS = () =>
     .pipe(once())
     .pipe(
       babel({
-        plugins: [
-          require('@babel/plugin-syntax-flow'),
-          require('@babel/plugin-transform-flow-strip-types'),
+        presets: [
+          require('@babel/preset-env'),
+          require('@babel/preset-typescript'),
         ],
       })
     )

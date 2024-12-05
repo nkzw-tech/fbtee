@@ -25,7 +25,7 @@ module.exports = {
       displayName: 'babel-plugin-fbt',
       roots: ['<rootDir>/packages/babel-plugin-fbt/src'],
       transform: {
-        '\\.js$': [
+        '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
             plugins: [

@@ -62,19 +62,19 @@ describe('fbt', () => {
       __vcg: 1, // viewer-context gender
       '*': {},
     };
-    table['*']['A'] = { '*': 'A,UNKNOWN,OTHER {name} has {num}' } as any;
+    table['*']['A'] = { '*': 'A,UNKNOWN,OTHER {name} has {num}' };
     table['*']['A'][ONE] = 'A,UNKNOWN,ONE {name} has {num}';
     table['*']['A'][FEW] = 'A,UNKNOWN,FEW {name} has {num}';
-    table['*']['B'] = { '*': 'B,UNKNOWN,OTHER {name} has {num}' } as any;
+    table['*']['B'] = { '*': 'B,UNKNOWN,OTHER {name} has {num}' };
     table['*']['B'][ONE] = 'B,UNKNOWN,ONE {name} has {num}';
     table['*']['B'][FEW] = 'B,UNKNOWN,FEW {name} has {num}';
-    table[MALE] = { A: { '*': 'A,MALE,OTHER {name} has {num}' } } as any;
+    table[MALE] = { A: { '*': 'A,MALE,OTHER {name} has {num}' } };
     table[MALE]['A'][ONE] = 'A,MALE,ONE {name} has {num}';
     // table['*'][male]['A'][FEW] = fallback to other ^^^
     // table['*'][male]['B'] = fallback to unknown gender ^^^
     table[FEMALE] = {
       B: { '*': 'B,FEMALE,OTHER {name} has {num}' },
-    } as any;
+    };
     table[FEMALE]['B'][FEW] = 'B,FEMALE,FEW {name} has {num}';
     // table[female]['B'][ONE] = fallback to other ^^^
     // table[female]['A'] = fallback to unknown gender ^^^

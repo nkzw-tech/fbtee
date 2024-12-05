@@ -90,7 +90,6 @@ module.exports = function BabelPluginFbtRuntime(
             ? t.stringLiteral(fbtHashKey(curLevel[enumKey]))
             : _buildEnumToHashKeyObjectExpression(
                 // TODO(T86653403) Add support for consolidated JSFBT structure to RN
-                // $FlowFixMe[incompatible-call]
                 curLevel[enumKey],
                 enumsLeft - 1
               )
@@ -112,7 +111,6 @@ module.exports = function BabelPluginFbtRuntime(
     if (enumCount > 0) {
       invariant(shiftedJsfbt != null, 'Expecting shiftedJsfbt to be defined');
       options.push(
-        // $FlowFixMe[incompatible-call]
         t.objectProperty(
           t.identifier('ehk'), // enumHashKey
           _buildEnumToHashKeyObjectExpression(shiftedJsfbt, enumCount)
@@ -120,7 +118,6 @@ module.exports = function BabelPluginFbtRuntime(
       );
     } else {
       options.push(
-        // $FlowFixMe[incompatible-call]
         t.objectProperty(
           t.identifier('hk'),
           t.stringLiteral(fbtHashKey(jsfbt.t))
@@ -130,18 +127,15 @@ module.exports = function BabelPluginFbtRuntime(
 
     // The expected method name is `objectExpression` but
     // it already works as-is apparently...
-    // $FlowFixMe[prop-missing] Use objectExpression() instead
     return t.ObjectExpression(options);
   }
 
   return {
     pre() {
-      // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
       const visitor = this;
       const opts = getPluginOptions(visitor);
       visitor.opts.fbtSentinel = opts.fbtSentinel || SENTINEL;
       if (opts.fbtHashKeyModule) {
-        // $FlowExpectedError[unsupported-syntax] Dynamic import needed
         fbtHashKey = require(opts.fbtHashKeyModule);
       }
     },
@@ -167,7 +161,6 @@ module.exports = function BabelPluginFbtRuntime(
        * fbt._("jsfbt test") or fbt._({... jsfbt table})
        */
       StringLiteral(path) {
-        // $FlowFixMe[object-this-reference] Babel transforms run with the plugin context by default
         const { fbtSentinel } = getPluginOptions(this);
         if (fbtSentinel == null || fbtSentinel.trim() == '') {
           throw new Error(
@@ -187,14 +180,12 @@ module.exports = function BabelPluginFbtRuntime(
 
         phrase = (JSON.parse(
           phrase.slice(sentinelLength, phrase.length - sentinelLength)
-          // $FlowFixMe[incompatible-type]
         ) /*: SentinelPayload */);
 
         const runtimeInput = mapLeaves(
           phrase.jsfbt.t,
           convertJSFBTLeafToRuntimeInputText
         );
-        // $FlowFixMe[prop-missing] replaceWithSourceString's type is not defined yet
         path.replaceWithSourceString(JSON.stringify(runtimeInput));
 
         const parentNode = path.parentPath && path.parentPath.node;
@@ -206,7 +197,6 @@ module.exports = function BabelPluginFbtRuntime(
         // Append runtime options - key for runtime dictionary lookup
         if (parentNode.arguments.length === 1) {
           // Second param 'args' could be omitted sometimes. Use null here
-          // $FlowFixMe[prop-missing]
           parentNode.arguments.push(t.nullLiteral());
         }
 
@@ -218,7 +208,6 @@ module.exports = function BabelPluginFbtRuntime(
           varDump(optionsNode),
           typeof optionsNode
         );
-        // $FlowFixMe[cannot-write]
         parentNode.arguments[2] = _appendHashKeyOption(
           optionsNode,
           phrase.jsfbt

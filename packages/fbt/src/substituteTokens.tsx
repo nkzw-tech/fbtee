@@ -1,5 +1,3 @@
-// flowlint ambiguous-object-type:error
-
 import invariant from 'invariant';
 import {
   applyPhonologicalRules,

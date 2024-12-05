@@ -153,7 +153,6 @@ function fbtPlural(
         intlNumUtils.formatNumberWithThousandDelimiters(value);
     } else {
       substitution[label] =
-        // $FlowFixMe[sketchy-null-mixed]
         value || intlNumUtils.formatNumberWithThousandDelimiters(count);
     }
   }

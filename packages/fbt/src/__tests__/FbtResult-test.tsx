@@ -25,22 +25,11 @@ describe('FbtResult', function () {
     let obj1 = new FbtResult(['prefix'], errorListener);
     const obj2 = new FbtResult(['suffix'], errorListener);
     let obj3 = new FbtResult([obj1, 'content', obj2], errorListener);
-    expect(
-      // flow doesn't think FbtResult.flattenToArray exists because of
-      // our egregious lies spat out in module.exports of FbtResultBase.js
-      // $FlowFixMe[prop-missing] flattenToArray
-      obj3.flattenToArray().join(' ')
-    ).toBe('prefix content suffix');
+    expect(obj3.flattenToArray().join(' ')).toBe('prefix content suffix');
 
     obj1 = new FbtResult(['prefix'], errorListener);
-
     obj3 = new FbtResult([obj1, 'content', 'stringable'], errorListener);
-    expect(
-      // flow doesn't think FbtResult.flattenToArray exists because of
-      // our egregious lies spat out in module.exports of FbtResultBase.js
-      // $FlowFixMe[prop-missing] flattenToArray
-      obj3.flattenToArray().join(' ')
-    ).toBe('prefix content stringable');
+    expect(obj3.flattenToArray().join(' ')).toBe('prefix content stringable');
   });
 
   it('does not invoke onStringSerializationError() when being serialized with valid-FBT contents', function () {

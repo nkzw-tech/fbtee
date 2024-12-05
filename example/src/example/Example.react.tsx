@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
 import { ChangeEvent, useCallback, useState } from 'react';
+import * as React from 'react';
 import translations from '../translatedFbts.json';
 import ExampleEnum from './Example$FbtEnum';
 

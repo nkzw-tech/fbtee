@@ -32,22 +32,19 @@ export type FbtRuntimeInput =
   | [PatternString, PatternHash]
   | FbtInputTable;
 
+type FbtInputBranch = {
+  [K in FbtTableKey]:
+    | PatternString
+    | [PatternString, PatternHash]
+    | FbtInputBranch;
+};
+
 export type FbtInputTable = Record<
   FbtTableKey,
   | number // Allow __vcg.
   | PatternString
   | [PatternString, PatternHash]
-  | Record<
-      FbtTableKey,
-      | PatternString
-      | [PatternString, PatternHash]
-      | Record<
-          FbtTableKey,
-          | PatternString
-          | [PatternString, PatternHash]
-          | Record<FbtTableKey, PatternString | [PatternString, PatternHash]>
-        >
-    >
+  | FbtInputBranch
 >;
 
 export type FbtTableArgs = Array<FbtTableArg>;

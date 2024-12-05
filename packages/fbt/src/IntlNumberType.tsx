@@ -1,14 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @generated SignedSource<<b546b0b14bbcedbf56908c5ebf48ccd4>>
- *
- * @flow strict
- */
-
 import FBLocaleToLang from './FBLocaleToLang';
 import IntlCLDRNumberType01 from './FbtNumber/IntlCLDRNumberType01';
 import IntlCLDRNumberType02 from './FbtNumber/IntlCLDRNumberType02';

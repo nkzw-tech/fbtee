@@ -90,7 +90,6 @@ const buildModules = () =>
         presets: [
           require('@babel/preset-env'),
           require('@babel/preset-react'),
-          require('@babel/preset-flow'),
           require('@babel/preset-typescript'),
         ],
         plugins: [
@@ -102,27 +101,6 @@ const buildModules = () =>
     .pipe(gulp.dest(paths.lib));
 
 gulp.task('modules', gulp.series(babelPluginFbtGulp.build, buildModules));
-
-const babelTestPresets = {
-  presets: [
-    require('@babel/preset-env'),
-    require('@babel/preset-react'),
-    require('@babel/preset-flow'),
-    require('@babel/preset-typescript'),
-  ],
-  plugins: [
-    ['babel-plugin-fbt', { fbtCommon: { Accept: '...' } }],
-    'babel-plugin-fbt-runtime',
-  ],
-};
-
-const transformTests = (src, dest) =>
-  gulp
-    .src(src, { follow: true })
-    .pipe(once())
-    .pipe(babel(babelTestPresets))
-    .pipe(flatten())
-    .pipe(gulp.dest(dest));
 
 const buildDistTask = () =>
   gulp
