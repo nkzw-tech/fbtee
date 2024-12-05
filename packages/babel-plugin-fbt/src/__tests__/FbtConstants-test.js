@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 const { JSModuleName, ModuleNameRegExp } = require('../FbtConstants');
 
 describe('FbtConstants', () => {

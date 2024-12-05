@@ -6,8 +6,6 @@
  * @noflow
  */
 
-'use strict';
-
 const { SENTINEL } = require('../FbtConstants');
 const { transformSync } = require('@babel/core');
 const prettier = require('prettier');

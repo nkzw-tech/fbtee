@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { NodePathOf } from '@babel/core';
 import typeof BabelTypes from '@babel/types';
 import type { AnyStringVariationArg } from '../fbt-nodes/FbtArguments';

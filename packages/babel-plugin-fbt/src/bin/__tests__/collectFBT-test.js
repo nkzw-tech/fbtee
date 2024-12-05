@@ -3,8 +3,6 @@
  *
  */
 
-'use strict';
-
 const { packagerTypes } = require('../collectFbtConstants');
 const path = require('path');
 const fbtCommonPath = path.resolve(__dirname, 'FbtCommonForTests.json');

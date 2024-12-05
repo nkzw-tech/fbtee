@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import typeof BabelTypes from '@babel/types';
 import type { PatternString } from '../../../runtime/FbtTable';
 import type { AnyFbtNode } from './fbt-nodes/FbtNode';

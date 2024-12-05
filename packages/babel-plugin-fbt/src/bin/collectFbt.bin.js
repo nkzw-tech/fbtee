@@ -8,6 +8,4 @@
  * @flow strict-local
  */
 
-'use strict';
-
 require('./collectFbt');

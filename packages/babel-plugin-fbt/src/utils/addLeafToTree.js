@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-'use strict';
-
 const invariant = require('invariant');
 
 /**

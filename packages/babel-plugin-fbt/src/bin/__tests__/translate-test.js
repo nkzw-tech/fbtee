@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 const { jsCodeNonASCIICharSerializer } = require('../../__tests__/FbtTestUtil');
 const { processJSON } = require('../translateUtils');
 

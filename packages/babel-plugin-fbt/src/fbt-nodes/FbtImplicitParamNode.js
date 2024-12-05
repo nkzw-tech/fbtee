@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { ParamSet } from '../FbtUtil';
 import type { TokenAliases } from '../index';
 import type {

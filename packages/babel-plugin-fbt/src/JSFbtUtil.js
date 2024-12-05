@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { FbtTableKey } from '../../../runtime/FbtTable';
 import type {
   ObjectWithJSFBT,

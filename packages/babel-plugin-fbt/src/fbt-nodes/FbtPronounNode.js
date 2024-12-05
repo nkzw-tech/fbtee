@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { ValidPronounUsagesKey } from '../FbtConstants';
 import type { BabelNodeCallExpressionArg } from '../FbtUtil';
 import type { GenderConstEnum } from '../Gender';

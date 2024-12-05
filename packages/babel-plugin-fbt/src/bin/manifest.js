@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 const { generateManifest } = require('./manifestUtils');
 const fs = require('fs');
 const yargs = require('yargs');

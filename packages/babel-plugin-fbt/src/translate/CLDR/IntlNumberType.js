@@ -9,8 +9,6 @@
  * @flow strict
  */
 
-'use strict';
-
 import FBLocaleToLang from '../FBLocaleToLang';
 import IntlCLDRNumberType01 from './IntlCLDRNumberType01';
 import IntlCLDRNumberType02 from './IntlCLDRNumberType02';

@@ -9,9 +9,9 @@ const process = require('process');
 process.env.NODE_ENV = 'development';
 
 const globalConfig = {
-  testMatch: ['**/__tests__/**/*-test.js'],
+  testMatch: ['**/__tests__/**/*-test.(js|jsx|tsx)'],
   transform: {
-    '\\.js$': '<rootDir>/jest-preprocessor.js',
+    '\\.(j|t)sx?$': '<rootDir>/jest-preprocessor.js',
   },
   testEnvironment: 'node',
 };
@@ -49,7 +49,7 @@ module.exports = {
       roots: ['<rootDir>/packages/fbt/src'],
       modulePaths: ['<rootDir>/packages/fbt/src'],
       transform: {
-        '\\.js$': [
+        '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
             plugins: [
@@ -72,7 +72,7 @@ module.exports = {
         '<rootDir>/packages/fbt/src',
       ],
       transform: {
-        '\\.jsx?$': [
+        '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
             plugins: [

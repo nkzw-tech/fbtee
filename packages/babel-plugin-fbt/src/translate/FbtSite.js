@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { TokenAliases } from '..';
 import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
 import type { CollectFbtOutputPhrase } from '../bin/collectFbt.js';

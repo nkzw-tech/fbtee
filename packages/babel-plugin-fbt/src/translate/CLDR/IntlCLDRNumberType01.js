@@ -9,8 +9,6 @@
  * @flow strict
  */
 
-'use strict';
-
 import type { IntlVariationsEnum } from '../IntlVariations';
 
 export default {

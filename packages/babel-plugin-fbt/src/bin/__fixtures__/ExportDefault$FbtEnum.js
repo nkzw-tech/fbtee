@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-'use strict';
-
 const ExportDefault$FbtEnum = {
   id1: 'groups',
   id2: 'photos',

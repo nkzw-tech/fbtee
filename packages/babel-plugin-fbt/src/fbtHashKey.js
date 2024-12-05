@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { TableJSFBTTree } from './index';
 
 const fbtJenkinsHash = require('./fbtJenkinsHash');

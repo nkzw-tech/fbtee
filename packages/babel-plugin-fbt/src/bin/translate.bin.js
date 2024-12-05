@@ -8,6 +8,4 @@
  * @noflow
  */
 
-'use strict';
-
 require('./translate');

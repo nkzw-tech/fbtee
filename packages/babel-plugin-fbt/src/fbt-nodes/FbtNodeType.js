@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 module.exports = {
   Element: 'element',
   Enum: 'enum',
@@ -16,7 +14,6 @@ module.exports = {
   Pronoun: 'pronoun',
   SameParam: 'sameParam',
   Text: 'text',
-
 
   element: 'element',
   enum: 'enum',

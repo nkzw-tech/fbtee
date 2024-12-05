@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { ExtraOptionValues } from 'FbtHooks';
 import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';
 import type { BabelNodeCallExpressionArg, ParamSet } from '../FbtUtil';

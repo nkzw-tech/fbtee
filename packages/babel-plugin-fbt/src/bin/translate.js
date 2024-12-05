@@ -72,8 +72,6 @@
  *
  */
 
-'use strict';
-
 const { processFiles, processJSON } = require('./translateUtils');
 const fs = require('fs');
 const path = require('path');

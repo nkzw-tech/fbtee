@@ -5,8 +5,6 @@
  * @noformat
  */
 
-'use strict';
-
 import babel from '@babel/core';
 
 export default function transform(code, options, plugins, presets) {

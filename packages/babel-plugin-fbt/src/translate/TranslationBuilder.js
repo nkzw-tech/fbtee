@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { FbtTableKey, PatternHash } from '../../../../runtime/FbtTable';
 import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase';
 import type {

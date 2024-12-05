@@ -6,8 +6,6 @@
  *
  */
 
-'use strict';
-
 const babelPluginFbtGulp = require('./packages/babel-plugin-fbt/gulpfile');
 const { version } = require('./packages/fbt/package.json');
 const del = require('del');
@@ -93,6 +91,7 @@ const buildModules = () =>
           require('@babel/preset-env'),
           require('@babel/preset-react'),
           require('@babel/preset-flow'),
+          require('@babel/preset-typescript'),
         ],
         plugins: [
           require('babel-plugin-fbt'),
@@ -109,6 +108,7 @@ const babelTestPresets = {
     require('@babel/preset-env'),
     require('@babel/preset-react'),
     require('@babel/preset-flow'),
+    require('@babel/preset-typescript'),
   ],
   plugins: [
     ['babel-plugin-fbt', { fbtCommon: { Accept: '...' } }],

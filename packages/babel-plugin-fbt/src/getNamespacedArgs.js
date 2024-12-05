@@ -3,8 +3,6 @@
  *
  */
 
-'use strict';
-
 const {
   PluralOptions,
   PluralRequiredAttributes,

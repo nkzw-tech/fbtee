@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 // flowlint ambiguous-object-type:error
 import type { JSModuleNameType } from './FbtConstants';
 

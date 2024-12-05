@@ -11,8 +11,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import FBLocaleToLang from '../FBLocaleToLang';
 
 const IntlDefaultGenderType = require('./IntlDefaultGenderType');

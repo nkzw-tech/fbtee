@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-'use strict';
-
 type GenderConfig = {|
   is_male: boolean,
   is_female: boolean,

@@ -1,0 +1,69 @@
+[ignore]
+<PROJECT_ROOT>/packages/fbt/lib/.*
+<PROJECT_ROOT>/packages/fbt/dist/.*
+.*/@babel/types/lib/index.js.flow
+.*/packages/babel-plugin-fbt/dist/.*
+
+[include]
+node_modules
+
+[libs]
+; node_modules/@babel/types/lib/index.js.flow
+flow-types/libdef
+
+[lints]
+
+[options]
+name=flow/fbt-top-level-repo
+module.system=node
+module.system.node.resolve_dirname=node_modules
+
+# TODO(T60942430) Set object definitions to be exact by default
+# exact_by_default=true
+
+# Force flow to consider `<fbs*>` as the given type
+facebook.fbs=Fbs
+# Force flow to consider `<fbt*>` as the given type
+facebook.fbt=FbtElement
+
+# Map imported internal plugins
+module.name_mapper='^babel-plugin-fbt$' -> '<PROJECT_ROOT>/packages/babel-plugin-fbt/src'
+module.name_mapper='^\(babel-plugin-fbt\)/dist/\(.*\)$' -> '<PROJECT_ROOT>/packages/\1/src/\2'
+
+# Import 3rd party node modules used by Babel transforms and runtime tests
+module.name_mapper='^\(\(invariant\|optimist\|@babel\)\(/.*\)?\)$' -> '<PROJECT_ROOT>/node_modules/\1'
+
+# Redirect non-FB JS modules to a dedicated folder
+module.name_mapper='^\(FBLocaleToLang\|fbtInit\|FbtPublic\|FbtTranslations\|GenderConst\|intlInlineMode\|IntlNumberType\|IntlPhonologicalRewrites\|IntlRedundantStops\|IntlVariationResolver\|IntlVariations\|NumberFormatConsts\)$' -> '<PROJECT_ROOT>/runtime/\1'
+module.name_mapper='^\(cx\|FBLogger\|FBLogMessage\|FbtQTOverrides\|FbtResultGK\|IntlViewerContext\|killswitch\)$' -> '<PROJECT_ROOT>/runtime/mocks/\1'
+
+# Redirect public JS modules to a dedicated folder
+module.name_mapper='^\(escapeRegex\|fbs\|fbt\|FbtHooks\|FbtPureStringResult\|FbtReactUtil\|FbtResultBase\|FbtResult\|FbtRuntimeTypes\|FbtTable\|FbtTableAccessor\|formatNumber\|getFbsResult\|IntlGender\|intlList\|intlNumUtils\|IntlPunctuation\|IntlVariationResolverImpl\|substituteTokens\)$' -> '<PROJECT_ROOT>/runtime/\1'
+module.name_mapper='^\(IntlCLDRNumberType[0-9][0-9]\)$' -> '<PROJECT_ROOT>/runtime/FbtNumber/\1'
+
+# Redirect typed JS Modules
+module.name_mapper='^\(NumberFormatConfig\)$' -> '<PROJECT_ROOT>/flow-types/typed-js-modules/\1.js.flow'
+
+munge_underscores=true
+
+sharedmemory.hash_table_pow=23
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_type=$FlowFixMeState
+suppress_type=$FlowFixMeEmpty
+suppress_type=$FlowExpectedError
+
+enums=true
+
+[strict]
+deprecated-type
+nonstrict-import
+sketchy-null
+unsafe-getters-setters
+untyped-import
+untyped-type-import
+
+[version]
+^0.225.0

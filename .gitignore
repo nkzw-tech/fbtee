@@ -5,8 +5,6 @@ node_modules
 
 # file checksums used by gulp-once
 .checksums
-# Ignore npm pack files generated during npm publish testing
-**.tgz
 
 # MacOS
 .DS_Store
@@ -24,9 +22,6 @@ example/src/translatedFbts.json
 packages/fbt/dist
 packages/fbt/lib
 packages/fbt/LICENSE
-packages/fbt/node_modules/.bin/fbt-*
 packages/babel-plugin-fbt/dist/
 
-# documentation build artifacts
-website/build/
-website/.docusaurus
+tsconfig.tsbuildinfo

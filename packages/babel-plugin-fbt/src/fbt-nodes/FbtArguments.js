@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { EnumKey } from '../FbtEnumRegistrar';
 import type { GenderConstEnum } from '../Gender';
 import typeof {

@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type {
   LangToNumberTypeValues,
   LocaleToNumberTypeValues,

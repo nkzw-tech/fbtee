@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-'use strict';
-
 const CommonJS$FbtEnum: { [string]: string, ... } = {
   id1: 'groups',
   id2: 'photos',

@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { NodePathOf } from '@babel/core';
 import typeof BabelTypes from '@babel/types';
 import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';

@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { IntlFbtVariationTypeValue } from './IntlVariations';
 import type TranslationConfig from './TranslationConfig';
 

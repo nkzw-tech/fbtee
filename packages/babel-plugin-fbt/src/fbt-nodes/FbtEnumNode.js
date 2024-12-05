@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { EnumModule } from '../FbtEnumRegistrar';
 import type { BabelNodeCallExpressionArg } from '../FbtUtil';
 import type { StringVariationArgsMap } from './FbtArguments';

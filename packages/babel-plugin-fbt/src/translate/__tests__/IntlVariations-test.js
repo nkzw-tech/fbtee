@@ -4,8 +4,6 @@
  * @flow strict
  */
 
-'use strict';
-
 let ClientSideIntlVariations;
 let IntlVariations;
 

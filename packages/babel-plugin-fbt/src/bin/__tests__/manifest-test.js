@@ -3,8 +3,6 @@
  *
  */
 
-'use strict';
-
 const { generateManifest } = require('../manifestUtils');
 const path = require('path');
 

@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { Scope } from '@babel/core';
 import type { FbtExtraOptionConfig, JSModuleNameType } from '../FbtConstants';
 import type {

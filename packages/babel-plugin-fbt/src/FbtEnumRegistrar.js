@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict';
-
 import type { NodePathOf } from '@babel/core';
 
 const { FBT_ENUM_MODULE_SUFFIX } = require('./FbtConstants');

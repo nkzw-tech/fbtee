@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { StringVariationArgsMap } from './FbtArguments';
 import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
 

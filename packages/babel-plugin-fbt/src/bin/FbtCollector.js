@@ -5,8 +5,6 @@
  * @noformat
  */
 
-'use strict';
-
 import type { BabelPluginList, BabelPresetList } from '@babel/core';
 import type { PatternHash, PatternString } from '../../../../runtime/FbtTable';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';

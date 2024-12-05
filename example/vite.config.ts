@@ -5,9 +5,6 @@ const root = process.cwd();
 
 export default {
   build: {
-    loader: {
-      '.js': 'jsx',
-    },
     target: 'modules',
   },
   define: {
@@ -17,7 +14,6 @@ export default {
     react({
       babel: {
         plugins: [
-          '@babel/plugin-transform-flow-strip-types',
           [
             'babel-plugin-fbt',
             {

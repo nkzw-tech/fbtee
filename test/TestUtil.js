@@ -6,8 +6,6 @@
  *
  */
 
-'use strict';
-
 const babel = require('@babel/core');
 const generate = require('@babel/generator').default;
 const babelParser = require('@babel/parser');

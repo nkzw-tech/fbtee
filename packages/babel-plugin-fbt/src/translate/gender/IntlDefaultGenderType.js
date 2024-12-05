@@ -11,8 +11,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 const { Gender } = require('../IntlVariations');
 
 const IntlDefaultGenderType = {

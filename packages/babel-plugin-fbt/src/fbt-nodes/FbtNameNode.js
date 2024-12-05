@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 /////////////////////////////////////////////////////////////////////
 // Planned fbt arguments that will be used by various fbt constructs
 // `*` means that it's a static argument (whose value won't change at runtime)

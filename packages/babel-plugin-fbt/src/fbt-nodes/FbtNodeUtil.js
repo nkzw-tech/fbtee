@@ -4,8 +4,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import type { JSModuleNameType } from '../FbtConstants';
 import type { TokenAliases } from '../index';
 import type { StringVariationArgsMap } from './FbtArguments';
