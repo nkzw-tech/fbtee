@@ -1,4 +1,3 @@
-// flowlint ambiguous-object-type:error
 import type { FbtResolvedPayload } from './FbtHooks';
 import FbtReactUtil from './FbtReactUtil';
 import FbtResultBase from './FbtResultBase';

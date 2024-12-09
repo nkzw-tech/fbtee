@@ -21,7 +21,6 @@ sidebar_label: Enforcing plain-text strings
 ## How to use it?
 
 - Use the `fbs()` functional API _(recommended)_
-  - You can still use the `<fbs>` JSX API but it’s _less type-safe_ because the Flow engine cannot verify statically that the values of `<fbs:param>` are string-friendly.
 - All existing fbt constructs are supported. Just write `fbs` instead of `fbt`.
   - E.g. `<fbt:param>` and `<fbs:param>` work the same way.
   - See [examples in unit tests file](https://github.com/facebook/fbt/blob/09ad3546a2f02c53af4c031113989564872eba34/runtime/shared/__tests__/fbs-test.js)
@@ -66,12 +65,3 @@ myPlainTranslatedText = fbs(
 // make sure to call .toString() as close to the UI recipient as possible
 document.title = myPlainTranslatedText.toString();
 ```
-
-### What do `fbs` result values return in JS?
-
-- Upon invoking `fbs()` or `<fbs>`, you'll receive an `Fbs` value.
-  - More accurately, it's an instance of `FbtPureStringResult`
-- `fbs` values can be used in lieu of `fbt` values
-  - `const someFbt: Fbt = fbs(...) // is Flow valid`
-- `fbt` values CANNOT be used in lieu of `fbs` values (as expected)
-  - `const plainText: Fbs = fbt(...) // is Flow invalid`

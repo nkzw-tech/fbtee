@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 import type { NodePath } from '@babel/core';
-import BabelTypes, {
+import {
   ArgumentPlaceholder,
   arrayExpression,
   assignmentExpression,
@@ -110,10 +110,8 @@ export default class FbtFunctionCallProcessor {
   nodeChecker: FbtNodeChecker;
   path: CallExpressionPath;
   pluginOptions: PluginOptions;
-  t: typeof BabelTypes;
 
   constructor({
-    babelTypes,
     defaultFbtOptions,
     fileSource,
     nodeChecker,
@@ -121,7 +119,6 @@ export default class FbtFunctionCallProcessor {
     pluginOptions,
     validFbtExtraOptions,
   }: {
-    babelTypes: typeof BabelTypes;
     defaultFbtOptions: FbtCallSiteOptions;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
     fileSource: string;
@@ -137,18 +134,15 @@ export default class FbtFunctionCallProcessor {
     this.nodeChecker = nodeChecker;
     this.path = path;
     this.pluginOptions = pluginOptions;
-    this.t = babelTypes;
   }
 
   static create({
-    babelTypes,
     defaultFbtOptions,
     fileSource,
     path,
     pluginOptions,
     validFbtExtraOptions,
   }: {
-    babelTypes: typeof BabelTypes;
     defaultFbtOptions: FbtCallSiteOptions;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
     fileSource: string;
@@ -158,7 +152,6 @@ export default class FbtFunctionCallProcessor {
     const nodeChecker = FbtNodeChecker.forFbtFunctionCall(path.node);
     return nodeChecker != null
       ? new FbtFunctionCallProcessor({
-          babelTypes,
           defaultFbtOptions,
           validFbtExtraOptions,
           fileSource,

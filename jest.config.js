@@ -1,8 +1,5 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- */
-
+const EnumManifest = require('./example/.enum_manifest.json');
+const CommonStrings = require('./example/common_strings.json');
 const path = require('path');
 const process = require('process');
 
@@ -16,10 +13,11 @@ const globalConfig = {
   testEnvironment: 'node',
 };
 
-const toAbsolutePath = (...args) => path.resolve(__dirname, ...args);
+const root = process.cwd();
+const toAbsolutePath = (...args) => path.resolve(root, ...args);
 
 module.exports = {
-  rootDir: __dirname,
+  rootDir: root,
   projects: [
     {
       displayName: 'babel-plugin-fbt',
@@ -79,11 +77,8 @@ module.exports = {
               [
                 toAbsolutePath('packages', 'babel-plugin-fbt'),
                 {
-                  fbtCommonPath: toAbsolutePath(
-                    'example',
-                    'common_strings.json'
-                  ),
-                  fbtEnumPath: toAbsolutePath('example', '.enum_manifest.json'),
+                  fbtCommon: CommonStrings,
+                  fbtEnumManifest: EnumManifest,
                 },
               ],
               toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),

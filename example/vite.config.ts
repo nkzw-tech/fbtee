@@ -1,5 +1,6 @@
-import path from 'node:path';
 import react from '@vitejs/plugin-react';
+import EnumManifest from './.enum_manifest.json';
+import CommonStrings from './common_strings.json';
 
 const root = process.cwd();
 
@@ -17,10 +18,8 @@ export default {
           [
             'babel-plugin-fbt',
             {
-              fbtCommonPath: './common_strings.json',
-              // We can also provide the fbt enum manifest directly as a JS variable
-              // fbtEnumManifest: require('./.enum_manifest.json'),
-              fbtEnumPath: path.join(__dirname, '.enum_manifest.json'),
+              fbtCommon: CommonStrings,
+              fbtEnumManifest: EnumManifest,
             },
           ],
           'babel-plugin-fbt-runtime',

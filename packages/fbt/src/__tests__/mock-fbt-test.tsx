@@ -1,6 +1,6 @@
+import { fbt } from '..';
 import getFbtResult from '../__mocks__/getFbtResult';
 import init from '../fbtInit';
-import { fbt } from '../FbtPublic';
 import IntlViewerContext from '../IntlViewerContext';
 
 init({

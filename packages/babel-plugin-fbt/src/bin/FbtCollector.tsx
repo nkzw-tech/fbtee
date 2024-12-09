@@ -1,15 +1,22 @@
 import type { PluginItem } from '@babel/core';
+import { transformSync } from '@babel/core';
+import presetReact from '@babel/preset-react';
+import presetTypescript from '@babel/preset-typescript';
 import type { PatternHash, PatternString } from '../../../fbt/src/FbtTable';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
 import type { FbtOptionConfig } from '../FbtConstants';
 import type { EnumManifest } from '../FbtEnumRegistrar';
 import { textContainsFbtLikeModule } from '../FbtUtil';
 import type { Phrase, PluginOptions } from '../index';
-import fbt from '../index';
+import fbt, {
+  getChildToParentRelationships,
+  getExtractedStrings,
+  getFbtElementNodes,
+} from '../index';
 
 export type ExternalTransform = (
   src: string,
-  opts: TransformOptions,
+  opts: PluginOptions,
   filename?: string | null | undefined
 ) => unknown;
 export type CollectorConfig = {
@@ -37,26 +44,37 @@ export type PackagerPhrase = Phrase & {
   hash_key?: string;
   hashToLeaf?: HashToLeaf;
 };
-export type TransformOptions = Readonly<
-  PluginOptions & {
-    fbtModule: typeof fbt;
-  }
->;
 
 export interface IFbtCollector {
   collectFromOneFile(
     source: string,
-    filename?: string | null | undefined,
+    filename: string,
     fbtEnumManifest?: EnumManifest
-  ): void;
+  ): Promise<void>;
   collectFromFiles(
     files: Array<[string, string]>,
     fbtEnumManifest?: EnumManifest
-  ): void;
+  ): Promise<void>;
   getChildParentMappings(): ChildParentMappings;
   getFbtElementNodes(): Array<PlainFbtNode>;
   getPhrases(): Array<PackagerPhrase>;
 }
+
+const transform = (
+  code: string,
+  options: { filename: string | null | undefined },
+  plugins: ReadonlyArray<PluginItem>,
+  presets: ReadonlyArray<PluginItem>
+) => {
+  transformSync(code, {
+    ast: false,
+    code: false,
+    filename: options.filename,
+    plugins: [[fbt, options], ...plugins],
+    presets: [presetTypescript, presetReact, ...presets],
+    sourceType: 'unambiguous',
+  });
+};
 
 export default class FbtCollector implements IFbtCollector {
   _phrases: Array<PackagerPhrase>;
@@ -71,17 +89,16 @@ export default class FbtCollector implements IFbtCollector {
     this._config = config;
   }
 
-  collectFromOneFile(
+  async collectFromOneFile(
     source: string,
-    filename?: string | null,
+    filename: string,
     fbtEnumManifest?: EnumManifest
-  ): void {
+  ): Promise<void> {
     const options = {
       collectFbt: true,
       extraOptions: this._extraOptions,
       fbtCommonPath: this._config.fbtCommonPath,
       fbtEnumManifest,
-      fbtModule: fbt,
       filename,
       generateOuterTokenName: this._config.generateOuterTokenName,
     } as const;
@@ -94,7 +111,6 @@ export default class FbtCollector implements IFbtCollector {
     if (externalTransform) {
       externalTransform(source, options, filename);
     } else {
-      const transform = require('@fbtjs/default-collection-transform');
       transform(
         source,
         options,
@@ -103,8 +119,8 @@ export default class FbtCollector implements IFbtCollector {
       );
     }
 
-    let newPhrases = fbt.getExtractedStrings();
-    const newChildParentMappings = fbt.getChildToParentRelationships();
+    let newPhrases = getExtractedStrings();
+    const newChildParentMappings = getChildToParentRelationships();
     const offset = this._phrases.length;
     Object.entries(newChildParentMappings).forEach(
       ([childIndex, parentIndex]: [any, any]) => {
@@ -116,13 +132,15 @@ export default class FbtCollector implements IFbtCollector {
     this._phrases.push(...(newPhrases as Array<PackagerPhrase>));
   }
 
-  collectFromFiles(
+  async collectFromFiles(
     files: Array<[string, string]>,
     fbtEnumManifest?: EnumManifest
   ) {
-    files.forEach(([file, source]: [any, any]) => {
-      this.collectFromOneFile(source, file, fbtEnumManifest);
-    });
+    await Promise.all(
+      files.map(([file, source]: [any, any]) =>
+        this.collectFromOneFile(source, file, fbtEnumManifest)
+      )
+    );
   }
 
   getPhrases(): Array<PackagerPhrase> {
@@ -134,6 +152,6 @@ export default class FbtCollector implements IFbtCollector {
   }
 
   getFbtElementNodes(): Array<PlainFbtNode> {
-    return fbt.getFbtElementNodes();
+    return getFbtElementNodes();
   }
 }

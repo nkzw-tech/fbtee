@@ -1,27 +1,15 @@
-# Global build-related files
-
 node_modules
 **/node_modules
-
-# file checksums used by gulp-once
-.checksums
-
-# MacOS
+.eslintcache
+.pnpm-debug.log
 .DS_Store
-
-# example build artifacts
 example/.enum_manifest.json
 example/.source_strings.json
 example/.src_manifest.json
-example/output
 example/source_strings.json
 example/src/translatedFbts
 example/src/translatedFbts.json
-
-# fbt runtime package
-packages/fbt/dist
+packages/*/lib
 packages/fbt/lib
 packages/fbt/LICENSE
-packages/babel-plugin-fbt/dist/
-
 tsconfig.tsbuildinfo

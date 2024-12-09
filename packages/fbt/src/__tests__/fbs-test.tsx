@@ -1,8 +1,8 @@
 /// <reference types="../ReactTypes.d.ts" />
 
 import React from 'react';
+import { fbs } from '..';
 import init from '../fbtInit';
-import { fbs } from '../FbtPublic';
 import IntlViewerContext from '../IntlViewerContext';
 
 init({

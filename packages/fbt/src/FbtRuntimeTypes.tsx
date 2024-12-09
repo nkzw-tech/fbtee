@@ -1,9 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- * @flow strict
- */
-
 export type ParamVariationType = {
   number: 0;
   gender: 1;

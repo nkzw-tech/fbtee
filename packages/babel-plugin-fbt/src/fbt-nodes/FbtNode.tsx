@@ -1,5 +1,4 @@
 import type { Scope } from '@babel/traverse';
-import { default as traverse } from '@babel/traverse';
 import {
   CallExpression,
   isCallExpression,
@@ -433,8 +432,7 @@ export default class FbtNode<
             `See https://fburl.com/i18n_js_fbt_extraction_limits`
         );
       }
-      // Look for function or class call nested in the argument
-      traverse(
+      scope.traverse(
         argument,
         {
           'CallExpression|NewExpression'(path) {

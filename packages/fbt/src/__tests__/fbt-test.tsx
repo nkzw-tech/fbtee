@@ -2,6 +2,7 @@
 
 import { render } from '@testing-library/react';
 import * as React from 'react';
+import { fbt } from '..';
 import getFbtResult from '../__mocks__/getFbtResult';
 import fbtInternal from '../fbt';
 import FbtHooks, {
@@ -10,7 +11,6 @@ import FbtHooks, {
   FbtTranslatedInput,
 } from '../FbtHooks';
 import init from '../fbtInit';
-import { fbt } from '../FbtPublic';
 import FbtResult from '../FbtResult';
 import FbtTranslations from '../FbtTranslations';
 import GenderConst from '../GenderConst';

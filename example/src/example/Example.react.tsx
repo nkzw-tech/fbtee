@@ -68,15 +68,11 @@ type SharedObj = keyof typeof ExampleEnum;
 export default function Example() {
   const [locale, setLocale] = useState<Locale>('en_US');
   const [ex1Name, setEx1Name] = useState('Someone');
-  const [ex1Gender, setEx1Gender] = useState<IntlVariations>(
-    IntlVariations.GENDER_UNKNOWN
-  );
+  const [ex1Gender, setEx1Gender] = useState(IntlVariations.GENDER_UNKNOWN);
   const [ex1Count, setEx1Count] = useState(1);
   const [ex2Name, setEx2Name] = useState('Someone');
   const [ex2Object, setEx2Object] = useState<SharedObj>('LINK');
-  const [ex2Pronoun, setEx2Pronoun] = useState<GenderConst>(
-    GenderConst.UNKNOWN_SINGULAR
-  );
+  const [ex2Pronoun, setEx2Pronoun] = useState(GenderConst.UNKNOWN_SINGULAR);
 
   const updateLocale = useCallback((newLocale: Locale) => {
     viewerContext.locale = newLocale;

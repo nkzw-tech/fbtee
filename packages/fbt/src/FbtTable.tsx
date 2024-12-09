@@ -1,12 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- * Provides types related to fbt table access and the algorithm for
- * recursively accessing the table entries and returning the leaves
- *
- * @flow strict-local
- */
-
 import invariant from 'invariant';
 import type { FbtRuntimeInput, FbtTableArgs } from './FbtHooks';
 

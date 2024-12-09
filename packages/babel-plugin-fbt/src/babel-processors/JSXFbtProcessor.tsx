@@ -1,5 +1,5 @@
 import type { NodePath as NodePathT } from '@babel/core';
-import BabelTypes, {
+import {
   ArrayExpression,
   arrayExpression,
   BooleanLiteral,
@@ -53,17 +53,14 @@ export default class JSXFbtProcessor {
   node: NodePath['node'];
   nodeChecker: FbtNodeChecker;
   path: NodePath;
-  t: typeof BabelTypes;
   validFbtExtraOptions: Readonly<FbtOptionConfig>;
   _openingElementAttributes: ReadonlyArray<JSXAttribute> | null | undefined;
 
   constructor({
-    babelTypes,
     nodeChecker,
     path,
     validFbtExtraOptions,
   }: {
-    babelTypes: typeof BabelTypes;
     nodeChecker: FbtNodeChecker;
     path: NodePath;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
@@ -73,22 +70,18 @@ export default class JSXFbtProcessor {
     this.nodeChecker = nodeChecker;
     this.path = path;
     this.validFbtExtraOptions = validFbtExtraOptions;
-    this.t = babelTypes;
   }
 
   static create({
-    babelTypes,
     path,
     validFbtExtraOptions,
   }: {
-    babelTypes: typeof BabelTypes;
     path: NodePath;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
   }): JSXFbtProcessor | null | undefined {
     const nodeChecker = FbtNodeChecker.forJSXFbt(path.node);
     return nodeChecker != null
       ? new JSXFbtProcessor({
-          babelTypes,
           nodeChecker,
           path,
           validFbtExtraOptions,

@@ -1,6 +1,6 @@
 import { transformSync as babelTransform } from '@babel/core';
-import { assertSourceAstEqual } from '../../../test/TestUtil';
-import { withFbtRequireStatement } from '../../babel-plugin-fbt/src/__tests__/FbtTestUtil';
+import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestUtil';
+import { assertSourceAstEqual } from '../../../../test/TestUtil';
 
 function transform(source: string, extraOptions?: Record<string, unknown>) {
   return (

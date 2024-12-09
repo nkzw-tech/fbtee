@@ -17,14 +17,18 @@
     "url": "https://github.com/facebook/fbt"
   },
   "license": "MIT",
-  "main": "src/FbtPublic.tsx",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --bundle ./src/index.tsx",
+    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
+  },
   "dependencies": {
     "invariant": "^2.2.4"
   },
   "devDependencies": {},
   "peerDependencies": {
-    "babel-plugin-fbt": "^1.0.0",
-    "babel-plugin-fbt-runtime": "^1.0.0",
+    "babel-plugin-fbt": "workspace:*",
+    "babel-plugin-fbt-runtime": "workspace:*",
     "react": "^18.0.0 || ^19.0.0"
   }
 }

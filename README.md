@@ -1,8 +1,4 @@
 <p>
-  <a href="https://github.com/facebook/fbt/actions?query=workflow%3Abuild">
-    <img src="https://github.com/facebook/fbt/workflows/build/badge.svg" />
-  </a>
-
   <a href="https://twitter.com/fbt_js">
     <img src="https://img.shields.io/twitter/follow/fbt_js.svg?style=social" align="right" alt="Twitter Follow" />
   </a>
@@ -76,8 +72,6 @@ See [CHANGELOG](CHANGELOG.md).
   - See [package.json](packages/babel-plugin-fbt/package.json)
 - [babel-plugin-fbt-runtime](https://www.npmjs.com/package/babel-plugin-fbt-runtime) (server-side)
   - See [package.json](packages/babel-plugin-fbt-runtime/package.json)
-- [@fbtjs/default-collection-transform](https://www.npmjs.com/package/@fbtjs/default-collection-transform) (build-time)
-  - See [package.json](packages/default-collection-transform/package.json)
 - [fbt](https://www.npmjs.com/package/fbt) (client-side)
   - See [package.json](packages/fbt/package.json)
 

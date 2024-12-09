@@ -9,16 +9,16 @@ import type {
 } from '../FbtCollector';
 
 export default class CustomFbtCollector implements IFbtCollector {
-  collectFromOneFile(
+  async collectFromOneFile(
     _source: string,
     _filename?: string | null,
     _fbtEnumManifest?: EnumManifest
-  ): void {}
+  ): Promise<void> {}
 
-  collectFromFiles(
+  async collectFromFiles(
     _files: Array<[string, string]>,
     _fbtEnumManifest?: EnumManifest
-  ): void {
+  ): Promise<void> {
     throw new Error('Not implemented');
   }
 

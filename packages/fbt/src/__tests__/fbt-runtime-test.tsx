@@ -1,9 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- * @flow
- */
-
 import fbtRuntime from '../fbt';
 import FbtHooks from '../FbtHooks';
 import FbtResult from '../FbtResult';

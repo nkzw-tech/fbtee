@@ -1,19 +1,9 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @generated SignedSource<<2f12862a6c5cbca23561dea8a26b9bcf>>
- *
- * @flow strict
- */
-
-
 import IntlVariations from '../IntlVariations';
 
 export default {
-  getVariation(n: number): typeof IntlVariations[keyof typeof IntlVariations] {
+  getVariation(
+    n: number
+  ): (typeof IntlVariations)[keyof typeof IntlVariations] {
     if (n % 10 === 1) {
       return IntlVariations.NUMBER_ONE;
     } else if (n % 10 === 2) {

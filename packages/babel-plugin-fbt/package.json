@@ -7,15 +7,21 @@
     "url": "https://github.com/facebook/fbt.git"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "bin": {
-    "fbt-collect": "dist/bin/collectFbt.bin.js",
-    "fbt-manifest": "dist/bin/manifest.bin.js",
-    "fbt-translate": "dist/bin/translate.bin.js"
+    "fbt-collect": "src/bin/collectFbt.bin.js",
+    "fbt-manifest": "src/bin/manifest.bin.js",
+    "fbt-translate": "src/bin/translate.bin.js"
+  },
+  "scripts": {
+    "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --external:glob --external:jest-docblock --external:yargs --external:@babel/* --bundle ./src/index.tsx",
+    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.26.3",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@babel/traverse": "^7.26.3",
     "@babel/types": "^7.26.3",
     "glob": "^7.1.6",
@@ -28,8 +34,5 @@
     "@types/babel__core": "^7.20.5",
     "@types/babel__traverse": "^7.20.6",
     "@types/glob": "^8.1.0"
-  },
-  "peerDependencies": {
-    "@fbtjs/default-collection-transform": "^1.0.0"
   }
 }

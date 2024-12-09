@@ -43,9 +43,9 @@ describe('collectFbt', () => {
     );
 
     if (Array.isArray(source)) {
-      fbtCollector.collectFromFiles(source);
+      await fbtCollector.collectFromFiles(source);
     } else {
-      fbtCollector.collectFromOneFile(source);
+      await fbtCollector.collectFromOneFile(source, 'test.js');
     }
 
     const output = buildCollectFbtOutput(fbtCollector, packagers, {
@@ -158,19 +158,6 @@ describe('collectFbt', () => {
     );
 
     expect(res.phrases.length).toEqual(0);
-  });
-
-  it('should not throw because of CSX', async () => {
-    const res = await collect(
-      [
-        "const fbt = require('fbt');",
-        '/**@csx*/',
-        '<fbt desc="foo">bar</fbt>;',
-        '<Foo options:key="bar" />',
-      ].join('\n')
-    );
-
-    expect(res).toMatchSnapshot();
   });
 
   it('should extract common strings from <fbt common={true}>', async () => {

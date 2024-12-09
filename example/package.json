@@ -18,7 +18,6 @@
     "translate-fbts-single-file": "fbt-translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
-    "@fbtjs/default-collection-transform": "workspace:*",
     "babel-plugin-fbt": "workspace:*",
     "babel-plugin-fbt-runtime": "workspace:*",
     "babel-plugin-minify-replace": "^0.5.0",

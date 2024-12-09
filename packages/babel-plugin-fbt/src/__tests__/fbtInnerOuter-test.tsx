@@ -1,4 +1,4 @@
-import fbt from '../index';
+import { getChildToParentRelationships } from '../index';
 import { transform, withFbtRequireStatement } from './FbtTestUtil';
 
 function testChildToParentRelationships([, testData]: readonly [
@@ -9,7 +9,7 @@ function testChildToParentRelationships([, testData]: readonly [
   transform(body, { collectFbt: true });
 
   expect(JSON.stringify(testData.output, null, ' ')).toEqual(
-    JSON.stringify(fbt.getChildToParentRelationships(), null, ' ')
+    JSON.stringify(getChildToParentRelationships(), null, ' ')
   );
 }
 

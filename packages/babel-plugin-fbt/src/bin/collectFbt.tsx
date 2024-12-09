@@ -219,11 +219,11 @@ async function writeOutput(collector: IFbtCollector) {
   process.stdout.write('\n');
 }
 
-function processSource(collector: IFbtCollector, source: string) {
+async function processSource(collector: IFbtCollector, source: string) {
   if (argv[args.MANIFEST]) {
     processJsonSource(collector, source);
   } else {
-    collector.collectFromOneFile(source);
+    await collector.collectFromOneFile(source, 'file.js');
   }
 }
 
@@ -253,7 +253,7 @@ if (argv[args.HELP]) {
         source += chunk;
       });
       stream.on('end', async () => {
-        processSource(collector, source);
+        await processSource(collector, source);
         await writeOutput(collector);
       });
     } else {

@@ -1,5 +1,5 @@
 import type { NodePath } from '@babel/core';
-import BabelTypes, {
+import {
   CallExpression,
   ImportDeclaration,
   JSXElement,
@@ -24,8 +24,15 @@ import type { FbtCallSiteOptions, FbtOptionConfig } from './FbtConstants';
 import { JSModuleName, ValidFbtOptions } from './FbtConstants';
 import type { EnumManifest, EnumModule } from './FbtEnumRegistrar';
 import FbtEnumRegistrar from './FbtEnumRegistrar';
+import fbtHashKey from './fbtHashKey';
 import FbtNodeChecker from './FbtNodeChecker';
-import { checkOption, errorAt, objMap } from './FbtUtil';
+import {
+  checkOption,
+  errorAt,
+  objMap,
+  replaceClearTokensWithTokenAliases,
+} from './FbtUtil';
+import { mapLeaves } from './JSFbtUtil';
 import { FbtVariationType } from './translate/IntlVariations';
 
 const { FBT } = JSModuleName;
@@ -195,7 +202,7 @@ type Visitor = {
 
 const toVisitor = (visitor: unknown): visitor is Visitor => true;
 
-export default function Transform({ types: t }: { types: typeof BabelTypes }) {
+export default function transform() {
   return {
     pre() {
       const visitor = toVisitor(this) ? this : null;
@@ -221,7 +228,6 @@ export default function Transform({ types: t }: { types: typeof BabelTypes }) {
        */
       JSXElement(path: NodePath<JSXElement>) {
         const root = JSXFbtProcessor.create({
-          babelTypes: t,
           path,
           validFbtExtraOptions,
         });
@@ -264,7 +270,6 @@ export default function Transform({ types: t }: { types: typeof BabelTypes }) {
         const pluginOptions: PluginOptions = visitor.opts;
 
         const root = FbtCommonFunctionCallProcessor.create({
-          babelTypes: t,
           path,
         });
 
@@ -279,7 +284,6 @@ export default function Transform({ types: t }: { types: typeof BabelTypes }) {
         }
 
         const processor = FbtFunctionCallProcessor.create({
-          babelTypes: t,
           defaultFbtOptions: defaultOptions,
           fileSource,
           validFbtExtraOptions,
@@ -337,26 +341,6 @@ export default function Transform({ types: t }: { types: typeof BabelTypes }) {
   };
 }
 
-Transform.getExtractedStrings = (): Array<Phrase> =>
-  allMetaPhrases.map((metaPhrase) => metaPhrase.phrase);
-
-Transform.getChildToParentRelationships = (): ChildToParentMap =>
-  childToParent || {};
-
-Transform.getFbtElementNodes = (): Array<PlainFbtNode> => {
-  const phraseToIndexMap = new Map<AnyFbtNode, number>(
-    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index])
-  );
-
-  return allMetaPhrases
-    .map(({ fbtNode }) =>
-      fbtNode instanceof FbtElementNode
-        ? toPlainFbtNodeTree(fbtNode, phraseToIndexMap)
-        : null
-    )
-    .filter((node): node is PlainFbtNode => node != null);
-};
-
 function initDefaultOptions(state: {
   file: { ast: { comments: ReadonlyArray<{ value: string }> } };
 }) {
@@ -407,3 +391,28 @@ function getEnumManifest(opts: PluginOptions): EnumManifest | null | undefined {
   }
   return null;
 }
+
+export function getExtractedStrings(): Array<Phrase> {
+  return allMetaPhrases.map((metaPhrase) => metaPhrase.phrase);
+}
+
+export function getChildToParentRelationships(): ChildToParentMap {
+  return childToParent || {};
+}
+
+export function getFbtElementNodes(): Array<PlainFbtNode> {
+  const phraseToIndexMap = new Map<AnyFbtNode, number>(
+    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index])
+  );
+
+  return allMetaPhrases
+    .map(({ fbtNode }) =>
+      fbtNode instanceof FbtElementNode
+        ? toPlainFbtNodeTree(fbtNode, phraseToIndexMap)
+        : null
+    )
+    .filter((node): node is PlainFbtNode => node != null);
+}
+
+export { fbtHashKey, mapLeaves, replaceClearTokensWithTokenAliases };
+export { SENTINEL } from './FbtConstants';

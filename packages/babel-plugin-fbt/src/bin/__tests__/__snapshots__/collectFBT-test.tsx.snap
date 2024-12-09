@@ -7,6 +7,7 @@ exports[`collectFbt When using string templates should extract correctly multipl
     {
       "col_beg": 0,
       "col_end": 86,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -29,6 +30,7 @@ exports[`collectFbt When using string templates should extract correctly name, p
     {
       "col_beg": 0,
       "col_end": 119,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -88,6 +90,7 @@ exports[`collectFbt When using string templates should extract correctly support
     {
       "col_beg": 0,
       "col_end": 37,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [
           null,
@@ -118,6 +121,7 @@ exports[`collectFbt When using string templates should extract correctly with a 
     {
       "col_beg": 0,
       "col_end": 52,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -140,6 +144,7 @@ exports[`collectFbt When using string templates should extract correctly with ju
     {
       "col_beg": 0,
       "col_end": 19,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -162,6 +167,7 @@ exports[`collectFbt When using string templates should extract correctly with th
     {
       "col_beg": 0,
       "col_end": 49,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -514,6 +520,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
     {
       "col_beg": 10,
       "col_end": 16,
+      "filepath": "test.js",
       "hashToLeaf": {
         "6CzFRF22gqmcMT9hNd4lFQ==": {
           "desc": "some desc",
@@ -537,6 +544,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
     {
       "col_beg": 12,
       "col_end": 16,
+      "filepath": "test.js",
       "hashToLeaf": {
         "vInz7SvwK8Zthis7azxV9Q==": {
           "desc": "In the phrase: "This is a {=link}"",
@@ -961,6 +969,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
     {
       "col_beg": 8,
       "col_end": 14,
+      "filepath": "test.js",
       "hashToLeaf": {
         "PqPPir8Kg9xSlqdednPFOg==": {
           "desc": "example 1",
@@ -1009,6 +1018,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
     {
       "col_beg": 10,
       "col_end": 14,
+      "filepath": "test.js",
       "hashToLeaf": {
         "2u1unDTClahYJKZKS5RVCQ==": {
           "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
@@ -1057,6 +1067,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
     {
       "col_beg": 12,
       "col_end": 21,
+      "filepath": "test.js",
       "hashToLeaf": {
         "Q9mOAQ+ogHG20z2QkEkNmQ==": {
           "desc": "In the phrase: "{name} has shared {=a photo} with you"",
@@ -1203,6 +1214,7 @@ exports[`collectFbt should dedupe fbt:plurals 1`] = `
     {
       "col_beg": 0,
       "col_end": 6,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [
           null,
@@ -1244,6 +1256,7 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
     {
       "col_beg": 8,
       "col_end": 14,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1261,6 +1274,7 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
     {
       "col_beg": 10,
       "col_end": 22,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1286,6 +1300,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
     {
       "col_beg": 8,
       "col_end": 14,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -1329,6 +1344,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
     {
       "col_beg": 10,
       "col_end": 30,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -1378,6 +1394,7 @@ exports[`collectFbt should extract common strings from <fbt common={true}> 1`] =
       "col_beg": 6,
       "col_end": 39,
       "common": true,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1400,6 +1417,7 @@ exports[`collectFbt should extract fbs strings 1`] = `
     {
       "col_beg": 27,
       "col_end": 52,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1422,6 +1440,7 @@ exports[`collectFbt should extract fbt strings 1`] = `
     {
       "col_beg": 27,
       "col_end": 52,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1445,6 +1464,7 @@ exports[`collectFbt should extract fbt.c strings 1`] = `
       "col_beg": 6,
       "col_end": 23,
       "common": true,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1511,6 +1531,7 @@ exports[`collectFbt should extract the author from Docblock 1`] = `
       "author": "Sponge Bob",
       "col_beg": 0,
       "col_end": 25,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1535,6 +1556,7 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
     {
       "col_beg": 8,
       "col_end": 14,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1552,6 +1574,7 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
     {
       "col_beg": 10,
       "col_end": 22,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1567,28 +1590,6 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
 }
 `;
 
-exports[`collectFbt should not throw because of CSX 1`] = `
-{
-  "childParentMappings": {},
-  "phrases": [
-    {
-      "col_beg": 0,
-      "col_end": 25,
-      "jsfbt": {
-        "m": [],
-        "t": {
-          "desc": "foo",
-          "text": "bar",
-        },
-      },
-      "line_beg": 3,
-      "line_end": 3,
-      "project": "",
-    },
-  ],
-}
-`;
-
 exports[`collectFbt should still extract strings if fbt call param doNotExtract is set to false 1`] = `
 {
   "childParentMappings": {},
@@ -1596,6 +1597,7 @@ exports[`collectFbt should still extract strings if fbt call param doNotExtract 
     {
       "col_beg": 0,
       "col_end": 40,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1618,6 +1620,7 @@ exports[`collectFbt should still extract strings if file-level doNotExtract is s
     {
       "col_beg": 0,
       "col_end": 25,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1640,6 +1643,7 @@ exports[`collectFbt should still extract strings if in-line doNotExtract is set 
     {
       "col_beg": 0,
       "col_end": 46,
+      "filepath": "test.js",
       "jsfbt": {
         "m": [],
         "t": {

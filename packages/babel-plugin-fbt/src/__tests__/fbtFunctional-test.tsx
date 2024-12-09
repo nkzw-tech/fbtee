@@ -1,8 +1,7 @@
-import { PluginOptions } from '..';
+import { getExtractedStrings, PluginOptions } from '..';
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest';
 import { testSection } from '../../../../test/TestUtil';
 import FbtFunctionCallProcessor from '../babel-processors/FbtFunctionCallProcessor';
-import fbtTransform from '../index';
 import { FbtVariationType } from '../translate/IntlVariations';
 import { payload, transform, withFbtRequireStatement } from './FbtTestUtil';
 
@@ -3085,7 +3084,7 @@ const describeTestScenarios = (testCases: TestCases) => {
               fbtEnumManifest: testCase.runWithTestFbtEnumManifest,
             };
             transform(testCase.input, pluginOptions);
-            expect(fbtTransform.getExtractedStrings()).toMatchSnapshot();
+            expect(getExtractedStrings()).toMatchSnapshot();
           })
         );
       });

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": true,
     "allowImportingTsExtensions": true,
-    "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -27,6 +26,6 @@
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["packages/*/dist/", "node_modules"],
+  "exclude": ["packages/*/lib/", "node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]
 }

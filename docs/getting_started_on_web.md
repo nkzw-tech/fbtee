@@ -20,8 +20,6 @@ The required NPM modules to add to your `dependencies` in your app are:
 - [**babel-plugin-fbt-runtime**](https://www.npmjs.com/package/babel-plugin-fbt-runtime) - The secondary Babel transform
   - Transforms the raw payloads within `fbt._(...)` so they can be used at runtime (by `fbt._`)
   - NOTE: [This plugin should get merged into `babel-plugin-fbt`](https://github.com/facebook/fbt/issues/125)
-- [**@fbtjs/default-collection-transform**](https://www.npmjs.com/package/@fbtjs/default-collection-transform)
-  - Only required if if you elect _not_ to pass a custom `--transform` nor `--custom-collector` in the [collection script](https://github.com/facebook/fbt/blob/3fc75eb5b3303db6041df098b5f77a94b5f36309/packages/babel-plugin-fbt/src/bin/collectFbt.js#L116-L152)
 
 If you're unfamiliar with [Babel](https://babeljs.io/), you can read through [their documentation here](https://babeljs.io/)
 
