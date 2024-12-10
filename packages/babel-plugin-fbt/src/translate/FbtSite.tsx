@@ -1,7 +1,7 @@
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import type { TableJSFBTTreeBranch, TokenAliases } from '..';
-import type { CollectFbtOutputPhrase } from '../bin/collectFbt';
+import type { CollectFbtOutputPhrase } from '../bin/collect';
 import { objMap } from '../FbtUtil';
 import type { JSFBTMetaEntry, TableJSFBTTree } from '../index';
 import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil';

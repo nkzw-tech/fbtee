@@ -1,9 +1,5 @@
 import fs from 'node:fs';
 import nullthrows from 'nullthrows';
-import type {
-  CollectFbtOutput,
-  CollectFbtOutputPhrase,
-} from '../bin/collectFbt';
 import FbtHashKey from '../fbtHashKey';
 import { objMap } from '../FbtUtil';
 import { FbtSite } from '../translate/FbtSite';
@@ -13,6 +9,7 @@ import TranslationConfig from '../translate/TranslationConfig';
 import type { SerializedTranslationData } from '../translate/TranslationData';
 import TranslationData from '../translate/TranslationData';
 import type { PatternHash, PatternString } from '../Types';
+import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect';
 
 export type Options = Readonly<{
   // Similar to `jenkins`, but pass the hash-module of your choice.

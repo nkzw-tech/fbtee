@@ -76,7 +76,8 @@ import {
   TranslatedGroups,
 } from './translateUtils';
 
-const argv = yargs
+const y = yargs();
+const argv = y
   .usage('Translate fbt phrases with provided translations:\n$0 [options]')
   .boolean('jenkins')
   .default('jenkins', false)
@@ -159,8 +160,8 @@ function writeOutput(
   }
 }
 
-if (argv['h']) {
-  yargs.showHelp();
+if (argv.help) {
+  y.showHelp();
   process.exit(0);
 }
 

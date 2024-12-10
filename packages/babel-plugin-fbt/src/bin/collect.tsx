@@ -94,9 +94,10 @@ const args = {
   TRANSFORM: 'transform',
 } as const;
 
-const argv = yargs
+const y = yargs();
+const argv = y
   .usage('Collect fbt instances from source:\n$0 [options]')
-  .default(args.HASH, __dirname + '/md5')
+  .default(args.HASH, import.meta.dirname + '/md5.tsx')
   .describe(args.HASH, 'Path to hashing module to use in text packager.')
   .default(args.PACKAGER, 'text')
   .describe(
@@ -227,8 +228,8 @@ async function processSource(collector: IFbtCollector, source: string) {
   }
 }
 
-if (argv[args.HELP]) {
-  yargs.showHelp();
+if (argv.help) {
+  y.showHelp();
 } else {
   const transformPath = argv[args.TRANSFORM];
   const transform = transformPath ? require(transformPath) : null;

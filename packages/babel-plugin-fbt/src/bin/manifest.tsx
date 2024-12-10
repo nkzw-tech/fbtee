@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import yargs from 'yargs';
 import { generateManifest } from './manifestUtils';
 
-const argv = yargs
+const y = yargs();
+const argv = y
   .usage(
     'Generate the enum manifest and its corresponding source manifest ' +
       'intended for consumption by the fbt transform and collectFbt'
@@ -27,7 +28,7 @@ const argv = yargs
   .parseSync();
 
 if (argv.help) {
-  yargs.showHelp();
+  y.showHelp();
   process.exit(0);
 }
 

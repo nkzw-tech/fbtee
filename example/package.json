@@ -5,17 +5,14 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "clean-build": "pnpm clean-fbts && pnpm install && pnpm build",
-    "clean-fbts": "rm .enum_manifest.json .src_manifest.json .source_strings.json src/translatedFbts.json .test_*.json 2&> /dev/null || exit 0",
-    "collect-fbts": "fbt-collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
+    "build:fbt": "pnpm fbt:collect && pnpm fbt:manifest && pnpm fbt:translate && pnpm fbt:translate-multiple && pnpm fbt:translate-single",
+    "clean:fbt": "rm -rf .enum_manifest.json .src_manifest.json .source_strings.json src/translatedFbts.json src/translatedFbts .test_*.json 2&> /dev/null || exit 0",
     "dev": "vite",
-    "manifest": "fbt-manifest --src src",
-    "test": "pnpm test-build-scripts && cd .. && jest example",
-    "test-build-scripts": "pnpm test-collect-fbts && pnpm test-collect-fbts-with-tiger-hash && pnpm test-translate-fbts-into-output-dir && pnpm translate-fbts-single-file",
-    "test-collect-fbts": "fbt-collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .test_source_strings.json",
-    "test-translate-fbts-into-output-dir": "fbt-translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
-    "translate-fbts": "fbt-translate --translations translations/*.json --jenkins > src/translatedFbts.json",
-    "translate-fbts-single-file": "fbt-translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
+    "fbt:collect": "fbt collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
+    "fbt:manifest": "fbt manifest --src src",
+    "fbt:translate": "fbt translate --translations translations/*.json --jenkins > src/translatedFbts.json",
+    "fbt:translate-multiple": "fbt translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
+    "fbt:translate-single": "fbt translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
     "babel-plugin-fbt": "workspace:*",

@@ -1,7 +1,7 @@
 import path from 'node:path';
 import invariant from 'invariant';
 import type { FbtOptionConfig } from '../FbtConstants';
-import type { CollectFbtOutput } from './collectFbt';
+import type { CollectFbtOutput } from './collect';
 import packagerTypes from './collectFbtConstants';
 import type {
   CollectorConfig,

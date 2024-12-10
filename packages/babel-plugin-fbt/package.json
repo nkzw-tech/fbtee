@@ -9,12 +9,12 @@
   "license": "MIT",
   "main": "lib/index.js",
   "bin": {
-    "fbt-collect": "src/bin/collectFbt.bin.js",
-    "fbt-manifest": "src/bin/manifest.bin.js",
-    "fbt-translate": "src/bin/translate.bin.js"
+    "fbt": "lib/bin.js"
   },
   "scripts": {
-    "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --external:glob --external:jest-docblock --external:yargs --external:@babel/* --bundle ./src/index.tsx",
+    "build": "rm -f lib/index.js; pnpm build:src; pnpm build:bin",
+    "build:bin": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/bin.js --jsx=automatic --external:glob --external:jest-docblock --external:yargs --external:@babel/* --bundle ./src/bin.tsx",
+    "build:src": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --external:glob --external:jest-docblock --external:yargs --external:@babel/* --bundle ./src/index.tsx",
     "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
   },
   "dependencies": {
