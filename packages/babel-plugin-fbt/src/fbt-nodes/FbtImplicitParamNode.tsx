@@ -49,7 +49,7 @@ export default class FbtImplicitParamNode
   extends FbtNode<AnyStringVariationArg, JSXElement, FbtChildNode, null>
   implements IFbtElementNode
 {
-  static readonly type: FbtNodeType = FbtNodeType.ImplicitParam;
+  static readonly type: FbtNodeType = 'implicitParam';
 
   _tokenSet: ParamSet = {};
 

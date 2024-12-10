@@ -4,6 +4,7 @@ import {
   Node,
   stringLiteral,
 } from '@babel/types';
+import { ConcreteFbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
 import {
   PluralOptions,
   PluralRequiredAttributes,
@@ -22,7 +23,12 @@ import {
   normalizeSpaces,
 } from './FbtUtil.tsx';
 
-export default function getNamespacedArgs(moduleName: string) {
+export default function getNamespacedArgs(
+  moduleName: string
+): Record<
+  ConcreteFbtNodeType,
+  (node: JSXElement) => Array<Node | null | undefined>
+> {
   return {
     /**
      * <fbt:enum> or <FbtEnum>
@@ -99,7 +105,7 @@ export default function getNamespacedArgs(moduleName: string) {
         singularArg,
         genderAttribute?.type === 'JSXExpressionContainer'
           ? genderAttribute.expression
-          : [],
+          : null,
       ];
     },
 
@@ -176,11 +182,10 @@ export default function getNamespacedArgs(moduleName: string) {
       );
       const countAttr = getAttributeByNameOrThrow(attributes, 'count').value;
       const children = filterEmptyNodes(node.children);
-      const pluralChildren = children.filter((child) => {
-        return (
+      const pluralChildren = children.filter(
+        (child) =>
           child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
-        );
-      });
+      );
       if (pluralChildren.length !== 1) {
         throw errorAt(
           node,
@@ -201,7 +206,7 @@ export default function getNamespacedArgs(moduleName: string) {
         singularArg,
         countAttr?.type === 'JSXExpressionContainer'
           ? countAttr.expression
-          : [],
+          : null,
         options,
       ];
     },

@@ -49,7 +49,7 @@ export default class FbtEnumNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Enum;
+  static readonly type: FbtNodeType = 'enum';
 
   static fromBabelNode({
     moduleName,

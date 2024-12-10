@@ -134,7 +134,7 @@ export default class FbtElementNode
   extends FbtNode<AnyStringVariationArg, CallExpression, FbtChildNode, Options>
   implements IFbtElementNode
 {
-  static readonly type: FbtNodeType = FbtNodeType.Element;
+  static readonly type: FbtNodeType = 'element';
 
   _tokenSet: ParamSet = {};
 

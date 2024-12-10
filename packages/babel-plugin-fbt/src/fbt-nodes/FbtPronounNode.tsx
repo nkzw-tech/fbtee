@@ -63,7 +63,7 @@ export default class FbtPronounNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Pronoun;
+  static readonly type: FbtNodeType = 'pronoun';
 
   static fromBabelNode({
     moduleName,

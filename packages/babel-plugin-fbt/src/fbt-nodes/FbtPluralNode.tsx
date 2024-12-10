@@ -53,7 +53,7 @@ export default class FbtPluralNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Plural;
+  static readonly type: FbtNodeType = 'plural';
 
   static fromBabelNode({
     moduleName,

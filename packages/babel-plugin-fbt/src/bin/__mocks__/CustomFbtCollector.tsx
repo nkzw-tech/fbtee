@@ -1,6 +1,5 @@
 import { JSXOpeningElement } from '@babel/types';
 import type { PlainFbtNode } from '../../fbt-nodes/FbtNode.tsx';
-import { FbtNodeType } from '../../fbt-nodes/FbtNodeType.tsx';
 import type { EnumManifest } from '../../FbtEnumRegistrar.tsx';
 import type {
   ChildParentMappings,
@@ -78,16 +77,16 @@ export default class CustomFbtCollector implements IFbtCollector {
       {
         children: [
           {
-            type: FbtNodeType.Text,
+            type: 'text',
           },
           {
             children: [
               {
-                type: FbtNodeType.Text,
+                type: 'text',
               },
             ],
             phraseIndex: 1,
-            type: FbtNodeType.ImplicitParam,
+            type: 'implicitParam',
             wrapperNode: {
               babelNode: pseudoJSXOpeningElement,
               props: {
@@ -100,7 +99,7 @@ export default class CustomFbtCollector implements IFbtCollector {
           },
         ],
         phraseIndex: 0,
-        type: FbtNodeType.Element,
+        type: 'element',
       },
     ];
   }

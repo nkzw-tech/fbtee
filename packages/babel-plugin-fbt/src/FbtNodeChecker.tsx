@@ -8,7 +8,7 @@ import {
   JSXElement,
   Node,
 } from '@babel/types';
-import { FbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
+import { FbtNodeType, getNodeType } from './fbt-nodes/FbtNodeType.tsx';
 import type { JSModuleNameType } from './FbtConstants.tsx';
 import { JSModuleName } from './FbtConstants.tsx';
 import { assertModuleName, errorAt } from './FbtUtil.tsx';
@@ -58,17 +58,14 @@ export default class FbtNodeChecker {
     );
   }
 
-  getFbtConstructNameFromFunctionCall(
-    node: Node
-  ): FbtNodeType | null | undefined {
+  getFbtConstructNameFromFunctionCall(node: Node): FbtNodeType | null {
     return (
       (isCallExpression(node) &&
         isMemberExpression(node.callee) &&
         isIdentifier(node.callee.object) &&
         this.isNameOfModule(node.callee.object.name) &&
         isIdentifier(node.callee.property) &&
-        typeof node.callee.property.name === 'string' &&
-        FbtNodeType[node.callee.property.name as FbtNodeType]) ||
+        getNodeType(node.callee.property.name)) ||
       null
     );
   }
@@ -159,50 +156,42 @@ export default class FbtNodeChecker {
     return name === FBS;
   }
 
-  static forFbtCommonFunctionCall(
-    node: Node
-  ): FbtNodeChecker | null | undefined {
-    if (fbtChecker.isCommonStringCall(node)) {
-      return fbtChecker;
-    } else if (fbsChecker.isCommonStringCall(node)) {
-      return fbsChecker;
-    }
-    return null;
+  static forFbtCommonFunctionCall(node: Node): FbtNodeChecker | null {
+    return fbtChecker.isCommonStringCall(node)
+      ? fbtChecker
+      : fbsChecker.isCommonStringCall(node)
+      ? fbsChecker
+      : null;
   }
 
-  static forFbtFunctionCall(node: Node): FbtNodeChecker | null | undefined {
-    if (fbtChecker.isModuleCall(node)) {
-      return fbtChecker;
-    } else if (fbsChecker.isModuleCall(node)) {
-      return fbsChecker;
-    }
-    return null;
+  static forFbtFunctionCall(node: Node): FbtNodeChecker | null {
+    return fbtChecker.isModuleCall(node)
+      ? fbtChecker
+      : fbsChecker.isModuleCall(node)
+      ? fbsChecker
+      : null;
   }
 
-  static forJSXFbt(node: Node): FbtNodeChecker | null | undefined {
-    if (fbtChecker.isJSXElement(node)) {
-      return fbtChecker;
-    } else if (fbsChecker.isJSXElement(node)) {
-      return fbsChecker;
-    }
-    return null;
+  static forJSXFbt(node: Node): FbtNodeChecker | null {
+    return fbtChecker.isJSXElement(node)
+      ? fbtChecker
+      : fbsChecker.isJSXElement(node)
+      ? fbsChecker
+      : null;
   }
 
   /**
    * This is same as the non-static getFbtConstructNameFromFunctionCall except
    * it accepts any of the three fbt modules (`FBT`, `FBS` or `REACT_FBT`).
    */
-  static getFbtConstructNameFromFunctionCall(
-    node: Node
-  ): FbtNodeType | null | undefined {
+  static getFbtConstructNameFromFunctionCall(node: Node): FbtNodeType | null {
     return (
       (isCallExpression(node) &&
         isMemberExpression(node.callee) &&
         isIdentifier(node.callee.object) &&
         isIdentifier(node.callee.property) &&
         moduleNames.has(node.callee.object.name) &&
-        typeof node.callee.property.name === 'string' &&
-        FbtNodeType[node.callee.property.name as FbtNodeType]) ||
+        getNodeType(node.callee.property.name)) ||
       null
     );
   }

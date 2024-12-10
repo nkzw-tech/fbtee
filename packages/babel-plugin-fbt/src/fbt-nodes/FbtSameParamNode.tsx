@@ -27,7 +27,7 @@ export default class FbtSameParamNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.SameParam;
+  static readonly type: FbtNodeType = 'sameParam';
 
   static fromBabelNode({
     moduleName,

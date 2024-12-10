@@ -39,7 +39,7 @@ export default class FbtNameNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Name;
+  static readonly type: FbtNodeType = 'name';
 
   override getOptions(): Options {
     try {

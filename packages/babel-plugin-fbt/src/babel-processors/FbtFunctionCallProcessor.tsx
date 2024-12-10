@@ -30,7 +30,7 @@ import { StringVariationArgsMap } from '../fbt-nodes/FbtArguments.tsx';
 import FbtElementNode from '../fbt-nodes/FbtElementNode.tsx';
 import FbtImplicitParamNode from '../fbt-nodes/FbtImplicitParamNode.tsx';
 import type { AnyFbtNode } from '../fbt-nodes/FbtNode.tsx';
-import { FbtNodeType } from '../fbt-nodes/FbtNodeType.tsx';
+import { isConcreteFbtNode } from '../fbt-nodes/FbtNodeType.tsx';
 import FbtParamNode from '../fbt-nodes/FbtParamNode.tsx';
 import type {
   FbtCallSiteOptions,
@@ -547,20 +547,11 @@ export default class FbtFunctionCallProcessor {
       {
         CallExpression(path: CallExpressionPath) {
           const nodeChecker = this.nodeChecker as FbtNodeChecker;
-          const constructs = new Set<FbtNodeType>([
-            FbtNodeType.Enum,
-            FbtNodeType.Name,
-            FbtNodeType.Param,
-            FbtNodeType.Plural,
-            FbtNodeType.Pronoun,
-            FbtNodeType.SameParam,
-          ]);
-
           const childFbtConstructName =
             nodeChecker.getFbtConstructNameFromFunctionCall(path.node);
           if (
             !childFbtConstructName ||
-            !constructs.has(childFbtConstructName)
+            !isConcreteFbtNode(childFbtConstructName)
           ) {
             return;
           }
@@ -580,7 +571,7 @@ export default class FbtFunctionCallProcessor {
               nodeChecker.getFbtConstructNameFromFunctionCall(parentNode);
             if (
               parentFbtConstructName &&
-              constructs.has(parentFbtConstructName)
+              isConcreteFbtNode(parentFbtConstructName)
             ) {
               throw errorAt(
                 parentNode,

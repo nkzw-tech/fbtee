@@ -22,7 +22,7 @@ import type {
 import type FbtEnumNode from './FbtEnumNode.tsx';
 import type FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
 import type FbtNameNode from './FbtNameNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
+import { FbtNodeType, getNodeType } from './FbtNodeType.tsx';
 import type FbtParamNode from './FbtParamNode.tsx';
 import type FbtPluralNode from './FbtPluralNode.tsx';
 import type FbtPronounNode from './FbtPronounNode.tsx';
@@ -335,11 +335,9 @@ export default class FbtNode<
    * NOTE: this only represents the current node but not its children!
    */
   toPlainFbtNode(): PlainFbtNode {
-    const type =
-      FbtNodeType[
-        (this.constructor as unknown as { type: 'string' })
-          .type as unknown as FbtNodeType
-      ];
+    const type = getNodeType(
+      (this.constructor as unknown as { type: 'string' }).type
+    );
     invariant(
       type != null,
       'Expected instance constructor.type property to be a string instead of `%s`',

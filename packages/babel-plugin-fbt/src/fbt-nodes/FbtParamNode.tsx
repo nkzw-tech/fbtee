@@ -73,7 +73,7 @@ export default class FbtParamNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Param;
+  static readonly type: FbtNodeType = 'param';
 
   override getOptions(): Options {
     try {

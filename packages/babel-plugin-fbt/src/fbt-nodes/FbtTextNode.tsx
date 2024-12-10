@@ -25,7 +25,7 @@ export default class FbtTextNode extends FbtNode<
   null,
   null
 > {
-  static readonly type: FbtNodeType = FbtNodeType.Text;
+  static readonly type: FbtNodeType = 'text';
 
   /**
    * Create a new class instance given a BabelNode root node.
