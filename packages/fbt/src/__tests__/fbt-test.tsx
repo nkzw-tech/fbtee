@@ -1,7 +1,7 @@
 /// <reference types="../ReactTypes.d.ts" />
 
 import { render } from '@testing-library/react';
-import * as React from 'react';
+import { Children, Component } from 'react';
 import { fbt } from '..';
 import getFbtResult from '../__mocks__/getFbtResult';
 import fbtInternal from '../fbt';
@@ -29,7 +29,7 @@ describe('fbt', () => {
     });
   });
 
-  it('should memoize new strings', function () {
+  it('should memoize new strings', () => {
     expect(fbtInternal._getCachedFbt('sample string')).toEqual(undefined);
 
     expect(fbtInternal._('sample string')).toEqual(
@@ -37,17 +37,17 @@ describe('fbt', () => {
     );
   });
 
-  it('should trivially handle tokenless strings', function () {
+  it('should trivially handle tokenless strings', () => {
     expect(fbt('without tokens', 'test')).toEqual('without tokens');
   });
 
-  it('should handle common strings', function () {
+  it('should handle common strings', () => {
     expect(fbt.c('Accept')).toEqual(
       fbt('Accept', 'Button/Link: Accept conditions')
     );
   });
 
-  it('should replace tokens with named values', function () {
+  it('should replace tokens with named values', () => {
     expect(
       fbt('with token ' + fbt.param('token', 'A') + ' here', 'test')
     ).toEqual('with token A here');
@@ -63,7 +63,7 @@ describe('fbt', () => {
     ).toEqual('with tokens A and B');
   });
 
-  it('should remove punctuation when a value ends with it', function () {
+  it('should remove punctuation when a value ends with it', () => {
     expect(fbt('Play ' + fbt.param('game', 'Chess!') + '!', 'test')).toEqual(
       'Play Chess!'
     );
@@ -72,7 +72,7 @@ describe('fbt', () => {
     ).toEqual("What's on your mind T.J.?");
   });
 
-  it('should allow values that look like token patterns', function () {
+  it('should allow values that look like token patterns', () => {
     expect(
       fbt(
         'with tokens ' +
@@ -85,7 +85,7 @@ describe('fbt', () => {
     ).toEqual('with tokens {tokenB} and B');
   });
 
-  it('should support objects as token values', function () {
+  it('should support objects as token values', () => {
     // We expect that this returns an opaque React fragment instead of an array.
     // We use this to preserve identity of nested React elements.
     const argument = <div />;
@@ -94,25 +94,25 @@ describe('fbt', () => {
       'test'
     );
     const items: Array<string | IFbtResultBase> = [];
-    React.Children.forEach(fragment, function (item) {
+    Children.forEach(fragment, (item) => {
       items.push(item);
     });
     expect(items).toEqual(['with token ', argument, ' here']);
   });
 
-  it('should render empty string for null values', function () {
+  it('should render empty string for null values', () => {
     expect(fbt(fbt.param('null_value', null), 'test')).toEqual('');
   });
 
-  it('should render empty string for undefined values', function () {
+  it('should render empty string for undefined values', () => {
     expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual('');
   });
 
   // React/fbt integration tests
   type Props = Readonly<{
-    value: string;
     childA: React.ReactNode;
     childB: React.ReactNode;
+    value: string;
   }>;
 
   function _render(
@@ -139,13 +139,13 @@ describe('fbt', () => {
     return <div>{fbtFragment}</div>;
   }
 
-  class TestComponent extends React.Component<Props> {
+  class TestComponent extends Component<Props> {
     override render() {
       return _render(this.props.value, this.props.childA, this.props.childB);
     }
   }
 
-  it('should use wildcard defaults', function () {
+  it('should use wildcard defaults', () => {
     expect(
       fbt(
         'with something like ' +
@@ -156,22 +156,22 @@ describe('fbt', () => {
     ).toEqual('with something like 42 wildcards');
   });
 
-  it('should format numeric value', function () {
+  it('should format numeric value', () => {
     expect(
       fbt(
-        'A total amount is ' + fbt.param('count', 10000, { number: true }),
+        'A total amount is ' + fbt.param('count', 10_000, { number: true }),
         'Test string'
       )
     ).toEqual('A total amount is 10,000');
   });
 
-  it('should keep literal value as is', function () {
+  it('should keep literal value as is', () => {
     expect(
-      fbt('A total amount is ' + fbt.param('count', 10000), 'Test string')
+      fbt('A total amount is ' + fbt.param('count', 10_000), 'Test string')
     ).toEqual('A total amount is 10000');
   });
 
-  it('should not warn when unkeyed React components are params', function () {
+  it('should not warn when unkeyed React components are params', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const { container } = render(
       <TestComponent childA={<div />} childB={<div />} value="A" />
@@ -201,7 +201,7 @@ describe('fbt', () => {
     expect(nodeA.children[1].innerHTML).toBe(nodeB.children[0].innerHTML);
   }
 
-  it('should retain React identity when sentence order changes', function () {
+  it('should retain React identity when sentence order changes', () => {
     expectChildSetsToRetainIdentity(<div key="A" />, <div key="B" />);
   });
 
@@ -265,7 +265,7 @@ describe('fbt', () => {
     });
   });
 
-  it('should create a tuple for fbt.subject if valid', function () {
+  it('should create a tuple for fbt.subject if valid', () => {
     expect(fbtInternal._subject(GenderConst.MALE_SINGULAR)).toEqual([
       [GenderConst.MALE_SINGULAR, '*'],
       null,
@@ -273,13 +273,13 @@ describe('fbt', () => {
     expect(() => fbtInternal._subject(0)).toThrow('Invalid gender provided');
   });
 
-  it('should leave non-QuickTranslation strings alone', function () {
+  it('should leave non-QuickTranslation strings alone', () => {
     expect(
       fbtInternal._(["This isn't", '8b0c31a270a324f26d2417a358106612'])
     ).toEqual("This isn't");
   });
 
-  it('should access table with multiple tokens containing subject', function () {
+  it('should access table with multiple tokens containing subject', () => {
     expect(
       fbt(
         'Invited by ' + fbt.plural('friend', 1, { showCount: 'yes' }) + '.',
@@ -292,7 +292,7 @@ describe('fbt', () => {
   it('should defer to FbtHooks.getTranslatedInput', () => {
     FbtHooks.register({
       getTranslatedInput(_input: FbtRuntimeCallInput): FbtTranslatedInput {
-        return { table: 'ALL YOUR TRANSLATION ARE BELONG TO US', args: null };
+        return { args: null, table: 'ALL YOUR TRANSLATION ARE BELONG TO US' };
       },
     });
     expect(fbtInternal._('sample string', null, null)).toEqual(
@@ -379,8 +379,8 @@ describe('fbt', () => {
             <a href="#link">
               <fbt:enum
                 enum-range={{
-                  photo: 'photo',
                   comment: 'comment',
+                  photo: 'photo',
                 }}
                 value={object}
               />
@@ -399,14 +399,17 @@ describe('fbt', () => {
     // console.warn('getFbt = \n----\n%s\n----\n', getFbt + '');
 
     const combinations: {
+      counts: Array<number>;
+      objects: Array<'photo' | 'comment'>;
+      ownerGenders: Array<keyof typeof GenderConst>;
       viewers: Array<{
         gender: IntlVariations;
         name: string;
       }>;
-      ownerGenders: Array<keyof typeof GenderConst>;
-      objects: Array<'photo' | 'comment'>;
-      counts: Array<number>;
     } = {
+      counts: [1, 10],
+      objects: ['photo', 'comment'],
+      ownerGenders: ['FEMALE_SINGULAR', 'MALE_SINGULAR', 'UNKNOWN_PLURAL'],
       viewers: [
         {
           gender: IntlVariations.GENDER_MALE,
@@ -421,9 +424,6 @@ describe('fbt', () => {
           name: 'Kim',
         },
       ],
-      ownerGenders: ['FEMALE_SINGULAR', 'MALE_SINGULAR', 'UNKNOWN_PLURAL'],
-      objects: ['photo', 'comment'],
-      counts: [1, 10],
     };
 
     combinations.viewers.forEach((viewer) =>
@@ -434,10 +434,10 @@ describe('fbt', () => {
               it(`should produce proper nested fbt results`, () => {
                 expect(
                   getFbt({
-                    viewer,
-                    ownerGender,
-                    object,
                     count,
+                    object,
+                    ownerGender,
+                    viewer,
                   })
                 ).toMatchSnapshot();
               }))

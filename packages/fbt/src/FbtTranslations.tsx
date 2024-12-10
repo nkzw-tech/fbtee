@@ -15,6 +15,10 @@ let currentTranslations: TranslationDict = {};
 const defaultLocale = 'en_US';
 
 export default {
+  getRegisteredTranslations(): TranslationDict {
+    return currentTranslations;
+  },
+
   getTranslatedInput(
     input: FbtRuntimeCallInput
   ): FbtTranslatedInput | null | undefined {
@@ -24,7 +28,8 @@ export default {
     const table = currentTranslations[locale];
     if (process.env.NODE_ENV === 'development') {
       if (!table && locale !== defaultLocale) {
-        console.warn('Translations have not been provided');
+        // eslint-disable-next-line no-console
+        console.warn('Translations have not been provided.');
       }
     }
 
@@ -32,17 +37,9 @@ export default {
       return null;
     }
     return {
-      table: table[hashKey],
       args,
+      table: table[hashKey],
     };
-  },
-
-  registerTranslations(translations: TranslationDict): undefined {
-    currentTranslations = translations;
-  },
-
-  getRegisteredTranslations(): TranslationDict {
-    return currentTranslations;
   },
 
   mergeTranslations(newTranslations: TranslationDict): undefined {
@@ -52,5 +49,9 @@ export default {
         newTranslations[locale]
       );
     });
+  },
+
+  registerTranslations(translations: TranslationDict): undefined {
+    currentTranslations = translations;
   },
 };

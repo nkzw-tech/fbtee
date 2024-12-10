@@ -3,511 +3,506 @@ import { Options, processJSON } from '../translateUtils';
 
 expect.addSnapshotSerializer(jsCodeNonASCIICharSerializer);
 
+function testTranslateNewPhrases(options: Options) {
+  it('should not throw on missing translations', () => {
+    const result = processJSON(
+      {
+        phrases: [
+          {
+            col_beg: 12,
+            col_end: 49,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                desc: 'title',
+                text: 'Your FBT Demo',
+              },
+            },
+            jsfbt: {
+              m: [],
+              t: {
+                desc: 'title',
+                text: 'Your FBT Demo',
+                tokenAliases: {},
+              },
+            },
+            line_beg: 130,
+            line_end: 130,
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': null,
+            },
+          },
+        ],
+      },
+      options
+    );
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should translate string with no variation', () => {
+    const result = processJSON(
+      {
+        phrases: [
+          {
+            col_beg: 12,
+            col_end: 49,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                desc: 'title',
+                text: 'Your FBT Demo',
+              },
+            },
+            jsfbt: {
+              m: [],
+              t: {
+                desc: 'title',
+                text: 'Your FBT Demo',
+                tokenAliases: {},
+              },
+            },
+            line_beg: 130,
+            line_end: 130,
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'Translation data for Your FBT Demo',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+            },
+          },
+        ],
+      },
+      options
+    );
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should translate string with variations and inner strings', () => {
+    const result = processJSON(
+      {
+        phrases: [
+          {
+            col_beg: 8,
+            col_end: 14,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              'PqPPir8Kg9xSlqdednPFOg==': {
+                desc: 'example 1',
+                text: '{name} has shared {=a photo} with you. View a photo',
+              },
+              'gVKMc/8jq5vnYR5v2bb32g==': {
+                desc: 'example 1',
+                text: '{name} has shared {=[number] photos} with you. View =[number] photos',
+              },
+            },
+            jsfbt: {
+              m: [
+                {
+                  token: 'name',
+                  type: 1,
+                },
+                {
+                  singular: true,
+                  token: 'number',
+                  type: 2,
+                },
+              ],
+              t: {
+                '*': {
+                  '*': {
+                    desc: 'example 1',
+                    text: '{name} has shared {=[number] photos} with you. View =[number] photos',
+                    tokenAliases: {
+                      '=[number] photos': '=m2',
+                    },
+                  },
+                  _1: {
+                    desc: 'example 1',
+                    text: '{name} has shared {=a photo} with you. View a photo',
+                    tokenAliases: {
+                      '=a photo': '=m2',
+                    },
+                  },
+                },
+              },
+            },
+            line_beg: 127,
+            line_end: 142,
+            project: 'fbt-demo-project',
+          },
+          {
+            col_beg: 10,
+            col_end: 14,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '/gj3gwqx1z8Xw233oZgOpQ==': {
+                desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
+                text: '{number} photos',
+              },
+              '8UZCD6gFUKN+U5UUo1I3/w==': {
+                desc: 'In the phrase: "{name} has shared {=a photo} with you. View a photo"',
+                text: 'a photo',
+              },
+            },
+            jsfbt: {
+              m: [
+                {
+                  token: 'name',
+                  type: 1,
+                },
+                {
+                  singular: true,
+                  token: 'number',
+                  type: 2,
+                },
+              ],
+              t: {
+                '*': {
+                  '*': {
+                    desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
+                    text: '{number} photos',
+                    tokenAliases: {},
+                  },
+                  _1: {
+                    desc: 'In the phrase: "{name} has shared {=a photo} with you. View a photo"',
+                    text: 'a photo',
+                    tokenAliases: {},
+                  },
+                },
+              },
+            },
+            line_beg: 133,
+            line_end: 140,
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '/gj3gwqx1z8Xw233oZgOpQ==': {
+                tokens: [],
+                translations: [
+                  {
+                    id: 107_911_344,
+                    translation: 'translation is: {number} photos',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              '8UZCD6gFUKN+U5UUo1I3/w==': {
+                tokens: [],
+                translations: [
+                  {
+                    id: 107_911_340,
+                    translation: 'translation is: a photo',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              'PqPPir8Kg9xSlqdednPFOg==': {
+                tokens: ['name'],
+                translations: [
+                  {
+                    id: 108_537_963,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
+                    variations: { '0': 2 },
+                  },
+                  {
+                    id: 108_537_953,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
+                    variations: { '0': 1 },
+                  },
+                  {
+                    id: 108_537_972,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
+                    variations: { '0': 3 },
+                  },
+                ],
+                types: [3],
+              },
+              'gVKMc/8jq5vnYR5v2bb32g==': {
+                tokens: ['name'],
+                translations: [
+                  {
+                    id: 108_537_963,
+                    translation:
+                      'translation is: {name} has shared {=[number] photos}. View =[number] photos',
+                    variations: { '0': 2 },
+                  },
+                  {
+                    id: 108_537_953,
+                    translation:
+                      'translation is: {name} has shared {=[number] photos}. View =[number] photos',
+                    variations: { '0': 1 },
+                  },
+                  {
+                    id: 108_537_972,
+                    translation:
+                      'translation is: {name} has shared {=[number] photos}. View =[number] photos',
+                    variations: { '0': 3 },
+                  },
+                ],
+                types: [3],
+              },
+            },
+          },
+        ],
+      },
+      options
+    );
+    expect(result).toMatchSnapshot();
+  });
+
+  it(
+    'should translate string with metadata entries that create no ' +
+      'hidden variation. Note: this string was collected in RN mode.',
+    () => {
+      const result = processJSON(
+        {
+          phrases: [
+            {
+              col_beg: 6,
+              col_end: 12,
+              filepath: 'src/example/Example.react.js',
+              hashToLeaf: {
+                'j9fTl1uOEIuslim41sMkdQ==': {
+                  desc: 'Example enum',
+                  text: 'he shared a photo.',
+                },
+                'sNncqVnQfCGCeJNXsLObVw==': {
+                  desc: 'Example enum',
+                  text: 'they shared a photo.',
+                },
+                'vHtEb4ph7GJGeRkjtEHcPA==': {
+                  desc: 'Example enum',
+                  text: 'she shared a photo.',
+                },
+              },
+              jsfbt: {
+                m: [
+                  {
+                    type: 3,
+                  },
+                ],
+                t: {
+                  '*': {
+                    desc: 'Example enum',
+                    text: 'they shared a photo.',
+                  },
+                  '1': {
+                    desc: 'Example enum',
+                    text: 'she shared a photo.',
+                  },
+                  '2': {
+                    desc: 'Example enum',
+                    text: 'he shared a photo.',
+                  },
+                },
+              },
+              line_beg: 127,
+              line_end: 130,
+              project: 'fbt-demo-project',
+            },
+          ],
+          translationGroups: [
+            {
+              'fb-locale': 'fb_HX',
+              translations: {
+                'j9fTl1uOEIuslim41sMkdQ==': {
+                  tokens: [],
+                  translations: [
+                    {
+                      translation: 'translation is: he shared a photo',
+                      variations: {},
+                    },
+                  ],
+                  types: [],
+                },
+                'sNncqVnQfCGCeJNXsLObVw==': {
+                  tokens: [],
+                  translations: [
+                    {
+                      translation: 'translation is: they shared a photo',
+                      variations: {},
+                    },
+                  ],
+                  types: [],
+                },
+                'vHtEb4ph7GJGeRkjtEHcPA==': {
+                  tokens: [],
+                  translations: [
+                    {
+                      translation: 'translation is: she shared a photo',
+                      variations: {},
+                    },
+                  ],
+                  types: [],
+                },
+              },
+            },
+          ],
+        },
+        options
+      );
+      expect(result).toMatchSnapshot();
+    }
+  );
+
+  it('should translate string with enum', () => {
+    const result = processJSON(
+      {
+        phrases: [
+          {
+            col_beg: 6,
+            col_end: 12,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '/3R5GnCZ5eU3EgRAiLf1vA==': {
+                desc: 'Example enum',
+                text: '{name} has a photo to share! View photo.',
+              },
+              '/giEGYE5cqdJVvtszgdPLg==': {
+                desc: 'Example enum',
+                text: '{name} has a video to share! View video.',
+              },
+              '2PhpGvvUtmT5RTpv8Kqf0w==': {
+                desc: 'Example enum',
+                text: '{name} has a link to share! View link.',
+              },
+              'nwcWZzo5dAQX38+P1IaY6A==': {
+                desc: 'Example enum',
+                text: '{name} has a page to share! View page.',
+              },
+              'wGYWno21D5FWihP/v0boFw==': {
+                desc: 'Example enum',
+                text: '{name} has a post to share! View post.',
+              },
+            },
+            jsfbt: {
+              m: [null],
+              t: {
+                LINK: {
+                  desc: 'Example enum',
+                  text: '{name} has a link to share! View link.',
+                },
+                PAGE: {
+                  desc: 'Example enum',
+                  text: '{name} has a page to share! View page.',
+                },
+                PHOTO: {
+                  desc: 'Example enum',
+                  text: '{name} has a photo to share! View photo.',
+                },
+                POST: {
+                  desc: 'Example enum',
+                  text: '{name} has a post to share! View post.',
+                },
+                VIDEO: {
+                  desc: 'Example enum',
+                  text: '{name} has a video to share! View video.',
+                },
+              },
+            },
+            line_beg: 127,
+            line_end: 133,
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '/3R5GnCZ5eU3EgRAiLf1vA==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: {name} has a photo to share',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              '/giEGYE5cqdJVvtszgdPLg==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: {name} has a video to share',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              '2PhpGvvUtmT5RTpv8Kqf0w==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: {name} has a link to share',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              'nwcWZzo5dAQX38+P1IaY6A==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: {name} has a page to share',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              'wGYWno21D5FWihP/v0boFw==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: {name} has a post to share',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+            },
+          },
+        ],
+      },
+      options
+    );
+    expect(result).toMatchSnapshot();
+  });
+}
+
 describe('translate-test.js', () => {
   describe('should translate new jsfbt payload', () => {
     for (const options of [
-      { jenkins: false, hashModule: false, strict: false } as const,
+      { hashModule: false, jenkins: false, strict: false } as const,
     ]) {
       describe(`with option=${JSON.stringify(options)}:`, () => {
         testTranslateNewPhrases(options);
-      });
-    }
-
-    function testTranslateNewPhrases(options: Options) {
-      it('should not throw on missing translations', () => {
-        const result = processJSON(
-          {
-            phrases: [
-              {
-                hashToLeaf: {
-                  '2dcba29d4a842c6be5d76fe996fcd9f4': {
-                    text: 'Your FBT Demo',
-                    desc: 'title',
-                  },
-                },
-                filepath: 'src/example/Example.react.js',
-                line_beg: 130,
-                col_beg: 12,
-                line_end: 130,
-                col_end: 49,
-                project: 'fbt-demo-project',
-                jsfbt: {
-                  t: {
-                    desc: 'title',
-                    text: 'Your FBT Demo',
-                    tokenAliases: {},
-                  },
-                  m: [],
-                },
-              },
-            ],
-            translationGroups: [
-              {
-                'fb-locale': 'fb_HX',
-                translations: {
-                  '2dcba29d4a842c6be5d76fe996fcd9f4': null,
-                },
-              },
-            ],
-          },
-          options
-        );
-        expect(result).toMatchSnapshot();
-      });
-
-      it('should translate string with no variation', () => {
-        const result = processJSON(
-          {
-            phrases: [
-              {
-                hashToLeaf: {
-                  '2dcba29d4a842c6be5d76fe996fcd9f4': {
-                    text: 'Your FBT Demo',
-                    desc: 'title',
-                  },
-                },
-                filepath: 'src/example/Example.react.js',
-                line_beg: 130,
-                col_beg: 12,
-                line_end: 130,
-                col_end: 49,
-                project: 'fbt-demo-project',
-                jsfbt: {
-                  t: {
-                    desc: 'title',
-                    text: 'Your FBT Demo',
-                    tokenAliases: {},
-                  },
-                  m: [],
-                },
-              },
-            ],
-            translationGroups: [
-              {
-                'fb-locale': 'fb_HX',
-                translations: {
-                  '2dcba29d4a842c6be5d76fe996fcd9f4': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation: 'Translation data for Your FBT Demo',
-                        variations: {},
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
-          },
-          options
-        );
-        expect(result).toMatchSnapshot();
-      });
-
-      it('should translate string with variations and inner strings', () => {
-        const result = processJSON(
-          {
-            phrases: [
-              {
-                hashToLeaf: {
-                  'gVKMc/8jq5vnYR5v2bb32g==': {
-                    text: '{name} has shared {=[number] photos} with you. View =[number] photos',
-                    desc: 'example 1',
-                  },
-                  'PqPPir8Kg9xSlqdednPFOg==': {
-                    text: '{name} has shared {=a photo} with you. View a photo',
-                    desc: 'example 1',
-                  },
-                },
-                filepath: 'src/example/Example.react.js',
-                line_beg: 127,
-                col_beg: 8,
-                line_end: 142,
-                col_end: 14,
-                project: 'fbt-demo-project',
-                jsfbt: {
-                  t: {
-                    '*': {
-                      '*': {
-                        desc: 'example 1',
-                        text: '{name} has shared {=[number] photos} with you. View =[number] photos',
-                        tokenAliases: {
-                          '=[number] photos': '=m2',
-                        },
-                      },
-                      _1: {
-                        desc: 'example 1',
-                        text: '{name} has shared {=a photo} with you. View a photo',
-                        tokenAliases: {
-                          '=a photo': '=m2',
-                        },
-                      },
-                    },
-                  },
-                  m: [
-                    {
-                      token: 'name',
-                      type: 1,
-                    },
-                    {
-                      token: 'number',
-                      type: 2,
-                      singular: true,
-                    },
-                  ],
-                },
-              },
-              {
-                hashToLeaf: {
-                  '/gj3gwqx1z8Xw233oZgOpQ==': {
-                    text: '{number} photos',
-                    desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
-                  },
-                  '8UZCD6gFUKN+U5UUo1I3/w==': {
-                    text: 'a photo',
-                    desc: 'In the phrase: "{name} has shared {=a photo} with you. View a photo"',
-                  },
-                },
-                filepath: 'src/example/Example.react.js',
-                line_beg: 133,
-                col_beg: 10,
-                line_end: 140,
-                col_end: 14,
-                project: 'fbt-demo-project',
-                jsfbt: {
-                  t: {
-                    '*': {
-                      '*': {
-                        desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
-                        text: '{number} photos',
-                        tokenAliases: {},
-                      },
-                      _1: {
-                        desc: 'In the phrase: "{name} has shared {=a photo} with you. View a photo"',
-                        text: 'a photo',
-                        tokenAliases: {},
-                      },
-                    },
-                  },
-                  m: [
-                    {
-                      token: 'name',
-                      type: 1,
-                    },
-                    {
-                      token: 'number',
-                      type: 2,
-                      singular: true,
-                    },
-                  ],
-                },
-              },
-            ],
-            translationGroups: [
-              {
-                'fb-locale': 'fb_HX',
-                translations: {
-                  'gVKMc/8jq5vnYR5v2bb32g==': {
-                    tokens: ['name'],
-                    types: [3],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has shared {=[number] photos}. View =[number] photos',
-                        id: 108537963,
-                        variations: { '0': 2 },
-                      },
-                      {
-                        translation:
-                          'translation is: {name} has shared {=[number] photos}. View =[number] photos',
-                        id: 108537953,
-                        variations: { '0': 1 },
-                      },
-                      {
-                        translation:
-                          'translation is: {name} has shared {=[number] photos}. View =[number] photos',
-                        id: 108537972,
-                        variations: { '0': 3 },
-                      },
-                    ],
-                  },
-                  'PqPPir8Kg9xSlqdednPFOg==': {
-                    tokens: ['name'],
-                    types: [3],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has shared {=a photo}. View a photo',
-                        id: 108537963,
-                        variations: { '0': 2 },
-                      },
-                      {
-                        translation:
-                          'translation is: {name} has shared {=a photo}. View a photo',
-                        id: 108537953,
-                        variations: { '0': 1 },
-                      },
-                      {
-                        translation:
-                          'translation is: {name} has shared {=a photo}. View a photo',
-                        id: 108537972,
-                        variations: { '0': 3 },
-                      },
-                    ],
-                  },
-                  '/gj3gwqx1z8Xw233oZgOpQ==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation: 'translation is: {number} photos',
-                        id: 107911344,
-                        variations: {},
-                      },
-                    ],
-                  },
-                  '8UZCD6gFUKN+U5UUo1I3/w==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation: 'translation is: a photo',
-                        id: 107911340,
-                        variations: {},
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
-          },
-          options
-        );
-        expect(result).toMatchSnapshot();
-      });
-
-      it(
-        'should translate string with metadata entries that create no ' +
-          'hidden variation. Note: this string was collected in RN mode.',
-        () => {
-          const result = processJSON(
-            {
-              phrases: [
-                {
-                  hashToLeaf: {
-                    'vHtEb4ph7GJGeRkjtEHcPA==': {
-                      text: 'she shared a photo.',
-                      desc: 'Example enum',
-                    },
-                    'j9fTl1uOEIuslim41sMkdQ==': {
-                      text: 'he shared a photo.',
-                      desc: 'Example enum',
-                    },
-                    'sNncqVnQfCGCeJNXsLObVw==': {
-                      text: 'they shared a photo.',
-                      desc: 'Example enum',
-                    },
-                  },
-                  filepath: 'src/example/Example.react.js',
-                  line_beg: 127,
-                  col_beg: 6,
-                  line_end: 130,
-                  col_end: 12,
-                  project: 'fbt-demo-project',
-                  jsfbt: {
-                    t: {
-                      '1': {
-                        desc: 'Example enum',
-                        text: 'she shared a photo.',
-                      },
-                      '2': {
-                        desc: 'Example enum',
-                        text: 'he shared a photo.',
-                      },
-                      '*': {
-                        desc: 'Example enum',
-                        text: 'they shared a photo.',
-                      },
-                    },
-                    m: [
-                      {
-                        type: 3,
-                      },
-                    ],
-                  },
-                },
-              ],
-              translationGroups: [
-                {
-                  'fb-locale': 'fb_HX',
-                  translations: {
-                    'vHtEb4ph7GJGeRkjtEHcPA==': {
-                      tokens: [],
-                      types: [],
-                      translations: [
-                        {
-                          translation: 'translation is: she shared a photo',
-                          variations: {},
-                        },
-                      ],
-                    },
-                    'j9fTl1uOEIuslim41sMkdQ==': {
-                      tokens: [],
-                      types: [],
-                      translations: [
-                        {
-                          translation: 'translation is: he shared a photo',
-                          variations: {},
-                        },
-                      ],
-                    },
-                    'sNncqVnQfCGCeJNXsLObVw==': {
-                      tokens: [],
-                      types: [],
-                      translations: [
-                        {
-                          translation: 'translation is: they shared a photo',
-                          variations: {},
-                        },
-                      ],
-                    },
-                  },
-                },
-              ],
-            },
-            options
-          );
-          expect(result).toMatchSnapshot();
-        }
-      );
-
-      it('should translate string with enum', () => {
-        const result = processJSON(
-          {
-            phrases: [
-              {
-                hashToLeaf: {
-                  '2PhpGvvUtmT5RTpv8Kqf0w==': {
-                    text: '{name} has a link to share! View link.',
-                    desc: 'Example enum',
-                  },
-                  'nwcWZzo5dAQX38+P1IaY6A==': {
-                    text: '{name} has a page to share! View page.',
-                    desc: 'Example enum',
-                  },
-                  '/3R5GnCZ5eU3EgRAiLf1vA==': {
-                    text: '{name} has a photo to share! View photo.',
-                    desc: 'Example enum',
-                  },
-                  'wGYWno21D5FWihP/v0boFw==': {
-                    text: '{name} has a post to share! View post.',
-                    desc: 'Example enum',
-                  },
-                  '/giEGYE5cqdJVvtszgdPLg==': {
-                    text: '{name} has a video to share! View video.',
-                    desc: 'Example enum',
-                  },
-                },
-                filepath: 'src/example/Example.react.js',
-                line_beg: 127,
-                col_beg: 6,
-                line_end: 133,
-                col_end: 12,
-                project: 'fbt-demo-project',
-                jsfbt: {
-                  t: {
-                    LINK: {
-                      desc: 'Example enum',
-                      text: '{name} has a link to share! View link.',
-                    },
-                    PAGE: {
-                      desc: 'Example enum',
-                      text: '{name} has a page to share! View page.',
-                    },
-                    PHOTO: {
-                      desc: 'Example enum',
-                      text: '{name} has a photo to share! View photo.',
-                    },
-                    POST: {
-                      desc: 'Example enum',
-                      text: '{name} has a post to share! View post.',
-                    },
-                    VIDEO: {
-                      desc: 'Example enum',
-                      text: '{name} has a video to share! View video.',
-                    },
-                  },
-                  m: [null],
-                },
-              },
-            ],
-            translationGroups: [
-              {
-                'fb-locale': 'fb_HX',
-                translations: {
-                  '2PhpGvvUtmT5RTpv8Kqf0w==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has a link to share',
-                        variations: {},
-                      },
-                    ],
-                  },
-                  'nwcWZzo5dAQX38+P1IaY6A==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has a page to share',
-                        variations: {},
-                      },
-                    ],
-                  },
-                  '/3R5GnCZ5eU3EgRAiLf1vA==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has a photo to share',
-                        variations: {},
-                      },
-                    ],
-                  },
-                  'wGYWno21D5FWihP/v0boFw==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has a post to share',
-                        variations: {},
-                      },
-                    ],
-                  },
-                  '/giEGYE5cqdJVvtszgdPLg==': {
-                    tokens: [],
-                    types: [],
-                    translations: [
-                      {
-                        translation:
-                          'translation is: {name} has a video to share',
-                        variations: {},
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
-          },
-          options
-        );
-        expect(result).toMatchSnapshot();
       });
     }
   });

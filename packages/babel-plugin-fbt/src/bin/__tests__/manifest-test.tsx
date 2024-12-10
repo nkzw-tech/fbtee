@@ -1,9 +1,4 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- */
-
-import path from 'path';
+import path from 'node:path';
 import { generateManifest } from '../manifestUtils';
 
 describe('manifest', () => {

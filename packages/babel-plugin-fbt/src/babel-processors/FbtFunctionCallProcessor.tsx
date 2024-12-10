@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer';
+import { Buffer } from 'node:buffer';
 import type { NodePath } from '@babel/core';
 import {
   ArgumentPlaceholder,
@@ -72,11 +72,11 @@ export type MetaPhrase = {
   compactStringVariations: CompactStringVariations;
   // FbtNode abstraction whose phrase's data comes from
   fbtNode: FbtElementNode | FbtImplicitParamNode;
-  // Phrase data
-  phrase: FbtFunctionCallPhrase;
   // Index of the outer-phrase (assuming that the current phrase is an inner-phrase)
   // If the current phrase is the top-level phrase, it won't be defined.
   parentIndex: number | null | undefined;
+  // Phrase data
+  phrase: FbtFunctionCallPhrase;
 };
 
 type CompactStringVariations = {
@@ -120,11 +120,11 @@ export default class FbtFunctionCallProcessor {
     validFbtExtraOptions,
   }: {
     defaultFbtOptions: FbtCallSiteOptions;
-    validFbtExtraOptions: Readonly<FbtOptionConfig>;
     fileSource: string;
     nodeChecker: FbtNodeChecker;
     path: CallExpressionPath;
     pluginOptions: PluginOptions;
+    validFbtExtraOptions: Readonly<FbtOptionConfig>;
   }) {
     this.defaultFbtOptions = defaultFbtOptions;
     this.validFbtExtraOptions = validFbtExtraOptions;
@@ -144,20 +144,20 @@ export default class FbtFunctionCallProcessor {
     validFbtExtraOptions,
   }: {
     defaultFbtOptions: FbtCallSiteOptions;
-    validFbtExtraOptions: Readonly<FbtOptionConfig>;
     fileSource: string;
     path: CallExpressionPath;
     pluginOptions: PluginOptions;
+    validFbtExtraOptions: Readonly<FbtOptionConfig>;
   }): FbtFunctionCallProcessor | null | undefined {
     const nodeChecker = FbtNodeChecker.forFbtFunctionCall(path.node);
     return nodeChecker != null
       ? new FbtFunctionCallProcessor({
           defaultFbtOptions,
-          validFbtExtraOptions,
           fileSource,
           nodeChecker,
           path,
           pluginOptions,
+          validFbtExtraOptions,
         })
       : null;
   }
@@ -455,9 +455,8 @@ export default class FbtFunctionCallProcessor {
           const phrase = {
             ...sharedPhraseOptions,
             jsfbt: {
-              // the order of JSFBT props matter for unit tests
-              t: {},
               m: jsfbtMetadata,
+              t: {},
             },
           };
           const svArgsMapList: Array<StringVariationArgsMap> = [];
@@ -766,9 +765,9 @@ export default class FbtFunctionCallProcessor {
         (fbtElementOptions.preserveWhitespace ??
           enforceBoolean.orNull(defaultFbtOptions.preserveWhitespace)) ||
         null,
-      subject: fbtElementOptions.subject,
       project:
         fbtElementOptions.project || enforceString(defaultFbtOptions.project),
+      subject: fbtElementOptions.subject,
     } as const;
     // delete nullish options
     for (const k in ret) {

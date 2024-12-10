@@ -1,10 +1,4 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- */
-
-import path from 'path';
-import { CollectFbtOutput } from '../collectFbt';
+import path from 'node:path';
 import packagerTypes from '../collectFbtConstants';
 import {
   buildCollectFbtOutput,
@@ -14,48 +8,43 @@ import {
 
 const fbtCommonPath = path.resolve(__dirname, 'FbtCommonForTests.json');
 
+async function collect(
+  source: Array<[string, string]> | string,
+  options: {
+    customCollector?: string;
+    genFbtNodes?: boolean;
+    genOuterTokenName?: boolean;
+    packagerType?: string;
+  } = {}
+) {
+  const opts = {
+    fbtCommonPath,
+    generateOuterTokenName: options?.genOuterTokenName,
+    plugins: [],
+    presets: [],
+    transform: null,
+  };
+  const fbtCollector = await getFbtCollector(
+    opts,
+    {},
+    options?.customCollector
+  );
+  const packager = options.packagerType ?? packagerTypes.NONE;
+  const packagers = await getPackagers(
+    packager,
+    path.join(__dirname, '../md5')
+  );
+
+  await (Array.isArray(source)
+    ? fbtCollector.collectFromFiles(source)
+    : fbtCollector.collectFromOneFile(source, 'test.js'));
+
+  return buildCollectFbtOutput(fbtCollector, packagers, {
+    genFbtNodes: !!options.genFbtNodes,
+  });
+}
+
 describe('collectFbt', () => {
-  async function collect(
-    source: Array<[string, string]> | string,
-    options: {
-      genOuterTokenName?: boolean;
-      customCollector?: string;
-      packagerType?: string;
-      genFbtNodes?: boolean;
-    } = {}
-  ) {
-    const opts = {
-      generateOuterTokenName: options?.genOuterTokenName,
-      plugins: [],
-      presets: [],
-      transform: null,
-      fbtCommonPath,
-    };
-    const fbtCollector = await getFbtCollector(
-      opts,
-      {},
-      options?.customCollector
-    );
-    const packager = options.packagerType ?? packagerTypes.NONE;
-    const packagers = await getPackagers(
-      packager,
-      path.join(__dirname, '../md5')
-    );
-
-    if (Array.isArray(source)) {
-      await fbtCollector.collectFromFiles(source);
-    } else {
-      await fbtCollector.collectFromOneFile(source, 'test.js');
-    }
-
-    const output = buildCollectFbtOutput(fbtCollector, packagers, {
-      genFbtNodes: !!options.genFbtNodes,
-    });
-
-    // Mimic collectFbt output: strip undefined fields, and normalize objects
-    return JSON.parse(JSON.stringify(output)) as CollectFbtOutput;
-  }
-
   it('should extract fbt strings', async () => {
     const res = await collect(
       'const fbt = require(\'fbt\');<fbt desc="foo">bar</fbt>'
@@ -271,15 +260,15 @@ describe('collectFbt', () => {
   });
 
   it('should throw on invalid template use', async () => {
-    const test = () =>
+    expect(() =>
       collect(
         [
           "const fbt = require('fbt');",
           'const bad = () => {};',
           'fbt(`dont do ${bad()} stuff`, "ok");',
         ].join('\n')
-      );
-    expect(test).rejects.toThrow();
+      )
+    ).rejects.toThrow();
   });
 
   it('should extract strings from a custom collector', async () => {
@@ -371,7 +360,7 @@ describe('collectFbt', () => {
               link
             </a>
           </fbt>`,
-        { packagerType: packagerTypes.TEXT, genFbtNodes: true }
+        { genFbtNodes: true, packagerType: packagerTypes.TEXT }
       );
 
       const { fbtElementNodes } = ret;
@@ -407,7 +396,7 @@ describe('collectFbt', () => {
           </a>
           with you
         </fbt>;`,
-        { packagerType: packagerTypes.TEXT, genFbtNodes: true }
+        { genFbtNodes: true, packagerType: packagerTypes.TEXT }
       );
 
       const { fbtElementNodes } = ret;

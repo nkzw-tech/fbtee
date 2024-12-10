@@ -123,8 +123,8 @@ export default class FbtPluralNode extends FbtNode<
   _branchByNumberVariation<T>(
     argsMap: StringVariationArgsMap,
     scenario: {
-      exactlyOne: () => T;
       anyNumber: () => T;
+      exactlyOne: () => T;
     }
   ): T {
     const svArg = argsMap.get(this);
@@ -154,12 +154,12 @@ export default class FbtPluralNode extends FbtNode<
     argsMap: StringVariationArgsMap
   ): string | null | undefined {
     return this._branchByNumberVariation(argsMap, {
-      exactlyOne: () => null,
       anyNumber: () => {
         return this.options.showCount !== ShowCountKeys.no
           ? this._getStaticTokenName()
           : null;
       },
+      exactlyOne: () => null,
     });
   }
 
@@ -167,15 +167,15 @@ export default class FbtPluralNode extends FbtNode<
     try {
       const { showCount } = this.options;
       return this._branchByNumberVariation(argsMap, {
-        exactlyOne: () =>
-          (showCount === ShowCountKeys.yes ? '1 ' : '') +
-          this._getSingularText(),
         anyNumber: () => {
           const many = this.options.many ?? this._getSingularText() + 's';
           return showCount !== ShowCountKeys.no
             ? tokenNameToTextPattern(this._getStaticTokenName()) + ' ' + many
             : many;
         },
+        exactlyOne: () =>
+          (showCount === ShowCountKeys.yes ? '1 ' : '') +
+          this._getSingularText(),
       });
     } catch (error: any) {
       throw errorAt(this.node, error);

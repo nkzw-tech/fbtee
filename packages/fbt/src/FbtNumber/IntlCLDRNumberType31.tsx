@@ -20,7 +20,7 @@ export default {
       (n % 100 < 90 || n % 100 > 99)
     ) {
       return IntlVariations.NUMBER_FEW;
-    } else if (n !== 0 && n % 1000000 === 0) {
+    } else if (n !== 0 && n % 1_000_000 === 0) {
       return IntlVariations.NUMBER_MANY;
     } else {
       return IntlVariations.NUMBER_OTHER;

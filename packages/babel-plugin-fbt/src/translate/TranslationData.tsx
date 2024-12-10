@@ -5,8 +5,8 @@ import type TranslationConfig from './TranslationConfig';
  * Corresponds to IntlJSTranslatationDataEntry in Hack
  */
 type Translation = {
-  translation: string;
   id?: number;
+  translation: string;
   // Allow variation enum values to be stored in string or number type,
   // and we will parse it into IntlVariationEnumValue in config.isDefaultVariation()
   variations: {
@@ -16,8 +16,8 @@ type Translation = {
 
 export type SerializedTranslationData = {
   tokens: ReadonlyArray<string>;
-  types: ReadonlyArray<IntlFbtVariationTypeValue>;
   translations: ReadonlyArray<Translation>;
+  types: ReadonlyArray<IntlFbtVariationTypeValue>;
 };
 
 export default class TranslationData {

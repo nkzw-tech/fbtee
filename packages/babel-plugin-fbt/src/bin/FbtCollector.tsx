@@ -2,7 +2,6 @@ import type { PluginItem } from '@babel/core';
 import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
-import type { PatternHash, PatternString } from '../../../fbt/src/FbtTable';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
 import type { FbtOptionConfig } from '../FbtConstants';
 import type { EnumManifest } from '../FbtEnumRegistrar';
@@ -13,6 +12,7 @@ import fbt, {
   getExtractedStrings,
   getFbtElementNodes,
 } from '../index';
+import type { PatternHash, PatternString } from '../Types';
 
 export type ExternalTransform = (
   src: string,
@@ -21,10 +21,10 @@ export type ExternalTransform = (
 ) => unknown;
 export type CollectorConfig = {
   fbtCommonPath?: string;
+  generateOuterTokenName?: boolean;
   plugins?: ReadonlyArray<PluginItem>;
   presets?: ReadonlyArray<PluginItem>;
   transform?: ExternalTransform | null | undefined;
-  generateOuterTokenName?: boolean;
 };
 type ParentPhraseIndex = number;
 export type ChildParentMappings = {
@@ -40,19 +40,19 @@ export type HashToLeaf = Partial<
   >
 >;
 export type PackagerPhrase = Phrase & {
+  hashToLeaf?: HashToLeaf;
   hash_code?: number;
   hash_key?: string;
-  hashToLeaf?: HashToLeaf;
 };
 
 export interface IFbtCollector {
+  collectFromFiles(
+    files: Array<[string, string]>,
+    fbtEnumManifest?: EnumManifest
+  ): Promise<void>;
   collectFromOneFile(
     source: string,
     filename: string,
-    fbtEnumManifest?: EnumManifest
-  ): Promise<void>;
-  collectFromFiles(
-    files: Array<[string, string]>,
     fbtEnumManifest?: EnumManifest
   ): Promise<void>;
   getChildParentMappings(): ChildParentMappings;
@@ -71,7 +71,16 @@ const transform = (
     code: false,
     filename: options.filename,
     plugins: [[fbt, options], ...plugins],
-    presets: [presetTypescript, presetReact, ...presets],
+    presets: [
+      presetTypescript,
+      [
+        presetReact,
+        {
+          runtime: 'automatic',
+        },
+      ],
+      ...presets,
+    ],
     sourceType: 'unambiguous',
   });
 };
@@ -119,7 +128,7 @@ export default class FbtCollector implements IFbtCollector {
       );
     }
 
-    let newPhrases = getExtractedStrings();
+    const newPhrases = getExtractedStrings();
     const newChildParentMappings = getChildToParentRelationships();
     const offset = this._phrases.length;
     Object.entries(newChildParentMappings).forEach(

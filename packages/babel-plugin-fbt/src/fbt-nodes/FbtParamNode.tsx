@@ -11,7 +11,6 @@ import {
 } from '@babel/types';
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
-import type { ParamVariationType } from '../../../fbt/src/FbtRuntimeTypes';
 import { JSModuleNameType, ValidParamOptions } from '../FbtConstants';
 import FbtNodeChecker from '../FbtNodeChecker';
 import type {
@@ -45,13 +44,10 @@ type Options = {
   value: BabelNodeCallExpressionArgument;
 };
 
-/**
- * Variations.
- */
-const ParamVariation: ParamVariationType = {
-  number: 0,
+const ParamVariation = {
   gender: 1,
-};
+  number: 0,
+} as const;
 
 function enforceBabelNodeExpression(
   value: Node | string | null,

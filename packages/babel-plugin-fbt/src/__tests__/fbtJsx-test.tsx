@@ -8,52 +8,15 @@ import {
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 const testData = {
-  'should convert simple strings': {
+  'Enable explicit whitespace': {
     input: withFbtRequireStatement(
-      `var x = <fbt desc="It's simple">A simple string</fbt>;`
-    ),
-  },
-
-  'should filter comment and empty expressions from children': {
-    input: withFbtRequireStatement(
-      `var x = <fbt desc="It's simple">
-        {
-        }A sim{/*
-          ignore
-          me
-          */}ple s{ }tri{}ng{/*ignore me*/}</fbt>;`
-    ),
-  },
-
-  'should strip out newlines': {
-    input: withFbtRequireStatement(
-      `var x =
-        <fbt desc="Test trailing space when not last child">
-          Preamble
-          <fbt:param name="parm">{blah}</fbt:param>
-        </fbt>;
-      baz();`
-    ),
-  },
-
-  'should strip out newlines in Reactish <Fbt>': {
-    input: withFbtRequireStatement(
-      `var x =
-        <Fbt desc="Test trailing space when not last child">
-          Preamble <FbtParam name="parm">{blah}</FbtParam>
-        </Fbt>;
-      baz();`
-    ),
-  },
-
-  'should strip out more newlines': {
-    input: withFbtRequireStatement(
-      `var x =
-        <fbt desc="moar lines">
-          A simple string...
-          with some other stuff.
-        </fbt>;
-        baz();`
+      `var x = <fbt desc="squelched">
+        <fbt:param name="one">{one}</fbt:param>
+        {" "}
+        <fbt:param name="two">{two}</fbt:param>
+        {\` \`}
+        <fbt:param name="three">{three}</fbt:param>
+      </fbt>;`
     ),
   },
 
@@ -69,64 +32,29 @@ const testData = {
     ),
   },
 
-  'Enable explicit whitespace': {
+  'fbt:param with multiple children should error': {
     input: withFbtRequireStatement(
-      `var x = <fbt desc="squelched">
-        <fbt:param name="one">{one}</fbt:param>
-        {" "}
-        <fbt:param name="two">{two}</fbt:param>
-        {\` \`}
-        <fbt:param name="three">{three}</fbt:param>
-      </fbt>;`
+      `<fbt desc="some-desc">
+        <fbt:param name="foo">
+          {foo}
+          {bar}
+        </fbt:param>
+      </fbt>`
     ),
+
+    throws: `fbt:param expects an {expression} or JSX element, and only one`,
   },
 
-  'should handle params': {
+  'fbt:param with multiple empty expression containers should be ok': {
     input: withFbtRequireStatement(
-      `var x = <fbt desc="a message!">
-          A parameterized message to:
-          <fbt:param name="personName">{theName}</fbt:param>
-        </fbt>;`
-    ),
-  },
-
-  'should handle empty string': {
-    input: withFbtRequireStatement(
-      `var x = <fbt desc="a message!">
-        A parameterized message to:
-        <fbt:param name="emptyString"> </fbt:param>
-      </fbt>;`
-    ),
-  },
-
-  'should handle concatenated descriptions': {
-    input: withFbtRequireStatement(
-      `<fbt desc={"A very long description " + "that we will concatenate " +
-        "a few times"}
-        project={"With" + "a" + "project"}>
-        Here it is
-      </fbt>;`
-    ),
-  },
-
-  'should handle template descriptions': {
-    input: withFbtRequireStatement(
-      `<fbt desc={\`A very long description
-        that will be a
-        template across multiple lines\`}
-        project={"With" + "a" + "project"}>
-        Here it is
-      </fbt>;`
-    ),
-  },
-
-  'should be able to nest within React nodes': {
-    input: withFbtRequireStatement(
-      `var x = <div>
-        <fbt desc="nested!">
-          A nested string
-        </fbt>
-      </div>;`
+      `<fbt desc="some-desc">
+        <fbt:param name="foo">
+          {}
+          {/* comment */}
+          {foo}
+          {}
+        </fbt:param>
+      </fbt>`
     ),
   },
 
@@ -143,6 +71,70 @@ const testData = {
           </fbt:param>
         </fbt>
       </div>;`
+    ),
+  },
+
+  'should be able to nest within React nodes': {
+    input: withFbtRequireStatement(
+      `var x = <div>
+        <fbt desc="nested!">
+          A nested string
+        </fbt>
+      </div>;`
+    ),
+  },
+
+  'should convert simple strings': {
+    input: withFbtRequireStatement(
+      `var x = <fbt desc="It's simple">A simple string</fbt>;`
+    ),
+  },
+
+  'should correctly destruct expression values in options': {
+    input: withFbtRequireStatement(
+      `<fbt desc="d">str
+        <fbt:param name="count" number={someNum}>
+          {getNum()}
+        </fbt:param>
+      </fbt>`
+    ),
+  },
+
+  'should filter comment and empty expressions from children': {
+    input: withFbtRequireStatement(
+      `var x = <fbt desc="It's simple">
+        {
+        }A sim{/*
+          ignore
+          me
+          */}ple s{ }tri{}ng{/*ignore me*/}</fbt>;`
+    ),
+  },
+
+  'should handle common string': {
+    input: withFbtRequireStatement(`<fbt common={true}>Done</fbt>`),
+
+    options: {
+      fbtCommon: { Done: 'The description for the common string "Done"' },
+    },
+  },
+
+  'should handle concatenated descriptions': {
+    input: withFbtRequireStatement(
+      `<fbt desc={"A very long description " + "that we will concatenate " +
+        "a few times"}
+        project={"With" + "a" + "project"}>
+        Here it is
+      </fbt>;`
+    ),
+  },
+
+  'should handle empty string': {
+    input: withFbtRequireStatement(
+      `var x = <fbt desc="a message!">
+        A parameterized message to:
+        <fbt:param name="emptyString"> </fbt:param>
+      </fbt>;`
     ),
   },
 
@@ -195,14 +187,12 @@ const testData = {
     ),
   },
 
-  'should handle variations': {
-    input: withFbtRequireStatement(
-      `var x = <fbt desc="variations!">
-        Click to see
-        <fbt:param name="count" number="true">{c}</fbt:param>
-        links
-      </fbt>;`
-    ),
+  'should handle fbt common attribute without value': {
+    input: withFbtRequireStatement(`<fbt common>Okay</fbt>`),
+
+    options: {
+      fbtCommon: { Okay: 'The description for the common string "Okay"' },
+    },
   },
 
   'should handle number={true} - (same output as above test)': {
@@ -215,42 +205,20 @@ const testData = {
     ),
   },
 
-  'should correctly destruct expression values in options': {
+  'should handle object pronoun': {
     input: withFbtRequireStatement(
-      `<fbt desc="d">str
-        <fbt:param name="count" number={someNum}>
-          {getNum()}
-        </fbt:param>
-      </fbt>`
+      `<fbt desc={"d"} project={"p"}>
+          I know <fbt:pronoun type="object" gender={gender}/>.
+        </fbt>;`
     ),
   },
 
-  'should insert param value for same-param': {
+  'should handle params': {
     input: withFbtRequireStatement(
-      `<fbt desc="d">str
-        <fbt:param name="foo">{Bar}</fbt:param> and
-        <fbt:same-param name="foo"/>
-      </fbt>`
-    ),
-  },
-
-  'should treat multiline descs as a single line': {
-    input: withFbtRequireStatement(
-      `<fbt desc="hi how are you today im doing well i guess
-        how is your mother is she well yeah why not lets go
-        home and never come back.">
-        lol
-      </fbt>`
-    ),
-  },
-
-  'should not insert extra space': {
-    input: withFbtRequireStatement(
-      `<fbt desc="Greating in i18n demo">
-        Hello, <fbt:param name="guest">
-          {guest}
-        </fbt:param>!
-      </fbt>`
+      `var x = <fbt desc="a message!">
+          A parameterized message to:
+          <fbt:param name="personName">{theName}</fbt:param>
+        </fbt>;`
     ),
   },
 
@@ -262,16 +230,36 @@ const testData = {
     ),
   },
 
-  'should throw on invalid attributes in fbt:param': {
-    input: withFbtRequireStatement(
-      `<fbt desc="some-desc">
-        <fbt:param name="foo" qux="foo" desc="foo-desc">
-          {foo}
-        </fbt:param>
-      </fbt>`
-    ),
+  'should handle subject+reflexive pronouns': {
+    input:
+      // She wished herself a happy birthday.
+      withFbtRequireStatement(
+        `<fbt desc={"d"} project={"p"}>
+          <fbt:pronoun type="subject" gender={gender} capitalize={true} human={true}/>
+          wished <fbt:pronoun type="reflexive" gender={gender} human={true}/> a happy birthday.
+        </fbt>;`
+      ),
+  },
 
-    throws: `Invalid option "qux". Only allowed: number, gender, name`,
+  'should handle template descriptions': {
+    input: withFbtRequireStatement(
+      `<fbt desc={\`A very long description
+        that will be a
+        template across multiple lines\`}
+        project={"With" + "a" + "project"}>
+        Here it is
+      </fbt>;`
+    ),
+  },
+
+  'should handle variations': {
+    input: withFbtRequireStatement(
+      `var x = <fbt desc="variations!">
+        Click to see
+        <fbt:param name="count" number="true">{c}</fbt:param>
+        links
+      </fbt>;`
+    ),
   },
 
   'should ignore __private attributes': {
@@ -294,6 +282,15 @@ const testData = {
     ),
   },
 
+  'should insert param value for same-param': {
+    input: withFbtRequireStatement(
+      `<fbt desc="d">str
+        <fbt:param name="foo">{Bar}</fbt:param> and
+        <fbt:same-param name="foo"/>
+      </fbt>`
+    ),
+  },
+
   'should maintain order of params and enums': {
     input: withFbtRequireStatement(
       `<fbt desc="some-desc">
@@ -306,6 +303,48 @@ const testData = {
           {bar}
         </fbt:param>
       </fbt>`
+    ),
+  },
+
+  'should not insert extra space': {
+    input: withFbtRequireStatement(
+      `<fbt desc="Greating in i18n demo">
+        Hello, <fbt:param name="guest">
+          {guest}
+        </fbt:param>!
+      </fbt>`
+    ),
+  },
+
+  'should strip out more newlines': {
+    input: withFbtRequireStatement(
+      `var x =
+        <fbt desc="moar lines">
+          A simple string...
+          with some other stuff.
+        </fbt>;
+        baz();`
+    ),
+  },
+
+  'should strip out newlines': {
+    input: withFbtRequireStatement(
+      `var x =
+        <fbt desc="Test trailing space when not last child">
+          Preamble
+          <fbt:param name="parm">{blah}</fbt:param>
+        </fbt>;
+      baz();`
+    ),
+  },
+
+  'should strip out newlines in Reactish <Fbt>': {
+    input: withFbtRequireStatement(
+      `var x =
+        <Fbt desc="Test trailing space when not last child">
+          Preamble <FbtParam name="parm">{blah}</FbtParam>
+        </Fbt>;
+      baz();`
     ),
   },
 
@@ -336,58 +375,16 @@ const testData = {
     ),
   },
 
-  'should handle object pronoun': {
-    input: withFbtRequireStatement(
-      `<fbt desc={"d"} project={"p"}>
-          I know <fbt:pronoun type="object" gender={gender}/>.
-        </fbt>;`
-    ),
-  },
+  'should throw for fbt that has description and common attribute (without value)':
+    {
+      input: withFbtRequireStatement(`<fbt common={true} desc='d'>No</fbt>`),
 
-  'should handle subject+reflexive pronouns': {
-    input:
-      // She wished herself a happy birthday.
-      withFbtRequireStatement(
-        `<fbt desc={"d"} project={"p"}>
-          <fbt:pronoun type="subject" gender={gender} capitalize={true} human={true}/>
-          wished <fbt:pronoun type="reflexive" gender={gender} human={true}/> a happy birthday.
-        </fbt>;`
-      ),
-  },
+      options: {
+        fbtCommon: { No: 'The description for the common string "No"' },
+      },
 
-  'fbt:param with multiple children should error': {
-    input: withFbtRequireStatement(
-      `<fbt desc="some-desc">
-        <fbt:param name="foo">
-          {foo}
-          {bar}
-        </fbt:param>
-      </fbt>`
-    ),
-
-    throws: `fbt:param expects an {expression} or JSX element, and only one`,
-  },
-
-  'fbt:param with multiple empty expression containers should be ok': {
-    input: withFbtRequireStatement(
-      `<fbt desc="some-desc">
-        <fbt:param name="foo">
-          {}
-          {/* comment */}
-          {foo}
-          {}
-        </fbt:param>
-      </fbt>`
-    ),
-  },
-
-  'should handle common string': {
-    input: withFbtRequireStatement(`<fbt common={true}>Done</fbt>`),
-
-    options: {
-      fbtCommon: { Done: 'The description for the common string "Done"' },
+      throws: `<fbt common={true}> must not have "desc" attribute`,
     },
-  },
 
   'should throw for strings with `common` attribute equal to false': {
     input: withFbtRequireStatement(`<fbt common={false}>Yes</fbt>`),
@@ -396,7 +393,19 @@ const testData = {
       fbtCommon: { Yes: 'The description for the common string "Yes"' },
     },
 
-    throws: `Unable to find attribute \"desc\".`,
+    throws: `Unable to find attribute "desc".`,
+  },
+
+  'should throw on invalid attributes in fbt:param': {
+    input: withFbtRequireStatement(
+      `<fbt desc="some-desc">
+        <fbt:param name="foo" qux="foo" desc="foo-desc">
+          {foo}
+        </fbt:param>
+      </fbt>`
+    ),
+
+    throws: `Invalid option "qux". Only allowed: gender, number, name`,
   },
 
   'should throw on undefined common string': {
@@ -406,27 +415,18 @@ const testData = {
 
     options: {},
 
-    throws: `Unknown string \"Some undefined common string\" for <fbt common={true}>`,
+    throws: `Unknown string "Some undefined common string" for <fbt common={true}>`,
   },
 
-  'should handle fbt common attribute without value': {
-    input: withFbtRequireStatement(`<fbt common>Okay</fbt>`),
-
-    options: {
-      fbtCommon: { Okay: 'The description for the common string "Okay"' },
-    },
+  'should treat multiline descs as a single line': {
+    input: withFbtRequireStatement(
+      `<fbt desc="hi how are you today im doing well i guess
+        how is your mother is she well yeah why not lets go
+        home and never come back.">
+        lol
+      </fbt>`
+    ),
   },
-
-  'should throw for fbt that has description and common attribute (without value)':
-    {
-      input: withFbtRequireStatement(`<fbt common={true} desc='d'>No</fbt>`),
-
-      options: {
-        fbtCommon: { No: 'The description for the common string "No"' },
-      },
-
-      throws: `<fbt common={true}> must not have \"desc\" attribute`,
-    },
 };
 
 describe('Test declarative (jsx) fbt syntax translation', () =>

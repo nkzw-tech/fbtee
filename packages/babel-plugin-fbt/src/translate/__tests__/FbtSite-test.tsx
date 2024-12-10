@@ -5,17 +5,31 @@ describe('FbtSite: testing fromScan', () => {
 
   beforeEach(() => {
     fbtSite = FbtSite.fromScan({
+      col_beg: 10,
+      col_end: 20,
+      filepath: 'Example.react.js',
       hashToLeaf: {
-        'gVKMc/8jq5vnYR5v2bb32g==': {
-          text: '{name} has shared {=[number] photos} with you',
-          desc: 'example 1',
-        },
         'PqPPir8Kg9xSlqdednPFOg==': {
-          text: '{name} has shared {=a photo} with you',
           desc: 'example 1',
+          text: '{name} has shared {=a photo} with you',
+        },
+        'gVKMc/8jq5vnYR5v2bb32g==': {
+          desc: 'example 1',
+          text: '{name} has shared {=[number] photos} with you',
         },
       },
       jsfbt: {
+        m: [
+          {
+            token: 'name',
+            type: 1,
+          },
+          {
+            singular: true,
+            token: 'number',
+            type: 2,
+          },
+        ],
         t: {
           '*': {
             '*': {
@@ -34,34 +48,20 @@ describe('FbtSite: testing fromScan', () => {
             },
           },
         },
-        m: [
-          {
-            token: 'name',
-            type: 1,
-          },
-          {
-            token: 'number',
-            type: 2,
-            singular: true,
-          },
-        ],
       },
-      project: 'fbt-demo-project',
-      col_beg: 10,
-      col_end: 20,
       line_beg: 9,
       line_end: 10,
-      filepath: 'Example.react.js',
+      project: 'fbt-demo-project',
     });
   });
 
   it('should compute hashToTokenAliases property as expected', () => {
     expect(fbtSite.getHashToTokenAliases()).toEqual({
-      'gVKMc/8jq5vnYR5v2bb32g==': {
-        '=[number] photos': '=m2',
-      },
       'PqPPir8Kg9xSlqdednPFOg==': {
         '=a photo': '=m2',
+      },
+      'gVKMc/8jq5vnYR5v2bb32g==': {
+        '=[number] photos': '=m2',
       },
     });
   });

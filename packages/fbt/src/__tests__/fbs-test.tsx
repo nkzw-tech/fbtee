@@ -6,10 +6,10 @@ import init from '../fbtInit';
 import IntlViewerContext from '../IntlViewerContext';
 
 init({
-  translations: { en_US: {} },
   hooks: {
     getViewerContext: () => IntlViewerContext,
   },
+  translations: { en_US: {} },
 });
 
 describe('fbs', () => {

@@ -8,7 +8,7 @@ export default function fbtJenkinsHash(
 ): number {
   let desc: string | null = null;
   let leavesHaveSameDesc = true;
-  onEachLeaf({ jsfbt: { t: jsfbt, m: [] } }, (leaf: TableJSFBTTreeLeaf) => {
+  onEachLeaf({ jsfbt: { m: [], t: jsfbt } }, (leaf: TableJSFBTTreeLeaf) => {
     if (desc == null) {
       desc = leaf.desc;
     } else if (desc !== leaf.desc) {

@@ -50,6 +50,6 @@ export default {
       return locToLang[locale as keyof typeof locToLang];
     }
     const idx = locale.indexOf('_');
-    return idx >= 0 ? locale.substr(0, idx) : locale;
+    return idx >= 0 ? locale.slice(0, Math.max(0, idx)) : locale;
   },
 };

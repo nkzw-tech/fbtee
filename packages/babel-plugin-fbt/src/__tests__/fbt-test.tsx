@@ -1,8 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- */
-
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
@@ -135,10 +130,10 @@ describe('fbt() API: ', () => {
               This is a string
             </fbt>;`
           ),
-          throws: `Option "private" has an invalid value: "aRandomValue". Only allowed: yes, no`,
+          throws: `Option "private" has an invalid value: "aRandomValue". Only allowed: no, yes`,
         },
         {
-          extraOptions: { private: { yes: true, no: true } },
+          extraOptions: { private: { no: true, yes: true } },
         }
       );
     });
@@ -180,12 +175,12 @@ describe('Test double-lined params', () => {
   });
 });
 
-describe('fbt variable binding detection', () => {
-  const describeFbtBindingTestCase = (requireStatement: string) => ({
-    input: `${requireStatement};
-        fbt("Foo", "Bar");`,
-  });
+const describeFbtBindingTestCase = (requireStatement: string) => ({
+  input: `${requireStatement};
+      fbt("Foo", "Bar");`,
+});
 
+describe('fbt variable binding detection', () => {
   it(`should handle commonJS require()`, () => {
     runTest(describeFbtBindingTestCase(`const fbt = require('fbt')`));
   });

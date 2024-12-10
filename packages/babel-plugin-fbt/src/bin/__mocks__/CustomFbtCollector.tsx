@@ -48,9 +48,9 @@ export default class CustomFbtCollector implements IFbtCollector {
           m: [],
           t: {
             desc: 'In the phrase: "Hello {=World}!"',
+            outerTokenName: '=World',
             text: 'World',
             tokenAliases: {},
-            outerTokenName: '=World',
           },
         },
         line_beg: 4,
@@ -69,37 +69,37 @@ export default class CustomFbtCollector implements IFbtCollector {
 
   getFbtElementNodes(): Array<PlainFbtNode> {
     const pseudoJSXOpeningElement: JSXOpeningElement = {
-      type: 'JSXOpeningElement',
-      selfClosing: false,
-      name: { type: 'JSXIdentifier', name: 'fbt' },
       attributes: [],
+      name: { name: 'fbt', type: 'JSXIdentifier' },
+      selfClosing: false,
+      type: 'JSXOpeningElement',
     };
     return [
       {
-        phraseIndex: 0,
         children: [
           {
             type: FbtNodeType.Text,
           },
           {
-            phraseIndex: 1,
             children: [
               {
                 type: FbtNodeType.Text,
               },
             ],
+            phraseIndex: 1,
             type: FbtNodeType.ImplicitParam,
             wrapperNode: {
-              type: 'a',
               babelNode: pseudoJSXOpeningElement,
               props: {
                 className: 'neatoLink',
                 href: 'https://somewhere.random',
                 tabindex: 123,
               },
+              type: 'a',
             },
           },
         ],
+        phraseIndex: 0,
         type: FbtNodeType.Element,
       },
     ];

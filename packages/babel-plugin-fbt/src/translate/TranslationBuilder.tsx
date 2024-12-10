@@ -1,11 +1,11 @@
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
-import type { FbtTableKey, PatternHash } from '../../../fbt/src/FbtTable';
 import {
   hasKeys,
   replaceClearTokensWithTokenAliases,
   varDump,
 } from '../FbtUtil';
+import type { FbtTableKey, PatternHash } from '../Types';
 import { FbtSite, FbtSiteMetaEntry } from './FbtSite';
 import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase';
 import type {
@@ -68,8 +68,8 @@ type TranslationTree =
 export type TranslationResult =
   | TranslationTree
   | {
-      __vcg: number;
       [key: FbtTableKey]: TranslationTree;
+      __vcg: number;
     };
 
 type MetadataToken = string;
@@ -389,7 +389,7 @@ export default class TranslationBuilder {
   ): void {
     const aggregateKey = buildConstraintKey(constraintKeys);
     if (constraintMap[aggregateKey]) {
-      const err = new Error(
+      throw new Error(
         'Unexpected duplicate key: ' +
           aggregateKey +
           '\nOriginal: ' +
@@ -397,8 +397,6 @@ export default class TranslationBuilder {
           '\nNew ' +
           translation
       );
-      err.stack;
-      throw err;
     }
     constraintMap[aggregateKey] = translation;
 

@@ -5,9 +5,9 @@ function toUtf8(str: string) {
     let charcode = str.charCodeAt(i);
     if (charcode < 0x80) {
       result.push(charcode);
-    } else if (charcode < 0x800) {
+    } else if (charcode < 0x8_00) {
       result.push(0xc0 | (charcode >> 6), 0x80 | (charcode & 0x3f));
-    } else if (charcode < 0xd800 || charcode >= 0xe000) {
+    } else if (charcode < 0xd8_00 || charcode >= 0xe0_00) {
       result.push(
         0xe0 | (charcode >> 12),
         0x80 | ((charcode >> 6) & 0x3f),
@@ -16,7 +16,8 @@ function toUtf8(str: string) {
     } else {
       i++;
       charcode =
-        0x10000 + (((charcode & 0x3ff) << 10) | (str.charCodeAt(i) & 0x3ff));
+        0x1_00_00 +
+        (((charcode & 0x3_ff) << 10) | (str.charCodeAt(i) & 0x3_ff));
       result.push(
         0xf0 | (charcode >> 18),
         0x80 | ((charcode >> 12) & 0x3f),

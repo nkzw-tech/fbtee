@@ -4,10 +4,10 @@ import GenderConst from './GenderConst';
 type DisplayGenderConstType = 'UNKNOWN' | 'FEMALE' | 'MALE' | 'NEUTER';
 
 const DisplayGenderConst = {
-  UNKNOWN: 'UNKNOWN',
   FEMALE: 'FEMALE',
   MALE: 'MALE',
   NEUTER: 'NEUTER',
+  UNKNOWN: 'UNKNOWN',
 } as const;
 
 /**
@@ -37,6 +37,6 @@ function fromDisplayGender(gender: DisplayGenderConstType): number {
 }
 
 module.exports = {
-  fromMultiple,
   fromDisplayGender,
+  fromMultiple,
 };

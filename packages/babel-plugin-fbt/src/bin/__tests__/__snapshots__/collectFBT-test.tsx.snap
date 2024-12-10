@@ -3,6 +3,7 @@
 exports[`collectFbt When using string templates should extract correctly multiple params 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -26,6 +27,7 @@ exports[`collectFbt When using string templates should extract correctly multipl
 exports[`collectFbt When using string templates should extract correctly name, pronoun, plural 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -86,6 +88,7 @@ exports[`collectFbt When using string templates should extract correctly name, p
 exports[`collectFbt When using string templates should extract correctly supports tables ie fbt:enum 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -117,6 +120,7 @@ exports[`collectFbt When using string templates should extract correctly support
 exports[`collectFbt When using string templates should extract correctly with a param 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -140,6 +144,7 @@ exports[`collectFbt When using string templates should extract correctly with a 
 exports[`collectFbt When using string templates should extract correctly with just string contents 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -163,6 +168,7 @@ exports[`collectFbt When using string templates should extract correctly with ju
 exports[`collectFbt When using string templates should extract correctly with the param being first 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -203,31 +209,39 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
           "phraseIndex": 1,
           "type": "implicitParam",
           "wrapperNode": {
-            "babelNode": {
+            "babelNode": Node {
               "attributes": [
-                {
+                Node {
                   "end": 119,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 36,
                       "index": 119,
                       "line": 4,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 15,
                       "index": 98,
                       "line": 4,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 107,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 24,
                         "index": 107,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 15,
                         "index": 98,
                         "line": 4,
@@ -235,56 +249,71 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "className",
                     "start": 98,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 98,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 119,
                     "extra": {
                       "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 36,
                         "index": 119,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 25,
                         "index": 108,
                         "line": 4,
                       },
                     },
                     "start": 108,
+                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "neatoLink",
                   },
                 },
-                {
+                Node {
                   "end": 151,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 68,
                       "index": 151,
                       "line": 4,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 37,
                       "index": 120,
                       "line": 4,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 124,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 41,
                         "index": 124,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 37,
                         "index": 120,
                         "line": 4,
@@ -292,56 +321,71 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "href",
                     "start": 120,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 120,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 151,
                     "extra": {
                       "raw": ""https://somewhere.random"",
                       "rawValue": "https://somewhere.random",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 68,
                         "index": 151,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 42,
                         "index": 125,
                         "line": 4,
                       },
                     },
                     "start": 125,
+                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "https://somewhere.random",
                   },
                 },
-                {
+                Node {
                   "end": 166,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 83,
                       "index": 166,
                       "line": 4,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 69,
                       "index": 152,
                       "line": 4,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 160,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 77,
                         "index": 160,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 69,
                         "index": 152,
                         "line": 4,
@@ -349,73 +393,93 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "tabindex",
                     "start": 152,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 152,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 166,
-                    "expression": {
+                    "expression": Node {
                       "end": 165,
                       "extra": {
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "loc": {
-                        "end": {
+                      "innerComments": undefined,
+                      "leadingComments": undefined,
+                      "loc": SourceLocation {
+                        "end": Position {
                           "column": 82,
                           "index": 165,
                           "line": 4,
                         },
-                        "start": {
+                        "filename": undefined,
+                        "identifierName": undefined,
+                        "start": Position {
                           "column": 79,
                           "index": 162,
                           "line": 4,
                         },
                       },
                       "start": 162,
+                      "trailingComments": undefined,
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 83,
                         "index": 166,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 78,
                         "index": 161,
                         "line": 4,
                       },
                     },
                     "start": 161,
+                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
-                {
+                Node {
                   "end": 178,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 95,
                       "index": 178,
                       "line": 4,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 84,
                       "index": 167,
                       "line": 4,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 169,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 86,
                         "index": 169,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 84,
                         "index": 167,
                         "line": 4,
@@ -423,73 +487,93 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "id",
                     "start": 167,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 167,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 178,
-                    "expression": {
+                    "expression": Node {
                       "end": 177,
                       "extra": {
                         "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "loc": {
-                        "end": {
+                      "innerComments": undefined,
+                      "leadingComments": undefined,
+                      "loc": SourceLocation {
+                        "end": Position {
                           "column": 94,
                           "index": 177,
                           "line": 4,
                         },
-                        "start": {
+                        "filename": undefined,
+                        "identifierName": undefined,
+                        "start": Position {
                           "column": 88,
                           "index": 171,
                           "line": 4,
                         },
                       },
                       "start": 171,
+                      "trailingComments": undefined,
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 95,
                         "index": 178,
                         "line": 4,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 87,
                         "index": 170,
                         "line": 4,
                       },
                     },
                     "start": 170,
+                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
               ],
               "end": 179,
-              "loc": {
-                "end": {
+              "innerComments": undefined,
+              "leadingComments": undefined,
+              "loc": SourceLocation {
+                "end": Position {
                   "column": 96,
                   "index": 179,
                   "line": 4,
                 },
-                "start": {
+                "filename": undefined,
+                "identifierName": undefined,
+                "start": Position {
                   "column": 12,
                   "index": 95,
                   "line": 4,
                 },
               },
-              "name": {
+              "name": Node {
                 "end": 97,
-                "loc": {
-                  "end": {
+                "innerComments": undefined,
+                "leadingComments": undefined,
+                "loc": SourceLocation {
+                  "end": Position {
                     "column": 14,
                     "index": 97,
                     "line": 4,
                   },
-                  "start": {
+                  "filename": undefined,
+                  "identifierName": undefined,
+                  "start": Position {
                     "column": 13,
                     "index": 96,
                     "line": 4,
@@ -497,10 +581,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                 },
                 "name": "a",
                 "start": 96,
+                "trailingComments": undefined,
                 "type": "JSXIdentifier",
               },
               "selfClosing": false,
               "start": 95,
+              "trailingComments": undefined,
               "type": "JSXOpeningElement",
             },
             "props": {
@@ -601,30 +687,38 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
               "phraseIndex": 2,
               "type": "implicitParam",
               "wrapperNode": {
-                "babelNode": {
+                "babelNode": Node {
                   "attributes": [],
                   "end": 320,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 20,
                       "index": 320,
                       "line": 8,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 12,
                       "index": 312,
                       "line": 8,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 319,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 19,
                         "index": 319,
                         "line": 8,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 13,
                         "index": 313,
                         "line": 8,
@@ -632,10 +726,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "strong",
                     "start": 313,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "selfClosing": false,
                   "start": 312,
+                  "trailingComments": undefined,
                   "type": "JSXOpeningElement",
                 },
                 "props": {},
@@ -649,31 +745,39 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
           "phraseIndex": 1,
           "type": "implicitParam",
           "wrapperNode": {
-            "babelNode": {
+            "babelNode": Node {
               "attributes": [
-                {
+                Node {
                   "end": 262,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 34,
                       "index": 262,
                       "line": 7,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 13,
                       "index": 241,
                       "line": 7,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 250,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 22,
                         "index": 250,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 13,
                         "index": 241,
                         "line": 7,
@@ -681,56 +785,71 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "className",
                     "start": 241,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 241,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 262,
                     "extra": {
                       "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 34,
                         "index": 262,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 23,
                         "index": 251,
                         "line": 7,
                       },
                     },
                     "start": 251,
+                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "neatoLink",
                   },
                 },
-                {
+                Node {
                   "end": 271,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 43,
                       "index": 271,
                       "line": 7,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 35,
                       "index": 263,
                       "line": 7,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 267,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 39,
                         "index": 267,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 35,
                         "index": 263,
                         "line": 7,
@@ -738,56 +857,71 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "href",
                     "start": 263,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 263,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 271,
                     "extra": {
                       "raw": ""#"",
                       "rawValue": "#",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 43,
                         "index": 271,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 40,
                         "index": 268,
                         "line": 7,
                       },
                     },
                     "start": 268,
+                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "#",
                   },
                 },
-                {
+                Node {
                   "end": 286,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 58,
                       "index": 286,
                       "line": 7,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 44,
                       "index": 272,
                       "line": 7,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 280,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 52,
                         "index": 280,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 44,
                         "index": 272,
                         "line": 7,
@@ -795,73 +929,93 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "tabindex",
                     "start": 272,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 272,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 286,
-                    "expression": {
+                    "expression": Node {
                       "end": 285,
                       "extra": {
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "loc": {
-                        "end": {
+                      "innerComments": undefined,
+                      "leadingComments": undefined,
+                      "loc": SourceLocation {
+                        "end": Position {
                           "column": 57,
                           "index": 285,
                           "line": 7,
                         },
-                        "start": {
+                        "filename": undefined,
+                        "identifierName": undefined,
+                        "start": Position {
                           "column": 54,
                           "index": 282,
                           "line": 7,
                         },
                       },
                       "start": 282,
+                      "trailingComments": undefined,
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 58,
                         "index": 286,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 53,
                         "index": 281,
                         "line": 7,
                       },
                     },
                     "start": 281,
+                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
-                {
+                Node {
                   "end": 298,
-                  "loc": {
-                    "end": {
+                  "innerComments": undefined,
+                  "leadingComments": undefined,
+                  "loc": SourceLocation {
+                    "end": Position {
                       "column": 70,
                       "index": 298,
                       "line": 7,
                     },
-                    "start": {
+                    "filename": undefined,
+                    "identifierName": undefined,
+                    "start": Position {
                       "column": 59,
                       "index": 287,
                       "line": 7,
                     },
                   },
-                  "name": {
+                  "name": Node {
                     "end": 289,
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 61,
                         "index": 289,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 59,
                         "index": 287,
                         "line": 7,
@@ -869,73 +1023,93 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "id",
                     "start": 287,
+                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 287,
+                  "trailingComments": undefined,
                   "type": "JSXAttribute",
-                  "value": {
+                  "value": Node {
                     "end": 298,
-                    "expression": {
+                    "expression": Node {
                       "end": 297,
                       "extra": {
                         "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "loc": {
-                        "end": {
+                      "innerComments": undefined,
+                      "leadingComments": undefined,
+                      "loc": SourceLocation {
+                        "end": Position {
                           "column": 69,
                           "index": 297,
                           "line": 7,
                         },
-                        "start": {
+                        "filename": undefined,
+                        "identifierName": undefined,
+                        "start": Position {
                           "column": 63,
                           "index": 291,
                           "line": 7,
                         },
                       },
                       "start": 291,
+                      "trailingComments": undefined,
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "loc": {
-                      "end": {
+                    "innerComments": undefined,
+                    "leadingComments": undefined,
+                    "loc": SourceLocation {
+                      "end": Position {
                         "column": 70,
                         "index": 298,
                         "line": 7,
                       },
-                      "start": {
+                      "filename": undefined,
+                      "identifierName": undefined,
+                      "start": Position {
                         "column": 62,
                         "index": 290,
                         "line": 7,
                       },
                     },
                     "start": 290,
+                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
               ],
               "end": 299,
-              "loc": {
-                "end": {
+              "innerComments": undefined,
+              "leadingComments": undefined,
+              "loc": SourceLocation {
+                "end": Position {
                   "column": 71,
                   "index": 299,
                   "line": 7,
                 },
-                "start": {
+                "filename": undefined,
+                "identifierName": undefined,
+                "start": Position {
                   "column": 10,
                   "index": 238,
                   "line": 7,
                 },
               },
-              "name": {
+              "name": Node {
                 "end": 240,
-                "loc": {
-                  "end": {
+                "innerComments": undefined,
+                "leadingComments": undefined,
+                "loc": SourceLocation {
+                  "end": Position {
                     "column": 12,
                     "index": 240,
                     "line": 7,
                   },
-                  "start": {
+                  "filename": undefined,
+                  "identifierName": undefined,
+                  "start": Position {
                     "column": 11,
                     "index": 239,
                     "line": 7,
@@ -943,10 +1117,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                 },
                 "name": "a",
                 "start": 239,
+                "trailingComments": undefined,
                 "type": "JSXIdentifier",
               },
               "selfClosing": false,
               "start": 238,
+              "trailingComments": undefined,
               "type": "JSXOpeningElement",
             },
             "props": {
@@ -1118,6 +1294,7 @@ exports[`collectFbt should create correct child parent mapping for multiple file
     "2": 1,
     "4": 3,
   },
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 12,
@@ -1210,6 +1387,7 @@ exports[`collectFbt should create correct child parent mapping for multiple file
 exports[`collectFbt should dedupe fbt:plurals 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -1252,6 +1430,7 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
   "childParentMappings": {
     "1": 0,
   },
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 8,
@@ -1296,6 +1475,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
   "childParentMappings": {
     "1": 0,
   },
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 8,
@@ -1321,16 +1501,19 @@ exports[`collectFbt should expose the subject option on top level and inner phra
       "line_beg": 2,
       "line_end": 5,
       "project": "",
-      "subject": {
+      "subject": Node {
         "end": 80,
-        "loc": {
-          "end": {
+        "innerComments": undefined,
+        "leadingComments": undefined,
+        "loc": SourceLocation {
+          "end": Position {
             "column": 52,
             "index": 80,
             "line": 2,
           },
+          "filename": undefined,
           "identifierName": "aSubject",
-          "start": {
+          "start": Position {
             "column": 44,
             "index": 72,
             "line": 2,
@@ -1338,6 +1521,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
         },
         "name": "aSubject",
         "start": 72,
+        "trailingComments": undefined,
         "type": "Identifier",
       },
     },
@@ -1362,16 +1546,19 @@ exports[`collectFbt should expose the subject option on top level and inner phra
       "line_beg": 4,
       "line_end": 4,
       "project": "",
-      "subject": {
+      "subject": Node {
         "end": 80,
-        "loc": {
-          "end": {
+        "innerComments": undefined,
+        "leadingComments": undefined,
+        "loc": SourceLocation {
+          "end": Position {
             "column": 52,
             "index": 80,
             "line": 2,
           },
+          "filename": undefined,
           "identifierName": "aSubject",
-          "start": {
+          "start": Position {
             "column": 44,
             "index": 72,
             "line": 2,
@@ -1379,6 +1566,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
         },
         "name": "aSubject",
         "start": 72,
+        "trailingComments": undefined,
         "type": "Identifier",
       },
     },
@@ -1389,6 +1577,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
 exports[`collectFbt should extract common strings from <fbt common={true}> 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 6,
@@ -1413,6 +1602,7 @@ exports[`collectFbt should extract common strings from <fbt common={true}> 1`] =
 exports[`collectFbt should extract fbs strings 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 27,
@@ -1436,6 +1626,7 @@ exports[`collectFbt should extract fbs strings 1`] = `
 exports[`collectFbt should extract fbt strings 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 27,
@@ -1459,6 +1650,7 @@ exports[`collectFbt should extract fbt strings 1`] = `
 exports[`collectFbt should extract fbt.c strings 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 6,
@@ -1485,6 +1677,7 @@ exports[`collectFbt should extract strings from a custom collector 1`] = `
   "childParentMappings": {
     "1": 0,
   },
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 8,
@@ -1526,6 +1719,7 @@ exports[`collectFbt should extract strings from a custom collector 1`] = `
 exports[`collectFbt should extract the author from Docblock 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "author": "Sponge Bob",
@@ -1552,6 +1746,7 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
   "childParentMappings": {
     "1": 0,
   },
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 8,
@@ -1593,6 +1788,7 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
 exports[`collectFbt should still extract strings if fbt call param doNotExtract is set to false 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -1616,6 +1812,7 @@ exports[`collectFbt should still extract strings if fbt call param doNotExtract 
 exports[`collectFbt should still extract strings if file-level doNotExtract is set to false 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,
@@ -1639,6 +1836,7 @@ exports[`collectFbt should still extract strings if file-level doNotExtract is s
 exports[`collectFbt should still extract strings if in-line doNotExtract is set to false 1`] = `
 {
   "childParentMappings": {},
+  "fbtElementNodes": undefined,
   "phrases": [
     {
       "col_beg": 0,

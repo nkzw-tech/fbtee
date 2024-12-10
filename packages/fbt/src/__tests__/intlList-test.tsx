@@ -4,11 +4,11 @@ import intlList, { Conjunctions, Delimiters } from '../intlList';
 import IntlViewerContext from '../IntlViewerContext';
 
 init({
-  translations: { en_US: {} },
   hooks: {
     getFbtResult,
     getViewerContext: () => IntlViewerContext,
   },
+  translations: { en_US: {} },
 });
 
 describe('intlList', () => {

@@ -10,7 +10,8 @@
     "clean": "rm -rf packages/*/lib",
     "dev": "cd example && pnpm dev",
     "jest": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" node_modules/.bin/jest",
-    "test": "jest && tsc"
+    "lint": "eslint --cache .",
+    "test": "lint && jest && tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -21,12 +22,14 @@
     "@babel/preset-typescript": "^7.26.0",
     "@babel/types": "^7.26.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
+    "@nkzw/eslint-config": "^1.18.1",
     "@testing-library/react": "^16.0.1",
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.6.8",
     "@types/babel__traverse": "^7.20.6",
     "@types/invariant": "^2.2.37",
     "@types/jest": "^29.5.14",
+    "@types/json-diff": "^1.0.3",
     "@types/node": "^22.10.1",
     "@types/prettier": "^2.0.0",
     "@types/react": "^18.3.13",
@@ -35,13 +38,23 @@
     "@types/yargs": "^17.0.33",
     "dts-bundle-generator": "^9.5.1",
     "esbuild": "^0.24.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-workspaces": "^0.10.1",
     "invariant": "^2.2.4",
     "jest": "^30.0.0-alpha.6",
     "jest-environment-jsdom": "^29.7.0",
+    "json-diff": "^1.0.6",
     "nullthrows": "^1.1.1",
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.5.6",
     "react-dom": "^18.0.0",
     "typescript": "^5.7.2"
+  },
+  "pnpm": {
+    "updateConfig": {
+      "ignoreDependencies": [
+        "eslint"
+      ]
+    }
   }
 }

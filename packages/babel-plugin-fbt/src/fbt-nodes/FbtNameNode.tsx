@@ -44,7 +44,7 @@ export default class FbtNameNode extends FbtNode<
   override getOptions(): Options {
     try {
       const { moduleName } = this;
-      let [node, value, gender] = this.getCallNodeArguments() || [];
+      const [node, initialValue, initialGender] = this.getCallNodeArguments() || [];
 
       invariant(
         isStringLiteral(node),
@@ -52,17 +52,17 @@ export default class FbtNameNode extends FbtNode<
         moduleName,
         node && node.type
       );
-      value = enforceBabelNodeCallExpressionArg(
-        value,
+      const value = enforceBabelNodeCallExpressionArg(
+        initialValue,
         `Second argument of ${moduleName}.name`
       );
-      gender = enforceBabelNodeCallExpressionArg(
-        gender,
+      const gender = enforceBabelNodeCallExpressionArg(
+        initialGender,
         `Third argument of ${moduleName}.name`
       );
 
-      return { name: node.value, value, gender };
-    } catch (error: any) {
+      return { gender, name: node.value, value };
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

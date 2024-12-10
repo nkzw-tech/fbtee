@@ -2,21 +2,21 @@ import escapeRegex from '../escapeRegex';
 
 describe('escapeRegex', () => {
   it('escapes individual special characters', () => {
-    expect(escapeRegex('.')).toBe('\\.');
+    expect(escapeRegex('.')).toBe(String.raw`\.`);
     expect(escapeRegex('\\')).toBe('\\\\');
-    expect(escapeRegex('[')).toBe('\\[');
-    expect(escapeRegex(']')).toBe('\\]');
-    expect(escapeRegex('(')).toBe('\\(');
-    expect(escapeRegex(')')).toBe('\\)');
-    expect(escapeRegex('{')).toBe('\\{');
-    expect(escapeRegex('}')).toBe('\\}');
-    expect(escapeRegex('^')).toBe('\\^');
-    expect(escapeRegex('$')).toBe('\\$');
-    expect(escapeRegex('-')).toBe('\\-');
-    expect(escapeRegex('|')).toBe('\\|');
-    expect(escapeRegex('?')).toBe('\\?');
-    expect(escapeRegex('*')).toBe('\\*');
-    expect(escapeRegex('+')).toBe('\\+');
+    expect(escapeRegex('[')).toBe(String.raw`\[`);
+    expect(escapeRegex(']')).toBe(String.raw`\]`);
+    expect(escapeRegex('(')).toBe(String.raw`\(`);
+    expect(escapeRegex(')')).toBe(String.raw`\)`);
+    expect(escapeRegex('{')).toBe(String.raw`\{`);
+    expect(escapeRegex('}')).toBe(String.raw`\}`);
+    expect(escapeRegex('^')).toBe(String.raw`\^`);
+    expect(escapeRegex('$')).toBe(String.raw`\$`);
+    expect(escapeRegex('-')).toBe(String.raw`\-`);
+    expect(escapeRegex('|')).toBe(String.raw`\|`);
+    expect(escapeRegex('?')).toBe(String.raw`\?`);
+    expect(escapeRegex('*')).toBe(String.raw`\*`);
+    expect(escapeRegex('+')).toBe(String.raw`\+`);
   });
 
   it("doesn't change characters that have escape sequences", () => {
@@ -31,10 +31,12 @@ describe('escapeRegex', () => {
 
   it('escapes multiple special characters', () => {
     expect(escapeRegex('hello? good-bye...')).toBe(
-      'hello\\? good\\-bye\\.\\.\\.'
+      String.raw`hello\? good\-bye\.\.\.`
     );
-    expect(escapeRegex('1 + 1 * 3 - 2 = 2')).toBe('1 \\+ 1 \\* 3 \\- 2 = 2');
-    expect(escapeRegex('[]{}()')).toBe('\\[\\]\\{\\}\\(\\)');
+    expect(escapeRegex('1 + 1 * 3 - 2 = 2')).toBe(
+      String.raw`1 \+ 1 \* 3 \- 2 = 2`
+    );
+    expect(escapeRegex('[]{}()')).toBe(String.raw`\[\]\{\}\(\)`);
   });
 
   it("doesn't change non-special characters", () => {

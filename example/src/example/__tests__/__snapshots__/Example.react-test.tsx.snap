@@ -288,15 +288,15 @@ exports[`Example.react renders the example 1`] = `
     className="languages"
   >
     <li>
-      English (US)‎
-    </li>
-    <li>
       <a
-        href="#fb_HX"
+        href="#ar_AR"
         onClick={[Function]}
       >
-        l33t 5p34k
+        العربية
       </a>
+    </li>
+    <li>
+      English (US)‎
     </li>
     <li>
       <a
@@ -308,10 +308,10 @@ exports[`Example.react renders the example 1`] = `
     </li>
     <li>
       <a
-        href="#ar_AR"
+        href="#fb_HX"
         onClick={[Function]}
       >
-        العربية
+        l33t 5p34k
       </a>
     </li>
     <li>

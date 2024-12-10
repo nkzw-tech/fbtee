@@ -1,6 +1,6 @@
 export default {
-  TEXT: 'text',
-  PHRASE: 'phrase',
   BOTH: 'both',
   NONE: 'none',
+  PHRASE: 'phrase',
+  TEXT: 'text',
 } as const;

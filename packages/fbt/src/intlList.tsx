@@ -5,10 +5,11 @@
 /// <reference types="./ReactTypes.d.ts" />
 
 import invariant from 'invariant';
-import * as React from 'react';
+import { isValidElement } from 'react';
 import fbt from './fbt';
 
 // Ensure the runtime is included.
+// eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
 fbt;
 
 export const Conjunctions = {
@@ -34,12 +35,12 @@ export default function intlList(
   items = items.filter(Boolean);
 
   if (process.env.NODE_ENV === 'development') {
-    items.forEach(function (item) {
+    for (const item of items) {
       invariant(
-        typeof item === 'string' || React.isValidElement(item),
+        typeof item === 'string' || isValidElement(item),
         'Must provide a string or ReactComponent to intlList.'
       );
-    });
+    }
   }
 
   const count = items.length;

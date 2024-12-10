@@ -1,6 +1,6 @@
 export type ParamVariationType = {
-  number: 0;
   gender: 1;
+  number: 0;
 };
 
 export type ValidPronounUsagesType = {

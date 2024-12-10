@@ -220,7 +220,7 @@ export default class FbtImplicitParamNode
     // ONLY IF the succeeding child is a JSXText.
     let unusedWhitespaceChild: JSXText | null | undefined = null;
     const firstChild = node.children[0];
-    const lastChild = node.children[node.children.length - 1];
+    const lastChild = node.children.at(-1);
     for (const child of node.children) {
       switch (child.type) {
         case 'JSXText':
@@ -361,9 +361,9 @@ export default class FbtImplicitParamNode
     return {
       type: FbtImplicitParamNode.type,
       wrapperNode: {
-        type: wrapperType.name,
         babelNode: openingElement,
         props,
+        type: wrapperType.name,
       },
     };
   }

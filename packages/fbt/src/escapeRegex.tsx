@@ -1,3 +1,3 @@
 export default function escapeRegex(str: string): string {
-  return str.replace(/([.?*+\^$\[\]\\(){}|\-])/g, '\\$1');
+  return str.replaceAll(/([$()*+.?[\\\]^{|}-])/g, String.raw`\$1`);
 }

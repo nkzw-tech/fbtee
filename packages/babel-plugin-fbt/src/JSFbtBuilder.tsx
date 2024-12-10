@@ -85,15 +85,13 @@ export default class JSFbtBuilder {
       const { fbtNode } = svArg;
 
       if (fbtNode instanceof FbtPluralNode) {
-        if (fbtNode.options.showCount !== ShowCountKeys.no) {
-          return {
-            token: nullthrows(fbtNode.options.name),
-            type: FbtVariationType.NUMBER,
-            singular: true,
-          };
-        } else {
-          return null;
-        }
+        return fbtNode.options.showCount !== ShowCountKeys.no
+          ? {
+              singular: true,
+              token: nullthrows(fbtNode.options.name),
+              type: FbtVariationType.NUMBER,
+            }
+          : null;
       }
 
       if (
@@ -223,7 +221,7 @@ export default class JSFbtBuilder {
     const { fbtNode } = curArg;
     const { usedEnums, usedPlurals, usedPronouns } = this;
 
-    const recurse = <V extends unknown>(
+    const recurse = <V,>(
       candidateValues: ReadonlyArray<V>,
       beforeRecurse?: (arg1: V) => unknown,
       isCollapsible: boolean = false

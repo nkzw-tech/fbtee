@@ -1,8 +1,8 @@
 import { IFbtResultBase } from './Types';
 
-const REACT_ELEMENT_TYPE: symbol | 60103 =
+const REACT_ELEMENT_TYPE: symbol | 60_103 =
   (typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element')) ||
-  0xeac7;
+  0xea_c7;
 
 export default {
   REACT_ELEMENT_TYPE,
@@ -14,8 +14,8 @@ export default {
       Object.defineProperty(fbtResult, '_store', {
         configurable: false,
         enumerable: false,
-        writable: false,
         value: reactObj,
+        writable: false,
       });
     } else {
       fbtResult._store = reactObj;

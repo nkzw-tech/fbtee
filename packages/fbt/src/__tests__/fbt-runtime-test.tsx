@@ -1,5 +1,5 @@
 import fbtRuntime from '../fbt';
-import FbtHooks from '../FbtHooks';
+import FbtHooks, { FbtRuntimeInput } from '../FbtHooks';
 import FbtResult from '../FbtResult';
 import { FbtTableArg } from '../FbtTableAccessor';
 import intlNumUtils from '../intlNumUtils';
@@ -19,31 +19,31 @@ FbtHooks.register({
 });
 
 describe('fbt', () => {
-  it('should handle variated numbers', function () {
+  it('should handle variated numbers', () => {
     FbtHooks.register({
       // IntlCLDRNumberType31
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'br_FR' }),
     });
     const numToType = {
+      1_000_000: IntlVariations.NUMBER_MANY,
+      103: IntlVariations.NUMBER_FEW,
+      15: IntlVariations.NUMBER_OTHER,
       21: IntlVariations.NUMBER_ONE,
       22: IntlVariations.NUMBER_TWO,
-      103: IntlVariations.NUMBER_FEW,
-      1000000: IntlVariations.NUMBER_MANY,
-      15: IntlVariations.NUMBER_OTHER,
     } as const;
     for (const n of Object.keys(numToType)) {
       const type = numToType[n as unknown as keyof typeof numToType];
       const displayNumber = intlNumUtils.formatNumberWithThousandDelimiters(
-        parseFloat(n)
+        Number.parseFloat(n)
       );
-      expect(fbtRuntime._param('num', parseInt(n, 10), [0])).toEqual([
+      expect(fbtRuntime._param('num', Number.parseInt(n, 10), [0])).toEqual([
         [type, '*'],
         { num: displayNumber },
       ]);
     }
   });
 
-  it('should access table with fallback logic', function () {
+  it('should access table with fallback logic', () => {
     let genderMock: IntlVariations;
     FbtHooks.register({
       getViewerContext: jest.fn(() => ({
@@ -52,26 +52,33 @@ describe('fbt', () => {
       })),
     });
 
-    const table: any = {
-      __vcg: 1, // viewer-context gender
-      '*': {},
+    const table: FbtRuntimeInput = {
+      '*': {
+        A: {
+          '*': 'A,UNKNOWN,OTHER {name} has {num}',
+          [FEW]: 'A,UNKNOWN,FEW {name} has {num}',
+          [ONE]: 'A,UNKNOWN,ONE {name} has {num}',
+        },
+        B: {
+          '*': 'B,UNKNOWN,OTHER {name} has {num}',
+          [FEW]: 'B,UNKNOWN,FEW {name} has {num}',
+          [ONE]: 'B,UNKNOWN,ONE {name} has {num}',
+        },
+      },
+      [FEMALE]: {
+        B: {
+          '*': 'B,FEMALE,OTHER {name} has {num}',
+          [FEW]: 'B,FEMALE,FEW {name} has {num}',
+        },
+      },
+      [MALE]: {
+        A: {
+          '*': 'A,MALE,OTHER {name} has {num}',
+          [ONE]: 'A,MALE,ONE {name} has {num}',
+        },
+      },
+      __vcg: 1,
     };
-    table['*']['A'] = { '*': 'A,UNKNOWN,OTHER {name} has {num}' };
-    table['*']['A'][ONE] = 'A,UNKNOWN,ONE {name} has {num}';
-    table['*']['A'][FEW] = 'A,UNKNOWN,FEW {name} has {num}';
-    table['*']['B'] = { '*': 'B,UNKNOWN,OTHER {name} has {num}' };
-    table['*']['B'][ONE] = 'B,UNKNOWN,ONE {name} has {num}';
-    table['*']['B'][FEW] = 'B,UNKNOWN,FEW {name} has {num}';
-    table[MALE] = { A: { '*': 'A,MALE,OTHER {name} has {num}' } };
-    table[MALE]['A'][ONE] = 'A,MALE,ONE {name} has {num}';
-    // table['*'][male]['A'][FEW] = fallback to other ^^^
-    // table['*'][male]['B'] = fallback to unknown gender ^^^
-    table[FEMALE] = {
-      B: { '*': 'B,FEMALE,OTHER {name} has {num}' },
-    };
-    table[FEMALE]['B'][FEW] = 'B,FEMALE,FEW {name} has {num}';
-    // table[female]['B'][ONE] = fallback to other ^^^
-    // table[female]['A'] = fallback to unknown gender ^^^
 
     const few = fbtRuntime._param('num', 10, [0] /*Variations.NUMBER*/);
     const other = fbtRuntime._param('num', 20, [0]);
@@ -96,8 +103,10 @@ describe('fbt', () => {
     }) {
       try {
         expect(fbtRuntime._(table, test.arg).toString()).toBe(test.expected);
-      } catch (error: any) {
-        error.message += `\ntest.expected="${test.expected}"`;
+      } catch (error) {
+        if (error instanceof Error) {
+          error.message += `\ntest.expected="${test.expected}"`;
+        }
         throw error;
       }
     };

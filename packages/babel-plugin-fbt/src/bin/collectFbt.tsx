@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import yargs from 'yargs';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
 import type { TableJSFBT } from '../index';
@@ -19,18 +19,6 @@ import type {
  * This represents the JSON output format of this script.
  */
 export type CollectFbtOutput = {
-  /**
-   * List of phrases extracted from the given JS source code.
-   * Note that for a given fbt callsite, we may extract multiple phrases.
-   */
-  phrases: Array<
-    PackagerPhrase & {
-      /**
-       * This field is present only when the TERSE script option is `false`
-       */
-      jsfbt?: TableJSFBT;
-    }
-  >;
   /**
    * Mapping of child phrase index to their parent phrase index.
    * This allows us to determine which phrases (from the `phrases` field) are "top-level" strings,
@@ -74,6 +62,18 @@ export type CollectFbtOutput = {
    * This field is present only when the GEN_FBT_NODES script option is `true`
    */
   fbtElementNodes?: Array<PlainFbtNode> | null | undefined;
+  /**
+   * List of phrases extracted from the given JS source code.
+   * Note that for a given fbt callsite, we may extract multiple phrases.
+   */
+  phrases: Array<
+    PackagerPhrase & {
+      /**
+       * This field is present only when the TERSE script option is `false`
+       */
+      jsfbt?: TableJSFBT;
+    }
+  >;
 };
 
 export type CollectFbtOutputPhrase = CollectFbtOutput['phrases'][number];
@@ -192,7 +192,7 @@ if (cliExtraOptions) {
 
 function processJsonSource(collector: IFbtCollector, source: string) {
   const json = JSON.parse(source);
-  Object.keys(json).forEach(function (manifest_path) {
+  Object.keys(json).forEach((manifest_path) => {
     let manifest: Record<string, any> = {};
     if (fs.existsSync(manifest_path)) {
       manifest = require(path.resolve(process.cwd(), manifest_path));
@@ -235,21 +235,22 @@ if (argv[args.HELP]) {
 
   getFbtCollector(
     {
+      fbtCommonPath: argv[args.COMMON_STRINGS] || undefined,
       generateOuterTokenName: argv[args.GEN_OUTER_TOKEN_NAME],
       plugins: argv[args.PLUGINS].map(require),
       presets: argv[args.PRESETS].map(require),
       transform,
-      fbtCommonPath: argv[args.COMMON_STRINGS] || undefined,
     },
     extraOptions,
     argv[args.CUSTOM_COLLECTOR]
+    // eslint-disable-next-line unicorn/prefer-top-level-await
   ).then(async (collector) => {
     if (!argv._.length) {
       // No files given, read stdin as the sole input.
       const stream = process.stdin;
       let source = '';
       stream.setEncoding('utf8');
-      stream.on('data', function (chunk) {
+      stream.on('data', (chunk) => {
         source += chunk;
       });
       stream.on('end', async () => {

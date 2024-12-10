@@ -1,8 +1,5 @@
-import * as React from 'react';
-
 enum IntlVariations {
   BITMASK_NUMBER = 28,
-  BITMASK_GENDER = 3,
   NUMBER_ZERO = 16,
   NUMBER_ONE = 4,
   NUMBER_TWO = 8,
@@ -28,13 +25,13 @@ export interface ParamOptions {
 
 export interface PronounOptions {
   /**
-   * Whether to elide the NOT_A_PERSON option in the text variations generated.
-   */
-  human?: boolean;
-  /**
    * Whether to capitalize the pronoun in the source string.
    */
   capitalize?: boolean;
+  /**
+   * Whether to elide the NOT_A_PERSON option in the text variations generated.
+   */
+  human?: boolean;
 }
 
 export interface PluralOptions {
@@ -42,6 +39,10 @@ export interface PluralOptions {
    * Represents the plural form of the string in English. Default is `{singular} + 's'`
    */
   many?: string;
+  /**
+   * Name of the token where count shows up. (Default: `"number"`)
+   */
+  name?: string;
   /**
    * `"yes"|"no"|"ifMany"`: Whether to show the `{number}` in the string.
    *
@@ -53,10 +54,6 @@ export interface PluralOptions {
    *  - "yes": Show the count in all cases
    */
   showCount?: 'yes' | 'no' | 'ifMany';
-  /**
-   * Name of the token where count shows up. (Default: `"number"`)
-   */
-  name?: string;
   /**
    * For overriding the displayed number
    */
@@ -105,7 +102,7 @@ interface FbsOutput {
 }
 
 type FbtEnumProps = {
-  'enum-range': string[] | { [enumKey: string]: string };
+  'enum-range': Array<string> | { [enumKey: string]: string };
   value: string;
 };
 
@@ -118,13 +115,13 @@ type FbtPluralProps = PluralOptions & {
 };
 
 type FbtPronounProps = PronounOptions & {
-  type: PronounType;
   gender: GenderConst;
+  type: PronounType;
 };
 
 type FbtNameProps = {
-  name: string;
   gender: IntlVariations;
+  name: string;
 };
 
 type FbtSameParamProps = {
@@ -141,17 +138,10 @@ declare module 'react' {
   namespace JSX {
     type PropsWithChildren<P> = P & { children?: React.ReactNode | undefined };
     type PropsWithStringChild<P> = P & {
-      children?: string | string[] | undefined;
+      children?: string | Array<string> | undefined;
     };
 
     interface IntrinsicElements {
-      fbt: PropsWithChildren<FbtProps>;
-      'fbt:enum': FbtEnumProps;
-      'fbt:name': PropsWithChildren<FbtNameProps>;
-      'fbt:param': PropsWithChildren<FbtParamProps>;
-      'fbt:plural': PropsWithChildren<FbtPluralProps>;
-      'fbt:pronoun': FbtPronounProps;
-      'fbt:same-param': FbtSameParamProps;
       fbs: PropsWithChildren<FbtProps>;
       'fbs:enum': FbtEnumProps;
       'fbs:name': PropsWithStringChild<FbtNameProps>;
@@ -159,6 +149,13 @@ declare module 'react' {
       'fbs:plural': PropsWithStringChild<FbtPluralProps>;
       'fbs:pronoun': FbtPronounProps;
       'fbs:same-param': FbtSameParamProps;
+      fbt: PropsWithChildren<FbtProps>;
+      'fbt:enum': FbtEnumProps;
+      'fbt:name': PropsWithChildren<FbtNameProps>;
+      'fbt:param': PropsWithChildren<FbtParamProps>;
+      'fbt:plural': PropsWithChildren<FbtPluralProps>;
+      'fbt:pronoun': FbtPronounProps;
+      'fbt:same-param': FbtSameParamProps;
     }
   }
 }

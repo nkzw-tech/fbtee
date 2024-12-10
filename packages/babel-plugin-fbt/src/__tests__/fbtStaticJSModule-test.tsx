@@ -12,8 +12,8 @@ function runTest(
   data: { input: string; output: string },
   extra?: PluginOptions
 ) {
-  var expected = data.output;
-  var actual = transform(data.input, extra);
+  const expected = data.output;
+  const actual = transform(data.input, extra);
   assertSourceAstEqual(expected, actual);
 }
 
@@ -40,6 +40,21 @@ describe('fbt preserveWhitespace argument', () => {
             </fbt>;
         `),
       },
+      'jsx elements and string variation arguments nested inside jsx element': {
+        input: withFbtRequireStatement(`
+          var x =
+            <fbt desc="d">
+              <a>OuterJsx1</a>
+              RawText
+              <b>OuterJsx2</b>
+              <b>
+                <i>InnerJsx1</i>
+                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                <i>InnerJsx2</i>
+              </b>
+            </fbt>;
+        `),
+      },
       'jsx elements with string variation arguments': {
         input: withFbtRequireStatement(`
           var x =
@@ -59,17 +74,22 @@ describe('fbt preserveWhitespace argument', () => {
             </fbt>;
         `),
       },
-      'jsx elements and string variation arguments nested inside jsx element': {
+      'should not preserve whitespace around text in JSXExpression': {
         input: withFbtRequireStatement(`
           var x =
             <fbt desc="d">
               <a>OuterJsx1</a>
-              RawText
+              {'textInJSXExpression'}
               <b>OuterJsx2</b>
               <b>
+                rawText
+                {'textInJSXExpression'}
                 <i>InnerJsx1</i>
+                {'textInJSXExpression'}
                 <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                {'text' + 'InJSXExpression'}
                 <i>InnerJsx2</i>
+                {\`text${'InJSXExpression'}\`}
               </b>
             </fbt>;
         `),
@@ -91,26 +111,6 @@ describe('fbt preserveWhitespace argument', () => {
                 {' '}
                 <i>InnerJsx3</i>
                 {' '}
-              </b>
-            </fbt>;
-        `),
-      },
-      'should not preserve whitespace around text in JSXExpression': {
-        input: withFbtRequireStatement(`
-          var x =
-            <fbt desc="d">
-              <a>OuterJsx1</a>
-              {'textInJSXExpression'}
-              <b>OuterJsx2</b>
-              <b>
-                rawText
-                {'textInJSXExpression'}
-                <i>InnerJsx1</i>
-                {'textInJSXExpression'}
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-                {'text' + 'InJSXExpression'}
-                <i>InnerJsx2</i>
-                {\`text${'InJSXExpression'}\`}
               </b>
             </fbt>;
         `),
@@ -164,16 +164,16 @@ describe('fbt preserveWhitespace argument', () => {
   it('should preserve whitespace in text when requested', () => {
     runTest({
       input: withFbtRequireStatement(
-        'var x = fbt("two\\nlines", "one line", {preserveWhitespace:true});'
+        String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(${payload({
           jsfbt: {
+            m: [],
             t: {
               desc: 'one line',
               text: 'two\nlines',
             },
-            m: [],
           },
         })})`
       ),
@@ -186,11 +186,11 @@ describe('fbt preserveWhitespace argument', () => {
       output: withFbtRequireStatement(
         `var x = fbt._(${payload({
           jsfbt: {
+            m: [],
             t: {
               desc: 'one space',
               text: 'two  spaces',
             },
-            m: [],
           },
         })})`
       ),
@@ -207,11 +207,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'two\nlines',
                   text: 'one line',
                 },
-                m: [],
               },
             })},
           );`
@@ -226,11 +226,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'two  spaces',
                   text: 'one space',
                 },
-                m: [],
               },
             })},
           );`
@@ -247,11 +247,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'one space',
                   text: 'two spaces',
                 },
-                m: [],
               },
             })},
           );`
@@ -266,11 +266,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'one line',
                   text: 'two lines',
                 },
-                m: [],
               },
             })},
           );`
@@ -287,11 +287,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'two lines',
                   text: 'one line',
                 },
-                m: [],
               },
             })},
           );`
@@ -306,11 +306,11 @@ describe('fbt preserveWhitespace argument', () => {
         `var x = fbt._(
             ${payload({
               jsfbt: {
+                m: [],
                 t: {
                   desc: 'two spaces',
                   text: 'one space',
                 },
-                m: [],
               },
             })},
           );`

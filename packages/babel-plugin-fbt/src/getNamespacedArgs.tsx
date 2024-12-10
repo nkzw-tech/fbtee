@@ -25,6 +25,85 @@ import {
 export default function getNamespacedArgs(moduleName: string) {
   return {
     /**
+     * <fbt:enum> or <FbtEnum>
+     */
+    enum(node: JSXElement) {
+      if (!node.openingElement.selfClosing) {
+        throw errorAt(node, `Expected ${moduleName}:enum to be selfClosing.`);
+      }
+
+      const rangeAttr = getAttributeByNameOrThrow(
+        node.openingElement.attributes,
+        'enum-range'
+      );
+
+      if (rangeAttr.value?.type !== 'JSXExpressionContainer') {
+        throw errorAt(
+          node,
+          'Expected JSX Expression for enum-range attribute but got ' +
+            rangeAttr.value?.type
+        );
+      }
+
+      const valueAttr = getAttributeByNameOrThrow(
+        node.openingElement.attributes,
+        'value'
+      );
+
+      if (valueAttr.value?.type === 'JSXExpressionContainer') {
+        return [valueAttr.value.expression, rangeAttr.value.expression];
+      } else if (valueAttr.value?.type === 'StringLiteral') {
+        return [valueAttr.value, rangeAttr.value.expression];
+      }
+
+      throw errorAt(
+        node,
+        `Expected value attribute of <${moduleName}:enum> to be an expression ` +
+          `but got ${valueAttr.value?.type}`
+      );
+    },
+
+    /**
+     * <fbt:name> or <FbtName>
+     */
+    name(node: JSXElement) {
+      const attributes = node.openingElement.attributes;
+      const nameAttribute = getAttributeByNameOrThrow(attributes, 'name').value;
+      const genderAttribute = getAttributeByNameOrThrow(
+        attributes,
+        'gender'
+      ).value;
+
+      const children = filterEmptyNodes(node.children);
+      const nameChildren = children.filter(
+        (child) =>
+          child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
+      );
+      if (nameChildren.length !== 1) {
+        throw errorAt(
+          node,
+          `${moduleName}:name expects text or an expression, and only one`
+        );
+      }
+
+      let singularArg =
+        (nameChildren[0].type === 'JSXExpressionContainer' &&
+          nameChildren[0].expression) ||
+        nameChildren[0];
+      if (singularArg.type === 'JSXText') {
+        singularArg = stringLiteral(normalizeSpaces(singularArg.value));
+      }
+
+      return [
+        nameAttribute,
+        singularArg,
+        genderAttribute?.type === 'JSXExpressionContainer'
+          ? genderAttribute.expression
+          : [],
+      ];
+    },
+
+    /**
      * <fbt:param> or <FbtParam>
      */
     param(node: JSXElement) {
@@ -36,9 +115,7 @@ export default function getNamespacedArgs(moduleName: string) {
         RequiredParamOptions
       );
 
-      let paramChildren = filterEmptyNodes(node.children).filter(function (
-        child
-      ) {
+      let paramChildren = filterEmptyNodes(node.children).filter((child) => {
         return (
           child.type === 'JSXExpressionContainer' || child.type === 'JSXElement'
         );
@@ -99,7 +176,7 @@ export default function getNamespacedArgs(moduleName: string) {
       );
       const countAttr = getAttributeByNameOrThrow(attributes, 'count').value;
       const children = filterEmptyNodes(node.children);
-      const pluralChildren = children.filter(function (child) {
+      const pluralChildren = children.filter((child) => {
         return (
           child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
         );
@@ -149,7 +226,12 @@ export default function getNamespacedArgs(moduleName: string) {
           `${moduleName}:pronoun attribute "type" must have StringLiteral content`
         );
       }
-      if (!ValidPronounUsages.hasOwnProperty(typeAttr.value)) {
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          ValidPronounUsages,
+          typeAttr.value
+        )
+      ) {
         throw errorAt(
           node,
           `${moduleName}:pronoun attribute "type" must be one of [` +
@@ -177,46 +259,6 @@ export default function getNamespacedArgs(moduleName: string) {
     },
 
     /**
-     * <fbt:name> or <FbtName>
-     */
-    name(node: JSXElement) {
-      const attributes = node.openingElement.attributes;
-      const nameAttribute = getAttributeByNameOrThrow(attributes, 'name').value;
-      const genderAttribute = getAttributeByNameOrThrow(
-        attributes,
-        'gender'
-      ).value;
-
-      const children = filterEmptyNodes(node.children);
-      const nameChildren = children.filter(
-        (child) =>
-          child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
-      );
-      if (nameChildren.length !== 1) {
-        throw errorAt(
-          node,
-          `${moduleName}:name expects text or an expression, and only one`
-        );
-      }
-
-      let singularArg =
-        (nameChildren[0].type === 'JSXExpressionContainer' &&
-          nameChildren[0].expression) ||
-        nameChildren[0];
-      if (singularArg.type === 'JSXText') {
-        singularArg = stringLiteral(normalizeSpaces(singularArg.value));
-      }
-
-      return [
-        nameAttribute,
-        singularArg,
-        genderAttribute?.type === 'JSXExpressionContainer'
-          ? genderAttribute.expression
-          : [],
-      ];
-    },
-
-    /**
      * <fbt:same-param> or <FbtSameParam>
      */
     sameParam(node: JSXElement) {
@@ -233,45 +275,6 @@ export default function getNamespacedArgs(moduleName: string) {
       );
 
       return [nameAttr.value];
-    },
-
-    /**
-     * <fbt:enum> or <FbtEnum>
-     */
-    enum(node: JSXElement) {
-      if (!node.openingElement.selfClosing) {
-        throw errorAt(node, `Expected ${moduleName}:enum to be selfClosing.`);
-      }
-
-      const rangeAttr = getAttributeByNameOrThrow(
-        node.openingElement.attributes,
-        'enum-range'
-      );
-
-      if (rangeAttr.value?.type !== 'JSXExpressionContainer') {
-        throw errorAt(
-          node,
-          'Expected JSX Expression for enum-range attribute but got ' +
-            rangeAttr.value?.type
-        );
-      }
-
-      const valueAttr = getAttributeByNameOrThrow(
-        node.openingElement.attributes,
-        'value'
-      );
-
-      if (valueAttr.value?.type === 'JSXExpressionContainer') {
-        return [valueAttr.value.expression, rangeAttr.value.expression];
-      } else if (valueAttr.value?.type === 'StringLiteral') {
-        return [valueAttr.value, rangeAttr.value.expression];
-      }
-
-      throw errorAt(
-        node,
-        `Expected value attribute of <${moduleName}:enum> to be an expression ` +
-          `but got ${valueAttr.value?.type}`
-      );
     },
   };
 }

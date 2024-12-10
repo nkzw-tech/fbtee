@@ -79,7 +79,7 @@ export function applyPhonologicalRules(text: string): string {
     result = result.replace(regexp, replacement);
   }
 
-  return result.replace(/\x01/g, '');
+  return result.replaceAll('', '');
 }
 
 /**
@@ -126,5 +126,5 @@ export function dedupeStops(prefix: string, suffix: string): string {
   // We can naively grab the last "character" (a general Unicode "no-no") from
   // our string because we know our set of stops we test against have no
   // diacritics nor lie outside the BMP
-  return isRedundant(prefix[prefix.length - 1], suffix) ? '' : suffix;
+  return isRedundant(prefix.at(-1) || '', suffix) ? '' : suffix;
 }

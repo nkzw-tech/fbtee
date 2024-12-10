@@ -28,8 +28,8 @@ describe('FbtTranslations', () => {
   it('merges translations with different locales as expected', () => {
     FbtTranslations.registerTranslations({ en_US: { c1: 'aaa' } });
     FbtTranslations.mergeTranslations({
-      es_MX: { c1: 'bbb' },
       cs_CZ: { c1: 'ccc' },
+      es_MX: { c1: 'bbb' },
     });
     expect(FbtTranslations.getRegisteredTranslations()).toMatchInlineSnapshot(`
     {

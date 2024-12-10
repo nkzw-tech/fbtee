@@ -1,9 +1,5 @@
-import type {
-  FbtTableKey,
-  PatternHash,
-  PatternString,
-} from '../../../fbt/src/FbtTable';
 import type { HashToLeaf } from '../bin/FbtCollector';
+import type { FbtTableKey, PatternHash, PatternString } from '../Types';
 import type {
   IntlFbtVariationTypeValue,
   IntlVariationMaskValue,

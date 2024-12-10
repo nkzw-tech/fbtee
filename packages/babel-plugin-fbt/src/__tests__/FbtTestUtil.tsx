@@ -1,6 +1,10 @@
 import { PluginOptions, transformSync } from '@babel/core';
 import prettier from 'prettier';
 import { SENTINEL } from '../FbtConstants';
+import presetReact from '@babel/preset-react';
+import presetTypeScript from '@babel/preset-typescript';
+import fbt from '../index';
+import syntaxJSX from '@babel/plugin-syntax-jsx';
 
 export function payload(obj: Record<string, unknown>): string {
   return JSON.stringify(
@@ -11,19 +15,12 @@ export function payload(obj: Record<string, unknown>): string {
 export function transform(source: string, pluginOptions?: PluginOptions) {
   return (
     transformSync(source, {
-      filename: 'source.js',
       ast: false,
-      presets: [require('@babel/preset-typescript')],
+      filename: 'source.js',
       plugins: [
-        require('@babel/plugin-syntax-jsx'),
-        [
-          require('@babel/plugin-transform-react-jsx'),
-          {
-            throwIfNamespace: false,
-          },
-        ],
-        [require('../index'), pluginOptions],
+        [fbt, pluginOptions],
       ],
+      presets: [presetTypeScript, presetReact],
       sourceType: 'module',
     })?.code || ''
   );
@@ -43,10 +40,12 @@ async function transformKeepJsx(
   return prettier.format(
     transformSync(source, {
       ast: false,
+      filename: 'source.js',
       plugins: [
-        require('@babel/plugin-syntax-jsx'),
-        [require('../index'), pluginOptions],
+        syntaxJSX,
+        [fbt, pluginOptions],
       ],
+      presets: [presetTypeScript],
       sourceType: 'module',
     })?.code || '',
     { parser: 'babel' }
@@ -79,7 +78,7 @@ const fbtSentinelRegex = /(["'])__FBT__(.*?)__FBT__\1/gm;
  */
 export const jsCodeFbtCallSerializer = {
   serialize(rawValue: string) {
-    const decoded = rawValue.replace(
+    const decoded = rawValue.replaceAll(
       fbtSentinelRegex,
       (_match, _quote, body) => {
         const json = Buffer.from(body, 'base64').toString('utf8');
@@ -103,9 +102,9 @@ const nonASCIICharRegex = /[^\0-~]/g;
  */
 export const jsCodeNonASCIICharSerializer = {
   serialize(rawValue: unknown) {
-    return JSON.stringify(rawValue).replace(
+    return JSON.stringify(rawValue).replaceAll(
       nonASCIICharRegex,
-      (char) => '\\u' + char.charCodeAt(0).toString(16).padStart(4, '0')
+      (char) => String.raw`\u` + char.charCodeAt(0).toString(16).padStart(4, '0')
     );
   },
 

@@ -1,11 +1,11 @@
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import type { TableJSFBTTreeBranch, TokenAliases } from '..';
-import type { PatternHash, PatternString } from '../../../fbt/src/FbtTable';
 import type { CollectFbtOutputPhrase } from '../bin/collectFbt';
 import { objMap } from '../FbtUtil';
 import type { JSFBTMetaEntry, TableJSFBTTree } from '../index';
 import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil';
+import type { PatternHash, PatternString } from '../Types';
 import type {
   FbtSiteHashifiedTableJSFBTTree,
   FbtSiteHashToTextAndDesc,
@@ -94,8 +94,8 @@ export class FbtSite extends FbtSiteBase<
       textAndDescToHash[textAndDesc] = hash;
     }
     const tableData = {
-      t: FbtSite._hashifyLeaves(jsfbt.t, textAndDescToHash),
       m: jsfbt.m,
+      t: FbtSite._hashifyLeaves(jsfbt.t, textAndDescToHash),
     } as const;
     const hashToTokenAliases: FbtSiteHashToTokenAliases = {};
     onEachLeaf({ jsfbt }, (leaf) => {
@@ -142,7 +142,7 @@ export class FbtSite extends FbtSiteBase<
     text: PatternString,
     desc: string
   ): TextAndDescConcatenation {
-    return JSON.stringify({ text, desc });
+    return JSON.stringify({ desc, text });
   }
 }
 
@@ -185,8 +185,8 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
 
     if (type === FbtVariationType.NUMBER) {
       return {
-        type: FbtVariationType.NUMBER,
         token: token != null ? token : undefined,
+        type: FbtVariationType.NUMBER,
       };
     }
 
@@ -195,7 +195,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
         token != null,
         'token should be specified for gender variation'
       );
-      return { type: FbtVariationType.GENDER, token };
+      return { token, type: FbtVariationType.GENDER };
     }
 
     if (type === FbtVariationType.PRONOUN) {
@@ -235,15 +235,15 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
 }
 
 const FbtSiteMetadata = {
-  wrap(
-    rawEntries: ReadonlyArray<JSFBTMetaEntry | null | undefined>
-  ): Array<FbtSiteMetaEntry | null | undefined> {
-    return rawEntries.map((entry) => entry && FbtSiteMetaEntry.wrap(entry));
-  },
-
   unwrap(
     metaEntries: ReadonlyArray<FbtSiteMetaEntry | null | undefined>
   ): Array<JSFBTMetaEntry | null | undefined> {
     return metaEntries.map((entry) => (entry == null ? null : entry.unwrap()));
+  },
+
+  wrap(
+    rawEntries: ReadonlyArray<JSFBTMetaEntry | null | undefined>
+  ): Array<FbtSiteMetaEntry | null | undefined> {
+    return rawEntries.map((entry) => entry && FbtSiteMetaEntry.wrap(entry));
   },
 } as const;

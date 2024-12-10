@@ -69,9 +69,9 @@ export default class FbtResultBase implements IFbtResultBase {
     const result: Array<FbtContentItem> = [];
     for (const content of contents) {
       if (Array.isArray(content)) {
-        result.push.apply(result, FbtResultBase.flattenToArray(content));
+        result.push(...FbtResultBase.flattenToArray(content));
       } else if (content instanceof FbtResultBase) {
-        result.push.apply(result, content.flattenToArray());
+        result.push(...content.flattenToArray());
       } else {
         result.push(content as FbtContentItem);
       }

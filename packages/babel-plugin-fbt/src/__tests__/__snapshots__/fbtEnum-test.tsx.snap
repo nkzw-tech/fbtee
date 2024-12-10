@@ -6,12 +6,12 @@ import aEnum from "Test$FbtEnum";
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,
@@ -26,12 +26,12 @@ import * as aEnum from "Test$FbtEnum";
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,
@@ -46,12 +46,12 @@ let aEnum = require("Test$FbtEnum");
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,
@@ -66,12 +66,12 @@ let aEnum = require("Test$FbtEnum");
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,
@@ -86,12 +86,12 @@ let aEnum = require("Test$FbtEnum");
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,
@@ -106,12 +106,12 @@ let aEnum = require("Test$FbtEnum");
 var x = fbt._(
   /* __FBT__ start */ {
     jsfbt: {
+      m: [null],
       t: {
         id1: { desc: "enums!", text: "Click to see groups" },
         id2: { desc: "enums!", text: "Click to see photos" },
         id3: { desc: "enums!", text: "Click to see videos" },
       },
-      m: [null],
     },
     project: "",
   } /* __FBT__ end */,

@@ -1,5 +1,4 @@
 import type { Node } from '@babel/types';
-import type { ValidPronounUsagesType } from '../../fbt/src/FbtRuntimeTypes';
 
 export type FbtOptionValue = string | boolean | Node;
 export type FbtOptionValues = Partial<
@@ -25,7 +24,7 @@ export type FbtCallSiteOptions = Partial<{
 }>;
 
 export type JSModuleNameType = 'fbt' | 'fbs';
-export type ValidPronounUsagesKey = keyof ValidPronounUsagesType;
+export type ValidPronounUsagesKey = keyof typeof ValidPronounUsages;
 
 export const SENTINEL = '__FBT__';
 
@@ -34,22 +33,22 @@ export const PluralRequiredAttributes = {
 } as const;
 
 const ShowCount = {
-  yes: true,
-  no: true,
   ifMany: true,
+  no: true,
+  yes: true,
 } as const;
 
 export const ShowCountKeys = {
-  yes: 'yes',
-  no: 'no',
   ifMany: 'ifMany',
+  no: 'no',
+  yes: 'yes',
 } as const;
 
 export const PluralOptions = {
-  value: true, // optional value to replace token (rather than count)
-  showCount: ShowCount,
-  name: true, // token
   many: true,
+  name: true,
+  showCount: ShowCount,
+  value: true,
 } as const;
 
 export const ValidPluralOptions = {
@@ -57,7 +56,7 @@ export const ValidPluralOptions = {
   ...PluralRequiredAttributes,
 } as const;
 
-export const ValidPronounUsages: ValidPronounUsagesType = {
+export const ValidPronounUsages = {
   object: 0,
   possessive: 1,
   reflexive: 2,
@@ -72,13 +71,14 @@ export const ValidPronounUsagesKeys = {
 } as const;
 
 export const ValidPronounOptions = {
-  human: { true: true, false: true },
-  capitalize: { true: true, false: true },
+  capitalize: { false: true, true: true },
+  human: { false: true, true: true },
 } as const;
 
 export const PronounRequiredAttributes = {
-  type: true, // See ValidPronounUsages for valid strings
+  // See ValidPronounUsages for valid strings
   gender: true,
+  type: true,
 } as const;
 
 /**
@@ -94,8 +94,8 @@ export const ValidFbtOptions = Object.freeze({
 });
 
 export const FbtBooleanOptions = {
-  preserveWhitespace: true,
   doNotExtract: true,
+  preserveWhitespace: true,
 } as const;
 
 export const CommonOption = 'common';
@@ -115,8 +115,8 @@ export const RequiredParamOptions = {
 } as const;
 
 export const ValidParamOptions = {
-  number: true,
   gender: true,
+  number: true,
   ...RequiredParamOptions,
 } as const;
 
@@ -126,9 +126,9 @@ export const FbtType = {
 } as const;
 
 export const JSModuleName = {
+  FBS: 'fbs',
   FBT: 'fbt',
   REACT_FBT: 'Fbt',
-  FBS: 'fbs',
 } as const;
 
 export type FbtTypeValue = (typeof FbtType)[keyof typeof FbtType];

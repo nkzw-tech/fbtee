@@ -148,7 +148,7 @@ export default class FbtPronounNode extends FbtNode<
       );
 
       return options.capitalize
-        ? word.charAt(0).toUpperCase() + word.substr(1)
+        ? word.charAt(0).toUpperCase() + word.slice(1)
         : word;
     } catch (error: any) {
       throw errorAt(this.node, error);

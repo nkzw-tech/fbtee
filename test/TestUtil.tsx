@@ -1,8 +1,9 @@
-import assert from 'assert';
+import assert from 'node:assert';
 import babel, { PluginItem } from '@babel/core';
 import generate from '@babel/generator';
 import { parse as babelParse } from '@babel/parser';
 import { Node } from '@babel/types';
+import jsonDiff from 'json-diff';
 
 type Options = Readonly<{
   comments?: boolean;
@@ -10,10 +11,10 @@ type Options = Readonly<{
 }>;
 
 type TestCase = Readonly<{
-  throws?: boolean | string;
   input: string;
-  output?: string;
   options?: Record<string, unknown>;
+  output?: string;
+  throws?: boolean | string;
 }>;
 
 type TestCases = Record<string, TestCase>;
@@ -31,12 +32,9 @@ const IGNORE_KEYS = [
 ];
 
 function stripMeta(node: Node, options?: Options) {
-  let ignoreKeys;
-  if (options?.comments) {
-    ignoreKeys = [...IGNORE_KEYS];
-  } else {
-    ignoreKeys = [...IGNORE_KEYS, 'leadingComments', 'trailingComments'];
-  }
+  const ignoreKeys = options?.comments
+    ? [...IGNORE_KEYS]
+    : [...IGNORE_KEYS, 'leadingComments', 'trailingComments'];
   for (const key of ignoreKeys) {
     // @ts-expect-error
     delete node[key];
@@ -52,13 +50,6 @@ function stripMeta(node: Node, options?: Options) {
   return node;
 }
 
-function getDefaultTransformForPlugins(plugins: Array<PluginItem>) {
-  return (source: string) =>
-    babel.transformSync(source, {
-      plugins,
-    })?.code;
-}
-
 function parse(code: string) {
   if ((typeof code !== 'string' && typeof code !== 'object') || code == null) {
     throw new Error(
@@ -66,8 +57,8 @@ function parse(code: string) {
     );
   }
   return babelParse(code, {
-    sourceType: 'module',
     plugins: ['typescript', 'jsx', 'nullishCoalescingOperator'],
+    sourceType: 'module',
   });
 }
 
@@ -86,7 +77,7 @@ function firstCommonSubstring(left: string, right: string) {
       break;
     }
   }
-  return left.substr(0, i);
+  return left.slice(0, Math.max(0, i));
 }
 
 function normalizeSourceCode(sourceCode: string) {
@@ -112,7 +103,7 @@ export function stripCodeBlockWhitespace(code: string) {
     match == null
       ? code
       : // Strip from each line
-        code.replace(new RegExp(match[1], 'g'), '\n');
+        code.replaceAll(new RegExp(match[1], 'g'), '\n');
 
   return strippedCode;
 }
@@ -132,8 +123,7 @@ export function assertSourceAstEqual(
   );
   try {
     assert.deepStrictEqual(actualTree, expectedTree);
-  } catch (e) {
-    const jsonDiff = require('json-diff');
+  } catch (error) {
     const expectedFormattedCode = formatSourceCode(expected);
     const actualFormattedCode = formatSourceCode(actual);
     const commonStr = firstCommonSubstring(
@@ -141,13 +131,13 @@ export function assertSourceAstEqual(
       actualFormattedCode
     );
     const excerptLength = 60;
-    const excerptDiffFromExpected = expectedFormattedCode.substr(
+    const excerptDiffFromExpected = expectedFormattedCode.slice(
       commonStr.length,
-      excerptLength
+      commonStr.length + excerptLength
     );
-    const excerptDiffFromActual = actualFormattedCode.substr(
+    const excerptDiffFromActual = actualFormattedCode.slice(
       commonStr.length,
-      excerptLength
+      commonStr.length + excerptLength
     );
 
     const errMessage = `deepEqual node AST assert failed for the following code:
@@ -172,8 +162,8 @@ ${jsonDiff.diffString(expectedTree, actualTree)}
     console.error(errMessage);
 
     const err = new Error(errMessage);
-    if (e instanceof Error) {
-      err.stack = e.stack;
+    if (error instanceof Error) {
+      err.stack = error.stack;
     }
     throw err;
   }
@@ -219,7 +209,7 @@ export function testSectionAsync(
 
 export function testSection(
   testData: TestCases,
-  transform: Function,
+  transform: (source: string, options?: Options) => string,
   options?: Options
 ) {
   Object.entries(testData).forEach(([title, testInfo]) => {
@@ -251,6 +241,13 @@ export function testCase(
   options: Options
 ) {
   describe(name, () =>
-    testSection(testData, getDefaultTransformForPlugins(plugins), options)
+    testSection(
+      testData,
+      (source: string) =>
+        babel.transformSync(source, {
+          plugins,
+        })?.code || '',
+      options
+    )
   );
 }

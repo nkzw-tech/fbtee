@@ -15,7 +15,6 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import type { ExtraOptionValues } from '../../../fbt/src/FbtHooks';
 import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants';
 import {
   FbtBooleanOptions,
@@ -64,6 +63,10 @@ import FbtPronounNode from './FbtPronounNode';
 import FbtSameParamNode from './FbtSameParamNode';
 import FbtTextNode from './FbtTextNode';
 
+type ExtraOptionValues = {
+  [optionName: string]: string;
+};
+
 export type Options = FbtElementNodeNativeOptions & {
   extraOptions: Readonly<ExtraOptionValues>;
 };
@@ -89,6 +92,7 @@ export type FbtElementNodeNativeOptions = {
 };
 
 export interface IFbtElementNode {
+  _tokenSet: ParamSet;
   /**
    * Returns description of this fbt string for the given map of string variation arguments
    */
@@ -98,7 +102,6 @@ export interface IFbtElementNode {
    * @throws if the token name was already registered
    */
   registerToken(name: string, source: AnyFbtNode): void;
-  _tokenSet: ParamSet;
 }
 
 /**
@@ -169,6 +172,7 @@ export default class FbtElementNode
         author: enforceString.orNull(rawOptions.author),
         common: enforceBoolean.orNull(rawOptions.common) || false,
         doNotExtract: enforceBoolean.orNull(rawOptions.doNotExtract),
+        extraOptions,
         preserveWhitespace:
           enforceBoolean.orNull(rawOptions.preserveWhitespace) || false,
         project: enforceString(rawOptions.project || ''),
@@ -178,7 +182,6 @@ export default class FbtElementNode
           isExpression(rawOptions.subject)
             ? enforceBabelNodeCallExpressionArg.orNull(rawOptions.subject)
             : null,
-        extraOptions,
       };
     } catch (error: any) {
       throw errorAt(node, error);

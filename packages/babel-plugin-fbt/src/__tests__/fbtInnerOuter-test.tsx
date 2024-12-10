@@ -5,7 +5,7 @@ function testChildToParentRelationships([, testData]: readonly [
   name: string,
   { input: string; output: Record<number, number> }
 ]) {
-  const body = testData.input.replace(/\/\*\*(?:\/|[^*]|\*+[^*\/])*\*+\//, '');
+  const body = testData.input.replace(/\/\*\*(?:\/|[^*]|\*+[^*/])*\*+\//, '');
   transform(body, { collectFbt: true });
 
   expect(JSON.stringify(testData.output, null, ' ')).toEqual(

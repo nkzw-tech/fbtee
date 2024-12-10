@@ -12,16 +12,16 @@ const { hasOwnProperty } = Object.prototype;
 // It also grabs any punctuation that may be present after the token, such as
 // brackets, fullstops and elipsis (for various locales too!)
 const parameterRegexp = new RegExp(
-  '\\{([^}]+)\\}(' + PUNCT_CHAR_CLASS + '*)',
+  String.raw`\{([^}]+)\}(` + PUNCT_CHAR_CLASS + '*)',
   'g'
 );
 
 export type MaybeReactComponent = Partial<{
-  type?: string;
-  props?: Record<any, any>;
   _store?: {
     validated: boolean | number;
   };
+  props?: Record<string, unknown>;
+  type?: string;
 }>;
 
 export type Substitutions = {
@@ -93,14 +93,14 @@ export default function substituteTokens(
           objectPieces.push(argument);
           argNames.push(parameter);
           // End of Transmission Block sentinel marker
-          return '\x17' + punctuation;
+          return '\u0017' + punctuation;
         } else if (argument == null) {
           return '';
         }
         return String(argument) + dedupeStops(String(argument), punctuation);
       }
     )
-    .split('\x17')
+    .split('\u0017')
     .map(applyPhonologicalRules);
 
   if (stringPieces.length === 1) {

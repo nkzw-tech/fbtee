@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { JSModuleNameType } from './FbtConstants';
 
 export type FbtCommonMap = {
@@ -19,9 +19,12 @@ export function init(
     let fbtCommonData;
     try {
       fbtCommonData = require(path.resolve(opts.fbtCommonPath));
-    } catch (error: any) {
-      error.message += `\nopts.fbtCommonPath: ${opts.fbtCommonPath}`;
-      error.message += `\nCurrent path: ${process.cwd()}`;
+    } catch (error) {
+      if (error instanceof Error) {
+        error.message +=
+          `\nopts.fbtCommonPath: ${opts.fbtCommonPath}` +
+          `\nCurrent path: ${process.cwd()}`;
+      }
       throw error;
     }
     Object.assign(textToDesc, fbtCommonData);

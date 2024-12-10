@@ -207,8 +207,7 @@ export default class FbtNodeChecker {
     );
   }
 
-  // Not defining the static value here because of JS syntax compatibility issues in node.js v10.x
-  static COMMON_STRING_METHOD_NAME: 'c' = 'c';
+  static readonly COMMON_STRING_METHOD_NAME = 'c';
 }
 
 const moduleNames = new Set<string>([FBT, FBS, REACT_FBT]);

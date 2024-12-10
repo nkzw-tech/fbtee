@@ -1,7 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- */
-
 import type {
   NumberingSystemData,
   StandardDecimalPatternInfo,
@@ -9,183 +5,182 @@ import type {
 
 export type NumberConfig = {
   decimalSeparator: string;
-  numberDelimiter: string;
   minDigitsForThousandsSeparator: number;
-  standardDecimalPatternInfo: StandardDecimalPatternInfo;
+  numberDelimiter: string;
   numberingSystemData: NumberingSystemData | null | undefined;
+  standardDecimalPatternInfo: StandardDecimalPatternInfo;
 };
 
 const DEFAULT_CONFIG = {
   decimalSeparator: '.',
-  numberDelimiter: ',',
   minDigitsForThousandsSeparator: 0,
+  numberDelimiter: ',',
+  numberingSystemData: null,
   standardDecimalPatternInfo: {
     primaryGroupSize: 3,
     secondaryGroupSize: 3,
   },
-  numberingSystemData: null,
 } as const;
 const DEFAULT_LOCALE = 'en_US';
 
 const configs = [
   {
     decimalSeparator: '.',
-    numberDelimiter: ',',
     minDigitsForThousandsSeparator: 4,
+    numberDelimiter: ',',
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: ',',
-    numberDelimiter: '\u00a0',
     minDigitsForThousandsSeparator: 4,
+    numberDelimiter: '\u00a0',
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: '\u066b',
-    numberDelimiter: '\u066c',
     minDigitsForThousandsSeparator: 4,
-    standardDecimalPatternInfo: {
-      primaryGroupSize: 3,
-      secondaryGroupSize: 3,
-    },
+    numberDelimiter: '\u066c',
     numberingSystemData: {
       digits: '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669',
     },
+    standardDecimalPatternInfo: {
+      primaryGroupSize: 3,
+      secondaryGroupSize: 3,
+    },
   },
   {
     decimalSeparator: '.',
-    numberDelimiter: ',',
     minDigitsForThousandsSeparator: 4,
-    standardDecimalPatternInfo: {
-      primaryGroupSize: 3,
-      secondaryGroupSize: 2,
-    },
+    numberDelimiter: ',',
     numberingSystemData: {
       digits: '\u09e6\u09e7\u09e8\u09e9\u09ea\u09eb\u09ec\u09ed\u09ee\u09ef',
     },
+    standardDecimalPatternInfo: {
+      primaryGroupSize: 3,
+      secondaryGroupSize: 2,
+    },
   },
   {
     decimalSeparator: ',',
-    numberDelimiter: '.',
     minDigitsForThousandsSeparator: 4,
+    numberDelimiter: '.',
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: ',',
+    minDigitsForThousandsSeparator: 5,
     numberDelimiter: '\u00a0',
-    minDigitsForThousandsSeparator: 5,
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: '.',
-    numberDelimiter: ',',
     minDigitsForThousandsSeparator: 4,
+    numberDelimiter: ',',
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 2,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: ',',
-    numberDelimiter: '.',
     minDigitsForThousandsSeparator: 5,
+    numberDelimiter: '.',
+    numberingSystemData: null,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
-    numberingSystemData: null,
   },
   {
     decimalSeparator: '\u066b',
-    numberDelimiter: '\u066c',
     minDigitsForThousandsSeparator: 4,
-    standardDecimalPatternInfo: {
-      primaryGroupSize: 3,
-      secondaryGroupSize: 3,
-    },
+    numberDelimiter: '\u066c',
     numberingSystemData: {
       digits: '\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9',
     },
+    standardDecimalPatternInfo: {
+      primaryGroupSize: 3,
+      secondaryGroupSize: 3,
+    },
   },
   {
     decimalSeparator: '\u066b',
-    numberDelimiter: '\u066c',
     minDigitsForThousandsSeparator: 4,
+    numberDelimiter: '\u066c',
+    numberingSystemData: {
+      digits: '\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9',
+    },
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 2,
-    },
-    numberingSystemData: {
-      digits: '\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9',
     },
   },
   {
     decimalSeparator: '.',
-    numberDelimiter: ',',
     minDigitsForThousandsSeparator: 4,
-    standardDecimalPatternInfo: {
-      primaryGroupSize: 3,
-      secondaryGroupSize: 2,
-    },
+    numberDelimiter: ',',
     numberingSystemData: {
       digits: '\u0966\u0967\u0968\u0969\u096a\u096b\u096c\u096d\u096e\u096f',
     },
+    standardDecimalPatternInfo: {
+      primaryGroupSize: 3,
+      secondaryGroupSize: 2,
+    },
   },
   {
     decimalSeparator: '.',
-    numberDelimiter: ',',
     minDigitsForThousandsSeparator: 4,
-    standardDecimalPatternInfo: {
-      primaryGroupSize: 3,
-      secondaryGroupSize: 3,
-    },
+    numberDelimiter: ',',
     numberingSystemData: {
       digits: '\u1040\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049',
     },
-  },
-  {
-    decimalSeparator: '.',
-    numberDelimiter: ',',
-    minDigitsForThousandsSeparator: 4,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
+  },
+  {
+    decimalSeparator: '.',
+    minDigitsForThousandsSeparator: 4,
+    numberDelimiter: ',',
     numberingSystemData: {
       digits: '\u0966\u0967\u0968\u0969\u096a\u096b\u096c\u096d\u096e\u096f',
     },
-  },
-  {
-    decimalSeparator: '.',
-    numberDelimiter: '\u2019',
-    minDigitsForThousandsSeparator: 4,
     standardDecimalPatternInfo: {
       primaryGroupSize: 3,
       secondaryGroupSize: 3,
     },
+  },
+  {
+    decimalSeparator: '.',
+    minDigitsForThousandsSeparator: 4,
+    numberDelimiter: '\u2019',
     numberingSystemData: null,
+    standardDecimalPatternInfo: {
+      primaryGroupSize: 3,
+      secondaryGroupSize: 3,
+    },
   },
 ];
 
 const localeToIdx = {
-  en_US: 0,
   af_ZA: 1,
   ak_GH: 0,
   am_ET: 0,
@@ -217,6 +212,7 @@ const localeToIdx = {
   en_OP: 0,
   en_PI: 0,
   en_UD: 0,
+  en_US: 0,
   eo_EO: 1,
   es_CL: 4,
   es_CO: 4,

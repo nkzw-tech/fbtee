@@ -1,8 +1,3 @@
-/**
- * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
- *
- */
-
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest';
 import {
   jsCodeFbtCallSerializer,

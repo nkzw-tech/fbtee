@@ -1,5 +1,5 @@
-import type { PatternHash, PatternString } from '../../../fbt/src/FbtTable';
 import { onEachLeaf } from '../JSFbtUtil';
+import type { PatternHash, PatternString } from '../Types';
 import type { HashToLeaf, PackagerPhrase } from './FbtCollector';
 
 export type HashFunction = (
@@ -23,8 +23,8 @@ export default class TextPackager {
       const hashToLeaf: HashToLeaf = {};
       onEachLeaf(phrase, ({ desc, text }) => {
         hashToLeaf[this._hash(text, desc)] = {
-          text,
           desc,
+          text,
         };
       });
 

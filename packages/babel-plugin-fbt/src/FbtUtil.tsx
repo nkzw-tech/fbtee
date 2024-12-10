@@ -1,4 +1,4 @@
-import util from 'util';
+import util from 'node:util';
 import generate from '@babel/generator';
 import {
   ArgumentPlaceholder,
@@ -51,7 +51,6 @@ import {
 } from '@babel/types';
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
-import type { PatternString } from '../../fbt/src/FbtTable';
 import type { AnyFbtNode } from './fbt-nodes/FbtNode';
 import type {
   FbtOptionConfig,
@@ -61,6 +60,9 @@ import type {
 } from './FbtConstants';
 import { JSModuleName, ModuleNameRegExp } from './FbtConstants';
 import type { TokenAliases } from './index';
+import type { PatternString } from './Types';
+
+const { hasOwnProperty } = Object.prototype;
 
 type BabelNodeJSXAttributes = ReadonlyArray<
   JSXOpeningElement['attributes'][number]
@@ -89,7 +91,7 @@ export function normalizeSpaces(
   }
   // We're  willingly preserving non-breaking space characters (\u00A0)
   // See D33402749 for more info.
-  return value.replace(/[^\S\u00A0]+/g, ' ');
+  return value.replaceAll(/[^\S\u00A0]+/g, ' ');
 }
 
 /**
@@ -124,7 +126,7 @@ export function validateNamespacedFbtElement(
         handlerName === 'same-param');
     // React's version, e.g. <FbtParam>, or <FbtEnum>
   } else if (isJSXIdentifier(node)) {
-    handlerName = node.name.substr(3).toLowerCase();
+    handlerName = node.name.slice(3).toLowerCase();
     valid =
       node.name === 'FbtEnum' ||
       node.name === 'FbtParam' ||
@@ -190,7 +192,7 @@ export function checkOption<K extends string>(
   const optionName = option as K;
 
   const validValues = validOptions[optionName];
-  if (!validOptions.hasOwnProperty(optionName) || validValues == null) {
+  if (!hasOwnProperty.call(validOptions, optionName) || validValues == null) {
     throw errorAt(
       isNode(value) ? value : null,
       `Invalid option "${optionName}". ` +
@@ -299,6 +301,10 @@ type ErrorWithBabelNodeLocation = Error & {
   _hasBabelNodeLocation?: boolean;
 };
 
+const isErrorWithNodeLocation = (
+  error: unknown
+): error is ErrorWithBabelNodeLocation =>
+  error instanceof Error && '_hasBabelNodeLocation' in error;
 /**
  * Prepend Babel node debug info (location, source code) to an Error message.
  *
@@ -308,7 +314,7 @@ type ErrorWithBabelNodeLocation = Error & {
  */
 export function errorAt(
   astNode?: Node | null,
-  msgOrError: string | ErrorWithBabelNodeLocation = '',
+  msgOrError: string | ErrorWithBabelNodeLocation | unknown = '',
   options: {
     suggestOSSWebsite?: boolean;
   } = {}
@@ -323,12 +329,15 @@ export function errorAt(
     error._hasBabelNodeLocation = astNode?.loc != null;
   } else {
     error = msgOrError;
-    if (error._hasBabelNodeLocation !== true) {
+    if (
+      isErrorWithNodeLocation(error) &&
+      error._hasBabelNodeLocation !== true
+    ) {
       error.message = createErrorMessageAtNode(astNode, error.message, options);
       error._hasBabelNodeLocation = astNode?.loc != null;
     }
   }
-  return error;
+  return error as ErrorWithBabelNodeLocation;
 }
 
 function createErrorMessageAtNode(
@@ -401,7 +410,7 @@ export function collectOptions(
 
     // Append only default valid options excluding "extraOptions",
     // which are used only by specific runtimes.
-    if (validOptions.hasOwnProperty(optionName)) {
+    if (hasOwnProperty.call(validOptions, optionName)) {
       key2value[optionName] = isTextualNode(value)
         ? normalizeSpaces(expandStringConcat(moduleName, value).value)
         : value;
@@ -429,7 +438,7 @@ export function collectOptionsFromFbtConstruct(
   }
 
   Object.keys(options).forEach((key) => {
-    if (booleanOptions && booleanOptions.hasOwnProperty(key)) {
+    if (booleanOptions && hasOwnProperty.call(booleanOptions, key)) {
       options[key] = getOptionBooleanValue(
         options,
         key,
@@ -543,7 +552,7 @@ export function getOptionBooleanValue<K extends string>(
   name: K,
   node?: Node | null
 ): boolean {
-  if (!options.hasOwnProperty(name)) {
+  if (!hasOwnProperty.call(options, name)) {
     return false;
   }
   const value = options[name];
@@ -635,7 +644,7 @@ export function hasKeys(o: Record<string, unknown>): boolean {
 
 export function getRawSource(src: string, node: Node): string {
   return node.start != null && node.end != null
-    ? src.substring(node.start, node.end)
+    ? src.slice(node.start, node.end)
     : '';
 }
 
@@ -904,7 +913,7 @@ export function enforceStringEnum<K extends string>(
   valueDesc?: string | null
 ): K {
   invariant(
-    typeof value === 'string' && keys.hasOwnProperty(value),
+    typeof value === 'string' && hasOwnProperty.call(keys, value),
     '%sExpected value to be one of [%s] but we got %s (%s) instead',
     valueDesc ? valueDesc + ' - ' : '',
     Object.keys(keys).join(', '),

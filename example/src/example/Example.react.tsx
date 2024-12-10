@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
 import { ChangeEvent, useCallback, useState } from 'react';
-import * as React from 'react';
 import translations from '../translatedFbts.json';
 import ExampleEnum from './Example$FbtEnum';
 
@@ -11,23 +10,23 @@ const viewerContext = {
 };
 
 init({
-  translations,
   hooks: {
     getViewerContext: () => viewerContext,
   },
+  translations,
 });
 
 const LOCALES = {
+  ar_AR: {
+    bcp47: 'ar',
+    displayName: '\u0627\u0644\u0639\u0631\u0628\u064A\u0629',
+    englishName: 'Arabic',
+    rtl: true,
+  },
   en_US: {
     bcp47: 'en-US',
     displayName: 'English (US)\u200e',
     englishName: 'English (US)',
-    rtl: false,
-  },
-  fb_HX: {
-    bcp47: 'fb-HX',
-    displayName: 'l33t 5p34k',
-    englishName: 'FB H4x0r',
     rtl: false,
   },
   es_LA: {
@@ -36,11 +35,11 @@ const LOCALES = {
     englishName: 'Spanish',
     rtl: false,
   },
-  ar_AR: {
-    bcp47: 'ar',
-    displayName: '\u0627\u0644\u0639\u0631\u0628\u064A\u0629',
-    englishName: 'Arabic',
-    rtl: true,
+  fb_HX: {
+    bcp47: 'fb-HX',
+    displayName: 'l33t 5p34k',
+    englishName: 'FB H4x0r',
+    rtl: false,
   },
   he_IL: {
     bcp47: 'he',
@@ -110,7 +109,7 @@ export default function Example() {
                 <select
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                    const vcGender = parseInt(event.target.value, 10);
+                    const vcGender = Number.parseInt(event.target.value, 10);
                     viewerContext.GENDER = vcGender;
                   }}
                 >
@@ -151,8 +150,8 @@ export default function Example() {
                 <input
                   name="count"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    const val = parseInt(event.target.value, 10);
-                    setEx1Count(isNaN(val) ? 1 : val);
+                    const val = Number.parseInt(event.target.value, 10);
+                    setEx1Count(Number.isNaN(val) ? 1 : val);
                   }}
                   placeholder={fbs('count', 'count field')}
                   type="number"
@@ -162,7 +161,7 @@ export default function Example() {
                 <select
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                    setEx1Gender(parseInt(event.target.value, 10));
+                    setEx1Gender(Number.parseInt(event.target.value, 10));
                   }}
                 >
                   <option value={IntlVariations.GENDER_UNKNOWN}>
@@ -235,7 +234,7 @@ export default function Example() {
                 <select
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                    setEx2Pronoun(parseInt(event.target.value, 10));
+                    setEx2Pronoun(Number.parseInt(event.target.value, 10));
                   }}
                 >
                   <option value={GenderConst.UNKNOWN_PLURAL}>

@@ -10,8 +10,8 @@ export default class PhrasePackager {
   pack(phrases: Array<PackagerPhrase>): Array<PackagerPhrase> {
     return phrases.map((phrase) => {
       return {
-        hash_key: fbtHashKey(phrase.jsfbt.t),
         hash_code: jenkinsHash(phrase.jsfbt.t),
+        hash_key: fbtHashKey(phrase.jsfbt.t),
         ...(phrase as PackagerPhrase),
       };
     });

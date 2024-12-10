@@ -180,11 +180,11 @@ export default class JSXFbtProcessor {
 
   _assertHasMandatoryAttributes(): void {
     if (
-      this._getOpeningElementAttributes().find(
+      !this._getOpeningElementAttributes().some(
         (attribute) =>
           attribute.name.type === 'JSXIdentifier' &&
           FbtCallMustHaveAtLeastOneOfTheseAttributes.has(attribute.name.name)
-      ) == null
+      )
     ) {
       throw errorAt(
         this.node,
@@ -352,9 +352,9 @@ export default class JSXFbtProcessor {
 
     this.path.replaceWith(
       this._createFbtFunctionCallNode({
-        text,
         desc: description,
         options: this._getOptions(),
+        text,
       })
     );
   }

@@ -1,5 +1,5 @@
+import type { FbtTableKey, PatternHash, PatternString } from 'babel-plugin-fbt';
 import FbtResult from './FbtResult';
-import type { FbtTableKey, PatternHash, PatternString } from './FbtTable';
 import type { FbtTableArg } from './FbtTableAccessor';
 import IntlViewerContext from './IntlViewerContext';
 import {
@@ -13,8 +13,8 @@ export type FbtResolvedPayload = {
   contents: NestedFbtContentItems;
   errorListener: IFbtErrorListener | null | undefined;
   extraOptions: ExtraOptionValues | null | undefined;
-  patternString: PatternString;
   patternHash: PatternHash | null | undefined;
+  patternString: PatternString;
 };
 
 /**
@@ -49,17 +49,17 @@ export type FbtInputTable = Record<
 
 export type FbtTableArgs = Array<FbtTableArg>;
 export type FbtTranslatedInput = {
-  table: FbtRuntimeInput & { __vcg?: 1 };
   args: FbtTableArgs | null | undefined;
+  table: FbtRuntimeInput & { __vcg?: 1 };
 };
 
 export type FbtEnumHashKeyTable = Partial<Record<FbtTableKey, PatternString>>;
 export type FbtInputOpts = {
-  // hash key
-  hk?: string;
   // enum hash key
   ehk?: FbtEnumHashKeyTable;
   eo?: ExtraOptionValues;
+  // hash key
+  hk?: string;
 };
 /**
  * Map of extra fbt options (or JSX attributes) to accept on fbt callsites.
@@ -75,9 +75,9 @@ export type ExtraOptionValues = {
 };
 export type ExtraOptionValue = string;
 export type FbtRuntimeCallInput = {
-  table: FbtRuntimeInput;
   args: FbtTableArgs | null | undefined;
   options: FbtInputOpts | null | undefined;
+  table: FbtRuntimeInput;
 };
 export type FbtImpressionOptions = {
   inputTable: FbtRuntimeInput;
@@ -110,14 +110,6 @@ export default {
     return _registrations.errorListener?.(context);
   },
 
-  logImpression(hash: string, options?: FbtImpressionOptions): undefined {
-    _registrations.logImpression?.(hash, options);
-  },
-
-  onTranslationOverride(hash: string): undefined {
-    _registrations.onTranslationOverride?.(hash);
-  },
-
   getFbsResult(input: FbtResolvedPayload): FbtPureStringResult {
     const { getFbsResult } = _registrations;
     if (!getFbsResult) {
@@ -144,6 +136,14 @@ export default {
       throw new Error(`FbtHooks: 'getViewerContext' is not registered`);
     }
     return getViewerContext();
+  },
+
+  logImpression(hash: string, options?: FbtImpressionOptions): undefined {
+    _registrations.logImpression?.(hash, options);
+  },
+
+  onTranslationOverride(hash: string): undefined {
+    _registrations.onTranslationOverride?.(hash);
   },
 
   register(registrations: FbtHookRegistrations): undefined {

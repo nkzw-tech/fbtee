@@ -49,11 +49,6 @@ export type AnyFbtNode = FbtNode<any, any, any, any>;
  */
 export type PlainJSXNode = {
   /**
-   * Type of the JSX element. E.g. "div", "strong", "ToolTipComponent", etc...
-   * It's generic so that it can represent any arbitrary JSX element.
-   */
-  type: string;
-  /**
    * The actual Babel AST node representing this JSX node internally.
    * Note that it may contain more contents at the JSX attributes level.
    * I.e. the JSX element's attributes are stored here,
@@ -69,6 +64,11 @@ export type PlainJSXNode = {
   props: Readonly<{
     [name: string]: string | number;
   }>;
+  /**
+   * Type of the JSX element. E.g. "div", "strong", "ToolTipComponent", etc...
+   * It's generic so that it can represent any arbitrary JSX element.
+   */
+  type: string;
 };
 
 /**
@@ -147,7 +147,6 @@ export type PlainJSXNode = {
  * ```
  */
 export type PlainFbtNode = {
-  type: FbtNodeType;
   readonly children?: ReadonlyArray<PlainFbtNode>;
   /**
    * Index of the phrase corresponding to this fbt node in the `phrases` array.
@@ -156,6 +155,7 @@ export type PlainFbtNode = {
    * Not read-only because it needs to be set at a later stage, when all phrases have been extracted
    */
   phraseIndex?: number | null | undefined;
+  type: FbtNodeType;
   /**
    * Abstract representation of a JSX element that wraps the current fbt node, if any.
    */
@@ -323,8 +323,8 @@ export default class FbtNode<
     }
 
     Object.defineProperty(ret, 'constructor', {
-      value: this.constructor,
       enumerable: false,
+      value: this.constructor,
     });
     return ret;
   }

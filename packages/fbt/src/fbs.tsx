@@ -1,9 +1,9 @@
+import type { PatternHash, PatternString } from 'babel-plugin-fbt';
 import invariant from 'invariant';
 import fbt from './fbt';
 import FbtHooks, { ExtraOptionValues } from './FbtHooks';
 import FbtPureStringResult from './FbtPureStringResult';
 import type { ParamVariationType } from './FbtRuntimeTypes';
-import type { PatternHash, PatternString } from './FbtTable';
 import type { FbtTableArg } from './FbtTableAccessor';
 import type GenderConstEnum from './GenderConst';
 import { $FbsParamInput, Fbs, Fbt, NestedFbtContentItems } from './Types';

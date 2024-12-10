@@ -6,8 +6,8 @@ function runTest(
   data: { input: string; output: string },
   extra?: PluginOptions
 ) {
-  var expected = data.output;
-  var actual = transform(data.input, extra);
+  const expected = data.output;
+  const actual = transform(data.input, extra);
   assertSourceAstEqual(expected, actual);
 }
 
@@ -26,7 +26,12 @@ describe('fbt pronoun support', () => {
         `var x = fbt._(
           ${payload({
             jsfbt: {
+              m: [null],
               t: {
+                '*': {
+                  desc: 'Capitalized possessive pronoun',
+                  text: 'Their birthday is today.',
+                },
                 1: {
                   desc: 'Capitalized possessive pronoun',
                   text: 'Her birthday is today.',
@@ -35,12 +40,7 @@ describe('fbt pronoun support', () => {
                   desc: 'Capitalized possessive pronoun',
                   text: 'His birthday is today.',
                 },
-                '*': {
-                  desc: 'Capitalized possessive pronoun',
-                  text: 'Their birthday is today.',
-                },
               },
-              m: [null],
             },
           })},
           [fbt._pronoun(1, gender)],
@@ -112,7 +112,12 @@ describe('fbt pronoun support', () => {
         `var x = fbt._(
           ${payload({
             jsfbt: {
+              m: [null],
               t: {
+                '*': {
+                  desc: 'Elided false option',
+                  text: 'Wish them a happy birthday.',
+                },
                 1: {
                   desc: 'Elided false option',
                   text: 'Wish her a happy birthday.',
@@ -121,12 +126,7 @@ describe('fbt pronoun support', () => {
                   desc: 'Elided false option',
                   text: 'Wish him a happy birthday.',
                 },
-                '*': {
-                  desc: 'Elided false option',
-                  text: 'Wish them a happy birthday.',
-                },
               },
-              m: [null],
             },
           })},
           [fbt._pronoun(0, gender, {human: 1})],

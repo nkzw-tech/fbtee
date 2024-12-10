@@ -1,4 +1,5 @@
-import type { FbtSubstitution, FbtTableKey } from './FbtTable';
+import { FbtTableKey } from 'babel-plugin-fbt';
+import type { FbtSubstitution } from './FbtTable';
 
 export type FbtTableArg = [
   Array<FbtTableKey> | null | undefined,
@@ -24,11 +25,11 @@ export default {
     return [variation, substitution];
   },
 
-  getSubstitution(substitution: FbtSubstitution): FbtTableArg {
-    return [null, substitution];
-  },
-
   getPronounResult(genderKey: number): FbtTableArg {
     return [[genderKey, '*'], null];
+  },
+
+  getSubstitution(substitution: FbtSubstitution): FbtTableArg {
+    return [null, substitution];
   },
 };

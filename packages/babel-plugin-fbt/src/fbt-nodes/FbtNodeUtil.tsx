@@ -73,12 +73,12 @@ export function toPlainFbtNodeTree(
   phraseToIndexMap: Map<AnyFbtNode, number>
 ): PlainFbtNode {
   const ret = {
-    phraseIndex: phraseToIndexMap.get(fbtNode),
     children: fbtNode.children
       .map((child) =>
         child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null
       )
       .filter(Boolean) as ReadonlyArray<PlainFbtNode> | undefined,
+    phraseIndex: phraseToIndexMap.get(fbtNode),
     ...fbtNode.toPlainFbtNode(),
   } as const;
   if (ret.phraseIndex == null) {
@@ -102,7 +102,7 @@ export function toPlainFbtNodeTree(
  * @example `convertToTokenName('Hello {name}') === '=Hello [name]'`
  */
 export function convertToTokenName(text: string): string {
-  return `=${text.replace(/[{}]/g, (m) => (m === '{' ? '[' : ']'))}`;
+  return `=${text.replaceAll(/[{}]/g, (m) => (m === '{' ? '[' : ']'))}`;
 }
 
 export function tokenNameToTextPattern(tokenName: string): string {

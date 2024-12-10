@@ -66,8 +66,8 @@
  *
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import yargs from 'yargs';
 import {
   LocaleToHashToTranslationResult,
@@ -165,8 +165,8 @@ if (argv['h']) {
 }
 
 const translationOptions = {
-  jenkins: argv['jenkins'],
   hashModule: argv['fbt-hash-module'],
+  jenkins: argv['jenkins'],
   strict: argv['strict'],
 } as const;
 
@@ -175,10 +175,10 @@ if (argv['stdin']) {
   let source = '';
   stream
     .setEncoding('utf8')
-    .on('data', function (chunk) {
+    .on('data', (chunk) => {
       source += chunk;
     })
-    .on('end', function () {
+    .on('end', () => {
       writeOutput(processJSON(JSON.parse(source), translationOptions));
     });
 } else {

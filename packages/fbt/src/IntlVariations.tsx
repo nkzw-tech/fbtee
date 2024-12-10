@@ -1,6 +1,5 @@
 enum IntlVariations {
   BITMASK_NUMBER = 28,
-  BITMASK_GENDER = 3,
   NUMBER_ZERO = 16,
   NUMBER_ONE = 4,
   NUMBER_TWO = 8,

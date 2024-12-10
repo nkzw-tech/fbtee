@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import invariant from 'invariant';
 import type { FbtOptionConfig } from '../FbtConstants';
 import type { CollectFbtOutput } from './collectFbt';
@@ -27,15 +27,15 @@ export function buildCollectFbtOutput(
   }
 ): CollectFbtOutput {
   return {
-    phrases: packagers.reduce(
-      (phrases, packager) => packager.pack(phrases),
-      fbtCollector.getPhrases()
-    ),
     childParentMappings: fbtCollector.getChildParentMappings(),
     fbtElementNodes: options.genFbtNodes
       ? fbtCollector.getFbtElementNodes()
       : // using `undefined` so that the field is not outputted by JSON.stringify
         undefined,
+    phrases: packagers.reduce(
+      (phrases, packager) => packager.pack(phrases),
+      fbtCollector.getPhrases()
+    ),
   };
 }
 

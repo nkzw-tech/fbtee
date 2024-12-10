@@ -1,17 +1,16 @@
 import { transformSync as babelTransform } from '@babel/core';
+import presetReact from '@babel/preset-react';
+import fbt from 'babel-plugin-fbt';
 import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestUtil';
 import { assertSourceAstEqual } from '../../../../test/TestUtil';
+import fbtRuntime from '../index';
 
 function transform(source: string, extraOptions?: Record<string, unknown>) {
   return (
     babelTransform(source, {
       ast: false,
-      plugins: [
-        require('@babel/plugin-syntax-jsx'),
-        require('@babel/plugin-transform-react-jsx'),
-        [require('babel-plugin-fbt'), { extraOptions: extraOptions }],
-        require('../index'),
-      ],
+      plugins: [[fbt, { extraOptions }], fbtRuntime],
+      presets: [presetReact],
       sourceType: 'module',
     })?.code || ''
   );
@@ -208,7 +207,7 @@ lines">
         );`
       ),
     };
-    const validExtraOptions = { private: { yes: true, no: true } };
+    const validExtraOptions = { private: { no: true, yes: true } };
     runTest(data, validExtraOptions);
   });
 
@@ -253,7 +252,7 @@ lines">
           {eo: {private: 'no'}, hk: 'fglLv'},
         );`,
     };
-    const validExtraOptions = { private: { yes: true, no: true } };
+    const validExtraOptions = { private: { no: true, yes: true } };
     runTest(data, validExtraOptions);
   });
 });

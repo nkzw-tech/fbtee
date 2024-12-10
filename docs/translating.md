@@ -55,14 +55,7 @@ given translation entry.
 
 ## Variation types
 
-Variation types can be one of
-
-```
-IntlVariations.BITMASK_NUMBER: 28
-IntlVariations.BITMASK_GENDER:  3
-```
-
-This signifies what the given token can variate on. Token types of type `GENDER` can be:
+Token types of type `GENDER` can be:
 
 ```
 IntlVariations.GENDER_MALE:   1

@@ -16,12 +16,12 @@ import {
   replaceClearTokensWithTokenAliases,
   SENTINEL,
 } from 'babel-plugin-fbt';
-import invariant from 'invariant';
 import type {
   ObjectWithJSFBT,
   TableJSFBT,
   TableJSFBTTreeLeaf,
-} from '../../babel-plugin-fbt/src/index.tsx';
+} from 'babel-plugin-fbt/src/index.tsx';
+import invariant from 'invariant';
 
 type Plugin = { opts: Partial<PluginOptions> & { fbtSentinel?: string } };
 
@@ -44,18 +44,16 @@ function convertJSFBTLeafToRuntimeInputText(leaf: TableJSFBTTreeLeaf) {
   return replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases);
 }
 
-export default function BabelPluginFbtRuntime() {
-  function _appendHashKeyOption(
-    optionsNode: ObjectExpression,
-    jsfbt: TableJSFBT
-  ) {
-    return objectExpression([
-      ...(optionsNode == null ? [] : [...optionsNode.properties]),
-      objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
-    ]);
-  }
+function appendHashKeyOption(optionsNode: ObjectExpression, jsfbt: TableJSFBT) {
+  return objectExpression([
+    ...(optionsNode == null ? [] : [...optionsNode.properties]),
+    objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
+  ]);
+}
 
+export default function BabelPluginFbtRuntime() {
   return {
+    name: 'fbt-runtime',
     pre() {
       const visitor = this as unknown as Plugin;
       const { fbtSentinel } = getPluginOptions(visitor);
@@ -63,7 +61,6 @@ export default function BabelPluginFbtRuntime() {
         visitor.opts.fbtSentinel = fbtSentinel || SENTINEL;
       }
     },
-    name: 'fbt-runtime',
     visitor: {
       /**
        * Transform the following:
@@ -131,7 +128,7 @@ export default function BabelPluginFbtRuntime() {
           optionsNode,
           typeof optionsNode
         );
-        parentNode.arguments[2] = _appendHashKeyOption(
+        parentNode.arguments[2] = appendHashKeyOption(
           optionsNode,
           parsedPhrase.jsfbt
         );

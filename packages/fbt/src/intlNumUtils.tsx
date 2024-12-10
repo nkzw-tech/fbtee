@@ -100,18 +100,18 @@ function formatNumberRaw(
   let decimal = valueParts[1];
 
   if (
-    Math.abs(parseInt(wholeNumber, 10)).toString().length >=
+    Math.abs(Number.parseInt(wholeNumber, 10)).toString().length >=
     minDigitsForThousandDelimiter
   ) {
     let replaced = '';
     const replaceWith = '$1' + thousandDelimiter + '$2$3';
     const primaryPattern =
-      '(\\d)(\\d{' + (primaryGroupingSize - 0) + '})($|\\D)';
+      String.raw`(\d)(\d{` + (primaryGroupingSize - 0) + String.raw`})($|\D)`;
     replaced = wholeNumber.replace(_buildRegex(primaryPattern), replaceWith);
     if (replaced != wholeNumber) {
       wholeNumber = replaced;
       const secondaryPatternString =
-        '(\\d)(\\d{' +
+        String.raw`(\d)(\d{` +
         (secondaryGroupingSize - 0) +
         '})(' +
         escapeRegex(thousandDelimiter) +
@@ -335,25 +335,25 @@ function parseNumberRaw(
       .trim();
   }
 
-  _text = _text.replace(/^[^\d]*\-/, '\u0002'); // preserve negative sign
+  _text = _text.replace(/^\D*-/, '\u0002'); // preserve negative sign
   _text = _text.replace(matchCurrenciesWithDots, ''); // remove some currencies
 
   const decimalExp = escapeRegex(decimalDelimiter);
   const numberExp = escapeRegex(numberDelimiter);
 
   const isThereADecimalSeparatorInBetween = _buildRegex(
-    '^[^\\d]*\\d.*' + decimalExp + '.*\\d[^\\d]*$'
+    String.raw`^[^\d]*\d.*` + decimalExp + String.raw`.*\d[^\d]*$`
   );
   if (!isThereADecimalSeparatorInBetween.test(_text)) {
     const isValidWithDecimalBeforeHand = _buildRegex(
-      '(^[^\\d]*)' + decimalExp + '(\\d*[^\\d]*$)'
+      String.raw`(^[^\d]*)` + decimalExp + String.raw`(\d*[^\d]*$)`
     );
     if (isValidWithDecimalBeforeHand.test(_text)) {
       _text = _text.replace(isValidWithDecimalBeforeHand, '$1\u0001$2');
       return _parseCodifiedNumber(_text);
     }
     const isValidWithoutDecimal = _buildRegex(
-      '^[^\\d]*[\\d ' + escapeRegex(numberExp) + ']*[^\\d]*$'
+      String.raw`^[^\d]*[\d ` + escapeRegex(numberExp) + String.raw`]*[^\d]*$`
     );
     if (!isValidWithoutDecimal.test(_text)) {
       _text = '';
@@ -361,7 +361,11 @@ function parseNumberRaw(
     return _parseCodifiedNumber(_text);
   }
   const isValid = _buildRegex(
-    '(^[^\\d]*[\\d ' + numberExp + ']*)' + decimalExp + '(\\d*[^\\d]*$)'
+    String.raw`(^[^\d]*[\d ` +
+      numberExp +
+      ']*)' +
+      decimalExp +
+      String.raw`(\d*[^\d]*$)`
   );
   _text = isValid.test(_text) ? _text.replace(isValid, '$1\u0001$2') : '';
   return _parseCodifiedNumber(_text);
@@ -373,12 +377,13 @@ function parseNumberRaw(
  */
 function _parseCodifiedNumber(text: string): number | null | undefined {
   const _text = text
-    .replace(/[^0-9\u0001\u0002]/g, '') // remove everything but numbers,
+    // eslint-disable-next-line no-control-regex
+    .replaceAll(/[^\d\u0001\u0002]/g, '') // remove everything but numbers,
     // decimal separator and negative sign
     .replace('\u0001', '.') // restore decimal separator
     .replace('\u0002', '-'); // restore negative sign
   const value = Number(_text);
-  return _text === '' || isNaN(value) ? null : value;
+  return _text === '' || Number.isNaN(value) ? null : value;
 }
 
 function _getNativeDigitsMap():
@@ -420,8 +425,8 @@ function parseNumber(text: string): number | null | undefined {
 export default {
   formatNumber,
   formatNumberRaw,
-  formatNumberWithThousandDelimiters,
   formatNumberWithLimitedSigFig,
+  formatNumberWithThousandDelimiters,
   parseNumber,
   parseNumberRaw,
   truncateLongNumber,

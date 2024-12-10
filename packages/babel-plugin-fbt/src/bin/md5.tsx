@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 export default function md5(text: string, description: string): string {
   return crypto

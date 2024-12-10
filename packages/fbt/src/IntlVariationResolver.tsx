@@ -5,7 +5,9 @@ import IntlVariations from './IntlVariations';
 
 export const EXACTLY_ONE = '_1';
 
-export function getNumberVariations(number: number): Array<any | string> {
+export function getNumberVariations(
+  number: number
+): Array<string | number | string> {
   const numType = IntlNumberType.get(
     FbtHooks.getViewerContext().locale
   ).getVariation(number);
@@ -20,7 +22,7 @@ export function getNumberVariations(number: number): Array<any | string> {
 
 export function getGenderVariations(gender: number): Array<string | number> {
   invariant(
-    gender & IntlVariations.BITMASK_GENDER,
+    gender & IntlVariations.GENDER_UNKNOWN,
     'Invalid gender provided: %s (%s)',
     gender,
     typeof gender

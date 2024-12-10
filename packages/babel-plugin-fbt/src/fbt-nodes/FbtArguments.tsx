@@ -55,14 +55,14 @@ export class FbtArgumentBase<B extends Node | null | undefined> {
    * See snapshot `fbtFunctional-test.js.snap` to find output examples.
    */
   toJSON(): unknown {
-    const { node, fbtNode } = this;
+    const { fbtNode, node } = this;
     const ret = compactBabelNodeProps({
-      node,
       fbtNode: fbtNode != null ? fbtNode.constructor.name : fbtNode,
+      node,
     });
     Object.defineProperty(ret, 'constructor', {
-      value: this.constructor,
       enumerable: false,
+      value: this.constructor,
     });
     return ret;
   }
@@ -173,8 +173,8 @@ export abstract class StringVariationArg<
   override toJSON() {
     return Object.assign(super.toJSON() as Record<string, unknown>, {
       candidateValues: this.candidateValues,
-      value: this.value,
       isCollapsible: this.isCollapsible,
+      value: this.value,
     });
   }
 }

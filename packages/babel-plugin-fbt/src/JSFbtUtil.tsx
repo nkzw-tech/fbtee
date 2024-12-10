@@ -1,11 +1,11 @@
 import nullthrows from 'nullthrows';
-import type { FbtTableKey } from '../../fbt/src/FbtTable';
 import type {
   ObjectWithJSFBT,
   TableJSFBTTree,
   TableJSFBTTreeBranch,
   TableJSFBTTreeLeaf,
 } from './index';
+import type { FbtTableKey } from './Types';
 
 export function isTableJSFBTTreeLeaf(
   value: Partial<TableJSFBTTreeLeaf>

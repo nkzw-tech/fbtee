@@ -1,6 +1,6 @@
 import 'normalize.css';
 import './root.css';
-import './Example/Example.css';
+import './example/Example.css';
 import { createRoot } from 'react-dom/client';
 import Example from './example/Example.react';
 

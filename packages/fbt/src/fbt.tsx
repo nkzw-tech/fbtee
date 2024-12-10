@@ -1,5 +1,6 @@
 /// <reference types="./ReactTypes.d.ts" />
 
+import type { FbtTableKey, PatternHash, PatternString } from 'babel-plugin-fbt';
 import invariant from 'invariant';
 import FbtHooks, {
   ExtraOptionValues,
@@ -13,7 +14,7 @@ import type {
   ParamVariationType,
   ValidPronounUsagesType,
 } from './FbtRuntimeTypes';
-import FbtTable, { FbtTableKey, PatternHash, PatternString } from './FbtTable';
+import FbtTable from './FbtTable';
 import FbtTableAccessor, { FbtTableArg } from './FbtTableAccessor';
 import GenderConst from './GenderConst';
 import getAllSubstitutions from './getAllSubstitutions';
@@ -26,8 +27,8 @@ import substituteTokens, { Substitutions } from './substituteTokens';
 import { NestedFbtContentItems } from './Types';
 
 const ParamVariation: ParamVariationType = {
-  number: 0,
   gender: 1,
+  number: 0,
 };
 
 const ValidPronounUsages: ValidPronounUsagesType = {
@@ -148,13 +149,10 @@ function fbtPlural(
     [key: string]: unknown;
   } = {};
   if (label) {
-    if (typeof value === 'number') {
-      substitution[label] =
-        intlNumUtils.formatNumberWithThousandDelimiters(value);
-    } else {
-      substitution[label] =
-        value || intlNumUtils.formatNumberWithThousandDelimiters(count);
-    }
+    substitution[label] =
+      typeof value === 'number'
+        ? intlNumUtils.formatNumberWithThousandDelimiters(value)
+        : value || intlNumUtils.formatNumberWithThousandDelimiters(count);
   }
   return FbtTableAccessor.getNumberResult(variation, substitution);
 }
@@ -249,8 +247,8 @@ function wrapContent(
 ): FbtResult {
   const contents = typeof fbtContent === 'string' ? [fbtContent] : fbtContent;
   const errorListener = FbtHooks.getErrorListener({
-    translation,
     hash,
+    translation,
   });
   const result = FbtHooks.getFbtResult({
     contents,
@@ -263,6 +261,7 @@ function wrapContent(
 }
 
 function isFbtInstance(value: unknown): value is FbtResultBase {
+  // eslint-disable-next-line @nkzw/no-instanceof
   return value instanceof FbtResultBase;
 }
 
@@ -312,9 +311,9 @@ fbt._ = function fbtCallsite(
   */
 
   let { args, table: pattern } = FbtHooks.getTranslatedInput({
-    table: inputTable,
     args: inputArgs,
     options,
+    table: inputTable,
   });
 
   let allSubstitutions: Substitutions = {};
@@ -374,8 +373,8 @@ fbt._ = function fbtCallsite(
       patternString,
       allSubstitutions,
       FbtHooks.getErrorListener?.({
-        translation: patternString,
         hash: patternHash,
+        translation: patternString,
       })
     );
     // Use this._wrapContent voluntarily so that it can be overwritten in fbs.js

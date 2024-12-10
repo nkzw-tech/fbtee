@@ -1,6 +1,5 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import nullthrows from 'nullthrows';
-import type { PatternHash, PatternString } from '../../../fbt/src/FbtTable';
 import type {
   CollectFbtOutput,
   CollectFbtOutputPhrase,
@@ -13,17 +12,18 @@ import TranslationBuilder from '../translate/TranslationBuilder';
 import TranslationConfig from '../translate/TranslationConfig';
 import type { SerializedTranslationData } from '../translate/TranslationData';
 import TranslationData from '../translate/TranslationData';
+import type { PatternHash, PatternString } from '../Types';
 
 export type Options = Readonly<{
+  // Similar to `jenkins`, but pass the hash-module of your choice.
+  // The module should export a function with the same signature and operation
+  // of fbt-hash-module.
+  hashModule: boolean | string;
   // By default, we output the translations as an associative array whose
   // indices match the phrases provided.  If instead, you'd like a mapping
   // from the associated "jenkins" hash to translation payload (for use in
   // babel-fbt-runtime plugin, for instance) you can use this.
   jenkins: boolean;
-  // Similar to `jenkins`, but pass the hash-module of your choice.
-  // The module should export a function with the same signature and operation
-  // of fbt-hash-module.
-  hashModule: boolean | string;
   // By default, we log missing values in the translation file to stderr. If you
   // instead would like to stop execution on missing values you can use this.
   strict: boolean;
@@ -137,9 +137,7 @@ function checkAndFilterTranslations(
     if (translations[hash] == null) {
       const message = `Missing ${locale} translation for string (${hash})`;
       if (options.strict) {
-        const err = new Error(message);
-        err.stack;
-        throw err;
+        throw new Error(message);
       } else {
         process.stderr.write(`${message}\n`);
       }

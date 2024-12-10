@@ -89,6 +89,11 @@ export type FbtErrorContext = {
  * interpolated payload (e.g. React nodes, DOM nodes, etc).
  */
 export interface IFbtErrorListener {
+  readonly onMissingParameterError?: (
+    providedParamNames: Array<string>,
+    missingParamName: string
+  ) => void;
+
   /**
    * Handle the error scenario where the FbtResultBase contains non-string elements
    * (usually React components) and tries to run .toString()
@@ -112,21 +117,16 @@ export interface IFbtErrorListener {
    * }
    */
   readonly onStringSerializationError?: (content: FbtContentItem) => void;
-
-  readonly onMissingParameterError?: (
-    providedParamNames: Array<string>,
-    missingParamName: string
-  ) => void;
 }
 
 export type IFbtResultBase = {
+  // Hack for allowing FBTResult to play nice in React components
+  _store?: { validated: boolean };
   getContents(): NestedFbtContentItems;
+
   // This relies on toString() which contains i18n logging logic to track impressions.
   // I.e. If you use this, i18n will register the string as displayed!
   toJSON(): string;
-
-  // Hack for allowing FBTResult to play nice in React components
-  _store?: { validated: boolean };
 };
 
 export type FbtPureStringResult = IFbtResultBase;
@@ -151,30 +151,32 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
       subject: IntlVariations;
     }
   ): Output;
-  param: (
-    name: string,
-    value: ParamInput,
-    options?: {
-      number?: boolean | number;
-      gender?: IntlVariations;
-    }
-  ) => ParamOutput;
+  c: (text: string) => Output;
   enum: (
     value: string,
     range: ReadonlyArray<string> | Readonly<{ [key: string]: string }>
   ) => ParamOutput;
+  isFbtInstance: (value: unknown) => value is IFbtResultBase;
   name: (
     tokenName: string,
     value: string,
     gender: IntlVariations
+  ) => ParamOutput;
+  param: (
+    name: string,
+    value: ParamInput,
+    options?: {
+      gender?: IntlVariations;
+      number?: boolean | number;
+    }
   ) => ParamOutput;
   plural: (
     label: string,
     count: number,
     options?: {
       many?: string;
-      showCount?: 'ifMany' | 'no' | 'yes';
-      name?: string; // token name
+      name?: string;
+      showCount?: 'ifMany' | 'no' | 'yes'; // token name
       value?: FbtContentItem; // optional value to replace token (rather than count)
     }
   ) => ParamOutput;
@@ -187,8 +189,6 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     }
   ) => ParamOutput;
   sameParam: (name: string) => ParamOutput;
-  c: (text: string) => Output;
-  isFbtInstance: (value: unknown) => value is IFbtResultBase;
 };
 
 type $StringBasedFbtFunctionAPI<Output, ParamInput, ParamOutput> = FbtAPIT<

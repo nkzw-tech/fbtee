@@ -38,14 +38,14 @@ const _mergedLocales = {
 
 const _mergedLangs = {
   ar: 1,
+  dsb: 1,
+  kab: 1,
   ks: 1,
   lv: 1,
   ps: 1,
-  kab: 1,
-  dsb: 1,
-  vec: 1,
   sq: 1,
   ti: 1,
+  vec: 1,
 } as const;
 
 export function forLanguage(lang: string): IntlGenderType {

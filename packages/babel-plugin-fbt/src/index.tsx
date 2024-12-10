@@ -6,11 +6,6 @@ import {
   Node,
 } from '@babel/types';
 import { parse as parseDocblock } from 'jest-docblock';
-import type {
-  FbtTableKey,
-  PatternHash,
-  PatternString,
-} from '../../fbt/src/FbtTable';
 import FbtCommonFunctionCallProcessor from './babel-processors/FbtCommonFunctionCallProcessor';
 import type { MetaPhrase } from './babel-processors/FbtFunctionCallProcessor';
 import FbtFunctionCallProcessor from './babel-processors/FbtFunctionCallProcessor';
@@ -34,6 +29,7 @@ import {
 } from './FbtUtil';
 import { mapLeaves } from './JSFbtUtil';
 import { FbtVariationType } from './translate/IntlVariations';
+import { FbtTableKey, PatternHash, PatternString } from './Types';
 
 const { FBT } = JSModuleName;
 
@@ -101,6 +97,7 @@ type TokenAlias = string;
 export type TokenAliases = {
   [clearTokenName: string]: TokenAlias;
 };
+
 /**
  * This is the main payload collected from the fbt callsite.
  *
@@ -113,14 +110,14 @@ export type TokenAliases = {
 export type TableJSFBTTreeLeaf = {
   desc: string;
   hash?: PatternHash;
-  text: PatternString;
-  tokenAliases?: TokenAliases;
   // The token name (at the outer string level) referring to this inner string
   //
   // E.g. For the fbt string `<fbt>Hello <i>World</i></fbt>`,
   // the outer string is "Hello {=World}", and the inner string is: "World".
   // So the outer token name of the inner string will be "=World"
   outerTokenName?: string;
+  text: PatternString;
+  tokenAliases?: TokenAliases;
 };
 
 export type TableJSFBTTreeBranch = {
@@ -131,30 +128,30 @@ export type TableJSFBTTree = TableJSFBTTreeLeaf | TableJSFBTTreeBranch;
 // Describes the usage of one level of the JSFBT table tree
 export type JSFBTMetaEntry = Readonly<
   | {
-      type: (typeof FbtVariationType)['NUMBER'];
+      range?: undefined;
       singular?: true; // TODO(T29504932) deprecate this,
       token?: string;
-      range?: undefined;
+      type: (typeof FbtVariationType)['NUMBER'];
     }
   | {
-      type: (typeof FbtVariationType)['GENDER'];
+      range?: undefined;
       token: string;
-      range?: undefined;
+      type: (typeof FbtVariationType)['GENDER'];
     }
   | {
+      range?: undefined;
+      token?: undefined;
       type: (typeof FbtVariationType)['PRONOUN'];
-      range?: undefined;
-      token?: undefined;
     }
   | {
-      type?: undefined;
-      token?: undefined;
       range: ReadonlyArray<string>;
+      token?: undefined;
+      type?: undefined;
     }
 >;
 export type TableJSFBT = Readonly<{
-  t: Readonly<TableJSFBTTree>;
   m: ReadonlyArray<JSFBTMetaEntry | null | undefined>;
+  t: Readonly<TableJSFBTTree>;
 }>;
 export type ObjectWithJSFBT = {
   jsfbt: TableJSFBT;
@@ -196,14 +193,16 @@ let allMetaPhrases: Array<
 let childToParent: ChildToParentMap;
 
 type Visitor = {
+  file: { ast: { comments: ReadonlyArray<{ value: string }> }; code: string };
   opts: PluginOptions;
-  file: { code: string; ast: { comments: ReadonlyArray<{ value: string }> } };
 };
 
 const toVisitor = (visitor: unknown): visitor is Visitor => true;
 
 export default function transform() {
   return {
+    name: FBT,
+
     pre() {
       const visitor = toVisitor(this) ? this : null;
       if (!visitor) {
@@ -211,8 +210,6 @@ export default function transform() {
       }
 
       const pluginOptions: PluginOptions | undefined = visitor.opts;
-      pluginOptions.fbtBase64 = pluginOptions.fbtBase64;
-
       init(pluginOptions);
       FbtEnumRegistrar.setEnumManifest(getEnumManifest(pluginOptions));
       validFbtExtraOptions = pluginOptions.extraOptions || {};
@@ -220,31 +217,7 @@ export default function transform() {
       allMetaPhrases = [];
       childToParent = {};
     },
-
-    name: FBT,
     visitor: {
-      /**
-       * Transform jsx-style <fbt> to fbt() calls.
-       */
-      JSXElement(path: NodePath<JSXElement>) {
-        const root = JSXFbtProcessor.create({
-          path,
-          validFbtExtraOptions,
-        });
-
-        if (!root) {
-          return;
-        }
-        root.convertToFbtFunctionCallNode(allMetaPhrases.length);
-      },
-
-      /**
-       * Register enum imports
-       */
-      ImportDeclaration(path: NodePath<ImportDeclaration>) {
-        FbtEnumRegistrar.registerImportIfApplicable(path);
-      },
-
       /**
        * Transform fbt("text", "desc", {project: "project"}) to semantically:
        *
@@ -286,9 +259,9 @@ export default function transform() {
         const processor = FbtFunctionCallProcessor.create({
           defaultFbtOptions: defaultOptions,
           fileSource,
-          validFbtExtraOptions,
           path,
           pluginOptions,
+          validFbtExtraOptions,
         });
 
         if (!processor) {
@@ -316,6 +289,28 @@ export default function transform() {
             }
           });
         }
+      },
+
+      /**
+       * Register enum imports
+       */
+      ImportDeclaration(path: NodePath<ImportDeclaration>) {
+        FbtEnumRegistrar.registerImportIfApplicable(path);
+      },
+
+      /**
+       * Transform jsx-style <fbt> to fbt() calls.
+       */
+      JSXElement(path: NodePath<JSXElement>) {
+        const root = JSXFbtProcessor.create({
+          path,
+          validFbtExtraOptions,
+        });
+
+        if (!root) {
+          return;
+        }
+        root.convertToFbtFunctionCallNode(allMetaPhrases.length);
       },
 
       Program: {
@@ -362,12 +357,12 @@ function addMetaPhrase(metaPhrase: MetaPhrase, pluginOptions: PluginOptions) {
   allMetaPhrases.push({
     ...metaPhrase,
     phrase: {
-      project: metaPhrase.phrase.project || '',
+      col_beg: fbtNode.node.loc?.start.column || 0,
+      col_end: fbtNode.node.loc?.end.column || 0,
       filepath: pluginOptions.filename,
       line_beg: fbtNode.node.loc?.start.line || 0,
-      col_beg: fbtNode.node.loc?.start.column || 0,
       line_end: fbtNode.node.loc?.end.line || 0,
-      col_end: fbtNode.node.loc?.end.column || 0,
+      project: metaPhrase.phrase.project || '',
       ...metaPhrase.phrase,
     },
   });
