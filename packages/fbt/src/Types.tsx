@@ -89,11 +89,6 @@ export type FbtErrorContext = {
  * interpolated payload (e.g. React nodes, DOM nodes, etc).
  */
 export interface IFbtErrorListener {
-  readonly onMissingParameterError?: (
-    providedParamNames: Array<string>,
-    missingParamName: string
-  ) => void;
-
   /**
    * Handle the error scenario where the FbtResultBase contains non-string elements
    * (usually React components) and tries to run .toString()

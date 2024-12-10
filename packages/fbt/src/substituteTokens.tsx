@@ -6,8 +6,6 @@ import {
 } from './IntlPunctuation.tsx';
 import { IFbtErrorListener } from './Types.tsx';
 
-const { hasOwnProperty } = Object.prototype;
-
 // This pattern finds tokens inside a string: 'string with {token} inside'.
 // It also grabs any punctuation that may be present after the token, such as
 // brackets, fullstops and elipsis (for various locales too!)
@@ -81,13 +79,6 @@ export default function substituteTokens(
     .replace(
       parameterRegexp,
       (_match: string, parameter: string, punctuation: string): string => {
-        if (!hasOwnProperty.call(args, parameter)) {
-          errorListener?.onMissingParameterError?.(
-            Object.keys(args),
-            parameter
-          );
-        }
-
         const argument = args[parameter];
         if (argument != null && typeof argument === 'object') {
           objectPieces.push(argument);
@@ -95,7 +86,7 @@ export default function substituteTokens(
           // End of Transmission Block sentinel marker
           return '\u0017' + punctuation;
         } else if (argument == null) {
-          return '';
+          return '{' + parameter + '}' + punctuation;
         }
         return String(argument) + dedupeStops(String(argument), punctuation);
       }

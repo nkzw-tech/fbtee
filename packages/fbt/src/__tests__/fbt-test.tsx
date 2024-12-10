@@ -16,7 +16,7 @@ import FbtTranslations from '../FbtTranslations.tsx';
 import GenderConst from '../GenderConst.tsx';
 import { fbt } from '../index.tsx';
 import IntlVariations from '../IntlVariations.tsx';
-import { IFbtErrorListener, IFbtResultBase } from '../Types.tsx';
+import { IFbtResultBase } from '../Types.tsx';
 
 init({
   translations: { en_US: {} },
@@ -101,12 +101,14 @@ describe('fbt', () => {
     expect(items).toEqual(['with token ', argument, ' here']);
   });
 
-  it('should render empty string for null values', () => {
-    expect(fbt(fbt.param('null_value', null), 'test')).toEqual('');
+  it('should render input params for null values', () => {
+    expect(fbt(fbt.param('null_value', null), 'test')).toEqual('{null_value}');
   });
 
-  it('should render empty string for undefined values', () => {
-    expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual('');
+  it('should render input params for undefined values', () => {
+    expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual(
+      '{undefined_value}'
+    );
   });
 
   // React/fbt integration tests
@@ -245,26 +247,6 @@ describe('fbt', () => {
       ).toThrowErrorMatchingInlineSnapshot(
         `"Cannot register a substitution with token=\`tokenName\` more than once"`
       );
-    });
-  });
-
-  describe('when encountering missing params for token substitutions', () => {
-    it('should invoke onMissingParameterError error listener', () => {
-      const onMissingParameterError = jest.fn();
-      const errorListener = jest
-        .fn<() => IFbtErrorListener | null | undefined>()
-        .mockImplementation(() => ({
-          onMissingParameterError,
-        }));
-      FbtHooks.register({
-        errorListener,
-      });
-      const pattern = 'Just a {tokenName}';
-      fbtInternal._(pattern, []);
-      expect(errorListener).toHaveBeenLastCalledWith({
-        translation: pattern,
-      });
-      expect(onMissingParameterError).toHaveBeenCalledWith([], 'tokenName');
     });
   });
 

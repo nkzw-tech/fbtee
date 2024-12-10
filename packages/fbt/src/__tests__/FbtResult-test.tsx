@@ -10,7 +10,6 @@ describe('FbtResult', () => {
   beforeEach(() => {
     FbtHooks.register({
       errorListener: () => ({
-        onMissingParameterError: jest.fn(),
         onStringSerializationError: jest.fn(),
       }),
     });
