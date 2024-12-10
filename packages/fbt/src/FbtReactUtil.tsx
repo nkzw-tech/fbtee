@@ -1,4 +1,4 @@
-import { IFbtResultBase } from './Types';
+import { IFbtResultBase } from './Types.tsx';
 
 const REACT_ELEMENT_TYPE: symbol | 60_103 =
   (typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element')) ||

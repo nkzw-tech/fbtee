@@ -1,7 +1,7 @@
 import type {
   NumberingSystemData,
   StandardDecimalPatternInfo,
-} from './intlNumUtils';
+} from './intlNumUtils.tsx';
 
 export type NumberConfig = {
   decimalSeparator: string;

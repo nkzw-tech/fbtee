@@ -1,5 +1,5 @@
-import fbtJenkinsHash from './fbtJenkinsHash';
-import type { TableJSFBTTree } from './index';
+import fbtJenkinsHash from './fbtJenkinsHash.tsx';
+import type { TableJSFBTTree } from './index.tsx';
 
 const BaseNSymbols =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

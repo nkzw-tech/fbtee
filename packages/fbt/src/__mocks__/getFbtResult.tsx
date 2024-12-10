@@ -1,5 +1,5 @@
-import type { FbtResolvedPayload } from '../FbtHooks';
-import FbtResult from '../FbtResult';
+import type { FbtResolvedPayload } from '../FbtHooks.tsx';
+import FbtResult from '../FbtResult.tsx';
 
 export default function getFbtResult(input: FbtResolvedPayload): FbtResult {
   const contents = input.contents;

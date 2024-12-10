@@ -9,15 +9,17 @@ import {
   objectProperty,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { JSModuleNameType, ValidPronounUsagesKey } from '../FbtConstants';
+import type {
+  JSModuleNameType,
+  ValidPronounUsagesKey,
+} from '../FbtConstants.tsx';
 import {
   ValidPronounOptions,
   ValidPronounUsages,
   ValidPronounUsagesKeys,
-} from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
-import type { CallExpressionArg } from '../FbtUtil';
+} from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
   createFbtRuntimeArgCallExpression,
@@ -26,13 +28,14 @@ import {
   enforceStringEnum,
   errorAt,
   varDump,
-} from '../FbtUtil';
-import { GenderConstEnum, Genders, getData } from '../Gender';
-import { GENDER_ANY } from '../translate/IntlVariations';
-import type { StringVariationArgsMap } from './FbtArguments';
-import { GenderStringVariationArg } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
+} from '../FbtUtil.tsx';
+import { GenderConstEnum, Genders, getData } from '../Gender.tsx';
+import nullthrows from '../nullthrows.tsx';
+import { GENDER_ANY } from '../translate/IntlVariations.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import { GenderStringVariationArg } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
 
 type Options = {
   // If true, capitalize the pronoun text

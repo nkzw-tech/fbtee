@@ -1,12 +1,12 @@
 import type { PatternHash, PatternString } from 'babel-plugin-fbt';
 import invariant from 'invariant';
-import fbt from './fbt';
-import FbtHooks, { ExtraOptionValues } from './FbtHooks';
-import FbtPureStringResult from './FbtPureStringResult';
-import type { ParamVariationType } from './FbtRuntimeTypes';
-import type { FbtTableArg } from './FbtTableAccessor';
-import type GenderConstEnum from './GenderConst';
-import { $FbsParamInput, Fbs, Fbt, NestedFbtContentItems } from './Types';
+import fbt from './fbt.tsx';
+import FbtHooks, { ExtraOptionValues } from './FbtHooks.tsx';
+import FbtPureStringResult from './FbtPureStringResult.tsx';
+import type { ParamVariationType } from './FbtRuntimeTypes.tsx';
+import type { FbtTableArg } from './FbtTableAccessor.tsx';
+import type GenderConstEnum from './GenderConst.tsx';
+import { $FbsParamInput, Fbs, Fbt, NestedFbtContentItems } from './Types.tsx';
 
 const cachedFbsResults: Partial<Record<PatternString, Fbt>> = {};
 

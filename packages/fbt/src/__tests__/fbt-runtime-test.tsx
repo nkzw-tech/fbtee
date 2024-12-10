@@ -1,13 +1,14 @@
-import fbtRuntime from '../fbt';
-import FbtHooks, { FbtRuntimeInput } from '../FbtHooks';
-import FbtResult from '../FbtResult';
-import { FbtTableArg } from '../FbtTableAccessor';
-import intlNumUtils from '../intlNumUtils';
+import { describe, expect, it, jest } from '@jest/globals';
+import fbtRuntime from '../fbt.tsx';
+import FbtHooks, { FbtRuntimeInput } from '../FbtHooks.tsx';
+import FbtResult from '../FbtResult.tsx';
+import { FbtTableArg } from '../FbtTableAccessor.tsx';
+import intlNumUtils from '../intlNumUtils.tsx';
 // Warning: importing JS modules outside of beforeEach blocks is generally bad practice
 // in jest tests. We might need to move these modules inside beforeEach().
 // These ones can stay here for now since they have a consistent behavior across this test suite.
-import IntlVariations from '../IntlVariations';
-import IntlViewerContext from '../IntlViewerContext';
+import IntlVariations from '../IntlVariations.tsx';
+import IntlViewerContext from '../IntlViewerContext.tsx';
 
 const ONE = String(IntlVariations.NUMBER_ONE);
 const FEW = String(IntlVariations.NUMBER_FEW);

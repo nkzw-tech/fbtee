@@ -1,6 +1,6 @@
-import fbtHashKey from '../fbtHashKey';
-import jenkinsHash from '../fbtJenkinsHash';
-import type { PackagerPhrase } from './FbtCollector';
+import fbtHashKey from '../fbtHashKey.tsx';
+import jenkinsHash from '../fbtJenkinsHash.tsx';
+import type { PackagerPhrase } from './FbtCollector.tsx';
 
 /**
  * PhrasePackager differs from TextPackager in that it hashes the

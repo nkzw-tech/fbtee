@@ -1,10 +1,10 @@
-import type { HashToLeaf } from '../bin/FbtCollector';
-import type { FbtTableKey, PatternHash, PatternString } from '../Types';
+import type { HashToLeaf } from '../bin/FbtCollector.tsx';
+import type { FbtTableKey, PatternHash, PatternString } from '../Types.tsx';
 import type {
   IntlFbtVariationTypeValue,
   IntlVariationMaskValue,
-} from './IntlVariations';
-import { FbtVariationType, Mask } from './IntlVariations';
+} from './IntlVariations.tsx';
+import { FbtVariationType, Mask } from './IntlVariations.tsx';
 
 export type FbtSiteHashToLeaf = FbtSiteHashToTextAndDesc | FbtSiteHashToText;
 

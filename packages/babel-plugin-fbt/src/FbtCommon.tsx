@@ -1,5 +1,4 @@
-import path from 'node:path';
-import type { JSModuleNameType } from './FbtConstants';
+import type { JSModuleNameType } from './FbtConstants.tsx';
 
 export type FbtCommonMap = {
   [text: string]: string;
@@ -8,7 +7,7 @@ const textToDesc: FbtCommonMap = {};
 
 export function init(
   opts: {
-    fbtCommon?: FbtCommonMap;
+    fbtCommon?: FbtCommonMap | null;
     fbtCommonPath?: string | null | undefined;
   } = {}
 ) {
@@ -16,18 +15,9 @@ export function init(
     Object.assign(textToDesc, opts.fbtCommon);
   }
   if (opts.fbtCommonPath != null) {
-    let fbtCommonData;
-    try {
-      fbtCommonData = require(path.resolve(opts.fbtCommonPath));
-    } catch (error) {
-      if (error instanceof Error) {
-        error.message +=
-          `\nopts.fbtCommonPath: ${opts.fbtCommonPath}` +
-          `\nCurrent path: ${process.cwd()}`;
-      }
-      throw error;
-    }
-    Object.assign(textToDesc, fbtCommonData);
+    throw new Error(
+      `'fbtCommonPath' is no longer supported. Use 'fbtCommon' instead.`
+    );
   }
 }
 

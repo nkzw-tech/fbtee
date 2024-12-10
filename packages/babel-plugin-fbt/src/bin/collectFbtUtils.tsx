@@ -1,17 +1,18 @@
 import path from 'node:path';
 import invariant from 'invariant';
-import type { FbtOptionConfig } from '../FbtConstants';
-import type { CollectFbtOutput } from './collect';
-import packagerTypes from './collectFbtConstants';
+import type { FbtOptionConfig } from '../FbtConstants.tsx';
+import type { CollectFbtOutput } from './collect.tsx';
+import packagerTypes from './collectFbtConstants.tsx';
 import type {
   CollectorConfig,
   IFbtCollector,
   PackagerPhrase,
-} from './FbtCollector';
-import FbtCollector from './FbtCollector';
-import PhrasePackager from './PhrasePackager';
-import type { HashFunction } from './TextPackager';
-import TextPackager from './TextPackager';
+} from './FbtCollector.tsx';
+import FbtCollector from './FbtCollector.tsx';
+import md5 from './md5.tsx';
+import PhrasePackager from './PhrasePackager.tsx';
+import type { HashFunction } from './TextPackager.tsx';
+import TextPackager from './TextPackager.tsx';
 
 export function buildCollectFbtOutput(
   fbtCollector: IFbtCollector,
@@ -39,12 +40,16 @@ export function buildCollectFbtOutput(
   };
 }
 
-async function getTextPackager(hashModulePath: string): Promise<TextPackager> {
-  const hashingModule = (await import(hashModulePath)).default as
-    | HashFunction
-    | {
-        getFbtHash: HashFunction;
-      };
+async function getTextPackager(
+  hashModulePath: string | null
+): Promise<TextPackager> {
+  const hashingModule = hashModulePath
+    ? ((await import(hashModulePath)).default as
+        | HashFunction
+        | {
+            getFbtHash: HashFunction;
+          })
+    : md5;
 
   invariant(
     typeof hashingModule === 'function' ||
@@ -63,7 +68,7 @@ async function getTextPackager(hashModulePath: string): Promise<TextPackager> {
 
 export async function getPackagers(
   packager: string,
-  hashModulePath: string
+  hashModulePath: string | null
 ): Promise<
   ReadonlyArray<
     | {

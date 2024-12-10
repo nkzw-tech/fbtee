@@ -1,6 +1,6 @@
-import escapeRegex from './escapeRegex';
-import FbtHooks from './FbtHooks';
-import NumberFormatConsts from './NumberFormatConsts';
+import escapeRegex from './escapeRegex.tsx';
+import FbtHooks from './FbtHooks.tsx';
+import NumberFormatConsts from './NumberFormatConsts.tsx';
 
 export type StandardDecimalPatternInfo = {
   primaryGroupSize: number;

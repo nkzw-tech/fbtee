@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const command = process.argv[2];
 process.argv.splice(2, 1);
 

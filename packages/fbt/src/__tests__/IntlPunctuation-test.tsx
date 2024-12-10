@@ -1,4 +1,5 @@
-import { dedupeStops } from '../IntlPunctuation';
+import { describe, expect, it } from '@jest/globals';
+import { dedupeStops } from '../IntlPunctuation.tsx';
 
 const FW_Q_MARK = '\u{ff1f}';
 const FW_BANG = '\u{ff01}';

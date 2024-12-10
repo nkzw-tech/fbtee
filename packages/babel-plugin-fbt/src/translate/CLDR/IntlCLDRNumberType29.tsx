@@ -1,4 +1,4 @@
-import type { IntlVariationsEnum } from '../IntlVariations';
+import type { IntlVariationsEnum } from '../IntlVariations.tsx';
 
 export default {
   getFallback(): IntlVariationsEnum {

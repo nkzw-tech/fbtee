@@ -1,4 +1,5 @@
-import { FbtSite } from '../FbtSite';
+import { describe, expect, it } from '@jest/globals';
+import { FbtSite } from '../FbtSite.tsx';
 
 describe('FbtSite: testing fromScan', () => {
   let fbtSite: FbtSite;

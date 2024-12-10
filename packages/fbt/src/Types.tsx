@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, ReactPortal } from 'react';
-import GenderConstEnum from './GenderConst';
-import IntlVariations from './IntlVariations';
+import GenderConstEnum from './GenderConst.tsx';
+import IntlVariations from './IntlVariations.tsx';
 
 /**
  * Translated string from an `fbt()` call.

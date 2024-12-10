@@ -12,7 +12,7 @@ import {
   ValidParamOptions,
   ValidPronounOptions,
   ValidPronounUsages,
-} from './FbtConstants';
+} from './FbtConstants.tsx';
 import {
   errorAt,
   expandStringConcat,
@@ -20,7 +20,7 @@ import {
   getAttributeByNameOrThrow,
   getOptionsFromAttributes,
   normalizeSpaces,
-} from './FbtUtil';
+} from './FbtUtil.tsx';
 
 export default function getNamespacedArgs(moduleName: string) {
   return {

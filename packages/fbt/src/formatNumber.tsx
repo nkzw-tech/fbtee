@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import intlNumUtils from './intlNumUtils';
+import intlNumUtils from './intlNumUtils.tsx';
 
 function formatNumber(value: number, decimals?: number | null): string {
   return intlNumUtils.formatNumber(value, decimals);

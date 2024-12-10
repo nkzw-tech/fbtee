@@ -1,7 +1,7 @@
 import invariant from 'invariant';
-import { FbtTableArgs } from './FbtHooks';
-import FbtTable from './FbtTable';
-import { MaybeReactComponent, Substitutions } from './substituteTokens';
+import { FbtTableArgs } from './FbtHooks.tsx';
+import FbtTable from './FbtTable.tsx';
+import { MaybeReactComponent, Substitutions } from './substituteTokens.tsx';
 
 export default function getAllSubstitutions(args: FbtTableArgs) {
   const allSubstitutions: Substitutions = {};

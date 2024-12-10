@@ -3,8 +3,8 @@ import {
   applyPhonologicalRules,
   dedupeStops,
   PUNCT_CHAR_CLASS,
-} from './IntlPunctuation';
-import { IFbtErrorListener } from './Types';
+} from './IntlPunctuation.tsx';
+import { IFbtErrorListener } from './Types.tsx';
 
 const { hasOwnProperty } = Object.prototype;
 

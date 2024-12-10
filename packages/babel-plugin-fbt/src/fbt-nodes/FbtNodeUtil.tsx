@@ -1,13 +1,13 @@
 import { Node } from '@babel/types';
 import invariant from 'invariant';
-import type { JSModuleNameType } from '../FbtConstants';
-import { errorAt, normalizeSpaces, varDump } from '../FbtUtil';
-import type { TokenAliases } from '../index';
-import type { StringVariationArgsMap } from './FbtArguments';
-import FbtElementNode from './FbtElementNode';
-import type FbtImplicitParamNodeType from './FbtImplicitParamNode';
-import FbtImplicitParamNode from './FbtImplicitParamNode';
-import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode';
+import type { JSModuleNameType } from '../FbtConstants.tsx';
+import { errorAt, normalizeSpaces, varDump } from '../FbtUtil.tsx';
+import type { TokenAliases } from '../index.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import FbtElementNode from './FbtElementNode.tsx';
+import type FbtImplicitParamNodeType from './FbtImplicitParamNode.tsx';
+import FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
+import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
 /**
  * This function gets the mapping from a `FbtSameParamNode`'s token name to
  * the `FbtNode` that shares the same token name.
@@ -32,7 +32,7 @@ import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode';
  *      <fbt:sameParam name="nameToken" />
  *    </fbt>
  */
-import FbtSameParamNode from './FbtSameParamNode';
+import FbtSameParamNode from './FbtSameParamNode.tsx';
 
 export type FromBabelNodeFunctionArgs = {
   moduleName: JSModuleNameType;

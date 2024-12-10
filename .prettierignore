@@ -1,3 +1,10 @@
+example/.enum_manifest.json
+example/.source_strings.json
+example/.src_manifest.json
+example/source_strings.json
+example/src/translatedFbts
+example/src/translatedFbts.json
+jest.config.js
 packages/*/lib/
-pnpm-lock.yaml
 packages/babel-plugin-fbt/src/__tests__/FbtTestUtil.tsx
+pnpm-lock.yaml

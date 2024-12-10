@@ -1,5 +1,5 @@
-import type { FbtResolvedPayload } from './FbtHooks';
-import FbtPureStringResult from './FbtPureStringResult';
+import type { FbtResolvedPayload } from './FbtHooks.tsx';
+import FbtPureStringResult from './FbtPureStringResult.tsx';
 
 export default function getFbsResult(
   input: FbtResolvedPayload

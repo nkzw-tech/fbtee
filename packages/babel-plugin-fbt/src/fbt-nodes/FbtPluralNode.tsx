@@ -6,15 +6,14 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
 import {
   JSModuleNameType,
   PLURAL_PARAM_TOKEN,
   ShowCountKeys,
   ValidPluralOptions,
-} from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
-import type { CallExpressionArg } from '../FbtUtil';
+} from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
   createFbtRuntimeArgCallExpression,
@@ -23,13 +22,14 @@ import {
   enforceStringEnum,
   errorAt,
   varDump,
-} from '../FbtUtil';
-import { EXACTLY_ONE, NUMBER_ANY } from '../translate/IntlVariations';
-import type { StringVariationArgsMap } from './FbtArguments';
-import { NumberStringVariationArg } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import { tokenNameToTextPattern } from './FbtNodeUtil';
+} from '../FbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import { EXACTLY_ONE, NUMBER_ANY } from '../translate/IntlVariations.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import { NumberStringVariationArg } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
   // Represents the number used for determining the plural case at runtime

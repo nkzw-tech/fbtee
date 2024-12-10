@@ -6,7 +6,7 @@ import {
   isImportDefaultSpecifier,
   isImportNamespaceSpecifier,
 } from '@babel/types';
-import { FBT_ENUM_MODULE_SUFFIX } from './FbtConstants';
+import { FBT_ENUM_MODULE_SUFFIX } from './FbtConstants.tsx';
 
 type NodeCallExpression = NodePath<CallExpression>;
 type NodeImportDeclaration = NodePath<ImportDeclaration>;

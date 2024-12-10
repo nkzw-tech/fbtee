@@ -1,21 +1,22 @@
 /// <reference types="../ReactTypes.d.ts" />
 
+import { describe, expect, it, jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import { Children, Component } from 'react';
-import { fbt } from '..';
-import getFbtResult from '../__mocks__/getFbtResult';
-import fbtInternal from '../fbt';
+import getFbtResult from '../__mocks__/getFbtResult.tsx';
+import fbtInternal from '../fbt.tsx';
 import FbtHooks, {
   FbtResolvedPayload,
   FbtRuntimeCallInput,
   FbtTranslatedInput,
-} from '../FbtHooks';
-import init from '../fbtInit';
-import FbtResult from '../FbtResult';
-import FbtTranslations from '../FbtTranslations';
-import GenderConst from '../GenderConst';
-import IntlVariations from '../IntlVariations';
-import { IFbtResultBase } from '../Types';
+} from '../FbtHooks.tsx';
+import init from '../fbtInit.tsx';
+import FbtResult from '../FbtResult.tsx';
+import FbtTranslations from '../FbtTranslations.tsx';
+import GenderConst from '../GenderConst.tsx';
+import { fbt } from '../index.tsx';
+import IntlVariations from '../IntlVariations.tsx';
+import { IFbtErrorListener, IFbtResultBase } from '../Types.tsx';
 
 init({
   translations: { en_US: {} },
@@ -250,9 +251,11 @@ describe('fbt', () => {
   describe('when encountering missing params for token substitutions', () => {
     it('should invoke onMissingParameterError error listener', () => {
       const onMissingParameterError = jest.fn();
-      const errorListener = jest.fn().mockImplementation(() => ({
-        onMissingParameterError,
-      }));
+      const errorListener = jest
+        .fn<() => IFbtErrorListener | null | undefined>()
+        .mockImplementation(() => ({
+          onMissingParameterError,
+        }));
       FbtHooks.register({
         errorListener,
       });

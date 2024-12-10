@@ -1,8 +1,8 @@
-import FbtHooks, { FbtHookRegistrations } from './FbtHooks';
-import FbtResult from './FbtResult';
-import FbtTranslations, { TranslationDict } from './FbtTranslations';
-import getFbsResult from './getFbsResult';
-import IntlViewerContext from './IntlViewerContext';
+import FbtHooks, { FbtHookRegistrations } from './FbtHooks.tsx';
+import FbtResult from './FbtResult.tsx';
+import FbtTranslations, { TranslationDict } from './FbtTranslations.tsx';
+import getFbsResult from './getFbsResult.tsx';
+import IntlViewerContext from './IntlViewerContext.tsx';
 
 export type FbtInitInput = {
   hooks?: FbtHookRegistrations | null | undefined;

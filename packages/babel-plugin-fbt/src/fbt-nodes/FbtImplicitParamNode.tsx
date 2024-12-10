@@ -13,25 +13,25 @@ import {
   ObjectExpression,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { ParamSet } from '../FbtUtil';
+import type { ParamSet } from '../FbtUtil.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
   errorAt,
   setUniqueToken,
   varDump,
-} from '../FbtUtil';
-import type { TokenAliases } from '../index';
+} from '../FbtUtil.tsx';
+import type { TokenAliases } from '../index.tsx';
+import nullthrows from '../nullthrows.tsx';
 import type {
   AnyStringVariationArg,
   StringVariationArgsMap,
-} from './FbtArguments';
-import type { IFbtElementNode } from './FbtElementNode';
-import FbtElementNode from './FbtElementNode';
-import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
+} from './FbtArguments.tsx';
+import type { IFbtElementNode } from './FbtElementNode.tsx';
+import FbtElementNode from './FbtElementNode.tsx';
+import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil.tsx';
 import {
   convertIndexInSiblingsArrayToOuterTokenAlias,
   convertToTokenName,
@@ -39,8 +39,8 @@ import {
   getChildNodeTextForDescription,
   getTextFromFbtNodeTree,
   getTokenAliasesFromFbtNodeTree,
-} from './FbtNodeUtil';
-import FbtTextNode from './FbtTextNode';
+} from './FbtNodeUtil.tsx';
+import FbtTextNode from './FbtTextNode.tsx';
 
 /**
  * Represents non-fbt JSX element nested inside an fbt callsite.

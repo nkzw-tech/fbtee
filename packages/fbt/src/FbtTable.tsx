@@ -1,6 +1,6 @@
-import { FbtTableKey } from 'babel-plugin-fbt/src/Types';
+import { FbtTableKey } from 'babel-plugin-fbt/src/Types.tsx';
 import invariant from 'invariant';
-import type { FbtRuntimeInput, FbtTableArgs } from './FbtHooks';
+import type { FbtRuntimeInput, FbtTableArgs } from './FbtHooks.tsx';
 
 export type FbtSubstitution = {
   [token: string]: unknown;

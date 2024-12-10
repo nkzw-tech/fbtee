@@ -1,7 +1,8 @@
-import nullthrows from 'nullthrows';
-import FbtHooks from '../FbtHooks';
-import FbtResult from '../FbtResult';
-import { IFbtErrorListener } from '../Types';
+import { describe, expect, it, jest } from '@jest/globals';
+import nullthrows from 'babel-plugin-fbt/src/nullthrows.tsx';
+import FbtHooks from '../FbtHooks.tsx';
+import FbtResult from '../FbtResult.tsx';
+import { IFbtErrorListener } from '../Types.tsx';
 
 let _errorListener: IFbtErrorListener | null | undefined;
 

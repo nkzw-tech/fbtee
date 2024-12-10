@@ -2,7 +2,7 @@ import FbtHooks, {
   FbtRuntimeCallInput,
   FbtRuntimeInput,
   FbtTranslatedInput,
-} from './FbtHooks';
+} from './FbtHooks.tsx';
 
 export type TranslationDict = {
   [locale: string]: {

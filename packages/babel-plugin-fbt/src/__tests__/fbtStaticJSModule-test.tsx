@@ -1,12 +1,16 @@
 import { PluginOptions } from '@babel/core';
-import { assertSourceAstEqual, testSection } from '../../../../test/TestUtil';
+import { describe, expect, it } from '@jest/globals';
+import {
+  assertSourceAstEqual,
+  testSection,
+} from '../../../../test/TestUtil.tsx';
 import {
   jsCodeFbtCallSerializer,
   payload,
   snapshotTransform,
   transform,
   withFbtRequireStatement,
-} from './FbtTestUtil';
+} from './FbtTestUtil.tsx';
 
 function runTest(
   data: { input: string; output: string },

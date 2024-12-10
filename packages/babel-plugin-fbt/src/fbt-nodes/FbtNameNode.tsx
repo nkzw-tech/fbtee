@@ -6,20 +6,20 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import { JSModuleNameType } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
-import type { CallExpressionArg } from '../FbtUtil';
+import { JSModuleNameType } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   createFbtRuntimeArgCallExpression,
   enforceBabelNodeCallExpressionArg,
   errorAt,
-} from '../FbtUtil';
-import { GENDER_ANY } from '../translate/IntlVariations';
-import type { StringVariationArgsMap } from './FbtArguments';
-import { GenderStringVariationArg } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import { tokenNameToTextPattern } from './FbtNodeUtil';
+} from '../FbtUtil.tsx';
+import { GENDER_ANY } from '../translate/IntlVariations.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import { GenderStringVariationArg } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
   // `BabelNode` representing the `gender` of the fbt:name's value

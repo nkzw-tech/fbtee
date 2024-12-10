@@ -1,5 +1,5 @@
-import type { IntlFbtVariationTypeValue } from './IntlVariations';
-import type TranslationConfig from './TranslationConfig';
+import type { IntlFbtVariationTypeValue } from './IntlVariations.tsx';
+import type TranslationConfig from './TranslationConfig.tsx';
 
 /**
  * Corresponds to IntlJSTranslatationDataEntry in Hack

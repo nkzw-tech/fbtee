@@ -27,5 +27,5 @@
     "target": "es2022"
   },
   "exclude": ["packages/*/lib/", "node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "example/src/example/Example$FbtEnum.js"]
 }

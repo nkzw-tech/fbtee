@@ -6,7 +6,7 @@
 
 import invariant from 'invariant';
 import { isValidElement } from 'react';
-import fbt from './fbt';
+import fbt from './fbt.tsx';
 
 // Ensure the runtime is included.
 // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions

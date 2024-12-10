@@ -3,7 +3,7 @@ import {
   IFbtErrorListener,
   IFbtResultBase,
   NestedFbtContentItems,
-} from './Types';
+} from './Types.tsx';
 
 export default class FbtResultBase implements IFbtResultBase {
   _contents: NestedFbtContentItems;

@@ -1,4 +1,4 @@
-import type { TokenConstraintPairs } from './TranslationBuilder';
+import type { TokenConstraintPairs } from './TranslationBuilder.tsx';
 
 /**
  * Concatenation of `TokenConstraintPairs` through `buildConstraintKey` method

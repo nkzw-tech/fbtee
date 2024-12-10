@@ -1,6 +1,7 @@
-import init from '../fbtInit';
-import intlNumUtils from '../intlNumUtils';
-import NumberFormatConsts, { NumberConfig } from '../NumberFormatConsts';
+import { describe, expect, it, jest } from '@jest/globals';
+import init from '../fbtInit.tsx';
+import intlNumUtils from '../intlNumUtils.tsx';
+import NumberFormatConsts, { NumberConfig } from '../NumberFormatConsts.tsx';
 
 init({
   translations: {},

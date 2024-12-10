@@ -2,7 +2,7 @@ import 'normalize.css';
 import './root.css';
 import './example/Example.css';
 import { createRoot } from 'react-dom/client';
-import Example from './example/Example.react';
+import Example from './example/Example.react.tsx';
 
 const root = document.getElementById('root');
 

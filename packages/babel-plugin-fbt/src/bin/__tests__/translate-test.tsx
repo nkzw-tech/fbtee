@@ -1,11 +1,11 @@
-import { jsCodeNonASCIICharSerializer } from '../../__tests__/FbtTestUtil';
-import { Options, processJSON } from '../translateUtils';
+import { jsCodeNonASCIICharSerializer } from '../../__tests__/FbtTestUtil.tsx';
+import { Options, processJSON } from '../translateUtils.tsx';
 
 expect.addSnapshotSerializer(jsCodeNonASCIICharSerializer);
 
 function testTranslateNewPhrases(options: Options) {
-  it('should not throw on missing translations', () => {
-    const result = processJSON(
+  it('should not throw on missing translations', async () => {
+    const result = await processJSON(
       {
         phrases: [
           {
@@ -45,8 +45,8 @@ function testTranslateNewPhrases(options: Options) {
     expect(result).toMatchSnapshot();
   });
 
-  it('should translate string with no variation', () => {
-    const result = processJSON(
+  it('should translate string with no variation', async () => {
+    const result = await processJSON(
       {
         phrases: [
           {
@@ -95,8 +95,8 @@ function testTranslateNewPhrases(options: Options) {
     expect(result).toMatchSnapshot();
   });
 
-  it('should translate string with variations and inner strings', () => {
-    const result = processJSON(
+  it('should translate string with variations and inner strings', async () => {
+    const result = await processJSON(
       {
         phrases: [
           {
@@ -277,103 +277,99 @@ function testTranslateNewPhrases(options: Options) {
     expect(result).toMatchSnapshot();
   });
 
-  it(
-    'should translate string with metadata entries that create no ' +
-      'hidden variation. Note: this string was collected in RN mode.',
-    () => {
-      const result = processJSON(
-        {
-          phrases: [
-            {
-              col_beg: 6,
-              col_end: 12,
-              filepath: 'src/example/Example.react.js',
-              hashToLeaf: {
-                'j9fTl1uOEIuslim41sMkdQ==': {
-                  desc: 'Example enum',
-                  text: 'he shared a photo.',
+  it('should translate string with metadata entries that create no hidden variation. Note: this string was collected in RN mode.', async () => {
+    const result = await processJSON(
+      {
+        phrases: [
+          {
+            col_beg: 6,
+            col_end: 12,
+            filepath: 'src/example/Example.react.js',
+            hashToLeaf: {
+              'j9fTl1uOEIuslim41sMkdQ==': {
+                desc: 'Example enum',
+                text: 'he shared a photo.',
+              },
+              'sNncqVnQfCGCeJNXsLObVw==': {
+                desc: 'Example enum',
+                text: 'they shared a photo.',
+              },
+              'vHtEb4ph7GJGeRkjtEHcPA==': {
+                desc: 'Example enum',
+                text: 'she shared a photo.',
+              },
+            },
+            jsfbt: {
+              m: [
+                {
+                  type: 3,
                 },
-                'sNncqVnQfCGCeJNXsLObVw==': {
+              ],
+              t: {
+                '*': {
                   desc: 'Example enum',
                   text: 'they shared a photo.',
                 },
-                'vHtEb4ph7GJGeRkjtEHcPA==': {
+                '1': {
                   desc: 'Example enum',
                   text: 'she shared a photo.',
                 },
+                '2': {
+                  desc: 'Example enum',
+                  text: 'he shared a photo.',
+                },
               },
-              jsfbt: {
-                m: [
+            },
+            line_beg: 127,
+            line_end: 130,
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              'j9fTl1uOEIuslim41sMkdQ==': {
+                tokens: [],
+                translations: [
                   {
-                    type: 3,
+                    translation: 'translation is: he shared a photo',
+                    variations: {},
                   },
                 ],
-                t: {
-                  '*': {
-                    desc: 'Example enum',
-                    text: 'they shared a photo.',
-                  },
-                  '1': {
-                    desc: 'Example enum',
-                    text: 'she shared a photo.',
-                  },
-                  '2': {
-                    desc: 'Example enum',
-                    text: 'he shared a photo.',
-                  },
-                },
+                types: [],
               },
-              line_beg: 127,
-              line_end: 130,
-              project: 'fbt-demo-project',
-            },
-          ],
-          translationGroups: [
-            {
-              'fb-locale': 'fb_HX',
-              translations: {
-                'j9fTl1uOEIuslim41sMkdQ==': {
-                  tokens: [],
-                  translations: [
-                    {
-                      translation: 'translation is: he shared a photo',
-                      variations: {},
-                    },
-                  ],
-                  types: [],
-                },
-                'sNncqVnQfCGCeJNXsLObVw==': {
-                  tokens: [],
-                  translations: [
-                    {
-                      translation: 'translation is: they shared a photo',
-                      variations: {},
-                    },
-                  ],
-                  types: [],
-                },
-                'vHtEb4ph7GJGeRkjtEHcPA==': {
-                  tokens: [],
-                  translations: [
-                    {
-                      translation: 'translation is: she shared a photo',
-                      variations: {},
-                    },
-                  ],
-                  types: [],
-                },
+              'sNncqVnQfCGCeJNXsLObVw==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: they shared a photo',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+              'vHtEb4ph7GJGeRkjtEHcPA==': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'translation is: she shared a photo',
+                    variations: {},
+                  },
+                ],
+                types: [],
               },
             },
-          ],
-        },
-        options
-      );
-      expect(result).toMatchSnapshot();
-    }
-  );
+          },
+        ],
+      },
+      options
+    );
+    expect(result).toMatchSnapshot();
+  });
 
-  it('should translate string with enum', () => {
-    const result = processJSON(
+  it('should translate string with enum', async () => {
+    const result = await processJSON(
       {
         phrases: [
           {

@@ -1,9 +1,10 @@
 import { transformSync as babelTransform } from '@babel/core';
 import presetReact from '@babel/preset-react';
+import { describe, it } from '@jest/globals';
 import fbt from 'babel-plugin-fbt';
-import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestUtil';
-import { assertSourceAstEqual } from '../../../../test/TestUtil';
-import fbtRuntime from '../index';
+import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestUtil.tsx';
+import { assertSourceAstEqual } from '../../../../test/TestUtil.tsx';
+import fbtRuntime from '../index.tsx';
 
 function transform(source: string, extraOptions?: Record<string, unknown>) {
   return (

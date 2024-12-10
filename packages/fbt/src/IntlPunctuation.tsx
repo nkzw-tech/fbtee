@@ -1,6 +1,6 @@
-import FbtHooks from './FbtHooks';
-import IntlPhonologicalRewrites from './IntlPhonologicalRewrites';
-import IntlRedundantStops from './IntlRedundantStops';
+import FbtHooks from './FbtHooks.tsx';
+import IntlPhonologicalRewrites from './IntlPhonologicalRewrites.tsx';
+import IntlRedundantStops from './IntlRedundantStops.tsx';
 
 /**
  * Regular expression snippet containing all the characters that we

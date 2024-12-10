@@ -50,17 +50,15 @@ import {
   TemplateLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { AnyFbtNode } from './fbt-nodes/FbtNode';
+import type { AnyFbtNode } from './fbt-nodes/FbtNode.tsx';
 import type {
   FbtOptionConfig,
   FbtOptionValue,
   FbtOptionValues,
   JSModuleNameType,
-} from './FbtConstants';
-import { JSModuleName, ModuleNameRegExp } from './FbtConstants';
-import type { TokenAliases } from './index';
-import type { PatternString } from './Types';
+} from './FbtConstants.tsx';
+import { JSModuleName, ModuleNameRegExp } from './FbtConstants.tsx';
+import nullthrows from './nullthrows.tsx';
 
 const { hasOwnProperty } = Object.prototype;
 
@@ -988,32 +986,5 @@ export function createFbtRuntimeArgCallExpression(
   );
 }
 
-/**
- * Clear token names in translations and runtime call texts need to be replaced
- * by their aliases in order for the runtime logic to work.
- */
-export function replaceClearTokensWithTokenAliases(
-  textOrTranslation: PatternString,
-  tokenAliases?: TokenAliases | null
-): string {
-  if (tokenAliases == null) {
-    return textOrTranslation;
-  }
-
-  // avoid cyclic dependency
-  const { tokenNameToTextPattern } = require('./fbt-nodes/FbtNodeUtil');
-  return Object.keys(tokenAliases).reduce(
-    (mangledText: string, clearToken: string) => {
-      const clearTokenName = tokenNameToTextPattern(clearToken);
-      const mangledTokenName = tokenNameToTextPattern(tokenAliases[clearToken]);
-      // Since a string is not allowed to have implicit params with duplicated
-      // token names, replacing the first and therefore the only occurence of
-      // `clearTokenName` is sufficient.
-      return mangledText.replace(clearTokenName, mangledTokenName);
-    },
-    textOrTranslation
-  );
-}
-
 const generateFormattedCodeFromAST = (node: Node) =>
-  generate(node, { comments: true }, '').code.trim();
+  generate.default(node, { comments: true }, '').code.trim();

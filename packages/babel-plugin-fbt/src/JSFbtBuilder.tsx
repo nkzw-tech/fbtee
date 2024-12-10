@@ -1,30 +1,30 @@
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { AnyStringVariationArg } from './fbt-nodes/FbtArguments';
+import type { AnyStringVariationArg } from './fbt-nodes/FbtArguments.tsx';
 import {
   EnumStringVariationArg,
   GenderStringVariationArg,
   NumberStringVariationArg,
-} from './fbt-nodes/FbtArguments';
-import FbtElementNode from './fbt-nodes/FbtElementNode';
-import FbtEnumNode from './fbt-nodes/FbtEnumNode';
-import FbtImplicitParamNode from './fbt-nodes/FbtImplicitParamNode';
-import FbtNameNode from './fbt-nodes/FbtNameNode';
-import FbtParamNode from './fbt-nodes/FbtParamNode';
-import FbtPluralNode from './fbt-nodes/FbtPluralNode';
-import FbtPronounNode from './fbt-nodes/FbtPronounNode';
-import { ShowCountKeys } from './FbtConstants';
-import type { EnumKey } from './FbtEnumRegistrar';
-import { varDump } from './FbtUtil';
-import type { GenderConstEnum } from './Gender';
-import type { JSFBTMetaEntry } from './index';
+} from './fbt-nodes/FbtArguments.tsx';
+import FbtElementNode from './fbt-nodes/FbtElementNode.tsx';
+import FbtEnumNode from './fbt-nodes/FbtEnumNode.tsx';
+import FbtImplicitParamNode from './fbt-nodes/FbtImplicitParamNode.tsx';
+import FbtNameNode from './fbt-nodes/FbtNameNode.tsx';
+import FbtParamNode from './fbt-nodes/FbtParamNode.tsx';
+import FbtPluralNode from './fbt-nodes/FbtPluralNode.tsx';
+import FbtPronounNode from './fbt-nodes/FbtPronounNode.tsx';
+import { ShowCountKeys } from './FbtConstants.tsx';
+import type { EnumKey } from './FbtEnumRegistrar.tsx';
+import { varDump } from './FbtUtil.tsx';
+import type { GenderConstEnum } from './Gender.tsx';
+import type { JSFBTMetaEntry } from './index.tsx';
+import nullthrows from './nullthrows.tsx';
 import {
   EXACTLY_ONE,
   FbtVariationType,
   GENDER_ANY,
   NUMBER_ANY,
   SUBJECT,
-} from './translate/IntlVariations';
+} from './translate/IntlVariations.tsx';
 
 /**
  * Helper class to assemble the JSFBT table data.

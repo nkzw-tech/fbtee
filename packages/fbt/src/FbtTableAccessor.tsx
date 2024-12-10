@@ -1,5 +1,5 @@
 import { FbtTableKey } from 'babel-plugin-fbt';
-import type { FbtSubstitution } from './FbtTable';
+import type { FbtSubstitution } from './FbtTable.tsx';
 
 export type FbtTableArg = [
   Array<FbtTableKey> | null | undefined,

@@ -1,7 +1,7 @@
 import invariant from 'invariant';
-import FbtHooks from './FbtHooks';
-import IntlNumberType from './IntlNumberType';
-import IntlVariations from './IntlVariations';
+import FbtHooks from './FbtHooks.tsx';
+import IntlNumberType from './IntlNumberType.tsx';
+import IntlVariations from './IntlVariations.tsx';
 
 export const EXACTLY_ONE = '_1';
 

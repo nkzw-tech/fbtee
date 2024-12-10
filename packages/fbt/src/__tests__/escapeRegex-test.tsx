@@ -1,4 +1,5 @@
-import escapeRegex from '../escapeRegex';
+import { describe, expect, it } from '@jest/globals';
+import escapeRegex from '../escapeRegex.tsx';
 
 describe('escapeRegex', () => {
   it('escapes individual special characters', () => {

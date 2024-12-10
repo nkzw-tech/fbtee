@@ -1,9 +1,9 @@
 import { PluginOptions, transformSync } from '@babel/core';
 import prettier from 'prettier';
-import { SENTINEL } from '../FbtConstants';
+import { SENTINEL } from '../FbtConstants.tsx';
 import presetReact from '@babel/preset-react';
 import presetTypeScript from '@babel/preset-typescript';
-import fbt from '../index';
+import fbt from '../index.tsx';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
 
 export function payload(obj: Record<string, unknown>): string {
@@ -94,7 +94,6 @@ export const jsCodeFbtCallSerializer = {
 } as const;
 
 const nonASCIICharRegex = /[^\0-~]/g;
-
 /**
  * Serialize JS source code that contains non-ASCII characters in unicode.
  * Non-ASCII characters in unicode string will be replaced with utf-8 representation.

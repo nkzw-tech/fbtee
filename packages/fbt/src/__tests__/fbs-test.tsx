@@ -1,9 +1,10 @@
 /// <reference types="../ReactTypes.d.ts" />
 
+import { describe, expect, it } from '@jest/globals';
 import React from 'react';
-import { fbs } from '..';
-import init from '../fbtInit';
-import IntlViewerContext from '../IntlViewerContext';
+import init from '../fbtInit.tsx';
+import { fbs } from '../index.tsx';
+import IntlViewerContext from '../IntlViewerContext.tsx';
 
 init({
   hooks: {
@@ -101,11 +102,8 @@ describe('fbs', () => {
       it('fbs() should throw an error', () => {
         expect(() =>
           fbs(
-            [
-              'Hello ',
-              // @ts-expect-error
-              fbs.param('name', <strong>world</strong>),
-            ],
+            // @ts-expect-error
+            ['Hello ', fbs.param('name', <strong>world</strong>)],
             'some desc'
           )
         ).toThrowErrorMatchingInlineSnapshot(

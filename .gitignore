@@ -1,14 +1,14 @@
-node_modules
-**/node_modules
+.DS_Store
 .eslintcache
 .pnpm-debug.log
-.DS_Store
+**/node_modules
 example/.enum_manifest.json
 example/.source_strings.json
 example/.src_manifest.json
 example/source_strings.json
 example/src/translatedFbts
 example/src/translatedFbts.json
+node_modules
 packages/*/lib
 packages/fbt/lib
 packages/fbt/LICENSE

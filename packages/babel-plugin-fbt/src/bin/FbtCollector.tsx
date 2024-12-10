@@ -2,17 +2,18 @@ import type { PluginItem } from '@babel/core';
 import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
-import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
-import type { FbtOptionConfig } from '../FbtConstants';
-import type { EnumManifest } from '../FbtEnumRegistrar';
-import { textContainsFbtLikeModule } from '../FbtUtil';
-import type { Phrase, PluginOptions } from '../index';
+import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
+import { FbtCommonMap } from '../FbtCommon.tsx';
+import type { FbtOptionConfig } from '../FbtConstants.tsx';
+import type { EnumManifest } from '../FbtEnumRegistrar.tsx';
+import { textContainsFbtLikeModule } from '../FbtUtil.tsx';
+import type { Phrase, PluginOptions } from '../index.tsx';
 import fbt, {
   getChildToParentRelationships,
   getExtractedStrings,
   getFbtElementNodes,
-} from '../index';
-import type { PatternHash, PatternString } from '../Types';
+} from '../index.tsx';
+import type { PatternHash, PatternString } from '../Types.tsx';
 
 export type ExternalTransform = (
   src: string,
@@ -20,7 +21,7 @@ export type ExternalTransform = (
   filename?: string | null | undefined
 ) => unknown;
 export type CollectorConfig = {
-  fbtCommonPath?: string;
+  fbtCommon?: FbtCommonMap | null;
   generateOuterTokenName?: boolean;
   plugins?: ReadonlyArray<PluginItem>;
   presets?: ReadonlyArray<PluginItem>;
@@ -106,7 +107,7 @@ export default class FbtCollector implements IFbtCollector {
     const options = {
       collectFbt: true,
       extraOptions: this._extraOptions,
-      fbtCommonPath: this._config.fbtCommonPath,
+      fbtCommon: this._config.fbtCommon,
       fbtEnumManifest,
       filename,
       generateOuterTokenName: this._config.generateOuterTokenName,

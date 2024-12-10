@@ -1,4 +1,4 @@
-import { Gender } from '../IntlVariations';
+import { Gender } from '../IntlVariations.tsx';
 
 export function getFallback(): typeof Gender.UNKNOWN {
   return Gender.UNKNOWN;

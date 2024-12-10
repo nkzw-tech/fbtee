@@ -8,11 +8,11 @@ import {
   objectProperty,
   stringLiteral,
 } from '@babel/types';
-import { getDesc, getUnknownCommonStringErrorMessage } from '../FbtCommon';
-import type { JSModuleNameType } from '../FbtConstants';
-import { CommonOption } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
-import { errorAt, expandStringConcat, normalizeSpaces } from '../FbtUtil';
+import { getDesc, getUnknownCommonStringErrorMessage } from '../FbtCommon.tsx';
+import type { JSModuleNameType } from '../FbtConstants.tsx';
+import { CommonOption } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import { errorAt, expandStringConcat, normalizeSpaces } from '../FbtUtil.tsx';
 
 type NodePath = NodePathT<CallExpression>;
 

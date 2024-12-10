@@ -1,6 +1,6 @@
-import { onEachLeaf } from '../JSFbtUtil';
-import type { PatternHash, PatternString } from '../Types';
-import type { HashToLeaf, PackagerPhrase } from './FbtCollector';
+import { onEachLeaf } from '../JSFbtUtil.tsx';
+import type { PatternHash, PatternString } from '../Types.tsx';
+import type { HashToLeaf, PackagerPhrase } from './FbtCollector.tsx';
 
 export type HashFunction = (
   text: PatternString,

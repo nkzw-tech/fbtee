@@ -10,28 +10,28 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import { JSModuleNameType, ValidParamOptions } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
+import { JSModuleNameType, ValidParamOptions } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type {
   BabelNodeCallExpressionArgument,
   CallExpressionArg,
-} from '../FbtUtil';
+} from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
   createFbtRuntimeArgCallExpression,
   errorAt,
   varDump,
-} from '../FbtUtil';
-import { GENDER_ANY, NUMBER_ANY } from '../translate/IntlVariations';
-import type { StringVariationArgsMap } from './FbtArguments';
+} from '../FbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import { GENDER_ANY, NUMBER_ANY } from '../translate/IntlVariations.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import {
   GenderStringVariationArg,
   NumberStringVariationArg,
-} from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import { tokenNameToTextPattern } from './FbtNodeUtil';
+} from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
   gender?: Expression | null | undefined; // Represents the `gender`,

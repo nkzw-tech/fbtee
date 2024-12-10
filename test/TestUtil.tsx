@@ -63,7 +63,7 @@ function parse(code: string) {
 }
 
 export function generateFormattedCodeFromAST(babelNode: Node) {
-  return generate(babelNode, { comments: true }, '').code.trim();
+  return generate.default(babelNode, { comments: true }, '').code.trim();
 }
 
 function formatSourceCode(input: string) {
@@ -81,13 +81,15 @@ function firstCommonSubstring(left: string, right: string) {
 }
 
 function normalizeSourceCode(sourceCode: string) {
-  return generate(
-    parse(sourceCode),
-    {
-      comments: true,
-    },
-    sourceCode
-  ).code.trim();
+  return generate
+    .default(
+      parse(sourceCode),
+      {
+        comments: true,
+      },
+      sourceCode
+    )
+    .code.trim();
 }
 
 /**

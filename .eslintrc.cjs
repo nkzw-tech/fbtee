@@ -12,7 +12,7 @@ module.exports = {
       },
     },
     {
-      files: ['./.eslintrc.js', './jest.config.js', './jest-preprocessor.js'],
+      files: ['./.eslintrc.cjs'],
       rules: {
         '@typescript-eslint/no-require-imports': 0,
       },
@@ -59,7 +59,6 @@ module.exports = {
 
     /* eslint-disable sort-keys-fix/sort-keys-fix */
     '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/no-require-imports': 0,
     '@nkzw/no-instanceof': 0,
     /* eslint-enable sort-keys-fix/sort-keys-fix */
   },

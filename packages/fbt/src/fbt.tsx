@@ -7,24 +7,24 @@ import FbtHooks, {
   FbtInputOpts,
   FbtRuntimeInput,
   FbtTableArgs,
-} from './FbtHooks';
-import FbtResult from './FbtResult';
-import FbtResultBase from './FbtResultBase';
+} from './FbtHooks.tsx';
+import FbtResult from './FbtResult.tsx';
+import FbtResultBase from './FbtResultBase.tsx';
 import type {
   ParamVariationType,
   ValidPronounUsagesType,
-} from './FbtRuntimeTypes';
-import FbtTable from './FbtTable';
-import FbtTableAccessor, { FbtTableArg } from './FbtTableAccessor';
-import GenderConst from './GenderConst';
-import getAllSubstitutions from './getAllSubstitutions';
-import intlNumUtils from './intlNumUtils';
+} from './FbtRuntimeTypes.tsx';
+import FbtTable from './FbtTable.tsx';
+import FbtTableAccessor, { FbtTableArg } from './FbtTableAccessor.tsx';
+import GenderConst from './GenderConst.tsx';
+import getAllSubstitutions from './getAllSubstitutions.tsx';
+import intlNumUtils from './intlNumUtils.tsx';
 import {
   getGenderVariations,
   getNumberVariations,
-} from './IntlVariationResolver';
-import substituteTokens, { Substitutions } from './substituteTokens';
-import { NestedFbtContentItems } from './Types';
+} from './IntlVariationResolver.tsx';
+import substituteTokens, { Substitutions } from './substituteTokens.tsx';
+import { NestedFbtContentItems } from './Types.tsx';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,

@@ -1,11 +1,11 @@
-import fbsInternal from './fbs';
-import fbtInternal from './fbt';
-import init from './fbtInit';
-import FbtResult from './FbtResult';
-import FbtTranslations from './FbtTranslations';
-import GenderConst from './GenderConst';
-import IntlVariations from './IntlVariations';
-import { FbsAPI, FbtAPI } from './Types';
+import fbsInternal from './fbs.tsx';
+import fbtInternal from './fbt.tsx';
+import init from './fbtInit.tsx';
+import FbtResult from './FbtResult.tsx';
+import FbtTranslations from './FbtTranslations.tsx';
+import GenderConst from './GenderConst.tsx';
+import IntlVariations from './IntlVariations.tsx';
+import { FbsAPI, FbtAPI } from './Types.tsx';
 
 const fbt = fbtInternal as unknown as FbtAPI;
 const fbs = fbsInternal as unknown as FbsAPI;

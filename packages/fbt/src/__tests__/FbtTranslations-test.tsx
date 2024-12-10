@@ -1,4 +1,5 @@
-import FbtTranslations from '../FbtTranslations';
+import { describe, expect, it } from '@jest/globals';
+import FbtTranslations from '../FbtTranslations.tsx';
 
 describe('FbtTranslations', () => {
   it('can register and get back translations', () => {

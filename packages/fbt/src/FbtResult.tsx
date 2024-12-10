@@ -1,11 +1,11 @@
-import type { FbtResolvedPayload } from './FbtHooks';
-import FbtReactUtil from './FbtReactUtil';
-import FbtResultBase from './FbtResultBase';
+import type { FbtResolvedPayload } from './FbtHooks.tsx';
+import FbtReactUtil from './FbtReactUtil.tsx';
+import FbtResultBase from './FbtResultBase.tsx';
 import {
   IFbtErrorListener,
   IFbtResultBase,
   NestedFbtContentItems,
-} from './Types';
+} from './Types.tsx';
 
 const FbtResultComponent = (props: Props): NestedFbtContentItems =>
   props.content;

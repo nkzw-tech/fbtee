@@ -8,10 +8,10 @@ import {
   JSXElement,
   Node,
 } from '@babel/types';
-import { FbtNodeType } from './fbt-nodes/FbtNodeType';
-import type { JSModuleNameType } from './FbtConstants';
-import { JSModuleName } from './FbtConstants';
-import { assertModuleName, errorAt } from './FbtUtil';
+import { FbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
+import type { JSModuleNameType } from './FbtConstants.tsx';
+import { JSModuleName } from './FbtConstants.tsx';
+import { assertModuleName, errorAt } from './FbtUtil.tsx';
 
 const { FBS, FBT, REACT_FBT } = JSModuleName;
 

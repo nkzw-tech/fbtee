@@ -1,13 +1,13 @@
-import FBLocaleToLang from '../FBLocaleToLang';
-import { Gender } from '../IntlVariations';
+import FBLocaleToLang from '../FBLocaleToLang.tsx';
+import { Gender } from '../IntlVariations.tsx';
 import {
   getFallback as getFallbackA,
   getGenderVariations as getGenderVariationsA,
-} from './IntlDefaultGenderType';
+} from './IntlDefaultGenderType.tsx';
 import {
   getFallback as getFallbackB,
   getGenderVariations as getGenderVariationsB,
-} from './IntlMergedUnknownGenderType';
+} from './IntlMergedUnknownGenderType.tsx';
 
 const IntlDefaultGenderType = {
   getFallback: getFallbackA,

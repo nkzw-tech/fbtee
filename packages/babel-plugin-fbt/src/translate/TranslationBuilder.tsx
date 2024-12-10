@@ -1,17 +1,14 @@
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import {
-  hasKeys,
-  replaceClearTokensWithTokenAliases,
-  varDump,
-} from '../FbtUtil';
-import type { FbtTableKey, PatternHash } from '../Types';
-import { FbtSite, FbtSiteMetaEntry } from './FbtSite';
-import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase';
+import { hasKeys, varDump } from '../FbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import replaceClearTokensWithTokenAliases from '../replaceClearTokensWithTokenAliases.tsx';
+import type { FbtTableKey, PatternHash } from '../Types.tsx';
+import { FbtSite, FbtSiteMetaEntry } from './FbtSite.tsx';
+import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase.tsx';
 import type {
   IntlVariationMaskValue,
   IntlVariationsEnum,
-} from './IntlVariations';
+} from './IntlVariations.tsx';
 import {
   EXACTLY_ONE,
   FbtVariationType,
@@ -21,11 +18,11 @@ import {
   isValidValue,
   Mask,
   VIEWING_USER,
-} from './IntlVariations';
-import type TranslationConfig from './TranslationConfig';
-import TranslationData from './TranslationData';
-import type { ConstraintKey } from './VariationConstraintUtils';
-import { buildConstraintKey } from './VariationConstraintUtils';
+} from './IntlVariations.tsx';
+import type TranslationConfig from './TranslationConfig.tsx';
+import TranslationData from './TranslationData.tsx';
+import type { ConstraintKey } from './VariationConstraintUtils.tsx';
+import { buildConstraintKey } from './VariationConstraintUtils.tsx';
 
 /**
  * Map from a string's hash to its translation payload.

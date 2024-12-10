@@ -17,6 +17,7 @@
     "url": "https://github.com/facebook/fbt"
   },
   "license": "MIT",
+  "type": "module",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --bundle ./src/index.tsx",

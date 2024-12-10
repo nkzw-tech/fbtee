@@ -66,17 +66,17 @@
  *
  */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import path, { join } from 'node:path';
 import yargs from 'yargs';
 import {
   LocaleToHashToTranslationResult,
   processFiles,
   processJSON,
   TranslatedGroups,
-} from './translateUtils';
+} from './translateUtils.tsx';
 
-const y = yargs();
+const y = yargs(process.argv.slice(2));
 const argv = y
   .usage('Translate fbt phrases with provided translations:\n$0 [options]')
   .boolean('jenkins')
@@ -104,13 +104,12 @@ const argv = y
       'from STDIN as a monolithic JSON payload'
   )
   .string('source-strings')
-  .default('source-strings', '.source_strings.json')
+  .default('source-strings', join(process.cwd(), '.source_strings.json'))
   .describe(
     'source-strings',
     'The file containing source strings, as collected by collectFbt.js'
   )
   .array('translations')
-  .default('translations', null)
   .describe(
     'translations',
     'The translation files containing translations corresponding to source-strings'
@@ -147,9 +146,9 @@ function writeOutput(
 ) {
   const outputDir = argv['output-dir'];
   if (outputDir) {
-    fs.mkdirSync(outputDir, { recursive: true });
+    mkdirSync(outputDir, { recursive: true });
     Object.keys(output).forEach((locale) => {
-      fs.writeFileSync(
+      writeFileSync(
         path.join(outputDir, `${locale}.json`),
         // @ts-expect-error
         createJSON({ [locale]: output[locale] })
@@ -179,14 +178,14 @@ if (argv['stdin']) {
     .on('data', (chunk) => {
       source += chunk;
     })
-    .on('end', () => {
-      writeOutput(processJSON(JSON.parse(source), translationOptions));
+    .on('end', async () => {
+      writeOutput(await processJSON(JSON.parse(source), translationOptions));
     });
 } else {
   writeOutput(
-    processFiles(
+    await processFiles(
       argv['source-strings'],
-      argv['translations'] || [],
+      argv['translations']?.map(String) || [],
       translationOptions
     )
   );

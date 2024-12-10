@@ -1,25 +1,29 @@
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { TableJSFBTTreeBranch, TokenAliases } from '..';
-import type { CollectFbtOutputPhrase } from '../bin/collect';
-import { objMap } from '../FbtUtil';
-import type { JSFBTMetaEntry, TableJSFBTTree } from '../index';
-import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil';
-import type { PatternHash, PatternString } from '../Types';
+import type { CollectFbtOutputPhrase } from '../bin/collect.tsx';
+import { objMap } from '../FbtUtil.tsx';
+import type {
+  JSFBTMetaEntry,
+  TableJSFBTTree,
+  TableJSFBTTreeBranch,
+  TokenAliases,
+} from '../index.tsx';
+import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import type { PatternHash, PatternString } from '../Types.tsx';
 import type {
   FbtSiteHashifiedTableJSFBTTree,
   FbtSiteHashToTextAndDesc,
-} from './FbtSiteBase';
+} from './FbtSiteBase.tsx';
 import {
   FbtSiteBase,
   FbtSiteMetaEntryBase,
   getVariationMaskFromType,
-} from './FbtSiteBase';
+} from './FbtSiteBase.tsx';
 import type {
   IntlFbtVariationTypeValue,
   IntlVariationMaskValue,
-} from './IntlVariations';
-import { FbtVariationType } from './IntlVariations';
+} from './IntlVariations.tsx';
+import { FbtVariationType } from './IntlVariations.tsx';
 
 type TextAndDescConcatenation = string;
 

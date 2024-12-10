@@ -1,5 +1,6 @@
-import { getChildToParentRelationships } from '../index';
-import { transform, withFbtRequireStatement } from './FbtTestUtil';
+import { describe, expect, it } from '@jest/globals';
+import { getChildToParentRelationships } from '../index.tsx';
+import { transform, withFbtRequireStatement } from './FbtTestUtil.tsx';
 
 function testChildToParentRelationships([, testData]: readonly [
   name: string,

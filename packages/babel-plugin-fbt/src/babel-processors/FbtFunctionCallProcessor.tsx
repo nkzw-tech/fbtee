@@ -28,21 +28,20 @@ import {
   variableDeclarator,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import type { AnyStringVariationArg } from '../fbt-nodes/FbtArguments';
-import { StringVariationArgsMap } from '../fbt-nodes/FbtArguments';
-import FbtElementNode from '../fbt-nodes/FbtElementNode';
-import FbtImplicitParamNode from '../fbt-nodes/FbtImplicitParamNode';
-import type { AnyFbtNode } from '../fbt-nodes/FbtNode';
-import { FbtNodeType } from '../fbt-nodes/FbtNodeType';
-import FbtParamNode from '../fbt-nodes/FbtParamNode';
+import type { AnyStringVariationArg } from '../fbt-nodes/FbtArguments.tsx';
+import { StringVariationArgsMap } from '../fbt-nodes/FbtArguments.tsx';
+import FbtElementNode from '../fbt-nodes/FbtElementNode.tsx';
+import FbtImplicitParamNode from '../fbt-nodes/FbtImplicitParamNode.tsx';
+import type { AnyFbtNode } from '../fbt-nodes/FbtNode.tsx';
+import { FbtNodeType } from '../fbt-nodes/FbtNodeType.tsx';
+import FbtParamNode from '../fbt-nodes/FbtParamNode.tsx';
 import type {
   FbtCallSiteOptions,
   FbtOptionConfig,
   JSModuleNameType,
-} from '../FbtConstants';
-import { EXTRA_OPTIONS_KEY, SENTINEL } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
+} from '../FbtConstants.tsx';
+import { EXTRA_OPTIONS_KEY, SENTINEL } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
   createFbtRuntimeArgCallExpression,
@@ -50,15 +49,16 @@ import {
   enforceString,
   errorAt,
   varDump,
-} from '../FbtUtil';
+} from '../FbtUtil.tsx';
 import type {
   ObjectWithJSFBT,
   PluginOptions,
   TableJSFBTTree,
   TableJSFBTTreeLeaf,
-} from '../index';
-import JSFbtBuilder from '../JSFbtBuilder';
-import addLeafToTree from '../utils/addLeafToTree';
+} from '../index.tsx';
+import JSFbtBuilder from '../JSFbtBuilder.tsx';
+import nullthrows from '../nullthrows.tsx';
+import addLeafToTree from '../utils/addLeafToTree.tsx';
 
 type CallExpressionPath = NodePath<CallExpression>;
 

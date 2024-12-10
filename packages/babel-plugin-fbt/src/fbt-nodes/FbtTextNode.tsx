@@ -4,10 +4,10 @@ import {
   JSXText,
   StringLiteral,
 } from '@babel/types';
-import type { StringVariationArgsMap } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil.tsx';
 
 /**
  * Represents the text literals present within <fbt> or fbt() callsites.

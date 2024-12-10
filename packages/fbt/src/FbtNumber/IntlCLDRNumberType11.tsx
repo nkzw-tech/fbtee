@@ -1,4 +1,4 @@
-import IntlVariations from '../IntlVariations';
+import IntlVariations from '../IntlVariations.tsx';
 
 const IntlCLDRNumberType11 = {
   getVariation(

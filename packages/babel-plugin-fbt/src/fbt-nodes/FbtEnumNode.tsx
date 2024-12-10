@@ -14,23 +14,23 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import nullthrows from 'nullthrows';
-import { FBT_ENUM_MODULE_SUFFIX, JSModuleNameType } from '../FbtConstants';
-import type { EnumModule } from '../FbtEnumRegistrar';
-import FbtEnumRegistrar from '../FbtEnumRegistrar';
-import FbtNodeChecker from '../FbtNodeChecker';
-import type { CallExpressionArg } from '../FbtUtil';
+import { FBT_ENUM_MODULE_SUFFIX, JSModuleNameType } from '../FbtConstants.tsx';
+import type { EnumModule } from '../FbtEnumRegistrar.tsx';
+import FbtEnumRegistrar from '../FbtEnumRegistrar.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   createFbtRuntimeArgCallExpression,
   enforceBabelNode,
   enforceBabelNodeCallExpressionArg,
   errorAt,
   varDump,
-} from '../FbtUtil';
-import type { StringVariationArgsMap } from './FbtArguments';
-import { EnumStringVariationArg } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
+} from '../FbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import { EnumStringVariationArg } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
 
 type Options = {
   range: EnumModule; // key/value pairs to use for this fbt:enum,

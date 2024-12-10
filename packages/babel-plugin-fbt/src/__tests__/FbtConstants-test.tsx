@@ -1,4 +1,5 @@
-import { ModuleNameRegExp } from '../FbtConstants';
+import { describe, expect, it } from '@jest/globals';
+import { ModuleNameRegExp } from '../FbtConstants.tsx';
 
 describe('FbtConstants', () => {
   describe('ModuleNameRegExp', () => {

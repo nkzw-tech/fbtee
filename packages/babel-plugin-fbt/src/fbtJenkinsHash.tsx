@@ -1,7 +1,7 @@
 import invariant from 'invariant';
-import type { TableJSFBTTree, TableJSFBTTreeLeaf } from './index';
-import jenkinsHash from './jenkinsHash';
-import { mapLeaves, onEachLeaf } from './JSFbtUtil';
+import type { TableJSFBTTree, TableJSFBTTreeLeaf } from './index.tsx';
+import jenkinsHash from './jenkinsHash.tsx';
+import { mapLeaves, onEachLeaf } from './JSFbtUtil.tsx';
 
 export default function fbtJenkinsHash(
   jsfbt: Readonly<TableJSFBTTree>

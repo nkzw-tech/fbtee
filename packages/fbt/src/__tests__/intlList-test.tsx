@@ -1,7 +1,8 @@
-import getFbtResult from '../__mocks__/getFbtResult';
-import init from '../fbtInit';
-import intlList, { Conjunctions, Delimiters } from '../intlList';
-import IntlViewerContext from '../IntlViewerContext';
+import { describe, expect, it } from '@jest/globals';
+import getFbtResult from '../__mocks__/getFbtResult.tsx';
+import init from '../fbtInit.tsx';
+import intlList, { Conjunctions, Delimiters } from '../intlList.tsx';
+import IntlViewerContext from '../IntlViewerContext.tsx';
 
 init({
   hooks: {

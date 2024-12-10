@@ -1,8 +1,11 @@
-import fs from 'node:fs';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import yargs from 'yargs';
-import { generateManifest } from './manifestUtils';
+import { generateManifest } from './manifestUtils.tsx';
 
-const y = yargs();
+const root = process.cwd();
+
+const y = yargs(process.argv.slice(2));
 const argv = y
   .usage(
     'Generate the enum manifest and its corresponding source manifest ' +
@@ -11,19 +14,19 @@ const argv = y
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .array('src')
-  .default('src', [process.cwd()])
+  .default('src', [root])
   .describe(
     'src',
     'The source folder(s) in which to look for JS source containing fbt and ' +
       'files with the $FbtEnum.js suffix. Defaults to CWD'
   )
-  .default('enum-manifest', '.enum_manifest.json')
+  .default('enum-manifest', join(root, '.enum_manifest.json'))
   .describe(
     'enum-manifest',
     'The path or filename to write the enum manfiest (accessed when ' +
       'processing shared enums)'
   )
-  .default('src-manifest', '.src_manifest.json')
+  .default('src-manifest', join(root, '.src_manifest.json'))
   .describe('src-manifest', 'The path or filename to write the source manifest')
   .parseSync();
 
@@ -33,12 +36,10 @@ if (argv.help) {
 }
 
 const enumManifestPath = argv['enum-manifest'];
-const { enumManifest, srcManifest } = generateManifest(
+const { enumManifest, srcManifest } = await generateManifest(
   enumManifestPath,
   argv.src
 );
 
-// Write enum manfiest
-fs.writeFileSync(enumManifestPath, JSON.stringify(enumManifest));
-
-fs.writeFileSync(argv['src-manifest'], JSON.stringify(srcManifest));
+writeFileSync(enumManifestPath, JSON.stringify(enumManifest));
+writeFileSync(argv['src-manifest'], JSON.stringify(srcManifest));

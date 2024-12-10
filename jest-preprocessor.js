@@ -1,4 +1,6 @@
-const babel = require('@babel/core');
+import babel from '@babel/core';
+import presetReact from '@babel/preset-react';
+import presetTypescript from '@babel/preset-typescript';
 
 function createTransformer(opts = {}) {
   return {
@@ -7,14 +9,13 @@ function createTransformer(opts = {}) {
         filename,
         plugins: opts.plugins || [],
         presets: [
-          require('@babel/preset-env'),
           [
-            require('@babel/preset-react'),
+            presetReact,
             {
               runtime: 'automatic',
             },
           ],
-          require('@babel/preset-typescript'),
+          presetTypescript,
         ],
         retainLines: true,
       };
@@ -24,7 +25,7 @@ function createTransformer(opts = {}) {
   };
 }
 
-module.exports = {
+export default {
   ...createTransformer(),
   createTransformer,
 };

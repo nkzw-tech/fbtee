@@ -1,9 +1,10 @@
-import { testSection } from '../../../../test/TestUtil';
+import { describe, expect } from '@jest/globals';
+import { testSection } from '../../../../test/TestUtil.tsx';
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
   withFbtRequireStatement,
-} from './FbtTestUtil';
+} from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 

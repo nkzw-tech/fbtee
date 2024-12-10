@@ -1,8 +1,9 @@
+import { describe, expect, it } from '@jest/globals';
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
   withFbtRequireStatement,
-} from './FbtTestUtil';
+} from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 

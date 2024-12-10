@@ -1,7 +1,8 @@
-import { fbt } from '..';
-import getFbtResult from '../__mocks__/getFbtResult';
-import init from '../fbtInit';
-import IntlViewerContext from '../IntlViewerContext';
+import { describe, expect, it } from '@jest/globals';
+import getFbtResult from '../__mocks__/getFbtResult.tsx';
+import init from '../fbtInit.tsx';
+import { fbt } from '../index.tsx';
+import IntlViewerContext from '../IntlViewerContext.tsx';
 
 init({
   hooks: {

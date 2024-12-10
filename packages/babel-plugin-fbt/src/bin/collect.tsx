@@ -1,19 +1,19 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import path, { resolve } from 'node:path';
 import yargs from 'yargs';
-import type { PlainFbtNode } from '../fbt-nodes/FbtNode';
-import type { TableJSFBT } from '../index';
-import packagerTypes from './collectFbtConstants';
+import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
+import type { TableJSFBT } from '../index.tsx';
+import packagerTypes from './collectFbtConstants.tsx';
 import {
   buildCollectFbtOutput,
   getFbtCollector,
   getPackagers,
-} from './collectFbtUtils';
+} from './collectFbtUtils.tsx';
 import type {
   ChildParentMappings,
   IFbtCollector,
   PackagerPhrase,
-} from './FbtCollector';
+} from './FbtCollector.tsx';
 
 /**
  * This represents the JSON output format of this script.
@@ -94,10 +94,10 @@ const args = {
   TRANSFORM: 'transform',
 } as const;
 
-const y = yargs();
+const y = yargs(process.argv.slice(2));
 const argv = y
   .usage('Collect fbt instances from source:\n$0 [options]')
-  .default(args.HASH, import.meta.dirname + '/md5.tsx')
+  .string(args.HASH)
   .describe(args.HASH, 'Path to hashing module to use in text packager.')
   .default(args.PACKAGER, 'text')
   .describe(
@@ -191,25 +191,29 @@ if (cliExtraOptions) {
   }
 }
 
-function processJsonSource(collector: IFbtCollector, source: string) {
+async function processJsonSource(collector: IFbtCollector, source: string) {
   const json = JSON.parse(source);
-  Object.keys(json).forEach((manifest_path) => {
+  for (const manifestPath of Object.keys(json)) {
     let manifest: Record<string, any> = {};
-    if (fs.existsSync(manifest_path)) {
-      manifest = require(path.resolve(process.cwd(), manifest_path));
+    if (existsSync(manifestPath)) {
+      manifest = (
+        await import(path.resolve(process.cwd(), manifestPath), {
+          with: { type: 'json' },
+        })
+      ).default;
     }
     const sources: Array<[string, string]> = [];
-    for (const file of json[manifest_path]) {
-      sources.push([file, fs.readFileSync(file, 'utf8')]);
+    for (const file of json[manifestPath]) {
+      sources.push([file, readFileSync(file, 'utf8')]);
     }
     collector.collectFromFiles(sources, manifest);
-  });
+  }
 }
 
 async function writeOutput(collector: IFbtCollector) {
   const packagers = await getPackagers(
     argv[args.PACKAGER] || 'text',
-    argv[args.HASH]
+    argv[args.HASH] || null
   );
   const output = buildCollectFbtOutput(collector, packagers, {
     genFbtNodes: argv[args.GEN_FBT_NODES],
@@ -221,22 +225,31 @@ async function writeOutput(collector: IFbtCollector) {
 }
 
 async function processSource(collector: IFbtCollector, source: string) {
-  if (argv[args.MANIFEST]) {
-    processJsonSource(collector, source);
-  } else {
-    await collector.collectFromOneFile(source, 'file.js');
-  }
+  await (argv[args.MANIFEST]
+    ? processJsonSource(collector, source)
+    : collector.collectFromOneFile(source, 'file.js'));
 }
 
 if (argv.help) {
   y.showHelp();
 } else {
   const transformPath = argv[args.TRANSFORM];
-  const transform = transformPath ? require(transformPath) : null;
+  const transform = transformPath
+    ? (await import(transformPath)).default
+    : null;
 
-  getFbtCollector(
+  const commonPath = argv[args.COMMON_STRINGS];
+  const fbtCommon = commonPath
+    ? (
+        await import(resolve(process.cwd(), commonPath), {
+          with: { type: 'json' },
+        })
+      ).default
+    : null;
+
+  const collector = await getFbtCollector(
     {
-      fbtCommonPath: argv[args.COMMON_STRINGS] || undefined,
+      fbtCommon,
       generateOuterTokenName: argv[args.GEN_OUTER_TOKEN_NAME],
       plugins: argv[args.PLUGINS].map(require),
       presets: argv[args.PRESETS].map(require),
@@ -244,27 +257,26 @@ if (argv.help) {
     },
     extraOptions,
     argv[args.CUSTOM_COLLECTOR]
-    // eslint-disable-next-line unicorn/prefer-top-level-await
-  ).then(async (collector) => {
-    if (!argv._.length) {
-      // No files given, read stdin as the sole input.
-      const stream = process.stdin;
-      let source = '';
-      stream.setEncoding('utf8');
-      stream.on('data', (chunk) => {
-        source += chunk;
-      });
-      stream.on('end', async () => {
-        await processSource(collector, source);
-        await writeOutput(collector);
-      });
-    } else {
-      const sources: Array<[string, string]> = [];
-      for (const file of argv._) {
-        sources.push([String(file), fs.readFileSync(file, 'utf8')]);
-      }
-      collector.collectFromFiles(sources);
+  );
+
+  if (!argv._.length) {
+    // No files given, read stdin as the sole input.
+    const stream = process.stdin;
+    let source = '';
+    stream.setEncoding('utf8');
+    stream.on('data', (chunk) => {
+      source += chunk;
+    });
+    stream.on('end', async () => {
+      await processSource(collector, source);
       await writeOutput(collector);
+    });
+  } else {
+    const sources: Array<[string, string]> = [];
+    for (const file of argv._) {
+      sources.push([String(file), readFileSync(file, 'utf8')]);
     }
-  });
+    collector.collectFromFiles(sources);
+    await writeOutput(collector);
+  }
 }

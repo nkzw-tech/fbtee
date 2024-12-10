@@ -1,14 +1,14 @@
 import { Node } from '@babel/types';
 import invariant from 'invariant';
-import type { EnumKey } from '../FbtEnumRegistrar';
-import { compactBabelNodeProps, getRawSource, varDump } from '../FbtUtil';
-import type { GenderConstEnum } from '../Gender';
+import type { EnumKey } from '../FbtEnumRegistrar.tsx';
+import { compactBabelNodeProps, getRawSource, varDump } from '../FbtUtil.tsx';
+import type { GenderConstEnum } from '../Gender.tsx';
 import {
   EXACTLY_ONE,
   GENDER_ANY,
   NUMBER_ANY,
-} from '../translate/IntlVariations';
-import type { AnyFbtNode } from './FbtNode';
+} from '../translate/IntlVariations.tsx';
+import type { AnyFbtNode } from './FbtNode.tsx';
 
 export type AnyStringVariationArg =
   | EnumStringVariationArg

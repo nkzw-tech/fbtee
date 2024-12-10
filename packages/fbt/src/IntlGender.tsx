@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import GenderConst from './GenderConst';
+import GenderConst from './GenderConst.tsx';
 
 type DisplayGenderConstType = 'UNKNOWN' | 'FEMALE' | 'MALE' | 'NEUTER';
 

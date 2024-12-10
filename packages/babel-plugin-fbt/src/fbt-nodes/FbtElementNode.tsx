@@ -15,13 +15,13 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants';
+import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants.tsx';
 import {
   FbtBooleanOptions,
   ValidFbtOptions,
   ValidPronounUsagesKeys,
-} from '../FbtConstants';
-import type { CallExpressionArg, ParamSet } from '../FbtUtil';
+} from '../FbtConstants.tsx';
+import type { CallExpressionArg, ParamSet } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
   compactBabelNodeProps,
@@ -34,21 +34,21 @@ import {
   normalizeSpaces,
   setUniqueToken,
   varDump,
-} from '../FbtUtil';
-import type { TokenAliases } from '../index';
-import { GENDER_ANY } from '../translate/IntlVariations';
+} from '../FbtUtil.tsx';
+import type { TokenAliases } from '../index.tsx';
+import { GENDER_ANY } from '../translate/IntlVariations.tsx';
 import type {
   AnyStringVariationArg,
   StringVariationArgsMap,
-} from './FbtArguments';
-import { GenderStringVariationArg } from './FbtArguments';
-import FbtEnumNode from './FbtEnumNode';
-import FbtImplicitParamNode from './FbtImplicitParamNode';
-import type FbtImplicitParamNodeType from './FbtImplicitParamNode';
-import FbtNameNode from './FbtNameNode';
-import type { AnyFbtNode, FbtChildNode } from './FbtNode';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
+} from './FbtArguments.tsx';
+import { GenderStringVariationArg } from './FbtArguments.tsx';
+import FbtEnumNode from './FbtEnumNode.tsx';
+import FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
+import type FbtImplicitParamNodeType from './FbtImplicitParamNode.tsx';
+import FbtNameNode from './FbtNameNode.tsx';
+import type { AnyFbtNode, FbtChildNode } from './FbtNode.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
 import {
   buildFbtNodeMapForSameParam,
   getChildNodeText,
@@ -56,12 +56,12 @@ import {
   getTextFromFbtNodeTree,
   getTokenAliasesFromFbtNodeTree,
   runOnNestedChildren,
-} from './FbtNodeUtil';
-import FbtParamNode from './FbtParamNode';
-import FbtPluralNode from './FbtPluralNode';
-import FbtPronounNode from './FbtPronounNode';
-import FbtSameParamNode from './FbtSameParamNode';
-import FbtTextNode from './FbtTextNode';
+} from './FbtNodeUtil.tsx';
+import FbtParamNode from './FbtParamNode.tsx';
+import FbtPluralNode from './FbtPluralNode.tsx';
+import FbtPronounNode from './FbtPronounNode.tsx';
+import FbtSameParamNode from './FbtSameParamNode.tsx';
+import FbtTextNode from './FbtTextNode.tsx';
 
 type ExtraOptionValues = {
   [optionName: string]: string;

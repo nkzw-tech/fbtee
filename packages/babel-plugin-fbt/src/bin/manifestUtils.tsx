@@ -1,38 +1,38 @@
 import fs from 'node:fs';
-import path from 'node:path';
+import { parse, relative, resolve } from 'node:path';
 import { globSync } from 'glob';
 import invariant from 'invariant';
 import {
   FBT_ENUM_MODULE_SUFFIX as ENUM_FILE,
   ModuleNameRegExp,
-} from '../FbtConstants';
-import type { EnumManifest, EnumModule } from '../FbtEnumRegistrar';
+} from '../FbtConstants.tsx';
+import type { EnumManifest, EnumModule } from '../FbtEnumRegistrar.tsx';
 
 const FILE_EXT = '.@(js|jsx|ts|tsx)';
 
-export function generateManifest(
+export async function generateManifest(
   enumManifestPath: string,
   srcPaths: ReadonlyArray<string>,
   cwd: string = process.cwd()
-): {
+): Promise<{
   enumManifest: EnumManifest;
   srcManifest: {
     [enumManifestPath: string]: Array<string>;
   };
-} {
+}> {
   const enumManifest: {
     [enumModuleName: string]: EnumModule;
   } = {};
   for (const src of srcPaths) {
     const enumFiles: Array<string> = globSync(
-      path.resolve(cwd, src) + '/**/*' + ENUM_FILE + FILE_EXT,
+      resolve(cwd, src) + '/**/*' + ENUM_FILE + FILE_EXT,
       {
         nodir: true,
       }
     );
     for (const filepath of enumFiles) {
-      const name = path.parse(filepath).name;
-      const obj = require(path.resolve(filepath));
+      const name = parse(filepath).name;
+      const obj = (await import(resolve(filepath))).default;
       const enumValue: EnumModule = obj.__esModule ? obj.default : obj;
 
       invariant(
@@ -47,7 +47,7 @@ export function generateManifest(
 
   // Find source files that are fbt-containing candidates
   const getFiles = (src: string) =>
-    globSync(path.resolve(cwd, src) + '/**/*' + FILE_EXT, { nodir: true });
+    globSync(resolve(cwd, src) + '/**/*' + FILE_EXT, { nodir: true });
 
   const srcFiles = srcPaths
     .flatMap(getFiles)
@@ -58,7 +58,7 @@ export function generateManifest(
         .split('\n')
         .some((line) => ModuleNameRegExp.test(line))
     )
-    .map((filepath) => path.relative(cwd, filepath));
+    .map((filepath) => relative(cwd, filepath));
 
   return {
     enumManifest,

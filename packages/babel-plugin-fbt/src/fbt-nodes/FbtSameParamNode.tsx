@@ -5,13 +5,13 @@ import {
   isStringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import { JSModuleNameType } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
-import { errorAt } from '../FbtUtil';
-import type { StringVariationArgsMap } from './FbtArguments';
-import FbtNode from './FbtNode';
-import { FbtNodeType } from './FbtNodeType';
-import { tokenNameToTextPattern } from './FbtNodeUtil';
+import { JSModuleNameType } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
+import { errorAt } from '../FbtUtil.tsx';
+import type { StringVariationArgsMap } from './FbtArguments.tsx';
+import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
   name: string; // Name of the string token

@@ -7,27 +7,27 @@ import {
   Node,
 } from '@babel/types';
 import invariant from 'invariant';
-import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
+import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type {
   BabelNodeCallExpressionArgument,
   CallExpressionArg,
-} from '../FbtUtil';
-import { compactBabelNodeProps, errorAt, varDump } from '../FbtUtil';
-import type { TokenAliases } from '../index';
+} from '../FbtUtil.tsx';
+import { compactBabelNodeProps, errorAt, varDump } from '../FbtUtil.tsx';
+import type { TokenAliases } from '../index.tsx';
 import type {
   AnyStringVariationArg,
   StringVariationArgsMap,
-} from './FbtArguments';
-import type FbtEnumNode from './FbtEnumNode';
-import type FbtImplicitParamNode from './FbtImplicitParamNode';
-import type FbtNameNode from './FbtNameNode';
-import { FbtNodeType } from './FbtNodeType';
-import type FbtParamNode from './FbtParamNode';
-import type FbtPluralNode from './FbtPluralNode';
-import type FbtPronounNode from './FbtPronounNode';
-import type FbtSameParamNode from './FbtSameParamNode';
-import type FbtTextNode from './FbtTextNode';
+} from './FbtArguments.tsx';
+import type FbtEnumNode from './FbtEnumNode.tsx';
+import type FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
+import type FbtNameNode from './FbtNameNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
+import type FbtParamNode from './FbtParamNode.tsx';
+import type FbtPluralNode from './FbtPluralNode.tsx';
+import type FbtPronounNode from './FbtPronounNode.tsx';
+import type FbtSameParamNode from './FbtSameParamNode.tsx';
+import type FbtTextNode from './FbtTextNode.tsx';
 
 export type FbtChildNode =
   | FbtEnumNode

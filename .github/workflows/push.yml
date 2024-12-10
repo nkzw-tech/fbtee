@@ -50,7 +50,7 @@ jobs:
           restore-keys: ${{ runner.os }}-pnpm-store-
 
       - name: Run setup
-        run: pnpm install && pnpm build:all
+        run: pnpm install && pnpm build:all && cd example && pnpm build:fbt
 
       - name: Run tests
         run: pnpm test

@@ -1,12 +1,12 @@
 import path from 'node:path';
-import packagerTypes from '../collectFbtConstants';
+import packagerTypes from '../collectFbtConstants.tsx';
 import {
   buildCollectFbtOutput,
   getFbtCollector,
   getPackagers,
-} from '../collectFbtUtils';
-
-const fbtCommonPath = path.resolve(__dirname, 'FbtCommonForTests.json');
+} from '../collectFbtUtils.tsx';
+// @ts-expect-error
+import fbtCommon from './FbtCommonForTests.json';
 
 async function collect(
   source: Array<[string, string]> | string,
@@ -18,7 +18,7 @@ async function collect(
   } = {}
 ) {
   const opts = {
-    fbtCommonPath,
+    fbtCommon,
     generateOuterTokenName: options?.genOuterTokenName,
     plugins: [],
     presets: [],
@@ -32,7 +32,7 @@ async function collect(
   const packager = options.packagerType ?? packagerTypes.NONE;
   const packagers = await getPackagers(
     packager,
-    path.join(__dirname, '../md5')
+    path.join(import.meta.dirname, '../md5.tsx')
   );
 
   await (Array.isArray(source)
@@ -275,7 +275,7 @@ describe('collectFbt', () => {
     expect(
       await collect('nothing in JS code', {
         customCollector: path.resolve(
-          __dirname,
+          import.meta.dirname,
           '../__mocks__/CustomFbtCollector.tsx'
         ),
       })

@@ -1,15 +1,15 @@
-import fs from 'node:fs';
-import nullthrows from 'nullthrows';
-import FbtHashKey from '../fbtHashKey';
-import { objMap } from '../FbtUtil';
-import { FbtSite } from '../translate/FbtSite';
-import type { TranslationResult } from '../translate/TranslationBuilder';
-import TranslationBuilder from '../translate/TranslationBuilder';
-import TranslationConfig from '../translate/TranslationConfig';
-import type { SerializedTranslationData } from '../translate/TranslationData';
-import TranslationData from '../translate/TranslationData';
-import type { PatternHash, PatternString } from '../Types';
-import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect';
+import { readFileSync } from 'node:fs';
+import FbtHashKey from '../fbtHashKey.tsx';
+import { objMap } from '../FbtUtil.tsx';
+import nullthrows from '../nullthrows.tsx';
+import { FbtSite } from '../translate/FbtSite.tsx';
+import type { TranslationResult } from '../translate/TranslationBuilder.tsx';
+import TranslationBuilder from '../translate/TranslationBuilder.tsx';
+import TranslationConfig from '../translate/TranslationConfig.tsx';
+import type { SerializedTranslationData } from '../translate/TranslationData.tsx';
+import TranslationData from '../translate/TranslationData.tsx';
+import type { PatternHash, PatternString } from '../Types.tsx';
+import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect.tsx';
 
 export type Options = Readonly<{
   // Similar to `jenkins`, but pass the hash-module of your choice.
@@ -56,33 +56,33 @@ type InputJSONType = Readonly<{
 
 function parseJSONFile<T>(filepath: string): T {
   try {
-    return JSON.parse(fs.readFileSync(filepath).toString());
+    return JSON.parse(readFileSync(filepath).toString());
   } catch (error: any) {
     error.message += `\nFile path: "${filepath}"`;
     throw error;
   }
 }
 
-export function processFiles(
+export async function processFiles(
   stringFile: string,
   translationFiles: ReadonlyArray<string>,
   options: Options
-): LocaleToHashToTranslationResult | TranslatedGroups {
+): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   const { phrases } = parseJSONFile<CollectFbtOutput>(stringFile);
   const fbtSites = phrases.map(createFbtSiteFromJSON);
   const translatedGroups = translationFiles.map((file) => {
     const group = parseJSONFile<TranslationGroup>(file);
     return processTranslations(fbtSites, group, options);
   });
-  return processGroups(phrases, translatedGroups, options);
+  return await processGroups(phrases, translatedGroups, options);
 }
 
-export function processJSON(
+export async function processJSON(
   json: InputJSONType,
   options: Options
-): LocaleToHashToTranslationResult | TranslatedGroups {
+): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   const fbtSites = json.phrases.map(createFbtSiteFromJSON);
-  return processGroups(
+  return await processGroups(
     json.phrases,
     json.translationGroups.map((group) =>
       processTranslations(fbtSites, group, options)
@@ -91,16 +91,16 @@ export function processJSON(
   );
 }
 
-function processGroups(
+async function processGroups(
   phrases: ReadonlyArray<CollectFbtOutputPhrase>,
   translatedGroups: TranslatedGroups,
   options: Options
-): LocaleToHashToTranslationResult | TranslatedGroups {
+): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   let fbtHash: typeof FbtHashKey | null | undefined = null;
   if (options.jenkins) {
-    fbtHash = require('../fbtHashKey');
+    fbtHash = (await import('../fbtHashKey.tsx')).default;
   } else if (typeof options.hashModule === 'string') {
-    fbtHash = require(options.hashModule);
+    fbtHash = (await import(options.hashModule)).default;
   }
 
   if (!fbtHash) {

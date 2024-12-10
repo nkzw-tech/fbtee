@@ -1,13 +1,13 @@
 import type { FbtTableKey, PatternHash, PatternString } from 'babel-plugin-fbt';
-import FbtResult from './FbtResult';
-import type { FbtTableArg } from './FbtTableAccessor';
-import IntlViewerContext from './IntlViewerContext';
+import FbtResult from './FbtResult.tsx';
+import type { FbtTableArg } from './FbtTableAccessor.tsx';
+import IntlViewerContext from './IntlViewerContext.tsx';
 import {
   FbtErrorContext,
   FbtPureStringResult,
   IFbtErrorListener,
   NestedFbtContentItems,
-} from './Types';
+} from './Types.tsx';
 
 export type FbtResolvedPayload = {
   contents: NestedFbtContentItems;

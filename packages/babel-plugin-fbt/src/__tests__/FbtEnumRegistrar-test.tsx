@@ -1,4 +1,5 @@
-import FbtEnumRegistrar from '../FbtEnumRegistrar';
+import { describe, expect, it } from '@jest/globals';
+import FbtEnumRegistrar from '../FbtEnumRegistrar.tsx';
 
 describe('Test FbtEnumRegistrar', () => {
   it('should strip paths and extensions', () => {

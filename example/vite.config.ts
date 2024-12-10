@@ -1,5 +1,7 @@
 import react from '@vitejs/plugin-react';
+// @ts-expect-error
 import EnumManifest from './.enum_manifest.json';
+// @ts-expect-error
 import CommonStrings from './common_strings.json';
 
 const root = process.cwd();

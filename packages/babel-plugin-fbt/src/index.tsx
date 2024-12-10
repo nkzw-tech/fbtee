@@ -6,30 +6,26 @@ import {
   Node,
 } from '@babel/types';
 import { parse as parseDocblock } from 'jest-docblock';
-import FbtCommonFunctionCallProcessor from './babel-processors/FbtCommonFunctionCallProcessor';
-import type { MetaPhrase } from './babel-processors/FbtFunctionCallProcessor';
-import FbtFunctionCallProcessor from './babel-processors/FbtFunctionCallProcessor';
-import JSXFbtProcessor from './babel-processors/JSXFbtProcessor';
-import FbtElementNode from './fbt-nodes/FbtElementNode';
-import type { AnyFbtNode, PlainFbtNode } from './fbt-nodes/FbtNode';
-import { toPlainFbtNodeTree } from './fbt-nodes/FbtNodeUtil';
-import type { FbtCommonMap } from './FbtCommon';
-import { init } from './FbtCommon';
-import type { FbtCallSiteOptions, FbtOptionConfig } from './FbtConstants';
-import { JSModuleName, ValidFbtOptions } from './FbtConstants';
-import type { EnumManifest, EnumModule } from './FbtEnumRegistrar';
-import FbtEnumRegistrar from './FbtEnumRegistrar';
-import fbtHashKey from './fbtHashKey';
-import FbtNodeChecker from './FbtNodeChecker';
-import {
-  checkOption,
-  errorAt,
-  objMap,
-  replaceClearTokensWithTokenAliases,
-} from './FbtUtil';
-import { mapLeaves } from './JSFbtUtil';
-import { FbtVariationType } from './translate/IntlVariations';
-import { FbtTableKey, PatternHash, PatternString } from './Types';
+import FbtCommonFunctionCallProcessor from './babel-processors/FbtCommonFunctionCallProcessor.tsx';
+import type { MetaPhrase } from './babel-processors/FbtFunctionCallProcessor.tsx';
+import FbtFunctionCallProcessor from './babel-processors/FbtFunctionCallProcessor.tsx';
+import JSXFbtProcessor from './babel-processors/JSXFbtProcessor.tsx';
+import FbtElementNode from './fbt-nodes/FbtElementNode.tsx';
+import type { AnyFbtNode, PlainFbtNode } from './fbt-nodes/FbtNode.tsx';
+import { toPlainFbtNodeTree } from './fbt-nodes/FbtNodeUtil.tsx';
+import type { FbtCommonMap } from './FbtCommon.tsx';
+import { init } from './FbtCommon.tsx';
+import type { FbtCallSiteOptions, FbtOptionConfig } from './FbtConstants.tsx';
+import { JSModuleName, ValidFbtOptions } from './FbtConstants.tsx';
+import type { EnumManifest } from './FbtEnumRegistrar.tsx';
+import FbtEnumRegistrar from './FbtEnumRegistrar.tsx';
+import fbtHashKey from './fbtHashKey.tsx';
+import FbtNodeChecker from './FbtNodeChecker.tsx';
+import { checkOption, errorAt } from './FbtUtil.tsx';
+import { mapLeaves } from './JSFbtUtil.tsx';
+import replaceClearTokensWithTokenAliases from './replaceClearTokensWithTokenAliases.tsx';
+import { FbtVariationType } from './translate/IntlVariations.tsx';
+import { FbtTableKey, PatternHash, PatternString } from './Types.tsx';
 
 const { FBT } = JSModuleName;
 
@@ -56,7 +52,6 @@ const isRequireAlias = (path: NodePath<Node>) => {
   );
 };
 
-type FbtEnumLoader = (enumFilePath: string) => EnumModule;
 export type PluginOptions = {
   collectFbt?: boolean;
   // Map of extra fbt options (or JSX attributes) to accept on fbt callsites.
@@ -65,24 +60,15 @@ export type PluginOptions = {
   // We only accept plain string literals as option values at the moment.
   extraOptions: FbtOptionConfig;
   fbtBase64?: boolean;
-  fbtCommon?: FbtCommonMap;
-  fbtCommonPath?: string | null | undefined;
-  // Path to a JS module that must export a function that is responsible for
-  // loading an fbt enum (by file path) and return its object.
-  // I.e. fbt enum loading function signature: `FbtEnumLoader`
-  fbtEnumLoader?: string | null | undefined;
+  fbtCommon?: FbtCommonMap | null;
   // Function that would return an fbt manifest object
   fbtEnumManifest?: EnumManifest | null | undefined;
-  // Fbt enum file path
-  fbtEnumPath?: string | null | undefined;
-  // Object map of file paths keyed by fbt enum module names
-  fbtEnumToPath?:
-    | {
-        [enumName: string]: string;
-      }
-    | null
-    | undefined;
+  // @deprecated
+  fbtEnumPath?: never;
+  // @deprecated
+  fbtEnumToPath?: never;
   fbtSentinel?: string | null | undefined;
+
   filename?: string | null | undefined;
   // If true, generate the `outerTokenName` property on the JSFbt tree leaves.
   generateOuterTokenName?: boolean;
@@ -377,12 +363,13 @@ function getEnumManifest(opts: PluginOptions): EnumManifest | null | undefined {
   if (fbtEnumManifest != null) {
     return fbtEnumManifest;
   } else if (fbtEnumPath != null) {
-    return require(fbtEnumPath);
+    throw new Error(
+      `'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`
+    );
   } else if (fbtEnumToPath != null) {
-    const loadEnum: FbtEnumLoader = opts.fbtEnumLoader
-      ? require(opts.fbtEnumLoader)
-      : require;
-    return objMap(fbtEnumToPath, loadEnum);
+    throw new Error(
+      `'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`
+    );
   }
   return null;
 }
@@ -410,4 +397,4 @@ export function getFbtElementNodes(): Array<PlainFbtNode> {
 }
 
 export { fbtHashKey, mapLeaves, replaceClearTokensWithTokenAliases };
-export { SENTINEL } from './FbtConstants';
+export { SENTINEL } from './FbtConstants.tsx';

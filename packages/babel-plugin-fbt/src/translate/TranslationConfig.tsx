@@ -2,9 +2,9 @@ import invariant from 'invariant';
 import type {
   LangToNumberTypeValues,
   LocaleToNumberTypeValues,
-} from './CLDR/IntlNumberType';
-import IntlNumberType from './CLDR/IntlNumberType';
-import { forLocale, type IntlGenderType } from './gender/IntlGenderType';
+} from './CLDR/IntlNumberType.tsx';
+import IntlNumberType from './CLDR/IntlNumberType.tsx';
+import { forLocale, type IntlGenderType } from './gender/IntlGenderType.tsx';
 
 /**
  * Represents a given locale's variation (number/gender) configuration.

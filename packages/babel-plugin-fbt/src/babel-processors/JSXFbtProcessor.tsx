@@ -21,15 +21,15 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import { getDesc, getUnknownCommonStringErrorMessage } from '../FbtCommon';
-import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants';
+import { getDesc, getUnknownCommonStringErrorMessage } from '../FbtCommon.tsx';
+import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants.tsx';
 import {
   CommonOption,
   FbtCallMustHaveAtLeastOneOfTheseAttributes,
   FbtRequiredAttributes,
   ValidFbtOptions,
-} from '../FbtConstants';
-import FbtNodeChecker from '../FbtNodeChecker';
+} from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   CallExpressionArg,
   convertToStringArrayNodeIfNeeded,
@@ -42,8 +42,8 @@ import {
   normalizeSpaces,
   validateNamespacedFbtElement,
   varDump,
-} from '../FbtUtil';
-import getNamespacedArgs from '../getNamespacedArgs';
+} from '../FbtUtil.tsx';
+import getNamespacedArgs from '../getNamespacedArgs.tsx';
 
 type NodePath = NodePathT<JSXElement>;
 type BabelNodeJSXElementChild = JSXElement['children'][number];

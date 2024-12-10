@@ -1,4 +1,5 @@
-import FBLocaleToLang from '../FBLocaleToLang';
+import { describe, expect, it } from '@jest/globals';
+import FBLocaleToLang from '../FBLocaleToLang.tsx';
 
 describe('Test FBLocaleToLang', () => {
   it('should map a locale', () => {
