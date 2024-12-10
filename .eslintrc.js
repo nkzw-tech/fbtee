@@ -57,11 +57,10 @@ module.exports = {
     'workspaces/no-absolute-imports': 2,
     'workspaces/no-relative-imports': 2,
 
-    // @nocommit
-    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    /* eslint-disable sort-keys-fix/sort-keys-fix */
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-require-imports': 0,
-    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
     '@nkzw/no-instanceof': 0,
+    /* eslint-enable sort-keys-fix/sort-keys-fix */
   },
 };

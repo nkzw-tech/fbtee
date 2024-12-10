@@ -104,7 +104,7 @@ export const jsCodeNonASCIICharSerializer = {
   serialize(rawValue: unknown) {
     return JSON.stringify(rawValue).replaceAll(
       nonASCIICharRegex,
-      (char) => String.raw`\u` + char.charCodeAt(0).toString(16).padStart(4, '0')
+      (char) => String.raw`\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`
     );
   },
 

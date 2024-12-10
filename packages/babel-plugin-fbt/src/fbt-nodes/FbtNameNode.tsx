@@ -44,7 +44,8 @@ export default class FbtNameNode extends FbtNode<
   override getOptions(): Options {
     try {
       const { moduleName } = this;
-      const [node, initialValue, initialGender] = this.getCallNodeArguments() || [];
+      const [node, initialValue, initialGender] =
+        this.getCallNodeArguments() || [];
 
       invariant(
         isStringLiteral(node),
