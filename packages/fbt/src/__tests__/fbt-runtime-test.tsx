@@ -1,8 +1,8 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import fbtRuntime from '../fbt.tsx';
 import FbtHooks, { FbtRuntimeInput } from '../FbtHooks.tsx';
-import FbtResult from '../FbtResult.tsx';
 import { FbtTableArg } from '../FbtTableAccessor.tsx';
+import { init } from '../index.tsx';
 import intlNumUtils from '../intlNumUtils.tsx';
 // Warning: importing JS modules outside of beforeEach blocks is generally bad practice
 // in jest tests. We might need to move these modules inside beforeEach().
@@ -15,9 +15,12 @@ const FEW = String(IntlVariations.NUMBER_FEW);
 const MALE = String(IntlVariations.GENDER_MALE);
 const FEMALE = String(IntlVariations.GENDER_FEMALE);
 
-FbtHooks.register({
-  getFbtResult: FbtResult.get,
+init({
+  translations: {},
 });
+
+// Ignore missing translations.
+console.warn = jest.fn();
 
 describe('fbt', () => {
   it('should handle variated numbers', () => {

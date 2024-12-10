@@ -1,4 +1,7 @@
-import FbtHooks, { FbtHookRegistrations } from './FbtHooks.tsx';
+import FbtHooks, {
+  FbtHookRegistrations,
+  FbtResolvedPayload,
+} from './FbtHooks.tsx';
 import FbtResult from './FbtResult.tsx';
 import FbtTranslations, { TranslationDict } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
@@ -9,7 +12,8 @@ export type FbtInitInput = {
   translations: TranslationDict;
 };
 
-const getFbtResult = FbtResult.get.bind(FbtResult);
+const getFbtResult = ({ contents, errorListener }: FbtResolvedPayload) =>
+  new FbtResult(contents, errorListener);
 
 export default function fbtInit(input: FbtInitInput): void {
   FbtTranslations.registerTranslations(input.translations);

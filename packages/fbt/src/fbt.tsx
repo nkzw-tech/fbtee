@@ -3,7 +3,6 @@
 import type { FbtTableKey, PatternHash, PatternString } from 'babel-plugin-fbt';
 import invariant from 'invariant';
 import FbtHooks, {
-  ExtraOptionValues,
   FbtInputOpts,
   FbtRuntimeInput,
   FbtTableArgs,
@@ -230,8 +229,7 @@ function fbtName(
 function wrapContent(
   fbtContent: NestedFbtContentItems | string,
   translation: PatternString,
-  hash?: PatternHash | null,
-  extraOptions?: ExtraOptionValues | null
+  hash?: PatternHash | null
 ): FbtResult {
   const contents = typeof fbtContent === 'string' ? [fbtContent] : fbtContent;
   const errorListener = FbtHooks.getErrorListener({
@@ -241,7 +239,6 @@ function wrapContent(
   const result = FbtHooks.getFbtResult({
     contents,
     errorListener,
-    extraOptions,
     patternHash: hash,
     patternString: translation,
   });
@@ -279,25 +276,13 @@ const fbt = function () {};
  *
  * @param options - options for runtime
  * translation dictionary access. hk stands for hash key which is used to look
- * up translated payload in React Native. ehk stands for enum hash key which
- * contains a structured enums to hash keys map which will later be traversed
- * to look up enum-less translated payload.
+ * up translated payload in React Native.
  */
 fbt._ = function fbtCallsite(
   inputTable: FbtRuntimeInput,
   inputArgs?: FbtTableArgs | null,
   options?: FbtInputOpts | null
 ): FbtResult {
-  /*
-  if (options?.hk || options?.ehk) {
-    return {
-      text: inputTable,
-      fbt: true,
-      hashKey: options.hk,
-    };
-  }
-  */
-
   let { args, table: pattern } = FbtHooks.getTranslatedInput({
     args: inputArgs,
     options,
@@ -369,8 +354,7 @@ fbt._ = function fbtCallsite(
     const result = this._wrapContent(
       fbtContent as NestedFbtContentItems,
       patternString,
-      patternHash,
-      options?.eo
+      patternHash
     );
     if (!hasSubstitutions) {
       this.cachedResults[patternString] = result;

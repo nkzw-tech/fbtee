@@ -12,7 +12,6 @@ import {
 export type FbtResolvedPayload = {
   contents: NestedFbtContentItems;
   errorListener: IFbtErrorListener | null | undefined;
-  extraOptions: ExtraOptionValues | null | undefined;
   patternHash: PatternHash | null | undefined;
   patternString: PatternString;
 };
@@ -55,9 +54,6 @@ export type FbtTranslatedInput = {
 
 export type FbtEnumHashKeyTable = Partial<Record<FbtTableKey, PatternString>>;
 export type FbtInputOpts = {
-  // enum hash key
-  ehk?: FbtEnumHashKeyTable;
-  eo?: ExtraOptionValues;
   // hash key
   hk?: string;
 };

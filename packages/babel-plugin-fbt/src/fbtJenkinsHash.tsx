@@ -27,8 +27,7 @@ export default function fbtJenkinsHash(
     );
     invariant(
       desc != null,
-      'Expect `desc` to be nonnull as `TableJSFBTTree` should contain at least ' +
-        'one leaf.'
+      'Expect `desc` to be nonnull as `TableJSFBTTree` should contain at least one leaf.'
     );
     const key = JSON.stringify(hashInputTree) + '|' + desc;
     return jenkinsHash(key);

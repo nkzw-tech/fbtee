@@ -6,12 +6,10 @@ import { Children, Component } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
 import fbtInternal from '../fbt.tsx';
 import FbtHooks, {
-  FbtResolvedPayload,
   FbtRuntimeCallInput,
   FbtTranslatedInput,
 } from '../FbtHooks.tsx';
 import init from '../fbtInit.tsx';
-import FbtResult from '../FbtResult.tsx';
 import FbtTranslations from '../FbtTranslations.tsx';
 import GenderConst from '../GenderConst.tsx';
 import { fbt } from '../index.tsx';
@@ -283,27 +281,6 @@ describe('fbt', () => {
     expect(fbtInternal._('sample string', null, null)).toEqual(
       'ALL YOUR TRANSLATION ARE BELONG TO US'
     );
-  });
-
-  it('should pass extra options to FbtHooks.getFbtResult', () => {
-    FbtHooks.register({
-      getFbtResult(input: FbtResolvedPayload) {
-        const { extraOptions } = input;
-        const string = FbtResult.get(input).toString();
-        if (extraOptions?.renderStringInBracket === 'yes') {
-          return new FbtResult([`[${string}]`], input.errorListener);
-        }
-        return new FbtResult([string], input.errorListener);
-      },
-    });
-    expect(fbtInternal._('A simple string', null)._contents[0]).toEqual(
-      'A simple string'
-    );
-    expect(
-      fbtInternal._('Another simple string', null, {
-        eo: { renderStringInBracket: 'yes' },
-      })._contents[0]
-    ).toEqual('[Another simple string]');
   });
 
   describe('given a string that is only made of contiguous tokens', () => {

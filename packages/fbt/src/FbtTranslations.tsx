@@ -19,10 +19,10 @@ export default {
     return currentTranslations;
   },
 
-  getTranslatedInput(
-    input: FbtRuntimeCallInput
-  ): FbtTranslatedInput | null | undefined {
-    const { args, options } = input;
+  getTranslatedInput({
+    args,
+    options,
+  }: FbtRuntimeCallInput): FbtTranslatedInput | null | undefined {
     const hashKey = options?.hk;
     const { locale } = FbtHooks.getViewerContext();
     const table = currentTranslations[locale];
@@ -33,13 +33,12 @@ export default {
       }
     }
 
-    if (hashKey == null || table?.[hashKey] == null) {
-      return null;
-    }
-    return {
-      args,
-      table: table[hashKey],
-    };
+    return hashKey == null || table?.[hashKey] == null
+      ? null
+      : {
+          args,
+          table: table[hashKey],
+        };
   },
 
   mergeTranslations(newTranslations: TranslationDict): undefined {

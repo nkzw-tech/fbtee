@@ -4,7 +4,6 @@ import {
   isCallExpression,
   isObjectExpression,
   nullLiteral,
-  ObjectExpression,
   objectExpression,
   objectProperty,
   stringLiteral,
@@ -16,11 +15,7 @@ import {
   replaceClearTokensWithTokenAliases,
   SENTINEL,
 } from 'babel-plugin-fbt';
-import type {
-  ObjectWithJSFBT,
-  TableJSFBT,
-  TableJSFBTTreeLeaf,
-} from 'babel-plugin-fbt/src/index.tsx';
+import type { ObjectWithJSFBT } from 'babel-plugin-fbt/src/index.tsx';
 import invariant from 'invariant';
 
 type Plugin = { opts: Partial<PluginOptions> & { fbtSentinel?: string } };
@@ -38,17 +33,6 @@ function getPluginOptions(plugin: Plugin): {
   return opts as {
     fbtSentinel?: string;
   };
-}
-
-function convertJSFBTLeafToRuntimeInputText(leaf: TableJSFBTTreeLeaf) {
-  return replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases);
-}
-
-function appendHashKeyOption(optionsNode: ObjectExpression, jsfbt: TableJSFBT) {
-  return objectExpression([
-    ...(optionsNode == null ? [] : [...optionsNode.properties]),
-    objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
-  ]);
 }
 
 export default function BabelPluginFbtRuntime() {
@@ -102,9 +86,8 @@ export default function BabelPluginFbtRuntime() {
           phrase.slice(sentinelLength, phrase.length - sentinelLength)
         ) as ObjectWithJSFBT;
 
-        const runtimeInput = mapLeaves(
-          parsedPhrase.jsfbt.t,
-          convertJSFBTLeafToRuntimeInputText
+        const runtimeInput = mapLeaves(parsedPhrase.jsfbt.t, (leaf) =>
+          replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases)
         );
         path.replaceWithSourceString(JSON.stringify(runtimeInput));
 
@@ -128,10 +111,14 @@ export default function BabelPluginFbtRuntime() {
           optionsNode,
           typeof optionsNode
         );
-        parentNode.arguments[2] = appendHashKeyOption(
-          optionsNode,
-          parsedPhrase.jsfbt
-        );
+
+        parentNode.arguments[2] = objectExpression([
+          ...(optionsNode == null ? [] : [...optionsNode.properties]),
+          objectProperty(
+            identifier('hk'),
+            stringLiteral(fbtHashKey(parsedPhrase.jsfbt.t))
+          ),
+        ]);
       },
     },
   };

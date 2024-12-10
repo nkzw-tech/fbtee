@@ -1,7 +1,7 @@
 import type { PatternHash, PatternString } from 'babel-plugin-fbt';
 import invariant from 'invariant';
 import fbt from './fbt.tsx';
-import FbtHooks, { ExtraOptionValues } from './FbtHooks.tsx';
+import FbtHooks from './FbtHooks.tsx';
 import FbtPureStringResult from './FbtPureStringResult.tsx';
 import type { ParamVariationType } from './FbtRuntimeTypes.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
@@ -46,15 +46,13 @@ const FbsImpl = {
   _wrapContent(
     fbtContent: NestedFbtContentItems | string,
     translation: PatternString,
-    hash?: PatternHash | null,
-    extraOptions?: ExtraOptionValues | null
+    hash?: PatternHash | null
   ): Fbs {
     const contents = typeof fbtContent === 'string' ? [fbtContent] : fbtContent;
     const errorListener = FbtHooks.getErrorListener({ hash, translation });
     return FbtHooks.getFbsResult({
       contents,
       errorListener,
-      extraOptions,
       patternHash: hash,
       patternString: translation,
     });

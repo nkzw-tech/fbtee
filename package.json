@@ -8,7 +8,7 @@
     "build": "pnpm -r build",
     "build:all": "pnpm -r build && pnpm -r build:types && pnpm install && cd example && pnpm build:fbt",
     "clean": "rm -rf packages/*/lib",
-    "dev": "cd example && pnpm dev",
+    "dev": "cd example && pnpm build:fbt && pnpm dev",
     "lint:format": "prettier --cache --check .",
     "format": "prettier --write .",
     "jest": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest",

@@ -1,4 +1,3 @@
-import type { FbtResolvedPayload } from './FbtHooks.tsx';
 import FbtReactUtil from './FbtReactUtil.tsx';
 import FbtResultBase from './FbtResultBase.tsx';
 import {
@@ -33,9 +32,5 @@ export default class FbtResult extends FbtResultBase implements IFbtResultBase {
     if (process.env.NODE_ENV === 'development') {
       FbtReactUtil.injectReactShim(this);
     }
-  }
-
-  static get(input: FbtResolvedPayload): FbtResult {
-    return new FbtResult(input.contents, input.errorListener);
   }
 }

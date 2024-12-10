@@ -6,7 +6,7 @@ module.exports = {
   ignorePatterns: ['packages/*/lib'],
   overrides: [
     {
-      files: ['./test/TestUtil.tsx'],
+      files: ['./test/TestUtil.tsx', '**/__tests__/**/*.tsx'],
       rules: {
         'no-console': 0,
       },
