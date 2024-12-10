@@ -50,7 +50,8 @@ jobs:
           restore-keys: ${{ runner.os }}-pnpm-store-
 
       - name: Run setup
-        run: pnpm install && pnpm build:all && cd example && pnpm build:fbt
+        # Execute install twice to ensure links are created after the first build.
+        run: pnpm install && pnpm build:all && pnpm install && cd example && pnpm build:fbt
 
       - name: Run tests
         run: pnpm test

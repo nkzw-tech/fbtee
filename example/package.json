@@ -9,11 +9,11 @@
     "build:fbt": "pnpm fbt:manifest && pnpm fbt:collect && pnpm fbt:translate && pnpm fbt:translate-multiple && pnpm fbt:translate-single",
     "clean:fbt": "rm -rf .enum_manifest.json .src_manifest.json .source_strings.json src/translatedFbts.json src/translatedFbts .test_*.json 2&> /dev/null || exit 0",
     "dev": "vite",
-    "fbt:collect": "pnpm fbt collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
-    "fbt:manifest": "pnpm fbt manifest --src src",
-    "fbt:translate": "pnpm fbt translate --translations translations/*.json --jenkins > src/translatedFbts.json",
-    "fbt:translate-multiple": "pnpm fbt translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
-    "fbt:translate-single": "pnpm fbt translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
+    "fbt:collect": "fbt collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
+    "fbt:manifest": "fbt manifest --src src",
+    "fbt:translate": "fbt translate --translations translations/*.json --jenkins > src/translatedFbts.json",
+    "fbt:translate-multiple": "fbt translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
+    "fbt:translate-single": "fbt translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
     "babel-plugin-fbt": "workspace:*",
