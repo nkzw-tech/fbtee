@@ -8,7 +8,7 @@ const textToDesc: FbtCommonMap = {};
 export function init(
   opts: {
     fbtCommon?: FbtCommonMap | null;
-    fbtCommonPath?: string | null | undefined;
+    fbtCommonPath?: string | null;
   } = {}
 ) {
   if (opts.fbtCommon) {
@@ -21,7 +21,7 @@ export function init(
   }
 }
 
-export function getDesc(text: string): string | null | undefined {
+export function getDesc(text: string): string | null {
   return textToDesc[text];
 }
 

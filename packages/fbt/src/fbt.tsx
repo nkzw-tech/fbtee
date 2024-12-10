@@ -81,10 +81,7 @@ function fbtParam(
   label: string,
   value: unknown,
   variations?:
-    | [
-        variation: ParamVariationType['number'],
-        value?: number | null | undefined
-      ]
+    | [variation: ParamVariationType['number'], value?: number | null]
     | [variation: ParamVariationType['gender'], value: GenderConst]
 ): FbtTableArg {
   const substitution: {
@@ -284,8 +281,8 @@ fbt._ = function fbtCallsite(
   options?: FbtInputOpts | null
 ): FbtResult {
   let { args, table: pattern } = FbtHooks.getTranslatedInput({
-    args: inputArgs,
-    options,
+    args: inputArgs || null,
+    options: options || null,
     table: inputTable,
   });
 
@@ -367,7 +364,7 @@ fbt._implicitParam = function fbtImplicitParam(
   label: string,
   value: unknown,
   variations?:
-    | [ParamVariationType['number'], number | null | undefined]
+    | [ParamVariationType['number'], number | null]
     | [ParamVariationType['gender'], GenderConst]
 ): FbtTableArg {
   return this._param(label, value, variations);

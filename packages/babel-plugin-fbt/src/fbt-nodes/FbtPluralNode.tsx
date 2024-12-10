@@ -34,13 +34,13 @@ import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 type Options = {
   // Represents the number used for determining the plural case at runtime
   count: CallExpressionArg;
-  many?: string | null | undefined; // text to show when count>1,
-  name: string | null | undefined; // token name,
+  many?: string | null; // text to show when count>1,
+  name: string | null; // token name,
   // If `yes`, show the `count` number as a prefix of the current plural text
   // If `ifMany`, behaves as `yes` when the count value is greater than 1
   // Else, `no` to hide the `count` number
   showCount: keyof typeof ShowCountKeys;
-  value?: CallExpressionArg | null | undefined; // optional value to replace token (rather than count)
+  value?: CallExpressionArg | null; // optional value to replace token (rather than count)
 };
 
 /**
@@ -61,7 +61,7 @@ export default class FbtPluralNode extends FbtNode<
   }: {
     moduleName: JSModuleNameType;
     node: Expression;
-  }): FbtPluralNode | null | undefined {
+  }): FbtPluralNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -115,7 +115,7 @@ export default class FbtPluralNode extends FbtNode<
               )
             : null,
       };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -150,9 +150,7 @@ export default class FbtPluralNode extends FbtNode<
     return nullthrows(this.options.name);
   }
 
-  override getTokenName(
-    argsMap: StringVariationArgsMap
-  ): string | null | undefined {
+  override getTokenName(argsMap: StringVariationArgsMap): string | null {
     return this._branchByNumberVariation(argsMap, {
       anyNumber: () => {
         return this.options.showCount !== ShowCountKeys.no
@@ -177,7 +175,7 @@ export default class FbtPluralNode extends FbtNode<
           (showCount === ShowCountKeys.yes ? '1 ' : '') +
           this._getSingularText(),
       });
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

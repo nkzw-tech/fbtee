@@ -29,7 +29,7 @@ import { buildConstraintKey } from './VariationConstraintUtils.tsx';
  * If the translation is string type, it implies it was machine generatd.
  */
 export type HashToTranslation = Partial<
-  Record<PatternHash, TranslationData | string | null | undefined>
+  Record<PatternHash, TranslationData | string | null>
 >;
 
 /**
@@ -343,7 +343,7 @@ export default class TranslationBuilder {
   getConstrainedTranslation(
     hash: PatternHash,
     tokenConstraints: TokenToConstraint
-  ): string | null | undefined {
+  ): string | null {
     const constraintKeys: MutableTokenConstraintPairs = [];
     for (const token of Object.keys(this._tokenToMask)) {
       constraintKeys.push([token, tokenConstraints[token] || '*']);
@@ -380,7 +380,7 @@ export default class TranslationBuilder {
     constraintMap: ConstraintKeyToTranslation,
     translation: string,
     defaultingLevel: number
-  ): void {
+  ) {
     const aggregateKey = buildConstraintKey(constraintKeys);
     if (constraintMap[aggregateKey]) {
       throw new Error(
@@ -472,7 +472,7 @@ export default class TranslationBuilder {
       return cache;
     }
 
-    const constraintMap: Record<string, any> = {};
+    const constraintMap: ConstraintKeyToTranslation = {};
     const transData = this._translations[hash];
     if (transData == null || typeof transData === 'string') {
       // No translation? No constraints.
@@ -483,7 +483,7 @@ export default class TranslationBuilder {
     // For every possible variation combination, create a mapping to its
     // corresponding translation
     transData.translations.forEach((translation) => {
-      const constraints: Record<string, any> = {};
+      const constraints: Record<string, string | number> = {};
       for (const idx of Object.keys(translation.variations)) {
         const variation = translation.variations[idx];
         // We prune entries that contain non-default variations

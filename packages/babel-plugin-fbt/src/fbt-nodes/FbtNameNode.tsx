@@ -74,7 +74,7 @@ export default class FbtNameNode extends FbtNode<
   }: {
     moduleName: JSModuleNameType;
     node: Expression;
-  }): FbtNameNode | null | undefined {
+  }): FbtNameNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -101,9 +101,9 @@ export default class FbtNameNode extends FbtNode<
 
   override getText(argsMap: StringVariationArgsMap): string {
     try {
-      argsMap.mustHave(this);
+      argsMap.get(this);
       return tokenNameToTextPattern(this.options.name);
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

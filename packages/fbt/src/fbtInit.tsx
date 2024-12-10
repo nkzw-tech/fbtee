@@ -8,14 +8,14 @@ import getFbsResult from './getFbsResult.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
 
 export type FbtInitInput = {
-  hooks?: FbtHookRegistrations | null | undefined;
+  hooks?: FbtHookRegistrations | null;
   translations: TranslationDict;
 };
 
 const getFbtResult = ({ contents, errorListener }: FbtResolvedPayload) =>
   new FbtResult(contents, errorListener);
 
-export default function fbtInit(input: FbtInitInput): void {
+export default function fbtInit(input: FbtInitInput) {
   FbtTranslations.registerTranslations(input.translations);
 
   // Hookup default implementations

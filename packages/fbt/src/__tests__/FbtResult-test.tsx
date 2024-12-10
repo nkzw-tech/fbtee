@@ -4,7 +4,7 @@ import FbtHooks from '../FbtHooks.tsx';
 import FbtResult from '../FbtResult.tsx';
 import { IFbtErrorListener } from '../Types.tsx';
 
-let _errorListener: IFbtErrorListener | null | undefined;
+let _errorListener: IFbtErrorListener | null;
 
 describe('FbtResult', () => {
   beforeEach(() => {

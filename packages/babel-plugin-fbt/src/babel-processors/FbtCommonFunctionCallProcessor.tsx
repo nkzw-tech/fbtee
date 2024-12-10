@@ -41,7 +41,7 @@ export default class FbtCommonFunctionCallProcessor {
     path,
   }: {
     path: NodePath;
-  }): FbtCommonFunctionCallProcessor | null | undefined {
+  }): FbtCommonFunctionCallProcessor | null {
     const nodeChecker = FbtNodeChecker.forFbtCommonFunctionCall(path.node);
     return nodeChecker != null
       ? new FbtCommonFunctionCallProcessor({

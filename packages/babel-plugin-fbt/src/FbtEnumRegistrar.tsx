@@ -14,20 +14,20 @@ export type EnumKey = string;
 type EnumValue = string;
 export type EnumModule = Partial<Record<EnumKey, EnumValue>>;
 export type EnumManifest = {
-  readonly [enumModuleName: string]: EnumModule | null | undefined;
+  readonly [enumModuleName: string]: EnumModule | null;
 };
 
 const fbtEnumMapping: {
-  [enumAlias: string]: string | null | undefined;
+  [enumAlias: string]: string | null;
 } = {};
 
-let enumManifest: EnumManifest | null | undefined;
+let enumManifest: EnumManifest | null;
 
 export default new (class FbtEnumRegistrar {
   /**
    * Set the enum manifest. I.e. a mapping of enum module names -> enum entries
    */
-  setEnumManifest(manifest?: EnumManifest | null): void {
+  setEnumManifest(manifest: EnumManifest | null) {
     enumManifest = manifest;
   }
 
@@ -35,7 +35,7 @@ export default new (class FbtEnumRegistrar {
    * Associate a JS variable name to an Fbt enum module name
    * If the module name is invalid, then it's a no-op.
    */
-  setModuleAlias(alias: string, modulePath: string): void {
+  setModuleAlias(alias: string, modulePath: string) {
     const moduleName = path.parse(modulePath).name;
     if (!moduleName.endsWith(FBT_ENUM_MODULE_SUFFIX)) {
       return;
@@ -46,16 +46,18 @@ export default new (class FbtEnumRegistrar {
   /**
    * Returns the Fbt enum module name for a given variable name (if any)
    */
-  getModuleName(name: string): string | null | undefined {
-    return fbtEnumMapping[name];
+  getModuleName(name: string) {
+    return fbtEnumMapping[name] || null;
   }
 
   /**
    * Returns the Fbt enum module name for a given variable name (if any)
    */
-  getEnum(variableName: string): EnumModule | null | undefined {
+  getEnum(variableName: string): EnumModule | null {
     const moduleName = this.getModuleName(variableName);
-    return enumManifest != null && moduleName != null
+    return enumManifest != null &&
+      moduleName != null &&
+      enumManifest[moduleName]
       ? enumManifest[moduleName]
       : null;
   }
@@ -64,7 +66,7 @@ export default new (class FbtEnumRegistrar {
    * Processes a `require(...)` call and registers the fbt enum if applicable.
    * @param path Babel path of a `require(...)` call expression
    */
-  registerRequireIfApplicable(path: NodeCallExpression): void {
+  registerRequireIfApplicable(path: NodeCallExpression) {
     const { node } = path;
     const firstArgument = node.arguments[0];
     if (firstArgument.type !== 'StringLiteral') {
@@ -92,7 +94,7 @@ export default new (class FbtEnumRegistrar {
    *
    * @param path Babel path of a `import` statement
    */
-  registerImportIfApplicable(path: NodeImportDeclaration): void {
+  registerImportIfApplicable(path: NodeImportDeclaration) {
     const { node } = path;
 
     if (node.specifiers.length > 1) {

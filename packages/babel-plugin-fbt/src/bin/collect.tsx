@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import path, { resolve } from 'node:path';
 import yargs from 'yargs';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
+import { FbtOptionConfig } from '../FbtConstants.tsx';
+import { EnumManifest } from '../FbtEnumRegistrar.tsx';
 import type { TableJSFBT } from '../index.tsx';
 import packagerTypes from './collectFbtConstants.tsx';
 import {
@@ -61,7 +63,7 @@ export type CollectFbtOutput = {
    *
    * This field is present only when the GEN_FBT_NODES script option is `true`
    */
-  fbtElementNodes?: Array<PlainFbtNode> | null | undefined;
+  fbtElementNodes?: Array<PlainFbtNode> | null;
   /**
    * List of phrases extracted from the given JS source code.
    * Note that for a given fbt callsite, we may extract multiple phrases.
@@ -182,7 +184,7 @@ const argv = y
   )
   .parseSync();
 
-const extraOptions: Record<string, any> = {};
+const extraOptions: FbtOptionConfig = {};
 const cliExtraOptions = argv[args.OPTIONS];
 if (cliExtraOptions) {
   const opts = cliExtraOptions.split(',');
@@ -194,7 +196,7 @@ if (cliExtraOptions) {
 async function processJsonSource(collector: IFbtCollector, source: string) {
   const json = JSON.parse(source);
   for (const manifestPath of Object.keys(json)) {
-    let manifest: Record<string, any> = {};
+    let manifest: EnumManifest = {};
     if (existsSync(manifestPath)) {
       manifest = (
         await import(path.resolve(process.cwd(), manifestPath), {

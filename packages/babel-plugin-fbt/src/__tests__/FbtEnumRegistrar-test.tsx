@@ -18,6 +18,6 @@ describe('Test FbtEnumRegistrar', () => {
 
   it("should not register modules that aren't enums", () => {
     FbtEnumRegistrar.setModuleAlias('xyz', './abc');
-    expect(FbtEnumRegistrar.getModuleName('xyz')).toBe(undefined);
+    expect(FbtEnumRegistrar.getModuleName('xyz')).toBe(null);
   });
 });

@@ -11,7 +11,7 @@ import {
 
 export type FbtResolvedPayload = {
   contents: NestedFbtContentItems;
-  errorListener: IFbtErrorListener | null | undefined;
+  errorListener: IFbtErrorListener | null;
   patternHash: PatternHash | null | undefined;
   patternString: PatternString;
 };
@@ -48,7 +48,7 @@ export type FbtInputTable = Record<
 
 export type FbtTableArgs = Array<FbtTableArg>;
 export type FbtTranslatedInput = {
-  args: FbtTableArgs | null | undefined;
+  args: FbtTableArgs | null;
   table: FbtRuntimeInput & { __vcg?: 1 };
 };
 
@@ -71,8 +71,8 @@ export type ExtraOptionValues = {
 };
 export type ExtraOptionValue = string;
 export type FbtRuntimeCallInput = {
-  args: FbtTableArgs | null | undefined;
-  options: FbtInputOpts | null | undefined;
+  args: FbtTableArgs | null;
+  options: FbtInputOpts | null;
   table: FbtRuntimeInput;
 };
 export type FbtImpressionOptions = {
@@ -81,29 +81,20 @@ export type FbtImpressionOptions = {
 };
 
 export type FbtHookRegistrations = Partial<{
-  errorListener: (
-    context: FbtErrorContext
-  ) => IFbtErrorListener | null | undefined;
+  errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
   getFbsResult: (input: FbtResolvedPayload) => FbtPureStringResult;
   getFbtResult: (input: FbtResolvedPayload) => FbtResult;
-  getTranslatedInput: (
-    input: FbtRuntimeCallInput
-  ) => FbtTranslatedInput | null | undefined | null | undefined;
+  getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
-  logImpression: (
-    hash: string,
-    options?: FbtImpressionOptions
-  ) => void | null | undefined;
-  onTranslationOverride: (hash: string) => void | null | undefined;
+  logImpression: (hash: string, options?: FbtImpressionOptions) => void;
+  onTranslationOverride: (hash: string) => void;
 }>;
 
 const _registrations: FbtHookRegistrations = {};
 
 export default {
-  getErrorListener(
-    context: FbtErrorContext
-  ): IFbtErrorListener | null | undefined {
-    return _registrations.errorListener?.(context);
+  getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
+    return _registrations.errorListener?.(context) || null;
   },
 
   getFbsResult(input: FbtResolvedPayload): FbtPureStringResult {
@@ -134,15 +125,15 @@ export default {
     return getViewerContext();
   },
 
-  logImpression(hash: string, options?: FbtImpressionOptions): undefined {
+  logImpression(hash: string, options?: FbtImpressionOptions) {
     _registrations.logImpression?.(hash, options);
   },
 
-  onTranslationOverride(hash: string): undefined {
+  onTranslationOverride(hash: string) {
     _registrations.onTranslationOverride?.(hash);
   },
 
-  register(registrations: FbtHookRegistrations): undefined {
+  register(registrations: FbtHookRegistrations) {
     Object.assign(_registrations, registrations);
   },
 };

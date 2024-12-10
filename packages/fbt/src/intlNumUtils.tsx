@@ -229,7 +229,7 @@ function _getNumberOfPowersOfTen(value: number): number {
  */
 function formatNumberWithLimitedSigFig(
   value: number,
-  decimals: number | null | undefined,
+  decimals: number | null,
   numSigFigs: number
 ): string {
   // First make the number sufficiently integer-like.

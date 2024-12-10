@@ -62,14 +62,14 @@ export type PluginOptions = {
   fbtBase64?: boolean;
   fbtCommon?: FbtCommonMap | null;
   // Function that would return an fbt manifest object
-  fbtEnumManifest?: EnumManifest | null | undefined;
+  fbtEnumManifest?: EnumManifest | null;
   // @deprecated
   fbtEnumPath?: never;
   // @deprecated
   fbtEnumToPath?: never;
-  fbtSentinel?: string | null | undefined;
+  fbtSentinel?: string | null;
 
-  filename?: string | null | undefined;
+  filename?: string | null;
   // If true, generate the `outerTokenName` property on the JSFbt tree leaves.
   generateOuterTokenName?: boolean;
 };
@@ -145,7 +145,7 @@ export type ObjectWithJSFBT = {
 export type Phrase = FbtCallSiteOptions & {
   col_beg: number;
   col_end: number;
-  filepath: string | null | undefined;
+  filepath: string | null;
   line_beg: number;
   line_end: number;
   project: string;
@@ -345,7 +345,7 @@ function addMetaPhrase(metaPhrase: MetaPhrase, pluginOptions: PluginOptions) {
     phrase: {
       col_beg: fbtNode.node.loc?.start.column || 0,
       col_end: fbtNode.node.loc?.end.column || 0,
-      filepath: pluginOptions.filename,
+      filepath: pluginOptions.filename || null,
       line_beg: fbtNode.node.loc?.start.line || 0,
       line_end: fbtNode.node.loc?.end.line || 0,
       project: metaPhrase.phrase.project || '',
@@ -358,7 +358,7 @@ function addEnclosingString(childIdx: number, parentIdx: number) {
   childToParent[childIdx] = parentIdx;
 }
 
-function getEnumManifest(opts: PluginOptions): EnumManifest | null | undefined {
+function getEnumManifest(opts: PluginOptions): EnumManifest | null {
   const { fbtEnumManifest, fbtEnumPath, fbtEnumToPath } = opts;
   if (fbtEnumManifest != null) {
     return fbtEnumManifest;

@@ -102,7 +102,7 @@ export default class FbtImplicitParamNode
         this._getElementNode().options.preserveWhitespace,
         getChildNodeText
       );
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -151,7 +151,7 @@ export default class FbtImplicitParamNode
 
   override getTokenAliases(
     argsMap: StringVariationArgsMap
-  ): TokenAliases | null | undefined {
+  ): TokenAliases | null {
     return getTokenAliasesFromFbtNodeTree(this, argsMap);
   }
 
@@ -203,7 +203,7 @@ export default class FbtImplicitParamNode
   static fromBabelNode({
     moduleName,
     node,
-  }: FromBabelNodeFunctionArgs): FbtImplicitParamNode | null | undefined {
+  }: FromBabelNodeFunctionArgs): FbtImplicitParamNode | null {
     if (!isJSXElement(node)) {
       return null;
     }
@@ -212,13 +212,13 @@ export default class FbtImplicitParamNode
       node,
     });
 
-    const fbtChildren: Array<FbtChildNode | null | undefined> = [];
+    const fbtChildren: Array<FbtChildNode | null> = [];
     // The last BabelNode child converted to FbtChildNode and added to `fbtChildren`
     let lastAddedChild = null;
     // Keep track of the last whitespace that succeeds a non JSXText child,
     // and we will convert it to a FbtTextNode and add it to `fbtChildren`
     // ONLY IF the succeeding child is a JSXText.
-    let unusedWhitespaceChild: JSXText | null | undefined = null;
+    let unusedWhitespaceChild: JSXText | null = null;
     const firstChild = node.children[0];
     const lastChild = node.children.at(-1);
     for (const child of node.children) {
@@ -272,8 +272,7 @@ export default class FbtImplicitParamNode
                   child,
                   `${moduleName}: only string literals (or concatenations of string literals) ` +
                     `are supported inside JSX expressions, ` +
-                    `but we found the node type "${elem.type}" instead.`,
-                  { suggestOSSWebsite: true }
+                    `but we found the node type "${elem.type}" instead.`
                 );
               }
               fbtChildren.push(
@@ -310,8 +309,7 @@ export default class FbtImplicitParamNode
         default:
           throw errorAt(
             child,
-            `${moduleName}: unsupported babel node: ${child.type}`,
-            { suggestOSSWebsite: true }
+            `${moduleName}: unsupported babel node: ${child.type}`
           );
       }
     }
@@ -320,7 +318,7 @@ export default class FbtImplicitParamNode
     return implicitParam;
   }
 
-  registerToken(name: string, source: AnyFbtNode): void {
+  registerToken(name: string, source: AnyFbtNode) {
     setUniqueToken(source.node, this.moduleName, name, this._tokenSet);
   }
 

@@ -35,7 +35,7 @@ export default class FbtSameParamNode extends FbtNode<
   }: {
     moduleName: JSModuleNameType;
     node: Expression;
-  }): FbtSameParamNode | null | undefined {
+  }): FbtSameParamNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -59,7 +59,7 @@ export default class FbtSameParamNode extends FbtNode<
         (name && name.type) || 'unknown'
       );
       return { name: name.value };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -71,7 +71,7 @@ export default class FbtSameParamNode extends FbtNode<
   override getText(_argsList: StringVariationArgsMap): string {
     try {
       return tokenNameToTextPattern(this.getTokenName(_argsList));
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

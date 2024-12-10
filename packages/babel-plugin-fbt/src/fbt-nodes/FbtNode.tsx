@@ -39,7 +39,12 @@ export type FbtChildNode =
   | FbtSameParamNode
   | FbtTextNode;
 
-export type AnyFbtNode = FbtNode<any, any, any, any>;
+export type AnyFbtNode = FbtNode<
+  AnyStringVariationArg | never,
+  Node,
+  FbtChildNode | null,
+  Record<string, unknown> | null
+>;
 
 /**
  * Abstract representation of a JSX element.
@@ -154,12 +159,12 @@ export type PlainFbtNode = {
    *
    * Not read-only because it needs to be set at a later stage, when all phrases have been extracted
    */
-  phraseIndex?: number | null | undefined;
+  phraseIndex?: number | null;
   type: FbtNodeType;
   /**
    * Abstract representation of a JSX element that wraps the current fbt node, if any.
    */
-  wrapperNode?: PlainJSXNode | null | undefined;
+  wrapperNode?: PlainJSXNode | null;
 };
 
 /**
@@ -175,14 +180,14 @@ export type PlainFbtNode = {
 export default class FbtNode<
   SVArgument extends AnyStringVariationArg | never = never,
   CurrentNode extends Node = Node,
-  MaybeChildNode extends FbtChildNode | null | undefined = null, // See related docs of this.options
-  Options extends Record<any, any> | null | undefined = null
+  MaybeChildNode extends FbtChildNode | null = null,
+  Options extends Record<string, unknown> | null = null
 > {
   readonly moduleName: JSModuleNameType;
   readonly children: Array<MaybeChildNode>;
   readonly node: CurrentNode;
   readonly nodeChecker: FbtNodeChecker;
-  parent: AnyFbtNode | null | undefined;
+  parent: AnyFbtNode | null = null;
   /**
    * Standardized "options" of the current fbt construct.
    *
@@ -198,10 +203,10 @@ export default class FbtNode<
     parent,
     validExtraOptions,
   }: {
-    children?: ReadonlyArray<MaybeChildNode> | null | undefined;
+    children?: ReadonlyArray<MaybeChildNode> | null;
     moduleName: JSModuleNameType;
     node: CurrentNode;
-    parent?: AnyFbtNode | null | undefined;
+    parent?: AnyFbtNode | null;
     validExtraOptions?: Readonly<FbtOptionConfig>;
   }) {
     this.moduleName = moduleName;
@@ -212,7 +217,6 @@ export default class FbtNode<
     this.children = children != null ? [...children] : [];
     this.nodeChecker = FbtNodeChecker.forModule(moduleName);
     this.options = this.getOptions(validExtraOptions);
-    this.initCheck();
   }
 
   /**
@@ -233,13 +237,7 @@ export default class FbtNode<
     );
   }
 
-  /**
-   * Run integrity checks to ensure this fbt construct is in a valid state
-   * These checks are non-exhaustive. Some new exceptions may arise later on.
-   */
-  initCheck(): void {}
-
-  setParent(parent?: AnyFbtNode | null): this {
+  setParent(parent: AnyFbtNode | null): this {
     this.parent = parent;
     return this;
   }
@@ -271,13 +269,11 @@ export default class FbtNode<
     );
   }
 
-  getTokenAliases(
-    _argsMap: StringVariationArgsMap
-  ): TokenAliases | null | undefined {
+  getTokenAliases(_argsMap: StringVariationArgsMap): TokenAliases | null {
     return null;
   }
 
-  getTokenName(_argsMap: StringVariationArgsMap): string | null | undefined {
+  getTokenName(_argsMap: StringVariationArgsMap): string | null {
     return null;
   }
 
@@ -299,8 +295,9 @@ export default class FbtNode<
     let stringVariationArgs;
     try {
       stringVariationArgs = this.getArgsForStringVariationCalc();
-    } catch (error: any) {
+    } catch (error) {
       if (
+        error instanceof Error &&
         error.message.includes(
           'This method must be implemented in a child class'
         )
@@ -349,7 +346,7 @@ export default class FbtNode<
   /**
    * Returns the Babel node from this FbtNode only if it's a BabelNodeCallExpression
    */
-  getCallNode(): CallExpression | null | undefined {
+  getCallNode(): CallExpression | null {
     return isCallExpression(this.node) ? this.node : null;
   }
 
@@ -357,26 +354,26 @@ export default class FbtNode<
    * Returns the list of BabelNode arguments of this fbt node
    * (assuming that it's based on a JS function call), or null.
    */
-  getCallNodeArguments():
-    | Array<BabelNodeCallExpressionArgument | null | undefined>
-    | null
-    | undefined {
-    const callNode = this.getCallNode();
-    return callNode ? callNode.arguments : null;
+  getCallNodeArguments(): Array<BabelNodeCallExpressionArgument | null> | null {
+    return this.getCallNode()?.arguments ?? null;
   }
 
   /**
    * Returns the first parent FbtNode that is an instance of the given class.
    */
-  getFirstAncestorOfType<N extends Node, Class>(
+  getFirstAncestorOfType<
+    N extends Node,
+    ChildNode extends MaybeChildNode | null,
+    Class
+  >(
     AncestorConstructor: new (x: {
-      children?: ReadonlyArray<MaybeChildNode> | null | undefined;
+      children?: ReadonlyArray<ChildNode>;
       moduleName: JSModuleNameType;
       node: N;
-      parent?: AnyFbtNode | null | undefined;
+      parent?: AnyFbtNode | null;
       validExtraOptions?: Readonly<FbtOptionConfig>;
     }) => Class
-  ): Class | null | undefined {
+  ): Class | null {
     for (let { parent } = this; parent != null; parent = parent.parent) {
       if (parent instanceof AncestorConstructor) {
         return parent;
@@ -396,7 +393,7 @@ export default class FbtNode<
    *
    * This method is responsible to generate <<runtimeFbtArg>>
    */
-  getFbtRuntimeArg(): CallExpression | null | undefined {
+  getFbtRuntimeArg(): CallExpression | null {
     throw errorAt(
       this.node,
       'This method must be implemented in a child class'
@@ -415,9 +412,7 @@ export default class FbtNode<
    *  fbt:plural: the 'count' value. 'value' is okay
    *  fbt:pronoun: the 'gender' value
    */
-  throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(
-    scope: Scope
-  ): void {
+  throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(scope: Scope) {
     const argsToCheck =
       this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
     for (const argumentName of Object.keys(argsToCheck)) {

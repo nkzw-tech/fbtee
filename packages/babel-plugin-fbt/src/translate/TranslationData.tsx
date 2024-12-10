@@ -37,8 +37,8 @@ export default class TranslationData {
   }
 
   static fromJSON: (
-    json?: SerializedTranslationData | null | undefined
-  ) => TranslationData | null | undefined = (json) => {
+    json?: SerializedTranslationData | null
+  ) => TranslationData | null = (json) => {
     if (json == null) {
       // Hash key is logged to stderr in `processTranslations`
       return null;
@@ -51,7 +51,7 @@ export default class TranslationData {
   }
 
   // Makes a best effort attempt at finding the default translation.
-  getDefaultTranslation(config: TranslationConfig): string | null | undefined {
+  getDefaultTranslation(config: TranslationConfig): string | null {
     if (this._defaultTranslation === undefined) {
       for (let i = 0; i < this.translations.length; ++i) {
         const trans = this.translations[i];

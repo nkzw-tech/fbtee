@@ -80,7 +80,7 @@ export default class JSFbtBuilder {
    */
   buildMetadata(
     compactStringVariationArgs: ReadonlyArray<AnyStringVariationArg>
-  ): Array<JSFBTMetaEntry | null | undefined> {
+  ): Array<JSFBTMetaEntry | null> {
     return compactStringVariationArgs.map((svArg) => {
       const { fbtNode } = svArg;
 
@@ -225,7 +225,7 @@ export default class JSFbtBuilder {
       candidateValues: ReadonlyArray<V>,
       beforeRecurse?: (arg1: V) => unknown,
       isCollapsible: boolean = false
-    ): void =>
+    ) =>
       candidateValues.forEach((value) => {
         if (beforeRecurse) {
           beforeRecurse(value);

@@ -34,13 +34,13 @@ import { FbtNodeType } from './FbtNodeType.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
-  gender?: Expression | null | undefined; // Represents the `gender`,
+  gender?: Expression | null; // Represents the `gender`,
   name: string; // Name of the string token,
   // If `true`, the string that uses this fbt:param will have number variations.
   // The `number` value will be inferred from the value of fbt:param
   // If `number` is a `BabelNode`, then we'll use it internally as the value to determine
   // the number variation, and the fbt:param value will represent the UI text to render.
-  number?: true | null | undefined | Expression;
+  number?: true | null | Expression;
   value: BabelNodeCallExpressionArgument;
 };
 
@@ -124,7 +124,7 @@ export default class FbtParamNode extends FbtNode<
         number,
         value,
       };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -135,7 +135,7 @@ export default class FbtParamNode extends FbtNode<
   }: {
     moduleName: JSModuleNameType;
     node: Expression;
-  }): FbtParamNode | null | undefined {
+  }): FbtParamNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -188,7 +188,7 @@ export default class FbtParamNode extends FbtNode<
         );
       });
       return tokenNameToTextPattern(this.getTokenName(argsMap));
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

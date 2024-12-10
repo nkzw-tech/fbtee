@@ -71,7 +71,7 @@ export type MetaPhrase = {
   fbtNode: FbtElementNode | FbtImplicitParamNode;
   // Index of the outer-phrase (assuming that the current phrase is an inner-phrase)
   // If the current phrase is the top-level phrase, it won't be defined.
-  parentIndex: number | null | undefined;
+  parentIndex: number | null;
   // Phrase data
   phrase: FbtFunctionCallPhrase;
 };
@@ -145,7 +145,7 @@ export default class FbtFunctionCallProcessor {
     path: CallExpressionPath;
     pluginOptions: PluginOptions;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
-  }): FbtFunctionCallProcessor | null | undefined {
+  }): FbtFunctionCallProcessor | null {
     const nodeChecker = FbtNodeChecker.forFbtFunctionCall(path.node);
     return nodeChecker != null
       ? new FbtFunctionCallProcessor({
@@ -272,7 +272,7 @@ export default class FbtFunctionCallProcessor {
 
   _injectVariableDeclarationsForStringVariationArguments(
     identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>
-  ): void {
+  ) {
     // Find the first ancestor block statement node or the program root node
     let curPath: NodePath<Node> = this.path;
     while (!isBlockStatement(curPath.node) && !isProgram(curPath.node)) {
@@ -406,7 +406,7 @@ export default class FbtFunctionCallProcessor {
   _getPhraseParentIndex(
     fbtNode: AnyFbtNode,
     list: ReadonlyArray<AnyFbtNode>
-  ): number | null | undefined {
+  ): number | null {
     if (fbtNode.parent == null) {
       return null;
     }
@@ -492,8 +492,8 @@ export default class FbtFunctionCallProcessor {
             parentIndex: this._getPhraseParentIndex(fbtNode, list),
             phrase,
           };
-        } catch (error: any) {
-          throw errorAt(fbtNode.node, error);
+        } catch (error) {
+          throw errorAt(this.node, error);
         }
       }
     );
@@ -542,7 +542,7 @@ export default class FbtFunctionCallProcessor {
    *      </fbt:param>
    *    </fbt>
    */
-  throwIfExistsNestedFbtConstruct(): void {
+  throwIfExistsNestedFbtConstruct() {
     this.path.traverse(
       {
         CallExpression(path: CallExpressionPath) {

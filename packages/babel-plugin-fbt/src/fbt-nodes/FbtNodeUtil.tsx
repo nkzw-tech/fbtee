@@ -59,11 +59,13 @@ export function getClosestElementOrImplicitParamNodeAncestor(
 export function runOnNestedChildren(
   node: AnyFbtNode,
   callback: (node: AnyFbtNode) => void
-): void {
+) {
   for (const child of node.children) {
-    callback(child);
-    if (child.children.length) {
-      runOnNestedChildren(child, callback);
+    if (child) {
+      callback(child);
+      if (child.children.length) {
+        runOnNestedChildren(child, callback);
+      }
     }
   }
 }
@@ -72,22 +74,23 @@ export function toPlainFbtNodeTree(
   fbtNode: AnyFbtNode,
   phraseToIndexMap: Map<AnyFbtNode, number>
 ): PlainFbtNode {
-  const ret = {
-    children: fbtNode.children
-      .map((child) =>
-        child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null
-      )
-      .filter(Boolean) as ReadonlyArray<PlainFbtNode> | undefined,
-    phraseIndex: phraseToIndexMap.get(fbtNode),
-    ...fbtNode.toPlainFbtNode(),
-  } as const;
-  if (ret.phraseIndex == null) {
-    delete ret.phraseIndex;
+  const node = { ...fbtNode.toPlainFbtNode() };
+  const phraseIndex = phraseToIndexMap.get(fbtNode);
+  const children = fbtNode.children
+    .map((child) =>
+      child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null
+    )
+    .filter((child): child is PlainFbtNode => child != null);
+
+  if (children?.length) {
+    node.children = children;
   }
-  if (ret.children?.length === 0) {
-    delete ret.children;
+
+  if (phraseIndex != null) {
+    node.phraseIndex = phraseIndex;
   }
-  return ret;
+
+  return node;
 }
 
 /**
@@ -139,11 +142,11 @@ export function getTextFromFbtNodeTree(
 ): string {
   try {
     if (subject) {
-      argsMap.mustHave(instance);
+      argsMap.get(instance);
     }
     const texts = instance.children.map(getChildNodeText.bind(null, argsMap));
     return normalizeSpaces(texts.join(''), { preserveWhitespace }).trim();
-  } catch (error: any) {
+  } catch (error) {
     throw errorAt(instance.node, error);
   }
 }
@@ -160,7 +163,7 @@ export function getChildNodeText(
 export function getTokenAliasesFromFbtNodeTree(
   instance: FbtElementNode | FbtImplicitParamNodeType,
   argsMap: StringVariationArgsMap
-): TokenAliases | null | undefined {
+): TokenAliases | null {
   const childrentokenAliases = instance.children.map((node, tokenIndex) =>
     getChildNodeTokenAliases(argsMap, node, tokenIndex)
   );
@@ -208,7 +211,7 @@ export function buildFbtNodeMapForSameParam(
   [key: string]: FbtChildNode;
 } {
   // Importing this module only here to avoid dependency cycle
-  const tokenNameToFbtNode: Record<string, any> = {};
+  const tokenNameToFbtNode: Record<string, FbtChildNode> = {};
   const tokenNameToSameParamNode: {
     [key: string]: FbtSameParamNode;
   } = {};
@@ -239,11 +242,11 @@ export function buildFbtNodeMapForSameParam(
         varDump(existingFbtNode),
         varDump(child)
       );
-      tokenNameToFbtNode[tokenName] = child;
+      tokenNameToFbtNode[tokenName] = child as FbtChildNode;
     }
   });
 
-  const sameParamTokenNameToRealFbtNode: Record<string, any> = {};
+  const sameParamTokenNameToRealFbtNode: Record<string, FbtChildNode> = {};
   for (const sameParamTokenName of Object.keys(tokenNameToSameParamNode)) {
     const realFbtNode = tokenNameToFbtNode[sameParamTokenName];
     invariant(

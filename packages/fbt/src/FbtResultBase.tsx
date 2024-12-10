@@ -7,16 +7,16 @@ import {
 
 export default class FbtResultBase implements IFbtResultBase {
   _contents: NestedFbtContentItems;
-  _stringValue: string | null | undefined;
+  _stringValue: string | null;
   _isSerializing: boolean;
-  _errorListener: IFbtErrorListener | null | undefined;
+  _errorListener: IFbtErrorListener | null;
 
   constructor(
     contents: NestedFbtContentItems,
     errorListener?: IFbtErrorListener | null
   ) {
     this._contents = contents;
-    this._errorListener = errorListener;
+    this._errorListener = errorListener || null;
     this._isSerializing = false;
     this._stringValue = null;
   }

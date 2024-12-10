@@ -25,10 +25,7 @@ import {
 
 export default function getNamespacedArgs(
   moduleName: string
-): Record<
-  ConcreteFbtNodeType,
-  (node: JSXElement) => Array<Node | null | undefined>
-> {
+): Record<ConcreteFbtNodeType, (node: JSXElement) => Array<Node | null>> {
   return {
     /**
      * <fbt:enum> or <FbtEnum>
@@ -80,12 +77,11 @@ export default function getNamespacedArgs(
         'gender'
       ).value;
 
-      const children = filterEmptyNodes(node.children);
-      const nameChildren = children.filter(
+      const children = filterEmptyNodes(node.children).filter(
         (child) =>
           child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
       );
-      if (nameChildren.length !== 1) {
+      if (children.length !== 1) {
         throw errorAt(
           node,
           `${moduleName}:name expects text or an expression, and only one`
@@ -93,9 +89,9 @@ export default function getNamespacedArgs(
       }
 
       let singularArg =
-        (nameChildren[0].type === 'JSXExpressionContainer' &&
-          nameChildren[0].expression) ||
-        nameChildren[0];
+        (children[0].type === 'JSXExpressionContainer' &&
+          children[0].expression) ||
+        children[0];
       if (singularArg.type === 'JSXText') {
         singularArg = stringLiteral(normalizeSpaces(singularArg.value));
       }
@@ -121,7 +117,7 @@ export default function getNamespacedArgs(
         RequiredParamOptions
       );
 
-      let paramChildren = filterEmptyNodes(node.children).filter((child) => {
+      let children = filterEmptyNodes(node.children).filter((child) => {
         return (
           child.type === 'JSXExpressionContainer' || child.type === 'JSXElement'
         );
@@ -131,17 +127,17 @@ export default function getNamespacedArgs(
       // should be the equivalent of
       // <fbt:param>{' '}</fbt:param>
       if (
-        paramChildren.length === 0 &&
+        children.length === 0 &&
         node.children.length === 1 &&
         node.children[0].type === 'JSXText' &&
         node.children[0].value === ' '
       ) {
-        paramChildren = [
+        children = [
           jsxExpressionContainer(stringLiteral(node.children[0].value)),
         ];
       }
 
-      if (paramChildren.length !== 1) {
+      if (children.length !== 1) {
         throw errorAt(
           node,
           `${moduleName}:param expects an {expression} or JSX element, and only one`
@@ -158,9 +154,9 @@ export default function getNamespacedArgs(
       }
       const paramArgs = [
         nameAttrValue,
-        (paramChildren[0].type === 'JSXExpressionContainer' &&
-          paramChildren[0].expression) ||
-          paramChildren[0],
+        (children[0].type === 'JSXExpressionContainer' &&
+          children[0].expression) ||
+          children[0],
       ];
 
       if (options.properties.length > 0) {
@@ -181,18 +177,17 @@ export default function getNamespacedArgs(
         PluralRequiredAttributes
       );
       const countAttr = getAttributeByNameOrThrow(attributes, 'count').value;
-      const children = filterEmptyNodes(node.children);
-      const pluralChildren = children.filter(
+      const children = filterEmptyNodes(node.children).filter(
         (child) =>
           child.type === 'JSXText' || child.type === 'JSXExpressionContainer'
       );
-      if (pluralChildren.length !== 1) {
+      if (children.length !== 1) {
         throw errorAt(
           node,
           `${moduleName}:plural expects text or an expression, and only one`
         );
       }
-      const singularNode = pluralChildren[0];
+      const singularNode = children[0];
       const singularText = expandStringConcat(
         moduleName,
         (singularNode.type === 'JSXExpressionContainer' &&
@@ -223,7 +218,6 @@ export default function getNamespacedArgs(
       }
 
       const attributes = node.openingElement.attributes;
-
       const typeAttr = getAttributeByNameOrThrow(attributes, 'type').value;
       if (typeAttr?.type !== 'StringLiteral') {
         throw errorAt(

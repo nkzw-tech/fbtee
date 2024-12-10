@@ -183,12 +183,12 @@ export default class FbtElementNode
             ? enforceBabelNodeCallExpressionArg.orNull(rawOptions.subject)
             : null,
       };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(node, error);
     }
   }
 
-  getExtraOptionsNode(): ObjectExpression | null | undefined {
+  getExtraOptionsNode(): ObjectExpression | null {
     const { extraOptions } = this.options;
     const extraOptionsObjectProperties = Object.keys(extraOptions).map(
       (optionName) =>
@@ -228,7 +228,7 @@ export default class FbtElementNode
   static beforeGetTextSanityCheck(
     instance: FbtElementNode | FbtImplicitParamNodeType,
     argsMap: StringVariationArgsMap
-  ): void {
+  ) {
     instance.children.forEach((child) => {
       const tokenName = child.getTokenName(argsMap);
       // FbtSameParamNode token names are allowed to be redundant by design
@@ -242,7 +242,7 @@ export default class FbtElementNode
    * Run some sanity checks before producing text
    * @throws if some fbt nodes in the tree have duplicate token names
    */
-  _beforeGetTextSanityCheck(argsMap: StringVariationArgsMap): void {
+  _beforeGetTextSanityCheck(argsMap: StringVariationArgsMap) {
     FbtElementNode.beforeGetTextSanityCheck(this, argsMap);
   }
 
@@ -256,7 +256,7 @@ export default class FbtElementNode
         this.options.preserveWhitespace,
         getChildNodeText
       );
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -292,7 +292,7 @@ export default class FbtElementNode
 
   override getTokenAliases(
     argsMap: StringVariationArgsMap
-  ): TokenAliases | null | undefined {
+  ): TokenAliases | null {
     return getTokenAliasesFromFbtNodeTree(this, argsMap);
   }
 
@@ -308,7 +308,7 @@ export default class FbtElementNode
     moduleName: JSModuleNameType;
     node: Expression;
     validExtraOptions: Readonly<FbtOptionConfig>;
-  }): FbtElementNode | null | undefined {
+  }): FbtElementNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -398,7 +398,7 @@ export default class FbtElementNode
     return ret;
   }
 
-  override getFbtRuntimeArg(): CallExpression | null | undefined {
+  override getFbtRuntimeArg(): CallExpression | null {
     const { subject } = this.options;
     return subject == null
       ? null
@@ -419,7 +419,7 @@ export default class FbtElementNode
   /**
    * @see IFbtElementNode#registerToken
    */
-  registerToken(name: string, source: AnyFbtNode): void {
+  registerToken(name: string, source: AnyFbtNode) {
     setUniqueToken(source.node, this.moduleName, name, this._tokenSet);
   }
 
@@ -444,7 +444,7 @@ export default class FbtElementNode
 
   assertNoOverallTokenNameCollision(
     argsMapList: ReadonlyArray<StringVariationArgsMap>
-  ): void {
+  ) {
     argsMapList.forEach((argsMap) => {
       buildFbtNodeMapForSameParam(this, argsMap);
     });

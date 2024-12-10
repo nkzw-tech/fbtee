@@ -33,6 +33,7 @@ import {
   JSXAttribute,
   JSXElement,
   JSXExpressionContainer,
+  JSXFragment,
   JSXOpeningElement,
   JSXSpreadAttribute,
   JSXText,
@@ -51,6 +52,7 @@ import {
 } from '@babel/types';
 import invariant from 'invariant';
 import type { AnyFbtNode } from './fbt-nodes/FbtNode.tsx';
+import { ConcreteFbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
 import type {
   FbtOptionConfig,
   FbtOptionValue,
@@ -73,14 +75,14 @@ export type CallExpressionArg =
 export type BabelNodeCallExpressionArgument =
   CallExpression['arguments'][number];
 export type ParamSet = {
-  [parameterName: string]: Node | null | undefined;
+  [parameterName: string]: Node | null;
 };
 const { FBS, FBT } = JSModuleName;
 
 export function normalizeSpaces(
   value: string,
   options?: {
-    preserveWhitespace?: FbtOptionValue | null | undefined;
+    preserveWhitespace?: FbtOptionValue | null;
   } | null
 ): string {
   if (options && options.preserveWhitespace) {
@@ -105,7 +107,7 @@ export function normalizeSpaces(
 export function validateNamespacedFbtElement(
   moduleName: string,
   node: Node
-): string {
+): ConcreteFbtNodeType | 'implicitParamMarker' {
   let valid = false;
   let handlerName;
 
@@ -142,7 +144,7 @@ export function validateNamespacedFbtElement(
   }
 
   invariant(handlerName != null, 'handlerName must not be null');
-  return handlerName;
+  return handlerName as ConcreteFbtNodeType;
 }
 
 function isBabelNodeCallExpressionArg(value: Node): value is CallExpressionArg {
@@ -168,7 +170,7 @@ export function setUniqueToken(
   moduleName: string,
   name: string,
   paramSet: ParamSet
-): void {
+) {
   const cachedNode = paramSet[name];
   if (cachedNode && cachedNode != node) {
     throw errorAt(
@@ -184,7 +186,7 @@ export function setUniqueToken(
 export function checkOption<K extends string>(
   option: string,
   validOptions: FbtOptionConfig,
-  value?: Node | null | undefined | string | boolean
+  value?: Node | null | string | boolean
 ): K {
   const optionName = option as K;
 
@@ -237,7 +239,7 @@ const boolCandidates = new Set<string>([
  */
 export function getOptionsFromAttributes(
   attributesNode: ReadonlyArray<JSXAttribute | JSXSpreadAttribute>,
-  validOptions: any,
+  validOptions: FbtOptionConfig,
   ignoredAttrs: Record<string, unknown>
 ): ObjectExpression {
   const options: Array<ObjectMethod | ObjectProperty | SpreadElement> = [];
@@ -307,17 +309,12 @@ const isErrorWithNodeLocation = (
  */
 export function errorAt(
   astNode?: Node | null,
-  msgOrError: string | ErrorWithBabelNodeLocation | unknown = '',
-  options: {
-    suggestOSSWebsite?: boolean;
-  } = {}
+  msgOrError: unknown = ''
 ): ErrorWithBabelNodeLocation {
   let error;
 
   if (typeof msgOrError === 'string') {
-    const newError = new Error(
-      createErrorMessageAtNode(astNode, msgOrError, options)
-    );
+    const newError = new Error(createErrorMessageAtNode(astNode, msgOrError));
     error = newError as ErrorWithBabelNodeLocation;
     error._hasBabelNodeLocation = astNode?.loc != null;
   } else {
@@ -326,7 +323,7 @@ export function errorAt(
       isErrorWithNodeLocation(error) &&
       error._hasBabelNodeLocation !== true
     ) {
-      error.message = createErrorMessageAtNode(astNode, error.message, options);
+      error.message = createErrorMessageAtNode(astNode, error.message);
       error._hasBabelNodeLocation = astNode?.loc != null;
     }
   }
@@ -335,22 +332,14 @@ export function errorAt(
 
 function createErrorMessageAtNode(
   astNode?: Node | null,
-  msg: string = '',
-  options: {
-    suggestOSSWebsite?: boolean;
-  } = {}
+  msg: string = ''
 ): string {
   const location = astNode && astNode.loc;
-  const optionalMessage = options.suggestOSSWebsite
-    ? 'See the docs at https://facebook.github.io/fbt/ for more info.'
-    : null;
-
   return (
     (location != null
       ? `Line ${location.start.line} Column ${location.start.column + 1}: `
       : '') +
     msg +
-    (optionalMessage ? `\n${optionalMessage}` : '') +
     (astNode != null
       ? `\n---\n${generateFormattedCodeFromAST(astNode)}\n---`
       : '')
@@ -360,7 +349,7 @@ function createErrorMessageAtNode(
 // Collects options from an fbt construct in functional form
 export function collectOptions(
   moduleName: JSModuleNameType,
-  options: ObjectExpression | null | undefined,
+  options: ObjectExpression | null,
   validOptions: FbtOptionConfig
 ): FbtOptionValues {
   const key2value: FbtOptionValues = {};
@@ -414,11 +403,11 @@ export function collectOptions(
 
 export function collectOptionsFromFbtConstruct(
   moduleName: JSModuleNameType,
-  callsiteNode: CallExpression | null | undefined | JSXElement,
+  callsiteNode: CallExpression | null | JSXElement,
   validOptions: FbtOptionConfig,
   booleanOptions: Partial<Record<string, unknown>> | null = null
 ): FbtOptionValues {
-  let optionsNode: ObjectExpression | null | undefined = null;
+  let optionsNode: ObjectExpression | null = null;
   let options = {} as FbtOptionValues;
   if (isCallExpression(callsiteNode)) {
     optionsNode = getOptionsNodeFromCallExpression(moduleName, callsiteNode);
@@ -452,7 +441,7 @@ export function collectOptionsFromFbtConstruct(
 export function getOptionsNodeFromCallExpression(
   moduleName: JSModuleNameType,
   node: CallExpression
-): ObjectExpression | null | undefined {
+): ObjectExpression | null {
   const optionsNode = node.arguments[2];
   if (optionsNode == null) {
     return null;
@@ -567,29 +556,42 @@ export function getOptionBooleanValue<K extends string>(
 /**
  * Utility for getting the first attribute by name from a list of attributes.
  */
+type JSXAttributeWithValue = Omit<JSXAttribute, 'value'> &
+  Readonly<{
+    value: JSXElement | JSXFragment | StringLiteral | JSXExpressionContainer;
+  }>;
+
+const isJSXAttributeWithValue = (
+  node: JSXAttribute
+): node is JSXAttributeWithValue => node.value != null;
+
 export function getAttributeByNameOrThrow(
   attributes: BabelNodeJSXAttributes,
   name: string,
   node: Node | null = null
-): JSXAttribute {
-  const attr = getAttributeByName(attributes, name);
-  if (attr == undefined) {
+): JSXAttributeWithValue {
+  const attribute = getAttributeByName(attributes, name);
+  if (attribute == null) {
     throw errorAt(node, `Unable to find attribute "${name}".`);
   }
-  return attr;
+
+  if (!isJSXAttributeWithValue(attribute)) {
+    throw errorAt(node, `Attribute "${name}" has no value.`);
+  }
+
+  return attribute;
 }
 
 export function getAttributeByName(
   attributes: BabelNodeJSXAttributes,
   name: string
-): JSXAttribute | null | undefined {
-  for (let i = 0; i < attributes.length; i++) {
-    const attr = attributes[i];
-    if (isJSXAttribute(attr) && attr.name.name === name) {
-      return attr;
+): JSXAttribute | null {
+  for (const attribute of attributes) {
+    if (isJSXAttribute(attribute) && attribute.name.name === name) {
+      return attribute;
     }
   }
-  return undefined;
+  return null;
 }
 
 export function getOpeningElementAttributes(
@@ -597,7 +599,7 @@ export function getOpeningElementAttributes(
 ): ReadonlyArray<JSXAttribute> {
   return node.openingElement.attributes.map((attribute) => {
     if (isJSXSpreadAttribute(attribute)) {
-      throw errorAt(attribute, `Do no use the JSX spread attribute`);
+      throw errorAt(attribute, `Do no use the JSX spread attribute.`);
     }
     return attribute;
   });
@@ -855,7 +857,7 @@ export function enforceBabelNode(
 }
 
 export function enforceBabelNodeCallExpressionArg(
-  value: Node | undefined | null,
+  value: Node | null,
   valueDesc?: string | null
 ): CallExpressionArg {
   invariant(
@@ -892,7 +894,7 @@ function nullableTypeCheckerFactory<
   Val
 >(
   checker: (arg1: Val, ...args: Args) => Ret
-): (arg1: Val, ...args: Args) => Ret | null | undefined {
+): (arg1: Val, ...args: Args) => Ret | null {
   return (value, ...args) => {
     return value == null ? null : checker(value, ...args);
   };
@@ -900,8 +902,8 @@ function nullableTypeCheckerFactory<
 
 const enforceBabelNodeOrNull: (
   value: unknown,
-  valueDesc?: string | null | undefined
-) => Node | null | undefined = nullableTypeCheckerFactory(enforceBabelNode);
+  valueDesc?: string | null
+) => Node | null = nullableTypeCheckerFactory(enforceBabelNode);
 enforceBabelNode.orNull = enforceBabelNodeOrNull;
 
 enforceBabelNodeCallExpressionArg.orNull = nullableTypeCheckerFactory(
@@ -910,14 +912,14 @@ enforceBabelNodeCallExpressionArg.orNull = nullableTypeCheckerFactory(
 
 const enforceBooleanOrNull: (
   value: unknown,
-  valueDesc?: string | null | undefined
-) => boolean | null | undefined = nullableTypeCheckerFactory(enforceBoolean);
+  valueDesc?: string | null
+) => boolean | null = nullableTypeCheckerFactory(enforceBoolean);
 enforceBoolean.orNull = enforceBooleanOrNull;
 
 const enforceStringOrNull: (
   value: unknown,
-  valueDesc?: string | null | undefined
-) => string | null | undefined = nullableTypeCheckerFactory(enforceString);
+  valueDesc?: string | null
+) => string | null = nullableTypeCheckerFactory(enforceString);
 enforceString.orNull = enforceStringOrNull;
 
 enforceStringEnum.orNull = nullableTypeCheckerFactory(enforceStringEnum);

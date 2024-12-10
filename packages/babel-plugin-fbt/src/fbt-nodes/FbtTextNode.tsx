@@ -34,7 +34,7 @@ export default class FbtTextNode extends FbtNode<
   static fromBabelNode({
     moduleName,
     node,
-  }: FromBabelNodeFunctionArgs): FbtTextNode | null | undefined {
+  }: FromBabelNodeFunctionArgs): FbtTextNode | null {
     return isJSXText(node) || isStringLiteral(node)
       ? new FbtTextNode({
           moduleName,

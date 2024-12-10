@@ -102,7 +102,7 @@ export default class FbtNodeChecker {
    * Inside <fbt>, don't allow <fbs:param>.
    * Inside <fbs>, don't allow <fbt:param>.
    */
-  assertNoNestedFbts(node: JSXElement): void {
+  assertNoNestedFbts(node: JSXElement) {
     const moduleName = this.moduleName;
     for (const child of node.children) {
       if (

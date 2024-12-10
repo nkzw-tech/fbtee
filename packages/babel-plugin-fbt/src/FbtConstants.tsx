@@ -1,9 +1,7 @@
 import type { Node } from '@babel/types';
 
 export type FbtOptionValue = string | boolean | Node;
-export type FbtOptionValues = Partial<
-  Record<string, FbtOptionValue | null | undefined>
->;
+export type FbtOptionValues = Partial<Record<string, FbtOptionValue | null>>;
 export type FbtOptionConfig = Partial<
   Record<
     string,
@@ -15,12 +13,12 @@ export type FbtOptionConfig = Partial<
 >;
 
 export type FbtCallSiteOptions = Partial<{
-  author?: FbtOptionValue | null | undefined;
-  common?: FbtOptionValue | null | undefined;
-  doNotExtract?: boolean | null | undefined;
-  preserveWhitespace?: FbtOptionValue | null | undefined;
+  author?: FbtOptionValue | null;
+  common?: FbtOptionValue | null;
+  doNotExtract?: boolean | null;
+  preserveWhitespace?: FbtOptionValue | null;
   project: string;
-  subject?: FbtOptionValue | null | undefined;
+  subject?: FbtOptionValue | null;
 }>;
 
 export type JSModuleNameType = 'fbt' | 'fbs';

@@ -7,7 +7,7 @@ export type NumberConfig = {
   decimalSeparator: string;
   minDigitsForThousandsSeparator: number;
   numberDelimiter: string;
-  numberingSystemData: NumberingSystemData | null | undefined;
+  numberingSystemData: NumberingSystemData | null;
   standardDecimalPatternInfo: StandardDecimalPatternInfo;
 };
 

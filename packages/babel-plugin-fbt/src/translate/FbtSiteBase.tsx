@@ -101,7 +101,7 @@ export class FbtSiteMetaEntryBase {
     this.token = token;
   }
 
-  getToken(): string | null | undefined {
+  getToken() {
     return this.token;
   }
 
@@ -109,14 +109,14 @@ export class FbtSiteMetaEntryBase {
     throw new Error('This method must be implemented in a child class');
   }
 
-  getVariationMask(): IntlVariationMaskValue | null | undefined {
+  getVariationMask(): IntlVariationMaskValue | null {
     throw new Error('This method must be implemented in a child class');
   }
 }
 
 export function getVariationMaskFromType(
   type?: IntlFbtVariationTypeValue | null
-): IntlVariationMaskValue | null | undefined {
+): IntlVariationMaskValue | null {
   switch (type) {
     case FbtVariationType.GENDER:
       return Mask.GENDER;

@@ -64,7 +64,7 @@ export default function addLeafToTree<V, T extends Record<string, unknown>>(
   tree: T,
   keys: ReadonlyArray<string | number>,
   leaf: unknown
-): void {
+) {
   let branch = tree;
 
   keys.forEach((key, index) => {

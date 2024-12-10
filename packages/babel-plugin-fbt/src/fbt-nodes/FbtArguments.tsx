@@ -33,7 +33,7 @@ export type AnyFbtArgument = GenericArg | AnyStringVariationArg;
  *      challenger
  *    </fbt:plural>
  */
-export class FbtArgumentBase<B extends Node | null | undefined> {
+export class FbtArgumentBase<B extends Node | null> {
   readonly fbtNode: AnyFbtNode;
   readonly node: B;
 
@@ -121,7 +121,7 @@ class GenericArg extends FbtArgumentBase<Node> {}
  */
 export abstract class StringVariationArg<
   Value,
-  B extends Node | null | undefined = Node
+  B extends Node | null = Node
 > extends FbtArgumentBase<B> {
   /**
    * List of candidate values that this SVArgument might have.
@@ -187,7 +187,7 @@ export class GenderStringVariationArg extends StringVariationArg<
 
 export class NumberStringVariationArg extends StringVariationArg<
   typeof NUMBER_ANY | typeof EXACTLY_ONE,
-  Node | null | undefined
+  Node | null
 > {}
 
 export class StringVariationArgsMap {
@@ -212,9 +212,5 @@ export class StringVariationArgsMap {
       varDump(fbtNode)
     );
     return ret;
-  }
-
-  mustHave(fbtNode: AnyFbtNode): void {
-    this.get(fbtNode);
   }
 }

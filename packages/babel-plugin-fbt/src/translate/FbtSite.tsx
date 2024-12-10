@@ -216,7 +216,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     return { range: this._range };
   }
 
-  static _validate(entry: Readonly<JSFBTMetaEntry>): void {
+  static _validate(entry: Readonly<JSFBTMetaEntry>) {
     const type = entry.type || null;
     const token = entry.token != null ? entry.token : null;
     const range = entry.range || null;

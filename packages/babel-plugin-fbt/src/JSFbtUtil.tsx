@@ -22,7 +22,7 @@ export function isTableJSFBTTreeLeaf(
 function _runOnNormalizedJSFBTLeaves(
   value: Readonly<TableJSFBTTree>,
   callback: (leaf: TableJSFBTTreeLeaf) => void
-): void {
+) {
   if (isTableJSFBTTreeLeaf(value)) {
     return callback(value);
   }
@@ -38,7 +38,7 @@ function _runOnNormalizedJSFBTLeaves(
 export function onEachLeaf(
   phrase: ObjectWithJSFBT,
   callback: (leaf: TableJSFBTTreeLeaf) => void
-): void {
+) {
   _runOnNormalizedJSFBTLeaves(phrase.jsfbt.t, callback);
 }
 

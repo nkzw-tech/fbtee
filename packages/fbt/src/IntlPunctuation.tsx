@@ -23,7 +23,7 @@ type Rule = [RegExp, string | ((match: string) => string)];
 type Rules = ReadonlyArray<Rule>;
 
 const rulesPerLocale: {
-  [locale: string]: Rules | null | undefined;
+  [locale: string]: Rules | null;
 } = {};
 
 function _getMemoizedRules(localeArg?: string | null): Rules {
@@ -97,10 +97,7 @@ for (const norm of Object.keys(IntlRedundantStops.equivalencies)) {
   }
 }
 
-const _redundancies = new Map<
-  string | null | undefined,
-  Set<string | null | undefined>
->();
+const _redundancies = new Map<string | undefined, Set<string | undefined>>();
 for (const prefix of Object.keys(IntlRedundantStops.redundancies)) {
   _redundancies.set(
     prefix,

@@ -22,7 +22,7 @@ export default {
   getTranslatedInput({
     args,
     options,
-  }: FbtRuntimeCallInput): FbtTranslatedInput | null | undefined {
+  }: FbtRuntimeCallInput): FbtTranslatedInput | null {
     const hashKey = options?.hk;
     const { locale } = FbtHooks.getViewerContext();
     const table = currentTranslations[locale];
@@ -41,7 +41,7 @@ export default {
         };
   },
 
-  mergeTranslations(newTranslations: TranslationDict): undefined {
+  mergeTranslations(newTranslations: TranslationDict) {
     Object.keys(newTranslations).forEach((locale) => {
       currentTranslations[locale] = Object.assign(
         currentTranslations[locale] ?? {},
@@ -50,7 +50,7 @@ export default {
     });
   },
 
-  registerTranslations(translations: TranslationDict): undefined {
+  registerTranslations(translations: TranslationDict) {
     currentTranslations = translations;
   },
 };

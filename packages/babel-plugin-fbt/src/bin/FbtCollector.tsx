@@ -18,14 +18,14 @@ import type { PatternHash, PatternString } from '../Types.tsx';
 export type ExternalTransform = (
   src: string,
   opts: PluginOptions,
-  filename?: string | null | undefined
+  filename?: string | null
 ) => unknown;
 export type CollectorConfig = {
   fbtCommon?: FbtCommonMap | null;
   generateOuterTokenName?: boolean;
   plugins?: ReadonlyArray<PluginItem>;
   presets?: ReadonlyArray<PluginItem>;
-  transform?: ExternalTransform | null | undefined;
+  transform?: ExternalTransform | null;
 };
 type ParentPhraseIndex = number;
 export type ChildParentMappings = {
@@ -63,7 +63,7 @@ export interface IFbtCollector {
 
 const transform = (
   code: string,
-  options: { filename: string | null | undefined },
+  options: { filename: string | null },
   plugins: ReadonlyArray<PluginItem>,
   presets: ReadonlyArray<PluginItem>
 ) => {
@@ -133,7 +133,7 @@ export default class FbtCollector implements IFbtCollector {
     const newChildParentMappings = getChildToParentRelationships();
     const offset = this._phrases.length;
     Object.entries(newChildParentMappings).forEach(
-      ([childIndex, parentIndex]: [any, any]) => {
+      ([childIndex, parentIndex]) => {
         this._childParentMappings[offset + +childIndex] = offset + parentIndex;
       }
     );
@@ -147,7 +147,7 @@ export default class FbtCollector implements IFbtCollector {
     fbtEnumManifest?: EnumManifest
   ) {
     await Promise.all(
-      files.map(([file, source]: [any, any]) =>
+      files.map(([file, source]) =>
         this.collectFromOneFile(source, file, fbtEnumManifest)
       )
     );

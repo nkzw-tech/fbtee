@@ -26,6 +26,7 @@ module.exports = {
   ],
   plugins: ['workspaces'],
   rules: {
+    '@nkzw/no-instanceof': 0,
     '@typescript-eslint/array-type': [2, { default: 'generic' }],
     'import/no-extraneous-dependencies': [
       2,
@@ -56,10 +57,5 @@ module.exports = {
     'unicorn/prefer-dom-node-append': 0,
     'workspaces/no-absolute-imports': 2,
     'workspaces/no-relative-imports': 2,
-
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
-    '@typescript-eslint/no-explicit-any': 0,
-    '@nkzw/no-instanceof': 0,
-    /* eslint-enable sort-keys-fix/sort-keys-fix */
   },
 };

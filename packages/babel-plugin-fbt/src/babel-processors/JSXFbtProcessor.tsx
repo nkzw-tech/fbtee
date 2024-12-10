@@ -55,7 +55,7 @@ export default class JSXFbtProcessor {
   nodeChecker: FbtNodeChecker;
   path: NodePath;
   validFbtExtraOptions: Readonly<FbtOptionConfig>;
-  _openingElementAttributes: ReadonlyArray<JSXAttribute> | null | undefined;
+  _openingElementAttributes: ReadonlyArray<JSXAttribute> | null = null;
 
   constructor({
     nodeChecker,
@@ -79,7 +79,7 @@ export default class JSXFbtProcessor {
   }: {
     path: NodePath;
     validFbtExtraOptions: Readonly<FbtOptionConfig>;
-  }): JSXFbtProcessor | null | undefined {
+  }): JSXFbtProcessor | null {
     const nodeChecker = FbtNodeChecker.forJSXFbt(path.node);
     return nodeChecker != null
       ? new JSXFbtProcessor({
@@ -117,8 +117,8 @@ export default class JSXFbtProcessor {
               stringNode?.type || 'unknown'
             );
             return stringNode.value;
-          } catch (error: any) {
-            throw errorAt(stringNode, error.message);
+          } catch (error) {
+            throw errorAt(stringNode, error);
           }
         })
         .join('');
@@ -179,7 +179,7 @@ export default class JSXFbtProcessor {
     return this._openingElementAttributes;
   }
 
-  _assertHasMandatoryAttributes(): void {
+  _assertHasMandatoryAttributes() {
     if (
       !this._getOpeningElementAttributes().some(
         (attribute) =>
@@ -279,8 +279,8 @@ export default class JSXFbtProcessor {
               `Unsupported JSX element child type '${node.type}'`
             );
         }
-      } catch (error: any) {
-        throw errorAt(node, error.message);
+      } catch (error) {
+        throw errorAt(node, error);
       }
     });
   }
@@ -345,7 +345,7 @@ export default class JSXFbtProcessor {
   /**
    * This method mutates the current Babel node
    */
-  convertToFbtFunctionCallNode(_phraseIndex: number): void {
+  convertToFbtFunctionCallNode(_phraseIndex: number) {
     this._assertNoNestedFbts();
     const children = this._transformChildrenForFbtCallSyntax();
     const text = this._getText(children);

@@ -17,7 +17,7 @@ const FbsImpl = {
     label: string,
     value: $FbsParamInput,
     variations?:
-      | [ParamVariationType['number'], number | null | undefined]
+      | [ParamVariationType['number'], number | null]
       | [ParamVariationType['gender'], GenderConst]
   ): FbtTableArg {
     invariant(

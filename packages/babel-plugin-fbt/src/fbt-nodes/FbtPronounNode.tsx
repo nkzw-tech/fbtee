@@ -39,11 +39,11 @@ import { FbtNodeType } from './FbtNodeType.tsx';
 
 type Options = {
   // If true, capitalize the pronoun text
-  capitalize?: boolean | null | undefined;
+  capitalize?: boolean | null;
   // BabelNodeCallExpressionArg representing the value of the `gender`
   gender: CallExpressionArg;
   // If true, exclude non-human-related pronouns from the generated string variations
-  human?: boolean | null | undefined;
+  human?: boolean | null;
   // Type of pronoun
   type: ValidPronounUsagesKey;
 };
@@ -71,7 +71,7 @@ export default class FbtPronounNode extends FbtNode<
   }: {
     moduleName: JSModuleNameType;
     node: Expression;
-  }): FbtPronounNode | null | undefined {
+  }): FbtPronounNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -83,6 +83,23 @@ export default class FbtPronounNode extends FbtNode<
           node,
         })
       : null;
+  }
+
+  constructor({
+    moduleName,
+    node,
+  }: {
+    moduleName: JSModuleNameType;
+    node: CallExpression;
+  }) {
+    super({ moduleName, node });
+
+    const args = this.getCallNodeArguments();
+    invariant(
+      (args && (args.length === 2 || args.length === 3)) || !args,
+      "Expected '(usage, gender [, options])' arguments to %s.pronoun()",
+      this.moduleName
+    );
   }
 
   override getOptions(): Options {
@@ -118,18 +135,9 @@ export default class FbtPronounNode extends FbtNode<
         human: enforceBoolean.orNull(mergedOptions.human),
         type,
       };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
-  }
-
-  override initCheck(): void {
-    const args = this.getCallNodeArguments();
-    invariant(
-      (args && (args.length === 2 || args.length === 3)) || !args,
-      "Expected '(usage, gender [, options])' arguments to %s.pronoun()",
-      this.moduleName
-    );
   }
 
   override getText(argsMap: StringVariationArgsMap): string {
@@ -153,7 +161,7 @@ export default class FbtPronounNode extends FbtNode<
       return options.capitalize
         ? word.charAt(0).toUpperCase() + word.slice(1)
         : word;
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

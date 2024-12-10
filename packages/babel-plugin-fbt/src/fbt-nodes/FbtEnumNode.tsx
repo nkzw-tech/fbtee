@@ -77,7 +77,7 @@ export default class FbtEnumNode extends FbtNode<
     let rangeNode: Node | null = rangeArg || null;
 
     try {
-      let range: Record<string, any> = {};
+      let range: EnumModule = {};
       rangeNode = enforceBabelNode(rangeNode, '`range`');
       if (isArrayExpression(rangeNode)) {
         invariant(
@@ -139,7 +139,7 @@ export default class FbtEnumNode extends FbtNode<
         range,
         value: enforceBabelNodeCallExpressionArg(value, '`value`'),
       };
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }
@@ -152,7 +152,7 @@ export default class FbtEnumNode extends FbtNode<
         this.options.range[svArgValue],
         `Unable to find enum text for key=${varDump(svArgValue)}`
       );
-    } catch (error: any) {
+    } catch (error) {
       throw errorAt(this.node, error);
     }
   }

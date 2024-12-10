@@ -47,7 +47,7 @@ type TranslationGroup = Readonly<{
 }>;
 
 type Translations = Partial<
-  Record<PatternString, SerializedTranslationData | null | undefined>
+  Record<PatternString, SerializedTranslationData | null>
 >;
 
 /** Phrases and translation data in one JSON object */
@@ -59,8 +59,10 @@ type InputJSONType = Readonly<{
 function parseJSONFile<T>(filepath: string): T {
   try {
     return JSON.parse(readFileSync(filepath).toString());
-  } catch (error: any) {
-    error.message += `\nFile path: "${filepath}"`;
+  } catch (error) {
+    if (error instanceof Error) {
+      error.message += `\nFile path: "${filepath}"`;
+    }
     throw error;
   }
 }
@@ -98,7 +100,7 @@ async function processGroups(
   translatedGroups: TranslatedGroups,
   options: Options
 ): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
-  let fbtHash: typeof FbtHashKey | null | undefined = null;
+  let fbtHash: typeof FbtHashKey | null = null;
   if (options.jenkins) {
     fbtHash = (await import('../fbtHashKey.tsx')).default;
   } else if (typeof options.hashModule === 'string') {

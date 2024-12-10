@@ -6,7 +6,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "author": "jwatson",
     "col_beg": 2,
     "col_end": 8,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -26,7 +26,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 16,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -65,7 +65,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 12,
     "col_end": 16,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -106,7 +106,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 23,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -146,7 +146,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 20,
     "col_end": 55,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -166,7 +166,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -186,7 +186,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -218,7 +218,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 52,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -238,7 +238,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 6,
     "col_end": 12,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -375,7 +375,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 8,
     "col_end": 12,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -476,7 +476,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 8,
     "col_end": 12,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -613,7 +613,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 19,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -719,7 +719,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 6,
     "col_end": 12,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -758,7 +758,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 8,
     "col_end": 12,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -799,7 +799,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 19,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -839,7 +839,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -887,7 +887,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 14,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -936,7 +936,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 12,
     "col_end": 16,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -987,7 +987,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1019,7 +1019,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1051,7 +1051,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1083,7 +1083,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1115,7 +1115,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1147,7 +1147,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1184,7 +1184,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1211,7 +1211,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1247,7 +1247,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1267,7 +1267,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1316,7 +1316,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1353,7 +1353,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1385,7 +1385,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -1424,7 +1424,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 6,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1451,7 +1451,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1478,7 +1478,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1493,7 +1493,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1508,7 +1508,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1528,7 +1528,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1548,7 +1548,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1568,7 +1568,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1588,7 +1588,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1608,7 +1608,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 16,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1647,7 +1647,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 12,
     "col_end": 16,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1688,7 +1688,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 14,
     "col_end": 18,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1728,7 +1728,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -1750,7 +1750,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
   {
     "col_beg": 12,
     "col_end": 13,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1803,7 +1803,7 @@ FbtElementNode {
     "project": "Super Secret",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2070,7 +2070,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2107,7 +2107,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2144,7 +2144,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2312,7 +2312,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2349,7 +2349,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -2807,7 +2807,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3074,7 +3074,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3333,7 +3333,7 @@ FbtElementNode {
     "project": "",
     "subject": "BabelNode[type=Identifier]",
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3501,7 +3501,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3584,7 +3584,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3667,7 +3667,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3758,7 +3758,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3853,7 +3853,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -3987,7 +3987,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4066,7 +4066,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4161,7 +4161,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4218,7 +4218,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4355,7 +4355,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4491,7 +4491,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4584,7 +4584,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4730,7 +4730,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4849,7 +4849,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -4942,7 +4942,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5015,7 +5015,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5088,7 +5088,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5161,7 +5161,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5232,7 +5232,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5308,7 +5308,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5345,7 +5345,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5472,7 +5472,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5792,7 +5792,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5883,7 +5883,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5928,7 +5928,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5967,7 +5967,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -5977,7 +5977,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
     "author": "jwatson",
     "col_beg": 2,
     "col_end": 8,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -5997,7 +5997,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6017,7 +6017,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 20,
     "col_end": 53,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6037,7 +6037,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 47,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6057,7 +6057,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6089,7 +6089,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6121,7 +6121,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 50,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6141,7 +6141,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6173,7 +6173,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6205,7 +6205,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 14,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6237,7 +6237,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6269,7 +6269,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6301,7 +6301,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6338,7 +6338,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -6365,7 +6365,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6401,7 +6401,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6421,7 +6421,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -6470,7 +6470,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6507,7 +6507,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6539,7 +6539,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 9,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         null,
@@ -6578,7 +6578,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 6,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -6605,7 +6605,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -6632,7 +6632,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 52,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6647,7 +6647,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 14,
     "col_end": 58,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6662,7 +6662,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 14,
     "col_end": 58,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6682,7 +6682,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6702,7 +6702,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6722,7 +6722,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6742,7 +6742,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6762,7 +6762,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6782,7 +6782,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 7,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [
         {
@@ -6804,7 +6804,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
   {
     "col_beg": 10,
     "col_end": 11,
-    "filepath": undefined,
+    "filepath": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6857,7 +6857,7 @@ FbtElementNode {
     "project": "Super Secret",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -6894,7 +6894,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -6931,7 +6931,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -6968,7 +6968,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7136,7 +7136,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7304,7 +7304,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7341,7 +7341,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7509,7 +7509,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7592,7 +7592,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7675,7 +7675,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7766,7 +7766,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7861,7 +7861,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -7995,7 +7995,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8074,7 +8074,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8169,7 +8169,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8226,7 +8226,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8363,7 +8363,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8499,7 +8499,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8592,7 +8592,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8738,7 +8738,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8857,7 +8857,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -8950,7 +8950,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9023,7 +9023,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9096,7 +9096,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9169,7 +9169,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9240,7 +9240,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9316,7 +9316,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9353,7 +9353,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9480,7 +9480,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9529,7 +9529,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9620,7 +9620,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9665,7 +9665,7 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
 
@@ -9704,6 +9704,6 @@ FbtElementNode {
     "project": "",
     "subject": null,
   },
-  "parent": undefined,
+  "parent": null,
 }
 `;
