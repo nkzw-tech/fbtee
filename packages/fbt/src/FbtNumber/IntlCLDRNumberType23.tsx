@@ -1,9 +1,7 @@
 import IntlVariations from '../IntlVariations.tsx';
 
 const IntlCLDRNumberType23 = {
-  getVariation(
-    n: number
-  ): (typeof IntlVariations)[keyof typeof IntlVariations] {
+  getVariation(n: number): IntlVariations {
     if (n % 100 === 1) {
       return IntlVariations.NUMBER_ONE;
     } else if (n % 100 === 2) {

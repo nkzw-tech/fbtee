@@ -15,7 +15,7 @@ export const IntlNumberVariations = {
   ZERO: 16, // 0b11000
 } as const;
 
-export type IntlVariationsEnum =
+export type IntlVariations =
   (typeof IntlNumberVariations)[keyof typeof IntlNumberVariations];
 
 // Must match with `IntlVariations.js`
@@ -25,6 +25,8 @@ export const Gender = {
   MALE: 1,
   UNKNOWN: 3,
 } as const;
+
+export type Gender = (typeof Gender)[keyof typeof Gender];
 
 // Two bitmasks for representing gender/number variations.  Give a bit
 // between number/gender in case CLDR ever exceeds 7 options
@@ -64,9 +66,7 @@ const SPECIALS = {
   EXACTLY_ONE: true,
 } as const;
 
-export function getType(
-  n: (typeof Mask)[keyof typeof Mask]
-): (typeof Mask)[keyof typeof Mask] {
+export function getType(n: IntlVariationMaskValue): IntlVariationMaskValue {
   invariant(isValidValue(n), 'Invalid NumberType: %s', n);
 
   return n & Mask.NUMBER ? Mask.NUMBER : Mask.GENDER;

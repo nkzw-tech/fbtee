@@ -29,7 +29,7 @@ import {
   errorAt,
   varDump,
 } from '../FbtUtil.tsx';
-import { GenderConstEnum, Genders, getData } from '../Gender.tsx';
+import { GenderConst, Genders, getData } from '../Gender.tsx';
 import nullthrows from '../nullthrows.tsx';
 import { GENDER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
@@ -48,7 +48,7 @@ type Options = {
   type: ValidPronounUsagesKey;
 };
 
-const candidatePronounGenders: ReadonlyArray<GenderConstEnum> =
+const candidatePronounGenders: ReadonlyArray<GenderConst> =
   consolidatedPronounGenders();
 
 const HUMAN_OPTION = 'human';
@@ -140,8 +140,8 @@ export default class FbtPronounNode extends FbtNode<
 
       const word = getData(
         svArgValue === GENDER_ANY
-          ? GenderConstEnum.UNKNOWN_PLURAL
-          : (svArgValue as GenderConstEnum),
+          ? GenderConst.UNKNOWN_PLURAL
+          : (svArgValue as GenderConst),
         options.type
       );
       invariant(
@@ -160,15 +160,15 @@ export default class FbtPronounNode extends FbtNode<
 
   override getArgsForStringVariationCalc(): ReadonlyArray<GenderStringVariationArg> {
     const { options } = this;
-    const candidates = new Set<GenderConstEnum | '*'>();
+    const candidates = new Set<GenderConst | '*'>();
 
     for (const gender of candidatePronounGenders) {
-      if (options.human === true && gender === GenderConstEnum.NOT_A_PERSON) {
+      if (options.human === true && gender === GenderConst.NOT_A_PERSON) {
         continue;
       }
       const resolvedGender = getPronounGenderKey(options.type, gender);
       candidates.add(
-        resolvedGender === GenderConstEnum.UNKNOWN_PLURAL
+        resolvedGender === GenderConst.UNKNOWN_PLURAL
           ? GENDER_ANY
           : resolvedGender
       );
@@ -208,43 +208,43 @@ export default class FbtPronounNode extends FbtNode<
 
 function getPronounGenderKey(
   usage: ValidPronounUsagesKey,
-  gender: GenderConstEnum
-): GenderConstEnum {
+  gender: GenderConst
+): GenderConst {
   switch (gender) {
-    case GenderConstEnum.NOT_A_PERSON:
+    case GenderConst.NOT_A_PERSON:
       return usage === ValidPronounUsagesKeys.object ||
         usage === ValidPronounUsagesKeys.reflexive
-        ? GenderConstEnum.NOT_A_PERSON
-        : GenderConstEnum.UNKNOWN_PLURAL;
+        ? GenderConst.NOT_A_PERSON
+        : GenderConst.UNKNOWN_PLURAL;
 
-    case GenderConstEnum.FEMALE_SINGULAR:
-    case GenderConstEnum.FEMALE_SINGULAR_GUESS:
-      return GenderConstEnum.FEMALE_SINGULAR;
+    case GenderConst.FEMALE_SINGULAR:
+    case GenderConst.FEMALE_SINGULAR_GUESS:
+      return GenderConst.FEMALE_SINGULAR;
 
-    case GenderConstEnum.MALE_SINGULAR:
-    case GenderConstEnum.MALE_SINGULAR_GUESS:
-      return GenderConstEnum.MALE_SINGULAR;
+    case GenderConst.MALE_SINGULAR:
+    case GenderConst.MALE_SINGULAR_GUESS:
+      return GenderConst.MALE_SINGULAR;
 
-    case GenderConstEnum.MIXED_UNKNOWN:
-    case GenderConstEnum.FEMALE_PLURAL:
-    case GenderConstEnum.MALE_PLURAL:
-    case GenderConstEnum.NEUTER_PLURAL:
-    case GenderConstEnum.UNKNOWN_PLURAL:
-      return GenderConstEnum.UNKNOWN_PLURAL;
+    case GenderConst.MIXED_UNKNOWN:
+    case GenderConst.FEMALE_PLURAL:
+    case GenderConst.MALE_PLURAL:
+    case GenderConst.NEUTER_PLURAL:
+    case GenderConst.UNKNOWN_PLURAL:
+      return GenderConst.UNKNOWN_PLURAL;
 
-    case GenderConstEnum.NEUTER_SINGULAR:
-    case GenderConstEnum.UNKNOWN_SINGULAR:
+    case GenderConst.NEUTER_SINGULAR:
+    case GenderConst.UNKNOWN_SINGULAR:
       return usage === ValidPronounUsagesKeys.reflexive
-        ? GenderConstEnum.NOT_A_PERSON
-        : GenderConstEnum.UNKNOWN_PLURAL;
+        ? GenderConst.NOT_A_PERSON
+        : GenderConst.UNKNOWN_PLURAL;
   }
 
   invariant(false, 'Unknown GENDER_CONST value: %s', varDump(gender));
 }
 
 // Prepare the list of genders actually used by the pronoun construct
-function consolidatedPronounGenders(): ReadonlyArray<GenderConstEnum> {
-  const set = new Set<GenderConstEnum>();
+function consolidatedPronounGenders(): ReadonlyArray<GenderConst> {
+  const set = new Set<GenderConst>();
 
   for (const gender of Genders) {
     for (const usageKey of Object.keys(ValidPronounUsagesKeys)) {

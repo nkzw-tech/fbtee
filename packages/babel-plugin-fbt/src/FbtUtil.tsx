@@ -79,7 +79,6 @@ const { FBS, FBT } = JSModuleName;
 
 export function normalizeSpaces(
   value: string,
-  // TODO(T56277500) set better types for Fbt options object to use `preserveWhitespace?: ?boolean`
   options?: {
     preserveWhitespace?: FbtOptionValue | null | undefined;
   } | null
@@ -226,16 +225,12 @@ export function checkOption<K extends string>(
   return optionName;
 }
 
-const SHORT_BOOL_CANDIDATES = {
-  common: 'common',
-  doNotExtract: 'doNotExtract',
-  number: 'number',
-  preserveWhitespace: 'preserveWhitespace',
-} as const;
-
-function canBeShortBoolAttr(name: string) {
-  return name in SHORT_BOOL_CANDIDATES;
-}
+const boolCandidates = new Set<string>([
+  'common',
+  'doNotExtract',
+  'number',
+  'preserveWhitespace',
+]);
 
 /**
  * Build options list form corresponding attributes.
@@ -268,7 +263,7 @@ export function getOptionsFromAttributes(
 
     let value: Expression | JSXExpressionContainer | null | undefined =
       node.value;
-    if (value === null && canBeShortBoolAttr(String(name))) {
+    if (value === null && boolCandidates.has(name)) {
       value = booleanLiteral(true);
     } else if (
       isJSXExpressionContainer(value) &&
@@ -606,38 +601,6 @@ export function getOpeningElementAttributes(
     }
     return attribute;
   });
-}
-
-export function objMap<
-  Object extends Partial<Record<Key, Value>>,
-  Key extends string | number,
-  Value,
-  ResultValue
->(
-  object: Object,
-  fn: (value: Value, arg2: Key) => ResultValue
-): Record<Key, ResultValue> {
-  const newObject: Partial<Record<Key, ResultValue>> = {};
-  for (const k of Object.keys(object)) {
-    newObject[k as Key] = fn(object[k as Key] as Value, k as Key);
-  }
-  return newObject as Record<Key, ResultValue>;
-}
-
-/**
- * Does this object have keys?
- *
- * Note: this breaks on any actual "class" object with prototype
- * members
- *
- * The micro-optimized equivalent of `Object.keys(o).length > 0` but
- * without the throw-away array
- */
-export function hasKeys(o: Record<string, unknown>): boolean {
-  for (const k in o) {
-    return k ? true : true;
-  }
-  return false;
 }
 
 export function getRawSource(src: string, node: Node): string {

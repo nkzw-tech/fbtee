@@ -15,7 +15,7 @@ import FbtPronounNode from './fbt-nodes/FbtPronounNode.tsx';
 import { ShowCountKeys } from './FbtConstants.tsx';
 import type { EnumKey } from './FbtEnumRegistrar.tsx';
 import { varDump } from './FbtUtil.tsx';
-import type { GenderConstEnum } from './Gender.tsx';
+import type { GenderConst } from './Gender.tsx';
 import type { JSFBTMetaEntry } from './index.tsx';
 import nullthrows from './nullthrows.tsx';
 import {
@@ -54,7 +54,7 @@ export default class JSFbtBuilder {
    * Map of fbt:pronoun at the current recursion level of `_getStringVariationCombinations()`
    */
   readonly usedPronouns: {
-    [pronounsArgCode: string]: GenderConstEnum | typeof GENDER_ANY;
+    [pronounsArgCode: string]: GenderConst | typeof GENDER_ANY;
   };
   /**
    * List of string variation arguments from a given fbt callsite
@@ -269,10 +269,6 @@ export default class JSFbtBuilder {
       const argCode = curArg.getArgCode(this.fileSource);
 
       if (argCode in usedPlurals) {
-        // Constrain our plural value ('many'/'singular') BUT still add a
-        // single level.  We don't currently prune runtime args like we do
-        // with enums, but we ought to...
-        // TODO(T41100260) Prune plurals better
         recurse([usedPlurals[argCode]]);
         return combos;
       }

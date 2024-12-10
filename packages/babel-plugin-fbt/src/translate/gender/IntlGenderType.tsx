@@ -20,8 +20,8 @@ const IntlMergedUnknownGenderType = {
 };
 
 export type IntlGenderType = Readonly<{
-  getFallback(): (typeof Gender)[keyof typeof Gender];
-  getGenderVariations(): ReadonlyArray<(typeof Gender)[keyof typeof Gender]>;
+  getFallback(): Gender;
+  getGenderVariations(): ReadonlyArray<Gender>;
 }>;
 
 const _mergedLocales = {

@@ -56,7 +56,7 @@ export default class TranslationData {
       for (let i = 0; i < this.translations.length; ++i) {
         const trans = this.translations[i];
         let isDefault = true;
-        for (const v in trans.variations) {
+        for (const v of Object.keys(trans.variations)) {
           if (!config.isDefaultVariation(trans.variations[v])) {
             isDefault = false;
             break;

@@ -1,9 +1,7 @@
 import IntlVariations from '../IntlVariations.tsx';
 
 export default {
-  getVariation(
-    n: number
-  ): (typeof IntlVariations)[keyof typeof IntlVariations] {
+  getVariation(n: number): IntlVariations {
     if (n === 1) {
       return IntlVariations.NUMBER_ONE;
     } else if (n === 0 || (n % 100 >= 2 && n % 100 <= 10)) {

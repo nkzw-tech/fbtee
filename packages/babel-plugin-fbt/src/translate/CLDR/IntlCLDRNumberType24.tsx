@@ -1,11 +1,11 @@
-import type { IntlVariationsEnum } from '../IntlVariations.tsx';
+import type { IntlVariations } from '../IntlVariations.tsx';
 
 export default {
-  getFallback(): IntlVariationsEnum {
+  getFallback(): IntlVariations {
     return 24;
   },
 
-  getNumberVariations(): Array<IntlVariationsEnum> {
+  getNumberVariations(): Array<IntlVariations> {
     return [4, 8, 12, 24];
   },
 };

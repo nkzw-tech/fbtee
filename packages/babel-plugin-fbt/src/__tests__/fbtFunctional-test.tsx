@@ -1100,7 +1100,7 @@ const testCases: TestCases = {
             <b>
               C1
               {
-                // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+                // fbt constructs like fbt.pronoun() should return some opaque type
                 // like FbtElement to work with React components
               }
               {fbt.param('paramName', paramValue)}
@@ -3028,14 +3028,15 @@ const filterTestCasesByType = (
   type: 'input' | 'inputWithArraySyntax'
 ) => {
   const filteredTestCases: Record<string, TestCase> = {};
-  for (const title in testCases) {
-    if (!testCases[title][type]?.length) {
+  for (const title of Object.keys(testCases)) {
+    const testCase = testCases[title];
+    if (!testCase[type]?.length) {
       continue;
     }
 
     const scenario = {
-      ...testCases[title],
-      input: testCases[title][type],
+      ...testCase,
+      input: testCase[type],
     };
 
     if (scenario.runWithTestFbtEnumManifest) {

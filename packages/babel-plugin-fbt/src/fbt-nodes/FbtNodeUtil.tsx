@@ -244,7 +244,7 @@ export function buildFbtNodeMapForSameParam(
   });
 
   const sameParamTokenNameToRealFbtNode: Record<string, any> = {};
-  for (const sameParamTokenName in tokenNameToSameParamNode) {
+  for (const sameParamTokenName of Object.keys(tokenNameToSameParamNode)) {
     const realFbtNode = tokenNameToFbtNode[sameParamTokenName];
     invariant(
       realFbtNode != null,

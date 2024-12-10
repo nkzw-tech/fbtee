@@ -5,7 +5,7 @@ import FbtHooks, { ExtraOptionValues } from './FbtHooks.tsx';
 import FbtPureStringResult from './FbtPureStringResult.tsx';
 import type { ParamVariationType } from './FbtRuntimeTypes.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
-import type GenderConstEnum from './GenderConst.tsx';
+import type GenderConst from './GenderConst.tsx';
 import { $FbsParamInput, Fbs, Fbt, NestedFbtContentItems } from './Types.tsx';
 
 const cachedFbsResults: Partial<Record<PatternString, Fbt>> = {};
@@ -18,7 +18,7 @@ const FbsImpl = {
     value: $FbsParamInput,
     variations?:
       | [ParamVariationType['number'], number | null | undefined]
-      | [ParamVariationType['gender'], GenderConstEnum]
+      | [ParamVariationType['gender'], GenderConst]
   ): FbtTableArg {
     invariant(
       typeof value === 'string' || value instanceof FbtPureStringResult,

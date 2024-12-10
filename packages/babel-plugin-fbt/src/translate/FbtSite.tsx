@@ -1,6 +1,5 @@
 import invariant from 'invariant';
 import type { CollectFbtOutputPhrase } from '../bin/collect.tsx';
-import { objMap } from '../FbtUtil.tsx';
 import type {
   JSFBTMetaEntry,
   TableJSFBTTree,
@@ -117,16 +116,20 @@ export class FbtSite extends FbtSiteBase<
     entry: Readonly<TableJSFBTTree>,
     textAndDescToHash: Readonly<TextAndDescToHash>
   ): FbtSiteHashifiedTableJSFBTTree {
-    return (
-      isTableJSFBTTreeLeaf(entry)
-        ? textAndDescToHash[this._serializeTextAndDesc(entry.text, entry.desc)]
-        : objMap(entry, (branch) =>
-            FbtSite._hashifyLeaves(
-              branch as TableJSFBTTreeBranch,
-              textAndDescToHash
-            )
-          )
-    ) as FbtSiteHashifiedTableJSFBTTree;
+    if (isTableJSFBTTreeLeaf(entry)) {
+      return textAndDescToHash[
+        this._serializeTextAndDesc(entry.text, entry.desc)
+      ] as FbtSiteHashifiedTableJSFBTTree;
+    }
+
+    const tree: FbtSiteHashifiedTableJSFBTTree = {};
+    for (const key of Object.keys(entry)) {
+      tree[key] = FbtSite._hashifyLeaves(
+        entry[key as keyof typeof entry] as TableJSFBTTreeBranch,
+        textAndDescToHash
+      );
+    }
+    return tree;
   }
 
   /**

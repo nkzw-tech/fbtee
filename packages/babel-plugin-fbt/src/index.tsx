@@ -115,7 +115,7 @@ export type TableJSFBTTree = TableJSFBTTreeLeaf | TableJSFBTTreeBranch;
 export type JSFBTMetaEntry = Readonly<
   | {
       range?: undefined;
-      singular?: true; // TODO(T29504932) deprecate this,
+      singular?: true;
       token?: string;
       type: (typeof FbtVariationType)['NUMBER'];
     }

@@ -4,8 +4,6 @@ export function getFallback(): typeof Gender.UNKNOWN {
   return Gender.UNKNOWN;
 }
 
-export function getGenderVariations(): ReadonlyArray<
-  (typeof Gender)[keyof typeof Gender]
-> {
+export function getGenderVariations(): ReadonlyArray<Gender> {
   return [Gender.UNKNOWN, Gender.MALE, Gender.FEMALE];
 }

@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import { hasKeys, varDump } from '../FbtUtil.tsx';
+import { varDump } from '../FbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
 import replaceClearTokensWithTokenAliases from '../replaceClearTokensWithTokenAliases.tsx';
 import type { FbtTableKey, PatternHash } from '../Types.tsx';
@@ -7,7 +7,7 @@ import { FbtSite, FbtSiteMetaEntry } from './FbtSite.tsx';
 import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase.tsx';
 import type {
   IntlVariationMaskValue,
-  IntlVariationsEnum,
+  IntlVariations,
 } from './IntlVariations.tsx';
 import {
   EXACTLY_ONE,
@@ -28,7 +28,7 @@ import { buildConstraintKey } from './VariationConstraintUtils.tsx';
  * Map from a string's hash to its translation payload.
  * If the translation is string type, it implies it was machine generatd.
  */
-type HashToTranslation = Partial<
+export type HashToTranslation = Partial<
   Record<PatternHash, TranslationData | string | null | undefined>
 >;
 
@@ -73,10 +73,7 @@ type MetadataToken = string;
 
 /** e.g. {'name' => IntlGenderVariations.MALE} */
 type TokenToConstraint = Partial<
-  Record<
-    MetadataToken,
-    IntlVariationsEnum | (typeof Gender)[keyof typeof Gender]
-  >
+  Record<MetadataToken, IntlVariations | Gender>
 >;
 
 /** e.g. {'name' => IntlVariationMask.GENDER} */
@@ -185,7 +182,7 @@ export default class TranslationBuilder {
   }
 
   _translationsExist(): boolean {
-    for (const hash in this._fbtSite.getHashToLeaf()) {
+    for (const hash of Object.keys(this._fbtSite.getHashToLeaf())) {
       const transData = this._translations[hash];
       if (
         typeof transData === 'string' ||
@@ -202,7 +199,7 @@ export default class TranslationBuilder {
    * Inspect all translation variations for a hidden viewer context token
    */
   _findVCGenderVariation(): boolean {
-    for (const hash in this._fbtSite.getHashToLeaf()) {
+    for (const hash of Object.keys(this._fbtSite.getHashToLeaf())) {
       const transData = this._translations[hash];
       if (!(transData instanceof TranslationData)) {
         continue;
@@ -309,7 +306,7 @@ export default class TranslationBuilder {
       // specified, return null and rely on runtime fallback to wildcard.
       translation = tokenConstraints ? null : transData;
     } else {
-      if (hasKeys(tokenConstraints)) {
+      if (Object.keys(tokenConstraints).length > 0) {
         translation = this.getConstrainedTranslation(hash, tokenConstraints);
       } else {
         // Real translations are TranslationData objects, so we call the
@@ -348,10 +345,10 @@ export default class TranslationBuilder {
     tokenConstraints: TokenToConstraint
   ): string | null | undefined {
     const constraintKeys: MutableTokenConstraintPairs = [];
-    for (const token in this._tokenToMask) {
+    for (const token of Object.keys(this._tokenToMask)) {
       constraintKeys.push([token, tokenConstraints[token] || '*']);
     }
-    const constraintMap = this._getConstraintMapWithMemoization(hash);
+    const constraintMap = this.getConstraintMapWithMemoization(hash);
     const aggregateKey = buildConstraintKey(constraintKeys);
     const translation = constraintMap[aggregateKey];
     if (!translation) {
@@ -466,26 +463,28 @@ export default class TranslationBuilder {
    *    ...
    *  }
    */
-  private _mem: Record<string, any> = {};
-  _getConstraintMapWithMemoization = (
+  private _mem = new Map<string, ConstraintKeyToTranslation>();
+  private getConstraintMapWithMemoization = (
     hash: PatternHash
   ): ConstraintKeyToTranslation => {
-    if (this._mem[hash]) {
-      return this._mem[hash];
+    const cache = this._mem.get(hash);
+    if (cache != null) {
+      return cache;
     }
 
     const constraintMap: Record<string, any> = {};
     const transData = this._translations[hash];
     if (transData == null || typeof transData === 'string') {
       // No translation? No constraints.
-      return (this._mem[hash] = constraintMap);
+      this._mem.set(hash, constraintMap);
+      return constraintMap;
     }
 
     // For every possible variation combination, create a mapping to its
     // corresponding translation
     transData.translations.forEach((translation) => {
       const constraints: Record<string, any> = {};
-      for (const idx in translation.variations) {
+      for (const idx of Object.keys(translation.variations)) {
         const variation = translation.variations[idx];
         // We prune entries that contain non-default variations
         // for tokens we haven't specified.
@@ -511,7 +510,7 @@ export default class TranslationBuilder {
       // default: '*', since no such variation actually exists for a
       // non-existent token
       const constraintKeys: MutableTokenConstraintPairs = [];
-      for (const k in this._tokenToMask) {
+      for (const k of Object.keys(this._tokenToMask)) {
         constraintKeys.push([k, constraints[k] || '*']);
       }
       this._insertConstraint(
@@ -521,7 +520,8 @@ export default class TranslationBuilder {
         0
       );
     });
-    return (this._mem[hash] = constraintMap);
+    this._mem.set(hash, constraintMap);
+    return constraintMap;
   };
 }
 
@@ -531,7 +531,7 @@ function _shouldStore(branch: TranslationTree): boolean {
     (typeof branch === 'string' ||
       typeof branch === 'number' ||
       Array.isArray(branch) ||
-      hasKeys(branch))
+      Object.keys(branch).length > 0)
   );
 }
 

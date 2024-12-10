@@ -562,7 +562,7 @@ describe('Test fbt transforms without the jsx transform', () => {
     });
   });
 
-  // TODO(T94644387) fix preserving whitespace for JSX text
+  // TODO: Fix preserving whitespace for JSX text.
   it('should fail to preserve whitespace in text when preserveWhitespace=true (known bug)', async () => {
     expect(
       await snapshotTransformKeepJsx(`
@@ -574,11 +574,7 @@ describe('Test fbt transforms without the jsx transform', () => {
     ).toMatchSnapshot();
   });
 
-  // TODO(T78914132): actually, we should NOT insert a space between two <fbt:plural>
-  // that don't neighbor raw text to match Hack fbt parity.
-  // But there's not much point fixing this before the fbt autoparam work.
-  // See Hack fbt equivalent: https://fburl.com/intl/zkacwqtj
-  // See also JS fbt fiddle: https://fburl.com/intl/ha5dryng
+  // TODO: We should NOT insert a space between two <fbt:plural>'s
   it(`[legacy buggy behavior] <fbt:pronoun> should insert a space character between two fbt constructs that don't neighbor raw text`, async () =>
     expect(
       await snapshotTransformKeepJsx(`

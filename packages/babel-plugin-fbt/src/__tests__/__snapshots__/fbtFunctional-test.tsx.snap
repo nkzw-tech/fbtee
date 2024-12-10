@@ -861,25 +861,25 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "line_end": 25,
     "project": "",
     "subject": Node {
-      "end": 594,
+      "end": 578,
       "innerComments": undefined,
       "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
-          "index": 594,
+          "index": 578,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
-          "index": 582,
+          "index": 566,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "start": 582,
+      "start": 566,
       "trailingComments": undefined,
       "type": "Identifier",
     },
@@ -910,25 +910,25 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "line_end": 18,
     "project": "",
     "subject": Node {
-      "end": 594,
+      "end": 578,
       "innerComments": undefined,
       "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
-          "index": 594,
+          "index": 578,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
-          "index": 582,
+          "index": 566,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "start": 582,
+      "start": 566,
       "trailingComments": undefined,
       "type": "Identifier",
     },
@@ -956,25 +956,25 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "line_end": 16,
     "project": "",
     "subject": Node {
-      "end": 594,
+      "end": 578,
       "innerComments": undefined,
       "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
-          "index": 594,
+          "index": 578,
           "line": 23,
         },
         "filename": undefined,
         "identifierName": "subjectValue",
         "start": Position {
           "column": 19,
-          "index": 582,
+          "index": 566,
           "line": 23,
         },
       },
       "name": "subjectValue",
-      "start": 582,
+      "start": 566,
       "trailingComments": undefined,
       "type": "Identifier",
     },
@@ -3085,7 +3085,7 @@ FbtElementNode {
             <b>
               C1
               {
-      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+      // fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -3149,7 +3149,7 @@ FbtElementNode {
             <b>
               C1
               {
-      // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+      // fbt constructs like fbt.pronoun() should return some opaque type
       // like FbtElement to work with React components
     }
               {fbt.param('paramName', paramValue)}
@@ -3199,7 +3199,7 @@ FbtElementNode {
           "__nodeCode": "<b>
               C1
               {
-    // TODO(T27672828) fbt constructs like fbt.pronoun() should return some opaque type
+    // fbt constructs like fbt.pronoun() should return some opaque type
     // like FbtElement to work with React components
   }
               {fbt.param('paramName', paramValue)}

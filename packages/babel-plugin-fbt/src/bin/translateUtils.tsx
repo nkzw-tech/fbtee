@@ -1,9 +1,11 @@
 import { readFileSync } from 'node:fs';
 import FbtHashKey from '../fbtHashKey.tsx';
-import { objMap } from '../FbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
 import { FbtSite } from '../translate/FbtSite.tsx';
-import type { TranslationResult } from '../translate/TranslationBuilder.tsx';
+import type {
+  HashToTranslation,
+  TranslationResult,
+} from '../translate/TranslationBuilder.tsx';
 import TranslationBuilder from '../translate/TranslationBuilder.tsx';
 import TranslationConfig from '../translate/TranslationConfig.tsx';
 import type { SerializedTranslationData } from '../translate/TranslationData.tsx';
@@ -130,7 +132,7 @@ function checkAndFilterTranslations(
   options: Options
 ): Translations {
   const filteredTranslations: Translations = {};
-  for (const hash in translations) {
+  for (const hash of Object.keys(translations)) {
     if (translations[hash] == null) {
       const message = `Missing ${locale} translation for string (${hash})`;
       if (options.strict) {
@@ -156,7 +158,10 @@ function processTranslations(
     group.translations,
     options
   );
-  const translations = objMap(filteredTranslations, TranslationData.fromJSON);
+  const translations: HashToTranslation = {};
+  for (const t of Object.keys(filteredTranslations)) {
+    translations[t] = TranslationData.fromJSON(filteredTranslations[t]);
+  }
   const translatedPhrases = fbtSites.map((fbtsite) =>
     new TranslationBuilder(translations, config, fbtsite, false).build()
   );

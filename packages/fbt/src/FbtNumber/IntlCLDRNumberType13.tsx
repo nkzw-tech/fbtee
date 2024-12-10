@@ -1,9 +1,7 @@
 import IntlVariations from '../IntlVariations.tsx';
 
 export default {
-  getVariation(
-    n: number
-  ): (typeof IntlVariations)[keyof typeof IntlVariations] {
+  getVariation(n: number): IntlVariations {
     return n === 1 ||
       n === 2 ||
       n === 3 ||

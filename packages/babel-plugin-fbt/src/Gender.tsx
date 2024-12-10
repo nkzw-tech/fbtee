@@ -13,7 +13,7 @@ type GenderConfig = {
   subject: string;
 };
 
-export enum GenderConstEnum {
+export enum GenderConst {
   NOT_A_PERSON = 0,
   FEMALE_SINGULAR = 1,
   MALE_SINGULAR = 2,
@@ -30,18 +30,18 @@ export enum GenderConstEnum {
 }
 
 export const Genders = [
-  GenderConstEnum.NOT_A_PERSON,
-  GenderConstEnum.FEMALE_SINGULAR,
-  GenderConstEnum.MALE_SINGULAR,
-  GenderConstEnum.FEMALE_SINGULAR_GUESS,
-  GenderConstEnum.MALE_SINGULAR_GUESS,
-  GenderConstEnum.MIXED_UNKNOWN,
-  GenderConstEnum.NEUTER_SINGULAR,
-  GenderConstEnum.UNKNOWN_SINGULAR,
-  GenderConstEnum.FEMALE_PLURAL,
-  GenderConstEnum.MALE_PLURAL,
-  GenderConstEnum.NEUTER_PLURAL,
-  GenderConstEnum.UNKNOWN_PLURAL,
+  GenderConst.NOT_A_PERSON,
+  GenderConst.FEMALE_SINGULAR,
+  GenderConst.MALE_SINGULAR,
+  GenderConst.FEMALE_SINGULAR_GUESS,
+  GenderConst.MALE_SINGULAR_GUESS,
+  GenderConst.MIXED_UNKNOWN,
+  GenderConst.NEUTER_SINGULAR,
+  GenderConst.UNKNOWN_SINGULAR,
+  GenderConst.FEMALE_PLURAL,
+  GenderConst.MALE_PLURAL,
+  GenderConst.NEUTER_PLURAL,
+  GenderConst.UNKNOWN_PLURAL,
 ] as const;
 
 const NotAPerson = {
@@ -59,9 +59,9 @@ const NotAPerson = {
   subject: 'they',
 };
 
-const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
-  [GenderConstEnum.NOT_A_PERSON]: NotAPerson,
-  [GenderConstEnum.UNKNOWN_SINGULAR]: {
+const data: Partial<Record<GenderConst, GenderConfig>> = {
+  [GenderConst.NOT_A_PERSON]: NotAPerson,
+  [GenderConst.UNKNOWN_SINGULAR]: {
     is_female: false,
     is_guess: false,
     is_male: false,
@@ -75,7 +75,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'unknown singular',
     subject: 'they',
   },
-  [GenderConstEnum.FEMALE_SINGULAR]: {
+  [GenderConst.FEMALE_SINGULAR]: {
     is_female: true,
     is_guess: false,
     is_male: false,
@@ -89,7 +89,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'female singular',
     subject: 'she',
   },
-  [GenderConstEnum.FEMALE_SINGULAR_GUESS]: {
+  [GenderConst.FEMALE_SINGULAR_GUESS]: {
     is_female: true,
     is_guess: true,
     is_male: false,
@@ -103,7 +103,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'female singular',
     subject: 'she',
   },
-  [GenderConstEnum.MALE_SINGULAR]: {
+  [GenderConst.MALE_SINGULAR]: {
     is_female: false,
     is_guess: false,
     is_male: true,
@@ -117,7 +117,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'male singular',
     subject: 'he',
   },
-  [GenderConstEnum.MALE_SINGULAR_GUESS]: {
+  [GenderConst.MALE_SINGULAR_GUESS]: {
     is_female: false,
     is_guess: true,
     is_male: true,
@@ -131,7 +131,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'male singular',
     subject: 'he',
   },
-  [GenderConstEnum.NEUTER_SINGULAR]: {
+  [GenderConst.NEUTER_SINGULAR]: {
     is_female: false,
     is_guess: false,
     is_male: false,
@@ -145,7 +145,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'neuter singular',
     subject: 'they',
   },
-  [GenderConstEnum.MIXED_UNKNOWN]: {
+  [GenderConst.MIXED_UNKNOWN]: {
     is_female: false,
     is_guess: false,
     is_male: false,
@@ -159,7 +159,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'mixed plural',
     subject: 'they',
   },
-  [GenderConstEnum.FEMALE_PLURAL]: {
+  [GenderConst.FEMALE_PLURAL]: {
     is_female: true,
     is_guess: false,
     is_male: false,
@@ -173,7 +173,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'female plural',
     subject: 'they',
   },
-  [GenderConstEnum.MALE_PLURAL]: {
+  [GenderConst.MALE_PLURAL]: {
     is_female: false,
     is_guess: false,
     is_male: true,
@@ -187,7 +187,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'male plural',
     subject: 'they',
   },
-  [GenderConstEnum.NEUTER_PLURAL]: {
+  [GenderConst.NEUTER_PLURAL]: {
     is_female: false,
     is_guess: false,
     is_male: false,
@@ -201,7 +201,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
     string: 'neuter plural',
     subject: 'they',
   },
-  [GenderConstEnum.UNKNOWN_PLURAL]: {
+  [GenderConst.UNKNOWN_PLURAL]: {
     is_female: false,
     is_guess: false,
     is_male: false,
@@ -218,7 +218,7 @@ const data: Partial<Record<GenderConstEnum, GenderConfig>> = {
 } as const;
 
 export function getData(
-  gender: GenderConstEnum,
+  gender: GenderConst,
   usage: keyof GenderConfig
 ): boolean | string {
   return (data[gender] || NotAPerson)[usage];

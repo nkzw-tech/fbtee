@@ -68,7 +68,7 @@ export default class FbtNodeChecker {
         this.isNameOfModule(node.callee.object.name) &&
         isIdentifier(node.callee.property) &&
         typeof node.callee.property.name === 'string' &&
-        FbtNodeType[node.callee.property.name as keyof typeof FbtNodeType]) ||
+        FbtNodeType[node.callee.property.name as FbtNodeType]) ||
       null
     );
   }
@@ -202,7 +202,7 @@ export default class FbtNodeChecker {
         isIdentifier(node.callee.property) &&
         moduleNames.has(node.callee.object.name) &&
         typeof node.callee.property.name === 'string' &&
-        FbtNodeType[node.callee.property.name as keyof typeof FbtNodeType]) ||
+        FbtNodeType[node.callee.property.name as FbtNodeType]) ||
       null
     );
   }

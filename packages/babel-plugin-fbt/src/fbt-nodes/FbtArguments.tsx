@@ -2,7 +2,7 @@ import { Node } from '@babel/types';
 import invariant from 'invariant';
 import type { EnumKey } from '../FbtEnumRegistrar.tsx';
 import { compactBabelNodeProps, getRawSource, varDump } from '../FbtUtil.tsx';
-import type { GenderConstEnum } from '../Gender.tsx';
+import type { GenderConst } from '../Gender.tsx';
 import {
   EXACTLY_ONE,
   GENDER_ANY,
@@ -182,7 +182,7 @@ export abstract class StringVariationArg<
 export class EnumStringVariationArg extends StringVariationArg<EnumKey> {}
 
 export class GenderStringVariationArg extends StringVariationArg<
-  GenderConstEnum | typeof GENDER_ANY
+  GenderConst | typeof GENDER_ANY
 > {}
 
 export class NumberStringVariationArg extends StringVariationArg<

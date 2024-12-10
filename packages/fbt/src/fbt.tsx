@@ -41,18 +41,6 @@ const ValidPronounUsages: ValidPronounUsagesType = {
 const cachedFbtResults: Partial<Record<PatternString, FbtResult>> = {};
 
 /**
- * _hasKeys takes an object and returns whether it has any keys. It purposefully
- * avoids creating the temporary arrays incurred by calling Object.keys(o)
- * @param {Object} o - Example: "allSubstitutions"
- */
-function _hasKeys(o: { [key: string]: unknown }) {
-  for (const k in o) {
-    return k ? true : true;
-  }
-  return false;
-}
-
-/**
  * fbt._enum() takes an enum value and returns a tuple in the format:
  * [value, null]
  * @param value - Example: "id1"
@@ -364,7 +352,7 @@ fbt._ = function fbtCallsite(
   }
 
   const cachedFbt = this.cachedResults[patternString];
-  const hasSubstitutions = _hasKeys(allSubstitutions);
+  const hasSubstitutions = Object.keys(allSubstitutions).length > 0;
 
   if (cachedFbt && !hasSubstitutions) {
     return cachedFbt;
@@ -377,7 +365,7 @@ fbt._ = function fbtCallsite(
         translation: patternString,
       })
     );
-    // Use this._wrapContent voluntarily so that it can be overwritten in fbs.js
+    // Use `this` so that `fbs` can have its own variant.
     const result = this._wrapContent(
       fbtContent as NestedFbtContentItems,
       patternString,

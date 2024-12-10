@@ -748,33 +748,31 @@ export default class FbtFunctionCallProcessor {
    */
   _getSharedPhraseOptions({ options: fbtElementOptions }: FbtElementNode) {
     const { defaultFbtOptions } = this;
-    const ret = {
-      author:
-        (fbtElementOptions.author ??
-          enforceString.orNull(defaultFbtOptions.author)) ||
-        null,
-      common:
-        (fbtElementOptions.common ??
-          enforceBoolean.orNull(defaultFbtOptions.common)) ||
-        null,
-      doNotExtract:
-        (fbtElementOptions.doNotExtract ??
-          enforceBoolean.orNull(defaultFbtOptions.doNotExtract)) ||
-        null,
-      preserveWhitespace:
-        (fbtElementOptions.preserveWhitespace ??
-          enforceBoolean.orNull(defaultFbtOptions.preserveWhitespace)) ||
-        null,
-      project:
-        fbtElementOptions.project || enforceString(defaultFbtOptions.project),
-      subject: fbtElementOptions.subject,
+
+    const author =
+      fbtElementOptions.author ??
+      enforceString.orNull(defaultFbtOptions.author);
+    const common =
+      fbtElementOptions.common ??
+      enforceBoolean.orNull(defaultFbtOptions.common);
+    const doNotExtract =
+      fbtElementOptions.doNotExtract ??
+      enforceBoolean.orNull(defaultFbtOptions.doNotExtract);
+    const preserveWhitespace =
+      fbtElementOptions.preserveWhitespace ??
+      enforceBoolean.orNull(defaultFbtOptions.preserveWhitespace);
+    const project =
+      fbtElementOptions.project || enforceString(defaultFbtOptions.project);
+    const subject = fbtElementOptions.subject;
+
+    return {
+      ...(author != null && { author }),
+      ...(common != null && common !== false && { common }),
+      ...(doNotExtract != null && doNotExtract !== false && { doNotExtract }),
+      ...(preserveWhitespace != null &&
+        preserveWhitespace !== false && { preserveWhitespace }),
+      ...(subject != null && { subject }),
+      project,
     } as const;
-    // delete nullish options
-    for (const k in ret) {
-      if (ret[k as keyof typeof ret] == null) {
-        delete ret[k as keyof typeof ret];
-      }
-    }
-    return ret;
   }
 }

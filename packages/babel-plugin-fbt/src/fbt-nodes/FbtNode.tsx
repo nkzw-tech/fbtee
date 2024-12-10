@@ -338,7 +338,7 @@ export default class FbtNode<
     const type =
       FbtNodeType[
         (this.constructor as unknown as { type: 'string' })
-          .type as unknown as keyof typeof FbtNodeType
+          .type as unknown as FbtNodeType
       ];
     invariant(
       type != null,
@@ -422,7 +422,7 @@ export default class FbtNode<
   ): void {
     const argsToCheck =
       this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
-    for (const argumentName in argsToCheck) {
+    for (const argumentName of Object.keys(argsToCheck)) {
       const argument = argsToCheck[argumentName];
       if (isCallExpression(argument) || isNewExpression(argument)) {
         throw errorAt(

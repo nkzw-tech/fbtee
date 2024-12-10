@@ -39,12 +39,12 @@ function _getRules(locale?: string | null): Rules {
   const rules: Array<Rule> = [];
   const rewrites = IntlPhonologicalRewrites.get(locale);
 
-  for (let pattern in rewrites.patterns) {
+  for (let pattern of Object.keys(rewrites.patterns)) {
     let replacement: string | ((match: string) => string) =
       rewrites.patterns[pattern];
     // "Metaclasses" are shorthand for larger character classes. For example,
     // _C may refer to consonants and _V to vowels for a locale.
-    for (const metaclass in rewrites.meta) {
+    for (const metaclass of Object.keys(rewrites.meta)) {
       const metaclassRegexp = new RegExp(metaclass.slice(1, -1), 'g');
       const characterClass = rewrites.meta[metaclass];
       pattern = pattern.replace(metaclassRegexp, characterClass);
@@ -87,7 +87,7 @@ export function applyPhonologicalRules(text: string): string {
  * are the entries in the redundancy mapping
  */
 const _normalizedStops = new Map<string, string>();
-for (const norm in IntlRedundantStops.equivalencies) {
+for (const norm of Object.keys(IntlRedundantStops.equivalencies)) {
   for (const eq of [norm].concat(
     IntlRedundantStops.equivalencies[
       norm as keyof typeof IntlRedundantStops.equivalencies
@@ -101,7 +101,7 @@ const _redundancies = new Map<
   string | null | undefined,
   Set<string | null | undefined>
 >();
-for (const prefix in IntlRedundantStops.redundancies) {
+for (const prefix of Object.keys(IntlRedundantStops.redundancies)) {
   _redundancies.set(
     prefix,
     new Set(

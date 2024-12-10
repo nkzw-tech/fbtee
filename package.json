@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build; pnpm -r build:types",
+    "build:all": "pnpm -r build && pnpm -r build:types && pnpm install && cd example && pnpm build:fbt",
     "clean": "rm -rf packages/*/lib",
     "dev": "cd example && pnpm dev",
     "lint:format": "prettier --cache --check .",

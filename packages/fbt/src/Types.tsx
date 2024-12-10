@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, ReactPortal } from 'react';
-import GenderConstEnum from './GenderConst.tsx';
+import GenderConst from './GenderConst.tsx';
 import IntlVariations from './IntlVariations.tsx';
 
 /**
@@ -177,7 +177,7 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
   ) => ParamOutput;
   pronoun: (
     usage: 'object' | 'possessive' | 'reflexive' | 'subject',
-    gender: GenderConstEnum,
+    gender: GenderConst,
     options?: {
       capitalize?: boolean;
       human?: boolean;
