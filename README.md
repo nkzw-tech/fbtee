@@ -1,79 +1,18 @@
-<p>
-  <a href="https://twitter.com/fbt_js">
-    <img src="https://img.shields.io/twitter/follow/fbt_js.svg?style=social" align="right" alt="Twitter Follow" />
-  </a>
-
-  <a href="https://discord.gg/cQvXZr5">
-    <img src="https://img.shields.io/discord/102860784329052160.svg" align="right" alt="Discord Chat" />
-  </a>
-
-  <a href="https://www.facebook.com/groups/498204277369868">
-    <img src="https://img.shields.io/badge/Facebook-Group-blue" align="right" alt="Facebook Group" />
-  </a>
-</p>
-
 <h1 align="center">
   <img src="https://facebook.github.io/fbt/img/fbt.png" height="150" width="150" alt="FBT"/>
 </h1>
 
-FBT is an internationalization framework for JavaScript designed to be not just **powerful** and **flexible**, but also **simple** and **intuitive**.
+FBT is an internationalization framework for JavaScript designed to be **powerful**, **flexible**, and **intuitive**.
+
 It helps with the following:
 
 - Organizing your source text for translation
-- Composing grammatically correct translatable UI
-- Eliminating verbose boilerplate for generating UI
+- Composing grammatically correct translatable User Interfaces
+- Eliminating verbose boilerplate for generating User Interfaces
 
-## Online Resources
+## Status: In-Progress Fork
 
-- [Official Website](https://facebook.github.io/fbt)
-- [Documentation](https://facebook.github.io/fbt/docs/getting_started_on_web)
-
-## Examples
-
-- [See our demo here](example/src/example/Example.react.jsx)
-
-## Requirements
-
-- [Node.js](https://nodejs.org/)
-- [Babel](https://babeljs.io/)
-
-## Building the fbt library
-
-```
-git clone git@github.com:facebook/fbt.git
-cd fbt
-pnpm install
-```
-
-## How FBT works
-
-FBT works by transforming your `<fbt>` and `fbt(...)` constructs via
-Babel plugins. These plugins serve to extract strings from source and
-lookup translated payloads generated at build-time. FBT creates tables
-of all possible variations for the given fbt phrase and accesses this
-at runtime.
-
-## Join the fbt community
-
-- [Website](https://facebook.github.io/fbt)
-- [Facebook group](https://www.facebook.com/groups/498204277369868)
-- [Discord #fbt channel in reactiflux](https://discord.gg/cQvXZr5)
-- [Twitter](https://twitter.com/fbt_js)
-
-See the [CONTRIBUTING](CONTRIBUTING.md) file for how to help out.
-
-## Change log
-
-See [CHANGELOG](CHANGELOG.md).
-
-## List of npm modules published from this repo:
-
-- [babel-plugin-fbt](https://www.npmjs.com/package/babel-plugin-fbt) (build-time / server-side)
-  - See [package.json](packages/babel-plugin-fbt/package.json)
-- [babel-plugin-fbt-runtime](https://www.npmjs.com/package/babel-plugin-fbt-runtime) (server-side)
-  - See [package.json](packages/babel-plugin-fbt-runtime/package.json)
-- [fbt](https://www.npmjs.com/package/fbt) (client-side)
-  - See [package.json](packages/fbt/package.json)
+This is a fork of Facebook's original fbt library, which has been archived. The aim of this fork is to create the best and most modern internationalization library for JavaScript & React.
 
 ## License
 
