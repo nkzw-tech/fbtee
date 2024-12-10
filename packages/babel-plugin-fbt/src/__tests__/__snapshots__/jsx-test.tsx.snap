@@ -577,6 +577,58 @@ fbt._(
 
 `;
 
+exports[`Test declarative (jsx) fbt syntax translation should work with fragments 1`] = `
+const fbt = require("fbt");
+<Fragment>
+  {fbt._(
+    /* __FBT__ start */ {
+      jsfbt: { m: [], t: { desc: "...", text: "{time} by {user name}" } },
+      project: "",
+    } /* __FBT__ end */,
+    [
+      fbt._param("time", formatDate(date, "F d, Y")),
+      fbt._param(
+        "user name",
+        <Link
+          href={{
+            url: user.link,
+          }}
+        >
+          {user.name}
+        </Link>
+      ),
+    ]
+  )}
+</Fragment>;
+
+`;
+
+exports[`Test declarative (jsx) fbt syntax translation should work with implicit fragments 1`] = `
+const fbt = require("fbt");
+<>
+  {fbt._(
+    /* __FBT__ start */ {
+      jsfbt: { m: [], t: { desc: "...", text: "{time} by {user name}" } },
+      project: "",
+    } /* __FBT__ end */,
+    [
+      fbt._param("time", formatDate(date, "F d, Y")),
+      fbt._param(
+        "user name",
+        <Link
+          href={{
+            url: user.link,
+          }}
+        >
+          {user.name}
+        </Link>
+      ),
+    ]
+  )}
+</>;
+
+`;
+
 exports[`Test fbt transforms without the jsx transform [legacy buggy behavior] <fbt:pronoun> should insert a space character between two fbt constructs that don't neighbor raw text 1`] = `
 const fbt = require("fbt");
 fbt._(

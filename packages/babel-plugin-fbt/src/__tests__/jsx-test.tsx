@@ -428,6 +428,38 @@ const testData = {
       </fbt>`
     ),
   },
+
+  'should work with fragments': {
+    input: withFbtRequireStatement(
+      `<Fragment>
+        <fbt desc="...">
+          <fbt:param name="time">{formatDate(date, "F d, Y")}</fbt:param>
+           by
+          <fbt:param name="user name">
+            <Link href={{url:user.link}}>
+              {user.name}
+            </Link>
+          </fbt:param>
+        </fbt>
+      </Fragment>;`
+    ),
+  },
+
+  'should work with implicit fragments': {
+    input: withFbtRequireStatement(
+      `<>
+        <fbt desc="...">
+          <fbt:param name="time">{formatDate(date, "F d, Y")}</fbt:param>
+           by
+          <fbt:param name="user name">
+            <Link href={{url:user.link}}>
+              {user.name}
+            </Link>
+          </fbt:param>
+        </fbt>
+      </>;`
+    ),
+  },
 };
 
 describe('Test declarative (jsx) fbt syntax translation', () =>

@@ -93,7 +93,9 @@ export default function Example() {
     <div>
       <div className="example">
         <div className="warning">
-          <fbt desc="title">Your FBT Demo</fbt>
+          <>
+            <fbt desc="title">Your FBT Demo</fbt>
+          </>
         </div>
         <h1>
           <fbt desc="header">Construct sentences</fbt>

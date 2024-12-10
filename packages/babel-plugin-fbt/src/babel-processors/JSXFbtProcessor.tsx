@@ -10,6 +10,7 @@ import {
   identifier,
   isCallExpression,
   isJSXElement,
+  isJSXFragment,
   isStringLiteral,
   JSXAttribute,
   JSXElement,
@@ -217,7 +218,7 @@ export default class JSXFbtProcessor {
     const callNode = callExpression(identifier(moduleName), args);
     callNode.loc = node.loc;
 
-    if (isJSXElement(path.parent)) {
+    if (isJSXElement(path.parent) || isJSXFragment(path.parent)) {
       const ret = jsxExpressionContainer(callNode);
       ret.loc = node.loc;
       return ret;
@@ -380,7 +381,7 @@ const jsxFbtConstructToFunctionalFormTransform = {
           memberExpression(identifier(moduleName), identifier(name), false),
           args as Array<CallExpressionArg>
         );
-      if (isJSXElement(path.parent)) {
+      if (isJSXElement(path.parent) || isJSXFragment(path.parent)) {
         fbtConstructCall = jsxExpressionContainer(fbtConstructCall);
       }
       path.replaceWith(fbtConstructCall);
