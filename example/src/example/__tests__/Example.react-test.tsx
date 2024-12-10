@@ -1,9 +1,9 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import Example from '../Example.react.tsx';
 
 describe('Example.react', () => {
   it('renders the example', () => {
-    const example = renderer.create(<Example />).toJSON();
-    expect(example).toMatchSnapshot();
+    const { asFragment } = render(<Example />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

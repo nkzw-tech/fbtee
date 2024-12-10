@@ -30,6 +30,6 @@
   "peerDependencies": {
     "babel-plugin-fbt": "workspace:*",
     "babel-plugin-fbt-runtime": "workspace:*",
-    "react": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0"
   }
 }

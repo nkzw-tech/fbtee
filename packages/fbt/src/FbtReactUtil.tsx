@@ -1,7 +1,9 @@
 import { IFbtResultBase } from './Types.tsx';
 
 const REACT_ELEMENT_TYPE: symbol | 60_103 =
-  (typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element')) ||
+  (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.transitional.element')) ||
   0xea_c7;
 
 export default {

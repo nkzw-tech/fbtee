@@ -23,14 +23,13 @@
     "fbt": "workspace:*",
     "invariant": "^2.2.4",
     "normalize.css": "8.0.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
     "@vitejs/plugin-react": "^4.3.4",
     "invariant": "^2.2.4",
-    "react-test-renderer": "^18.0.0",
     "vite": "^6.0.3"
   }
 }

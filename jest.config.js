@@ -69,6 +69,7 @@ export default {
         '<rootDir>/packages/fbt/src',
       ],
       roots: ['<rootDir>/example'],
+      testEnvironment: 'jsdom',
       transform: {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
