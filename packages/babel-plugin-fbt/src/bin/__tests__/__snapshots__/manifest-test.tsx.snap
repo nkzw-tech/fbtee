@@ -8,12 +8,12 @@ exports[`manifest should extract strings 1`] = `
 
 exports[`manifest should extract strings 2`] = `
 "{
-  "CommonJS$FbtEnum": {
+  "ExportDefault$FbtEnum": {
     "id1": "groups",
     "id2": "photos",
     "id3": "videos"
   },
-  "ExportDefault$FbtEnum": {
+  "CommonJS$FbtEnum": {
     "id1": "groups",
     "id2": "photos",
     "id3": "videos"

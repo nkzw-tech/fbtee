@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import glob from 'glob';
+import { globSync } from 'glob';
 import invariant from 'invariant';
 import {
   FBT_ENUM_MODULE_SUFFIX as ENUM_FILE,
@@ -24,7 +24,7 @@ export function generateManifest(
     [enumModuleName: string]: EnumModule;
   } = {};
   for (const src of srcPaths) {
-    const enumFiles: Array<string> = glob.sync(
+    const enumFiles: Array<string> = globSync(
       path.resolve(cwd, src) + '/**/*' + ENUM_FILE + FILE_EXT,
       {
         nodir: true,
@@ -47,7 +47,7 @@ export function generateManifest(
 
   // Find source files that are fbt-containing candidates
   const getFiles = (src: string) =>
-    glob.sync(path.resolve(cwd, src) + '/**/*' + FILE_EXT, { nodir: true });
+    globSync(path.resolve(cwd, src) + '/**/*' + FILE_EXT, { nodir: true });
 
   const srcFiles = srcPaths
     .flatMap(getFiles)
