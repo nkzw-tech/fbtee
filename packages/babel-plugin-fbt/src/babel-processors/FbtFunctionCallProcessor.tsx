@@ -16,9 +16,6 @@ import {
   jsxExpressionContainer,
   memberExpression,
   Node,
-  nullLiteral,
-  objectExpression,
-  objectProperty,
   Program,
   SequenceExpression,
   sequenceExpression,
@@ -40,7 +37,7 @@ import type {
   FbtOptionConfig,
   JSModuleNameType,
 } from '../FbtConstants.tsx';
-import { EXTRA_OPTIONS_KEY, SENTINEL } from '../FbtConstants.tsx';
+import { SENTINEL } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
@@ -190,7 +187,7 @@ export default class FbtFunctionCallProcessor {
     metaPhraseIndex: number,
     stringVariationRuntimeArgs: StringVariationRuntimeArgumentBabelNodes
   ): CallExpression {
-    const { fbtNode, phrase } = metaPhrases[metaPhraseIndex];
+    const { phrase } = metaPhrases[metaPhraseIndex];
     const { pluginOptions } = this;
 
     // 1st argument - Sentinel Payload
@@ -215,19 +212,6 @@ export default class FbtFunctionCallProcessor {
     );
     if (fbtRuntimeArgs.length > 0) {
       args.push(arrayExpression(fbtRuntimeArgs));
-    }
-
-    // 3rd argument - Extra options which eventually become part of `FbtInputOpts`
-    const extraOptionsNode = fbtNode.getExtraOptionsNode();
-    if (extraOptionsNode != null) {
-      if (args.length === 1) {
-        args.push(nullLiteral());
-      }
-      args.push(
-        objectExpression([
-          objectProperty(identifier(EXTRA_OPTIONS_KEY), extraOptionsNode),
-        ])
-      );
     }
 
     return callExpression(

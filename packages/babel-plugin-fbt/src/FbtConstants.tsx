@@ -138,5 +138,3 @@ export type FbtTypeValue = (typeof FbtType)[keyof typeof FbtType];
 export const ModuleNameRegExp: RegExp = /<[Ff]b[st]\b|fb[st](\.c)?\s*\(/;
 
 export const FBT_ENUM_MODULE_SUFFIX = '$FbtEnum';
-
-export const EXTRA_OPTIONS_KEY = 'eo';
