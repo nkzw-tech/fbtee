@@ -2,14 +2,17 @@ import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import { describe, it } from '@jest/globals';
 import fbt from 'babel-plugin-fbt';
-import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestUtil.tsx';
-import { assertSourceAstEqual } from '../../../../test/TestUtil.tsx';
+import fbtAutoImport from 'babel-plugin-fbt-auto-import';
+import {
+  assertSourceAstEqual,
+  withFbtRequireStatement,
+} from 'babel-plugin-fbt/src/__tests__/FbtTestUtil.tsx';
 import fbtRuntime from '../index.tsx';
 
 const transform = (source: string, extraOptions?: Record<string, unknown>) =>
   transformSync(source, {
     ast: false,
-    plugins: [[fbt, { extraOptions }], fbtRuntime],
+    plugins: [fbtAutoImport, [fbt, { extraOptions }], fbtRuntime],
     presets: [presetReact],
     sourceType: 'module',
   })?.code || '';
@@ -62,6 +65,37 @@ lines">
           {hk: '2xRGl8'},
         );`
       ),
+    };
+    runTest(data);
+  });
+
+  it('should auto import for <fbt>', () => {
+    const data = {
+      input: `<fbt desc="d">
+          <fbt:param
+            name="two
+lines">
+            <b>
+              <fbt desc="test">simple</fbt>
+            </b>
+          </fbt:param>
+          test
+        </fbt>;`,
+      output: `import { fbt } from 'fbt';
+        fbt._(
+          '{two lines} test',
+          [
+            fbt._param(
+              'two lines',
+              React.createElement(
+                'b',
+                null,
+                fbt._('simple', null, {hk: '2pjKFw'}),
+              ),
+            ),
+          ],
+          {hk: '2xRGl8'},
+        );`,
     };
     runTest(data);
   });

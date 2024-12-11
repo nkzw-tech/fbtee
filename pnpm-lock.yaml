@@ -200,6 +200,15 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0
 
+  packages/babel-plugin-fbt-auto-import:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.26.0
+        version: 7.26.0
+      '@babel/types':
+        specifier: ^7.26.3
+        version: 7.26.3
+
   packages/babel-plugin-fbt-runtime:
     dependencies:
       '@babel/core':
@@ -220,12 +229,19 @@ importers:
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
+    devDependencies:
+      babel-plugin-fbt-auto-import:
+        specifier: workspace:*
+        version: link:../babel-plugin-fbt-auto-import
 
   packages/babel-preset-fbt:
     dependencies:
       babel-plugin-fbt:
         specifier: workspace:*
         version: link:../babel-plugin-fbt
+      babel-plugin-fbt-auto-import:
+        specifier: workspace:*
+        version: link:../babel-plugin-fbt-auto-import
       babel-plugin-fbt-runtime:
         specifier: workspace:*
         version: link:../babel-plugin-fbt-runtime
@@ -3550,7 +3566,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-module-imports': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
-      '@babel/traverse': 7.25.9
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 

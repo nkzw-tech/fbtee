@@ -1,8 +1,8 @@
 import { describe, expect } from '@jest/globals';
-import { testSection } from '../../../../test/TestUtil.tsx';
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
+  testSection,
   withFbtRequireStatement,
 } from './FbtTestUtil.tsx';
 

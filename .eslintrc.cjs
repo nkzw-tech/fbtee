@@ -6,21 +6,16 @@ module.exports = {
   ignorePatterns: ['packages/*/lib'],
   overrides: [
     {
-      files: ['./test/TestUtil.tsx', '**/__tests__/**/*.tsx'],
+      files: ['**/__tests__/**/*.tsx'],
       rules: {
         'no-console': 0,
+        'workspaces/no-relative-imports': 0,
       },
     },
     {
       files: ['./.eslintrc.cjs'],
       rules: {
         '@typescript-eslint/no-require-imports': 0,
-      },
-    },
-    {
-      files: ['**/__tests__/**/*.tsx'],
-      rules: {
-        'workspaces/no-relative-imports': 0,
       },
     },
   ],
@@ -34,7 +29,6 @@ module.exports = {
         devDependencies: [
           './example/vite.config.ts',
           './jest-preprocessor.js',
-          './test/TestUtil.tsx',
           '**/__tests__/**/*.tsx',
         ],
         packageDir: [__dirname].concat(

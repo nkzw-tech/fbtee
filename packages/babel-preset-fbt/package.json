@@ -15,11 +15,12 @@
   "scripts": {
     "build": "rm -f lib/index.js; pnpm build:src; pnpm build:bin",
     "build:bin": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/bin.js --external:babel-plugin-fbt --bundle ./src/bin.tsx",
-    "build:src": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --external:babel-plugin-fbt --external:babel-plugin-fbt-runtime --bundle ./src/index.tsx",
+    "build:src": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --external:babel-plugin-fbt --external:babel-plugin-fbt-runtime --external:babel-plugin-fbt-auto-import --bundle ./src/index.tsx",
     "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
   },
   "dependencies": {
     "babel-plugin-fbt": "workspace:*",
+    "babel-plugin-fbt-auto-import": "workspace:*",
     "babel-plugin-fbt-runtime": "workspace:*"
   }
 }

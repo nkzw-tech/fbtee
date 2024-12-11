@@ -1,5 +1,6 @@
 packages:
   - 'example'
+  - 'packages/babel-plugin-fbt-auto-import'
   - 'packages/babel-plugin-fbt-runtime'
   - 'packages/babel-plugin-fbt'
   - 'packages/babel-preset-fbt'

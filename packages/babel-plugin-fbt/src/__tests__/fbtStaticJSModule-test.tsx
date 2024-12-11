@@ -2,12 +2,10 @@ import { PluginOptions } from '@babel/core';
 import { describe, expect, it } from '@jest/globals';
 import {
   assertSourceAstEqual,
-  testSection,
-} from '../../../../test/TestUtil.tsx';
-import {
   jsCodeFbtCallSerializer,
   payload,
   snapshotTransform,
+  testSection,
   transform,
   withFbtRequireStatement,
 } from './FbtTestUtil.tsx';

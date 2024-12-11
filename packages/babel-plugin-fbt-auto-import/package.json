@@ -1,7 +1,7 @@
 {
-  "name": "babel-plugin-fbt-runtime",
+  "name": "babel-plugin-fbt-auto-import",
   "version": "0.0.0",
-  "description": "The secondary FBT Babel transform, for E2E use",
+  "description": "Auto-import fbt when using <fbt> components.",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/fbt.git"
@@ -15,15 +15,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/preset-react": "^7.26.3",
-    "@babel/traverse": "^7.26.4",
-    "@babel/types": "^7.26.3",
-    "invariant": "^2.2.4"
-  },
-  "devDependencies": {
-    "babel-plugin-fbt-auto-import": "workspace:*"
-  },
-  "peerDependencies": {
-    "babel-plugin-fbt": "workspace:*"
+    "@babel/types": "^7.26.3"
   }
 }

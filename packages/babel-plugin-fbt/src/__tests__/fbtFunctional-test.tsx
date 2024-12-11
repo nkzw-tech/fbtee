@@ -1,10 +1,14 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest.tsx';
-import { testSection } from '../../../../test/TestUtil.tsx';
 import FbtFunctionCallProcessor from '../babel-processors/FbtFunctionCallProcessor.tsx';
 import { getExtractedStrings, PluginOptions } from '../index.tsx';
 import { FbtVariationType } from '../translate/IntlVariations.tsx';
-import { payload, transform, withFbtRequireStatement } from './FbtTestUtil.tsx';
+import {
+  payload,
+  testSection,
+  transform,
+  withFbtRequireStatement,
+} from './FbtTestUtil.tsx';
 
 type TestCase = Readonly<{
   input: string;

@@ -1,8 +1,16 @@
 import fbt, { PluginOptions } from 'babel-plugin-fbt';
+import autoImport from 'babel-plugin-fbt-auto-import';
 import fbtRuntime from 'babel-plugin-fbt-runtime';
 
-export default function preset(_: unknown, options: PluginOptions) {
+export default function preset(
+  _: unknown,
+  options: PluginOptions & { disableAutoImport?: boolean }
+) {
   return {
-    plugins: [[fbt, options], fbtRuntime],
+    plugins: [
+      ...(options?.disableAutoImport ? [] : [autoImport]),
+      [fbt, options],
+      fbtRuntime,
+    ],
   };
 }
