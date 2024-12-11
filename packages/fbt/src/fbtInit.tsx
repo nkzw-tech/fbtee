@@ -12,8 +12,11 @@ export type FbtInitInput = {
   translations: TranslationDict;
 };
 
-const getFbtResult = ({ contents, errorListener }: FbtResolvedPayload) =>
-  new FbtResult(contents, errorListener);
+const getFbtResult = ({
+  contents,
+  errorListener,
+  hashKey,
+}: FbtResolvedPayload) => new FbtResult(contents, errorListener, hashKey);
 
 export default function fbtInit(input: FbtInitInput) {
   FbtTranslations.registerTranslations(input.translations);

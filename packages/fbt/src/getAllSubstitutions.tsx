@@ -1,7 +1,8 @@
 import invariant from 'invariant';
 import { FbtTableArgs } from './FbtHooks.tsx';
 import FbtTable from './FbtTable.tsx';
-import { MaybeReactComponent, Substitutions } from './substituteTokens.tsx';
+import { Substitutions } from './substituteTokens.tsx';
+import { FbtContentItem } from './Types.tsx';
 
 export default function getAllSubstitutions(args: FbtTableArgs) {
   const allSubstitutions: Substitutions = {};
@@ -16,9 +17,7 @@ export default function getAllSubstitutions(args: FbtTableArgs) {
         'Cannot register a substitution with token=`%s` more than once',
         tokenName
       );
-      allSubstitutions[tokenName] = substitution[
-        tokenName
-      ] as MaybeReactComponent;
+      allSubstitutions[tokenName] = substitution[tokenName] as FbtContentItem;
     }
   }
   return allSubstitutions;

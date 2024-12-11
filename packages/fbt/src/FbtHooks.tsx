@@ -12,7 +12,7 @@ import {
 export type FbtResolvedPayload = {
   contents: NestedFbtContentItems;
   errorListener: IFbtErrorListener | null;
-  patternHash: PatternHash | null | undefined;
+  hashKey: PatternHash | null | undefined;
   patternString: PatternString;
 };
 
@@ -86,8 +86,6 @@ export type FbtHookRegistrations = Partial<{
   getFbtResult: (input: FbtResolvedPayload) => FbtResult;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
-  logImpression: (hash: string, options?: FbtImpressionOptions) => void;
-  onTranslationOverride: (hash: string) => void;
 }>;
 
 const _registrations: FbtHookRegistrations = {};
@@ -123,14 +121,6 @@ export default {
       throw new Error(`FbtHooks: 'getViewerContext' is not registered`);
     }
     return getViewerContext();
-  },
-
-  logImpression(hash: string, options?: FbtImpressionOptions) {
-    _registrations.logImpression?.(hash, options);
-  },
-
-  onTranslationOverride(hash: string) {
-    _registrations.onTranslationOverride?.(hash);
   },
 
   register(registrations: FbtHookRegistrations) {

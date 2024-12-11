@@ -233,13 +233,12 @@ function wrapContent(
     hash,
     translation,
   });
-  const result = FbtHooks.getFbtResult({
+  return FbtHooks.getFbtResult({
     contents,
     errorListener,
-    patternHash: hash,
+    hashKey: hash,
     patternString: translation,
   });
-  return result;
 }
 
 function isFbtInstance(value: unknown): value is FbtResultBase {
@@ -310,18 +309,8 @@ fbt._ = function fbtCallsite(
     invariant(pattern !== null, 'Table access failed');
   }
 
-  let patternString, patternHash;
-  if (Array.isArray(pattern)) {
-    patternString = pattern[0];
-    patternHash = pattern[1];
-    const impressionOptions = {
-      inputTable,
-      tokens,
-    } as const;
-    FbtHooks.logImpression(patternHash, impressionOptions);
-  } else if (typeof pattern === 'string') {
-    patternString = pattern;
-  } else {
+  const patternString = Array.isArray(pattern) ? pattern[0] : pattern;
+  if (typeof patternString !== 'string') {
     throw new Error(
       'Table access did not result in string: ' +
         (pattern === undefined ? 'undefined' : JSON.stringify(pattern)) +
@@ -341,7 +330,7 @@ fbt._ = function fbtCallsite(
     const result = this._wrapContent(
       fbtContent as NestedFbtContentItems,
       patternString,
-      patternHash
+      options?.hk
     );
     if (!hasSubstitutions) {
       this.cachedResults[patternString] = result;

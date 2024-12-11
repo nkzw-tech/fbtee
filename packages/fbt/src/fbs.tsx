@@ -53,7 +53,7 @@ const FbsImpl = {
     return FbtHooks.getFbsResult({
       contents,
       errorListener,
-      patternHash: hash,
+      hashKey: hash,
       patternString: translation,
     });
   },

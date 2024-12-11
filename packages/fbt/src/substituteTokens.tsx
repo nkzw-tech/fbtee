@@ -1,10 +1,9 @@
-import invariant from 'invariant';
 import {
   applyPhonologicalRules,
   dedupeStops,
   PUNCT_CHAR_CLASS,
 } from './IntlPunctuation.tsx';
-import { IFbtErrorListener } from './Types.tsx';
+import { FbtContentItem, NestedFbtContentItems } from './Types.tsx';
 
 // This pattern finds tokens inside a string: 'string with {token} inside'.
 // It also grabs any punctuation that may be present after the token, such as
@@ -14,40 +13,9 @@ const parameterRegexp = new RegExp(
   'g'
 );
 
-export type MaybeReactComponent = Partial<{
-  _store?: {
-    validated: boolean | number;
-  };
-  props?: Record<string, unknown>;
-  type?: string;
-}>;
-
 export type Substitutions = {
-  [paramName: string]: MaybeReactComponent;
+  [paramName: string]: FbtContentItem;
 };
-
-// Hack into React internals to avoid key warnings
-function markAsSafeForReact<T extends MaybeReactComponent>(object: T): T {
-  if (process.env.NODE_ENV === 'development') {
-    // If this looks like a ReactElement, mark it as safe to silence any
-    // key warnings.
-    const store = object._store;
-    if (
-      object.type != null &&
-      object.type != '' &&
-      typeof object.props === 'object' &&
-      store != null &&
-      typeof store === 'object'
-    ) {
-      if (typeof store.validated === 'number') {
-        store.validated = 1;
-      } else if (typeof store.validated === 'boolean') {
-        store.validated = true;
-      }
-    }
-  }
-  return object;
-}
 
 /**
  * Does the token substitution fbt() but without the string lookup.
@@ -55,28 +23,25 @@ function markAsSafeForReact<T extends MaybeReactComponent>(object: T): T {
  */
 export default function substituteTokens(
   template: string,
-  args: Substitutions,
-  errorListener?: IFbtErrorListener | null
-): string | Array<string | MaybeReactComponent> {
+  args: Substitutions
+): FbtContentItem | NestedFbtContentItems {
   if (args == null) {
     return template;
   }
 
-  invariant(
-    typeof args === 'object',
-    'The 2nd argument must be an object (not a string) for tx(%s, ...)',
-    template
-  );
-
   // Splice in the arguments while keeping rich object ones separate.
-  const objectPieces: Array<MaybeReactComponent> = [];
+  const objectPieces: Array<FbtContentItem> = [];
   const argNames = [];
+  let index = 0;
   const stringPieces = template
     .replace(
       parameterRegexp,
       (_match: string, parameter: string, punctuation: string): string => {
-        const argument = args[parameter];
+        let argument = args[parameter];
         if (argument != null && typeof argument === 'object') {
+          if ('key' in argument && argument.key === null) {
+            argument = { ...argument, key: `${index++}` };
+          }
           objectPieces.push(argument);
           argNames.push(parameter);
           // End of Transmission Block sentinel marker
@@ -97,10 +62,10 @@ export default function substituteTokens(
   // Zip together the lists of pieces.
   // We skip adding empty strings from stringPieces since they were
   // injected from translation patterns that only contain tokens.
-  const pieces: Array<string | MaybeReactComponent> =
+  const pieces: Array<FbtContentItem> =
     stringPieces[0] !== '' ? [stringPieces[0]] : [];
   for (let i = 0; i < objectPieces.length; i++) {
-    pieces.push(markAsSafeForReact(objectPieces[i]));
+    pieces.push(objectPieces[i]);
     if (stringPieces[i + 1] !== '') {
       pieces.push(stringPieces[i + 1]);
     }

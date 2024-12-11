@@ -4,6 +4,7 @@ import FbtPureStringResult from './FbtPureStringResult.tsx';
 export default function getFbsResult({
   contents,
   errorListener,
+  hashKey,
 }: FbtResolvedPayload): FbtPureStringResult {
-  return new FbtPureStringResult(contents, errorListener);
+  return new FbtPureStringResult(contents, errorListener, hashKey);
 }

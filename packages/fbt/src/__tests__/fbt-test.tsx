@@ -87,7 +87,7 @@ describe('fbt', () => {
   it('should support objects as token values', () => {
     // We expect that this returns an opaque React fragment instead of an array.
     // We use this to preserve identity of nested React elements.
-    const argument = <div />;
+    const argument = <div key="test" />;
     const fragment = fbt(
       'with token ' + fbt.param('token', argument) + ' here',
       'test'

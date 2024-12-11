@@ -22,21 +22,22 @@ describe('FbtResult', () => {
 
   it('can be flattened into array', () => {
     const errorListener = nullthrows(_errorListener);
-    let obj1 = new FbtResult(['prefix'], errorListener);
-    const obj2 = new FbtResult(['suffix'], errorListener);
-    let obj3 = new FbtResult([obj1, 'content', obj2], errorListener);
+    let obj1 = new FbtResult(['prefix'], errorListener, null);
+    const obj2 = new FbtResult(['suffix'], errorListener, null);
+    let obj3 = new FbtResult([obj1, 'content', obj2], errorListener, null);
     expect(obj3.flattenToArray().join(' ')).toBe('prefix content suffix');
 
-    obj1 = new FbtResult(['prefix'], errorListener);
-    obj3 = new FbtResult([obj1, 'content', 'stringable'], errorListener);
+    obj1 = new FbtResult(['prefix'], errorListener, null);
+    obj3 = new FbtResult([obj1, 'content', 'stringable'], errorListener, null);
     expect(obj3.flattenToArray().join(' ')).toBe('prefix content stringable');
   });
 
   it('does not invoke onStringSerializationError() when being serialized with valid-FBT contents', () => {
     const errorListener = nullthrows(_errorListener);
     const result = new FbtResult(
-      ['hello', new FbtResult(['world'], errorListener)],
-      errorListener
+      ['hello', new FbtResult(['world'], errorListener, null)],
+      errorListener,
+      null
     );
     result.toString();
     expect(errorListener?.onStringSerializationError).not.toHaveBeenCalled();
