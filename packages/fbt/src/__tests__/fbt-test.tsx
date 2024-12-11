@@ -2,19 +2,22 @@
 
 import { describe, expect, it, jest } from '@jest/globals';
 import { render } from '@testing-library/react';
+import { PatternHash } from 'babel-plugin-fbt';
 import { Children, Component } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
+import fbsInternal from '../fbs.tsx';
 import fbtInternal from '../fbt.tsx';
-import FbtHooks, {
-  FbtRuntimeCallInput,
-  FbtTranslatedInput,
-} from '../FbtHooks.tsx';
-import init from '../fbtInit.tsx';
 import FbtTranslations from '../FbtTranslations.tsx';
 import GenderConst from '../GenderConst.tsx';
-import { fbt } from '../index.tsx';
+import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput } from '../Hooks.tsx';
+import { fbt, FbtResult } from '../index.tsx';
+import init from '../init.tsx';
 import IntlVariations from '../IntlVariations.tsx';
-import { IFbtResultBase } from '../Types.tsx';
+import {
+  BaseResult,
+  IFbtErrorListener,
+  NestedFbtContentItems,
+} from '../Types.tsx';
 
 init({
   translations: { en_US: {} },
@@ -22,17 +25,31 @@ init({
 
 describe('fbt', () => {
   beforeEach(() => {
-    FbtHooks.register({
+    Hooks.register({
       getFbtResult,
       getTranslatedInput: FbtTranslations.getTranslatedInput,
     });
   });
 
-  it('should memoize new strings', () => {
-    expect(fbtInternal._getCachedFbt('sample string')).toEqual(undefined);
+  it('should hint at the correct usage of fbt', () => {
+    expect(() => fbtInternal('test')).toThrowErrorMatchingInlineSnapshot(
+      `"fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again."`
+    );
+  });
 
-    expect(fbtInternal._('sample string')).toEqual(
-      fbtInternal._getCachedFbt('sample string')
+  it('should memoize new strings', () => {
+    Hooks.register({
+      getFbtResult: (
+        contents: NestedFbtContentItems,
+        hashKey: PatternHash | null | undefined,
+        errorListener: IFbtErrorListener | null
+      ) => new FbtResult(contents, errorListener, hashKey),
+    });
+
+    expect(fbtInternal._('sample string') instanceof FbtResult).toBe(true);
+    expect(fbtInternal._('sample string')).toBe(fbtInternal._('sample string'));
+    expect(fbtInternal._('sample string')).not.toBe(
+      fbsInternal._('sample string')
     );
   });
 
@@ -92,7 +109,7 @@ describe('fbt', () => {
       'with token ' + fbt.param('token', argument) + ' here',
       'test'
     );
-    const items: Array<string | IFbtResultBase> = [];
+    const items: Array<string | BaseResult> = [];
     Children.forEach(fragment, (item) => {
       items.push(item);
     });
@@ -131,7 +148,9 @@ describe('fbt', () => {
         B: 'preamble {tokenB} is after {tokenA}',
       },
       [
+        // @ts-expect-error
         fbtInternal._param('tokenA', childA),
+        // @ts-expect-error
         fbtInternal._param('tokenB', childB),
         fbtInternal._enum(value, { A: 'is before', B: 'is after' }),
       ]
@@ -272,8 +291,8 @@ describe('fbt', () => {
     ).toEqual('Invited by 1 friend.');
   });
 
-  it('should defer to FbtHooks.getTranslatedInput', () => {
-    FbtHooks.register({
+  it('should defer to Hooks.getTranslatedInput', () => {
+    Hooks.register({
       getTranslatedInput(_input: FbtRuntimeCallInput): FbtTranslatedInput {
         return { args: null, table: 'ALL YOUR TRANSLATION ARE BELONG TO US' };
       },

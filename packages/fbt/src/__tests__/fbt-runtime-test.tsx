@@ -1,7 +1,7 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import fbtRuntime from '../fbt.tsx';
-import FbtHooks, { FbtRuntimeInput } from '../FbtHooks.tsx';
 import { FbtTableArg } from '../FbtTableAccessor.tsx';
+import Hooks, { FbtRuntimeInput } from '../Hooks.tsx';
 import { init } from '../index.tsx';
 import intlNumUtils from '../intlNumUtils.tsx';
 // Warning: importing JS modules outside of beforeEach blocks is generally bad practice
@@ -24,7 +24,7 @@ console.warn = jest.fn();
 
 describe('fbt', () => {
   it('should handle variated numbers', () => {
-    FbtHooks.register({
+    Hooks.register({
       // IntlCLDRNumberType31
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'br_FR' }),
     });
@@ -49,7 +49,7 @@ describe('fbt', () => {
 
   it('should access table with fallback logic', () => {
     let genderMock: IntlVariations;
-    FbtHooks.register({
+    Hooks.register({
       getViewerContext: jest.fn(() => ({
         GENDER: genderMock,
         locale: 'ro_RO', // IntlCLDRNumberType19

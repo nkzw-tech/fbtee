@@ -3,18 +3,18 @@ import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
 import {
+  BaseResult,
   FbtErrorContext,
-  FbtPureStringResult,
   IFbtErrorListener,
   NestedFbtContentItems,
+  PureStringResult,
 } from './Types.tsx';
 
-export type FbtResolvedPayload = {
-  contents: NestedFbtContentItems;
-  errorListener: IFbtErrorListener | null;
-  hashKey: PatternHash | null | undefined;
-  patternString: PatternString;
-};
+export type ResolverFn<T extends BaseResult> = (
+  contents: NestedFbtContentItems,
+  hashKey: PatternHash | null | undefined,
+  errorListener: IFbtErrorListener | null
+) => T;
 
 /**
  * This is the main input payload to the fbt._(...) runtime call.
@@ -80,35 +80,43 @@ export type FbtImpressionOptions = {
   tokens: Array<FbtTableKey>;
 };
 
-export type FbtHookRegistrations = Partial<{
+export type Hooks = Partial<{
   errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
-  getFbsResult: (input: FbtResolvedPayload) => FbtPureStringResult;
-  getFbtResult: (input: FbtResolvedPayload) => FbtResult;
+  getFbsResult: ResolverFn<PureStringResult>;
+  getFbtResult: ResolverFn<FbtResult>;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
 }>;
 
-const _registrations: FbtHookRegistrations = {};
+const _registrations: Hooks = {};
 
 export default {
   getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
     return _registrations.errorListener?.(context) || null;
   },
 
-  getFbsResult(input: FbtResolvedPayload): FbtPureStringResult {
+  getFbsResult(
+    contents: NestedFbtContentItems,
+    hashKey: PatternHash | null | undefined,
+    errorListener: IFbtErrorListener | null
+  ): PureStringResult {
     const { getFbsResult } = _registrations;
     if (!getFbsResult) {
-      throw new Error(`FbtHooks: 'getFbsResult' is not registered`);
+      throw new Error(`Hooks: 'getFbsResult' is not registered`);
     }
-    return getFbsResult(input);
+    return getFbsResult(contents, hashKey, errorListener);
   },
 
-  getFbtResult(input: FbtResolvedPayload): FbtResult {
+  getFbtResult(
+    contenst: NestedFbtContentItems,
+    hashKey: PatternHash | null | undefined,
+    errorListener: IFbtErrorListener | null
+  ): FbtResult {
     const { getFbtResult } = _registrations;
     if (!getFbtResult) {
-      throw new Error(`FbtHooks: 'getFbtResult' is not registered`);
+      throw new Error(`Hooks: 'getFbtResult' is not registered`);
     }
-    return getFbtResult(input);
+    return getFbtResult(contenst, hashKey, errorListener);
   },
 
   getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {
@@ -118,12 +126,12 @@ export default {
   getViewerContext(): typeof IntlViewerContext {
     const { getViewerContext } = _registrations;
     if (!getViewerContext) {
-      throw new Error(`FbtHooks: 'getViewerContext' is not registered`);
+      throw new Error(`Hooks: 'getViewerContext' is not registered`);
     }
     return getViewerContext();
   },
 
-  register(registrations: FbtHookRegistrations) {
+  register(registrations: Hooks) {
     Object.assign(_registrations, registrations);
   },
 };

@@ -1,7 +1,7 @@
 import FbtResultBase from './FbtResultBase.tsx';
 import {
+  BaseResult,
   IFbtErrorListener,
-  IFbtResultBase,
   NestedFbtContentItems,
 } from './Types.tsx';
 
@@ -9,7 +9,7 @@ type Props = Readonly<{
   content: NestedFbtContentItems;
 }>;
 
-export default class FbtResult extends FbtResultBase implements IFbtResultBase {
+export default class FbtResult extends FbtResultBase implements BaseResult {
   $$typeof = Symbol.for('react.transitional.element');
   props: Props;
   ref = null;

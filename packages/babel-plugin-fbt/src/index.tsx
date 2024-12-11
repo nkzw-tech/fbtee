@@ -19,13 +19,15 @@ import type { FbtCallSiteOptions, FbtOptionConfig } from './FbtConstants.tsx';
 import { JSModuleName, ValidFbtOptions } from './FbtConstants.tsx';
 import type { EnumManifest } from './FbtEnumRegistrar.tsx';
 import FbtEnumRegistrar from './FbtEnumRegistrar.tsx';
-import fbtHashKey from './fbtHashKey.tsx';
 import FbtNodeChecker from './FbtNodeChecker.tsx';
 import { checkOption, errorAt } from './FbtUtil.tsx';
-import { mapLeaves } from './JSFbtUtil.tsx';
-import replaceClearTokensWithTokenAliases from './replaceClearTokensWithTokenAliases.tsx';
 import { FbtVariationType } from './translate/IntlVariations.tsx';
 import { FbtTableKey, PatternHash, PatternString } from './Types.tsx';
+
+export { SENTINEL } from './FbtConstants.tsx';
+export { default as fbtHashKey } from './fbtHashKey.tsx';
+export { mapLeaves } from './JSFbtUtil.tsx';
+export { default as replaceClearTokensWithTokenAliases } from './replaceClearTokensWithTokenAliases.tsx';
 
 const { FBT } = JSModuleName;
 
@@ -395,6 +397,3 @@ export function getFbtElementNodes(): Array<PlainFbtNode> {
     )
     .filter((node): node is PlainFbtNode => node != null);
 }
-
-export { fbtHashKey, mapLeaves, replaceClearTokensWithTokenAliases };
-export { SENTINEL } from './FbtConstants.tsx';

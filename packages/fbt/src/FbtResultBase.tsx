@@ -1,11 +1,11 @@
 import {
+  BaseResult,
   FbtContentItem,
   IFbtErrorListener,
-  IFbtResultBase,
   NestedFbtContentItems,
 } from './Types.tsx';
 
-export default class FbtResultBase implements IFbtResultBase {
+export default class FbtResultBase implements BaseResult {
   _contents: NestedFbtContentItems;
   _stringValue: string | null;
   _isSerializing: boolean;

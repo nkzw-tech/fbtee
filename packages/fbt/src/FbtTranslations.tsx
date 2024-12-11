@@ -1,8 +1,8 @@
-import FbtHooks, {
+import Hooks, {
   FbtRuntimeCallInput,
   FbtRuntimeInput,
   FbtTranslatedInput,
-} from './FbtHooks.tsx';
+} from './Hooks.tsx';
 
 export type TranslationDict = {
   [locale: string]: {
@@ -24,7 +24,7 @@ export default {
     options,
   }: FbtRuntimeCallInput): FbtTranslatedInput | null {
     const hashKey = options?.hk;
-    const { locale } = FbtHooks.getViewerContext();
+    const { locale } = Hooks.getViewerContext();
     const table = currentTranslations[locale];
     if (process.env.NODE_ENV === 'development') {
       if (!table && locale !== defaultLocale) {

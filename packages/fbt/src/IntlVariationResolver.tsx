@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import FbtHooks from './FbtHooks.tsx';
+import Hooks from './Hooks.tsx';
 import IntlNumberType from './IntlNumberType.tsx';
 import IntlVariations from './IntlVariations.tsx';
 
@@ -9,7 +9,7 @@ export function getNumberVariations(
   number: number
 ): Array<string | number | string> {
   const numType = IntlNumberType.get(
-    FbtHooks.getViewerContext().locale
+    Hooks.getViewerContext().locale
   ).getVariation(number);
   invariant(
     numType & IntlVariations.BITMASK_NUMBER,

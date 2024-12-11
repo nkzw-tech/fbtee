@@ -1,5 +1,5 @@
 import escapeRegex from './escapeRegex.tsx';
-import FbtHooks from './FbtHooks.tsx';
+import Hooks from './Hooks.tsx';
 import NumberFormatConsts from './NumberFormatConsts.tsx';
 
 export type StandardDecimalPatternInfo = {
@@ -160,7 +160,7 @@ function _replaceWithNativeDigits(number: string, digits: string): string {
  */
 function formatNumber(value: number, decimals?: number | null): string {
   const NumberFormatConfig = NumberFormatConsts.get(
-    FbtHooks.getViewerContext().locale
+    Hooks.getViewerContext().locale
   );
   return formatNumberRaw(
     value,
@@ -189,7 +189,7 @@ function formatNumberWithThousandDelimiters(
   decimals?: number | null
 ): string {
   const NumberFormatConfig = NumberFormatConsts.get(
-    FbtHooks.getViewerContext().locale
+    Hooks.getViewerContext().locale
   );
   return formatNumberRaw(
     value,
@@ -393,7 +393,7 @@ function _getNativeDigitsMap():
   | null
   | undefined {
   const NumberFormatConfig = NumberFormatConsts.get(
-    FbtHooks.getViewerContext().locale
+    Hooks.getViewerContext().locale
   );
   const nativeDigitMap: {
     [key: string]: string;
@@ -413,7 +413,7 @@ function _getNativeDigitsMap():
 
 function parseNumber(text: string): number | null | undefined {
   const NumberFormatConfig = NumberFormatConsts.get(
-    FbtHooks.getViewerContext().locale
+    Hooks.getViewerContext().locale
   );
   return parseNumberRaw(
     text,

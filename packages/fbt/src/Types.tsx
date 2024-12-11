@@ -26,7 +26,7 @@ export type FbtString = string;
  * There are some string-like properties and methods you may use, like `length`
  * and `toString()`.
  */
-export type FbtElement = IFbtResultBase;
+export type FbtElement = BaseResult;
 
 /**
  * All translated strings. Could either be a translated string returned by an
@@ -46,14 +46,6 @@ export type FbtWithoutString = FbtString | FbtElement;
  */
 export type Fbt = string | FbtWithoutString;
 
-/**
- * All translated strings wrapped in `fbs()` or `<fbs>` type.
- * If this is composed of "string parameters" (fbs.param),
- * then it'll only accept plain string values, or other `Fbs` objects.
- * @see {@link https://fburl.com/wiki/ix5srv2p} for more info
- */
-export type Fbs = FbtPureStringResult;
-
 // Read-only array of Fbt items. Use this only when your code is meant to
 // handle a list of Fbts from different source code locations.
 // Avoid returning an array of Fbt like [<fbt/>, <fbt/>] for a single site
@@ -61,11 +53,10 @@ export type Fbs = FbtPureStringResult;
 // Favor using a single <fbt/> element as often as possible.
 export type FbtCollection = Fbt | ReadonlyArray<Fbt>;
 
-// Similar to React$Node without `Iterable<React$Node>`
 export type FbtContentItem =
   | boolean
   | FbtElement
-  | FbtPureStringResult
+  | PureStringResult
   | FbtString
   | null
   | number
@@ -114,21 +105,16 @@ export interface IFbtErrorListener {
   readonly onStringSerializationError?: (content: FbtContentItem) => void;
 }
 
-export type IFbtResultBase = {
-  // Hack for allowing FBTResult to play nice in React components
-  _store?: { validated: boolean };
+export type BaseResult = {
   getContents(): NestedFbtContentItems;
-
-  // This relies on toString() which contains i18n logging logic to track impressions.
-  // I.e. If you use this, i18n will register the string as displayed!
   toJSON(): string;
 };
 
-export type FbtPureStringResult = IFbtResultBase;
+export type PureStringResult = BaseResult;
 
 // Represents the input of an fbt.param
-type $FbtParamInput = ReactNode;
-export type $FbsParamInput = FbtPureStringResult | string;
+type FbtParamInput = ReactNode;
+export type FbsParamInput = PureStringResult | string;
 
 // Represents the output of an fbt.param, fbt.enum, etc...
 // It's voluntarily not an accurate representation of the real output.
@@ -151,7 +137,6 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     value: string,
     range: ReadonlyArray<string> | Readonly<{ [key: string]: string }>
   ) => ParamOutput;
-  isFbtInstance: (value: unknown) => value is IFbtResultBase;
   name: (
     tokenName: string,
     value: string,
@@ -186,13 +171,13 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
   sameParam: (name: string) => ParamOutput;
 };
 
-type $StringBasedFbtFunctionAPI<Output, ParamInput, ParamOutput> = FbtAPIT<
+type StringBasedFbtFunctionAPI<Output, ParamInput, ParamOutput> = FbtAPIT<
   Output,
   ParamInput,
   ParamOutput
 >;
 
-export type $ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
+type ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
   Output,
   ParamInput,
   FbtParamOutput
@@ -200,16 +185,16 @@ export type $ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
 
 type TranslatedString = string & { __fbt_do_not_access: true };
 
-export type FbtAPI = $StringBasedFbtFunctionAPI<
+export type FbtAPI = StringBasedFbtFunctionAPI<
   TranslatedString,
-  $FbtParamInput,
+  FbtParamInput,
   string
 > &
-  $ArrayBasedFbtFunctionAPI<TranslatedString, $FbtParamInput>;
+  ArrayBasedFbtFunctionAPI<TranslatedString, FbtParamInput>;
 
-export type FbsAPI = $StringBasedFbtFunctionAPI<
+export type FbsAPI = StringBasedFbtFunctionAPI<
   TranslatedString,
-  $FbsParamInput,
+  FbsParamInput,
   FbtParamOutput
 > &
-  $ArrayBasedFbtFunctionAPI<TranslatedString, $FbsParamInput>;
+  ArrayBasedFbtFunctionAPI<TranslatedString, FbsParamInput>;

@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import init from '../fbtInit.tsx';
+import init from '../init.tsx';
 import intlNumUtils from '../intlNumUtils.tsx';
 import NumberFormatConsts, { NumberConfig } from '../NumberFormatConsts.tsx';
 

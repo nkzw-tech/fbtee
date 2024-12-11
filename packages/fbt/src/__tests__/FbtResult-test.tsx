@@ -1,20 +1,20 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import nullthrows from 'babel-plugin-fbt/src/nullthrows.tsx';
-import FbtHooks from '../FbtHooks.tsx';
 import FbtResult from '../FbtResult.tsx';
+import Hooks from '../Hooks.tsx';
 import { IFbtErrorListener } from '../Types.tsx';
 
 let _errorListener: IFbtErrorListener | null;
 
 describe('FbtResult', () => {
   beforeEach(() => {
-    FbtHooks.register({
+    Hooks.register({
       errorListener: () => ({
         onStringSerializationError: jest.fn(),
       }),
     });
 
-    _errorListener = FbtHooks.getErrorListener({
+    _errorListener = Hooks.getErrorListener({
       hash: 'h',
       translation: 't',
     });

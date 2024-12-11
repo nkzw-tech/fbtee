@@ -1,4 +1,4 @@
-import FbtHooks from './FbtHooks.tsx';
+import Hooks from './Hooks.tsx';
 import IntlPhonologicalRewrites from './IntlPhonologicalRewrites.tsx';
 import IntlRedundantStops from './IntlRedundantStops.tsx';
 
@@ -71,7 +71,7 @@ function _getRules(locale?: string | null): Rules {
  * Returns: String with phonological rules applied (e.g., "Ozguri...")
  */
 export function applyPhonologicalRules(text: string): string {
-  const rules = _getMemoizedRules(FbtHooks.getViewerContext().locale);
+  const rules = _getMemoizedRules(Hooks.getViewerContext().locale);
   let result = text;
 
   for (const [regexp, replacement] of rules) {

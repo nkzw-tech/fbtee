@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from '@jest/globals';
 import React from 'react';
-import init from '../fbtInit.tsx';
 import { fbs } from '../index.tsx';
+import init from '../init.tsx';
 import IntlViewerContext from '../IntlViewerContext.tsx';
 
 init({
