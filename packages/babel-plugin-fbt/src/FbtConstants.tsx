@@ -82,14 +82,14 @@ export const PronounRequiredAttributes = {
 /**
  * Valid options allowed in the fbt(...) calls.
  */
-export const ValidFbtOptions = Object.freeze({
+export const ValidFbtOptions = {
   author: true,
   common: true,
   doNotExtract: true,
   preserveWhitespace: true,
   project: true,
   subject: true,
-});
+} as const;
 
 export const FbtBooleanOptions = {
   doNotExtract: true,

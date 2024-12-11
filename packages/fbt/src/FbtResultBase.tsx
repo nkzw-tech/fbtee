@@ -21,7 +21,7 @@ export default class FbtResultBase implements IFbtResultBase {
     this._stringValue = null;
   }
 
-  flattenToArray(): Array<FbtContentItem> {
+  flattenToArray(): ReadonlyArray<FbtContentItem> {
     return FbtResultBase.flattenToArray(this._contents);
   }
 
@@ -65,7 +65,11 @@ export default class FbtResultBase implements IFbtResultBase {
 
   static flattenToArray(
     contents: NestedFbtContentItems
-  ): Array<FbtContentItem> {
+  ): ReadonlyArray<FbtContentItem> {
+    if (contents.length === 1 && typeof contents[0] === 'string') {
+      return contents as ReadonlyArray<FbtContentItem>;
+    }
+
     const result: Array<FbtContentItem> = [];
     for (const content of contents) {
       if (Array.isArray(content)) {

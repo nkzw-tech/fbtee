@@ -31,11 +31,7 @@ function markAsSafeForReact<T extends MaybeReactComponent>(object: T): T {
   if (process.env.NODE_ENV === 'development') {
     // If this looks like a ReactElement, mark it as safe to silence any
     // key warnings.
-
-    // I use a string key to avoid any possible private variable transforms.
-    const storeKey = '_store';
-
-    const store = object[storeKey];
+    const store = object._store;
     if (
       object.type != null &&
       object.type != '' &&
@@ -100,7 +96,7 @@ export default function substituteTokens(
 
   // Zip together the lists of pieces.
   // We skip adding empty strings from stringPieces since they were
-  // injected from translation patterns that only contain tokens. See D20453562
+  // injected from translation patterns that only contain tokens.
   const pieces: Array<string | MaybeReactComponent> =
     stringPieces[0] !== '' ? [stringPieces[0]] : [];
   for (let i = 0; i < objectPieces.length; i++) {

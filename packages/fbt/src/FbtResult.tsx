@@ -1,4 +1,3 @@
-import FbtReactUtil from './FbtReactUtil.tsx';
 import FbtResultBase from './FbtResultBase.tsx';
 import {
   IFbtErrorListener,
@@ -13,8 +12,23 @@ type Props = Readonly<{
   content: NestedFbtContentItems;
 }>;
 
+const injectReactShim = (fbtResult: IFbtResultBase) => {
+  const reactObj = { validated: true } as const;
+
+  if (process.env.NODE_ENV === 'development') {
+    Object.defineProperty(fbtResult, '_store', {
+      configurable: false,
+      enumerable: false,
+      value: reactObj,
+      writable: false,
+    });
+  } else {
+    fbtResult._store = reactObj;
+  }
+};
+
 export default class FbtResult extends FbtResultBase implements IFbtResultBase {
-  $$typeof: symbol | number = FbtReactUtil.REACT_ELEMENT_TYPE;
+  $$typeof: symbol | number = Symbol.for('react.transitional.element');
   key: string | null | undefined = null;
   props: Props;
   ref = null;
@@ -30,7 +44,7 @@ export default class FbtResult extends FbtResultBase implements IFbtResultBase {
     };
 
     if (process.env.NODE_ENV === 'development') {
-      FbtReactUtil.injectReactShim(this);
+      injectReactShim(this);
     }
   }
 }

@@ -312,9 +312,6 @@ fbt._ = function fbtCallsite(
 
   let patternString, patternHash;
   if (Array.isArray(pattern)) {
-    // [fbt_impressions]
-    // When logging of string impressions is enabled, the string and its hash
-    // are packaged in an array. We want to log the hash
     patternString = pattern[0];
     patternHash = pattern[1];
     const impressionOptions = {
@@ -339,14 +336,7 @@ fbt._ = function fbtCallsite(
   if (cachedFbt && !hasSubstitutions) {
     return cachedFbt;
   } else {
-    const fbtContent = substituteTokens(
-      patternString,
-      allSubstitutions,
-      FbtHooks.getErrorListener?.({
-        hash: patternHash,
-        translation: patternString,
-      })
-    );
+    const fbtContent = substituteTokens(patternString, allSubstitutions);
     // Use `this` so that `fbs` can have its own variant.
     const result = this._wrapContent(
       fbtContent as NestedFbtContentItems,

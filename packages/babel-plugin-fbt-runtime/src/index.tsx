@@ -68,8 +68,9 @@ export default function BabelPluginFbtRuntime() {
         const { fbtSentinel } = getPluginOptions(this as unknown as Plugin);
         if (fbtSentinel == null || fbtSentinel.trim() == '') {
           throw new Error(
-            `fbtSentinel must be a non-empty string. ` +
-              `Current value is ${String(fbtSentinel)} (${typeof fbtSentinel})`
+            `fbtSentinel must be a non-empty string. Current value is ${String(
+              fbtSentinel
+            )} (${typeof fbtSentinel})`
           );
         }
         const sentinelLength = fbtSentinel.length;
@@ -94,7 +95,7 @@ export default function BabelPluginFbtRuntime() {
         const parentNode = path.parentPath && path.parentPath.node;
         invariant(
           isCallExpression(parentNode),
-          'Expected parent node to be a BabelNodeCallExpression'
+          `Expected parent node to be a 'CallExpression'`
         );
 
         // Append runtime options - key for runtime dictionary lookup
