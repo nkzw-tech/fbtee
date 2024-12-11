@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-fbt",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "The FBT Babel localization transform",
   "repository": {
     "type": "git",

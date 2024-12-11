@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-fbt-runtime",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "The secondary FBT Babel transform, for E2E use",
   "repository": {
     "type": "git",

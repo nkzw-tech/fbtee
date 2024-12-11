@@ -1,4 +1,4 @@
-import { NodePath, PluginOptions } from '@babel/core';
+import { NodePath } from '@babel/core';
 import {
   identifier,
   isCallExpression,
@@ -18,38 +18,14 @@ import {
 import type { ObjectWithJSFBT } from 'babel-plugin-fbt/src/index.tsx';
 import invariant from 'invariant';
 
-type Plugin = { opts: Partial<PluginOptions> & { fbtSentinel?: string } };
-
-function getPluginOptions(plugin: Plugin): {
-  fbtSentinel?: string;
-} {
-  const { opts } = plugin;
-  if (opts == null || typeof opts !== 'object') {
-    throw new Error(
-      `Expected to opts property to be an object. ` +
-        `Current value is ${String(opts)} (${typeof opts})`
-    );
-  }
-  return opts as {
-    fbtSentinel?: string;
-  };
-}
-
 export default function BabelPluginFbtRuntime() {
   return {
     name: 'fbt-runtime',
-    pre() {
-      const visitor = this as unknown as Plugin;
-      const { fbtSentinel } = getPluginOptions(visitor);
-      if (visitor.opts) {
-        visitor.opts.fbtSentinel = fbtSentinel || SENTINEL;
-      }
-    },
     visitor: {
       /**
        * Transform the following:
        * fbt._(
-       *   fbtSentinel +
+       *   SENTINEL +
        *   JSON.strinfigy({
        *     type: "text",
        *     jsfbt: "jsfbt test" | {
@@ -59,25 +35,17 @@ export default function BabelPluginFbtRuntime() {
        *     desc: "desc",
        *     project: "project",
        *   }) +
-       *   fbtSentinel
+       *   SENTINEL
        * );
        * to:
        * fbt._("jsfbt test") or fbt._({... jsfbt table})
        */
       StringLiteral(path: NodePath<StringLiteral>) {
-        const { fbtSentinel } = getPluginOptions(this as unknown as Plugin);
-        if (fbtSentinel == null || fbtSentinel.trim() == '') {
-          throw new Error(
-            `fbtSentinel must be a non-empty string. Current value is ${String(
-              fbtSentinel
-            )} (${typeof fbtSentinel})`
-          );
-        }
-        const sentinelLength = fbtSentinel.length;
+        const sentinelLength = SENTINEL.length;
         const phrase = path.node.value;
         if (
-          !phrase.startsWith(fbtSentinel) ||
-          !phrase.endsWith(fbtSentinel) ||
+          !phrase.startsWith(SENTINEL) ||
+          !phrase.endsWith(SENTINEL) ||
           phrase.length <= sentinelLength * 2
         ) {
           return;

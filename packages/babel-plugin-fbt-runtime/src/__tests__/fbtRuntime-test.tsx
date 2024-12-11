@@ -1,4 +1,4 @@
-import { transformSync as babelTransform } from '@babel/core';
+import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import { describe, it } from '@jest/globals';
 import fbt from 'babel-plugin-fbt';
@@ -6,23 +6,18 @@ import { withFbtRequireStatement } from 'babel-plugin-fbt/src/__tests__/FbtTestU
 import { assertSourceAstEqual } from '../../../../test/TestUtil.tsx';
 import fbtRuntime from '../index.tsx';
 
-function transform(source: string, extraOptions?: Record<string, unknown>) {
-  return (
-    babelTransform(source, {
-      ast: false,
-      plugins: [[fbt, { extraOptions }], fbtRuntime],
-      presets: [presetReact],
-      sourceType: 'module',
-    })?.code || ''
-  );
-}
+const transform = (source: string, extraOptions?: Record<string, unknown>) =>
+  transformSync(source, {
+    ast: false,
+    plugins: [[fbt, { extraOptions }], fbtRuntime],
+    presets: [presetReact],
+    sourceType: 'module',
+  })?.code || '';
 
-function runTest(
+const runTest = (
   data: { input: string; output: string },
   extraOptions?: Record<string, unknown>
-) {
-  assertSourceAstEqual(data.output, transform(data.input, extraOptions));
-}
+) => assertSourceAstEqual(data.output, transform(data.input, extraOptions));
 
 describe('Test hash key generation', () => {
   it('should generate hash key for simply string', () => {

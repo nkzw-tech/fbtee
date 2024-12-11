@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -16,9 +16,7 @@
     "fbt:translate-single": "fbt translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
-    "babel-plugin-fbt": "workspace:*",
-    "babel-plugin-fbt-runtime": "workspace:*",
-    "babel-plugin-minify-replace": "^0.5.0",
+    "babel-preset-fbt": "workspace:*",
     "classnames": "^2.5.1",
     "fbt": "workspace:*",
     "invariant": "^2.2.4",

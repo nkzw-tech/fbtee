@@ -199,9 +199,8 @@ export default class FbtFunctionCallProcessor {
       pluginOptions.fbtBase64 === true
         ? Buffer.from(argsOutput).toString('base64')
         : argsOutput;
-    const fbtSentinel = pluginOptions.fbtSentinel ?? SENTINEL;
     const args: Array<Expression | SpreadElement | ArgumentPlaceholder> = [
-      stringLiteral(fbtSentinel + encodedOutput + fbtSentinel),
+      stringLiteral(SENTINEL + encodedOutput + SENTINEL),
     ];
 
     // 2nd argument - `FbtTableArgs` in the fbt runtime calls

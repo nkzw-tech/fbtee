@@ -68,8 +68,6 @@ export function withFbtRequireStatement(code: string): string {
   ${code}`;
 }
 
-const fbtSentinelRegex = /(["'])__FBT__(.*?)__FBT__\1/gm;
-
 /**
  * Serialize JS source code that contains fbt client-side code.
  * For readability, the JSFBT payload is deconstructed and the FBT sentinels are
@@ -79,7 +77,7 @@ const fbtSentinelRegex = /(["'])__FBT__(.*?)__FBT__\1/gm;
 export const jsCodeFbtCallSerializer = {
   serialize(rawValue: string) {
     const decoded = rawValue.replaceAll(
-      fbtSentinelRegex,
+      /(["'])__FBT__(.*?)__FBT__\1/gm,
       (_match, _quote, body) => {
         const json = Buffer.from(body, 'base64').toString('utf8');
         return `/* ${SENTINEL} start */ ${json} /* ${SENTINEL} end */`;

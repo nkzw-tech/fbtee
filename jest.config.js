@@ -1,4 +1,3 @@
-import path from 'node:path';
 import process from 'node:process';
 import EnumManifest from './example/.enum_manifest.json' with { type: 'json' };
 import CommonStrings from './example/common_strings.json' with { type: 'json' };
@@ -15,7 +14,6 @@ const globalConfig = {
 };
 
 const root = process.cwd();
-const toAbsolutePath = (...args) => path.resolve(root, ...args);
 
 export default {
   projects: [
@@ -26,12 +24,11 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            plugins: [
+            presets: [
               [
-                toAbsolutePath('packages', 'babel-plugin-fbt'),
+                './packages/babel-preset-fbt',
                 { fbtCommon: { Accept: '...' } },
               ],
-              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
             ],
           },
         ],
@@ -50,12 +47,11 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            plugins: [
+            presets: [
               [
-                toAbsolutePath('packages', 'babel-plugin-fbt'),
+                './packages/babel-preset-fbt',
                 { fbtCommon: { Accept: '...' } },
               ],
-              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
             ],
           },
         ],
@@ -74,15 +70,14 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            plugins: [
+            presets: [
               [
-                toAbsolutePath('packages', 'babel-plugin-fbt'),
+                './packages/babel-preset-fbt',
                 {
                   fbtCommon: CommonStrings,
                   fbtEnumManifest: EnumManifest,
                 },
               ],
-              toAbsolutePath('packages', 'babel-plugin-fbt-runtime'),
             ],
           },
         ],

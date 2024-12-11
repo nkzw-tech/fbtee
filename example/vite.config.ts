@@ -16,15 +16,14 @@ export default {
   plugins: [
     react({
       babel: {
-        plugins: [
+        presets: [
           [
-            'babel-plugin-fbt',
+            'babel-preset-fbt',
             {
               fbtCommon: CommonStrings,
               fbtEnumManifest: EnumManifest,
             },
           ],
-          'babel-plugin-fbt-runtime',
         ],
       },
     }),

@@ -69,8 +69,6 @@ export type PluginOptions = {
   fbtEnumPath?: never;
   // @deprecated
   fbtEnumToPath?: never;
-  fbtSentinel?: string | null;
-
   filename?: string | null;
   // If true, generate the `outerTokenName` property on the JSFbt tree leaves.
   generateOuterTokenName?: boolean;
@@ -210,7 +208,7 @@ export default function transform() {
        * Transform fbt("text", "desc", {project: "project"}) to semantically:
        *
        * fbt._(
-       *   fbtSentinel +
+       *   SENTINEL +
        *   JSON.stringify({
        *     jsfbt: {
        *      text: "text",
@@ -218,7 +216,7 @@ export default function transform() {
        *     },
        *     project: "project",
        *   }) +
-       *   fbtSentinel
+       *   SENTINEL
        * );
        */
       CallExpression(path: NodePath<CallExpression>) {
