@@ -306,8 +306,7 @@ export default function transform() {
           path.traverse({
             CallExpression(path: NodePath<CallExpression>) {
               if (
-                FbtNodeChecker.getFbtConstructNameFromFunctionCall(path.node) !=
-                null
+                FbtNodeChecker.getFbtNodeTypeFromFunctionCall(path.node) != null
               ) {
                 throw errorAt(
                   path.node,

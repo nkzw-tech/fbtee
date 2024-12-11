@@ -34,7 +34,7 @@ import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
  */
 import FbtSameParamNode from './FbtSameParamNode.tsx';
 
-export type FromBabelNodeFunctionArgs = {
+export type FromNodeArgs = {
   moduleName: JSModuleNameType;
   node: Node;
 };

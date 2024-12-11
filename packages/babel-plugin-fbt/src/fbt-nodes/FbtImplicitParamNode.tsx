@@ -30,8 +30,7 @@ import type { IFbtElementNode } from './FbtElementNode.tsx';
 import FbtElementNode from './FbtElementNode.tsx';
 import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
-import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil.tsx';
+import type { FromNodeArgs } from './FbtNodeUtil.tsx';
 import {
   convertIndexInSiblingsArrayToOuterTokenAlias,
   convertToTokenName,
@@ -49,7 +48,7 @@ export default class FbtImplicitParamNode
   extends FbtNode<AnyStringVariationArg, JSXElement, FbtChildNode, null>
   implements IFbtElementNode
 {
-  static readonly type: FbtNodeType = 'implicitParam';
+  readonly type = 'implicitParam';
 
   _tokenSet: ParamSet = {};
 
@@ -200,10 +199,10 @@ export default class FbtImplicitParamNode
    * Create a new class instance given a BabelNode root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
-  }: FromBabelNodeFunctionArgs): FbtImplicitParamNode | null {
+  }: FromNodeArgs): FbtImplicitParamNode | null {
     if (!isJSXElement(node)) {
       return null;
     }
@@ -239,16 +238,14 @@ export default class FbtImplicitParamNode
             }
           } else if (unusedWhitespaceChild != null) {
             fbtChildren.push(
-              FbtTextNode.fromBabelNode({
+              FbtTextNode.fromNode({
                 moduleName,
                 node: unusedWhitespaceChild,
               })
             );
             unusedWhitespaceChild = null;
           }
-          fbtChildren.push(
-            FbtTextNode.fromBabelNode({ moduleName, node: child })
-          );
+          fbtChildren.push(FbtTextNode.fromNode({ moduleName, node: child }));
           lastAddedChild = child;
           break;
 
@@ -357,7 +354,7 @@ export default class FbtImplicitParamNode
     }
 
     return {
-      type: FbtImplicitParamNode.type,
+      type: 'implicitParam',
       wrapperNode: {
         babelNode: openingElement,
         props,

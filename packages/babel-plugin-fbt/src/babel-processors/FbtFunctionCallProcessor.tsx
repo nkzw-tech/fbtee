@@ -41,7 +41,7 @@ import { SENTINEL } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBoolean,
   enforceString,
   errorAt,
@@ -547,8 +547,7 @@ export default class FbtFunctionCallProcessor {
       {
         CallExpression(path: CallExpressionPath) {
           const nodeChecker = this.nodeChecker as FbtNodeChecker;
-          const childFbtConstructName =
-            nodeChecker.getFbtConstructNameFromFunctionCall(path.node);
+          const childFbtConstructName = nodeChecker.getFbtNodeType(path.node);
           if (
             !childFbtConstructName ||
             !isConcreteFbtNode(childFbtConstructName)
@@ -568,7 +567,7 @@ export default class FbtFunctionCallProcessor {
             }
 
             const parentFbtConstructName =
-              nodeChecker.getFbtConstructNameFromFunctionCall(parentNode);
+              nodeChecker.getFbtNodeType(parentNode);
             if (
               parentFbtConstructName &&
               isConcreteFbtNode(parentFbtConstructName)
@@ -611,7 +610,7 @@ export default class FbtFunctionCallProcessor {
     );
     fbtCallArgs[0] = fbtContentsNode;
 
-    const elementNode = FbtElementNode.fromBabelNode({
+    const elementNode = FbtElementNode.fromNode({
       moduleName,
       node,
       validExtraOptions: this.validFbtExtraOptions,
@@ -707,7 +706,7 @@ export default class FbtFunctionCallProcessor {
           )
         ),
       ];
-      const fbtParamRuntimeArg = createFbtRuntimeArgCallExpression(
+      const fbtParamRuntimeArg = createRuntimeCallExpression(
         innerMetaPhraseFbtNode,
         [stringLiteral(innerMetaPhraseFbtNode.getOuterTokenAlias()), babelNode]
       );

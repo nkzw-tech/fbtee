@@ -22,7 +22,7 @@ import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBabelNodeCallExpressionArg,
   enforceBoolean,
   enforceStringEnum,
@@ -35,7 +35,6 @@ import { GENDER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { GenderStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 
 type Options = {
   // If true, capitalize the pronoun text
@@ -63,9 +62,9 @@ export default class FbtPronounNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'pronoun';
+  readonly type = 'pronoun';
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -75,9 +74,9 @@ export default class FbtPronounNode extends FbtNode<
     if (!isCallExpression(node)) {
       return null;
     }
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtPronounNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'pronoun'
       ? new FbtPronounNode({
           moduleName,
           node,
@@ -204,7 +203,7 @@ export default class FbtPronounNode extends FbtNode<
       );
     }
 
-    return createFbtRuntimeArgCallExpression(this, pronounArgs);
+    return createRuntimeCallExpression(this, pronounArgs);
   }
 
   override getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): Readonly<{

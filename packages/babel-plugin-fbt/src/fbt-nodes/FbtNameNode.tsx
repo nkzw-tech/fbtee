@@ -10,7 +10,7 @@ import { JSModuleNameType } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBabelNodeCallExpressionArg,
   errorAt,
 } from '../FbtUtil.tsx';
@@ -18,7 +18,6 @@ import { GENDER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { GenderStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
@@ -39,7 +38,7 @@ export default class FbtNameNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'name';
+  readonly type = 'name';
 
   override getOptions(): Options {
     try {
@@ -68,7 +67,7 @@ export default class FbtNameNode extends FbtNode<
     }
   }
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -79,9 +78,9 @@ export default class FbtNameNode extends FbtNode<
       return null;
     }
 
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtNameNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'name'
       ? new FbtNameNode({
           moduleName,
           node,
@@ -110,7 +109,7 @@ export default class FbtNameNode extends FbtNode<
 
   override getFbtRuntimeArg(): CallExpression {
     const { gender, name, value } = this.options;
-    return createFbtRuntimeArgCallExpression(
+    return createRuntimeCallExpression(
       this,
       [stringLiteral(name), value, gender].filter(Boolean)
     );

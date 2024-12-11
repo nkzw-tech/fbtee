@@ -330,6 +330,9 @@ export function errorAt(
   return error as ErrorWithBabelNodeLocation;
 }
 
+const generateFormattedCodeFromAST = (node: Node) =>
+  generate.default(node, { comments: true }, '').code.trim();
+
 function createErrorMessageAtNode(
   astNode?: Node | null,
   msg: string = ''
@@ -789,19 +792,19 @@ export function convertToStringArrayNodeIfNeeded(
  *   }
  */
 export function compactBabelNodeProps(
-  object: Record<string, unknown>,
+  object: AnyFbtNode | Record<string, unknown>,
   serializeSourceCode: boolean = true
 ): Record<string, unknown> {
-  const ret = { ...object };
-  for (const propName of Object.keys(ret)) {
-    const propValue = ret[propName];
+  const ret: Record<string, unknown> = { ...object };
+  for (const key of Object.keys(ret)) {
+    const propValue = ret[key];
     if (!isNode(propValue)) {
       continue;
     }
     if (serializeSourceCode) {
-      ret[`__${propName}Code`] = generateFormattedCodeFromAST(propValue);
+      ret[`__${key}Code`] = generateFormattedCodeFromAST(propValue);
     }
-    ret[propName] = `BabelNode[type=${propValue.type || ''}]`;
+    ret[key] = `BabelNode[type=${propValue.type || ''}]`;
   }
   return ret;
 }
@@ -931,7 +934,7 @@ enforceStringEnum.orNull = nullableTypeCheckerFactory(enforceStringEnum);
  * @param args Arguments of the function call
  * @param overrideMethodName Use this method name instead of the one from the fbtNode
  */
-export function createFbtRuntimeArgCallExpression(
+export function createRuntimeCallExpression(
   fbtNode: AnyFbtNode,
   args: Array<CallExpressionArg>,
   overrideMethodName?: string
@@ -939,17 +942,8 @@ export function createFbtRuntimeArgCallExpression(
   return callExpression(
     memberExpression(
       identifier(fbtNode.moduleName),
-      identifier(
-        '_' +
-          (overrideMethodName ||
-            nullthrows(
-              (fbtNode.constructor as unknown as { type: string }).type
-            ))
-      )
+      identifier('_' + (overrideMethodName || nullthrows(fbtNode.type)))
     ),
     args
   );
 }
-
-const generateFormattedCodeFromAST = (node: Node) =>
-  generate.default(node, { comments: true }, '').code.trim();

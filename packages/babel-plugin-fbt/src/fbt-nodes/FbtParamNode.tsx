@@ -18,7 +18,7 @@ import type {
 } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   errorAt,
   varDump,
 } from '../FbtUtil.tsx';
@@ -30,7 +30,6 @@ import {
   NumberStringVariationArg,
 } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
@@ -73,7 +72,7 @@ export default class FbtParamNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'param';
+  readonly type = 'param';
 
   override getOptions(): Options {
     try {
@@ -129,7 +128,7 @@ export default class FbtParamNode extends FbtNode<
     }
   }
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -140,9 +139,9 @@ export default class FbtParamNode extends FbtNode<
       return null;
     }
 
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtParamNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'param'
       ? new FbtParamNode({
           moduleName,
           node,
@@ -208,7 +207,7 @@ export default class FbtParamNode extends FbtNode<
     } else if (gender != null) {
       variationValues = [numericLiteral(ParamVariation.gender), gender];
     }
-    return createFbtRuntimeArgCallExpression(
+    return createRuntimeCallExpression(
       this,
       [
         stringLiteral(name),

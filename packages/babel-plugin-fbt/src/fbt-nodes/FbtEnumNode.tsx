@@ -20,7 +20,7 @@ import FbtEnumRegistrar from '../FbtEnumRegistrar.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBabelNode,
   enforceBabelNodeCallExpressionArg,
   errorAt,
@@ -30,7 +30,6 @@ import nullthrows from '../nullthrows.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { EnumStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 
 type Options = {
   range: EnumModule; // key/value pairs to use for this fbt:enum,
@@ -49,9 +48,9 @@ export default class FbtEnumNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'enum';
+  readonly type = 'enum';
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -62,9 +61,9 @@ export default class FbtEnumNode extends FbtNode<
       return null;
     }
 
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtEnumNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'enum'
       ? new FbtEnumNode({
           moduleName,
           node,
@@ -182,7 +181,7 @@ export default class FbtEnumNode extends FbtNode<
       );
     }
 
-    return createFbtRuntimeArgCallExpression(this, [
+    return createRuntimeCallExpression(this, [
       this.options.value,
       runtimeRange,
     ]);

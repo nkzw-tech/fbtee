@@ -16,7 +16,7 @@ import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBabelNodeCallExpressionArg,
   enforceString,
   enforceStringEnum,
@@ -28,7 +28,6 @@ import { EXACTLY_ONE, NUMBER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { NumberStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
@@ -53,9 +52,9 @@ export default class FbtPluralNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'plural';
+  readonly type = 'plural';
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -66,9 +65,9 @@ export default class FbtPluralNode extends FbtNode<
       return null;
     }
 
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtPluralNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'plural'
       ? new FbtPluralNode({
           moduleName,
           node,
@@ -214,7 +213,7 @@ export default class FbtPluralNode extends FbtNode<
         pluralArgs.push(value);
       }
     }
-    return createFbtRuntimeArgCallExpression(this, pluralArgs);
+    return createRuntimeCallExpression(this, pluralArgs);
   }
 
   override getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): Readonly<{

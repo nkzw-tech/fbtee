@@ -6,8 +6,7 @@ import {
 } from '@babel/types';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
-import type { FromBabelNodeFunctionArgs } from './FbtNodeUtil.tsx';
+import type { FromNodeArgs } from './FbtNodeUtil.tsx';
 
 /**
  * Represents the text literals present within <fbt> or fbt() callsites.
@@ -25,16 +24,13 @@ export default class FbtTextNode extends FbtNode<
   null,
   null
 > {
-  static readonly type: FbtNodeType = 'text';
+  readonly type = 'text';
 
   /**
    * Create a new class instance given a BabelNode root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromBabelNode({
-    moduleName,
-    node,
-  }: FromBabelNodeFunctionArgs): FbtTextNode | null {
+  static fromNode({ moduleName, node }: FromNodeArgs): FbtTextNode | null {
     return isJSXText(node) || isStringLiteral(node)
       ? new FbtTextNode({
           moduleName,

@@ -25,7 +25,7 @@ import type { CallExpressionArg, ParamSet } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
   compactBabelNodeProps,
-  createFbtRuntimeArgCallExpression,
+  createRuntimeCallExpression,
   enforceBabelNodeCallExpressionArg,
   enforceBoolean,
   enforceString,
@@ -48,7 +48,6 @@ import type FbtImplicitParamNodeType from './FbtImplicitParamNode.tsx';
 import FbtNameNode from './FbtNameNode.tsx';
 import type { AnyFbtNode, FbtChildNode } from './FbtNode.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 import {
   buildFbtNodeMapForSameParam,
   getChildNodeText,
@@ -134,7 +133,7 @@ export default class FbtElementNode
   extends FbtNode<AnyStringVariationArg, CallExpression, FbtChildNode, Options>
   implements IFbtElementNode
 {
-  static readonly type: FbtNodeType = 'element';
+  readonly type = 'element';
 
   _tokenSet: ParamSet = {};
 
@@ -300,7 +299,7 @@ export default class FbtElementNode
    * Create a new class instance given a BabelNode root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
     validExtraOptions,
@@ -367,7 +366,7 @@ export default class FbtElementNode
     ];
 
     for (const Constructor of fbtChildNodeClasses) {
-      fbtChildNode = Constructor.fromBabelNode({ moduleName, node });
+      fbtChildNode = Constructor.fromNode({ moduleName, node });
       if (fbtChildNode != null) {
         break;
       }
@@ -377,7 +376,7 @@ export default class FbtElementNode
     if (fbtChildNode == null && isJSXElement(node)) {
       // Later on, we should only allow non-fbt JSX elements here for auto-wrapping.
       // fbt:param, fbt:pronoun, etc... should appear as children of it.
-      fbtChildNode = FbtImplicitParamNode.fromBabelNode({ moduleName, node });
+      fbtChildNode = FbtImplicitParamNode.fromNode({ moduleName, node });
     }
 
     if (fbtChildNode != null) {
@@ -402,7 +401,7 @@ export default class FbtElementNode
     const { subject } = this.options;
     return subject == null
       ? null
-      : createFbtRuntimeArgCallExpression(
+      : createRuntimeCallExpression(
           this,
           [subject],
           ValidPronounUsagesKeys.subject

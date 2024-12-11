@@ -58,7 +58,7 @@ export default class FbtNodeChecker {
     );
   }
 
-  getFbtConstructNameFromFunctionCall(node: Node): FbtNodeType | null {
+  getFbtNodeType(node: Node): FbtNodeType | null {
     return (
       (isCallExpression(node) &&
         isMemberExpression(node.callee) &&
@@ -184,7 +184,7 @@ export default class FbtNodeChecker {
    * This is same as the non-static getFbtConstructNameFromFunctionCall except
    * it accepts any of the three fbt modules (`FBT`, `FBS` or `REACT_FBT`).
    */
-  static getFbtConstructNameFromFunctionCall(node: Node): FbtNodeType | null {
+  static getFbtNodeTypeFromFunctionCall(node: Node): FbtNodeType | null {
     return (
       (isCallExpression(node) &&
         isMemberExpression(node.callee) &&

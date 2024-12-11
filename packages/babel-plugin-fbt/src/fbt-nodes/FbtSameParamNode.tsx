@@ -10,7 +10,6 @@ import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import { errorAt } from '../FbtUtil.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import { FbtNodeType } from './FbtNodeType.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
 type Options = {
@@ -27,9 +26,9 @@ export default class FbtSameParamNode extends FbtNode<
   null,
   Options
 > {
-  static readonly type: FbtNodeType = 'sameParam';
+  readonly type = 'sameParam';
 
-  static fromBabelNode({
+  static fromNode({
     moduleName,
     node,
   }: {
@@ -39,9 +38,9 @@ export default class FbtSameParamNode extends FbtNode<
     if (!isCallExpression(node)) {
       return null;
     }
-    const checker = FbtNodeChecker.forModule(moduleName);
-    const constructName = checker.getFbtConstructNameFromFunctionCall(node);
-    return constructName === FbtSameParamNode.type
+    const constructName =
+      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    return constructName === 'sameParam'
       ? new FbtSameParamNode({
           moduleName,
           node,

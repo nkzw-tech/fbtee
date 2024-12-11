@@ -251,11 +251,7 @@ export default class JSXFbtProcessor {
           case 'JSXExpressionContainer': {
             const { expression } = node;
 
-            if (
-              this.nodeChecker.getFbtConstructNameFromFunctionCall(
-                expression
-              ) != null
-            ) {
+            if (this.nodeChecker.getFbtNodeType(expression) != null) {
               // preserve fbt construct's function calls intact
               invariant(
                 isCallExpression(expression),

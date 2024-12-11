@@ -6,14 +6,13 @@ import {
   JSXOpeningElement,
   Node,
 } from '@babel/types';
-import invariant from 'invariant';
 import type { FbtOptionConfig, JSModuleNameType } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type {
   BabelNodeCallExpressionArgument,
   CallExpressionArg,
 } from '../FbtUtil.tsx';
-import { compactBabelNodeProps, errorAt, varDump } from '../FbtUtil.tsx';
+import { compactBabelNodeProps, errorAt } from '../FbtUtil.tsx';
 import type { TokenAliases } from '../index.tsx';
 import type {
   AnyStringVariationArg,
@@ -22,7 +21,7 @@ import type {
 import type FbtEnumNode from './FbtEnumNode.tsx';
 import type FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
 import type FbtNameNode from './FbtNameNode.tsx';
-import { FbtNodeType, getNodeType } from './FbtNodeType.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
 import type FbtParamNode from './FbtParamNode.tsx';
 import type FbtPluralNode from './FbtPluralNode.tsx';
 import type FbtPronounNode from './FbtPronounNode.tsx';
@@ -177,7 +176,7 @@ export type PlainFbtNode = {
  *
  * We'll usually not use this class directly, favoring specialized child classes instead.
  */
-export default class FbtNode<
+export default abstract class FbtNode<
   SVArgument extends AnyStringVariationArg | never = never,
   CurrentNode extends Node = Node,
   MaybeChildNode extends FbtChildNode | null = null,
@@ -187,6 +186,7 @@ export default class FbtNode<
   readonly children: Array<MaybeChildNode>;
   readonly node: CurrentNode;
   readonly nodeChecker: FbtNodeChecker;
+  abstract readonly type: FbtNodeType;
   parent: AnyFbtNode | null = null;
   /**
    * Standardized "options" of the current fbt construct.
@@ -308,39 +308,26 @@ export default class FbtNode<
       }
     }
 
-    const ret: Record<string, unknown> = {
-      ...compactBabelNodeProps(this as unknown as Record<string, unknown>),
+    const object: Record<string, unknown> = {
+      ...compactBabelNodeProps(this),
       __stringVariationArgs: stringVariationArgs,
-      // Avoid cyclic recursion issues
-      parent: this.parent != null ? this.parent.constructor.name : this.parent,
+      parent: this.parent != null ? this.parent.constructor.name : null,
     };
 
     if (this.options != null) {
-      ret.options = compactBabelNodeProps(this.options);
+      object.options = compactBabelNodeProps(this.options);
     }
 
-    Object.defineProperty(ret, 'constructor', {
+    delete object.type;
+    Object.defineProperty(object, 'constructor', {
       enumerable: false,
       value: this.constructor,
     });
-    return ret;
+    return object;
   }
 
-  /**
-   * Returns a JSON-friendly representation of this instance that can be consumed
-   * in other programming languages.
-   * NOTE: this only represents the current node but not its children!
-   */
   toPlainFbtNode(): PlainFbtNode {
-    const type = getNodeType(
-      (this.constructor as unknown as { type: 'string' }).type
-    );
-    invariant(
-      type != null,
-      'Expected instance constructor.type property to be a string instead of `%s`',
-      varDump(type)
-    );
-    return { type };
+    return { type: this.type };
   }
 
   /**
