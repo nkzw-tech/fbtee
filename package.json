@@ -1,19 +1,20 @@
 {
   "name": "@nkzw/fbtee-internal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
     "build:all": "pnpm -r build && pnpm -r build:types && pnpm install && pnpm copy-files && cd example && pnpm build:fbtee",
-    "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "clean": "rm -rf packages/*/lib; cd example pnpm clean",
+    "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "dev": "cd example && pnpm build:fbtee && pnpm dev",
-    "lint:format": "prettier --cache --check .",
     "format": "prettier --write .",
     "jest": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest",
     "lint": "eslint --cache .",
+    "lint:format": "prettier --cache --check .",
+    "ship": "pnpm clean && pnpm build:all && pnpm test && pnpm publish -r --access public",
     "test": "npm-run-all --parallel lint jest tsc:check lint:format",
     "tsc:check": "tsc"
   },
