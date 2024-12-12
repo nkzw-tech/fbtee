@@ -157,6 +157,7 @@ Facebook has done an amazing job with `fbt`, an internationalization library tha
 The open-source version of `fbt`, however, became unmaintained, difficult to set up, and incompatible with modern tools. It was eventually archived in November 2024. **fbtee** builds on this foundation with several improvements:
 
 - **Easier Setup:** fbtee works with modern tools like Vite.
+- **Fully Typed:**
 - **Improved React Compatibility:** Removed React-specific hacks and added support for implicit React fragments (`<>`).
 - **Enhanced Features:** Fixed and exported `intlList`, which was not functional in the original `fbt`.
 - **Modernized Codebase:** Rewritten using TypeScript, ES modules (ESM), eslint, and modern JavaScript standards. Removed cruft and legacy code.
@@ -168,6 +169,7 @@ The open-source version of `fbt`, however, became unmaintained, difficult to set
 
 **fbtee** is compatible with `fbt`. If you are already using `fbt`, migrating to fbtee is straightforward:
 
+- Follow the "Getting Started" guide above and remove all "fbt" related packages.
 - Replace `import { fbt } from 'fbt'` with `import { fbt } from 'fbtee'`.
 - Rename commands from `fbt-collect`, `fbt-manifest` and `fbt-translate` to `fbtee-collect`, `fbtee-manifest` and `fbtee-translate`.
 - If you were using CommonJS modules for common strings or enums, convert them to ES modules.
@@ -183,3 +185,7 @@ _Note: Some legacy behavior and options were removed from `fbtee`. If you have a
 - `fbt` was originally created by [Facebook](https://github.com/facebook/fbt).
 - The auto-import plugin was created by [@alexandernanberg](https://github.com/alexandernanberg).
 - [Nakazawa Tech](https://nkzw.tech) rewrote `fbt` into `fbtee` and continues to maintain this project.
+
+## Support
+
+- Check out the [#fbtee channel on Reactiflux's Discord server](https://discord.gg/reactiflux).
