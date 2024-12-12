@@ -121,7 +121,7 @@ const argv = y
       '[<source_file1>, ...]}. Otherwise stdin itself will be parsed',
   )
   .string(args.COMMON_STRINGS)
-  .default(args.COMMON_STRINGS, null)
+  .default(args.COMMON_STRINGS, '')
   .describe(
     args.COMMON_STRINGS,
     'Optional path to the common strings module. ' +
@@ -240,12 +240,17 @@ if (argv.help) {
     ? (await import(transformPath)).default
     : null;
 
-  const commonPath = argv[args.COMMON_STRINGS];
-  const fbtCommon = commonPath
+  const commonFile = argv[args.COMMON_STRINGS];
+  const fbtCommon = commonFile?.length
     ? (
-        await import(resolve(process.cwd(), commonPath), {
-          with: { type: 'json' },
-        })
+        await import(
+          resolve(process.cwd(), commonFile),
+          commonFile.endsWith('.json')
+            ? {
+                with: { type: 'json' },
+              }
+            : {}
+        )
       ).default
     : null;
 
