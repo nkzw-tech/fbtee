@@ -4,7 +4,7 @@ import FbtTranslations, { TranslationDict } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
 import Hook, { Hooks } from './Hooks.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
-import type { IFbtErrorListener, NestedFbtContentItems } from './Types.d.ts';
+import type { IFbtErrorListener, NestedFbtContentItems } from './Types.js';
 
 const getFbtResult = (
   contents: NestedFbtContentItems,
@@ -12,7 +12,7 @@ const getFbtResult = (
   errorListener: IFbtErrorListener | null,
 ) => new FbtResult(contents, errorListener, hashKey);
 
-export default function init({
+export default function setupFbtee({
   hooks,
   translations,
 }: {

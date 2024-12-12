@@ -1,15 +1,15 @@
 import classNames from 'classnames';
-import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbtee';
+import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 import translations from '../translatedFbts.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.js';
 
-const viewerContext = {
+let viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
   locale: 'en_US',
 };
 
-init({
+setupFbtee({
   hooks: {
     getViewerContext: () => viewerContext,
   },
@@ -73,14 +73,17 @@ export default function Example() {
   const [ex2Object, setEx2Object] = useState<SharedObj>('LINK');
   const [ex2Pronoun, setEx2Pronoun] = useState(GenderConst.UNKNOWN_SINGULAR);
 
-  const updateLocale = useCallback((newLocale: Locale) => {
-    viewerContext.locale = newLocale;
-    setLocale(newLocale);
+  const updateLocale = useCallback((locale: Locale) => {
+    viewerContext = {
+      ...viewerContext,
+      locale,
+    };
+    setLocale(locale);
     const html = document.getElementsByTagName('html')[0];
     if (html != null) {
-      html.lang = LOCALES[newLocale].bcp47;
+      html.lang = LOCALES[locale].bcp47;
     }
-    document.body.className = LOCALES[newLocale].rtl ? 'rtl' : 'ltr';
+    document.body.className = LOCALES[locale].rtl ? 'rtl' : 'ltr';
   }, []);
 
   const onSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {

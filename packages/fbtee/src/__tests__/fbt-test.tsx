@@ -1,4 +1,4 @@
-/// <reference types="../ReactTypes.d.ts" />
+/// <reference types="../../ReactTypes.d.ts" />
 
 import { describe, expect, it, jest } from '@jest/globals';
 import { PatternHash } from '@nkzw/babel-plugin-fbtee';
@@ -11,15 +11,15 @@ import FbtTranslations from '../FbtTranslations.tsx';
 import GenderConst from '../GenderConst.tsx';
 import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput } from '../Hooks.tsx';
 import { fbt, FbtResult } from '../index.tsx';
-import init from '../init.tsx';
 import IntlVariations from '../IntlVariations.tsx';
+import setupFbtee from '../setupFbtee.tsx';
 import type {
   BaseResult,
   IFbtErrorListener,
   NestedFbtContentItems,
 } from '../Types.d.ts';
 
-init({
+setupFbtee({
   translations: { en_US: {} },
 });
 

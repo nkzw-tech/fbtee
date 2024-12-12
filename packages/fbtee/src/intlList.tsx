@@ -2,7 +2,7 @@
  * @fbt {"project": "intl-core"}
  */
 
-/// <reference types="./ReactTypes.d.ts" />
+/// <reference types="../ReactTypes.d.ts" />
 
 import invariant from 'invariant';
 import { isValidElement } from 'react';

@@ -1,4 +1,4 @@
-/// <reference types="./ReactTypes.d.ts" />
+/// <reference types="../ReactTypes.d.ts" />
 
 import type { FbtTableKey, PatternString } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';

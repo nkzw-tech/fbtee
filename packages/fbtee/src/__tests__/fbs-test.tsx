@@ -1,12 +1,12 @@
-/// <reference types="../ReactTypes.d.ts" />
+/// <reference types="../../ReactTypes.d.ts" />
 
 import { describe, expect, it } from '@jest/globals';
 import React from 'react';
 import { fbs } from '../index.tsx';
-import init from '../init.tsx';
 import IntlViewerContext from '../IntlViewerContext.tsx';
+import setupFbtee from '../setupFbtee.tsx';
 
-init({
+setupFbtee({
   hooks: {
     getViewerContext: () => IntlViewerContext,
   },

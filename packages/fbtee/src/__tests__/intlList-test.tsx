@@ -1,10 +1,10 @@
 import { describe, expect, it } from '@jest/globals';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
-import init from '../init.tsx';
 import intlList, { Conjunctions, Delimiters } from '../intlList.tsx';
 import IntlViewerContext from '../IntlViewerContext.tsx';
+import setupFbtee from '../setupFbtee.tsx';
 
-init({
+setupFbtee({
   hooks: {
     getFbtResult,
     getViewerContext: () => IntlViewerContext,

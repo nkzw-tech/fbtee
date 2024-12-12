@@ -1,9 +1,9 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import init from '../init.tsx';
 import intlNumUtils from '../intlNumUtils.tsx';
 import NumberFormatConsts, { NumberConfig } from '../NumberFormatConsts.tsx';
+import setupFbtee from '../setupFbtee.tsx';
 
-init({
+setupFbtee({
   translations: {},
 });
 
