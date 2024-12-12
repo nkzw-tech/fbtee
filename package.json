@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/fbtee-internal",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -36,8 +36,7 @@
     "@types/invariant": "^2.2.37",
     "@types/jest": "^29.5.14",
     "@types/json-diff": "^1.0.3",
-    "@types/node": "^22.10.1",
-    "@types/prettier": "^3.0.0",
+    "@types/node": "^22.10.2",
     "@types/prettier-2": "npm:@types/prettier@^2.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

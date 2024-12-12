@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/babel-fbtee",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -29,8 +29,8 @@
     "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
   },
   "dependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:*",
-    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:*",
-    "@nkzw/babel-plugin-fbtee-runtime": "workspace:*"
+    "@nkzw/babel-plugin-fbtee": "workspace:^",
+    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^",
+    "@nkzw/babel-plugin-fbtee-runtime": "workspace:^"
   }
 }

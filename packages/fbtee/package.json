@@ -1,6 +1,6 @@
 {
   "name": "fbtee",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -28,8 +28,8 @@
   },
   "devDependencies": {},
   "peerDependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:*",
-    "@nkzw/babel-plugin-fbtee-runtime": "workspace:*",
+    "@nkzw/babel-plugin-fbtee": "workspace:^",
+    "@nkzw/babel-plugin-fbtee-runtime": "workspace:^",
     "react": "^19.0.0"
   }
 }

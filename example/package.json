@@ -16,9 +16,9 @@
     "fbtee:translate-single": "fbtee translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
-    "@nkzw/babel-fbtee": "workspace:*",
+    "@nkzw/babel-fbtee": "workspace:^",
     "classnames": "^2.5.1",
-    "fbtee": "workspace:*",
+    "fbtee": "workspace:^",
     "invariant": "^2.2.4",
     "normalize.css": "8.0.1",
     "react": "^19.0.0",
