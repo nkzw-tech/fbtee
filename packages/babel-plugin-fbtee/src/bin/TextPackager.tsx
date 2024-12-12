@@ -4,7 +4,7 @@ import type { HashToLeaf, PackagerPhrase } from './FbtCollector.tsx';
 
 export type HashFunction = (
   text: PatternString,
-  description: string
+  description: string,
 ) => PatternHash;
 
 /**

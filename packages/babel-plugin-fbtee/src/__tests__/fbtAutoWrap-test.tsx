@@ -32,7 +32,7 @@ const testData = {
             </fbt:plural>
           </b>
         </a>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -52,7 +52,7 @@ const testData = {
             cat
           </fbt:plural>
         </b>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -72,7 +72,7 @@ const testData = {
               <fbt:pronoun type="possessive" gender={g2} /> some_pronoun
             </a>
           </b>
-        </fbt>`
+        </fbt>`,
       ),
     },
 
@@ -90,7 +90,7 @@ const testData = {
               {foo}
             </fbt:name>
           </a>
-        </fbt>`
+        </fbt>`,
       ),
 
       throws: "There's already a token called `foo` in this fbt call.",
@@ -119,7 +119,7 @@ const testData = {
               </fbt:plural>
             </b>
           </a>
-        </fbt>`
+        </fbt>`,
       ),
 
       throws: "There's already a token called `foo` in this fbt call.",
@@ -133,7 +133,7 @@ const testData = {
           <b>liked</b>
         </Link>
         your video
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -142,7 +142,7 @@ const testData = {
       `<fbt desc="d">
         <link href="#">Your friends</link>
         liked your video
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -157,7 +157,7 @@ const testData = {
           <div href="#">second</div>
           test
         </fbt>
-      </div>;`
+      </div>;`,
     ),
   },
 
@@ -172,7 +172,7 @@ const testData = {
             </fbt>
           </div>
         </fbt:param>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -185,7 +185,7 @@ const testData = {
           </div>
         </fbt:param>
         <div>an implicit param</div>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -197,7 +197,7 @@ const testData = {
           <link href="#">a nested</link>
         </b>
         test
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -206,7 +206,7 @@ const testData = {
       `<fbt desc="d">
         <div href="#">this is</div>
         a singly nested test
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -223,7 +223,7 @@ const testData = {
             </fbt>
           </div>
         </fbt:param>
-      </fbt>;`
+      </fbt>;`,
       ),
     },
 
@@ -235,7 +235,7 @@ const testData = {
           a doubly
         </div>
         nested test
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -270,7 +270,7 @@ const testData = {
             </fbt>
           </link>
         </fbt:param>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -283,7 +283,7 @@ const testData = {
         </div>
         nested test
         <div href="#">with an additional level</div>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -298,7 +298,7 @@ const testData = {
           three
           <div href="#">four</div>
         </div>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -316,7 +316,7 @@ const testData = {
           three
           <div href="#">four</div>
         </div>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -325,7 +325,7 @@ const testData = {
       `<fbt desc="d">
         <div>wrap once</div>
         <div>wrap twice</div>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -338,7 +338,7 @@ const testData = {
         </div>
         <div>wrap twice</div>
         complicated
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 };

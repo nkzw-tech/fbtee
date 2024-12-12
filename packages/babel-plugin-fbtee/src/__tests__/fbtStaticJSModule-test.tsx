@@ -12,7 +12,7 @@ import {
 
 function runTest(
   data: { input: string; output: string },
-  extra?: PluginOptions
+  extra?: PluginOptions,
 ) {
   const expected = data.output;
   const actual = transform(data.input, extra);
@@ -166,7 +166,7 @@ describe('fbt preserveWhitespace argument', () => {
   it('should preserve whitespace in text when requested', () => {
     runTest({
       input: withFbtRequireStatement(
-        String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`
+        String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(${payload({
@@ -177,13 +177,13 @@ describe('fbt preserveWhitespace argument', () => {
               text: 'two\nlines',
             },
           },
-        })})`
+        })})`,
       ),
     });
 
     runTest({
       input: withFbtRequireStatement(
-        'var x = fbt("two  spaces", "one space", {preserveWhitespace:true});'
+        'var x = fbt("two  spaces", "one space", {preserveWhitespace:true});',
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(${payload({
@@ -194,7 +194,7 @@ describe('fbt preserveWhitespace argument', () => {
               text: 'two  spaces',
             },
           },
-        })})`
+        })})`,
       ),
     });
   });
@@ -202,7 +202,7 @@ describe('fbt preserveWhitespace argument', () => {
   it('should preserve whitespace in desc when requested', () => {
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`
+        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`,
       ),
 
       output: withFbtRequireStatement(
@@ -216,13 +216,13 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
 
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('one space', 'two  spaces', {preserveWhitespace: true});`
+        `var x = fbt('one space', 'two  spaces', {preserveWhitespace: true});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(
@@ -235,7 +235,7 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
   });
@@ -243,7 +243,7 @@ describe('fbt preserveWhitespace argument', () => {
   it('should coalesce whitespace in text when not requested', () => {
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('two  spaces', 'one space', {preserveWhitespace: false});`
+        `var x = fbt('two  spaces', 'one space', {preserveWhitespace: false});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(
@@ -256,13 +256,13 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
 
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`
+        `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(
@@ -275,7 +275,7 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
   });
@@ -283,7 +283,7 @@ describe('fbt preserveWhitespace argument', () => {
   it('should coalesce whitespace in desc when not requested', () => {
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`
+        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(
@@ -296,13 +296,13 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
 
     runTest({
       input: withFbtRequireStatement(
-        `var x = fbt('one space', 'two spaces', {preserveWhitespace: false});`
+        `var x = fbt('one space', 'two spaces', {preserveWhitespace: false});`,
       ),
       output: withFbtRequireStatement(
         `var x = fbt._(
@@ -315,7 +315,7 @@ describe('fbt preserveWhitespace argument', () => {
                 },
               },
             })},
-          );`
+          );`,
       ),
     });
   });

@@ -18,7 +18,7 @@ export default function getAllSubstitutions(args: FbtTableArgs) {
       invariant(
         substitutions[tokenName] == null,
         'Cannot register a substitution with token=`%s` more than once',
-        tokenName
+        tokenName,
       );
       substitutions[tokenName] = substitution[tokenName] as FbtContentItem;
     }

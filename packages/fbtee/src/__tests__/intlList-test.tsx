@@ -27,7 +27,7 @@ describe('intlList', () => {
   });
   it('should handle three items', () => {
     expect(intlList(['first', 'second', 'third'])).toBe(
-      'first, second and third'
+      'first, second and third',
     );
   });
   it('should handle a bunch of items', () => {
@@ -42,7 +42,7 @@ describe('intlList', () => {
   });
   it('should handle no conjunction', () => {
     expect(intlList(['first', 'second', 'third'], Conjunctions.NONE)).toBe(
-      'first, second, third'
+      'first, second, third',
     );
   });
   it('should handle optional delimiter', () => {
@@ -50,8 +50,8 @@ describe('intlList', () => {
       intlList(
         ['first', 'second', 'third'],
         Conjunctions.NONE,
-        Delimiters.SEMICOLON
-      )
+        Delimiters.SEMICOLON,
+      ),
     ).toBe('first; second; third');
   });
   it('should handle bullet delimiters', () => {
@@ -59,8 +59,8 @@ describe('intlList', () => {
       intlList(
         ['first', 'second', 'third'],
         Conjunctions.NONE,
-        Delimiters.BULLET
-      )
+        Delimiters.BULLET,
+      ),
     ).toBe('first \u2022 second \u2022 third');
   });
 });

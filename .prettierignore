@@ -4,7 +4,5 @@ example/.src_manifest.json
 example/source_strings.json
 example/src/translatedFbts
 example/src/translatedFbts.json
-jest.config.js
 packages/*/lib/
-packages/babel-plugin-fbtee/src/__tests__/FbtTestUtil.tsx
 pnpm-lock.yaml

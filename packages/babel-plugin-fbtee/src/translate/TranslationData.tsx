@@ -29,7 +29,7 @@ export default class TranslationData {
   constructor(
     tokens: ReadonlyArray<string>,
     types: ReadonlyArray<IntlFbtVariationTypeValue>,
-    translations: ReadonlyArray<Translation>
+    translations: ReadonlyArray<Translation>,
   ) {
     this.tokens = tokens;
     this.types = types;
@@ -37,7 +37,7 @@ export default class TranslationData {
   }
 
   static fromJSON: (
-    json?: SerializedTranslationData | null
+    json?: SerializedTranslationData | null,
   ) => TranslationData | null = (json) => {
     if (json == null) {
       // Hash key is logged to stderr in `processTranslations`

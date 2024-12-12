@@ -86,7 +86,7 @@ const argv = y
     'By default, we output the translations as an associative array whose ' +
       "indices match the phrases provided.  If instead, you'd like a mapping " +
       'from the associated "jenkins" hash to translation payload (for use in ' +
-      'babel-fbt-runtime plugin, for instance) you can use this'
+      'babel-fbt-runtime plugin, for instance) you can use this',
   )
   .string('fbt-hash-module')
   .default('fbt-hash-module', false)
@@ -94,25 +94,25 @@ const argv = y
     'fbt-hash-module',
     `Similar to --${'jenkins'}, but pass the hash-module of your choice.  The ` +
       'module should export a function with the same signature and operation ' +
-      'of fbt-hash-module'
+      'of fbt-hash-module',
   )
   .boolean('stdin')
   .default('stdin', false)
   .describe(
     'stdin',
     'Instead of reading translation files and source file separately, read ' +
-      'from STDIN as a monolithic JSON payload'
+      'from STDIN as a monolithic JSON payload',
   )
   .string('source-strings')
   .default('source-strings', join(process.cwd(), '.source_strings.json'))
   .describe(
     'source-strings',
-    'The file containing source strings, as collected by collectFbt.js'
+    'The file containing source strings, as collected by collectFbt.js',
   )
   .array('translations')
   .describe(
     'translations',
-    'The translation files containing translations corresponding to source-strings'
+    'The translation files containing translations corresponding to source-strings',
   )
   .boolean('pretty')
   .default('pretty', false)
@@ -126,14 +126,14 @@ const argv = y
     'output-dir',
     'By default, we write the output to stdout. If you instead would like to split ' +
       'the output by locale you can use this arg to specify an output directory. ' +
-      'This is useful when you want to lazy load translations per locale.'
+      'This is useful when you want to lazy load translations per locale.',
   )
   .boolean('strict')
   .default('strict', false)
   .describe(
     'strict',
     'By default, we log missing values in the translation file to stderr. ' +
-      'If you instead would like to stop execution on missing values you can use this.'
+      'If you instead would like to stop execution on missing values you can use this.',
   )
   .parseSync();
 
@@ -142,7 +142,7 @@ function createJSON(obj: unknown) {
 }
 
 function writeOutput(
-  output: LocaleToHashToTranslationResult | TranslatedGroups
+  output: LocaleToHashToTranslationResult | TranslatedGroups,
 ) {
   const outputDir = argv['output-dir'];
   if (outputDir) {
@@ -151,7 +151,7 @@ function writeOutput(
       writeFileSync(
         path.join(outputDir, `${locale}.json`),
         // @ts-expect-error
-        createJSON({ [locale]: output[locale] })
+        createJSON({ [locale]: output[locale] }),
       );
     });
   } else {
@@ -186,7 +186,7 @@ if (argv['stdin']) {
     await processFiles(
       argv['source-strings'],
       argv['translations']?.map(String) || [],
-      translationOptions
-    )
+      translationOptions,
+    ),
   );
 }

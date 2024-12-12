@@ -94,7 +94,7 @@ export default class FbtPronounNode extends FbtNode<
     invariant(
       (args && (args.length === 2 || args.length === 3)) || !args,
       "Expected '(usage, gender [, options])' arguments to %s.pronoun()",
-      this.moduleName
+      this.moduleName,
     );
   }
 
@@ -103,7 +103,7 @@ export default class FbtPronounNode extends FbtNode<
     const rawOptions = collectOptionsFromFbtConstruct(
       moduleName,
       this.node,
-      ValidPronounOptions
+      ValidPronounOptions,
     );
 
     try {
@@ -113,16 +113,16 @@ export default class FbtPronounNode extends FbtNode<
         isStringLiteral(usageArg),
         '`usage`, the first argument of %s.pronoun() must be a `StringLiteral` but we got `%s`',
         moduleName,
-        usageArg?.type || 'unknown'
+        usageArg?.type || 'unknown',
       );
       const type = enforceStringEnum(
         usageArg.value,
         ValidPronounUsages,
-        `\`usage\`, the first argument of ${moduleName}.pronoun()`
+        `\`usage\`, the first argument of ${moduleName}.pronoun()`,
       );
       const gender = enforceNodeCallExpressionArg(
         genderArg,
-        '`gender`, the second argument'
+        '`gender`, the second argument',
       );
       const mergedOptions = nullthrows(rawOptions);
       return {
@@ -146,12 +146,12 @@ export default class FbtPronounNode extends FbtNode<
         svArgValue === GENDER_ANY
           ? GenderConst.UNKNOWN_PLURAL
           : (svArgValue as GenderConst),
-        options.type
+        options.type,
       );
       invariant(
         typeof word === 'string',
         'Expected pronoun word to be a string but we got %s',
-        varDump(word)
+        varDump(word),
       );
 
       return options.capitalize
@@ -174,7 +174,7 @@ export default class FbtPronounNode extends FbtNode<
       candidates.add(
         resolvedGender === GenderConst.UNKNOWN_PLURAL
           ? GENDER_ANY
-          : resolvedGender
+          : resolvedGender,
       );
     }
 
@@ -182,7 +182,7 @@ export default class FbtPronounNode extends FbtNode<
       new GenderStringVariationArg(
         this,
         options.gender,
-        Array.from(candidates)
+        Array.from(candidates),
       ),
     ];
   }
@@ -196,7 +196,7 @@ export default class FbtPronounNode extends FbtNode<
       pronounArgs.push(
         objectExpression([
           objectProperty(identifier(HUMAN_OPTION), numericLiteral(1)),
-        ])
+        ]),
       );
     }
 
@@ -212,7 +212,7 @@ export default class FbtPronounNode extends FbtNode<
 
 function getPronounGenderKey(
   usage: ValidPronounUsagesKey,
-  gender: GenderConst
+  gender: GenderConst,
 ): GenderConst {
   switch (gender) {
     case GenderConst.NOT_A_PERSON:
@@ -257,8 +257,8 @@ function consolidatedPronounGenders(): ReadonlyArray<GenderConst> {
           ValidPronounUsagesKeys[
             usageKey as keyof typeof ValidPronounUsagesKeys
           ],
-          gender
-        )
+          gender,
+        ),
       );
     }
   }

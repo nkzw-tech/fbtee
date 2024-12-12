@@ -40,7 +40,7 @@ function testTranslateNewPhrases(options: Options) {
           },
         ],
       },
-      options
+      options,
     );
     expect(result).toMatchSnapshot();
   });
@@ -90,7 +90,7 @@ function testTranslateNewPhrases(options: Options) {
           },
         ],
       },
-      options
+      options,
     );
     expect(result).toMatchSnapshot();
   });
@@ -272,7 +272,7 @@ function testTranslateNewPhrases(options: Options) {
           },
         ],
       },
-      options
+      options,
     );
     expect(result).toMatchSnapshot();
   });
@@ -363,7 +363,7 @@ function testTranslateNewPhrases(options: Options) {
           },
         ],
       },
-      options
+      options,
     );
     expect(result).toMatchSnapshot();
   });
@@ -486,7 +486,7 @@ function testTranslateNewPhrases(options: Options) {
           },
         ],
       },
-      options
+      options,
     );
     expect(result).toMatchSnapshot();
   });

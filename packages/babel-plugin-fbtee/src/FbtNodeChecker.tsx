@@ -119,7 +119,7 @@ export default class FbtNodeChecker {
           child,
           `Don't put <${nestedJSXElementName}> directly within <${rootJSXElementName}>. ` +
             `This is redundant. The text is already translated so you don't need ` +
-            `to translate it again`
+            `to translate it again`,
         );
       } else {
         const otherChecker =
@@ -135,7 +135,7 @@ export default class FbtNodeChecker {
             child,
             `Don't mix <fbt> and <fbs> JSX namespaces. ` +
               `Found a <${name.namespace.name}:${name.name.name}> ` +
-              `directly within a <${moduleName}>`
+              `directly within a <${moduleName}>`,
           );
         }
       }
@@ -158,24 +158,24 @@ export default class FbtNodeChecker {
     return fbtChecker.isCommonStringCall(node)
       ? fbtChecker
       : fbsChecker.isCommonStringCall(node)
-      ? fbsChecker
-      : null;
+        ? fbsChecker
+        : null;
   }
 
   static forFbtFunctionCall(node: Node): FbtNodeChecker | null {
     return fbtChecker.isModuleCall(node)
       ? fbtChecker
       : fbsChecker.isModuleCall(node)
-      ? fbsChecker
-      : null;
+        ? fbsChecker
+        : null;
   }
 
   static forJSXFbt(node: Node): FbtNodeChecker | null {
     return fbtChecker.isJSXElement(node)
       ? fbtChecker
       : fbsChecker.isJSXElement(node)
-      ? fbsChecker
-      : null;
+        ? fbsChecker
+        : null;
   }
 
   /**

@@ -18,13 +18,13 @@ describe('fbs', () => {
     describe('with a basic text', () => {
       it('fbs() should work', () => {
         expect(
-          fbs('Hello world', 'some desc').toString()
+          fbs('Hello world', 'some desc').toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);
       });
 
       it('<fbs> should work', () => {
         expect(
-          (<fbs desc="some desc">Hello world</fbs>).toString()
+          (<fbs desc="some desc">Hello world</fbs>).toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);
       });
     });
@@ -34,8 +34,8 @@ describe('fbs', () => {
         expect(
           fbs(
             ['Hello ', fbs.param('name', fbs('world', 'param text'))],
-            'some desc'
-          ).toString()
+            'some desc',
+          ).toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);
       });
 
@@ -49,7 +49,7 @@ describe('fbs', () => {
                 <fbs desc="param text">world</fbs>
               </fbs:param>
             </fbs>
-          ).toString()
+          ).toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);
       });
     });
@@ -71,8 +71,8 @@ describe('fbs', () => {
               }),
               '.',
             ],
-            'desc'
-          ).toString()
+            'desc',
+          ).toString(),
         ).toMatchInlineSnapshot(`"I have three dreams."`);
       });
 
@@ -91,7 +91,7 @@ describe('fbs', () => {
               </fbs:plural>
               {'.'}
             </fbs>
-          ).toString()
+          ).toString(),
         ).toMatchInlineSnapshot(`"I have three dreams."`);
       });
     });
@@ -104,10 +104,10 @@ describe('fbs', () => {
           fbs(
             // @ts-expect-error
             ['Hello ', fbs.param('name', <strong>world</strong>)],
-            'some desc'
-          )
+            'some desc',
+          ),
         ).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
         );
       });
 
@@ -121,7 +121,7 @@ describe('fbs', () => {
             </fbs:param>
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });
@@ -145,7 +145,7 @@ describe('fbs', () => {
             Hello <strong>world!</strong>
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });
@@ -167,10 +167,10 @@ describe('fbs', () => {
               }),
               '.',
             ],
-            'desc'
-          )
+            'desc',
+          ),
         ).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`
+          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
         );
       });
 
@@ -189,7 +189,7 @@ describe('fbs', () => {
             {'.'}
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`
+          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });

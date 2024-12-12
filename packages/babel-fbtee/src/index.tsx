@@ -4,7 +4,7 @@ import fbtRuntime from '@nkzw/babel-plugin-fbtee-runtime';
 
 export default function preset(
   _: unknown,
-  options: PluginOptions & { disableAutoImport?: boolean }
+  options: PluginOptions & { disableAutoImport?: boolean },
 ) {
   return {
     plugins: [

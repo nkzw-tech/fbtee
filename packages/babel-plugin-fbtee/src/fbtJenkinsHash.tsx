@@ -4,7 +4,7 @@ import jenkinsHash from './jenkinsHash.tsx';
 import { mapLeaves, onEachLeaf } from './JSFbtUtil.tsx';
 
 export default function fbtJenkinsHash(
-  jsfbt: Readonly<TableJSFBTTree>
+  jsfbt: Readonly<TableJSFBTTree>,
 ): number {
   let desc: string | null = null;
   let leavesHaveSameDesc = true;
@@ -23,11 +23,11 @@ export default function fbtJenkinsHash(
         return leaf.tokenAliases != null
           ? { text: leaf.text, tokenAliases: leaf.tokenAliases }
           : leaf.text;
-      }
+      },
     );
     invariant(
       desc != null,
-      'Expect `desc` to be nonnull as `TableJSFBTTree` should contain at least one leaf.'
+      'Expect `desc` to be nonnull as `TableJSFBTTree` should contain at least one leaf.',
     );
     const key = JSON.stringify(hashInputTree) + '|' + desc;
     return jenkinsHash(key);
@@ -40,7 +40,7 @@ export default function fbtJenkinsHash(
       return leaf.tokenAliases != null
         ? { ...newLeaf, tokenAliases: leaf.tokenAliases }
         : newLeaf;
-    }
+    },
   );
   return jenkinsHash(JSON.stringify(hashInputTree));
 }

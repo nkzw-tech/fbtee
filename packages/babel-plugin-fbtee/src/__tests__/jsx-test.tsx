@@ -17,7 +17,7 @@ const testData = {
         <fbt:param name="two">{two}</fbt:param>
         {\` \`}
         <fbt:param name="three">{three}</fbt:param>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -29,7 +29,7 @@ const testData = {
           with some
           {' other stuff.'}
         </fbt>;
-        baz();`
+        baz();`,
     ),
   },
 
@@ -40,7 +40,7 @@ const testData = {
           {foo}
           {bar}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
 
     throws: `fbt:param expects an {expression} or JSX element, and only one`,
@@ -55,7 +55,7 @@ const testData = {
           {foo}
           {}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -71,7 +71,7 @@ const testData = {
             </Link>
           </fbt:param>
         </fbt>
-      </div>;`
+      </div>;`,
     ),
   },
 
@@ -81,13 +81,13 @@ const testData = {
         <fbt desc="nested!">
           A nested string
         </fbt>
-      </div>;`
+      </div>;`,
     ),
   },
 
   'should convert simple strings': {
     input: withFbtRequireStatement(
-      `var x = <fbt desc="It's simple">A simple string</fbt>;`
+      `var x = <fbt desc="It's simple">A simple string</fbt>;`,
     ),
   },
 
@@ -97,7 +97,7 @@ const testData = {
         <fbt:param name="count" number={someNum}>
           {getNum()}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -108,7 +108,7 @@ const testData = {
         }A sim{/*
           ignore
           me
-          */}ple s{ }tri{}ng{/*ignore me*/}</fbt>;`
+          */}ple s{ }tri{}ng{/*ignore me*/}</fbt>;`,
     ),
   },
 
@@ -126,7 +126,7 @@ const testData = {
         "a few times"}
         project={"With" + "a" + "project"}>
         Here it is
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -135,7 +135,7 @@ const testData = {
       `var x = <fbt desc="a message!">
         A parameterized message to:
         <fbt:param name="emptyString"> </fbt:param>
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -151,7 +151,7 @@ const testData = {
           ]}
           value={id}
         />
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -167,7 +167,7 @@ const testData = {
           }}
           value={id}
         />
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -184,7 +184,7 @@ const testData = {
           value={id}
         />
         Hey-hey!
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -202,7 +202,7 @@ const testData = {
         Click to see
         <fbt:param name="count" number={true}>{c}</fbt:param>
         links
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -210,7 +210,7 @@ const testData = {
     input: withFbtRequireStatement(
       `<fbt desc={"d"} project={"p"}>
           I know <fbt:pronoun type="object" gender={gender}/>.
-        </fbt>;`
+        </fbt>;`,
     ),
   },
 
@@ -219,7 +219,7 @@ const testData = {
       `var x = <fbt desc="a message!">
           A parameterized message to:
           <fbt:param name="personName">{theName}</fbt:param>
-        </fbt>;`
+        </fbt>;`,
     ),
   },
 
@@ -227,7 +227,7 @@ const testData = {
     input: withFbtRequireStatement(
       `<fbt desc="foo">
         {"foo" + "bar"}
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -238,7 +238,7 @@ const testData = {
         `<fbt desc={"d"} project={"p"}>
           <fbt:pronoun type="subject" gender={gender} capitalize={true} human={true}/>
           wished <fbt:pronoun type="reflexive" gender={gender} human={true}/> a happy birthday.
-        </fbt>;`
+        </fbt>;`,
       ),
   },
 
@@ -249,7 +249,7 @@ const testData = {
         template across multiple lines\`}
         project={"With" + "a" + "project"}>
         Here it is
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -259,7 +259,7 @@ const testData = {
         Click to see
         <fbt:param name="count" number="true">{c}</fbt:param>
         links
-      </fbt>;`
+      </fbt>;`,
     ),
   },
 
@@ -269,7 +269,7 @@ const testData = {
         <fbt:param __self="param" name="foo">
           {foo}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -279,7 +279,7 @@ const testData = {
         <fbt:param name="foo">
           !{foo}!
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -288,7 +288,7 @@ const testData = {
       `<fbt desc="d">str
         <fbt:param name="foo">{Bar}</fbt:param> and
         <fbt:same-param name="foo"/>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -303,7 +303,7 @@ const testData = {
         <fbt:param name="bar" number={n}>
           {bar}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -313,7 +313,7 @@ const testData = {
         Hello, <fbt:param name="guest">
           {guest}
         </fbt:param>!
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -324,7 +324,7 @@ const testData = {
           A simple string...
           with some other stuff.
         </fbt>;
-        baz();`
+        baz();`,
     ),
   },
 
@@ -335,13 +335,13 @@ const testData = {
           Preamble
           <fbt:param name="parm">{blah}</fbt:param>
         </fbt>;
-      baz();`
+      baz();`,
     ),
   },
 
   'should support html escapes': {
     input: withFbtRequireStatement(
-      `<fbt desc="foo &quot;bar&quot;">&times;</fbt>`
+      `<fbt desc="foo &quot;bar&quot;">&times;</fbt>`,
     ),
   },
 
@@ -351,7 +351,7 @@ const testData = {
     input: withFbtRequireStatement(
       `<fbt desc="desc with    non-breaking&nbsp;&nbsp;&nbsp;space">
           text with    non-breaking&nbsp;&nbsp;&nbsp;space
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -362,7 +362,7 @@ const testData = {
         A copyright sign {'\\u00A9'},
         a multi byte character {'\\uD83D\\uDCA9'},
         and a backslash {'\\\\'}.
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -393,7 +393,7 @@ const testData = {
         <fbt:param name="foo" qux="foo" desc="foo-desc">
           {foo}
         </fbt:param>
-      </fbt>`
+      </fbt>`,
     ),
 
     throws: `Invalid option "qux". Only allowed: gender, number, name`,
@@ -401,7 +401,7 @@ const testData = {
 
   'should throw on undefined common string': {
     input: withFbtRequireStatement(
-      `<fbt common={true}>Some undefined common string</fbt>`
+      `<fbt common={true}>Some undefined common string</fbt>`,
     ),
 
     options: {},
@@ -415,7 +415,7 @@ const testData = {
         how is your mother is she well yeah why not lets go
         home and never come back.">
         lol
-      </fbt>`
+      </fbt>`,
     ),
   },
 
@@ -431,7 +431,7 @@ const testData = {
             </Link>
           </fbt:param>
         </fbt>
-      </Fragment>;`
+      </Fragment>;`,
     ),
   },
 
@@ -447,7 +447,7 @@ const testData = {
             </Link>
           </fbt:param>
         </fbt>
-      </>;`
+      </>;`,
     ),
   },
 };
@@ -466,7 +466,7 @@ describe('Test fbt transforms without the jsx transform', () => {
           <fbt desc="nested!">
             A nested string
           </fbt>;
-      `)
+      `),
     ).toMatchSnapshot(); // Should be like fbt._()
   });
 
@@ -480,7 +480,7 @@ describe('Test fbt transforms without the jsx transform', () => {
               A nested string
             </fbt>
           </div>;
-      `)
+      `),
     ).toMatchSnapshot(); // Should be like <div>{fbt._()}</div>
   });
 
@@ -489,7 +489,7 @@ describe('Test fbt transforms without the jsx transform', () => {
       await snapshotTransformKeepJsx(`
         const fbt = require("fbtee");
         let x = <fbt desc="" doNotExtract>Test</fbt>;
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -501,7 +501,7 @@ describe('Test fbt transforms without the jsx transform', () => {
           <fbt desc="">
             <fbt:param name="name" number>{'name'}</fbt:param>
           </fbt>;
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -517,7 +517,7 @@ describe('Test fbt transforms without the jsx transform', () => {
               </fbt>
             }
           </div>\`;
-        `)
+        `),
       ).toMatchSnapshot();
     });
 
@@ -535,7 +535,7 @@ describe('Test fbt transforms without the jsx transform', () => {
               </fbt>
             }
           </div>\`;
-        `)
+        `),
       ).toMatchSnapshot();
     });
 
@@ -550,7 +550,7 @@ describe('Test fbt transforms without the jsx transform', () => {
               photo
             </fbt:plural>.
           </fbt>
-        `)
+        `),
       ).toMatchSnapshot();
     });
 
@@ -579,7 +579,7 @@ describe('Test fbt transforms without the jsx transform', () => {
               </fbt>
             }
           </div>\`;
-        `)
+        `),
       ).toMatchSnapshot();
     });
   });
@@ -592,7 +592,7 @@ describe('Test fbt transforms without the jsx transform', () => {
         <fbt desc="desc with 3   spaces" preserveWhitespace={true}>
           Some text with 3   spaces in between.
         </fbt>;
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -611,7 +611,7 @@ describe('Test fbt transforms without the jsx transform', () => {
           </fbt:plural>
           to anything.
         </fbt>
-      `)
+      `),
     ).toMatchSnapshot());
 });
 
@@ -625,15 +625,15 @@ test('Test common fbt with value-less `common` attribute should have same runtim
         const fbt = require("fbtee");
         let x = <fbt common>Submit</fbt>;
       `,
-      options
-    )
+      options,
+    ),
   ).toEqual(
     await snapshotTransformKeepJsx(
       `
         const fbt = require("fbtee");
         let x = <fbt common={true}>Submit</fbt>;
       `,
-      options
-    )
+      options,
+    ),
   );
 });

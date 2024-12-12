@@ -9,7 +9,7 @@ import {
 
 function runTest(
   data: { input: string; output: string },
-  extra?: PluginOptions
+  extra?: PluginOptions,
 ) {
   const expected = data.output;
   const actual = transform(data.input, extra);
@@ -24,7 +24,7 @@ describe('fbt pronoun support', () => {
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
             'Capitalized possessive pronoun',
-          );`
+          );`,
       ),
 
       output: withFbtRequireStatement(
@@ -49,7 +49,7 @@ describe('fbt pronoun support', () => {
             },
           })},
           [fbt._pronoun(1, gender)],
-        );`
+        );`,
       ),
     });
   });
@@ -62,10 +62,10 @@ describe('fbt pronoun support', () => {
           fbt.pronoun('possessive', gender, {human: 'true'}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`
+      );`,
     );
     expect(() => transform(input)).toThrow(
-      "Expected boolean value instead of 'true' (string)"
+      "Expected boolean value instead of 'true' (string)",
     );
   });
 
@@ -77,10 +77,10 @@ describe('fbt pronoun support', () => {
           human: 'true',
         })} a happy birthday.\`,
         'Expect error exception',
-      );`
+      );`,
     );
     expect(() => transform(input)).toThrow(
-      "Expected boolean value instead of 'true' (string)"
+      "Expected boolean value instead of 'true' (string)",
     );
   });
 
@@ -92,11 +92,11 @@ describe('fbt pronoun support', () => {
           fbt.pronoun('possession', gender, {human: false}) +
           ' a happy birthday.',
         'Expect error exception',
-      );`
+      );`,
     );
     expect(() => transform(input)).toThrow(
       '`usage`, the first argument of fbt.pronoun() - Expected value to be ' +
-        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead"
+        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead",
     );
   });
 
@@ -110,7 +110,7 @@ describe('fbt pronoun support', () => {
               fbt.pronoun('object', gender, {human: true}) +
               ' a happy birthday.',
             'Elided false option',
-          );`
+          );`,
         ),
 
       output: withFbtRequireStatement(
@@ -135,7 +135,7 @@ describe('fbt pronoun support', () => {
             },
           })},
           [fbt._pronoun(0, gender, {human: 1})],
-        );`
+        );`,
       ),
     });
   });

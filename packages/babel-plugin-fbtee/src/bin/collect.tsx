@@ -108,7 +108,7 @@ const argv = y
       "  'text' - hashing is done at the text (or leaf) level (more granular)\n" +
       "'phrase' - hashing is done at the phrase (entire fbt callsite) level\n" +
       "  'both' - Both phrase and text hashing are performed\n" +
-      "  'none' - No hashing or alteration of phrase data\n"
+      "  'none' - No hashing or alteration of phrase data\n",
   )
   .choices(args.PACKAGER, Object.values(packagerTypes))
   .describe(args.HELP, 'Display usage message')
@@ -118,14 +118,14 @@ const argv = y
   .describe(
     args.MANIFEST,
     'Interpret stdin as JSON map of {<enum-manifest-file>: ' +
-      '[<source_file1>, ...]}. Otherwise stdin itself will be parsed'
+      '[<source_file1>, ...]}. Otherwise stdin itself will be parsed',
   )
   .string(args.COMMON_STRINGS)
   .default(args.COMMON_STRINGS, null)
   .describe(
     args.COMMON_STRINGS,
     'Optional path to the common strings module. ' +
-      'This is a map from {[text]: [description]}.'
+      'This is a map from {[text]: [description]}.',
   )
   .boolean(args.PRETTY)
   .default(args.PRETTY, false)
@@ -137,13 +137,13 @@ const argv = y
     'Generate the outer token name of an inner string in the JSON output. ' +
       'E.g. For the fbt string `<fbt>Hello <i>World</i></fbt>`, ' +
       'the outer string is "Hello {=World}", and the inner string is: "World". ' +
-      'So the outer token name of the inner string will be "=World"'
+      'So the outer token name of the inner string will be "=World"',
   )
   .boolean(args.GEN_FBT_NODES)
   .default(args.GEN_FBT_NODES, false)
   .describe(
     args.GEN_FBT_NODES,
-    'Generate the abstract representation of the fbt callsites as FbtNode trees.'
+    'Generate the abstract representation of the fbt callsites as FbtNode trees.',
   )
   .string(args.TRANSFORM)
   .default(args.TRANSFORM, null)
@@ -151,27 +151,27 @@ const argv = y
     args.TRANSFORM,
     'A custom transform to call into rather than the default provided. ' +
       'Expects a signature of (source, options, filename) => mixed, and ' +
-      'for babel-pluginf-fbt to be run within the transform.'
+      'for babel-pluginf-fbt to be run within the transform.',
   )
   .array(args.PLUGINS)
   .default(args.PLUGINS, [])
   .describe(
     args.PLUGINS,
     'List of auxiliary Babel plugins to enable for parsing source.\n' +
-      'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator'
+      'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator',
   )
   .array(args.PRESETS)
   .default(args.PRESETS, [])
   .describe(
     args.PRESETS,
     'List of auxiliary Babel presets to enable for parsing source.\n' +
-      'E.g. --presets @babel/preset-typescript'
+      'E.g. --presets @babel/preset-typescript',
   )
   .string(args.OPTIONS)
   .describe(
     args.OPTIONS,
     'additional options that fbt(..., {can: "take"}).  ' +
-      `i.e. --${args.OPTIONS} "locale,qux,id"`
+      `i.e. --${args.OPTIONS} "locale,qux,id"`,
   )
   .string(args.CUSTOM_COLLECTOR)
   .describe(
@@ -180,7 +180,7 @@ const argv = y
       `the input JS is not flexible enough. As an alternative, you can provide your own ` +
       `implementation of the FbtCollector module. ` +
       `It must at least expose the same public methods to expose the extract fbt phrases.\n` +
-      `i.e. --${args.CUSTOM_COLLECTOR} myFbtCollector.js`
+      `i.e. --${args.CUSTOM_COLLECTOR} myFbtCollector.js`,
   )
   .parseSync();
 
@@ -215,13 +215,13 @@ async function processJsonSource(collector: IFbtCollector, source: string) {
 async function writeOutput(collector: IFbtCollector) {
   const packagers = await getPackagers(
     argv[args.PACKAGER] || 'text',
-    argv[args.HASH] || null
+    argv[args.HASH] || null,
   );
   const output = buildCollectFbtOutput(collector, packagers, {
     genFbtNodes: argv[args.GEN_FBT_NODES],
   });
   process.stdout.write(
-    JSON.stringify(output, null, argv.pretty ? ' ' : undefined)
+    JSON.stringify(output, null, argv.pretty ? ' ' : undefined),
   );
   process.stdout.write('\n');
 }
@@ -258,7 +258,7 @@ if (argv.help) {
       transform,
     },
     extraOptions,
-    argv[args.CUSTOM_COLLECTOR]
+    argv[args.CUSTOM_COLLECTOR],
   );
 
   if (!argv._.length) {

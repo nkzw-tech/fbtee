@@ -17,7 +17,7 @@ import {
 export type ResolverFn<T extends BaseResult> = (
   contents: NestedFbtContentItems,
   hashKey: PatternHash | null | undefined,
-  errorListener: IFbtErrorListener | null
+  errorListener: IFbtErrorListener | null,
 ) => T;
 
 /**
@@ -102,7 +102,7 @@ export default {
   getFbsResult(
     contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
-    errorListener: IFbtErrorListener | null
+    errorListener: IFbtErrorListener | null,
   ): PureStringResult {
     const { getFbsResult } = _registrations;
     if (!getFbsResult) {
@@ -114,7 +114,7 @@ export default {
   getFbtResult(
     contenst: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
-    errorListener: IFbtErrorListener | null
+    errorListener: IFbtErrorListener | null,
   ): FbtResult {
     const { getFbtResult } = _registrations;
     if (!getFbtResult) {

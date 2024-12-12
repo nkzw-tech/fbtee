@@ -69,7 +69,7 @@ const FbtTable = {
     table: FbtRuntimeInput,
     args: FbtTableArgs,
     argsIndex: number,
-    tokens: Array<FbtTableKey>
+    tokens: Array<FbtTableKey>,
   ): FbtRuntimeInput | null {
     if (argsIndex >= args.length) {
       // We've reached the end of our arguments at a valid entry, in which case
@@ -77,7 +77,7 @@ const FbtTable = {
       invariant(
         typeof table === 'string' || Array.isArray(table),
         'Expected leaf, but got: %s',
-        JSON.stringify(table)
+        JSON.stringify(table),
       );
       return table;
     }
@@ -90,7 +90,7 @@ const FbtTable = {
     invariant(
       typeof table !== 'string' && !Array.isArray(table),
       'If tableIndex is non-null, we should have a table, but we got: %s',
-      typeof table
+      typeof table,
     );
     // Is there a variation? Attempt table access in order of variation preference
     for (let k = 0; k < tableIndices.length; ++k) {

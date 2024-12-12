@@ -37,7 +37,7 @@ fbt(
     }) +
     ' on your ' +
     fbt.plural('photo', getPhotoCount()),
-  'plural example'
+  'plural example',
 );
 ```
 

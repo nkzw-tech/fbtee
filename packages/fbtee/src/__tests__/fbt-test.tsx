@@ -33,7 +33,7 @@ describe('fbt', () => {
 
   it('should hint at the correct usage of fbt', () => {
     expect(() => fbtInternal('test')).toThrowErrorMatchingInlineSnapshot(
-      `"fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again."`
+      `"fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again."`,
     );
   });
 
@@ -42,14 +42,14 @@ describe('fbt', () => {
       getFbtResult: (
         contents: NestedFbtContentItems,
         hashKey: PatternHash | null | undefined,
-        errorListener: IFbtErrorListener | null
+        errorListener: IFbtErrorListener | null,
       ) => new FbtResult(contents, errorListener, hashKey),
     });
 
     expect(fbtInternal._('sample string') instanceof FbtResult).toBe(true);
     expect(fbtInternal._('sample string')).toBe(fbtInternal._('sample string'));
     expect(fbtInternal._('sample string')).not.toBe(
-      fbsInternal._('sample string')
+      fbsInternal._('sample string'),
     );
   });
 
@@ -59,13 +59,13 @@ describe('fbt', () => {
 
   it('should handle common strings', () => {
     expect(fbt.c('Accept')).toEqual(
-      fbt('Accept', 'Button/Link: Accept conditions')
+      fbt('Accept', 'Button/Link: Accept conditions'),
     );
   });
 
   it('should replace tokens with named values', () => {
     expect(
-      fbt('with token ' + fbt.param('token', 'A') + ' here', 'test')
+      fbt('with token ' + fbt.param('token', 'A') + ' here', 'test'),
     ).toEqual('with token A here');
     expect(
       fbt(
@@ -74,17 +74,17 @@ describe('fbt', () => {
           ' and ' +
           fbt.param('tokenB', 'B') +
           '',
-        'test'
-      )
+        'test',
+      ),
     ).toEqual('with tokens A and B');
   });
 
   it('should remove punctuation when a value ends with it', () => {
     expect(fbt('Play ' + fbt.param('game', 'Chess!') + '!', 'test')).toEqual(
-      'Play Chess!'
+      'Play Chess!',
     );
     expect(
-      fbt("What's on your mind " + fbt.param('name', 'T.J.') + '?', 'test')
+      fbt("What's on your mind " + fbt.param('name', 'T.J.') + '?', 'test'),
     ).toEqual("What's on your mind T.J.?");
   });
 
@@ -96,8 +96,8 @@ describe('fbt', () => {
           ' and ' +
           fbt.param('tokenB', 'B') +
           '',
-        'test'
-      )
+        'test',
+      ),
     ).toEqual('with tokens {tokenB} and B');
   });
 
@@ -107,7 +107,7 @@ describe('fbt', () => {
     const argument = <div key="test" />;
     const fragment = fbt(
       'with token ' + fbt.param('token', argument) + ' here',
-      'test'
+      'test',
     );
     const items: Array<string | BaseResult> = [];
     Children.forEach(fragment, (item) => {
@@ -122,7 +122,7 @@ describe('fbt', () => {
 
   it('should render input params for undefined values', () => {
     expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual(
-      '{undefined_value}'
+      '{undefined_value}',
     );
   });
 
@@ -136,7 +136,7 @@ describe('fbt', () => {
   function _render(
     value: string,
     childA: React.ReactNode,
-    childB: React.ReactNode
+    childB: React.ReactNode,
   ) {
     // In theory, different enum values can result in different sentence
     // structures. If that happens, the React components should retain
@@ -153,7 +153,7 @@ describe('fbt', () => {
         // @ts-expect-error
         fbtInternal._param('tokenB', childB),
         fbtInternal._enum(value, { A: 'is before', B: 'is after' }),
-      ]
+      ],
     );
     // @ts-expect-error
     return <div>{fbtFragment}</div>;
@@ -171,8 +171,8 @@ describe('fbt', () => {
         'with something like ' +
           fbt.param('count', 42, { number: true }) +
           ' wildcards',
-        'test'
-      )
+        'test',
+      ),
     ).toEqual('with something like 42 wildcards');
   });
 
@@ -180,21 +180,21 @@ describe('fbt', () => {
     expect(
       fbt(
         'A total amount is ' + fbt.param('count', 10_000, { number: true }),
-        'Test string'
-      )
+        'Test string',
+      ),
     ).toEqual('A total amount is 10,000');
   });
 
   it('should keep literal value as is', () => {
     expect(
-      fbt('A total amount is ' + fbt.param('count', 10_000), 'Test string')
+      fbt('A total amount is ' + fbt.param('count', 10_000), 'Test string'),
     ).toEqual('A total amount is 10000');
   });
 
   it('should not warn when unkeyed React components are params', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const { container } = render(
-      <TestComponent childA={<div />} childB={<div />} value="A" />
+      <TestComponent childA={<div />} childB={<div />} value="A" />,
     );
     expect(container.children[0].getElementsByTagName('div').length).toBe(2);
     expect(warn.mock.calls.length).toBe(0);
@@ -202,14 +202,14 @@ describe('fbt', () => {
 
   function expectChildSetsToRetainIdentity(
     setA: React.ReactElement,
-    setB: React.ReactElement
+    setB: React.ReactElement,
   ) {
     const { container: containerA } = render(
-      <TestComponent childA={setA} childB={setB} value="A" />
+      <TestComponent childA={setA} childB={setB} value="A" />,
     );
     const nodeA = containerA.children[0];
     const { container: containerB } = render(
-      <TestComponent childA={setA} childB={setB} value="B" />
+      <TestComponent childA={setA} childB={setB} value="B" />,
     );
     const nodeB = containerB.children[0];
 
@@ -231,9 +231,9 @@ describe('fbt', () => {
         fbtInternal._('Just a {tokenName}', [
           fbtInternal._param('tokenName', 'substitute'),
           fbtInternal._param('tokenName', 'substitute'),
-        ])
+        ]),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot register a substitution with token=\`tokenName\` more than once"`
+        `"Cannot register a substitution with token=\`tokenName\` more than once"`,
       );
     });
 
@@ -244,11 +244,11 @@ describe('fbt', () => {
           fbtInternal._name(
             'tokenName',
             'person name',
-            GenderConst.UNKNOWN_SINGULAR
+            GenderConst.UNKNOWN_SINGULAR,
           ),
-        ])
+        ]),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot register a substitution with token=\`tokenName\` more than once"`
+        `"Cannot register a substitution with token=\`tokenName\` more than once"`,
       );
     });
   });
@@ -263,7 +263,7 @@ describe('fbt', () => {
 
   it('should leave non-QuickTranslation strings alone', () => {
     expect(
-      fbtInternal._(["This isn't", '8b0c31a270a324f26d2417a358106612'])
+      fbtInternal._(["This isn't", '8b0c31a270a324f26d2417a358106612']),
     ).toEqual("This isn't");
   });
 
@@ -272,8 +272,8 @@ describe('fbt', () => {
       fbt(
         'Invited by ' + fbt.plural('friend', 1, { showCount: 'yes' }) + '.',
         'Test Description',
-        { subject: IntlVariations.GENDER_UNKNOWN }
-      )
+        { subject: IntlVariations.GENDER_UNKNOWN },
+      ),
     ).toEqual('Invited by 1 friend.');
   });
 
@@ -284,7 +284,7 @@ describe('fbt', () => {
       },
     });
     expect(fbtInternal._('sample string', null, null)).toEqual(
-      'ALL YOUR TRANSLATION ARE BELONG TO US'
+      'ALL YOUR TRANSLATION ARE BELONG TO US',
     );
   });
 
@@ -296,14 +296,14 @@ describe('fbt', () => {
         <fbt desc="...">
           <fbt:param name="hello">{fbtParams[0]}</fbt:param>
           <fbt:param name="world">{fbtParams[1]}</fbt:param>
-        </fbt>
+        </fbt>,
       ).toEqual(fbtParams.join(''));
 
       expect(
         fbt(
           fbt.param('hello', fbtParams[0]) + fbt.param('world', fbtParams[1]),
-          'desc'
-        )
+          'desc',
+        ),
       ).toEqual(fbtParams.join(''));
     });
   });
@@ -405,12 +405,12 @@ describe('fbt', () => {
                     object,
                     ownerGender,
                     viewer,
-                  })
+                  }),
                 ).toMatchSnapshot();
-              }))
-          )
-        )
-      )
+              })),
+          ),
+        ),
+      ),
     );
   });
 });

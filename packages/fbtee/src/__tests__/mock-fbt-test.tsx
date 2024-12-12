@@ -35,7 +35,7 @@ describe('mock fbt (no typechecks)', () => {
 
   it('should munge together fbt.param calls', () => {
     expect(fbt('Hello ' + fbt.param('name', 'bubba'), 'description')).toEqual(
-      'Hello bubba'
+      'Hello bubba',
     );
   });
 
@@ -57,8 +57,8 @@ describe('mock fbt (no typechecks)', () => {
           ' ' +
           fbt.enum('b', ['a', 'b']) +
           '. The end.',
-        'd'
-      )
+        'd',
+      ),
     ).toEqual('bar a 3 things more plain text w00t w00t2 b. The end.');
   });
 });

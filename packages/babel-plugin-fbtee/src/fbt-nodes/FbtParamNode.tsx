@@ -47,14 +47,14 @@ const ParamVariation = {
 
 function enforceExpression(
   value: Node | string | null,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ): Expression {
   invariant(
     value != null && typeof value !== 'string' && isExpression(value),
     '%sExpected Expression value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value;
 }
@@ -76,7 +76,7 @@ export default class FbtParamNode extends FbtNode<
       const rawOptions = collectOptionsFromFbtConstruct(
         this.moduleName,
         this.node,
-        ValidParamOptions
+        ValidParamOptions,
       );
       const [arg0, arg1] = this.getCallNodeArguments() || [];
       const gender =
@@ -87,23 +87,23 @@ export default class FbtParamNode extends FbtNode<
         typeof rawOptions.number === 'boolean'
           ? rawOptions.number
           : rawOptions.number != null
-          ? enforceExpression(rawOptions.number)
-          : null;
+            ? enforceExpression(rawOptions.number)
+            : null;
 
       invariant(
         number !== false,
-        '`number` option must be an expression or `true`'
+        '`number` option must be an expression or `true`',
       );
       invariant(
         !gender || !number,
-        'Gender and number options must not be set at the same time'
+        'Gender and number options must not be set at the same time',
       );
 
       let name = typeof rawOptions.name === 'string' ? rawOptions.name : null;
       if (name == null || name === '') {
         invariant(
           isStringLiteral(arg0),
-          'First function argument must be a string literal'
+          'First function argument must be a string literal',
         );
         name = arg0.value;
       }
@@ -111,7 +111,7 @@ export default class FbtParamNode extends FbtNode<
 
       const value = nullthrows(
         arg1,
-        'The second function argument must not be null'
+        'The second function argument must not be null',
       );
 
       return {
@@ -153,7 +153,7 @@ export default class FbtParamNode extends FbtNode<
     const ret = [];
     invariant(
       !gender || !number,
-      'Gender and number options must not be set at the same time'
+      'Gender and number options must not be set at the same time',
     );
     if (gender) {
       ret.push(new GenderStringVariationArg(this, gender, [GENDER_ANY]));
@@ -161,7 +161,7 @@ export default class FbtParamNode extends FbtNode<
       ret.push(
         new NumberStringVariationArg(this, number === true ? null : number, [
           NUMBER_ANY,
-        ])
+        ]),
       );
     }
     return ret;
@@ -180,7 +180,7 @@ export default class FbtParamNode extends FbtNode<
           'Expected SVArgument instance of %s but got %s instead: %s',
           expectedArg.constructor.name || 'unknown',
           svArg.constructor.name || 'unknown',
-          varDump(svArg)
+          varDump(svArg),
         );
       });
       return tokenNameToTextPattern(this.getTokenName(argsMap));
@@ -210,7 +210,7 @@ export default class FbtParamNode extends FbtNode<
         stringLiteral(name),
         value,
         variationValues ? arrayExpression(variationValues) : null,
-      ].filter((node): node is Expression => node != null)
+      ].filter((node): node is Expression => node != null),
     );
   }
 

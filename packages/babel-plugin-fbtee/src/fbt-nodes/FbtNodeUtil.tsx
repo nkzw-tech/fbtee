@@ -43,7 +43,7 @@ export type FromNodeArgs = {
  * Returns the closest ancestor node of type: FbtElementNode | FbtImplicitParamNode
  */
 export function getClosestElementOrImplicitParamNodeAncestor(
-  startNode: AnyFbtNode
+  startNode: AnyFbtNode,
 ): FbtElementNode | FbtImplicitParamNodeType {
   const ret =
     startNode.getFirstAncestorOfType(FbtImplicitParamNode) ||
@@ -51,14 +51,14 @@ export function getClosestElementOrImplicitParamNodeAncestor(
   invariant(
     ret != null,
     'Unable to find closest ancestor of type FbtElementNode or FbtImplicitParamNode for node: %s',
-    varDump(startNode)
+    varDump(startNode),
   );
   return ret;
 }
 
 export function runOnNestedChildren(
   node: AnyFbtNode,
-  callback: (node: AnyFbtNode) => void
+  callback: (node: AnyFbtNode) => void,
 ) {
   for (const child of node.children) {
     if (child) {
@@ -72,13 +72,13 @@ export function runOnNestedChildren(
 
 export function toPlainFbtNodeTree(
   fbtNode: AnyFbtNode,
-  phraseToIndexMap: Map<AnyFbtNode, number>
+  phraseToIndexMap: Map<AnyFbtNode, number>,
 ): PlainFbtNode {
   const node = { ...fbtNode.toPlainFbtNode() };
   const phraseIndex = phraseToIndexMap.get(fbtNode);
   const children = fbtNode.children
     .map((child) =>
-      child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null
+      child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null,
     )
     .filter((child): child is PlainFbtNode => child != null);
 
@@ -120,7 +120,7 @@ export function tokenNameToTextPattern(tokenName: string): string {
  *          the outer token alias of <a>world</a> will be '=m1'.
  */
 export function convertIndexInSiblingsArrayToOuterTokenAlias(
-  index: number
+  index: number,
 ): string {
   return convertToTokenName(`m${index}`);
 }
@@ -137,8 +137,8 @@ export function getTextFromFbtNodeTree(
   preserveWhitespace: boolean,
   getChildNodeText: (
     argsMap: StringVariationArgsMap,
-    child: FbtChildNode
-  ) => string
+    child: FbtChildNode,
+  ) => string,
 ): string {
   try {
     if (subject) {
@@ -153,7 +153,7 @@ export function getTextFromFbtNodeTree(
 
 export function getChildNodeText(
   argsMap: StringVariationArgsMap,
-  child: FbtChildNode
+  child: FbtChildNode,
 ): string {
   return child instanceof FbtImplicitParamNode
     ? tokenNameToTextPattern(child.getTokenName(argsMap))
@@ -162,10 +162,10 @@ export function getChildNodeText(
 
 export function getTokenAliasesFromFbtNodeTree(
   instance: FbtElementNode | FbtImplicitParamNodeType,
-  argsMap: StringVariationArgsMap
+  argsMap: StringVariationArgsMap,
 ): TokenAliases | null {
   const childrentokenAliases = instance.children.map((node, tokenIndex) =>
-    getChildNodeTokenAliases(argsMap, node, tokenIndex)
+    getChildNodeTokenAliases(argsMap, node, tokenIndex),
   );
   const tokenAliases = Object.assign({}, ...childrentokenAliases);
   return Object.keys(tokenAliases).length ? tokenAliases : null;
@@ -174,14 +174,14 @@ export function getTokenAliasesFromFbtNodeTree(
 function getChildNodeTokenAliases(
   argsMap: StringVariationArgsMap,
   child: FbtChildNode,
-  tokenIndex: number
+  tokenIndex: number,
 ): TokenAliases {
   if (child instanceof FbtImplicitParamNode) {
     const childToken = child.getTokenName(argsMap);
     invariant(
       childToken != null,
       'The token of FbtImplicitParamNode %s is expected to be non-null',
-      varDump(child)
+      varDump(child),
     );
     return {
       [childToken]: convertIndexInSiblingsArrayToOuterTokenAlias(tokenIndex),
@@ -193,7 +193,7 @@ function getChildNodeTokenAliases(
 export function getChildNodeTextForDescription(
   targetFbtNode: FbtImplicitParamNodeType,
   argsMap: StringVariationArgsMap,
-  child: FbtChildNode
+  child: FbtChildNode,
 ): string {
   if (child instanceof FbtImplicitParamNode) {
     return child === targetFbtNode || !child.isAncestorOf(targetFbtNode)
@@ -206,7 +206,7 @@ export function getChildNodeTextForDescription(
 
 export function buildFbtNodeMapForSameParam(
   fbtNode: FbtElementNode,
-  argsMap: StringVariationArgsMap
+  argsMap: StringVariationArgsMap,
 ): {
   [key: string]: FbtChildNode;
 } {
@@ -240,7 +240,7 @@ export function buildFbtNodeMapForSameParam(
         fbtNode.moduleName,
         fbtNode.moduleName,
         varDump(existingFbtNode),
-        varDump(child)
+        varDump(child),
       );
       tokenNameToFbtNode[tokenName] = child as FbtChildNode;
     }
@@ -253,7 +253,7 @@ export function buildFbtNodeMapForSameParam(
       realFbtNode != null,
       'Expected fbt `sameParam` construct with name=`%s` to refer to a ' +
         '`name` or `param` construct using the same token name',
-      sameParamTokenName
+      sameParamTokenName,
     );
     sameParamTokenNameToRealFbtNode[sameParamTokenName] = realFbtNode;
   }

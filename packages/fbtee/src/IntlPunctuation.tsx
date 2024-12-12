@@ -91,7 +91,7 @@ for (const norm of Object.keys(IntlRedundantStops.equivalencies)) {
   for (const eq of [norm].concat(
     IntlRedundantStops.equivalencies[
       norm as keyof typeof IntlRedundantStops.equivalencies
-    ]
+    ],
   )) {
     _normalizedStops.set(eq, norm);
   }
@@ -104,8 +104,8 @@ for (const prefix of Object.keys(IntlRedundantStops.redundancies)) {
     new Set(
       IntlRedundantStops.redundancies[
         prefix as keyof typeof IntlRedundantStops.redundancies
-      ]
-    )
+      ],
+    ),
   );
 }
 

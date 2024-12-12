@@ -9,7 +9,7 @@ describe('manifest', () => {
     const { enumManifest, srcManifest } = await generateManifest(
       enumManifestPath,
       [srcPath],
-      import.meta.dirname + '/../..'
+      import.meta.dirname + '/../..',
     );
 
     expect(JSON.stringify(srcManifest, null, 2)).toMatchSnapshot();

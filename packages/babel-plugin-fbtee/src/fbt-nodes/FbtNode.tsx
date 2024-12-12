@@ -177,7 +177,7 @@ export default abstract class FbtNode<
   SVArgument extends AnyStringVariationArg | never = never,
   CurrentNode extends Node = Node,
   MaybeChildNode extends FbtChildNode | null = null,
-  Options extends Record<string, unknown> | null = null
+  Options extends Record<string, unknown> | null = null,
 > {
   readonly moduleName: BindingName;
   readonly children: Array<MaybeChildNode>;
@@ -230,7 +230,7 @@ export default abstract class FbtNode<
   getOptions(_validExtraOptions?: Readonly<FbtOptionConfig>): Options {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class'
+      'This method must be implemented in a child class',
     );
   }
 
@@ -255,14 +255,14 @@ export default abstract class FbtNode<
   getArgsForStringVariationCalc(): ReadonlyArray<SVArgument> {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class'
+      'This method must be implemented in a child class',
     );
   }
 
   getText(_argsMap: StringVariationArgsMap): string {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class'
+      'This method must be implemented in a child class',
     );
   }
 
@@ -296,7 +296,7 @@ export default abstract class FbtNode<
       if (
         error instanceof Error &&
         error.message.includes(
-          'This method must be implemented in a child class'
+          'This method must be implemented in a child class',
         )
       ) {
         stringVariationArgs = error;
@@ -348,7 +348,7 @@ export default abstract class FbtNode<
   getFirstAncestorOfType<
     N extends Node,
     ChildNode extends MaybeChildNode | null,
-    Class
+    Class,
   >(
     AncestorConstructor: new (x: {
       children?: ReadonlyArray<ChildNode>;
@@ -356,7 +356,7 @@ export default abstract class FbtNode<
       node: N;
       parent?: AnyFbtNode | null;
       validExtraOptions?: Readonly<FbtOptionConfig>;
-    }) => Class
+    }) => Class,
   ): Class | null {
     for (let { parent } = this; parent != null; parent = parent.parent) {
       if (parent instanceof AncestorConstructor) {
@@ -380,7 +380,7 @@ export default abstract class FbtNode<
   getFbtRuntimeArg(): CallExpression | null {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class'
+      'This method must be implemented in a child class',
     );
   }
 
@@ -406,7 +406,7 @@ export default abstract class FbtNode<
           this.node,
           `Expected string variation runtime argument "${argumentName}" ` +
             `to not be a function call or class instantiation expression. ` +
-            `See https://fburl.com/i18n_js_fbt_extraction_limits`
+            `See https://fburl.com/i18n_js_fbt_extraction_limits`,
         );
       }
       scope.traverse(
@@ -417,11 +417,11 @@ export default abstract class FbtNode<
               path.node,
               `Expected string variation runtime argument "${argumentName}" ` +
                 `to not contain a function call or class instantiation expression. ` +
-                `See https://fburl.com/i18n_js_fbt_extraction_limits`
+                `See https://fburl.com/i18n_js_fbt_extraction_limits`,
             );
           },
         },
-        scope
+        scope,
       );
     }
   }

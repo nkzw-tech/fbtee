@@ -16,7 +16,7 @@ export default class TranslationConfig {
 
   constructor(
     numberType: LangToNumberTypeValues | LocaleToNumberTypeValues,
-    genderType: IntlGenderType
+    genderType: IntlGenderType,
   ) {
     this.numberType = numberType;
     this.genderType = genderType;
@@ -33,7 +33,7 @@ export default class TranslationConfig {
         typeof variation === 'string',
         'Expect keys in translated payload to be either string or number type ' +
           'but got a key of type `%s`',
-        variation
+        variation,
       );
       value = Number.parseInt(variation, 10);
     }
@@ -49,7 +49,7 @@ export default class TranslationConfig {
   static fromFBLocale(locale: string): TranslationConfig {
     return new TranslationConfig(
       IntlNumberType.forLocale(locale),
-      forLocale(locale)
+      forLocale(locale),
     );
   }
 }

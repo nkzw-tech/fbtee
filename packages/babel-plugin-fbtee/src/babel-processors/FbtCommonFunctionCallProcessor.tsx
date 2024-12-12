@@ -62,12 +62,12 @@ export default class FbtCommonFunctionCallProcessor {
     if (node.arguments.length !== 1) {
       throw errorAt(
         node,
-        `Expected ${moduleName}.c to have exactly 1 argument. ${node.arguments.length} was given.`
+        `Expected ${moduleName}.c to have exactly 1 argument. ${node.arguments.length} was given.`,
       );
     }
 
     const text = normalizeSpaces(
-      expandStringConcat(moduleName, node.arguments[0]).value
+      expandStringConcat(moduleName, node.arguments[0]).value,
     ).trim();
 
     const desc = getCommonDescription(text);

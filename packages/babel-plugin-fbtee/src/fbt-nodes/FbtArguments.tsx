@@ -71,7 +71,7 @@ export class FbtArgumentBase<B extends Node | null> {
     invariant(
       !!this.node,
       'Unable to find node object from string variation argument: %s',
-      varDump(this)
+      varDump(this),
     );
     return getRawSource(code, this.node);
   }
@@ -121,7 +121,7 @@ class GenericArg extends FbtArgumentBase<Node> {}
  */
 export abstract class StringVariationArg<
   Value,
-  B extends Node | null = Node
+  B extends Node | null = Node,
 > extends FbtArgumentBase<B> {
   /**
    * List of candidate values that this SVArgument might have.
@@ -146,7 +146,7 @@ export abstract class StringVariationArg<
     node: B,
     candidateValues: ReadonlyArray<Value>,
     value?: Value | null,
-    isCollapsible: boolean = false
+    isCollapsible: boolean = false,
   ) {
     super(fbtNode, node);
     this.candidateValues = candidateValues;
@@ -160,13 +160,13 @@ export abstract class StringVariationArg<
       node: B,
       candidateValues: ReadonlyArray<Value>,
       value?: Value | null,
-      isCollapsible?: boolean
+      isCollapsible?: boolean,
     ) => this)(
       this.fbtNode,
       this.node,
       this.candidateValues,
       value,
-      isCollapsible
+      isCollapsible,
     );
   }
 
@@ -200,7 +200,7 @@ export class StringVariationArgsMap {
       'Expected only one StringVariationArg per FbtNode. ' +
         'Input array length=%s but resulting map size=%s',
       svArgs.length,
-      this._map.size
+      this._map.size,
     );
   }
 
@@ -209,7 +209,7 @@ export class StringVariationArgsMap {
     invariant(
       ret != null,
       'Unable to find entry for FbtNode: %s',
-      varDump(fbtNode)
+      varDump(fbtNode),
     );
     return ret;
   }

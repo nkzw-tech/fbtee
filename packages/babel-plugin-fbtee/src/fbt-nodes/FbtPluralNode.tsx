@@ -79,21 +79,21 @@ export default class FbtPluralNode extends FbtNode<
     const rawOptions = collectOptionsFromFbtConstruct(
       this.moduleName,
       this.node,
-      ValidPluralOptions
+      ValidPluralOptions,
     );
 
     try {
       const [_, countArg] = this.getCallNodeArguments() || [];
       const count = enforceNodeCallExpressionArg(
         countArg,
-        '`count`, the second function argument'
+        '`count`, the second function argument',
       );
       const showCount =
         (typeof rawOptions.showCount === 'string' &&
           enforceStringEnum.orNull(
             rawOptions.showCount,
             ValidPluralOptions.showCount,
-            '`showCount` option'
+            '`showCount` option',
           )) ||
         ShowCountKeys.no;
       const name =
@@ -110,7 +110,7 @@ export default class FbtPluralNode extends FbtNode<
           typeof rawOptions.value !== 'boolean'
             ? enforceNodeCallExpressionArg.orNull(
                 rawOptions.value,
-                '`value` option'
+                '`value` option',
               )
             : null,
       };
@@ -124,7 +124,7 @@ export default class FbtPluralNode extends FbtNode<
     scenario: {
       anyNumber: () => T;
       exactlyOne: () => T;
-    }
+    },
   ): T {
     const svArg = argsMap.get(this);
     const svArgValue = nullthrows(svArg.value);
@@ -140,7 +140,7 @@ export default class FbtPluralNode extends FbtNode<
         invariant(
           false,
           'Unsupported string variation value: %s',
-          varDump(svArgValue)
+          varDump(svArgValue),
         );
     }
   }
@@ -184,7 +184,7 @@ export default class FbtPluralNode extends FbtNode<
     invariant(
       isStringLiteral(callArg0),
       'Expected a StringLiteral but got "%s" instead',
-      callArg0.type
+      callArg0.type,
     );
     return callArg0.value;
   }
@@ -206,7 +206,7 @@ export default class FbtPluralNode extends FbtNode<
       invariant(
         name != null,
         'name must be defined when showCount=%s',
-        showCount
+        showCount,
       );
       pluralArgs.push(stringLiteral(name));
       if (value) {

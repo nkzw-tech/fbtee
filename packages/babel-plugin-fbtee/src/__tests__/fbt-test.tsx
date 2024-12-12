@@ -12,8 +12,8 @@ describe('fbt() API: ', () => {
     it('should accept "subject" as a parameter', () => {
       expect(
         snapshotTransform(
-          withFbtRequireStatement(`fbt("Foo", "Bar", {subject: foo});`)
-        )
+          withFbtRequireStatement(`fbt("Foo", "Bar", {subject: foo});`),
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -22,8 +22,8 @@ describe('fbt() API: ', () => {
     it('should accept "subject" as a parameter', () => {
       expect(
         snapshotTransform(
-          withFbtRequireStatement('fbt(`Foo`, "Bar", {subject: foo});')
-        )
+          withFbtRequireStatement('fbt(`Foo`, "Bar", {subject: foo});'),
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -43,15 +43,15 @@ describe('Test double-lined params', () => {
             </b>
           </fbt:param>
           test
-        </fbt>`
-        )
-      )
+        </fbt>`,
+        ),
+      ),
     ).toMatchSnapshot();
   });
 });
 
 const describeFbtBindingTestCase = (
-  requireStatement: string
+  requireStatement: string,
 ) => `${requireStatement};
       fbt("Foo", "Bar");`;
 
@@ -59,22 +59,24 @@ describe('fbt variable binding detection', () => {
   it(`should handle commonJS require()`, () => {
     expect(
       snapshotTransform(
-        describeFbtBindingTestCase(`const fbt = require('fbtee')`)
-      )
+        describeFbtBindingTestCase(`const fbt = require('fbtee')`),
+      ),
     ).toMatchSnapshot();
   });
 
   describe('using ES6', () => {
     it(`should handle fbt default export`, () => {
       expect(
-        snapshotTransform(describeFbtBindingTestCase(`import fbt from 'fbtee'`))
+        snapshotTransform(
+          describeFbtBindingTestCase(`import fbt from 'fbtee'`),
+        ),
       ).toMatchSnapshot();
     });
     it(`should handle the named fbt export`, () => {
       expect(
         snapshotTransform(
-          describeFbtBindingTestCase(`import {fbt} from 'fbtee'`)
-        )
+          describeFbtBindingTestCase(`import {fbt} from 'fbtee'`),
+        ),
       ).toMatchSnapshot();
     });
   });

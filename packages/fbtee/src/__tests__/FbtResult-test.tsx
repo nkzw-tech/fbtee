@@ -34,7 +34,7 @@ describe('FbtResult', () => {
     const result = new FbtResult(
       ['hello', new FbtResult(['world'], errorListener, null)],
       errorListener,
-      null
+      null,
     );
     result.toString();
     expect(errorListener?.onStringSerializationError).not.toHaveBeenCalled();

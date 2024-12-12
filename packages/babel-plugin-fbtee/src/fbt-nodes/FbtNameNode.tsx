@@ -50,15 +50,15 @@ export default class FbtNameNode extends FbtNode<
         isStringLiteral(node),
         'Expected first argument of %s.name to be a string literal, but got %s',
         moduleName,
-        node && node.type
+        node && node.type,
       );
       const value = enforceNodeCallExpressionArg(
         initialValue,
-        `Second argument of ${moduleName}.name`
+        `Second argument of ${moduleName}.name`,
       );
       const gender = enforceNodeCallExpressionArg(
         initialGender,
-        `Third argument of ${moduleName}.name`
+        `Third argument of ${moduleName}.name`,
       );
 
       return { gender, name: node.value, value };
@@ -111,7 +111,7 @@ export default class FbtNameNode extends FbtNode<
     const { gender, name, value } = this.options;
     return createRuntimeCallExpression(
       this,
-      [stringLiteral(name), value, gender].filter(Boolean)
+      [stringLiteral(name), value, gender].filter(Boolean),
     );
   }
 

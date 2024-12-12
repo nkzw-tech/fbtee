@@ -41,7 +41,7 @@ export type FbtSiteHashifiedTableJSFBTTree =
  */
 export class FbtSiteBase<
   MetaDataEntry extends FbtSiteMetaEntryBase,
-  HashToLeaf extends FbtSiteHashToLeaf
+  HashToLeaf extends FbtSiteHashToLeaf,
 > {
   readonly hashToLeaf: HashToLeaf;
   readonly project: string;
@@ -52,7 +52,7 @@ export class FbtSiteBase<
     hashToLeaf: HashToLeaf,
     table: FbtSiteHashifiedTableJSFBTTree,
     metadata: ReadonlyArray<MetaDataEntry | null | undefined>,
-    project: string
+    project: string,
   ) {
     this.hashToLeaf = hashToLeaf;
     this.table = table;
@@ -115,7 +115,7 @@ export class FbtSiteMetaEntryBase {
 }
 
 export function getVariationMaskFromType(
-  type?: IntlFbtVariationTypeValue | null
+  type?: IntlFbtVariationTypeValue | null,
 ): IntlVariationMaskValue | null {
   switch (type) {
     case FbtVariationType.GENDER:

@@ -3,7 +3,7 @@ import type { FbtSubstitution } from './FbtTable.tsx';
 
 export type FbtTableArg = [
   Array<FbtTableKey> | null | undefined,
-  FbtSubstitution | null | undefined
+  FbtSubstitution | null | undefined,
 ];
 
 export default {
@@ -13,14 +13,14 @@ export default {
 
   getGenderResult(
     variation: Array<FbtTableKey>,
-    substitution?: FbtSubstitution | null
+    substitution?: FbtSubstitution | null,
   ): FbtTableArg {
     return [variation, substitution];
   },
 
   getNumberResult(
     variation: Array<FbtTableKey>,
-    substitution?: FbtSubstitution | null
+    substitution?: FbtSubstitution | null,
   ): FbtTableArg {
     return [variation, substitution];
   },

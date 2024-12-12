@@ -67,13 +67,13 @@ export class FbtSite extends FbtSiteBase<
       t: FbtSiteHashifiedTableJSFBTTree;
     },
     project: string,
-    hashToTokenAliases: FbtSiteHashToTokenAliases
+    hashToTokenAliases: FbtSiteHashToTokenAliases,
   ) {
     super(
       hashToTextAndDesc,
       tableData.t,
       FbtSiteMetadata.wrap(tableData.m),
-      project
+      project,
     );
     this._hashToTokenAliases = hashToTokenAliases;
   }
@@ -92,7 +92,7 @@ export class FbtSite extends FbtSiteBase<
       const textAndDesc = this._serializeTextAndDesc(node.text, node.desc);
       invariant(
         textAndDescToHash[textAndDesc] == null,
-        "Duplicate text+desc pairs pointing to different hashes shouldn't be possible"
+        "Duplicate text+desc pairs pointing to different hashes shouldn't be possible",
       );
       textAndDescToHash[textAndDesc] = hash;
     }
@@ -114,7 +114,7 @@ export class FbtSite extends FbtSiteBase<
 
   static _hashifyLeaves(
     entry: Readonly<TableJSFBTTree>,
-    textAndDescToHash: Readonly<TextAndDescToHash>
+    textAndDescToHash: Readonly<TextAndDescToHash>,
   ): FbtSiteHashifiedTableJSFBTTree {
     if (isTableJSFBTTreeLeaf(entry)) {
       return textAndDescToHash[
@@ -126,7 +126,7 @@ export class FbtSite extends FbtSiteBase<
     for (const key of Object.keys(entry)) {
       tree[key] = FbtSite._hashifyLeaves(
         entry[key as keyof typeof entry] as TableJSFBTTreeBranch,
-        textAndDescToHash
+        textAndDescToHash,
       );
     }
     return tree;
@@ -147,7 +147,7 @@ export class FbtSite extends FbtSiteBase<
    */
   static _serializeTextAndDesc(
     text: PatternString,
-    desc: string
+    desc: string,
   ): TextAndDescConcatenation {
     return JSON.stringify({ desc, text });
   }
@@ -159,7 +159,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
   constructor(
     type?: IntlFbtVariationTypeValue | null,
     token?: string | null,
-    range?: ReadonlyArray<string> | null
+    range?: ReadonlyArray<string> | null,
   ) {
     super(type, token);
     this._range = range;
@@ -172,7 +172,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
   override getVariationMask(): IntlVariationMaskValue {
     invariant(
       this.hasVariationMask(),
-      'check hasVariationMask to avoid this invariant'
+      'check hasVariationMask to avoid this invariant',
     );
     return nullthrows(getVariationMaskFromType(this.type));
   }
@@ -182,7 +182,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     return new this(
       entry.type || null,
       entry.token != null ? entry.token : null,
-      entry.range || null
+      entry.range || null,
     );
   }
 
@@ -199,7 +199,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     if (type === FbtVariationType.GENDER) {
       invariant(
         token != null,
-        'token should be specified for gender variation'
+        'token should be specified for gender variation',
       );
       return { token, type: FbtVariationType.GENDER };
     }
@@ -210,7 +210,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
 
     invariant(
       this._range != null,
-      'range should be specified for enum variation'
+      'range should be specified for enum variation',
     );
     return { range: this._range };
   }
@@ -222,18 +222,18 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     if (type === null) {
       invariant(
         range !== null,
-        'if no type is provided, this must be enum variation and thus range must be specified '
+        'if no type is provided, this must be enum variation and thus range must be specified ',
       );
     } else {
       if (type === FbtVariationType.GENDER) {
         invariant(
           token !== null,
-          'token should be specified for gender variation'
+          'token should be specified for gender variation',
         );
       } else if (type === FbtVariationType.PRONOUN) {
         invariant(
           token === null,
-          'token should not be specified for pronoun variation'
+          'token should not be specified for pronoun variation',
         );
       }
     }
@@ -242,13 +242,13 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
 
 const FbtSiteMetadata = {
   unwrap(
-    metaEntries: ReadonlyArray<FbtSiteMetaEntry | null | undefined>
+    metaEntries: ReadonlyArray<FbtSiteMetaEntry | null | undefined>,
   ): Array<JSFBTMetaEntry | null | undefined> {
     return metaEntries.map((entry) => (entry == null ? null : entry.unwrap()));
   },
 
   wrap(
-    rawEntries: ReadonlyArray<JSFBTMetaEntry | null | undefined>
+    rawEntries: ReadonlyArray<JSFBTMetaEntry | null | undefined>,
   ): Array<FbtSiteMetaEntry | null | undefined> {
     return rawEntries.map((entry) => entry && FbtSiteMetaEntry.wrap(entry));
   },

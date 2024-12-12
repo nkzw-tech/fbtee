@@ -1,7 +1,9 @@
 .warning {
   background-color: #be4b49;
   border-radius: 2px;
-  box-shadow: 0 0 0 1px rgba(139, 3, 0, 0.75), 0 1px 10px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(139, 3, 0, 0.75),
+    0 1px 10px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
   color: #fff;
   display: block;
@@ -168,7 +170,9 @@
 .sentence {
   background: linear-gradient(#dddde8, #ccccdd);
   border-radius: 3px;
-  box-shadow: 0 0 0 1px rgba(139, 3, 0, 0.75), 0 1px 10px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(139, 3, 0, 0.75),
+    0 1px 10px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
   font-size: 1.5rem;
   padding: 0.5em;

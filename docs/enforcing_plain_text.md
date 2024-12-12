@@ -57,7 +57,7 @@ myPlainTranslatedText = fbs(
     }),
     '.',
   ],
-  'desc'
+  'desc',
 );
 // singular text = "I have a dream."
 // plural text = "I have {number} dreams."

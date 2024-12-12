@@ -8,7 +8,7 @@ import nullthrows from './nullthrows.tsx';
 import type { FbtTableKey } from './Types.tsx';
 
 export function isTableJSFBTTreeLeaf(
-  value: Partial<TableJSFBTTreeLeaf>
+  value: Partial<TableJSFBTTreeLeaf>,
 ): value is TableJSFBTTreeLeaf {
   return (
     value &&
@@ -21,7 +21,7 @@ export function isTableJSFBTTreeLeaf(
 
 function _runOnNormalizedJSFBTLeaves(
   value: Readonly<TableJSFBTTree>,
-  callback: (leaf: TableJSFBTTreeLeaf) => void
+  callback: (leaf: TableJSFBTTreeLeaf) => void,
 ) {
   if (isTableJSFBTTreeLeaf(value)) {
     return callback(value);
@@ -30,14 +30,14 @@ function _runOnNormalizedJSFBTLeaves(
   for (const key of Object.keys(value)) {
     _runOnNormalizedJSFBTLeaves(
       nullthrows((value as TableJSFBTTreeBranch)[key]),
-      callback
+      callback,
     );
   }
 }
 
 export function onEachLeaf(
   phrase: ObjectWithJSFBT,
-  callback: (leaf: TableJSFBTTreeLeaf) => void
+  callback: (leaf: TableJSFBTTreeLeaf) => void,
 ) {
   _runOnNormalizedJSFBTLeaves(phrase.jsfbt.t, callback);
 }
@@ -48,7 +48,7 @@ export function onEachLeaf(
  */
 export function mapLeaves<NewLeaf>(
   tree: Readonly<TableJSFBTTree>,
-  convertLeaf: (leaf: Readonly<TableJSFBTTreeLeaf>) => NewLeaf
+  convertLeaf: (leaf: Readonly<TableJSFBTTreeLeaf>) => NewLeaf,
 ): NewLeaf {
   if (isTableJSFBTTreeLeaf(tree)) {
     return convertLeaf(tree);
@@ -58,7 +58,7 @@ export function mapLeaves<NewLeaf>(
   for (const tableKey of Object.keys(tree)) {
     newFbtTree[tableKey] = mapLeaves(
       (tree as TableJSFBTTreeBranch)[tableKey]!,
-      convertLeaf
+      convertLeaf,
     );
   }
   return newFbtTree as NewLeaf;

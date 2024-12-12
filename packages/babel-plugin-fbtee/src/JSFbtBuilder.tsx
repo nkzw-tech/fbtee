@@ -63,7 +63,7 @@ export default class JSFbtBuilder {
 
   constructor(
     fileSource: string,
-    stringVariationArgs: ReadonlyArray<AnyStringVariationArg>
+    stringVariationArgs: ReadonlyArray<AnyStringVariationArg>,
   ) {
     this.fileSource = fileSource;
     this.stringVariationArgs = stringVariationArgs;
@@ -79,7 +79,7 @@ export default class JSFbtBuilder {
    * See FbtFunctionCallProcessor#_compactStringVariationArgs()
    */
   buildMetadata(
-    compactStringVariationArgs: ReadonlyArray<AnyStringVariationArg>
+    compactStringVariationArgs: ReadonlyArray<AnyStringVariationArg>,
   ): Array<JSFBTMetaEntry | null> {
     return compactStringVariationArgs.map((svArg) => {
       const { fbtNode } = svArg;
@@ -112,7 +112,7 @@ export default class JSFbtBuilder {
         invariant(
           fbtNode instanceof FbtEnumNode,
           'Expected fbtNode to be an instance of FbtEnumNode but got `%s` instead',
-          fbtNode.constructor.name || varDump(fbtNode)
+          fbtNode.constructor.name || varDump(fbtNode),
         );
 
         // We ensure we have placeholders in our metadata because enums and
@@ -140,7 +140,7 @@ export default class JSFbtBuilder {
         invariant(
           fbtNode instanceof FbtNameNode || fbtNode instanceof FbtParamNode,
           'Expected fbtNode to be an instance of FbtNameNode or FbtParamNode but got `%s` instead',
-          fbtNode.constructor.name || varDump(fbtNode)
+          fbtNode.constructor.name || varDump(fbtNode),
         );
         return svArg instanceof NumberStringVariationArg
           ? {
@@ -156,7 +156,7 @@ export default class JSFbtBuilder {
       invariant(
         false,
         'Unsupported string variation argument: %s',
-        varDump(svArg)
+        varDump(svArg),
       );
     });
   }
@@ -200,12 +200,12 @@ export default class JSFbtBuilder {
   _getStringVariationCombinations(
     combos: Array<ReadonlyArray<AnyStringVariationArg>> = [],
     curArgIndex: number = 0,
-    prevArgs: ReadonlyArray<AnyStringVariationArg> = []
+    prevArgs: ReadonlyArray<AnyStringVariationArg> = [],
   ): Array<ReadonlyArray<AnyStringVariationArg>> {
     invariant(
       curArgIndex >= 0,
       'curArgIndex value must greater or equal to 0, but we got `%s` instead',
-      curArgIndex
+      curArgIndex,
     );
 
     if (this.stringVariationArgs.length === 0) {
@@ -224,7 +224,7 @@ export default class JSFbtBuilder {
     const recurse = <V,>(
       candidateValues: ReadonlyArray<V>,
       beforeRecurse?: (arg1: V) => unknown,
-      isCollapsible: boolean = false
+      isCollapsible: boolean = false,
     ) =>
       candidateValues.forEach((value) => {
         if (beforeRecurse) {
@@ -233,7 +233,7 @@ export default class JSFbtBuilder {
         this._getStringVariationCombinations(
           combos,
           curArgIndex + 1,
-          prevArgs.concat(curArg.cloneWithValue(value as '*', isCollapsible))
+          prevArgs.concat(curArg.cloneWithValue(value as '*', isCollapsible)),
         );
       });
 
@@ -241,7 +241,7 @@ export default class JSFbtBuilder {
       invariant(
         curArg instanceof EnumStringVariationArg,
         'Expected EnumStringVariationArg but got: %s',
-        varDump(curArg)
+        varDump(curArg),
       );
       const argCode = curArg.getArgCode(this.fileSource);
 
@@ -251,7 +251,7 @@ export default class JSFbtBuilder {
           enumKey in fbtNode.options.range,
           '%s not found in %s. Attempting to re-use incompatible enums',
           enumKey,
-          varDump(fbtNode.options.range)
+          varDump(fbtNode.options.range),
         );
 
         recurse([enumKey], undefined, true);
@@ -264,7 +264,7 @@ export default class JSFbtBuilder {
       invariant(
         curArg instanceof NumberStringVariationArg,
         'Expected NumberStringVariationArg but got: %s',
-        varDump(curArg)
+        varDump(curArg),
       );
       const argCode = curArg.getArgCode(this.fileSource);
 
@@ -275,14 +275,14 @@ export default class JSFbtBuilder {
 
       recurse(
         curArg.candidateValues,
-        (value) => (usedPlurals[argCode] = value)
+        (value) => (usedPlurals[argCode] = value),
       );
       delete usedPlurals[argCode];
     } else if (fbtNode instanceof FbtPronounNode) {
       invariant(
         curArg instanceof GenderStringVariationArg,
         'Expected GenderStringVariationArg but got: %s',
-        varDump(curArg)
+        varDump(curArg),
       );
       const argCode = curArg.getArgCode(this.fileSource);
 
@@ -293,7 +293,7 @@ export default class JSFbtBuilder {
 
       recurse(
         curArg.candidateValues,
-        (value) => (usedPronouns[argCode] = value)
+        (value) => (usedPronouns[argCode] = value),
       );
       delete usedPronouns[argCode];
     } else if (
@@ -305,13 +305,13 @@ export default class JSFbtBuilder {
         curArg.candidateValues,
         undefined,
         curArg instanceof GenderStringVariationArg &&
-          fbtNode instanceof FbtImplicitParamNode
+          fbtNode instanceof FbtImplicitParamNode,
       );
     } else {
       invariant(
         false,
         'Unsupported string variation argument: %s',
-        varDump(curArg)
+        varDump(curArg),
       );
     }
     return combos;

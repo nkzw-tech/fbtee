@@ -74,11 +74,11 @@ export default class FbtImplicitParamNode
   getOuterTokenAlias(): string {
     const index = nullthrows(
       this.parent,
-      'Parent node must be defined'
+      'Parent node must be defined',
     ).children.indexOf(this);
     invariant(
       index != -1,
-      "Could not find current fbt node among the parent node's children"
+      "Could not find current fbt node among the parent node's children",
     );
     return convertIndexInSiblingsArrayToOuterTokenAlias(index);
   }
@@ -87,7 +87,7 @@ export default class FbtImplicitParamNode
     return FbtElementNode.getArgsForStringVariationCalcForFbtElement(
       this,
       // The implicit fbt string may depend on a subject, inferred from the top-level FbtElementNode
-      this._getSubjectNode()
+      this._getSubjectNode(),
     );
   }
 
@@ -99,7 +99,7 @@ export default class FbtImplicitParamNode
         argsMap,
         this._getSubjectNode(),
         this._getElementNode().options.preserveWhitespace,
-        getChildNodeText
+        getChildNodeText,
       );
     } catch (error) {
       throw errorAt(this.node, error);
@@ -108,14 +108,14 @@ export default class FbtImplicitParamNode
 
   getTextForDescription(
     argsMap: StringVariationArgsMap,
-    targetFbtNode: FbtImplicitParamNode
+    targetFbtNode: FbtImplicitParamNode,
   ): string {
     return getTextFromFbtNodeTree(
       this,
       argsMap,
       this._getSubjectNode(),
       this._getElementNode().options.preserveWhitespace,
-      getChildNodeTextForDescription.bind(null, targetFbtNode)
+      getChildNodeTextForDescription.bind(null, targetFbtNode),
     );
   }
 
@@ -132,8 +132,8 @@ export default class FbtImplicitParamNode
         argsMap,
         this._getSubjectNode(),
         this._getElementNode().options.preserveWhitespace,
-        (_, child) => child.getText(argsMap)
-      )
+        (_, child) => child.getText(argsMap),
+      ),
     );
   }
 
@@ -144,12 +144,12 @@ export default class FbtImplicitParamNode
   getDescription(argsMap: StringVariationArgsMap): string {
     return `In the phrase: "${this._getElementNode().getTextForDescription(
       argsMap,
-      this
+      this,
     )}"`;
   }
 
   override getTokenAliases(
-    argsMap: StringVariationArgsMap
+    argsMap: StringVariationArgsMap,
   ): TokenAliases | null {
     return getTokenAliasesFromFbtNodeTree(this, argsMap);
   }
@@ -190,7 +190,7 @@ export default class FbtImplicitParamNode
       ancestorFbtElementNode != null,
       'Expect every `FbtImplicitParamNode` to have a `FbtElementNode` ancestor ' +
         'but could not find one for %s',
-      varDump(this)
+      varDump(this),
     );
     return ancestorFbtElementNode.getExtraOptionsNode();
   }
@@ -241,7 +241,7 @@ export default class FbtImplicitParamNode
               FbtTextNode.fromNode({
                 moduleName,
                 node: unusedWhitespaceChild,
-              })
+              }),
             );
             unusedWhitespaceChild = null;
           }
@@ -269,11 +269,11 @@ export default class FbtImplicitParamNode
                   child,
                   `${moduleName}: only string literals (or concatenations of string literals) ` +
                     `are supported inside JSX expressions, ` +
-                    `but we found the node type "${elem.type}" instead.`
+                    `but we found the node type "${elem.type}" instead.`,
                 );
               }
               fbtChildren.push(
-                FbtElementNode.createChildNode({ moduleName, node: elem })
+                FbtElementNode.createChildNode({ moduleName, node: elem }),
               );
             });
             unusedWhitespaceChild = null;
@@ -287,7 +287,7 @@ export default class FbtImplicitParamNode
           }
 
           fbtChildren.push(
-            FbtElementNode.createChildNode({ moduleName, node: expression })
+            FbtElementNode.createChildNode({ moduleName, node: expression }),
           );
           unusedWhitespaceChild = null;
           lastAddedChild = child;
@@ -296,7 +296,7 @@ export default class FbtImplicitParamNode
 
         case 'JSXElement': {
           fbtChildren.push(
-            FbtElementNode.createChildNode({ moduleName, node: child })
+            FbtElementNode.createChildNode({ moduleName, node: child }),
           );
           unusedWhitespaceChild = null;
           lastAddedChild = child;
@@ -306,7 +306,7 @@ export default class FbtImplicitParamNode
         default:
           throw errorAt(
             child,
-            `${moduleName}: unsupported node: ${child.type}`
+            `${moduleName}: unsupported node: ${child.type}`,
           );
       }
     }
@@ -321,7 +321,7 @@ export default class FbtImplicitParamNode
 
   override toJSON() {
     return FbtElementNode.__compactTokenSet(
-      super.toJSON() as Record<string, unknown>
+      super.toJSON() as Record<string, unknown>,
     );
   }
 
@@ -333,7 +333,7 @@ export default class FbtImplicitParamNode
     invariant(
       isJSXIdentifier(wrapperType),
       'Expected a JSXIdentifier instead of `%s`',
-      varDump(wrapperType)
+      varDump(wrapperType),
     );
 
     const props: {

@@ -63,7 +63,7 @@ import invariant from 'invariant';
 export default function addLeafToTree<V, T extends Record<string, unknown>>(
   tree: T,
   keys: ReadonlyArray<string | number>,
-  leaf: unknown
+  leaf: unknown,
 ) {
   let branch = tree;
 
@@ -72,7 +72,7 @@ export default function addLeafToTree<V, T extends Record<string, unknown>>(
     invariant(
       !isLast || branch[key] == null,
       'Overwriting an existing tree leaf is not allowed. keys=`%s`',
-      JSON.stringify(keys)
+      JSON.stringify(keys),
     );
     if (branch[key] == null) {
       // @ts-expect-error

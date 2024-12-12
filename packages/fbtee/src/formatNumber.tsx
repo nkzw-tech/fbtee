@@ -7,7 +7,7 @@ function formatNumber(value: number, decimals?: number | null): string {
 
 function getAtLeastString(
   maxNumber: number,
-  decimals?: number | null
+  decimals?: number | null,
 ): ReactElement {
   // after we start using CLDR data, it will not be fbt anymore.
   return (
@@ -22,7 +22,7 @@ function getAtLeastString(
 
 function getLessThanString(
   minNumber: number,
-  decimals?: number | null
+  decimals?: number | null,
 ): ReactElement {
   // after we start using CLDR data, it will not be fbt anymore.
   return (
@@ -38,7 +38,7 @@ function getLessThanString(
 function formatNumberWithMaxLimit(
   value: number,
   maxvalue: number,
-  decimals?: number | null
+  decimals?: number | null,
 ): ReactElement | string {
   return value > maxvalue
     ? getAtLeastString(maxvalue, decimals)
@@ -48,7 +48,7 @@ function formatNumberWithMaxLimit(
 function formatNumberWithMinLimit(
   value: number,
   minvalue: number,
-  decimals?: number | null
+  decimals?: number | null,
 ): ReactElement | string {
   return value < minvalue
     ? getLessThanString(minvalue, decimals)

@@ -55,7 +55,7 @@ export default class FbtSameParamNode extends FbtNode<
         isStringLiteral(name),
         'Expected first argument of %s.sameParam to be a string literal, but got `%s`',
         this.moduleName,
-        (name && name.type) || 'unknown'
+        (name && name.type) || 'unknown',
       );
       return { name: name.value };
     } catch (error) {

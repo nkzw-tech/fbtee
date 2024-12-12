@@ -222,7 +222,7 @@ export default function Example() {
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
                     setEx2Object(
-                      event.target.value as keyof typeof ExampleEnum
+                      event.target.value as keyof typeof ExampleEnum,
                     );
                   }}
                 >

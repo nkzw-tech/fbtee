@@ -81,12 +81,12 @@ export default class FbtEnumNode extends FbtNode<
       if (isArrayExpression(rangeNode)) {
         invariant(
           rangeNode.elements && rangeNode.elements.length,
-          'List of enum entries must not be empty'
+          'List of enum entries must not be empty',
         );
         rangeNode.elements.forEach((item) => {
           invariant(
             isStringLiteral(item),
-            'Enum values must be string literals'
+            'Enum values must be string literals',
           );
           range[item.value] = item.value;
         });
@@ -95,13 +95,13 @@ export default class FbtEnumNode extends FbtNode<
           invariant(
             isObjectProperty(prop),
             'Enum entries must be standard object properties. ' +
-              'Method or spread expressions are forbidden'
+              'Method or spread expressions are forbidden',
           );
           const valueNode = prop.value;
           const keyNode = prop.key;
           invariant(
             isStringLiteral(valueNode),
-            'Enum values must be string literals'
+            'Enum values must be string literals',
           );
           if (isStringLiteral(keyNode) || isNumericLiteral(keyNode)) {
             range[keyNode.value.toString()] = valueNode.value;
@@ -110,26 +110,26 @@ export default class FbtEnumNode extends FbtNode<
               isIdentifier(keyNode) && prop.computed === false,
               'Enum keys must be string literals instead of `%s` ' +
                 'when using an object with computed property names',
-              keyNode.type
+              keyNode.type,
             );
             range[keyNode.name] = valueNode.value;
           }
         });
         invariant(
           Object.keys(range).length,
-          'Map of enum entries must not be empty'
+          'Map of enum entries must not be empty',
         );
       } else {
         invariant(
           isIdentifier(rangeNode),
           'Expected enum range (second argument) to be an array, object or ' +
-            'a variable referring to an fbt enum'
+            'a variable referring to an fbt enum',
         );
 
         const manifest = nullthrows(
           FbtEnumRegistrar.getEnum(rangeNode.name),
           `Fbt Enum \`${rangeNode.name}\` not registered; ensure the enum ` +
-            `was correctly imported and that it has the ${FBT_ENUM_MODULE_SUFFIX} suffix.`
+            `was correctly imported and that it has the ${FBT_ENUM_MODULE_SUFFIX} suffix.`,
         );
         range = manifest;
       }
@@ -149,7 +149,7 @@ export default class FbtEnumNode extends FbtNode<
       const svArgValue = nullthrows(svArg.value);
       return nullthrows(
         this.options.range[svArgValue],
-        `Unable to find enum text for key=${varDump(svArgValue)}`
+        `Unable to find enum text for key=${varDump(svArgValue)}`,
       );
     } catch (error) {
       throw errorAt(this.node, error);
@@ -161,7 +161,7 @@ export default class FbtEnumNode extends FbtNode<
       new EnumStringVariationArg(
         this,
         this.options.value,
-        Object.keys(this.options.range)
+        Object.keys(this.options.range),
       ),
     ];
   }
@@ -176,8 +176,8 @@ export default class FbtEnumNode extends FbtNode<
       const { range } = this.options;
       runtimeRange = objectExpression(
         Object.keys(range).map((key) =>
-          objectProperty(stringLiteral(key), stringLiteral(range[key]!))
-        )
+          objectProperty(stringLiteral(key), stringLiteral(range[key]!)),
+        ),
       );
     }
 

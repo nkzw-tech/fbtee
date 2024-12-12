@@ -18,7 +18,7 @@ export default class FbtResult extends FbtResultBase implements BaseResult {
   constructor(
     contents: NestedFbtContentItems,
     errorListener: IFbtErrorListener | null,
-    public readonly key: string | null | undefined
+    public readonly key: string | null | undefined,
   ) {
     super(contents, errorListener);
     this.props = {

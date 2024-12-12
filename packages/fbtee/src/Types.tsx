@@ -130,17 +130,17 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
       author?: string;
       project?: string;
       subject: IntlVariations;
-    }
+    },
   ): Output;
   c: (text: string) => Output;
   enum: (
     value: string,
-    range: ReadonlyArray<string> | Readonly<{ [key: string]: string }>
+    range: ReadonlyArray<string> | Readonly<{ [key: string]: string }>,
   ) => ParamOutput;
   name: (
     tokenName: string,
     value: string,
-    gender: IntlVariations
+    gender: IntlVariations,
   ) => ParamOutput;
   param: (
     name: string,
@@ -148,7 +148,7 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     options?: {
       gender?: IntlVariations;
       number?: boolean | number;
-    }
+    },
   ) => ParamOutput;
   plural: (
     label: string,
@@ -158,7 +158,7 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
       name?: string;
       showCount?: 'ifMany' | 'no' | 'yes'; // token name
       value?: FbtContentItem; // optional value to replace token (rather than count)
-    }
+    },
   ) => ParamOutput;
   pronoun: (
     usage: 'object' | 'possessive' | 'reflexive' | 'subject',
@@ -166,7 +166,7 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     options?: {
       capitalize?: boolean;
       human?: boolean;
-    }
+    },
   ) => ParamOutput;
   sameParam: (name: string) => ParamOutput;
 };

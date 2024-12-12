@@ -52,18 +52,18 @@ export default function BabelPluginFbtRuntime() {
         }
 
         const parsedPhrase = JSON.parse(
-          phrase.slice(sentinelLength, phrase.length - sentinelLength)
+          phrase.slice(sentinelLength, phrase.length - sentinelLength),
         ) as ObjectWithJSFBT;
 
         const runtimeInput = mapLeaves(parsedPhrase.jsfbt.t, (leaf) =>
-          replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases)
+          replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases),
         );
         path.replaceWithSourceString(JSON.stringify(runtimeInput));
 
         const parentNode = path.parentPath && path.parentPath.node;
         invariant(
           isCallExpression(parentNode),
-          `Expected parent node to be a 'CallExpression'`
+          `Expected parent node to be a 'CallExpression'`,
         );
 
         // Append runtime options - key for runtime dictionary lookup
@@ -78,14 +78,14 @@ export default function BabelPluginFbtRuntime() {
           optionsNode == null || isObjectExpression(optionsNode),
           'Expect options node to be either null or an object expression but got %s (%s)',
           optionsNode,
-          typeof optionsNode
+          typeof optionsNode,
         );
 
         parentNode.arguments[2] = objectExpression([
           ...(optionsNode == null ? [] : [...optionsNode.properties]),
           objectProperty(
             identifier('hk'),
-            stringLiteral(fbtHashKey(parsedPhrase.jsfbt.t))
+            stringLiteral(fbtHashKey(parsedPhrase.jsfbt.t)),
           ),
         ]);
       },

@@ -9,7 +9,7 @@ import { IFbtErrorListener, NestedFbtContentItems } from './Types.tsx';
 const getFbtResult = (
   contents: NestedFbtContentItems,
   hashKey: PatternHash | null | undefined,
-  errorListener: IFbtErrorListener | null
+  errorListener: IFbtErrorListener | null,
 ) => new FbtResult(contents, errorListener, hashKey);
 
 export default function init({

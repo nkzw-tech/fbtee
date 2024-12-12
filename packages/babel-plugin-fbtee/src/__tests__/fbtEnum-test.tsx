@@ -10,7 +10,7 @@ expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 function runTest(data: { input: string; throws?: string }) {
   expect(
-    snapshotTransform(data.input, { fbtEnumManifest: TestFbtEnumManifest })
+    snapshotTransform(data.input, { fbtEnumManifest: TestFbtEnumManifest }),
   ).toMatchSnapshot();
 }
 
@@ -29,7 +29,7 @@ describe('Test Fbt Enum', () => {
             Click to see
             <fbt:enum enum-range={aEnum} value={id} />
           </fbt>
-        );`
+        );`,
       ),
     });
   });
@@ -43,7 +43,7 @@ describe('Test Fbt Enum', () => {
             Click to see
             <fbt:enum enum-range={aEnum} value="id1" />
           </fbt>
-        );`
+        );`,
       ),
     });
   });
@@ -52,7 +52,7 @@ describe('Test Fbt Enum', () => {
     runTest({
       input: withFbtRequireStatement(
         `let aEnum = require('Test$FbtEnum');
-        var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`
+        var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
       ),
     });
   });
@@ -81,7 +81,7 @@ describe('Test Fbt Enum', () => {
     runTest({
       input: withFbtRequireStatement(
         `let aEnum = require('Test$FbtEnum');
-          var x = fbt(\`Click to see \${fbt.enum(id, aEnum)}\`, 'enums!');`
+          var x = fbt(\`Click to see \${fbt.enum(id, aEnum)}\`, 'enums!');`,
       ),
     });
   });
@@ -91,10 +91,10 @@ describe('Test Fbt Enum', () => {
       snapshotTransform(
         withFbtRequireStatement(
           `let aEnum = require('Test$FbtEnum');
-          var x = fbt('This is ' + fbt.enum(id, {bad: \`egg\`}), 'enums!');`
+          var x = fbt('This is ' + fbt.enum(id, {bad: \`egg\`}), 'enums!');`,
         ),
-        { fbtEnumManifest: TestFbtEnumManifest }
-      )
+        { fbtEnumManifest: TestFbtEnumManifest },
+      ),
     ).toThrow('Enum values must be string literals');
   });
 
@@ -111,10 +111,10 @@ describe('Test Fbt Enum', () => {
                 }}
                 value={myValue}
               />
-            </fbt>;`
+            </fbt>;`,
           ),
-          { fbtEnumManifest: TestFbtEnumManifest }
-        )
+          { fbtEnumManifest: TestFbtEnumManifest },
+        ),
       ).toThrow('Enum keys must be string literals instead of `');
     });
 
@@ -130,10 +130,10 @@ describe('Test Fbt Enum', () => {
                 }}
                 value={myValue}
               />
-            </fbt>;`
+            </fbt>;`,
           ),
-          { fbtEnumManifest: TestFbtEnumManifest }
-        )
+          { fbtEnumManifest: TestFbtEnumManifest },
+        ),
       ).toThrow('Enum keys must be string literals instead of `');
     });
   });
@@ -143,9 +143,9 @@ describe('Test Fbt Enum', () => {
       snapshotTransform(
         withFbtRequireStatement(
           `import aEnum, * as bEnum from 'Test$FbtEnum';
-          var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`
-        )
-      )
+          var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
+        ),
+      ),
     ).toThrow('Fbt Enum `aEnum` not registered');
   });
 
@@ -154,9 +154,9 @@ describe('Test Fbt Enum', () => {
       snapshotTransform(
         withFbtRequireStatement(
           `import {aEnum} from 'Test$FbtEnum';
-          var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`
-        )
-      )
+          var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
+        ),
+      ),
     ).toThrow('Fbt Enum `aEnum` not registered');
   });
 });

@@ -11,7 +11,7 @@ export type ConstraintKey = string;
  * constraint map maps the given constraints to the appropriate translation
  */
 export function buildConstraintKey(
-  constraintKeys: TokenConstraintPairs
+  constraintKeys: TokenConstraintPairs,
 ): ConstraintKey {
   return constraintKeys.map((kv) => kv[0] + '%' + kv[1]).join(':');
 }

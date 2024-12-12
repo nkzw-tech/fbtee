@@ -79,7 +79,7 @@ export function normalizeSpaces(
   value: string,
   options?: {
     preserveWhitespace?: FbtOptionValue | null;
-  } | null
+  } | null,
 ): string {
   if (options && options.preserveWhitespace) {
     return value;
@@ -102,7 +102,7 @@ export function normalizeSpaces(
  */
 export function validateNamespacedFbtElement(
   moduleName: string,
-  node: Node
+  node: Node,
 ): ConcreteFbtNodeType | 'implicitParamMarker' {
   let valid = false;
   let handlerName;
@@ -165,7 +165,7 @@ export function setUniqueToken(
   node: Node,
   moduleName: string,
   name: string,
-  paramSet: ParamSet
+  paramSet: ParamSet,
 ) {
   const cachedNode = paramSet[name];
   if (cachedNode && cachedNode != node) {
@@ -173,7 +173,7 @@ export function setUniqueToken(
       node,
       `There's already a token called "${name}" in this ${moduleName} call. ` +
         `Use ${moduleName}.sameParam if you want to reuse the same token name or ` +
-        `give this token a different name`
+        `give this token a different name`,
     );
   }
   paramSet[name] = node;
@@ -182,7 +182,7 @@ export function setUniqueToken(
 export function checkOption<K extends string>(
   option: string,
   validOptions: FbtOptionConfig,
-  value?: Node | null | string | boolean
+  value?: Node | null | string | boolean,
 ): K {
   const optionName = option as K;
 
@@ -191,7 +191,7 @@ export function checkOption<K extends string>(
     throw errorAt(
       isNode(value) ? value : null,
       `Invalid option "${optionName}". ` +
-        `Only allowed: ${Object.keys(validOptions).join(', ')} `
+        `Only allowed: ${Object.keys(validOptions).join(', ')} `,
     );
   } else if (validValues !== true) {
     let valueStr;
@@ -207,8 +207,8 @@ export function checkOption<K extends string>(
         isNode(value) ? value : null,
         `Option "${optionName}" has an invalid value. ` +
           `Expected a string literal but value is \`${varDump(
-            value
-          )}\` (${typeof value})`
+            value,
+          )}\` (${typeof value})`,
       );
     }
 
@@ -216,7 +216,7 @@ export function checkOption<K extends string>(
       throw errorAt(
         isNode(value) ? value : null,
         `Option "${optionName}" has an invalid value: "${valueStr}". ` +
-          `Only allowed: ${Object.keys(validValues).join(', ')}`
+          `Only allowed: ${Object.keys(validValues).join(', ')}`,
       );
     }
   }
@@ -236,7 +236,7 @@ const boolCandidates = new Set<string>([
 export function getOptionsFromAttributes(
   attributesNode: ReadonlyArray<JSXAttribute | JSXSpreadAttribute>,
   validOptions: FbtOptionConfig,
-  ignoredAttrs: Record<string, unknown>
+  ignoredAttrs: Record<string, unknown>,
 ): ObjectExpression {
   const options: Array<ObjectMethod | ObjectProperty | SpreadElement> = [];
 
@@ -279,8 +279,8 @@ export function getOptionsFromAttributes(
       options.push(
         objectProperty(
           stringLiteral(checkOption(name, validOptions, value)),
-          value as Expression
-        )
+          value as Expression,
+        ),
       );
     }
   }
@@ -293,7 +293,7 @@ type ErrorWithNodeLocation = Error & {
 };
 
 const isErrorWithNodeLocation = (
-  error: unknown
+  error: unknown,
 ): error is ErrorWithNodeLocation =>
   error instanceof Error && '_hasNodeLocation' in error;
 /**
@@ -305,7 +305,7 @@ const isErrorWithNodeLocation = (
  */
 export function errorAt(
   astNode?: Node | null,
-  msgOrError: unknown = ''
+  msgOrError: unknown = '',
 ): ErrorWithNodeLocation {
   let error;
 
@@ -328,7 +328,7 @@ const generateFormattedCodeFromAST = (node: Node) =>
 
 function createErrorMessageAtNode(
   astNode?: Node | null,
-  msg: string = ''
+  msg: string = '',
 ): string {
   const location = astNode && astNode.loc;
   return (
@@ -346,7 +346,7 @@ function createErrorMessageAtNode(
 export function collectOptions(
   moduleName: BindingName,
   options: ObjectExpression | null,
-  validOptions: FbtOptionConfig
+  validOptions: FbtOptionConfig,
 ): FbtOptionValues {
   const key2value: FbtOptionValues = {};
   if (options == null) {
@@ -358,7 +358,7 @@ export function collectOptions(
       throw errorAt(
         option,
         `options object must contain plain object properties. ` +
-          `No method definitions or spread operators.`
+          `No method definitions or spread operators.`,
       );
     }
 
@@ -371,7 +371,7 @@ export function collectOptions(
     } else {
       throw errorAt(
         option,
-        `Expected property name to be an identifier or a string literal.`
+        `Expected property name to be an identifier or a string literal.`,
       );
     }
     optionName = checkOption(optionName, validOptions, option.value);
@@ -379,7 +379,7 @@ export function collectOptions(
     if (isArrowFunctionExpression(option.value)) {
       throw errorAt(
         option,
-        `${moduleName}(...) does not allow an arrow function as an option value`
+        `${moduleName}(...) does not allow an arrow function as an option value`,
       );
     }
 
@@ -401,7 +401,7 @@ export function collectOptionsFromFbtConstruct(
   moduleName: BindingName,
   callsiteNode: CallExpression | null | JSXElement,
   validOptions: FbtOptionConfig,
-  booleanOptions: Partial<Record<string, unknown>> | null = null
+  booleanOptions: Partial<Record<string, unknown>> | null = null,
 ): FbtOptionValues {
   let optionsNode: ObjectExpression | null = null;
   let options = {} as FbtOptionValues;
@@ -411,7 +411,7 @@ export function collectOptionsFromFbtConstruct(
   } else if (isJSXElement(callsiteNode)) {
     throw errorAt(
       callsiteNode,
-      'Collecting options from JSX element is not supported yet'
+      'Collecting options from JSX element is not supported yet',
     );
   }
 
@@ -420,7 +420,7 @@ export function collectOptionsFromFbtConstruct(
       options[key] = getOptionBooleanValue(
         options,
         key,
-        optionsNode || callsiteNode
+        optionsNode || callsiteNode,
       );
     } else if (
       options[key] &&
@@ -436,7 +436,7 @@ export function collectOptionsFromFbtConstruct(
 
 export function getOptionsNodeFromCallExpression(
   moduleName: BindingName,
-  node: CallExpression
+  node: CallExpression,
 ): ObjectExpression | null {
   const optionsNode = node.arguments[2];
   if (optionsNode == null) {
@@ -445,7 +445,7 @@ export function getOptionsNodeFromCallExpression(
   if (!isObjectExpression(optionsNode)) {
     throw errorAt(
       optionsNode,
-      `${moduleName}(...) expects options as an ObjectExpression as its 3rd argument`
+      `${moduleName}(...) expects options as an ObjectExpression as its 3rd argument`,
     );
   }
   return optionsNode;
@@ -457,18 +457,18 @@ export function getOptionsNodeFromCallExpression(
  */
 export function expandStringConcat(
   moduleName: string,
-  node: Node
+  node: Node,
 ): StringLiteral | JSXText {
   if (isBinaryExpression(node)) {
     if (node.operator !== '+') {
       throw errorAt(
         node,
-        `Expected concatenation operator (+) but got ${node.operator}`
+        `Expected concatenation operator (+) but got ${node.operator}`,
       );
     }
     return stringLiteral(
       expandStringConcat(moduleName, node.left).value +
-        expandStringConcat(moduleName, node.right).value
+        expandStringConcat(moduleName, node.right).value,
     );
   } else if (isStringLiteral(node)) {
     return node;
@@ -491,7 +491,7 @@ export function expandStringConcat(
           throw errorAt(
             node,
             `${moduleName} template placeholders only accept params wrapped in ` +
-              `${moduleName}.param. Expected StringLiteral got ${expr.type}`
+              `${moduleName}.param. Expected StringLiteral got ${expr.type}`,
           );
         }
         string += expr.value;
@@ -506,20 +506,20 @@ export function expandStringConcat(
     `${moduleName} only accepts plain strings with params wrapped in ${moduleName}.param(...). ` +
       `See the docs at https://facebook.github.io/fbt/ for more info. ` +
       `Expected StringLiteral, TemplateLiteral, or concatenation; ` +
-      `got "${node.type}"`
+      `got "${node.type}"`,
   );
 }
 
 export function expandStringArray(
   moduleName: string,
-  node: ArrayExpression
+  node: ArrayExpression,
 ): StringLiteral {
   return stringLiteral(
     nullthrows(node.elements)
       .map(
-        (element) => expandStringConcat(moduleName, nullthrows(element)).value
+        (element) => expandStringConcat(moduleName, nullthrows(element)).value,
       )
-      .join('')
+      .join(''),
   );
 }
 
@@ -528,7 +528,7 @@ export function expandStringArray(
 export function getOptionBooleanValue<K extends string>(
   options: FbtOptionValues,
   name: K,
-  node?: Node | null
+  node?: Node | null,
 ): boolean {
   if (!hasOwnProperty.call(options, name)) {
     return false;
@@ -545,7 +545,7 @@ export function getOptionBooleanValue<K extends string>(
 
   throw errorAt(
     node,
-    `Value for option "${name}" must be Boolean literal 'true' or 'false'.`
+    `Value for option "${name}" must be Boolean literal 'true' or 'false'.`,
   );
 }
 
@@ -558,13 +558,13 @@ type JSXAttributeWithValue = Omit<JSXAttribute, 'value'> &
   }>;
 
 const isJSXAttributeWithValue = (
-  node: JSXAttribute
+  node: JSXAttribute,
 ): node is JSXAttributeWithValue => node.value != null;
 
 export function getAttributeByNameOrThrow(
   attributes: JSXAttributes,
   name: string,
-  node: Node | null = null
+  node: Node | null = null,
 ): JSXAttributeWithValue {
   const attribute = getAttributeByName(attributes, name);
   if (attribute == null) {
@@ -580,7 +580,7 @@ export function getAttributeByNameOrThrow(
 
 export function getAttributeByName(
   attributes: JSXAttributes,
-  name: string
+  name: string,
 ): JSXAttribute | null {
   for (const attribute of attributes) {
     if (isJSXAttribute(attribute) && attribute.name.name === name) {
@@ -591,7 +591,7 @@ export function getAttributeByName(
 }
 
 export function getOpeningElementAttributes(
-  node: JSXElement
+  node: JSXElement,
 ): ReadonlyArray<JSXAttribute> {
   return node.openingElement.attributes.map((attribute) => {
     if (isJSXSpreadAttribute(attribute)) {
@@ -611,7 +611,7 @@ export function getRawSource(src: string, node: Node): string {
  * Filter whitespace-only nodes from a list of nodes.
  */
 export function filterEmptyNodes<B extends Node>(
-  nodes: ReadonlyArray<B>
+  nodes: ReadonlyArray<B>,
 ): ReadonlyArray<B> {
   return nodes.filter((node) => {
     // Filter whitespace and comment block
@@ -628,7 +628,7 @@ export function textContainsFbtLikeModule(text: string): boolean {
 
 export function convertTemplateLiteralToArrayElements(
   moduleName: BindingName,
-  node: TemplateLiteral
+  node: TemplateLiteral,
 ): Array<StringLiteral | CallExpression | JSXElement> {
   const { expressions, quasis } = node;
   const nodes: Array<StringLiteral | CallExpression | JSXElement> = [];
@@ -653,7 +653,7 @@ export function convertTemplateLiteralToArrayElements(
           expression,
           `Unexpected node type: ${expression.type}. ${moduleName}() only supports ` +
             `the following syntax within template literals:` +
-            `string literal, a construct like ${moduleName}.param() or a JSX element.`
+            `string literal, a construct like ${moduleName}.param() or a JSX element.`,
         );
       }
     }
@@ -663,7 +663,7 @@ export function convertTemplateLiteralToArrayElements(
 
 export function getBinaryExpressionOperands(
   moduleName: BindingName,
-  node: Expression | PrivateName
+  node: Expression | PrivateName,
 ): Array<CallExpression | StringLiteral | TemplateLiteral> {
   switch (node.type) {
     case 'BinaryExpression':
@@ -683,14 +683,14 @@ export function getBinaryExpressionOperands(
         node,
         `Unexpected node type: ${node.type}. ` +
           `The ${moduleName}() string concatenation pattern only supports ` +
-          ` string literals or constructs like ${moduleName}.param().`
+          ` string literals or constructs like ${moduleName}.param().`,
       );
   }
 }
 
 export function convertToStringArrayNodeIfNeeded(
   moduleName: BindingName,
-  node: CallExpression['arguments'][number]
+  node: CallExpression['arguments'][number],
 ): ArrayExpression {
   let initialElements;
   let didStartWithArray = false;
@@ -718,7 +718,7 @@ export function convertToStringArrayNodeIfNeeded(
         node,
         `Unexpected node type: ${node.type}. ` +
           `${moduleName}()'s first argument should be a string literal, ` +
-          `a construct like ${moduleName}.param() or an array of those.`
+          `a construct like ${moduleName}.param() or an array of those.`,
       );
   }
 
@@ -727,37 +727,40 @@ export function convertToStringArrayNodeIfNeeded(
   // We're not making this fully recursive since, from a syntax POV,
   // it wouldn't be elegant to allow developers to nest lots of template literals.
   return arrayExpression(
-    initialElements.reduce((elements, element) => {
-      if (element == null) {
-        return elements;
-      }
-      if (
-        didStartWithArray &&
-        (element.type === 'BinaryExpression' ||
-          (element.type === 'TemplateLiteral' && element.expressions.length))
-      ) {
-        throw errorAt(
-          element,
-          `${moduleName}(array) only supports items that are string literals, ` +
-            `template literals without any expressions, or fbt constructs`
-        );
-      }
-      switch (element.type) {
-        case 'BinaryExpression': {
-          elements.push(...getBinaryExpressionOperands(moduleName, element));
-          break;
+    initialElements.reduce(
+      (elements, element) => {
+        if (element == null) {
+          return elements;
         }
-        case 'TemplateLiteral': {
-          elements.push(
-            ...convertTemplateLiteralToArrayElements(moduleName, element)
+        if (
+          didStartWithArray &&
+          (element.type === 'BinaryExpression' ||
+            (element.type === 'TemplateLiteral' && element.expressions.length))
+        ) {
+          throw errorAt(
+            element,
+            `${moduleName}(array) only supports items that are string literals, ` +
+              `template literals without any expressions, or fbt constructs`,
           );
-          break;
         }
-        default:
-          elements.push(element);
-      }
-      return elements;
-    }, [] as Array<null | Expression | SpreadElement>)
+        switch (element.type) {
+          case 'BinaryExpression': {
+            elements.push(...getBinaryExpressionOperands(moduleName, element));
+            break;
+          }
+          case 'TemplateLiteral': {
+            elements.push(
+              ...convertTemplateLiteralToArrayElements(moduleName, element),
+            );
+            break;
+          }
+          default:
+            elements.push(element);
+        }
+        return elements;
+      },
+      [] as Array<null | Expression | SpreadElement>,
+    ),
   );
 }
 
@@ -779,7 +782,7 @@ export function convertToStringArrayNodeIfNeeded(
  */
 export function compactNodeProps(
   object: AnyFbtNode | Record<string, unknown>,
-  serializeSourceCode: boolean = true
+  serializeSourceCode: boolean = true,
 ): Record<string, unknown> {
   const ret: Record<string, unknown> = { ...object };
   for (const key of Object.keys(ret)) {
@@ -805,28 +808,28 @@ export function varDump(value: unknown, depth: number = 1): string {
 
 export function enforceString(
   value: unknown,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ): string {
   invariant(
     typeof value === 'string',
     '%sExpected string value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value;
 }
 
 export function enforceBoolean(
   value: unknown,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ): boolean {
   invariant(
     typeof value === 'boolean',
     '%sExpected boolean value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value;
 }
@@ -837,21 +840,21 @@ export function enforceNode(value: unknown, valueDesc?: string | null): Node {
     '%sExpected Node value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value;
 }
 
 export function enforceNodeCallExpressionArg(
   value: Node | null,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ): CallExpressionArg {
   invariant(
     value && isNodeCallExpressionArg(value),
     '%sExpected CallExpressionArg value instead of %s (%s)',
     valueDesc ? valueDesc + ' - ' : '',
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value;
 }
@@ -859,7 +862,7 @@ export function enforceNodeCallExpressionArg(
 export function enforceStringEnum<K extends string>(
   value: string,
   keys: Partial<Record<K, unknown>>,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ): K {
   invariant(
     typeof value === 'string' && hasOwnProperty.call(keys, value),
@@ -867,7 +870,7 @@ export function enforceStringEnum<K extends string>(
     valueDesc ? valueDesc + ' - ' : '',
     Object.keys(keys).join(', '),
     varDump(value),
-    typeof value
+    typeof value,
   );
   return value as K;
 }
@@ -877,9 +880,9 @@ function nullableTypeCheckerFactory<
   ArgVal,
   Args extends ReadonlyArray<ArgVal>,
   Ret,
-  Val
+  Val,
 >(
-  checker: (arg1: Val, ...args: Args) => Ret
+  checker: (arg1: Val, ...args: Args) => Ret,
 ): (arg1: Val, ...args: Args) => Ret | null {
   return (value, ...args) => {
     return value == null ? null : checker(value, ...args);
@@ -888,23 +891,23 @@ function nullableTypeCheckerFactory<
 
 const enforceNodeOrNull: (
   value: unknown,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ) => Node | null = nullableTypeCheckerFactory(enforceNode);
 enforceNode.orNull = enforceNodeOrNull;
 
 enforceNodeCallExpressionArg.orNull = nullableTypeCheckerFactory(
-  enforceNodeCallExpressionArg
+  enforceNodeCallExpressionArg,
 );
 
 const enforceBooleanOrNull: (
   value: unknown,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ) => boolean | null = nullableTypeCheckerFactory(enforceBoolean);
 enforceBoolean.orNull = enforceBooleanOrNull;
 
 const enforceStringOrNull: (
   value: unknown,
-  valueDesc?: string | null
+  valueDesc?: string | null,
 ) => string | null = nullableTypeCheckerFactory(enforceString);
 enforceString.orNull = enforceStringOrNull;
 
@@ -920,13 +923,13 @@ enforceStringEnum.orNull = nullableTypeCheckerFactory(enforceStringEnum);
 export function createRuntimeCallExpression(
   fbtNode: AnyFbtNode,
   args: Array<CallExpressionArg>,
-  overrideMethodName?: string
+  overrideMethodName?: string,
 ): CallExpression {
   return callExpression(
     memberExpression(
       identifier(fbtNode.moduleName),
-      identifier('_' + (overrideMethodName || nullthrows(fbtNode.type)))
+      identifier('_' + (overrideMethodName || nullthrows(fbtNode.type))),
     ),
-    args
+    args,
   );
 }

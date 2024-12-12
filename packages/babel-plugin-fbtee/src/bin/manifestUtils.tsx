@@ -13,7 +13,7 @@ const FILE_EXT = '.@(js|jsx|ts|tsx)';
 export async function generateManifest(
   enumManifestPath: string,
   srcPaths: ReadonlyArray<string>,
-  cwd: string = process.cwd()
+  cwd: string = process.cwd(),
 ): Promise<{
   enumManifest: EnumManifest;
   srcManifest: {
@@ -28,7 +28,7 @@ export async function generateManifest(
       resolve(cwd, src) + '/**/*' + ENUM_FILE + FILE_EXT,
       {
         nodir: true,
-      }
+      },
     );
     for (const filepath of enumFiles) {
       const name = parse(filepath).name;
@@ -39,7 +39,7 @@ export async function generateManifest(
         enumValue != null,
         'No valid enum found for `%s`, ensure you are exporting your enum ' +
           'via `export default { ... };`',
-        name
+        name,
       );
       enumManifest[name] = enumValue;
     }
@@ -56,7 +56,7 @@ export async function generateManifest(
         .readFileSync(filepath)
         .toString('utf8')
         .split('\n')
-        .some((line) => ModuleNameRegExp.test(line))
+        .some((line) => ModuleNameRegExp.test(line)),
     )
     .map((filepath) => relative(cwd, filepath));
 

@@ -94,11 +94,11 @@ export default class JSXFbtProcessor {
   }
 
   _getText(
-    childNodes: Array<CallExpression | JSXElement | StringLiteral>
+    childNodes: Array<CallExpression | JSXElement | StringLiteral>,
   ): ArrayExpression {
     return convertToStringArrayNodeIfNeeded(
       this.moduleName,
-      arrayExpression(childNodes)
+      arrayExpression(childNodes),
     );
   }
 
@@ -117,7 +117,7 @@ export default class JSXFbtProcessor {
             invariant(
               isStringLiteral(stringNode),
               'Expected a StringLiteral but found `%s` instead',
-              stringNode?.type || 'unknown'
+              stringNode?.type || 'unknown',
             );
             return stringNode.value;
           } catch (error) {
@@ -131,13 +131,13 @@ export default class JSXFbtProcessor {
       if (descValue == null || descValue === '') {
         throw errorAt(
           node,
-          getUnknownCommonStringErrorMessage(moduleName, textValue)
+          getUnknownCommonStringErrorMessage(moduleName, textValue),
         );
       }
       if (getAttributeByName(this._getOpeningElementAttributes(), 'desc')) {
         throw errorAt(
           node,
-          `<${moduleName} common={true}> must not have "desc" attribute`
+          `<${moduleName} common={true}> must not have "desc" attribute`,
         );
       }
       desc = stringLiteral(descValue);
@@ -156,7 +156,7 @@ export default class JSXFbtProcessor {
         ? getOptionsFromAttributes(
             attrs,
             { ...this.validFbtExtraOptions, ...ValidFbtOptions },
-            FbtRequiredAttributes
+            FbtRequiredAttributes,
           )
         : null;
     return (options?.properties.length ?? 0) > 0 ? options : null;
@@ -173,11 +173,11 @@ export default class JSXFbtProcessor {
         if (attribute.type === 'JSXSpreadAttribute') {
           throw errorAt(
             node,
-            `<${this.moduleName}> does not support JSX spread attribute`
+            `<${this.moduleName}> does not support JSX spread attribute`,
           );
         }
         return attribute;
-      }
+      },
     );
     return this._openingElementAttributes;
   }
@@ -187,7 +187,7 @@ export default class JSXFbtProcessor {
       !this._getOpeningElementAttributes().some(
         (attribute) =>
           attribute.name.type === 'JSXIdentifier' &&
-          FbtCallMustHaveAtLeastOneOfTheseAttributes.has(attribute.name.name)
+          FbtCallMustHaveAtLeastOneOfTheseAttributes.has(attribute.name.name),
       )
     ) {
       throw errorAt(
@@ -195,7 +195,7 @@ export default class JSXFbtProcessor {
         `<${this.moduleName}> must have at least ` +
           `one of these attributes: ${[
             ...FbtCallMustHaveAtLeastOneOfTheseAttributes,
-          ].join(', ')}`
+          ].join(', ')}`,
       );
     }
   }
@@ -258,7 +258,7 @@ export default class JSXFbtProcessor {
                 isCallExpression(expression),
                 'Expected CallExpression value but received `%s` (%s)',
                 varDump(expression),
-                typeof expression
+                typeof expression,
               );
               return expression;
             }
@@ -266,14 +266,14 @@ export default class JSXFbtProcessor {
             // otherwise, assume that we have textual nodes to return
             return stringLiteral(
               normalizeSpaces(
-                expandStringConcat(this.moduleName, node.expression).value
-              )
+                expandStringConcat(this.moduleName, node.expression).value,
+              ),
             );
           }
           default:
             throw errorAt(
               node,
-              `Unsupported JSX element child type '${node.type}'`
+              `Unsupported JSX element child type '${node.type}'`,
             );
         }
       } catch (error) {
@@ -286,7 +286,7 @@ export default class JSXFbtProcessor {
     const { moduleName } = this;
     const descAttr = getAttributeByNameOrThrow(
       this._getOpeningElementAttributes(),
-      'desc'
+      'desc',
     );
     const { node } = this;
     if (!descAttr || descAttr.value == null) {
@@ -297,7 +297,7 @@ export default class JSXFbtProcessor {
         // @babel/parser should not allow this scenario normally
         invariant(
           descAttr.value.expression.type !== 'JSXEmptyExpression',
-          'unexpected'
+          'unexpected',
         );
         return descAttr.value.expression;
       case 'StringLiteral':
@@ -306,14 +306,14 @@ export default class JSXFbtProcessor {
     throw errorAt(
       node,
       `<${moduleName}> "desc" attribute must be a string literal ` +
-        `or a non-empty JSX expression`
+        `or a non-empty JSX expression`,
     );
   }
 
   _getCommonAttributeValue(): null | BooleanLiteral {
     const commonAttr = getAttributeByName(
       this._getOpeningElementAttributes(),
-      CommonOption
+      CommonOption,
     );
     if (commonAttr == null) {
       return null;
@@ -335,7 +335,7 @@ export default class JSXFbtProcessor {
     }
 
     throw new Error(
-      `\`${CommonOption}\` attribute for <${this.moduleName}> requires boolean literal`
+      `\`${CommonOption}\` attribute for <${this.moduleName}> requires boolean literal`,
     );
   }
 
@@ -353,7 +353,7 @@ export default class JSXFbtProcessor {
         desc: description,
         options: this._getOptions(),
         text,
-      })
+      }),
     );
   }
 }
@@ -368,7 +368,7 @@ const jsxFbtConstructToFunctionalFormTransform = {
     const { moduleName } = this as unknown as { moduleName: BindingName };
     const name = validateNamespacedFbtElement(
       moduleName,
-      node.openingElement.name
+      node.openingElement.name,
     );
     if (name !== 'implicitParamMarker') {
       const namespace = getNamespacedArgs(moduleName);
@@ -376,7 +376,7 @@ const jsxFbtConstructToFunctionalFormTransform = {
       let fbtConstructCall: CallExpression | JSXExpressionContainer =
         callExpression(
           memberExpression(identifier(moduleName), identifier(name), false),
-          args as Array<CallExpressionArg>
+          args as Array<CallExpressionArg>,
         );
       if (isJSXElement(path.parent) || isJSXFragment(path.parent)) {
         fbtConstructCall = jsxExpressionContainer(fbtConstructCall);

@@ -27,14 +27,14 @@ const testCases: TestCases = {
       `fbt('A string that moved files', 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
-      });`
+      });`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
       `fbt(['A string that moved files'], 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
-      });`
+      });`,
     ),
 
     output: withFbtRequireStatement(
@@ -49,7 +49,7 @@ const testCases: TestCases = {
           },
           project: 'Super Secret',
         })},
-      );`
+      );`,
     ),
   },
 
@@ -59,7 +59,7 @@ const testCases: TestCases = {
         'A short string',
         'With a ridiculously long description that' +
           ' requires concatenation',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -73,7 +73,7 @@ const testCases: TestCases = {
             },
           },
         })},
-      );`
+      );`,
     ),
   },
 
@@ -102,7 +102,7 @@ const testCases: TestCases = {
             </a>
             with you
           </fbt>;
-        }`
+        }`,
       ),
 
       output: withFbtRequireStatement(
@@ -247,19 +247,19 @@ const testCases: TestCases = {
               )
             ]
           ));
-        }`
+        }`,
       ),
     },
 
   'should be able to nest within React nodes': {
     input: withFbtRequireStatement(
       `var React = require('react');
-      var x = <div>{fbt('A nested string', 'nested!')}</div>;`
+      var x = <div>{fbt('A nested string', 'nested!')}</div>;`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
       `var React = require('react');
-      var x = <div>{fbt(['A nested string'], 'nested!')}</div>;`
+      var x = <div>{fbt(['A nested string'], 'nested!')}</div>;`,
     ),
 
     output: withFbtRequireStatement(
@@ -278,13 +278,13 @@ const testCases: TestCases = {
             },
           })},
         ),
-      );`
+      );`,
     ),
   },
 
   'should convert simple strings': {
     input: withFbtRequireStatement(
-      `var x = fbt('A simple string', "It's simple");`
+      `var x = fbt('A simple string', "It's simple");`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -293,7 +293,7 @@ const testCases: TestCases = {
           'A simple string',
         ],
         "It's simple",
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -307,7 +307,7 @@ const testCases: TestCases = {
             },
           },
         })},
-      );`
+      );`,
     ),
   },
 
@@ -328,7 +328,7 @@ const testCases: TestCases = {
           }) +
           '!',
         'enums!',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -348,7 +348,7 @@ const testCases: TestCases = {
           }),
           '!'
         ], 'enums!',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -379,7 +379,7 @@ const testCases: TestCases = {
             "videos": 'Videos',
           }),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -397,7 +397,7 @@ const testCases: TestCases = {
             "videos": 'videos',
           })}!\`,
           'enums!',
-        );`
+        );`,
       ),
 
       output: withFbtRequireStatement(
@@ -428,19 +428,19 @@ const testCases: TestCases = {
             "videos": 'Videos',
           }),
         ],
-      );`
+      );`,
       ),
     },
 
   'should get project from docblock': {
     input: `/** @fbt {"project": "dev"}*/
       ${withFbtRequireStatement(
-        `var x = fbt('Also simple string', "It's simple");`
+        `var x = fbt('Also simple string', "It's simple");`,
       )}`,
 
     inputWithArraySyntax: `/** @fbt {"project": "dev"}*/
       ${withFbtRequireStatement(
-        `var x = fbt(['Also simple string'], "It's simple");`
+        `var x = fbt(['Also simple string'], "It's simple");`,
       )}`,
 
     output: `/** @fbt {"project": "dev"}*/
@@ -456,7 +456,7 @@ const testCases: TestCases = {
             },
             project: 'dev',
           })},
-        );`
+        );`,
       )}`,
   },
 
@@ -484,7 +484,7 @@ const testCases: TestCases = {
               human="true" />
           </strong>
         </a>
-      </fbt>;`
+      </fbt>;`,
     ),
     /* eslint-disable sort-keys-fix/sort-keys-fix */
     output: `
@@ -947,7 +947,7 @@ const testCases: TestCases = {
           </strong>
         </a>
         with you
-      </fbt>;`
+      </fbt>;`,
     ),
 
     output: `
@@ -1118,7 +1118,7 @@ const testCases: TestCases = {
         {
           subject: subjectValue,
         }
-      );`
+      );`,
     ),
 
     output: `
@@ -1209,7 +1209,7 @@ const testCases: TestCases = {
           }) +
           '!',
         'enums!',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1230,7 +1230,7 @@ const testCases: TestCases = {
           '!',
         ],
         'enums!',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1261,7 +1261,7 @@ const testCases: TestCases = {
             "videos": 'Videos',
           }),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1270,7 +1270,7 @@ const testCases: TestCases = {
       `var x = fbt(
         'Click to see ' + fbt.enum('groups', ['groups', 'photos', 'videos']),
         'enum as an array',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1280,7 +1280,7 @@ const testCases: TestCases = {
           fbt.enum('groups', ['groups', 'photos', 'videos']),
         ],
         'enum as an array',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1311,7 +1311,7 @@ const testCases: TestCases = {
             "videos": 'videos',
           }),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1321,7 +1321,7 @@ const testCases: TestCases = {
       var x = fbt(
         'Click to see ' + fbt.enum('id1', aEnum),
         'enum as an array',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1332,7 +1332,7 @@ const testCases: TestCases = {
           fbt.enum('id1', aEnum),
         ],
         'enum as an array',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1358,7 +1358,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._enum('id1', aEnum)],
-      );`
+      );`,
     ),
 
     runWithTestFbtEnumManifest: TestFbtEnumManifest,
@@ -1370,7 +1370,7 @@ const testCases: TestCases = {
         'Click to see ' +
           fbt.enum('id1', {id1: 'groups', id2: 'photos', id3: 'videos'}),
         'enum as an object',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1380,7 +1380,7 @@ const testCases: TestCases = {
           fbt.enum('id1', {id1: 'groups', id2: 'photos', id3: 'videos'}),
         ],
         'enum as an object',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1411,7 +1411,7 @@ const testCases: TestCases = {
             "id3": 'videos'
           })
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1420,7 +1420,7 @@ const testCases: TestCases = {
       `var x = fbt(
         'Hello, ' + fbt.enum('groups', ['groups', 'photos', 'videos']) + '!',
         'enums!',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1430,7 +1430,7 @@ const testCases: TestCases = {
           fbt.enum('groups', ['groups', 'photos', 'videos']),
           '!',
         ], 'enums!',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1461,7 +1461,7 @@ const testCases: TestCases = {
             "videos": 'videos',
           }),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1472,7 +1472,7 @@ const testCases: TestCases = {
         fbt.plural('is ', count, {many: 'are '}) +
         fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         'plurals',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1482,7 +1482,7 @@ const testCases: TestCases = {
           fbt.plural('is ', count, {many: 'are '}),
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         ], 'plurals',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1514,7 +1514,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._plural(count), fbt._plural(count, 'number')],
-      );`
+      );`,
     ),
   },
 
@@ -1523,7 +1523,7 @@ const testCases: TestCases = {
       `var x = fbt(
         'You just friended ' + fbt.name('name', personname, gender),
         'names',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1532,7 +1532,7 @@ const testCases: TestCases = {
           'You just friended ',
           fbt.name('name', personname, gender),
         ], 'names',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1554,7 +1554,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._name('name', personname, gender)],
-      );`
+      );`,
     ),
   },
 
@@ -1565,7 +1565,7 @@ const testCases: TestCases = {
             fbt.pronoun('object', gender) +
             '.',
           'object pronoun',
-        );`
+        );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1576,7 +1576,7 @@ const testCases: TestCases = {
             '.'
           ],
           'object pronoun',
-        );`
+        );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1605,7 +1605,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._pronoun(0, gender)],
-      );`
+      );`,
     ),
   },
 
@@ -1615,7 +1615,7 @@ const testCases: TestCases = {
         'A parameterized message to ' +
           fbt.param('personName', truthy ? ifTrue : ifFalse),
         'Moar params',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1625,7 +1625,7 @@ const testCases: TestCases = {
           fbt.param('personName', truthy ? ifTrue : ifFalse),
         ],
         'Moar params',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1640,7 +1640,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._param('personName', truthy ? ifTrue : ifFalse)],
-      );`
+      );`,
     ),
   },
 
@@ -1651,7 +1651,7 @@ const testCases: TestCases = {
         ' and ' +
         fbt.plural('dog', dogCount, {name: 'dog_token', showCount: 'yes'}),
         'plurals',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1662,7 +1662,7 @@ const testCases: TestCases = {
           fbt.plural('dog', dogCount, {name: 'dog_token', showCount: 'yes'}),
         ],
         'plurals',
-      )`
+      )`,
     ),
 
     output: withFbtRequireStatement(
@@ -1710,7 +1710,7 @@ const testCases: TestCases = {
           fbt._plural(catCount, 'cat_token'),
           fbt._plural(dogCount, 'dog_token'),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1721,7 +1721,7 @@ const testCases: TestCases = {
           fbt.plural('was ', count, {showCount: 'no', many: 'were '}) +
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         'plurals',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1732,7 +1732,7 @@ const testCases: TestCases = {
           fbt.plural('a like', count, {showCount: 'ifMany', many: 'likes'}),
         ],
         'plurals',
-      )`
+      )`,
     ),
 
     output: withFbtRequireStatement(
@@ -1764,7 +1764,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._plural(count), fbt._plural(count, 'number')],
-      );`
+      );`,
     ),
   },
 
@@ -1775,7 +1775,7 @@ const testCases: TestCases = {
         `var x = fbt(
           'It is ' + fbt.pronoun('possessive', gender) + ' birthday.',
           'possessive pronoun',
-        );`
+        );`,
       ),
 
     inputWithArraySyntax:
@@ -1787,7 +1787,7 @@ const testCases: TestCases = {
             fbt.pronoun('possessive', gender),
             ' birthday.'
           ], 'possessive pronoun',
-        );`
+        );`,
       ),
 
     output: withFbtRequireStatement(
@@ -1812,7 +1812,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._pronoun(1, gender)],
-      );`
+      );`,
     ),
   },
 
@@ -1826,7 +1826,7 @@ const testCases: TestCases = {
             fbt.pronoun('reflexive', gender, {human: true}) +
             ' a happy birthday.',
           'subject+reflexive pronouns',
-        );`
+        );`,
       ),
 
     inputWithArraySyntax:
@@ -1839,7 +1839,7 @@ const testCases: TestCases = {
             fbt.pronoun('reflexive', gender, {human: true}),
             ' a happy birthday.'
           ], 'subject+reflexive pronouns',
-        );`
+        );`,
       ),
 
     output: withFbtRequireStatement(
@@ -1873,7 +1873,7 @@ const testCases: TestCases = {
           fbt._pronoun(3, gender, {human: 1}),
           fbt._pronoun(2, gender, {human: 1})
         ],
-      );`
+      );`,
     ),
   },
 
@@ -1882,7 +1882,7 @@ const testCases: TestCases = {
       `var x = fbt(
         'Click to see ' + fbt.param('count', c, {number: true}) + ' links',
         'variations!',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1892,7 +1892,7 @@ const testCases: TestCases = {
           fbt.param('count', c, {number: true}),
           ' links',
         ], 'variations!',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1914,7 +1914,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._param('count', c, [0])],
-      );`
+      );`,
     ),
   },
 
@@ -1928,7 +1928,7 @@ const testCases: TestCases = {
         fbt.sameParam('count') +
         ' likes',
         'test variations + sameParam',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1941,7 +1941,7 @@ const testCases: TestCases = {
           fbt.sameParam('count'),
           ' likes',
         ], 'test variations + sameParam',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -1964,7 +1964,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._param('count', val, [0])],
-      );`
+      );`,
     ),
   },
 
@@ -1972,7 +1972,7 @@ const testCases: TestCases = {
     input: withFbtRequireStatement(
       `var x = fbt('foo' + 'bar' + 'baz' + 'qux', 'desc');
       var y = fbt('foo' + ('bar' + 'baz' + 'qux'), 'desc');
-      var q = fbt('foo' + 'bar' + ('baz' + 'qux'), 'desc');`
+      var q = fbt('foo' + 'bar' + ('baz' + 'qux'), 'desc');`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -1999,7 +1999,7 @@ const testCases: TestCases = {
           ('baz'),
           ('qux'),
         ], 'desc'
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -2035,7 +2035,7 @@ const testCases: TestCases = {
             },
           },
         })},
-      );`
+      );`,
     ),
   },
 
@@ -2044,7 +2044,7 @@ const testCases: TestCases = {
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name1'),
         'd',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2054,7 +2054,7 @@ const testCases: TestCases = {
           ' and ',
           fbt.sameParam('name1'),
         ], 'd',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -2069,7 +2069,7 @@ const testCases: TestCases = {
           },
         })},
         [fbt._param('name1', val1)],
-      );`
+      );`,
     ),
   },
 
@@ -2090,7 +2090,7 @@ const testCases: TestCases = {
           ' blah ' +
           fbt.param('name2', qux),
         'a',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2109,7 +2109,7 @@ const testCases: TestCases = {
           ' blah ',
           fbt.param('name2', qux),
         ], 'a',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -2136,7 +2136,7 @@ const testCases: TestCases = {
           ),
           fbt._param('name2', qux),
         ],
-      );`
+      );`,
     ),
   },
 
@@ -2147,7 +2147,7 @@ const testCases: TestCases = {
         'with some other stuff.',
         'blah'
       );
-      baz();`
+      baz();`,
     ),
 
     output: withFbtRequireStatement(
@@ -2162,7 +2162,7 @@ const testCases: TestCases = {
           },
         })},
       );
-      baz();`
+      baz();`,
     ),
   },
 
@@ -2176,7 +2176,7 @@ const testCases: TestCases = {
 with some other stuff.\`,
         'blah',
       );
-      baz();`
+      baz();`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2187,7 +2187,7 @@ with some other stuff.\`
         ],
         'blah',
       );
-      baz();`
+      baz();`,
     ),
 
     output: withFbtRequireStatement(
@@ -2202,7 +2202,7 @@ with some other stuff.\`
           },
         })},
       );
-      baz();`
+      baz();`,
     ),
   },
 
@@ -2219,7 +2219,7 @@ with some other stuff.\`
         fbt.param('name2', val2) +
         ' e ',
         'a',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2234,7 +2234,7 @@ with some other stuff.\`
           fbt.param('name2', val2),
           ' e ',
         ], 'a',
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -2249,7 +2249,7 @@ with some other stuff.\`
           },
         })},
         [fbt._param('name1', val1), fbt._param('name2', val2)],
-      );`
+      );`,
     ),
   },
 
@@ -2274,7 +2274,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       output: `var fbt_sv_arg_0, fbt_sv_arg_1;
@@ -2336,7 +2336,7 @@ with some other stuff.\`
                 },
               },
               project: '',
-            }
+            },
           )},
           [
             fbt_sv_arg_0,
@@ -2362,7 +2362,7 @@ with some other stuff.\`
                   },
                 },
                 project: '',
-              }
+              },
             )}, [fbt_sv_arg_0, fbt_sv_arg_1])))])))]));`,
     },
 
@@ -2381,7 +2381,7 @@ with some other stuff.\`
         ) +
         ' b',
         'desc',
-      );`
+      );`,
       ),
 
       inputWithArraySyntax: withFbtRequireStatement(
@@ -2398,7 +2398,7 @@ with some other stuff.\`
           ),
           ' b',
         ], 'desc',
-      );`
+      );`,
       ),
 
       output: withFbtRequireStatement(
@@ -2439,13 +2439,13 @@ with some other stuff.\`
             gender,
           ),
         ],
-      );`
+      );`,
       ),
     },
 
   'should respect the doNotExtract option': {
     input: withFbtRequireStatement(
-      `var x = fbt('A doNotExtract string', "should not be extracted", {doNotExtract: true});`
+      `var x = fbt('A doNotExtract string', "should not be extracted", {doNotExtract: true});`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2455,7 +2455,7 @@ with some other stuff.\`
         ],
         "should not be extracted",
         {doNotExtract: true}
-      );`
+      );`,
     ),
 
     output: withFbtRequireStatement(
@@ -2469,7 +2469,7 @@ with some other stuff.\`
             },
           },
         })},
-      );`
+      );`,
     ),
   },
 
@@ -2492,7 +2492,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2519,7 +2519,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2546,7 +2546,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2573,7 +2573,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2600,7 +2600,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2627,7 +2627,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2654,7 +2654,7 @@ with some other stuff.\`
             ' A2',
           ],
           'string with nested JSX fragments',
-        );`
+        );`,
       ),
 
       throws:
@@ -2683,7 +2683,7 @@ with some other stuff.\`
           {
             subject: subjectValue(),
           }
-        );`
+        );`,
       ),
 
       throws:
@@ -2696,7 +2696,7 @@ with some other stuff.\`
       `var z = fbt(
         fbt.plural('cat', count, {value: someValueFunction(), name: 'tokenName', showCount: 'yes'}) + ' and ' + fbt.sameParam('tokenName'),
         'd',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2706,7 +2706,7 @@ with some other stuff.\`
           ' and ',
           fbt.sameParam('tokenName'),
         ], 'd',
-      );`
+      );`,
     ),
 
     throws:
@@ -2727,7 +2727,7 @@ with some other stuff.\`
             {fbt.sameParam('name1')}
           </b>,
         ], 'd',
-      );`
+      );`,
       ),
 
       throws:
@@ -2740,7 +2740,7 @@ with some other stuff.\`
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name2'),
         'd',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2750,7 +2750,7 @@ with some other stuff.\`
           ' and ',
           fbt.sameParam('name2'),
         ], 'd',
-      );`
+      );`,
     ),
 
     throws:
@@ -2763,7 +2763,7 @@ with some other stuff.\`
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {showCount: 'badkey'}),
         'plurals',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2772,7 +2772,7 @@ with some other stuff.\`
           'There were ',
           fbt.plural('a like', count, {showCount: 'badkey'}),
         ], 'plurals',
-      );`
+      );`,
     ),
 
     throws: `Option "showCount" has an invalid value: "badkey". Only allowed: ifMany, no, yes`,
@@ -2785,7 +2785,7 @@ with some other stuff.\`
         `var x = fbt(
           'It is ' + fbt.pronoun('POSSESSION', gender) + ' birthday.',
           'throw because of unknown pronoun type',
-        );`
+        );`,
       ),
 
     inputWithArraySyntax:
@@ -2797,7 +2797,7 @@ with some other stuff.\`
             fbt.pronoun('POSSESSION', gender),
             ' birthday.'
           ], 'throw because of unknown pronoun type',
-        );`
+        );`,
       ),
 
     throws:
@@ -2814,7 +2814,7 @@ with some other stuff.\`
         var x = fbt(
           'It is ' + fbt.pronoun(u, gender) + ' birthday.',
           'throw not StringLiteral',
-        );`
+        );`,
       ),
 
     inputWithArraySyntax:
@@ -2827,7 +2827,7 @@ with some other stuff.\`
             fbt.pronoun(u, gender),
             ' birthday.',
           ], 'throw not StringLiteral',
-        );`
+        );`,
       ),
 
     throws:
@@ -2839,7 +2839,7 @@ with some other stuff.\`
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {whatisthis: 'huh?'}),
         'plurals',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2848,7 +2848,7 @@ with some other stuff.\`
           'There were ',
           fbt.plural('a like', count, {whatisthis: 'huh?'}),
         ], 'plurals',
-      );`
+      );`,
     ),
 
     throws: `Invalid option "whatisthis". Only allowed: many, name, showCount, value, count`,
@@ -2861,7 +2861,7 @@ with some other stuff.\`
         fbt.name('name', fbt.param('paramName', val2), gender) +
         ' b',
         'desc',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2871,7 +2871,7 @@ with some other stuff.\`
           fbt.name('name', fbt.param('paramName', val2), gender),
           ' b',
         ], 'desc',
-      );`
+      );`,
     ),
 
     throws:
@@ -2886,7 +2886,7 @@ with some other stuff.\`
         fbt.param('name', fbt.param('name2', val2)) +
         ' b',
         'desc',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -2896,7 +2896,7 @@ with some other stuff.\`
           fbt.param('name', fbt.param('name2', val2)),
           ' b',
         ], 'desc',
-      );`
+      );`,
     ),
 
     throws:
@@ -2921,7 +2921,7 @@ with some other stuff.\`
           [
             'It is ' + fbt.pronoun('possessive', gender) + ' birthday.'
           ], 'throw because fbt constructs should be used as array items only',
-        );`
+        );`,
       ),
 
       throws:
@@ -2940,7 +2940,7 @@ with some other stuff.\`
           ' ',
           <a>world</a>,
         ], 'token name collision due to autoparam',
-      );`
+      );`,
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -2957,7 +2957,7 @@ with some other stuff.\`
           ' ',
           fbt.param('=world', value),
         ], 'token name collision due to autoparam',
-      );`
+      );`,
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -2976,7 +2976,7 @@ with some other stuff.\`
             {fbt.plural('world', value)}
           </b>,
         ], 'token name collision due to autoparam',
-      );`
+      );`,
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -2995,7 +2995,7 @@ with some other stuff.\`
             fbt.enum(value, ['world'])
           }</a>,
         ], 'token name collision due to autoparam',
-      );`
+      );`,
       ),
 
       throws: `There's already a token called "=world" in this fbt call`,
@@ -3009,7 +3009,7 @@ with some other stuff.\`
         fbt.param('name', val2) +
         ' b',
         'desc',
-      );`
+      );`,
     ),
 
     inputWithArraySyntax: withFbtRequireStatement(
@@ -3020,7 +3020,7 @@ with some other stuff.\`
           fbt.param('name', val2),
           ' b',
         ], 'desc',
-      );`
+      );`,
     ),
 
     throws: `There's already a token called "name" in this fbt call`,
@@ -3029,7 +3029,7 @@ with some other stuff.\`
 
 const filterTestCasesByType = (
   testCases: TestCases,
-  type: 'input' | 'inputWithArraySyntax'
+  type: 'input' | 'inputWithArraySyntax',
 ) => {
   const filteredTestCases: Record<string, TestCase> = {};
   for (const title of Object.keys(testCases)) {
@@ -3055,7 +3055,7 @@ const filterTestCasesByType = (
 
 function withThrowExpectation(
   throwExpectation: boolean | string | undefined,
-  callback: () => void
+  callback: () => void,
 ) {
   return () => {
     if (throwExpectation === true) {
@@ -3077,8 +3077,8 @@ const describeTestScenarios = (testCases: TestCases) => {
     callback: (
       title: string,
       testCase: TestCase,
-      options?: PluginOptions
-    ) => void
+      options?: PluginOptions,
+    ) => void,
   ) {
     for (const title of Object.keys(testCases)) {
       callback(title, testCases[title]);
@@ -3098,7 +3098,7 @@ const describeTestScenarios = (testCases: TestCases) => {
             };
             transform(testCase.input, pluginOptions);
             expect(getExtractedStrings()).toMatchSnapshot();
-          })
+          }),
         );
       });
     });
@@ -3110,7 +3110,7 @@ const describeTestScenarios = (testCases: TestCases) => {
           withThrowExpectation(testCase.throws, () => {
             const spy = jest.spyOn(
               FbtFunctionCallProcessor.prototype,
-              '_convertToFbtNode'
+              '_convertToFbtNode',
             );
             spy.mockClear();
 
@@ -3127,7 +3127,7 @@ const describeTestScenarios = (testCases: TestCases) => {
                 expect(result.value).toMatchSnapshot();
               }
             }
-          })
+          }),
         );
       });
     });
@@ -3141,7 +3141,7 @@ describe('Functional FBT API', () => {
 
   describe('using array arguments:', () => {
     describeTestScenarios(
-      filterTestCasesByType(testCases, 'inputWithArraySyntax')
+      filterTestCasesByType(testCases, 'inputWithArraySyntax'),
     );
   });
 });

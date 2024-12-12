@@ -25,7 +25,7 @@ export function buildCollectFbtOutput(
   >,
   options: {
     genFbtNodes: boolean;
-  }
+  },
 ): CollectFbtOutput {
   return {
     childParentMappings: fbtCollector.getChildParentMappings(),
@@ -35,13 +35,13 @@ export function buildCollectFbtOutput(
         undefined,
     phrases: packagers.reduce(
       (phrases, packager) => packager.pack(phrases),
-      fbtCollector.getPhrases()
+      fbtCollector.getPhrases(),
     ),
   };
 }
 
 async function getTextPackager(
-  hashModulePath: string | null
+  hashModulePath: string | null,
 ): Promise<TextPackager> {
   const hashingModule = hashModulePath
     ? ((await import(hashModulePath)).default as
@@ -57,18 +57,18 @@ async function getTextPackager(
         typeof hashingModule.getFbtHash === 'function'),
     'Expected hashing module to expose a default value that is a function, ' +
       'or an object with a getFbtHash() function property. Hashing module location: `%s`',
-    hashModulePath
+    hashModulePath,
   );
   return new TextPackager(
     typeof hashingModule === 'function'
       ? hashingModule
-      : hashingModule.getFbtHash
+      : hashingModule.getFbtHash,
   );
 }
 
 export async function getPackagers(
   packager: string,
-  hashModulePath: string | null
+  hashModulePath: string | null,
 ): Promise<
   ReadonlyArray<
     | {
@@ -95,7 +95,7 @@ export async function getPackagers(
 export async function getFbtCollector(
   collectorConfig: CollectorConfig,
   extraOptions: FbtOptionConfig,
-  customCollectorPath?: string | null
+  customCollectorPath?: string | null,
 ): Promise<IFbtCollector> {
   if (customCollectorPath == null) {
     return new FbtCollector(collectorConfig, extraOptions);

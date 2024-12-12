@@ -8,7 +8,7 @@ export default createRuntime({
   param: (
     label,
     value?: string | FbtPureStringResult,
-    variations?: Variations
+    variations?: Variations,
   ) => {
     if (value instanceof FbtPureStringResult) {
       value = String(value);
@@ -18,7 +18,7 @@ export default createRuntime({
       'Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; ' +
         'instead we got `%s` (type: %s)',
       value,
-      typeof value
+      typeof value,
     );
     return fbt._param(label, value, variations);
   },
@@ -31,7 +31,7 @@ export default createRuntime({
       'Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; ' +
         'instead we got `%s` (type: %s)',
       value,
-      typeof value
+      typeof value,
     );
     return fbt._plural(count, label, value);
   },

@@ -45,7 +45,7 @@ type ValidPronounUsages =
  */
 const getPronounGenderKey = (
   usage: ValidPronounUsages,
-  gender: GenderConst
+  gender: GenderConst,
 ) => {
   switch (gender) {
     case GenderConst.NOT_A_PERSON:
@@ -94,14 +94,14 @@ export function createRuntime<P, T extends BaseResult>({
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
-        `fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again.`
+        `fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again.`,
       );
     },
     {
       _: (
         inputTable: FbtRuntimeInput,
         inputArgs?: FbtTableArgs | null,
-        options?: FbtInputOpts | null
+        options?: FbtInputOpts | null,
       ): T => {
         let { args, table } = Hooks.getTranslatedInput({
           args: inputArgs || null,
@@ -118,8 +118,8 @@ export function createRuntime<P, T extends BaseResult>({
           args.unshift(
             FbtTableAccessor.getGenderResult(
               getGenderVariations(Hooks.getViewerContext().GENDER),
-              null
-            )
+              null,
+            ),
           );
         }
 
@@ -142,7 +142,7 @@ export function createRuntime<P, T extends BaseResult>({
             'Table access did not result in string: ' +
               (table === undefined ? 'undefined' : JSON.stringify(table)) +
               ', Type: ' +
-              typeof table
+              typeof table,
           );
         }
 
@@ -159,7 +159,7 @@ export function createRuntime<P, T extends BaseResult>({
             Hooks.getErrorListener({
               hash: options?.hk,
               translation: patternString,
-            })
+            }),
           );
           if (!substitutions) {
             cachedResults.set(patternString, result);
@@ -171,7 +171,7 @@ export function createRuntime<P, T extends BaseResult>({
         value: FbtTableKey,
         range: {
           [enumKey: string]: string;
-        }
+        },
       ) => {
         if (process.env.NODE_ENV === 'development') {
           invariant(value in range, 'invalid value: %s', value);
@@ -195,20 +195,20 @@ export function createRuntime<P, T extends BaseResult>({
         gender: GenderConst,
         options?: {
           human?: 1;
-        } | null
+        } | null,
       ) => {
         invariant(
           gender !== GenderConst.NOT_A_PERSON || !options || !options.human,
-          'Gender cannot be GenderConst.NOT_A_PERSON if you set "human" to true'
+          'Gender cannot be GenderConst.NOT_A_PERSON if you set "human" to true',
         );
         return FbtTableAccessor.getPronounResult(
-          getPronounGenderKey(usage, gender)
+          getPronounGenderKey(usage, gender),
         );
       },
 
       _subject: (value: GenderConst) =>
         FbtTableAccessor.getGenderResult(getGenderVariations(value), null),
-    } as const
+    } as const,
   );
 }
 
@@ -232,7 +232,7 @@ export default createRuntime<string | number, FbtResult>({
         invariant(gender != null, 'expected gender value');
         return FbtTableAccessor.getGenderResult(
           getGenderVariations(gender),
-          substitution
+          substitution,
         );
       } else {
         invariant(false, 'Unknown invariant mask');
@@ -252,6 +252,6 @@ export default createRuntime<string | number, FbtResult>({
                 : value ||
                   intlNumUtils.formatNumberWithThousandDelimiters(count),
           }
-        : null
+        : null,
     ),
 });

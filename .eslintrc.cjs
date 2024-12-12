@@ -41,9 +41,9 @@ module.exports = {
                 n
                   .replaceAll(/\s*-\s+/g, '')
                   .replaceAll("'", '')
-                  .replaceAll('\r', '')
-              )
-            )
+                  .replaceAll('\r', ''),
+              ),
+            ),
         ),
       },
     ],

@@ -11,12 +11,12 @@ export default class CustomFbtCollector implements IFbtCollector {
   async collectFromOneFile(
     _source: string,
     _filename?: string | null,
-    _fbtEnumManifest?: EnumManifest
+    _fbtEnumManifest?: EnumManifest,
   ): Promise<void> {}
 
   async collectFromFiles(
     _files: Array<[string, string]>,
-    _fbtEnumManifest?: EnumManifest
+    _fbtEnumManifest?: EnumManifest,
   ): Promise<void> {
     throw new Error('Not implemented');
   }

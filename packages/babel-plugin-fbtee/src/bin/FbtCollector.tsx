@@ -18,7 +18,7 @@ import type { PatternHash, PatternString } from '../Types.tsx';
 export type ExternalTransform = (
   src: string,
   opts: PluginOptions,
-  filename?: string | null
+  filename?: string | null,
 ) => unknown;
 export type CollectorConfig = {
   fbtCommon?: FbtCommonMap | null;
@@ -49,12 +49,12 @@ export type PackagerPhrase = Phrase & {
 export interface IFbtCollector {
   collectFromFiles(
     files: Array<[string, string]>,
-    fbtEnumManifest?: EnumManifest
+    fbtEnumManifest?: EnumManifest,
   ): Promise<void>;
   collectFromOneFile(
     source: string,
     filename: string,
-    fbtEnumManifest?: EnumManifest
+    fbtEnumManifest?: EnumManifest,
   ): Promise<void>;
   getChildParentMappings(): ChildParentMappings;
   getFbtElementNodes(): Array<PlainFbtNode>;
@@ -65,7 +65,7 @@ const transform = (
   code: string,
   options: { filename: string | null },
   plugins: ReadonlyArray<PluginItem>,
-  presets: ReadonlyArray<PluginItem>
+  presets: ReadonlyArray<PluginItem>,
 ) => {
   transformSync(code, {
     ast: false,
@@ -102,7 +102,7 @@ export default class FbtCollector implements IFbtCollector {
   async collectFromOneFile(
     source: string,
     filename: string,
-    fbtEnumManifest?: EnumManifest
+    fbtEnumManifest?: EnumManifest,
   ): Promise<void> {
     const options = {
       collectFbt: true,
@@ -125,7 +125,7 @@ export default class FbtCollector implements IFbtCollector {
         source,
         options,
         this._config.plugins || [],
-        this._config.presets || []
+        this._config.presets || [],
       );
     }
 
@@ -135,7 +135,7 @@ export default class FbtCollector implements IFbtCollector {
     Object.entries(newChildParentMappings).forEach(
       ([childIndex, parentIndex]) => {
         this._childParentMappings[offset + +childIndex] = offset + parentIndex;
-      }
+      },
     );
 
     // PackagerPhrase is an extended type of Phrase
@@ -144,12 +144,12 @@ export default class FbtCollector implements IFbtCollector {
 
   async collectFromFiles(
     files: Array<[string, string]>,
-    fbtEnumManifest?: EnumManifest
+    fbtEnumManifest?: EnumManifest,
   ) {
     await Promise.all(
       files.map(([file, source]) =>
-        this.collectFromOneFile(source, file, fbtEnumManifest)
-      )
+        this.collectFromOneFile(source, file, fbtEnumManifest),
+      ),
     );
   }
 

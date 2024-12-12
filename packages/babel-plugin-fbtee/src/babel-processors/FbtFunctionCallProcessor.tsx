@@ -164,7 +164,7 @@ export default class FbtFunctionCallProcessor {
     if (!this.nodeChecker.isJSModuleBound<typeof path.node>(path)) {
       throw errorAt(
         path.node,
-        `${moduleName} is not bound. Did you forget to require('${moduleName}')?`
+        `${moduleName} is not bound. Did you forget to require('${moduleName}')?`,
       );
     }
     return this;
@@ -176,7 +176,7 @@ export default class FbtFunctionCallProcessor {
       throw errorAt(
         node,
         `Expected ${moduleName} calls to have at least two arguments. ` +
-          `Only ${node.arguments.length} was given.`
+          `Only ${node.arguments.length} was given.`,
       );
     }
     return this;
@@ -185,7 +185,7 @@ export default class FbtFunctionCallProcessor {
   _createFbtRuntimeCallForMetaPhrase(
     metaPhrases: ReadonlyArray<MetaPhrase>,
     metaPhraseIndex: number,
-    stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes
+    stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes,
   ): CallExpression {
     const { phrase } = metaPhrases[metaPhraseIndex];
     const { pluginOptions } = this;
@@ -207,7 +207,7 @@ export default class FbtFunctionCallProcessor {
     const fbtRuntimeArgs = this._createFbtRuntimeArgumentsForMetaPhrase(
       metaPhrases,
       metaPhraseIndex,
-      stringVariationRuntimeArgs
+      stringVariationRuntimeArgs,
     );
     if (fbtRuntimeArgs.length > 0) {
       args.push(arrayExpression(fbtRuntimeArgs));
@@ -215,12 +215,12 @@ export default class FbtFunctionCallProcessor {
 
     return callExpression(
       memberExpression(identifier(this.moduleName), identifier('_')),
-      args
+      args,
     );
   }
 
   _createRootFbtRuntimeCall(
-    metaPhrases: ReadonlyArray<MetaPhrase>
+    metaPhrases: ReadonlyArray<MetaPhrase>,
   ): CallExpression | SequenceExpression {
     const stringVariationRuntimeArgs =
       this._createRuntimeArgsFromStringVariantNodes(metaPhrases[0]);
@@ -228,27 +228,27 @@ export default class FbtFunctionCallProcessor {
       return this._createFbtRuntimeCallForMetaPhrase(
         metaPhrases,
         0,
-        stringVariationRuntimeArgs
+        stringVariationRuntimeArgs,
       );
     }
     this._throwIfStringVariationArgsMayCauseSideEffects(metaPhrases);
 
     const stringVariationRuntimeArgIdentifiers =
       this._generateUniqueIdentifiersForRuntimeArgs(
-        stringVariationRuntimeArgs.length
+        stringVariationRuntimeArgs.length,
       );
     const fbtRuntimeCall = this._createFbtRuntimeCallForMetaPhrase(
       metaPhrases,
       0,
-      stringVariationRuntimeArgIdentifiers
+      stringVariationRuntimeArgIdentifiers,
     );
     this._injectVariableDeclarationsForStringVariationArguments(
-      stringVariationRuntimeArgIdentifiers
+      stringVariationRuntimeArgIdentifiers,
     );
     return this._wrapFbtRuntimeCallInSequenceExpression(
       stringVariationRuntimeArgs,
       fbtRuntimeCall,
-      stringVariationRuntimeArgIdentifiers
+      stringVariationRuntimeArgIdentifiers,
     );
   }
 
@@ -260,17 +260,17 @@ export default class FbtFunctionCallProcessor {
    * examples.
    */
   _throwIfStringVariationArgsMayCauseSideEffects(
-    metaPhrases: ReadonlyArray<MetaPhrase>
+    metaPhrases: ReadonlyArray<MetaPhrase>,
   ) {
     metaPhrases[0].compactStringVariations.array.map((svArg) =>
       svArg.fbtNode.throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(
-        this.path.context.scope
-      )
+        this.path.context.scope,
+      ),
     );
   }
 
   _injectVariableDeclarationsForStringVariationArguments(
-    identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>
+    identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>,
   ) {
     // Find the first ancestor block statement node or the program root node
     let curPath: NodePath<Node> = this.path;
@@ -278,7 +278,7 @@ export default class FbtFunctionCallProcessor {
       curPath = nullthrows(
         curPath.parentPath,
         'curPath can not be null. Otherwise, it means we reached the root' +
-          ' of Babel AST in the previous iteration and therefore we would have exited the loop.'
+          ' of Babel AST in the previous iteration and therefore we would have exited the loop.',
       );
     }
     const blockOrProgramPath = curPath;
@@ -286,7 +286,7 @@ export default class FbtFunctionCallProcessor {
     invariant(
       isBlockStatement(blockOrProgramNode) || isProgram(blockOrProgramNode),
       "According to the above loop's condition, " +
-        'blockOrProgramNode must be either a block statement or a program node '
+        'blockOrProgramNode must be either a block statement or a program node ',
     );
 
     // Replace the blockStatement/program node with
@@ -294,12 +294,12 @@ export default class FbtFunctionCallProcessor {
     const declarations = variableDeclaration(
       'var',
       identifiersForStringVariationRuntimeArgs.map((identifier) =>
-        variableDeclarator(identifier)
-      )
+        variableDeclarator(identifier),
+      ),
     );
     const cloned = cloneNode<BlockStatement | Program>(
       blockOrProgramNode,
-      false
+      false,
     );
     cloned.body = [declarations, ...cloned.body];
     blockOrProgramPath.replaceWith(cloned);
@@ -320,35 +320,35 @@ export default class FbtFunctionCallProcessor {
   _wrapFbtRuntimeCallInSequenceExpression(
     runtimeArgs: ReadonlyArray<CallExpression>,
     fbtRuntimeCall: CallExpression,
-    identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>
+    identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>,
   ): SequenceExpression {
     invariant(
       runtimeArgs.length == identifiersForStringVariationRuntimeArgs.length,
       'Expect exactly one identifier for each string variation runtime argument. ' +
         'Instead we get %s identifiers and %s arguments.',
       identifiersForStringVariationRuntimeArgs.length,
-      runtimeArgs.length
+      runtimeArgs.length,
     );
     return sequenceExpression([
       ...runtimeArgs.map((runtimeArg, i) =>
         assignmentExpression(
           '=',
           identifiersForStringVariationRuntimeArgs[i],
-          runtimeArg
-        )
+          runtimeArg,
+        ),
       ),
       fbtRuntimeCall,
     ]);
   }
 
   _hasStringVariationAndContainsInnerString(
-    metaPhrases: ReadonlyArray<MetaPhrase>
+    metaPhrases: ReadonlyArray<MetaPhrase>,
   ): boolean {
     const fbtElement = metaPhrases[0].fbtNode;
     invariant(
       fbtElement instanceof FbtElementNode,
       'Expected a FbtElementNode for top level string but received: %s',
-      varDump(fbtElement)
+      varDump(fbtElement),
     );
     const doesNotContainInnerString = fbtElement.children.every((child) => {
       return !(child instanceof FbtImplicitParamNode);
@@ -385,7 +385,7 @@ export default class FbtFunctionCallProcessor {
    * Other types of variation arguments are accepted as-is.
    */
   _compactStringVariationArgs(
-    args: ReadonlyArray<AnyStringVariationArg>
+    args: ReadonlyArray<AnyStringVariationArg>,
   ): CompactStringVariations {
     const indexMap: Array<number> = [];
     const array = args.filter((arg, i) => {
@@ -404,7 +404,7 @@ export default class FbtFunctionCallProcessor {
 
   _getPhraseParentIndex(
     fbtNode: AnyFbtNode,
-    list: ReadonlyArray<AnyFbtNode>
+    list: ReadonlyArray<AnyFbtNode>,
   ): number | null {
     if (fbtNode.parent == null) {
       return null;
@@ -413,7 +413,7 @@ export default class FbtFunctionCallProcessor {
     invariant(
       parentIndex > -1,
       'Unable to find parent fbt node: node=%s',
-      varDump(fbtNode)
+      varDump(fbtNode),
     );
     return parentIndex;
   }
@@ -426,10 +426,10 @@ export default class FbtFunctionCallProcessor {
     const jsfbtBuilder = new JSFbtBuilder(this.fileSource, stringVariationArgs);
     const argsCombinations = jsfbtBuilder.getStringVariationCombinations();
     const compactStringVariations = this._compactStringVariationArgs(
-      argsCombinations[0] || []
+      argsCombinations[0] || [],
     );
     const jsfbtMetadata = jsfbtBuilder.buildMetadata(
-      compactStringVariations.array
+      compactStringVariations.array,
     );
     const sharedPhraseOptions = this._getSharedPhraseOptions(fbtElement);
     return [fbtElement, ...fbtElement.getImplicitParamNodes()].map(
@@ -450,7 +450,7 @@ export default class FbtFunctionCallProcessor {
           ).forEach((argsCombination) => {
             const svArgsMap = new StringVariationArgsMap(argsCombination);
             const argValues = compactStringVariations.indexMap.map(
-              (originIndex) => nullthrows(argsCombination[originIndex]?.value)
+              (originIndex) => nullthrows(argsCombination[originIndex]?.value),
             );
             const leaf = {
               desc: fbtNode.getDescription(svArgsMap),
@@ -473,7 +473,7 @@ export default class FbtFunctionCallProcessor {
               addLeafToTree<TableJSFBTTreeLeaf, TableJSFBTTree>(
                 phrase.jsfbt.t,
                 argValues,
-                leaf
+                leaf,
               );
             } else {
               // jsfbt only contains one leaf
@@ -494,7 +494,7 @@ export default class FbtFunctionCallProcessor {
         } catch (error) {
           throw errorAt(this.node, error);
         }
-      }
+      },
     );
   }
 
@@ -581,7 +581,7 @@ export default class FbtFunctionCallProcessor {
                   `nest inside ` +
                   `${nodeChecker.moduleName}.${
                     nullthrows(parentFbtConstructName) as string
-                  }`
+                  }`,
               );
             }
             parentPath = parentPath.parentPath;
@@ -590,7 +590,7 @@ export default class FbtFunctionCallProcessor {
       },
       {
         nodeChecker: this.nodeChecker,
-      }
+      },
     );
   }
 
@@ -605,7 +605,7 @@ export default class FbtFunctionCallProcessor {
     const { arguments: fbtCallArgs } = node;
     const fbtContentsNode = convertToStringArrayNodeIfNeeded(
       moduleName,
-      fbtCallArgs[0]
+      fbtCallArgs[0],
     );
     fbtCallArgs[0] = fbtContentsNode;
 
@@ -617,7 +617,7 @@ export default class FbtFunctionCallProcessor {
     if (elementNode == null) {
       throw errorAt(
         node,
-        `${moduleName}: unable to create FbtElementNode from given node`
+        `${moduleName}: unable to create FbtElementNode from given node`,
       );
     }
     return elementNode;
@@ -626,7 +626,7 @@ export default class FbtFunctionCallProcessor {
   _createFbtRuntimeArgumentsForMetaPhrase(
     metaPhrases: ReadonlyArray<MetaPhrase>,
     metaPhraseIndex: number,
-    stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes
+    stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes,
   ): Array<CallExpression | Identifier> {
     const metaPhrase = metaPhrases[metaPhraseIndex];
     // Runtime arguments of a string fall into 3 categories:
@@ -641,13 +641,13 @@ export default class FbtFunctionCallProcessor {
       ...this._createRuntimeArgsFromImplicitParamNodes(
         metaPhrases,
         metaPhraseIndex,
-        stringVariationRuntimeArgs
+        stringVariationRuntimeArgs,
       ),
     ];
   }
 
   _createRuntimeArgsFromStringVariantNodes(
-    metaPhrase: MetaPhrase
+    metaPhrase: MetaPhrase,
   ): Array<CallExpression> {
     const fbtRuntimeArgs = [];
     const { compactStringVariations } = metaPhrase;
@@ -661,7 +661,7 @@ export default class FbtFunctionCallProcessor {
   }
 
   _createRuntimeArgsFromNonStringVariantNodes(
-    fbtNode: FbtImplicitParamNode | FbtElementNode
+    fbtNode: FbtImplicitParamNode | FbtElementNode,
   ): Array<CallExpression> {
     const fbtRuntimeArgs = [];
     for (const child of fbtNode.children) {
@@ -679,7 +679,7 @@ export default class FbtFunctionCallProcessor {
   _createRuntimeArgsFromImplicitParamNodes(
     metaPhrases: ReadonlyArray<MetaPhrase>,
     metaPhraseIndex: number,
-    runtimeArgsFromStringVariationNodes: StringVariationRuntimeArgumentNodes
+    runtimeArgsFromStringVariationNodes: StringVariationRuntimeArgumentNodes,
   ): Array<CallExpression> {
     const fbtRuntimeArgs = [];
     for (const [
@@ -693,7 +693,7 @@ export default class FbtFunctionCallProcessor {
       invariant(
         innerMetaPhraseFbtNode instanceof FbtImplicitParamNode,
         'Expected the inner meta phrase to be associated with a FbtImplicitParamNode instead of %s',
-        varDump(innerMetaPhraseFbtNode)
+        varDump(innerMetaPhraseFbtNode),
       );
       const node = cloneNode(innerMetaPhraseFbtNode.node);
       node.children = [
@@ -701,13 +701,13 @@ export default class FbtFunctionCallProcessor {
           this._createFbtRuntimeCallForMetaPhrase(
             metaPhrases,
             innerMetaPhraseIndex,
-            runtimeArgsFromStringVariationNodes
-          )
+            runtimeArgsFromStringVariationNodes,
+          ),
         ),
       ];
       const fbtParamRuntimeArg = createRuntimeCallExpression(
         innerMetaPhraseFbtNode,
-        [stringLiteral(innerMetaPhraseFbtNode.getOuterTokenAlias()), node]
+        [stringLiteral(innerMetaPhraseFbtNode.getOuterTokenAlias()), node],
       );
       fbtRuntimeArgs.push(fbtParamRuntimeArg);
     }

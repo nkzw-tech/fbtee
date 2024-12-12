@@ -13,7 +13,7 @@ export default class FbtResultBase implements BaseResult {
 
   constructor(
     contents: NestedFbtContentItems,
-    errorListener?: IFbtErrorListener | null
+    errorListener?: IFbtErrorListener | null,
   ) {
     this._contents = contents;
     this._errorListener = errorListener || null;
@@ -64,7 +64,7 @@ export default class FbtResultBase implements BaseResult {
   }
 
   static flattenToArray(
-    contents: NestedFbtContentItems
+    contents: NestedFbtContentItems,
   ): ReadonlyArray<FbtContentItem> {
     if (contents.length === 1 && typeof contents[0] === 'string') {
       return contents as ReadonlyArray<FbtContentItem>;

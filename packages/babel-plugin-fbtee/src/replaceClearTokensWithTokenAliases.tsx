@@ -8,7 +8,7 @@ import { PatternString } from './Types.tsx';
  */
 export default function replaceClearTokensWithTokenAliases(
   textOrTranslation: PatternString,
-  tokenAliases?: TokenAliases | null
+  tokenAliases?: TokenAliases | null,
 ): string {
   if (tokenAliases == null) {
     return textOrTranslation;
@@ -23,6 +23,6 @@ export default function replaceClearTokensWithTokenAliases(
       // `clearTokenName` is sufficient.
       return mangledText.replace(clearTokenName, mangledTokenName);
     },
-    textOrTranslation
+    textOrTranslation,
   );
 }

@@ -58,7 +58,7 @@ function _buildRegex(pattern: string): RegExp {
 const matchCurrenciesWithDots = _buildRegex(
   CURRENCIES_WITH_DOTS.reduce((regex, representation, index) => {
     return regex + (index ? '|' : '') + '(' + escapeRegex(representation) + ')';
-  }, '')
+  }, ''),
 );
 
 /**
@@ -78,7 +78,7 @@ function formatNumberRaw(
     primaryGroupSize: DEFAULT_GROUPING_SIZE,
     secondaryGroupSize: DEFAULT_GROUPING_SIZE,
   },
-  numberingSystemData?: NumberingSystemData | null
+  numberingSystemData?: NumberingSystemData | null,
 ): string {
   const primaryGroupingSize =
     standardPatternInfo.primaryGroupSize || DEFAULT_GROUPING_SIZE;
@@ -160,7 +160,7 @@ function _replaceWithNativeDigits(number: string, digits: string): string {
  */
 function formatNumber(value: number, decimals?: number | null): string {
   const NumberFormatConfig = NumberFormatConsts.get(
-    Hooks.getViewerContext().locale
+    Hooks.getViewerContext().locale,
   );
   return formatNumberRaw(
     value,
@@ -169,7 +169,7 @@ function formatNumber(value: number, decimals?: number | null): string {
     NumberFormatConfig.decimalSeparator,
     NumberFormatConfig.minDigitsForThousandsSeparator,
     NumberFormatConfig.standardDecimalPatternInfo,
-    NumberFormatConfig.numberingSystemData
+    NumberFormatConfig.numberingSystemData,
   );
 }
 
@@ -186,10 +186,10 @@ function formatNumber(value: number, decimals?: number | null): string {
  */
 function formatNumberWithThousandDelimiters(
   value: number | string,
-  decimals?: number | null
+  decimals?: number | null,
 ): string {
   const NumberFormatConfig = NumberFormatConsts.get(
-    Hooks.getViewerContext().locale
+    Hooks.getViewerContext().locale,
   );
   return formatNumberRaw(
     value,
@@ -198,7 +198,7 @@ function formatNumberWithThousandDelimiters(
     NumberFormatConfig.decimalSeparator,
     NumberFormatConfig.minDigitsForThousandsSeparator,
     NumberFormatConfig.standardDecimalPatternInfo,
-    NumberFormatConfig.numberingSystemData
+    NumberFormatConfig.numberingSystemData,
   );
 }
 
@@ -230,7 +230,7 @@ function _getNumberOfPowersOfTen(value: number): number {
 function formatNumberWithLimitedSigFig(
   value: number,
   decimals: number | null,
-  numSigFigs: number
+  numSigFigs: number,
 ): string {
   // First make the number sufficiently integer-like.
   const power = _getNumberOfPowersOfTen(value);
@@ -241,7 +241,7 @@ function formatNumberWithLimitedSigFig(
   // Now that we have a large enough integer, round to cut off some digits.
   const roundTo = Math.pow(
     10,
-    _getNumberOfPowersOfTen(inflatedValue) - numSigFigs + 1
+    _getNumberOfPowersOfTen(inflatedValue) - numSigFigs + 1,
   );
   let truncatedValue = Math.round(inflatedValue / roundTo) * roundTo;
   // Bring it back to whatever the number's magnitude was before.
@@ -251,7 +251,7 @@ function formatNumberWithLimitedSigFig(
     if (decimals == null) {
       return formatNumberWithThousandDelimiters(
         truncatedValue,
-        numSigFigs - power - 1
+        numSigFigs - power - 1,
       );
     }
   }
@@ -322,7 +322,7 @@ function truncateLongNumber(number: string, decimals?: number): string {
 function parseNumberRaw(
   text: string,
   decimalDelimiter: string,
-  numberDelimiter: string = ''
+  numberDelimiter: string = '',
 ): number | null | undefined {
   // Replace numerals based on current locale data
   const digitsMap = _getNativeDigitsMap();
@@ -342,18 +342,18 @@ function parseNumberRaw(
   const numberExp = escapeRegex(numberDelimiter);
 
   const isThereADecimalSeparatorInBetween = _buildRegex(
-    String.raw`^[^\d]*\d.*` + decimalExp + String.raw`.*\d[^\d]*$`
+    String.raw`^[^\d]*\d.*` + decimalExp + String.raw`.*\d[^\d]*$`,
   );
   if (!isThereADecimalSeparatorInBetween.test(_text)) {
     const isValidWithDecimalBeforeHand = _buildRegex(
-      String.raw`(^[^\d]*)` + decimalExp + String.raw`(\d*[^\d]*$)`
+      String.raw`(^[^\d]*)` + decimalExp + String.raw`(\d*[^\d]*$)`,
     );
     if (isValidWithDecimalBeforeHand.test(_text)) {
       _text = _text.replace(isValidWithDecimalBeforeHand, '$1\u0001$2');
       return _parseCodifiedNumber(_text);
     }
     const isValidWithoutDecimal = _buildRegex(
-      String.raw`^[^\d]*[\d ` + escapeRegex(numberExp) + String.raw`]*[^\d]*$`
+      String.raw`^[^\d]*[\d ` + escapeRegex(numberExp) + String.raw`]*[^\d]*$`,
     );
     if (!isValidWithoutDecimal.test(_text)) {
       _text = '';
@@ -365,7 +365,7 @@ function parseNumberRaw(
       numberExp +
       ']*)' +
       decimalExp +
-      String.raw`(\d*[^\d]*$)`
+      String.raw`(\d*[^\d]*$)`,
   );
   _text = isValid.test(_text) ? _text.replace(isValid, '$1\u0001$2') : '';
   return _parseCodifiedNumber(_text);
@@ -393,7 +393,7 @@ function _getNativeDigitsMap():
   | null
   | undefined {
   const NumberFormatConfig = NumberFormatConsts.get(
-    Hooks.getViewerContext().locale
+    Hooks.getViewerContext().locale,
   );
   const nativeDigitMap: {
     [key: string]: string;
@@ -413,12 +413,12 @@ function _getNativeDigitsMap():
 
 function parseNumber(text: string): number | null | undefined {
   const NumberFormatConfig = NumberFormatConsts.get(
-    Hooks.getViewerContext().locale
+    Hooks.getViewerContext().locale,
   );
   return parseNumberRaw(
     text,
     NumberFormatConfig.decimalSeparator || '.',
-    NumberFormatConfig.numberDelimiter
+    NumberFormatConfig.numberDelimiter,
   );
 }
 

@@ -45,7 +45,7 @@ export default {
     Object.keys(newTranslations).forEach((locale) => {
       currentTranslations[locale] = Object.assign(
         currentTranslations[locale] ?? {},
-        newTranslations[locale]
+        newTranslations[locale],
       );
     });
   },

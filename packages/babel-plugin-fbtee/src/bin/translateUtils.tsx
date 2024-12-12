@@ -70,7 +70,7 @@ function parseJSONFile<T>(filepath: string): T {
 export async function processFiles(
   stringFile: string,
   translationFiles: ReadonlyArray<string>,
-  options: Options
+  options: Options,
 ): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   const { phrases } = parseJSONFile<CollectFbtOutput>(stringFile);
   const fbtSites = phrases.map(createFbtSiteFromJSON);
@@ -83,22 +83,22 @@ export async function processFiles(
 
 export async function processJSON(
   json: InputJSONType,
-  options: Options
+  options: Options,
 ): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   const fbtSites = json.phrases.map(createFbtSiteFromJSON);
   return await processGroups(
     json.phrases,
     json.translationGroups.map((group) =>
-      processTranslations(fbtSites, group, options)
+      processTranslations(fbtSites, group, options),
     ),
-    options
+    options,
   );
 }
 
 async function processGroups(
   phrases: ReadonlyArray<CollectFbtOutputPhrase>,
   translatedGroups: TranslatedGroups,
-  options: Options
+  options: Options,
 ): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
   let fbtHash: typeof FbtHashKey | null = null;
   if (options.jenkins) {
@@ -119,7 +119,7 @@ async function processGroups(
       const translatedFbt = group.translatedPhrases[idx];
       const jsfbt = nullthrows(
         phrase.jsfbt,
-        `Expect every phrase to have 'jsfbt' field. However, 'jsfbt' is missing in the phrase at index ${idx}.`
+        `Expect every phrase to have 'jsfbt' field. However, 'jsfbt' is missing in the phrase at index ${idx}.`,
       );
       const hash = nullthrows(fbtHash)(jsfbt.t);
       hashToFbt[hash] = translatedFbt;
@@ -131,7 +131,7 @@ async function processGroups(
 function checkAndFilterTranslations(
   locale: string,
   translations: Translations,
-  options: Options
+  options: Options,
 ): Translations {
   const filteredTranslations: Translations = {};
   for (const hash of Object.keys(translations)) {
@@ -152,20 +152,20 @@ function checkAndFilterTranslations(
 function processTranslations(
   fbtSites: ReadonlyArray<FbtSite>,
   group: TranslationGroup,
-  options: Options
+  options: Options,
 ): TranslatedGroup {
   const config = TranslationConfig.fromFBLocale(group['fb-locale']);
   const filteredTranslations = checkAndFilterTranslations(
     group['fb-locale'],
     group.translations,
-    options
+    options,
   );
   const translations: HashToTranslation = {};
   for (const t of Object.keys(filteredTranslations)) {
     translations[t] = TranslationData.fromJSON(filteredTranslations[t]);
   }
   const translatedPhrases = fbtSites.map((fbtsite) =>
-    new TranslationBuilder(translations, config, fbtsite, false).build()
+    new TranslationBuilder(translations, config, fbtsite, false).build(),
   );
   return {
     'fb-locale': group['fb-locale'],

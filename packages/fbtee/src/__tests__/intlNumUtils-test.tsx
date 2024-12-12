@@ -137,22 +137,22 @@ describe('intlNumUtils:', () => {
 
     it('Should respect delimiters passed', () => {
       expect(intlNumUtils.formatNumberRaw(1234.54, 2, '.', ',')).toBe(
-        '1.234,54'
+        '1.234,54',
       );
       expect(intlNumUtils.formatNumberRaw('1234.54', 2, '.', ',')).toBe(
-        '1.234,54'
+        '1.234,54',
       );
     });
 
     it('Should handle large numbers', () => {
       expect(intlNumUtils.formatNumberRaw('1000000000000000', 2)).toBe(
-        '1000000000000000.00'
+        '1000000000000000.00',
       );
       expect(intlNumUtils.formatNumberRaw('1000000000000000.123', 2)).toBe(
-        '1000000000000000.12'
+        '1000000000000000.12',
       );
       expect(intlNumUtils.formatNumberRaw('-1000000000000000.123', 2)).toBe(
-        '-1000000000000000.12'
+        '-1000000000000000.12',
       );
     });
 
@@ -160,10 +160,10 @@ describe('intlNumUtils:', () => {
       expect(intlNumUtils.formatNumberRaw(0.000_000_199, 9)).toBe('1.99e-7');
       expect(intlNumUtils.formatNumberRaw(0.000_000_199, 7)).toBe('2e-7');
       expect(intlNumUtils.formatNumberRaw(0.000_000_019_9, 7)).toBe(
-        '0.0000000'
+        '0.0000000',
       );
       expect(intlNumUtils.formatNumberRaw('0.000000199', 9)).toBe(
-        '0.000000199'
+        '0.000000199',
       );
     });
   });
@@ -222,41 +222,41 @@ describe('intlNumUtils:', () => {
     it('Should work with integer input', () => {
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5)).toBe('5');
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5, 3)).toBe(
-        '5.000'
+        '5.000',
       );
     });
 
     it('Should not round when no decimals are specified', () => {
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5.499)).toBe(
-        '5.499'
+        '5.499',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5.5)).toBe('5.5');
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5.499, null)).toBe(
-        '5.499'
+        '5.499',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(5.5, null)).toBe(
-        '5.5'
+        '5.5',
       );
     });
 
     it('Should round (not truncate) decimals', () => {
       expect(
-        intlNumUtils.formatNumberWithThousandDelimiters(1234.5655, 2)
+        intlNumUtils.formatNumberWithThousandDelimiters(1234.5655, 2),
       ).toBe('1,234.57');
       expect(
-        intlNumUtils.formatNumberWithThousandDelimiters(1234.5644, 2)
+        intlNumUtils.formatNumberWithThousandDelimiters(1234.5644, 2),
       ).toBe('1,234.56');
       expect(
-        intlNumUtils.formatNumberWithThousandDelimiters(-1234.5655, 2)
+        intlNumUtils.formatNumberWithThousandDelimiters(-1234.5655, 2),
       ).toBe('-1,234.57');
       expect(
-        intlNumUtils.formatNumberWithThousandDelimiters(-1234.5644, 2)
+        intlNumUtils.formatNumberWithThousandDelimiters(-1234.5644, 2),
       ).toBe('-1,234.56');
     });
 
     it('Should handle a higher precision than given', () => {
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.1, 5)).toBe(
-        '1,234.10000'
+        '1,234.10000',
       );
     });
 
@@ -264,16 +264,16 @@ describe('intlNumUtils:', () => {
       prepareForHindiLatinFormat();
       expect(intlNumUtils.formatNumberWithThousandDelimiters(12)).toBe('12');
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1234)).toBe(
-        '1,234'
+        '1,234',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(12_345)).toBe(
-        '12,345'
+        '12,345',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(123_456)).toBe(
-        '1,23,456'
+        '1,23,456',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.1)).toBe(
-        '12,34,567.1'
+        '12,34,567.1',
       );
       jest.resetModules();
     });
@@ -282,16 +282,16 @@ describe('intlNumUtils:', () => {
       prepareForHindiDevanagariFormat();
       expect(intlNumUtils.formatNumberWithThousandDelimiters(0)).toBe('\u0966');
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1234)).toBe(
-        '\u0967,\u0968\u0969\u096A'
+        '\u0967,\u0968\u0969\u096A',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(12_345)).toBe(
-        '\u0967\u0968,\u0969\u096A\u096B'
+        '\u0967\u0968,\u0969\u096A\u096B',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(123_456)).toBe(
-        '\u0967,\u0968\u0969,\u096A\u096B\u096C'
+        '\u0967,\u0968\u0969,\u096A\u096B\u096C',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.1)).toBe(
-        '\u0967\u0968,\u0969\u096A,\u096B\u096C\u096D.\u0967'
+        '\u0967\u0968,\u0969\u096A,\u096B\u096C\u096D.\u0967',
       );
       jest.resetModules();
     });
@@ -305,14 +305,14 @@ describe('intlNumUtils:', () => {
 
       // Below the thousand separator threshold. No thousand separator.
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.1, 1)).toBe(
-        '1234#1'
+        '1234#1',
       );
       expect(intlNumUtils.formatNumberWithThousandDelimiters(12_345.1, 1)).toBe(
-        '12345#1'
+        '12345#1',
       );
       // Above the thousand separator threshold.
       expect(
-        intlNumUtils.formatNumberWithThousandDelimiters(123_456.1, 1)
+        intlNumUtils.formatNumberWithThousandDelimiters(123_456.1, 1),
       ).toBe('123/456#1');
 
       // Clean up.
@@ -327,16 +327,16 @@ describe('intlNumUtils:', () => {
 
     it('Should format number in significant figures and decimals', () => {
       expect(
-        intlNumUtils.formatNumberWithLimitedSigFig(123_456_789, 0, 2)
+        intlNumUtils.formatNumberWithLimitedSigFig(123_456_789, 0, 2),
       ).toBe('120,000,000');
       expect(
-        intlNumUtils.formatNumberWithLimitedSigFig(1.234_567_89, 2, 2)
+        intlNumUtils.formatNumberWithLimitedSigFig(1.234_567_89, 2, 2),
       ).toBe('1.20');
       expect(intlNumUtils.formatNumberWithLimitedSigFig(-12.345, 3, 3)).toBe(
-        '-12.300'
+        '-12.300',
       );
       expect(intlNumUtils.formatNumberWithLimitedSigFig(0, null, 3)).toBe(
-        '0.00'
+        '0.00',
       );
     });
   });
@@ -375,22 +375,22 @@ describe('intlNumUtils:', () => {
       expect(intlNumUtils.parseNumberRaw('100,235', ',')).toBe(100.235);
       expect(intlNumUtils.parseNumberRaw('100,', ',')).toBe(100); // No decimal digits
       expect(intlNumUtils.parseNumberRaw('123.456.789', ',', '.')).toBe(
-        123_456_789
+        123_456_789,
       ); // 2+ '.'s
       expect(intlNumUtils.parseNumberRaw('123.456.789.123', ',', '.')).toBe(
-        123_456_789_123
+        123_456_789_123,
       ); // long
       expect(intlNumUtils.parseNumberRaw('123.456.789.', ',', '.')).toBe(
-        123_456_789
+        123_456_789,
       ); // trailing .
       expect(intlNumUtils.parseNumberRaw('-123.456.789', ',', '.')).toBe(
-        -123_456_789
+        -123_456_789,
       ); // negative
       expect(intlNumUtils.parseNumberRaw('123.456,785', ',', '.')).toBe(
-        123_456.785
+        123_456.785,
       ); // decimal
       expect(intlNumUtils.parseNumberRaw('300,02,000 132', ' ', ',')).toBe(
-        30_002_000.132
+        30_002_000.132,
       ); // space
     });
 
@@ -475,42 +475,42 @@ describe('intlNumUtils:', () => {
       prepareForArabicFormat();
       // test cases that use \u066b as decimal separator
       expect(intlNumUtils.parseNumber('\u0660\u066b\u0661\u0662\u0663')).toBe(
-        0.123
+        0.123,
       );
       expect(
         intlNumUtils.parseNumber(
-          '\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669\u0660'
-        )
+          '\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669\u0660',
+        ),
       ).toBe(1_234_567_890); // all digits
       expect(
         intlNumUtils.parseNumber(
           '\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066C' +
-            '\u0667\u0668\u0669\u066C\u0661\u0662\u0663\u0660'
-        )
+            '\u0667\u0668\u0669\u066C\u0661\u0662\u0663\u0660',
+        ),
       ).toBe(1_234_567_891_230); // longer
       expect(
         intlNumUtils.parseNumber(
-          '\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066C\u0667\u0668\u0669\u066C'
-        )
+          '\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066C\u0667\u0668\u0669\u066C',
+        ),
       ).toBe(123_456_789); // trailing .
       expect(
         intlNumUtils.parseNumber(
-          '\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066b\u0667\u0668\u0669'
-        )
+          '\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066b\u0667\u0668\u0669',
+        ),
       ).toBe(123_456.789); // decimal
       expect(
         intlNumUtils.parseNumber(
-          '-\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066C\u0667\u0668\u0669'
-        )
+          '-\u0661\u0662\u0663\u066C\u0664\u0665\u0666\u066C\u0667\u0668\u0669',
+        ),
       ).toBe(-123_456_789);
 
       expect(intlNumUtils.parseNumber('\u0660\u066b\u0661\u0662\u0663')).toBe(
-        0.123
+        0.123,
       );
       expect(
         intlNumUtils.parseNumber(
-          '\u0661\u0662\u0663\u066c\u0664\u0665\u0666\u066b\u0667\u0668\u0669'
-        )
+          '\u0661\u0662\u0663\u066c\u0664\u0665\u0666\u066b\u0667\u0668\u0669',
+        ),
       ).toBe(123_456.789); // decimal
 
       // Clean up.
@@ -521,33 +521,33 @@ describe('intlNumUtils:', () => {
       prepareForPersianFormat();
       // Persian characters
       expect(intlNumUtils.parseNumber('\u06f0\u066B\u06f1\u06f2\u06f3')).toBe(
-        0.123
+        0.123,
       );
       expect(
         intlNumUtils.parseNumber(
-          '\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9\u06f0'
-        )
+          '\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9\u06f0',
+        ),
       ).toBe(1_234_567_890); // all digits
       expect(
         intlNumUtils.parseNumber(
           '\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9\u066C' +
-            '\u06f1\u06f2\u06f3\u06f0'
-        )
+            '\u06f1\u06f2\u06f3\u06f0',
+        ),
       ).toBe(1_234_567_891_230); // longer
       expect(
         intlNumUtils.parseNumber(
-          '\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9\u066C'
-        )
+          '\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9\u066C',
+        ),
       ).toBe(123_456_789); // trailing .
       expect(
         intlNumUtils.parseNumber(
-          '\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066B\u06f7\u06f8\u06f5'
-        )
+          '\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066B\u06f7\u06f8\u06f5',
+        ),
       ).toBe(123_456.785); // decimal
       expect(
         intlNumUtils.parseNumber(
-          '-\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9'
-        )
+          '-\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9',
+        ),
       ).toBe(-123_456_789);
 
       // Clean up.

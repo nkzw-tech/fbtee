@@ -45,7 +45,7 @@ lines">
             </b>
           </fbt:param>
           test
-        </fbt>;`
+        </fbt>;`,
       ),
       output: withFbtRequireStatement(
         `fbt._(
@@ -61,7 +61,7 @@ lines">
             ),
           ],
           {hk: '2xRGl8'},
-        );`
+        );`,
       ),
     };
     runTest(data);
@@ -118,7 +118,7 @@ describe('Test enum hash keys generation', () => {
   it('should generate single hash key for fbt with enum under regular mode', () => {
     runTest({
       input: withFbtRequireStatement(
-        `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`
+        `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`,
       ),
       output: withFbtRequireStatement(
         `fbt._(
@@ -135,7 +135,7 @@ describe('Test enum hash keys generation', () => {
               })
             ],
             {hk: "NT3sR"},
-          );`
+          );`,
       ),
     });
   });
@@ -154,7 +154,7 @@ test('Test replacing clear token names with mangled tokens', () => {
             count={ex1.count}>
             a photo
           </fbt:plural>
-        </fbt>;`
+        </fbt>;`,
     ),
     output: `var fbt_sv_arg_0;
       const { fbt } = require("fbtee");

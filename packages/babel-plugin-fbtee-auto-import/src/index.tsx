@@ -24,7 +24,7 @@ export default function autoImport() {
         ) {
           const declaration = importDeclaration(
             [importSpecifier(identifier(name.name), identifier(name.name))],
-            stringLiteral(ModuleName)
+            stringLiteral(ModuleName),
           );
 
           if (root) {

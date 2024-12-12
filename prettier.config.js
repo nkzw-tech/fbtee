@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   importOrderParserPlugins: ['importAssertions', 'typescript', 'jsx'],
   plugins: [
     '@ianvs/prettier-plugin-sort-imports',

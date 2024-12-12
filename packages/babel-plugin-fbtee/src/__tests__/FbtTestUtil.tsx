@@ -5,14 +5,14 @@ import syntaxJSX from '@babel/plugin-syntax-jsx';
 import presetReact from '@babel/preset-react';
 import presetTypeScript from '@babel/preset-typescript';
 import { Node } from '@babel/types';
-import prettier from 'prettier';
+import { expect } from '@jest/globals';
+import prettier from 'prettier-2';
 import { SENTINEL } from '../FbtConstants.tsx';
 import fbt from '../index.tsx';
-import {expect} from '@jest/globals';
 
 export function payload(obj: Record<string, unknown>): string {
   return JSON.stringify(
-    `__FBT__${JSON.stringify({ ...obj, project: obj.project || '' })}__FBT__`
+    `__FBT__${JSON.stringify({ ...obj, project: obj.project || '' })}__FBT__`,
   );
 }
 
@@ -30,14 +30,14 @@ export function transform(source: string, pluginOptions?: PluginOptions) {
 
 export function snapshotTransform(
   source: string,
-  pluginOptions?: PluginOptions
+  pluginOptions?: PluginOptions,
 ): string {
   return transform(source, { fbtBase64: true, ...pluginOptions });
 }
 
 async function transformKeepJsx(
   source: string,
-  pluginOptions?: PluginOptions
+  pluginOptions?: PluginOptions,
 ): Promise<string> {
   return prettier.format(
     transformSync(source, {
@@ -47,13 +47,13 @@ async function transformKeepJsx(
       presets: [presetTypeScript],
       sourceType: 'module',
     })?.code || '',
-    { parser: 'babel' }
+    { parser: 'babel' },
   );
 }
 
 export const snapshotTransformKeepJsx = (
   source: string,
-  pluginOptions?: PluginOptions
+  pluginOptions?: PluginOptions,
 ): Promise<string> =>
   transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
 
@@ -80,7 +80,7 @@ export const jsCodeFbtCallSerializer = {
       (_match, _quote, body) => {
         const json = Buffer.from(body, 'base64').toString('utf8');
         return `/* ${SENTINEL} start */ ${json} /* ${SENTINEL} end */`;
-      }
+      },
     );
     return prettier.format(decoded, { parser: 'babel' });
   },
@@ -100,7 +100,8 @@ export const jsCodeNonASCIICharSerializer = {
   serialize(rawValue: unknown) {
     return JSON.stringify(rawValue).replaceAll(
       nonASCIICharRegex,
-      (char) => String.raw`\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`
+      (char) =>
+        String.raw`\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`,
     );
   },
 
@@ -157,7 +158,7 @@ function stripMeta(node: Node, options?: Options) {
 function parse(code: string) {
   if ((typeof code !== 'string' && typeof code !== 'object') || code == null) {
     throw new Error(
-      `Code must be a string or AST object but got: ${typeof code}`
+      `Code must be a string or AST object but got: ${typeof code}`,
     );
   }
   return babelParse(code, {
@@ -191,7 +192,7 @@ function normalizeSourceCode(sourceCode: string) {
       {
         comments: true,
       },
-      sourceCode
+      sourceCode,
     )
     .code.trim();
 }
@@ -223,15 +224,15 @@ const indent = (code: string) =>
 export function assertSourceAstEqual(
   expected: string,
   actual: string,
-  options?: Options
+  options?: Options,
 ) {
   const expectedTree = stripMeta(
     parse(normalizeSourceCode(expected)).program,
-    options
+    options,
   );
   const actualTree = stripMeta(
     parse(normalizeSourceCode(actual)).program,
-    options
+    options,
   );
   try {
     expect(actualTree).toStrictEqual(expectedTree);
@@ -240,18 +241,18 @@ export function assertSourceAstEqual(
     const receivedFormattedCode = formatSourceCode(actual);
     const commonStr = firstCommonSubstring(
       expectedFormattedCode,
-      receivedFormattedCode
+      receivedFormattedCode,
     );
     const excerptLength = 60;
     const excerptDiffFromExpected = expectedFormattedCode.slice(
       commonStr.length,
-      commonStr.length + excerptLength
+      commonStr.length + excerptLength,
     );
     const excerptDiffFromReceived = receivedFormattedCode.slice(
       commonStr.length,
-      commonStr.length + excerptLength
+      commonStr.length + excerptLength,
     );
-    
+
     throw new Error(`${error instanceof Error ? `${error.message}\n` : ``}}
 Expect nodes to be equal but received:
 
@@ -277,26 +278,26 @@ export function testSectionAsync(
   testData: TestCases,
   transform: (
     source: string,
-    options?: Record<string, unknown>
+    options?: Record<string, unknown>,
   ) => Promise<string>,
-  options: Options
+  options: Options,
 ) {
   Object.entries(testData).forEach(([title, testInfo]) => {
     test(title, async () => {
       if (testInfo.throws === true) {
         await expect(
-          transform(testInfo.input, testInfo.options)
+          transform(testInfo.input, testInfo.options),
         ).rejects.toThrow();
       } else if (typeof testInfo.throws === 'string') {
         await expect(
-          transform(testInfo.input, testInfo.options)
+          transform(testInfo.input, testInfo.options),
         ).rejects.toThrow(testInfo.throws);
       } else {
         expect(
           (async () => {
             const transformOutput = await transform(
               testInfo.input,
-              testInfo.options
+              testInfo.options,
             );
             if (options && options.matchSnapshot) {
               expect(transformOutput).toMatchSnapshot();
@@ -304,7 +305,7 @@ export function testSectionAsync(
               assertSourceAstEqual(testInfo.output, transformOutput, options);
             }
             return true;
-          })()
+          })(),
         ).resolves.toBe(true);
       }
     });
@@ -314,7 +315,7 @@ export function testSectionAsync(
 export function testSection(
   testData: TestCases,
   transform: (source: string, options?: Options) => string,
-  options?: Options
+  options?: Options,
 ) {
   Object.entries(testData).forEach(([title, testInfo]) => {
     test(title, () => {
@@ -322,7 +323,7 @@ export function testSection(
         expect(() => transform(testInfo.input, testInfo.options)).toThrow();
       } else if (typeof testInfo.throws === 'string') {
         expect(() => transform(testInfo.input, testInfo.options)).toThrow(
-          testInfo.throws
+          testInfo.throws,
         );
       } else {
         expect(() => {
@@ -342,7 +343,7 @@ export function testCase(
   name: string,
   plugins: Array<PluginItem>,
   testData: TestCases,
-  options: Options
+  options: Options,
 ) {
   describe(name, () =>
     testSection(
@@ -351,7 +352,7 @@ export function testCase(
         babel.transformSync(source, {
           plugins,
         })?.code || '',
-      options
-    )
+      options,
+    ),
   );
 }

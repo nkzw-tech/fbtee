@@ -10,7 +10,7 @@ import { FbtContentItem, NestedFbtContentItems } from './Types.tsx';
 // brackets, fullstops and elipsis (for various locales too!)
 const parameterRegexp = new RegExp(
   String.raw`\{([^}]+)\}(` + PUNCT_CHAR_CLASS + '*)',
-  'g'
+  'g',
 );
 
 export type Substitutions = {
@@ -23,7 +23,7 @@ export type Substitutions = {
  */
 export default function substituteTokens(
   template: string,
-  args: Substitutions | null
+  args: Substitutions | null,
 ): FbtContentItem | NestedFbtContentItems {
   if (args == null) {
     return template;
@@ -50,7 +50,7 @@ export default function substituteTokens(
           return '{' + parameter + '}' + punctuation;
         }
         return String(argument) + dedupeStops(String(argument), punctuation);
-      }
+      },
     )
     .split('\u0017')
     .map(applyPhonologicalRules);

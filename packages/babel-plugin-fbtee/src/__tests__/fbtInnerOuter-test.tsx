@@ -4,13 +4,13 @@ import { transform, withFbtRequireStatement } from './FbtTestUtil.tsx';
 
 function testChildToParentRelationships([, testData]: readonly [
   name: string,
-  { input: string; output: Record<number, number> }
+  { input: string; output: Record<number, number> },
 ]) {
   const body = testData.input.replace(/\/\*\*(?:\/|[^*]|\*+[^*/])*\*+\//, '');
   transform(body, { collectFbt: true });
 
   expect(JSON.stringify(testData.output, null, ' ')).toEqual(
-    JSON.stringify(getChildToParentRelationships(), null, ' ')
+    JSON.stringify(getChildToParentRelationships(), null, ' '),
   );
 }
 
@@ -22,7 +22,7 @@ const testData = [
         `<fbt desc="d">
             <link href="#">Your friends</link>
             liked your video
-          </fbt>;`
+          </fbt>;`,
       ),
       output: { 1: 0 },
     },
@@ -37,7 +37,7 @@ const testData = [
               <b>liked</b>
             </Link>
             your video
-          </fbt>;`
+          </fbt>;`,
       ),
       output: { 1: 0, 2: 1 },
     },
@@ -53,7 +53,7 @@ const testData = [
             <div>
               phrase 3<div>phrase 4</div>
             </div>
-          </fbt>;`
+          </fbt>;`,
       ),
       output: { 1: 0, 2: 1, 3: 0, 4: 3 },
     },
@@ -77,7 +77,7 @@ const testData = [
               </div>
             </fbt:param>
             <div href="#">another child!</div>
-          </fbt>;`
+          </fbt>;`,
       ),
       output: { 1: 0, 4: 3 },
     },
@@ -93,7 +93,7 @@ const testData = [
             <fbt desc="phrase 2">
               <div href="#">phrase 3</div>
             </fbt>
-          </div>;`
+          </div>;`,
       ),
       output: { 1: 0, 3: 2 },
     },

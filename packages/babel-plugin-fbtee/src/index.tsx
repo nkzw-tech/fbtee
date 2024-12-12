@@ -268,7 +268,7 @@ export default function transform() {
             if (metaPhrase.parentIndex != null) {
               addEnclosingString(
                 index + initialPhraseCount,
-                metaPhrase.parentIndex + initialPhraseCount
+                metaPhrase.parentIndex + initialPhraseCount,
               );
             }
           });
@@ -308,7 +308,7 @@ export default function transform() {
                   path.node,
                   `Fbt constructs can only be used within the scope of an fbt` +
                     ` string. I.e. It should be used directly inside an ` +
-                    `‹fbt› / ‹fbs› callsite`
+                    `‹fbt› / ‹fbs› callsite`,
                 );
               }
             },
@@ -361,11 +361,11 @@ function getEnumManifest(opts: PluginOptions): EnumManifest | null {
     return fbtEnumManifest;
   } else if (fbtEnumPath != null) {
     throw new Error(
-      `'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`
+      `'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
     );
   } else if (fbtEnumToPath != null) {
     throw new Error(
-      `'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`
+      `'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
     );
   }
   return null;
@@ -381,14 +381,14 @@ export function getChildToParentRelationships(): ChildToParentMap {
 
 export function getFbtElementNodes(): Array<PlainFbtNode> {
   const phraseToIndexMap = new Map<AnyFbtNode, number>(
-    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index])
+    allMetaPhrases.map((metaPhrase, index) => [metaPhrase.fbtNode, index]),
   );
 
   return allMetaPhrases
     .map(({ fbtNode }) =>
       fbtNode instanceof FbtElementNode
         ? toPlainFbtNodeTree(fbtNode, phraseToIndexMap)
-        : null
+        : null,
     )
     .filter((node): node is PlainFbtNode => node != null);
 }

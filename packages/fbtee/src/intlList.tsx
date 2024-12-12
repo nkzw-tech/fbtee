@@ -30,7 +30,7 @@ type Delimiter = keyof typeof Delimiters;
 export default function intlList(
   items: ReadonlyArray<string | React.ReactElement | null | undefined>,
   conjunction: Conjunction = Conjunctions.AND,
-  delimiter: Delimiter = Delimiters.COMMA
+  delimiter: Delimiter = Delimiters.COMMA,
 ): React.ReactNode {
   items = items.filter(Boolean);
 
@@ -38,7 +38,7 @@ export default function intlList(
     for (const item of items) {
       invariant(
         typeof item === 'string' || isValidElement(item),
-        'Must provide a string or ReactComponent to intlList.'
+        'Must provide a string or ReactComponent to intlList.',
       );
     }
   }
@@ -179,7 +179,7 @@ export default function intlList(
       invariant(
         false,
         'Invalid conjunction %s provided to intlList',
-        conjunction
+        conjunction,
       );
   }
 }

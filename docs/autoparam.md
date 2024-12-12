@@ -34,7 +34,7 @@ fbt(
       <span>awesome</span> vacation
     </a>,
   ],
-  'auto-wrap example'
+  'auto-wrap example',
 );
 ```
 

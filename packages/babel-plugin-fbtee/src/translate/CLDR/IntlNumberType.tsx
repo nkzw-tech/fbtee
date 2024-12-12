@@ -299,7 +299,7 @@ function _getNumberModuleForLang(lang: string): LangToNumberTypeValues {
 }
 
 function _getNumberModuleForLocale(
-  locale: string
+  locale: string,
 ): LocaleToNumberTypeValues | LangToNumberTypeValues {
   return (
     localeToNumberType[locale as keyof typeof localeToNumberType] ||
@@ -308,7 +308,7 @@ function _getNumberModuleForLocale(
 }
 
 function forLocale(
-  locale: string
+  locale: string,
 ): LocaleToNumberTypeValues | LangToNumberTypeValues {
   return _getNumberModuleForLocale(locale);
 }
