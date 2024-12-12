@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbt';
+import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 // @ts-expect-error
 import translations from '../translatedFbts.json';
@@ -319,7 +319,6 @@ export default function Example() {
           </li>
         ))}
       </ul>
-      <p className="copyright">{`Facebook \u00A9 2021`}</p>
     </div>
   );
 }

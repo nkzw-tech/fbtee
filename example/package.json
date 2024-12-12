@@ -6,19 +6,19 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build:fbt": "pnpm fbt:manifest && pnpm fbt:collect && pnpm fbt:translate && pnpm fbt:translate-multiple && pnpm fbt:translate-single",
-    "clean:fbt": "rm -rf .enum_manifest.json .src_manifest.json .source_strings.json src/translatedFbts.json src/translatedFbts .test_*.json 2&> /dev/null || exit 0",
+    "build:fbtee": "pnpm fbtee:manifest && pnpm fbtee:collect && pnpm fbtee:translate && pnpm fbtee:translate-multiple && pnpm fbtee:translate-single",
+    "clean": "rm -rf .enum_manifest.json .src_manifest.json .source_strings.json src/translatedFbts.json src/translatedFbts .test_*.json 2&> /dev/null || exit 0",
     "dev": "vite",
-    "fbt:collect": "fbt collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
-    "fbt:manifest": "fbt manifest --src src",
-    "fbt:translate": "fbt translate --translations translations/*.json --jenkins > src/translatedFbts.json",
-    "fbt:translate-multiple": "fbt translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
-    "fbt:translate-single": "fbt translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
+    "fbtee:collect": "fbtee collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > .source_strings.json",
+    "fbtee:manifest": "fbtee manifest --src src",
+    "fbtee:translate": "fbtee translate --translations translations/*.json --jenkins > src/translatedFbts.json",
+    "fbtee:translate-multiple": "fbtee translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
+    "fbtee:translate-single": "fbtee translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
   },
   "dependencies": {
-    "babel-preset-fbt": "workspace:*",
+    "@nkzw/babel-fbtee": "workspace:*",
     "classnames": "^2.5.1",
-    "fbt": "workspace:*",
+    "fbtee": "workspace:*",
     "invariant": "^2.2.4",
     "normalize.css": "8.0.1",
     "react": "^19.0.0",

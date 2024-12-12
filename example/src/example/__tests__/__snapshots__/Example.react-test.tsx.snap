@@ -301,11 +301,6 @@ exports[`Example.react renders the example 1`] = `
         </a>
       </li>
     </ul>
-    <p
-      class="copyright"
-    >
-      Facebook © 2021
-    </p>
   </div>
 </DocumentFragment>
 `;

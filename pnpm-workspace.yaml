@@ -1,7 +1,7 @@
 packages:
   - 'example'
-  - 'packages/babel-plugin-fbt-auto-import'
-  - 'packages/babel-plugin-fbt-runtime'
-  - 'packages/babel-plugin-fbt'
-  - 'packages/babel-preset-fbt'
-  - 'packages/fbt'
+  - 'packages/babel-plugin-fbtee-auto-import'
+  - 'packages/babel-plugin-fbtee-runtime'
+  - 'packages/babel-plugin-fbtee'
+  - 'packages/babel-fbtee'
+  - 'packages/fbtee'

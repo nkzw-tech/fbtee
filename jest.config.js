@@ -19,14 +19,14 @@ export default {
   projects: [
     {
       displayName: 'babel-plugin-fbt',
-      roots: ['<rootDir>/packages/babel-plugin-fbt/src'],
+      roots: ['<rootDir>/packages/babel-plugin-fbtee/src'],
       transform: {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
             presets: [
               [
-                './packages/babel-preset-fbt',
+                './packages/babel-fbtee',
                 { fbtCommon: { Accept: '...' } },
               ],
             ],
@@ -36,12 +36,12 @@ export default {
     },
     {
       displayName: 'babel-plugin-fbt-runtime',
-      roots: ['<rootDir>/packages/babel-plugin-fbt-runtime'],
+      roots: ['<rootDir>/packages/babel-plugin-fbtee-runtime'],
     },
     {
       displayName: 'fbt',
-      modulePaths: ['<rootDir>/packages/fbt/src'],
-      roots: ['<rootDir>/packages/fbt/src'],
+      modulePaths: ['<rootDir>/packages/fbtee/src'],
+      roots: ['<rootDir>/packages/fbtee/src'],
       testEnvironment: 'jsdom',
       transform: {
         '\\.(j|t)sx?$': [
@@ -49,7 +49,7 @@ export default {
           {
             presets: [
               [
-                './packages/babel-preset-fbt',
+                './packages/babel-fbtee',
                 { fbtCommon: { Accept: '...' } },
               ],
             ],
@@ -62,7 +62,7 @@ export default {
       modulePaths: [
         '<rootDir>/example/src',
         '<rootDir>/example/src/example',
-        '<rootDir>/packages/fbt/src',
+        '<rootDir>/packages/fbtee/src',
       ],
       roots: ['<rootDir>/example'],
       testEnvironment: 'jsdom',
@@ -72,7 +72,7 @@ export default {
           {
             presets: [
               [
-                './packages/babel-preset-fbt',
+                './packages/babel-fbtee',
                 {
                   fbtCommon: CommonStrings,
                   fbtEnumManifest: EnumManifest,

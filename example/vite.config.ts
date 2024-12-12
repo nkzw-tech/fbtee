@@ -1,3 +1,4 @@
+import fbteePreset from '@nkzw/babel-fbtee';
 import react from '@vitejs/plugin-react';
 // @ts-expect-error
 import EnumManifest from './.enum_manifest.json';
@@ -18,7 +19,7 @@ export default {
       babel: {
         presets: [
           [
-            'babel-preset-fbt',
+            fbteePreset,
             {
               fbtCommon: CommonStrings,
               fbtEnumManifest: EnumManifest,

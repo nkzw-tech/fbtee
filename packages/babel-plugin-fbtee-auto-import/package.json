@@ -1,0 +1,31 @@
+{
+  "name": "@nkzw/babel-plugin-fbtee-auto-import",
+  "version": "0.0.1",
+  "description": "The JavaScript & React Internationalization Framework.",
+  "keywords": [
+    "fbt",
+    "globalization",
+    "i18n",
+    "internationalization",
+    "l10n",
+    "localization",
+    "react",
+    "translation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/fbt.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --external:@nkzw/babel-plugin-fbtee --external:@babel/* --bundle ./src/index.tsx",
+    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/types": "^7.26.3",
+    "@nkzw/babel-plugin-fbtee": "workspace:*"
+  }
+}

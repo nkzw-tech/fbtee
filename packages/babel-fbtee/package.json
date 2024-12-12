@@ -1,0 +1,36 @@
+{
+  "name": "@nkzw/babel-fbtee",
+  "version": "0.0.1",
+  "description": "The JavaScript & React Internationalization Framework.",
+  "keywords": [
+    "fbt",
+    "globalization",
+    "i18n",
+    "internationalization",
+    "l10n",
+    "localization",
+    "react",
+    "translation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/fbt.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "bin": {
+    "fbtee": "lib/bin.js"
+  },
+  "scripts": {
+    "build": "rm -f lib/index.js; pnpm build:src; pnpm build:bin",
+    "build:bin": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/bin.js --external:@nkzw/babel-plugin-fbtee --bundle ./src/bin.tsx",
+    "build:src": "esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --external:@nkzw/babel-plugin-fbtee --external:@nkzw/babel-plugin-fbtee-runtime --external:@nkzw/babel-plugin-fbtee-auto-import --bundle ./src/index.tsx",
+    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
+  },
+  "dependencies": {
+    "@nkzw/babel-plugin-fbtee": "workspace:*",
+    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:*",
+    "@nkzw/babel-plugin-fbtee-runtime": "workspace:*"
+  }
+}

@@ -6,5 +6,5 @@ example/src/translatedFbts
 example/src/translatedFbts.json
 jest.config.js
 packages/*/lib/
-packages/babel-plugin-fbt/src/__tests__/FbtTestUtil.tsx
+packages/babel-plugin-fbtee/src/__tests__/FbtTestUtil.tsx
 pnpm-lock.yaml
