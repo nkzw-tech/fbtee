@@ -1,6 +1,5 @@
 import { Node } from '@babel/types';
 import invariant from 'invariant';
-import type { BindingName } from '../FbtConstants.tsx';
 import { errorAt, normalizeSpaces, varDump } from '../FbtUtil.tsx';
 import type { TokenAliases } from '../index.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
@@ -33,11 +32,6 @@ import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
  *    </fbt>
  */
 import FbtSameParamNode from './FbtSameParamNode.tsx';
-
-export type FromNodeArgs = {
-  moduleName: BindingName;
-  node: Node;
-};
 
 /**
  * Returns the closest ancestor node of type: FbtElementNode | FbtImplicitParamNode

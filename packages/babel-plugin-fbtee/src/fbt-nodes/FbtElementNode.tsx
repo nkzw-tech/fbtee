@@ -1,6 +1,5 @@
 import {
   CallExpression,
-  Expression,
   identifier,
   isArrayExpression,
   isCallExpression,
@@ -21,6 +20,7 @@ import {
   ValidFbtOptions,
   ValidPronounUsagesKeys,
 } from '../FbtConstants.tsx';
+import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg, ParamSet } from '../FbtUtil.tsx';
 import {
   collectOptionsFromFbtConstruct,
@@ -48,6 +48,7 @@ import type FbtImplicitParamNodeType from './FbtImplicitParamNode.tsx';
 import FbtNameNode from './FbtNameNode.tsx';
 import type { AnyFbtNode, FbtChildNode } from './FbtNode.tsx';
 import FbtNode from './FbtNode.tsx';
+import { FbtNodeType } from './FbtNodeType.tsx';
 import {
   buildFbtNodeMapForSameParam,
   getChildNodeText,
@@ -102,6 +103,19 @@ export interface IFbtElementNode {
    */
   registerToken(name: string, source: AnyFbtNode): void;
 }
+
+const childNodeClasses = new Map(
+  [
+    FbtEnumNode,
+    FbtNameNode,
+    FbtParamNode,
+    FbtPluralNode,
+    FbtPronounNode,
+    FbtSameParamNode,
+  ].map(
+    (Constructor) => [Constructor.type as FbtNodeType, Constructor] as const,
+  ),
+);
 
 /**
  * Represents the main fbt() or <fbt> construct.
@@ -299,15 +313,11 @@ export default class FbtElementNode
    * Create a new class instance given a node root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromNode({
-    moduleName,
-    node,
-    validExtraOptions,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-    validExtraOptions: Readonly<FbtOptionConfig>;
-  }): FbtElementNode | null {
+  static fromNode(
+    moduleName: BindingName,
+    node: Node,
+    validExtraOptions: Readonly<FbtOptionConfig>,
+  ): FbtElementNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
@@ -334,12 +344,7 @@ export default class FbtElementNode
       if (isSpreadElement(elementChild)) {
         throw errorAt(elementChild, `Array spread syntax is not supported`);
       }
-      fbtElement.appendChild(
-        this.createChildNode({
-          moduleName,
-          node: elementChild,
-        }),
-      );
+      fbtElement.appendChild(this.createChildNode(moduleName, elementChild));
     }
     return fbtElement;
   }
@@ -347,40 +352,22 @@ export default class FbtElementNode
   /**
    * Create a child fbt node for a given node.
    */
-  static createChildNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtChildNode {
-    let fbtChildNode;
-    const fbtChildNodeClasses = [
-      FbtEnumNode,
-      FbtNameNode,
-      FbtParamNode,
-      FbtPluralNode,
-      FbtPronounNode,
-      FbtSameParamNode,
-      FbtTextNode,
-    ];
-
-    for (const Constructor of fbtChildNodeClasses) {
-      fbtChildNode = Constructor.fromNode({ moduleName, node });
-      if (fbtChildNode != null) {
-        break;
-      }
-    }
+  static createChildNode(moduleName: BindingName, node: Node): FbtChildNode {
+    const nodeType = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const Constructor = nodeType ? childNodeClasses.get(nodeType) : null;
+    let childNode: FbtChildNode | null =
+      Constructor?.fromNode(moduleName, node) ||
+      FbtTextNode.fromNode(moduleName, node);
 
     // Try to convert to FbtImplicitParamNode as a last resort
-    if (fbtChildNode == null && isJSXElement(node)) {
+    if (childNode == null && isJSXElement(node)) {
       // Later on, we should only allow non-fbt JSX elements here for auto-wrapping.
       // fbt:param, fbt:pronoun, etc... should appear as children of it.
-      fbtChildNode = FbtImplicitParamNode.fromNode({ moduleName, node });
+      childNode = FbtImplicitParamNode.fromNode(moduleName, node);
     }
 
-    if (fbtChildNode != null) {
-      return fbtChildNode;
+    if (childNode != null) {
+      return childNode;
     }
 
     throw errorAt(node, `${moduleName}: unsupported node: ${node.type}`);

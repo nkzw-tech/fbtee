@@ -1,9 +1,9 @@
 import {
   CallExpression,
-  Expression,
   identifier,
   isCallExpression,
   isStringLiteral,
+  Node,
   numericLiteral,
   objectExpression,
   objectProperty,
@@ -59,15 +59,10 @@ export default class FbtPronounNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'pronoun';
   readonly type = 'pronoun';
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtPronounNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtPronounNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

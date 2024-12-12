@@ -1,8 +1,8 @@
 import {
   CallExpression,
-  Expression,
   isCallExpression,
   isStringLiteral,
+  Node,
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
@@ -52,15 +52,10 @@ export default class FbtPluralNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'plural';
   readonly type = 'plural';
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtPluralNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtPluralNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

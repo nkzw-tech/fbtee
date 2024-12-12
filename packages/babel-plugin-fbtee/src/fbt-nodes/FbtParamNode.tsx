@@ -69,6 +69,7 @@ export default class FbtParamNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'param';
   readonly type = 'param';
 
   override getOptions(): Options {
@@ -125,13 +126,7 @@ export default class FbtParamNode extends FbtNode<
     }
   }
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtParamNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtParamNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

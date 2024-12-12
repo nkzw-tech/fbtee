@@ -1,6 +1,5 @@
 import {
   CallExpression,
-  Expression,
   isArrayExpression,
   isCallExpression,
   isIdentifier,
@@ -48,15 +47,10 @@ export default class FbtEnumNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'enum';
   readonly type = 'enum';
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtEnumNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtEnumNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

@@ -1,8 +1,8 @@
 import {
   CallExpression,
-  Expression,
   isCallExpression,
   isStringLiteral,
+  Node,
 } from '@babel/types';
 import invariant from 'invariant';
 import { BindingName } from '../FbtConstants.tsx';
@@ -26,15 +26,13 @@ export default class FbtSameParamNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'sameParam';
   readonly type = 'sameParam';
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtSameParamNode | null {
+  static fromNode(
+    moduleName: BindingName,
+    node: Node,
+  ): FbtSameParamNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

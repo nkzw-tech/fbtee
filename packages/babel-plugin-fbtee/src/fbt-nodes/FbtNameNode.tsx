@@ -1,8 +1,8 @@
 import {
   CallExpression,
-  Expression,
   isCallExpression,
   isStringLiteral,
+  Node,
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
@@ -38,6 +38,7 @@ export default class FbtNameNode extends FbtNode<
   null,
   Options
 > {
+  static readonly type = 'name';
   readonly type = 'name';
 
   override getOptions(): Options {
@@ -67,13 +68,7 @@ export default class FbtNameNode extends FbtNode<
     }
   }
 
-  static fromNode({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: Expression;
-  }): FbtNameNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtNameNode | null {
     if (!isCallExpression(node)) {
       return null;
     }

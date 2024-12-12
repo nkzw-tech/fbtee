@@ -609,11 +609,11 @@ export default class FbtFunctionCallProcessor {
     );
     fbtCallArgs[0] = fbtContentsNode;
 
-    const elementNode = FbtElementNode.fromNode({
+    const elementNode = FbtElementNode.fromNode(
       moduleName,
       node,
-      validExtraOptions: this.validFbtExtraOptions,
-    });
+      this.validFbtExtraOptions,
+    );
     if (elementNode == null) {
       throw errorAt(
         node,

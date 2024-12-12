@@ -2,11 +2,12 @@ import {
   isJSXText,
   isStringLiteral,
   JSXText,
+  Node,
   StringLiteral,
 } from '@babel/types';
+import { BindingName } from '../FbtConstants.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
-import type { FromNodeArgs } from './FbtNodeUtil.tsx';
 
 /**
  * Represents the text literals present within <fbt> or fbt() callsites.
@@ -30,7 +31,7 @@ export default class FbtTextNode extends FbtNode<
    * Create a new class instance given a root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromNode({ moduleName, node }: FromNodeArgs): FbtTextNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtTextNode | null {
     return isJSXText(node) || isStringLiteral(node)
       ? new FbtTextNode({
           moduleName,

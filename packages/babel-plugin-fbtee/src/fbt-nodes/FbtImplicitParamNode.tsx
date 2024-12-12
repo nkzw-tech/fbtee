@@ -13,6 +13,7 @@ import {
   ObjectExpression,
 } from '@babel/types';
 import invariant from 'invariant';
+import { BindingName } from '../FbtConstants.tsx';
 import type { ParamSet } from '../FbtUtil.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
@@ -30,7 +31,6 @@ import type { IFbtElementNode } from './FbtElementNode.tsx';
 import FbtElementNode from './FbtElementNode.tsx';
 import type { AnyFbtNode, FbtChildNode, PlainFbtNode } from './FbtNode.tsx';
 import FbtNode from './FbtNode.tsx';
-import type { FromNodeArgs } from './FbtNodeUtil.tsx';
 import {
   convertIndexInSiblingsArrayToOuterTokenAlias,
   convertToTokenName,
@@ -199,10 +199,10 @@ export default class FbtImplicitParamNode
    * Create a new class instance given a root node.
    * If that node is incompatible, we'll just return `null`.
    */
-  static fromNode({
-    moduleName,
-    node,
-  }: FromNodeArgs): FbtImplicitParamNode | null {
+  static fromNode(
+    moduleName: BindingName,
+    node: Node,
+  ): FbtImplicitParamNode | null {
     if (!isJSXElement(node)) {
       return null;
     }
@@ -238,14 +238,11 @@ export default class FbtImplicitParamNode
             }
           } else if (unusedWhitespaceChild != null) {
             fbtChildren.push(
-              FbtTextNode.fromNode({
-                moduleName,
-                node: unusedWhitespaceChild,
-              }),
+              FbtTextNode.fromNode(moduleName, unusedWhitespaceChild),
             );
             unusedWhitespaceChild = null;
           }
-          fbtChildren.push(FbtTextNode.fromNode({ moduleName, node: child }));
+          fbtChildren.push(FbtTextNode.fromNode(moduleName, child));
           lastAddedChild = child;
           break;
 
@@ -260,22 +257,22 @@ export default class FbtImplicitParamNode
               convertToStringArrayNodeIfNeeded(moduleName, expression)
                 .elements || ([] as Array<null>);
 
-            elements.forEach((elem) => {
-              if (elem == null) {
-                return;
+            for (const element of elements) {
+              if (element == null) {
+                continue;
               }
-              if (elem.type !== 'StringLiteral') {
+              if (element.type !== 'StringLiteral') {
                 throw errorAt(
                   child,
                   `${moduleName}: only string literals (or concatenations of string literals) ` +
                     `are supported inside JSX expressions, ` +
-                    `but we found the node type "${elem.type}" instead.`,
+                    `but we found the node type "${element.type}" instead.`,
                 );
               }
               fbtChildren.push(
-                FbtElementNode.createChildNode({ moduleName, node: elem }),
+                FbtElementNode.createChildNode(moduleName, element),
               );
-            });
+            }
             unusedWhitespaceChild = null;
             lastAddedChild = child;
             continue;
@@ -287,7 +284,7 @@ export default class FbtImplicitParamNode
           }
 
           fbtChildren.push(
-            FbtElementNode.createChildNode({ moduleName, node: expression }),
+            FbtElementNode.createChildNode(moduleName, expression),
           );
           unusedWhitespaceChild = null;
           lastAddedChild = child;
@@ -295,9 +292,7 @@ export default class FbtImplicitParamNode
         }
 
         case 'JSXElement': {
-          fbtChildren.push(
-            FbtElementNode.createChildNode({ moduleName, node: child }),
-          );
+          fbtChildren.push(FbtElementNode.createChildNode(moduleName, child));
           unusedWhitespaceChild = null;
           lastAddedChild = child;
           break;
