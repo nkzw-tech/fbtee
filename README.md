@@ -15,6 +15,8 @@ This is a fork of Facebook's original `fbt` library, which has been archived. Th
 
 ## Getting Started
 
+**fbtee** requires at least Node 22, and React 19 if you are using React.
+
 ```bash
 npm install fbtee @nkzw/babel-fbtee
 ```
@@ -170,6 +172,7 @@ The open-source version of `fbt`, however, became unmaintained, difficult to set
 **fbtee** is compatible with `fbt`. If you are already using `fbt`, migrating to fbtee is straightforward:
 
 - Follow the "Getting Started" guide above and remove all "fbt" related packages.
+- Make sure you are using React 19.
 - Replace `import { fbt } from 'fbt'` with `import { fbt } from 'fbtee'`.
 - Rename commands from `fbt-collect`, `fbt-manifest` and `fbt-translate` to `fbtee-collect`, `fbtee-manifest` and `fbtee-translate`.
 - If you were using CommonJS modules for common strings or enums, convert them to ES modules.
