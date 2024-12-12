@@ -189,6 +189,9 @@ importers:
       '@babel/types':
         specifier: ^7.26.3
         version: 7.26.3
+      '@nkzw/babel-plugin-fbtee-auto-import':
+        specifier: workspace:*
+        version: link:../babel-plugin-fbtee-auto-import
       glob:
         specifier: ^11.0.0
         version: 11.0.0

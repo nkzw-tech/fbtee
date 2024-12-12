@@ -240,17 +240,15 @@ if (argv.help) {
     ? (await import(transformPath)).default
     : null;
 
-  const commonFile = argv[args.COMMON_STRINGS];
+  const commonFile = argv[args.COMMON_STRINGS]?.length
+    ? resolve(process.cwd(), argv[args.COMMON_STRINGS])
+    : null;
   const fbtCommon = commonFile?.length
-    ? (
-        await import(
-          resolve(process.cwd(), commonFile),
-          commonFile.endsWith('.json')
-            ? {
-                with: { type: 'json' },
-              }
-            : {}
-        )
+    ? (commonFile.endsWith('.json')
+        ? await import(commonFile, {
+            with: { type: 'json' },
+          })
+        : await import(commonFile)
       ).default
     : null;
 

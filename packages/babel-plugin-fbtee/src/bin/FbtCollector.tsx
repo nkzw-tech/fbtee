@@ -2,6 +2,7 @@ import type { PluginItem } from '@babel/core';
 import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
+import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { FbtCommonMap } from '../FbtCommon.tsx';
 import type { FbtOptionConfig } from '../FbtConstants.tsx';
@@ -71,7 +72,7 @@ const transform = (
     ast: false,
     code: false,
     filename: options.filename,
-    plugins: [[fbt, options], ...plugins],
+    plugins: [fbtAutoImport, [fbt, options], ...plugins],
     presets: [
       presetTypescript,
       [
