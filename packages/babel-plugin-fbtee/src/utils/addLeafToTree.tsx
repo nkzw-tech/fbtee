@@ -63,7 +63,7 @@ import invariant from 'invariant';
 export default function addLeafToTree<V, T extends Record<string, unknown>>(
   tree: T,
   keys: ReadonlyArray<string | number>,
-  leaf: unknown,
+  leaf: V,
 ) {
   let branch = tree;
 

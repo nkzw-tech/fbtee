@@ -1,9 +1,7 @@
 import fbteePreset from '@nkzw/babel-fbtee';
 import react from '@vitejs/plugin-react';
-// @ts-expect-error
-import EnumManifest from './.enum_manifest.json';
-// @ts-expect-error
-import CommonStrings from './common_strings.json';
+import EnumManifest from './.enum_manifest.json' with { type: 'json' };
+import CommonStrings from './common_strings.json' with { type: 'json' };
 
 const root = process.cwd();
 

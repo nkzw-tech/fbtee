@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, init, IntlVariations } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
-// @ts-expect-error
-import translations from '../translatedFbts.json';
+import translations from '../translatedFbts.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.js';
 
 const viewerContext = {

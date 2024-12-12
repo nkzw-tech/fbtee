@@ -5,8 +5,7 @@ import {
   getFbtCollector,
   getPackagers,
 } from '../collectFbtUtils.tsx';
-// @ts-expect-error
-import fbtCommon from './FbtCommonForTests.json';
+import fbtCommon from './FbtCommonForTests.json' with { type: 'json' };
 
 async function collect(
   source: Array<[string, string]> | string,

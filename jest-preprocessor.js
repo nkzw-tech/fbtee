@@ -1,4 +1,5 @@
 import babel from '@babel/core';
+import pluginSyntaxAttributes from '@babel/plugin-syntax-import-attributes';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
 
@@ -6,6 +7,7 @@ const createTransformer = (opts = {}) => ({
   process: (src, filename) =>
     babel.transform(src, {
       filename,
+      plugins: [pluginSyntaxAttributes],
       presets: [
         ...(opts?.presets || []),
         [
