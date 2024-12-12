@@ -5,7 +5,7 @@ import type {
   TableJSFBTTreeLeaf,
 } from './index.tsx';
 import nullthrows from './nullthrows.tsx';
-import type { FbtTableKey } from './Types.tsx';
+import type { FbtTableKey } from './Types.d.ts';
 
 export function isTableJSFBTTreeLeaf(
   value: Partial<TableJSFBTTreeLeaf>,

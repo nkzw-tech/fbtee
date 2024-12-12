@@ -4,7 +4,7 @@ import FbtTranslations, { TranslationDict } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
 import Hook, { Hooks } from './Hooks.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
-import { IFbtErrorListener, NestedFbtContentItems } from './Types.tsx';
+import type { IFbtErrorListener, NestedFbtContentItems } from './Types.d.ts';
 
 const getFbtResult = (
   contents: NestedFbtContentItems,

@@ -1,6 +1,6 @@
 import { tokenNameToTextPattern } from './fbt-nodes/FbtNodeUtil.tsx';
 import { TokenAliases } from './index.tsx';
-import { PatternString } from './Types.tsx';
+import type { PatternString } from './Types.d.ts';
 
 /**
  * Clear token names in translations and runtime call texts need to be replaced

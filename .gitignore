@@ -10,6 +10,8 @@ example/src/translatedFbts
 example/src/translatedFbts.json
 node_modules
 packages/*/lib
+packages/*/LICENSE
+packages/*/README.md
 packages/fbt/lib
 packages/fbt/LICENSE
 tsconfig.tsbuildinfo

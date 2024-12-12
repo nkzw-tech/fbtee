@@ -1,5 +1,5 @@
 import { onEachLeaf } from '../JSFbtUtil.tsx';
-import type { PatternHash, PatternString } from '../Types.tsx';
+import type { PatternHash, PatternString } from '../Types.d.ts';
 import type { HashToLeaf, PackagerPhrase } from './FbtCollector.tsx';
 
 export type HashFunction = (

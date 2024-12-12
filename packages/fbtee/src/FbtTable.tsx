@@ -1,4 +1,4 @@
-import { FbtTableKey } from '@nkzw/babel-plugin-fbtee/src/Types.tsx';
+import type { FbtTableKey } from '@nkzw/babel-plugin-fbtee/src/Types.d.ts';
 import invariant from 'invariant';
 import type { FbtRuntimeInput, FbtTableArgs } from './Hooks.tsx';
 

@@ -2,7 +2,7 @@ import invariant from 'invariant';
 import { varDump } from '../FbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
 import replaceClearTokensWithTokenAliases from '../replaceClearTokensWithTokenAliases.tsx';
-import type { FbtTableKey, PatternHash } from '../Types.tsx';
+import type { FbtTableKey, PatternHash } from '../Types.d.ts';
 import { FbtSite, FbtSiteMetaEntry } from './FbtSite.tsx';
 import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase.tsx';
 import type {

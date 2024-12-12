@@ -6,13 +6,13 @@ import type {
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
-import {
+import type {
   BaseResult,
   FbtErrorContext,
   IFbtErrorListener,
   NestedFbtContentItems,
   PureStringResult,
-} from './Types.tsx';
+} from './Types.d.ts';
 
 export type ResolverFn<T extends BaseResult> = (
   contents: NestedFbtContentItems,

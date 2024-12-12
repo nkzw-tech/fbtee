@@ -13,11 +13,11 @@ import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput } from '../Hooks.tsx';
 import { fbt, FbtResult } from '../index.tsx';
 import init from '../init.tsx';
 import IntlVariations from '../IntlVariations.tsx';
-import {
+import type {
   BaseResult,
   IFbtErrorListener,
   NestedFbtContentItems,
-} from '../Types.tsx';
+} from '../Types.d.ts';
 
 init({
   translations: { en_US: {} },

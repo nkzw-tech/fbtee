@@ -5,10 +5,6 @@ export default function nullthrows<T>(
   if (x != null) {
     return x;
   }
-  const error = new Error(
-    message !== undefined ? message : 'Got unexpected ' + x,
-  );
-  // @ts-expect-error
-  error.framesToPop = 1;
-  throw error;
+
+  throw new Error(message !== undefined ? message : 'Got unexpected ' + x);
 }

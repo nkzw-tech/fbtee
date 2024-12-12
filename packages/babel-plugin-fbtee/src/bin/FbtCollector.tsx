@@ -13,7 +13,7 @@ import fbt, {
   getExtractedStrings,
   getFbtElementNodes,
 } from '../index.tsx';
-import type { PatternHash, PatternString } from '../Types.tsx';
+import type { PatternHash, PatternString } from '../Types.d.ts';
 
 export type ExternalTransform = (
   src: string,

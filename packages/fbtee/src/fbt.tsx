@@ -23,7 +23,7 @@ import {
   getNumberVariations,
 } from './IntlVariationResolver.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
-import { BaseResult, NestedFbtContentItems } from './Types.tsx';
+import type { BaseResult, NestedFbtContentItems } from './Types.d.ts';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,

@@ -1,9 +1,9 @@
-import {
+import type {
   BaseResult,
   FbtContentItem,
   IFbtErrorListener,
   NestedFbtContentItems,
-} from './Types.tsx';
+} from './Types.d.ts';
 
 export default class FbtResultBase implements BaseResult {
   _contents: NestedFbtContentItems;
