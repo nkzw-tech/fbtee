@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#! /usr/bin/env node --experimental-strip-types --no-warnings
 const command = process.argv[2];
 process.argv.splice(2, 1);
 

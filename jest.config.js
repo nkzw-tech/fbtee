@@ -5,9 +5,9 @@ import CommonStrings from './example/common_strings.json' with { type: 'json' };
 process.env.NODE_ENV = 'development';
 
 const globalConfig = {
-  extensionsToTreatAsEsm: ['.tsx'],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   testEnvironment: 'node',
-  testMatch: ['**/__tests__/**/*-test.(js|jsx|tsx)'],
+  testMatch: ['**/__tests__/**/*-test.(js|jsx|ts|tsx)'],
   transform: {
     '\\.(j|t)sx?$': '<rootDir>/jest-preprocessor.js',
   },

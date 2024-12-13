@@ -4,4 +4,4 @@ export default {
   PHOTO: 'photo',
   POST: 'post',
   VIDEO: 'video',
-};
+} as const;
