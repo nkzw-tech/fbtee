@@ -20,8 +20,7 @@
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm --clean --no-splitting",
-    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
+    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm --clean --no-splitting --dts"
   },
   "dependencies": {
     "invariant": "^2.2.4"

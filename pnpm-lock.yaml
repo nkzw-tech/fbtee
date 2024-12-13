@@ -77,9 +77,6 @@ importers:
       '@types/yargs':
         specifier: ^17.0.33
         version: 17.0.33
-      dts-bundle-generator:
-        specifier: ^9.5.1
-        version: 9.5.1
       eslint:
         specifier: ^8.0.0
         version: 8.57.1
@@ -1644,11 +1641,6 @@ packages:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
     deprecated: Use your platform's native DOMException instead
-
-  dts-bundle-generator@9.5.1:
-    resolution: {integrity: sha512-DxpJOb2FNnEyOzMkG11sxO2dmxPjthoVWxfKqWYJ/bI/rT1rvTMktF5EKjAYrRZu6Z6t3NhOUZ0sZ5ZXevOfbA==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
 
   dunder-proto@1.0.0:
     resolution: {integrity: sha512-9+Sj30DIu+4KvHqMfLUGLFYL2PkURSYMVXJyXe92nFRvlYq5hBjLEhblKB+vkd/WVlUYMWigiY07T91Fkk0+4A==}
@@ -5378,11 +5370,6 @@ snapshots:
   domexception@4.0.0:
     dependencies:
       webidl-conversions: 7.0.0
-
-  dts-bundle-generator@9.5.1:
-    dependencies:
-      typescript: 5.7.2
-      yargs: 17.7.2
 
   dunder-proto@1.0.0:
     dependencies:

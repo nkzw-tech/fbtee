@@ -9,3 +9,5 @@ if (command === 'manifest') {
 } else if (command === 'collect') {
   import('./bin/collect.tsx');
 }
+
+export default {};

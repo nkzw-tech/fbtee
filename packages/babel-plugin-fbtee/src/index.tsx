@@ -24,6 +24,7 @@ import { checkOption, errorAt } from './FbtUtil.tsx';
 import { FbtVariationType } from './translate/IntlVariations.tsx';
 import type { FbtTableKey, PatternHash, PatternString } from './Types.d.ts';
 
+export type { FbtTableKey, PatternHash, PatternString };
 export { SENTINEL } from './FbtConstants.tsx';
 export { default as fbtHashKey } from './fbtHashKey.tsx';
 export { mapLeaves } from './JSFbtUtil.tsx';
