@@ -191,7 +191,7 @@ exports[`Example.react renders the example 1`] = `
                 <option
                   value="11"
                 >
-                  Unknown (Plural)
+                  Unknown (plural)
                 </option>
                 <option
                   value="7"
@@ -201,12 +201,12 @@ exports[`Example.react renders the example 1`] = `
                 <option
                   value="2"
                 >
-                  Male (singular)
+                  Male
                 </option>
                 <option
                   value="1"
                 >
-                  Female (singular)
+                  Female
                 </option>
               </select>
             </span>

@@ -249,16 +249,16 @@ export default function Example() {
                     <fbs desc="Gender Select label">Not a person</fbs>
                   </option>
                   <option value={GenderConst.UNKNOWN_PLURAL}>
-                    <fbs desc="Gender Select label">Unknown (Plural)</fbs>
+                    <fbs desc="Gender Select label">Unknown (plural)</fbs>
                   </option>
                   <option value={GenderConst.UNKNOWN_SINGULAR}>
                     <fbs desc="Gender Select label">Unknown (singular)</fbs>
                   </option>
-                  <option value={GenderConst.MALE_SINGULAR}>
-                    <fbs desc="Gender Select label">Male (singular)</fbs>
+                  <option value={GenderConst.MALE}>
+                    <fbs desc="Gender Select label">Male</fbs>
                   </option>
-                  <option value={GenderConst.FEMALE_SINGULAR}>
-                    <fbs desc="Gender Select label">Female (singular)</fbs>
+                  <option value={GenderConst.FEMALE}>
+                    <fbs desc="Gender Select label">Female</fbs>
                   </option>
                 </select>
               </span>

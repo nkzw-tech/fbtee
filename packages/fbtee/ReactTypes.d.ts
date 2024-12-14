@@ -11,6 +11,14 @@ enum IntlVariations {
   GENDER_UNKNOWN = 3,
 }
 
+enum GenderConst {
+  NOT_A_PERSON = 0,
+  FEMALE = 1,
+  MALE = 2,
+  UNKNOWN_SINGULAR = 7,
+  UNKNOWN_PLURAL = 11,
+}
+
 export type ParamOptions = {
   /**
    * `IntlVariations.GENDER_*` Pass the gender of the parameter for correctly variated text.

@@ -254,8 +254,8 @@ describe('fbt', () => {
   });
 
   it('should create a tuple for fbt.subject if valid', () => {
-    expect(fbtInternal._subject(GenderConst.MALE_SINGULAR)).toEqual([
-      [GenderConst.MALE_SINGULAR, '*'],
+    expect(fbtInternal._subject(GenderConst.MALE)).toEqual([
+      [GenderConst.MALE, '*'],
       null,
     ]);
     expect(() => fbtInternal._subject(0)).toThrow('Invalid gender provided');
@@ -318,15 +318,8 @@ describe('fbt', () => {
       count: number;
       object: string;
       ownerGender:
-        | 'FEMALE_PLURAL'
-        | 'FEMALE_SINGULAR'
-        | 'FEMALE_SINGULAR_GUESS'
-        | 'MALE_PLURAL'
-        | 'MALE_SINGULAR'
-        | 'MALE_SINGULAR_GUESS'
-        | 'MIXED_UNKNOWN'
-        | 'NEUTER_PLURAL'
-        | 'NEUTER_SINGULAR'
+        | 'FEMALE'
+        | 'MALE'
         | 'NOT_A_PERSON'
         | 'UNKNOWN_PLURAL'
         | 'UNKNOWN_SINGULAR';
@@ -376,7 +369,7 @@ describe('fbt', () => {
     } = {
       counts: [1, 10],
       objects: ['photo', 'comment'],
-      ownerGenders: ['FEMALE_SINGULAR', 'MALE_SINGULAR', 'UNKNOWN_PLURAL'],
+      ownerGenders: ['FEMALE', 'MALE', 'UNKNOWN_PLURAL'],
       viewers: [
         {
           gender: IntlVariations.GENDER_MALE,
