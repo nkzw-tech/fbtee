@@ -20,7 +20,7 @@
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
-    "build": "rm -f lib/index.js; esbuild --target=node22 --platform=node --format=esm --outfile=lib/index.js --jsx=automatic --bundle ./src/index.tsx;",
+    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm --clean --no-splitting",
     "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
   },
   "dependencies": {
