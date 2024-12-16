@@ -23,8 +23,7 @@
     "fbtee": "lib/bin.js"
   },
   "scripts": {
-    "build": "tsup src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --no-splitting",
-    "build:types": "dts-bundle-generator -o lib/index.d.ts src/index.tsx"
+    "build": "tsup src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --no-splitting --dts"
   },
   "dependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build && pnpm -r build:types && pnpm install && pnpm copy-files && cd example && pnpm build:fbtee",
+    "build:all": "pnpm -r build && pnpm install && pnpm copy-files && cd example && pnpm build:fbtee",
     "clean": "rm -rf packages/*/lib; cd example pnpm clean",
     "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "dev": "cd example && pnpm build:fbtee && pnpm dev",
@@ -41,7 +41,6 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/yargs": "^17.0.33",
-    "dts-bundle-generator": "^9.5.1",
     "eslint": "^8.0.0",
     "eslint-plugin-workspaces": "^0.10.1",
     "invariant": "^2.2.4",
