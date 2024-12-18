@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "eslint-plugin-fbtee": "workspace:^",
     "invariant": "^2.2.4",
     "vite": "^6.0.3"
   }

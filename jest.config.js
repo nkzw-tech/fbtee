@@ -78,6 +78,14 @@ export default {
         ],
       },
     },
+    {
+      displayName: 'eslint-plugin-fbtee',
+      modulePaths: ['<rootDir>/packages/eslint-plugin-fbtee'],
+      roots: ['<rootDir>/packages/eslint-plugin-fbtee/src'],
+      transform: {
+        '\\.(j|t)sx?$': ['<rootDir>/jest-preprocessor.js'],
+      },
+    },
   ]
     .filter(Boolean)
     .map((project) => ({ ...globalConfig, ...project })),
