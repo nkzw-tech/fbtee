@@ -292,7 +292,7 @@ export default function Example() {
               <button
                 className="bottom"
                 onClick={(e) => {
-                  window.open('https://github.com/facebook/fbt', '_blank');
+                  window.open('https://github.com/nkzw-tech/fbtee', '_blank');
                 }}
                 type="submit"
               >

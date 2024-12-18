@@ -14,7 +14,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/fbt"
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/fbtee"
   },
   "license": "MIT",
   "type": "module",

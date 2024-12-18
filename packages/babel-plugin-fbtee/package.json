@@ -14,7 +14,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/fbt.git"
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/babel-plugin-fbtee"
   },
   "license": "MIT",
   "type": "module",
