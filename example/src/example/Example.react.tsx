@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 import translations from '../translatedFbts.json' with { type: 'json' };
-import ExampleEnum from './Example$FbtEnum.js';
+import ExampleEnum from './Example$FbtEnum.ts';
 
 let viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
