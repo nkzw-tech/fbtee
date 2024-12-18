@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createRule, elementType } from '../utils.tsx';
+import { createRule, elementType, resolveNodeValue } from '../utils.tsx';
 
 export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   name: 'no-empty-strings',
@@ -104,12 +104,5 @@ function validateChildren(
 }
 
 function isEmptyString(node: TSESTree.Expression | TSESTree.Literal): boolean {
-  if (node.type === 'Literal' && typeof node.value === 'string') {
-    return node.value.trim() === '';
-  }
-  return (
-    node.type === 'TemplateLiteral' &&
-    node.quasis.length === 1 &&
-    node.quasis[0].value.raw.trim() === ''
-  );
+  return resolveNodeValue(node)?.trim() === '';
 }

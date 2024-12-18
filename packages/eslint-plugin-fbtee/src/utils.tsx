@@ -46,3 +46,65 @@ export function elementType(
     }
   }
 }
+
+export function resolveJsxElementTextContent(
+  node: TSESTree.JSXElement,
+): string {
+  return node.children
+    .map((child) => {
+      if (child.type === 'JSXText') {
+        return child.value.trim();
+      }
+
+      if (child.type === 'JSXExpressionContainer') {
+        return resolveNodeValue(child.expression) || '';
+      }
+
+      return '';
+    })
+    .join('')
+    .trim();
+}
+
+export function resolveBinaryExpression(
+  node: TSESTree.BinaryExpression,
+): string | null {
+  if (node.operator !== '+') {
+    return null;
+  }
+
+  const leftValue = resolveNodeValue(node.left);
+  const rightValue = resolveNodeValue(node.right);
+
+  if (leftValue !== null && rightValue !== null) {
+    return leftValue + rightValue;
+  }
+
+  return null;
+}
+
+export function resolveNodeValue(
+  node:
+    | TSESTree.Expression
+    | TSESTree.JSXExpression
+    | TSESTree.JSXEmptyExpression
+    | TSESTree.PrivateIdentifier,
+): string | null {
+  if (node.type === 'Literal' && typeof node.value === 'string') {
+    return node.value;
+  }
+
+  if (node.type === 'TemplateLiteral' && node.expressions.length === 0) {
+    return node.quasis.map((quasi) => quasi.value.raw).join('');
+  }
+
+  if (node.type === 'BinaryExpression') {
+    return resolveBinaryExpression(node);
+  }
+
+  if (node.type === 'JSXExpressionContainer') {
+    return resolveNodeValue(node.expression);
+  }
+
+  return null;
+}
