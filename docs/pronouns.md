@@ -15,18 +15,11 @@ const PRONOUN_USAGE = {
 }
 
 const GenderConst = {
-  NOT_A_PERSON: 0
-  FEMALE_SINGULAR: 1
-  MALE_SINGULAR: 2
-  FEMALE_SINGULAR_GUESS: 3
-  MALE_SINGULAR_GUESS: 4
-  MIXED_UNKNOWN: 5
-  NEUTER_SINGULAR: 6
-  UNKNOWN_SINGULAR: 7
-  FEMALE_PLURAL: 8
-  MALE_PLURAL: 9
-  NEUTER_PLURAL: 10
-  UNKNOWN_PLURAL: 11
+  NOT_A_PERSON = 0,
+  FEMALE_SINGULAR = 1,
+  MALE_SINGULAR = 2,
+  UNKNOWN_SINGULAR = 7,
+  UNKNOWN_PLURAL = 11,
 }
 ```
 
@@ -98,12 +91,5 @@ _Note how `reflexive` and `object` have 4 types_
      0 NOT_A_PERSON          they    their      themself   this
      1 FEMALE_SINGULAR       she     her        herself    her
      2 MALE_SINGULAR         he      his        himself    him
-     3 FEMALE_SINGULAR_GUESS she     her        herself    her
-     4 MALE_SINGULAR_GUESS   he      his        himself    him
-     5 MIXED_UNKNOWN         they    their      themselves them
-     6 NEUTER_SINGULAR       they    their      themself   them
      7 UNKNOWN_SINGULAR      they    their      themself   them
-     8 FEMALE_PLURAL         they    their      themselves them
-     9 MALE_PLURAL           they    their      themselves them
-    10 NEUTER_PLURAL         they    their      themselves them
     11 UNKNOWN_PLURAL        they    their      themselves them

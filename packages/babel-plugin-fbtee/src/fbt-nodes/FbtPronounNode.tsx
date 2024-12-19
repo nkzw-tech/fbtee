@@ -217,21 +217,14 @@ function getPronounGenderKey(
         : GenderConst.UNKNOWN_PLURAL;
 
     case GenderConst.FEMALE_SINGULAR:
-    case GenderConst.FEMALE_SINGULAR_GUESS:
       return GenderConst.FEMALE_SINGULAR;
 
     case GenderConst.MALE_SINGULAR:
-    case GenderConst.MALE_SINGULAR_GUESS:
       return GenderConst.MALE_SINGULAR;
 
-    case GenderConst.MIXED_UNKNOWN:
-    case GenderConst.FEMALE_PLURAL:
-    case GenderConst.MALE_PLURAL:
-    case GenderConst.NEUTER_PLURAL:
     case GenderConst.UNKNOWN_PLURAL:
       return GenderConst.UNKNOWN_PLURAL;
 
-    case GenderConst.NEUTER_SINGULAR:
     case GenderConst.UNKNOWN_SINGULAR:
       return usage === ValidPronounUsagesKeys.reflexive
         ? GenderConst.NOT_A_PERSON

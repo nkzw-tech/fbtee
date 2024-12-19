@@ -191,7 +191,7 @@ exports[`Example.react renders the example 1`] = `
                 <option
                   value="11"
                 >
-                  Unknown (Plural)
+                  Unknown (plural)
                 </option>
                 <option
                   value="7"

@@ -318,15 +318,8 @@ describe('fbt', () => {
       count: number;
       object: string;
       ownerGender:
-        | 'FEMALE_PLURAL'
         | 'FEMALE_SINGULAR'
-        | 'FEMALE_SINGULAR_GUESS'
-        | 'MALE_PLURAL'
         | 'MALE_SINGULAR'
-        | 'MALE_SINGULAR_GUESS'
-        | 'MIXED_UNKNOWN'
-        | 'NEUTER_PLURAL'
-        | 'NEUTER_SINGULAR'
         | 'NOT_A_PERSON'
         | 'UNKNOWN_PLURAL'
         | 'UNKNOWN_SINGULAR';
