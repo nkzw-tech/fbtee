@@ -54,11 +54,11 @@ const getPronounGenderKey = (
         ? GenderConst.NOT_A_PERSON
         : GenderConst.UNKNOWN_PLURAL;
 
-    case GenderConst.FEMALE:
-      return GenderConst.FEMALE;
+    case GenderConst.FEMALE_SINGULAR:
+      return GenderConst.FEMALE_SINGULAR;
 
-    case GenderConst.MALE:
-      return GenderConst.MALE;
+    case GenderConst.MALE_SINGULAR:
+      return GenderConst.MALE_SINGULAR;
 
     case GenderConst.UNKNOWN_PLURAL:
       return GenderConst.UNKNOWN_PLURAL;

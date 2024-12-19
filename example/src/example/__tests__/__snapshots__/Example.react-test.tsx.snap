@@ -201,12 +201,12 @@ exports[`Example.react renders the example 1`] = `
                 <option
                   value="2"
                 >
-                  Male
+                  Male (singular)
                 </option>
                 <option
                   value="1"
                 >
-                  Female
+                  Female (singular)
                 </option>
               </select>
             </span>

@@ -16,8 +16,8 @@ const PRONOUN_USAGE = {
 
 const GenderConst = {
   NOT_A_PERSON = 0,
-  FEMALE = 1,
-  MALE = 2,
+  FEMALE_SINGULAR = 1,
+  MALE_SINGULAR = 2,
   UNKNOWN_SINGULAR = 7,
   UNKNOWN_PLURAL = 11,
 }
@@ -89,7 +89,7 @@ _Note how `reflexive` and `object` have 4 types_
      V Name                  Subject Possessive Reflexive  Object
     =============================================================
      0 NOT_A_PERSON          they    their      themself   this
-     1 FEMALE                she     her        herself    her
-     2 MALE                  he      his        himself    him
+     1 FEMALE_SINGULAR       she     her        herself    her
+     2 MALE_SINGULAR         he      his        himself    him
      7 UNKNOWN_SINGULAR      they    their      themself   them
     11 UNKNOWN_PLURAL        they    their      themselves them
