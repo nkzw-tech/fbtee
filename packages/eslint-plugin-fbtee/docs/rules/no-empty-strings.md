@@ -2,7 +2,7 @@
 
 ## Rule Details
 
-This rule ensures that <fbt> tags and fbt()/fbs() calls are given meaningful text and descriptions. Empty strings as children or arguments can result in untranslated content or unclear intent for translators, and this rule helps to catch such issues early.
+This rule ensures that `<fbt>` tags and `fbt()`/`fbs()` calls are given meaningful text.
 
 Examples of **incorrect** code for this rule:
 
@@ -15,15 +15,7 @@ Examples of **incorrect** code for this rule:
 ```
 
 ```jsx
-<fbt desc="">Hello</fbt>
-```
-
-```jsx
 fbt('', 'Greeting');
-```
-
-```jsx
-fbt('Hello', '');
 ```
 
 Examples of **correct** code for this rule:

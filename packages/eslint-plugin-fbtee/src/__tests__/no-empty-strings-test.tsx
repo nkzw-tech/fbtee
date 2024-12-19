@@ -77,7 +77,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
+          messageId: 'jsxEmptyString',
           line: 2,
         },
       ],
@@ -88,7 +88,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
+          messageId: 'jsxEmptyString',
           line: 2,
         },
       ],
@@ -99,22 +99,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc=""></fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyText',
-          line: 2,
-        },
-        {
-          messageId: 'jsxEmptyDesc',
+          messageId: 'jsxEmptyString',
           line: 2,
         },
       ],
@@ -125,51 +110,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('', 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyText',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt(\`\`, 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyText',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Hello', '');
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Hello', \`\`);
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
+          messageId: 'jsxEmptyString',
           line: 2,
         },
       ],
@@ -182,7 +123,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
+          messageId: 'jsxEmptyString',
           line: 3,
         },
       ],
@@ -195,7 +136,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
+          messageId: 'jsxEmptyString',
           line: 3,
         },
       ],
@@ -208,8 +149,63 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          messageId: 'jsxEmptyText',
+          messageId: 'jsxEmptyString',
           line: 3,
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('', 'Greeting');
+      `,
+      errors: [
+        {
+          messageId: 'emptyString',
+          line: 2,
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(' ', 'Greeting');
+      `,
+      errors: [
+        {
+          messageId: 'emptyString',
+          line: 2,
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(\`\`, 'Greeting');
+      `,
+      errors: [
+        {
+          messageId: 'emptyString',
+          line: 2,
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(\` \`, 'Greeting');
+      `,
+      errors: [
+        {
+          messageId: 'emptyString',
+          line: 2,
+        },
+      ],
+    },
+    {
+      code: `
+        fbs('', 'Greeting');
+      `,
+      errors: [
+        {
+          messageId: 'emptyString',
+          line: 2,
         },
       ],
     },
