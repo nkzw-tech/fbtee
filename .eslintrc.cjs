@@ -1,9 +1,7 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 const { join } = require('node:path');
 const { existsSync, readFileSync } = require('node:fs');
 
 module.exports = {
-  root: true,
   extends: ['@nkzw'],
   ignorePatterns: ['packages/*/lib'],
   overrides: [

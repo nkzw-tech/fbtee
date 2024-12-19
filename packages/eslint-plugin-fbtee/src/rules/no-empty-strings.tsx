@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createRule, elementType } from '../utils.ts';
+import { createRule, elementType } from '../utils.tsx';
 
 export default createRule<
   [],

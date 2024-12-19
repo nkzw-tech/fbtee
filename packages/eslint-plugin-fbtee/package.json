@@ -15,7 +15,7 @@
     "require": "./lib/index.cjs"
   },
   "scripts": {
-    "build": "tsup src/index.ts -d lib --target=node22 --format=esm,cjs --clean --no-splitting --dts"
+    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --no-splitting --dts"
   },
   "dependencies": {
     "@typescript-eslint/utils": "^8.18.0"

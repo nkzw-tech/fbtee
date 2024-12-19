@@ -1,8 +1,8 @@
-/* eslint-disable import/no-unresolved */
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 
+// eslint-disable-next-line import/no-unresolved
 import { RuleTester } from '@typescript-eslint/rule-tester';
-import rule from '../rules/no-empty-strings.ts';
+import rule from '../rules/no-empty-strings.tsx';
 
 const ruleTester = new RuleTester({
   languageOptions: {
