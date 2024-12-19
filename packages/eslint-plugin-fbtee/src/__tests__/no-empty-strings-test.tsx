@@ -62,6 +62,13 @@ ruleTester.run('no-empty-strings', rule, {
         </fbt>;
       `,
     },
+    {
+      code: `
+        <fbt desc="Greeting">
+          <>Hello</>
+        </fbt>;
+      `,
+    },
   ],
   invalid: [
     {
@@ -184,6 +191,19 @@ ruleTester.run('no-empty-strings', rule, {
       code: `
         <fbt desc="Greeting">
           <span></span>
+        </fbt>;
+      `,
+      errors: [
+        {
+          messageId: 'jsxEmptyText',
+          line: 3,
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          <></>
         </fbt>;
       `,
       errors: [

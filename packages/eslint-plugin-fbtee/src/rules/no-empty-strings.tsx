@@ -105,7 +105,7 @@ export default createRule<
 });
 
 function validateChildren(
-  node: TSESTree.JSXElement,
+  node: TSESTree.JSXElement | TSESTree.JSXFragment,
   nodesToReport: Set<TSESTree.Node>,
 ): boolean {
   let hasTextContent = false;
@@ -130,7 +130,7 @@ function validateChildren(
       }
     }
 
-    if (child.type === 'JSXElement') {
+    if (child.type === 'JSXElement' || child.type === 'JSXFragment') {
       hasTextContent ||= validateChildren(child, nodesToReport);
     }
 
