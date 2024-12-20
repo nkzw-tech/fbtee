@@ -26,7 +26,10 @@ export default {
           '<rootDir>/jest-preprocessor.js',
           {
             presets: [
-              ['./packages/babel-fbtee', { fbtCommon: { Accept: '...' } }],
+              [
+                './packages/babel-preset-fbtee',
+                { fbtCommon: { Accept: '...' } },
+              ],
             ],
           },
         ],
@@ -46,7 +49,10 @@ export default {
           '<rootDir>/jest-preprocessor.js',
           {
             presets: [
-              ['./packages/babel-fbtee', { fbtCommon: { Accept: '...' } }],
+              [
+                './packages/babel-preset-fbtee',
+                { fbtCommon: { Accept: '...' } },
+              ],
             ],
           },
         ],
@@ -67,7 +73,7 @@ export default {
           {
             presets: [
               [
-                './packages/babel-fbtee',
+                './packages/babel-preset-fbtee',
                 {
                   fbtCommon: CommonStrings,
                   fbtEnumManifest: EnumManifest,

@@ -18,13 +18,13 @@ This is a fork of Facebook's original `fbt` library, which has been archived. Th
 **fbtee** requires at least Node 22, and React 19 if you are using React.
 
 ```bash
-npm install fbtee @nkzw/babel-fbtee
+npm install fbtee @nkzw/babel-preset-fbtee
 ```
 
 In your `vite.config.ts`:
 
 ```ts
-import fbteePreset from '@nkzw/babel-fbtee';
+import fbteePreset from '@nkzw/babel-preset-fbtee';
 import react from '@vitejs/plugin-react';
 
 export default {
@@ -136,7 +136,7 @@ const Greeting = ({ name }) => (
 );
 ```
 
-_Note: `<fbt>` is auto-imported for you by the `@nkzw/babel-fbtee` plugin._
+_Note: `<fbt>` is auto-imported for you by the `@nkzw/babel-preset-fbtee` plugin._
 
 After marking your strings for translation with `<fbt>`, run the following commands to extract, and compile translations:
 

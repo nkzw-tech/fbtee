@@ -1,4 +1,4 @@
-import fbteePreset from '@nkzw/babel-fbtee';
+import fbteePreset from '@nkzw/babel-preset-fbtee';
 import react from '@vitejs/plugin-react';
 import EnumManifest from './.enum_manifest.json' with { type: 'json' };
 import CommonStrings from './common_strings.json' with { type: 'json' };

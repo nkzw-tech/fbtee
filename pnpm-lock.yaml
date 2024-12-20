@@ -119,9 +119,9 @@ importers:
 
   example:
     dependencies:
-      '@nkzw/babel-fbtee':
+      '@nkzw/babel-preset-fbtee':
         specifier: workspace:^
-        version: link:../packages/babel-fbtee
+        version: link:../packages/babel-preset-fbtee
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -153,18 +153,6 @@ importers:
       vite:
         specifier: ^6.0.3
         version: 6.0.3(@types/node@22.10.2)(terser@5.36.0)(yaml@2.6.1)
-
-  packages/babel-fbtee:
-    dependencies:
-      '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:^
-        version: link:../babel-plugin-fbtee
-      '@nkzw/babel-plugin-fbtee-auto-import':
-        specifier: workspace:^
-        version: link:../babel-plugin-fbtee-auto-import
-      '@nkzw/babel-plugin-fbtee-runtime':
-        specifier: workspace:^
-        version: link:../babel-plugin-fbtee-runtime
 
   packages/babel-plugin-fbtee:
     dependencies:
@@ -254,6 +242,18 @@ importers:
       '@nkzw/babel-plugin-fbtee-auto-import':
         specifier: workspace:^
         version: link:../babel-plugin-fbtee-auto-import
+
+  packages/babel-preset-fbtee:
+    dependencies:
+      '@nkzw/babel-plugin-fbtee':
+        specifier: workspace:^
+        version: link:../babel-plugin-fbtee
+      '@nkzw/babel-plugin-fbtee-auto-import':
+        specifier: workspace:^
+        version: link:../babel-plugin-fbtee-auto-import
+      '@nkzw/babel-plugin-fbtee-runtime':
+        specifier: workspace:^
+        version: link:../babel-plugin-fbtee-runtime
 
   packages/eslint-plugin-fbtee:
     dependencies:

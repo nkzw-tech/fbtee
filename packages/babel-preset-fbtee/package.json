@@ -1,5 +1,5 @@
 {
-  "name": "@nkzw/babel-fbtee",
+  "name": "@nkzw/babel-preset-fbtee",
   "version": "0.1.0",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
@@ -15,7 +15,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
-    "directory": "packages/babel-fbtee"
+    "directory": "packages/babel-preset-fbtee"
   },
   "license": "MIT",
   "type": "module",
