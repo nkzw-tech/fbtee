@@ -1,45 +1,9 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import type { TSESTree } from '@typescript-eslint/utils';
 import { createRule, elementType, resolveNodeValue } from '../utils.tsx';
 
 export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
-  name: 'no-empty-strings',
-  meta: {
-    type: 'problem',
-    docs: {
-      description: 'Disallow empty strings in fbt elements or function calls.',
-    },
-    messages: {
-      emptyString:
-        'Empty strings are not allowed in fbt() or fbs() function arguments.',
-      jsxEmptyString:
-        'Empty strings are not allowed as children of <fbt> tags.',
-    },
-    schema: [],
-  },
-  defaultOptions: [],
-
   create(context) {
     return {
-      JSXElement(node) {
-        if (elementType(node) !== 'fbt') {
-          return;
-        }
-
-        //  Collect nodes to report and validate all children recursively.
-        const nodesToReport = new Set<TSESTree.Node>();
-        const hasTextContent = validateChildren(node, nodesToReport);
-
-        if (!hasTextContent) {
-          for (const node of nodesToReport) {
-            context.report({
-              node,
-              messageId: 'jsxEmptyString',
-            });
-          }
-        }
-      },
-
       CallExpression(node) {
         if (
           node.callee.type === 'Identifier' &&
@@ -52,13 +16,47 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
 
         if (text && text.type !== 'SpreadElement' && isEmptyString(text)) {
           context.report({
-            node: text,
             messageId: 'emptyString',
+            node: text,
           });
+        }
+      },
+
+      JSXElement(node) {
+        if (elementType(node) !== 'fbt') {
+          return;
+        }
+
+        //  Collect nodes to report and validate all children recursively.
+        const nodesToReport = new Set<TSESTree.Node>();
+        const hasTextContent = validateChildren(node, nodesToReport);
+
+        if (!hasTextContent) {
+          for (const node of nodesToReport) {
+            context.report({
+              messageId: 'jsxEmptyString',
+              node,
+            });
+          }
         }
       },
     };
   },
+  defaultOptions: [],
+  meta: {
+    docs: {
+      description: 'Disallow empty strings in fbt elements or function calls.',
+    },
+    messages: {
+      emptyString:
+        'Empty strings are not allowed in fbt() or fbs() function arguments.',
+      jsxEmptyString:
+        'Empty strings are not allowed as children of <fbt> tags.',
+    },
+    schema: [],
+    type: 'problem',
+  },
+  name: 'no-empty-strings',
 });
 
 function validateChildren(

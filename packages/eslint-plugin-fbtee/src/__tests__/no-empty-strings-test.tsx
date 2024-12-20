@@ -1,6 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
-
-// eslint-disable-next-line import/no-unresolved
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../rules/no-empty-strings.tsx';
 
@@ -15,6 +12,146 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('no-empty-strings', rule, {
+  invalid: [
+    {
+      code: `
+        <fbt desc="Greeting"></fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">{''}</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">{\`\`}</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">  </fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {' '}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          <span></span>
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          <></>
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('', 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(' ', 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(\`\`, 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt(\` \`, 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        fbs('', 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyString',
+        },
+      ],
+    },
+  ],
   valid: [
     {
       code: `
@@ -68,146 +205,6 @@ ruleTester.run('no-empty-strings', rule, {
           <>Hello</>
         </fbt>;
       `,
-    },
-  ],
-  invalid: [
-    {
-      code: `
-        <fbt desc="Greeting"></fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">{''}</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">{\`\`}</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">  </fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">
-          {' '}
-        </fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 3,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">
-          <span></span>
-        </fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 3,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">
-          <></>
-        </fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyString',
-          line: 3,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('', 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt(' ', 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt(\`\`, 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt(\` \`, 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyString',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbs('', 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'emptyString',
-          line: 2,
-        },
-      ],
     },
   ],
 });

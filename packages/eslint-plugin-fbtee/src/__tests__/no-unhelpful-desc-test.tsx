@@ -1,6 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
-
-// eslint-disable-next-line import/no-unresolved
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../rules/no-unhelpful-desc.tsx';
 
@@ -15,6 +12,224 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('unhelpful-desc', rule, {
+  invalid: [
+    {
+      // <fbt>
+      code: `
+        <fbt desc="">Hello</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc={''}>Hello</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">Greeting</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc={'Greeting'}>Greeting</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc={'Greeting' + ''}>Greeting</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="greeting">Greeting</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Hey">Hello world</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'shortDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc={'Hey'}>Hello world</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'shortDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc={'Hey' + ''}>Hello world</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'shortDesc',
+        },
+      ],
+    },
+
+    // fbt()
+    {
+      code: `
+        fbt('Hello world', '');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('Hello world', \`\`);
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('Hello world', '' + '');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('Hello world', 'Hey');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'shortDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('Greeting', 'Greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbt('Greeting', 'greeting');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+
+    // fbs()
+    {
+      code: `
+        fbs('Hello world', '');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'emptyDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbs('Hello world', 'a');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'shortDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        fbs('Hello world', 'Hello world');
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'duplicateDesc',
+        },
+      ],
+    },
+    {
+      code: `
+        <input 
+          placeholder={fbs('Hello world', '')} 
+        />;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'emptyDesc',
+        },
+      ],
+    },
+  ],
   valid: [
     // <fbt>
     {
@@ -90,224 +305,6 @@ ruleTester.run('unhelpful-desc', rule, {
       code: `
         <input placeholder={fbs('Hello world', 'Greeting')} />;
       `,
-    },
-  ],
-  invalid: [
-    {
-      // <fbt>
-      code: `
-        <fbt desc="">Hello</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc={''}>Hello</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'jsxEmptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Greeting">Greeting</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc={'Greeting'}>Greeting</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc={'Greeting' + ''}>Greeting</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="greeting">Greeting</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc="Hey">Hello world</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'shortDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc={'Hey'}>Hello world</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'shortDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <fbt desc={'Hey' + ''}>Hello world</fbt>;
-      `,
-      errors: [
-        {
-          messageId: 'shortDesc',
-          line: 2,
-        },
-      ],
-    },
-
-    // fbt()
-    {
-      code: `
-        fbt('Hello world', '');
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Hello world', \`\`);
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Hello world', '' + '');
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Hello world', 'Hey');
-      `,
-      errors: [
-        {
-          messageId: 'shortDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Greeting', 'Greeting');
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbt('Greeting', 'greeting');
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-
-    // fbs()
-    {
-      code: `
-        fbs('Hello world', '');
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbs('Hello world', 'a');
-      `,
-      errors: [
-        {
-          messageId: 'shortDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        fbs('Hello world', 'Hello world');
-      `,
-      errors: [
-        {
-          messageId: 'duplicateDesc',
-          line: 2,
-        },
-      ],
-    },
-    {
-      code: `
-        <input 
-          placeholder={fbs('Hello world', '')} 
-        />;
-      `,
-      errors: [
-        {
-          messageId: 'emptyDesc',
-          line: 3,
-        },
-      ],
     },
   ],
 });

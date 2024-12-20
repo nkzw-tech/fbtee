@@ -47,6 +47,12 @@ module.exports = {
         ),
       },
     ],
+    'import/no-unresolved': [
+      2,
+      {
+        ignore: ['@typescript-eslint/*'],
+      },
+    ],
     'no-extra-parens': 0,
     'unicorn/prefer-dom-node-append': 0,
     'workspaces/no-absolute-imports': 2,

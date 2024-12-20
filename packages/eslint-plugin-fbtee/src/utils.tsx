@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { ESLintUtils } from '@typescript-eslint/utils';
 import type { TSESTree } from '@typescript-eslint/utils';
 
