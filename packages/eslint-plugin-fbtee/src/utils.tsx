@@ -3,7 +3,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 
 export const createRule = ESLintUtils.RuleCreator(
   (name) =>
-    `https://github.com/nkzw-tech/fbtee/tree/main/packages/eslint-plugin-fbt/docs/rules/${name}`,
+    `https://github.com/nkzw-tech/fbtee/blob/main/packages/eslint-plugin-fbtee/docs/rules/${name}.md`,
 );
 
 function resolveMemberExpressions(
