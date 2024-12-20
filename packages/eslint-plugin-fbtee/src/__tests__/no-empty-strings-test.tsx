@@ -13,6 +13,7 @@ const ruleTester = new RuleTester({
 
 ruleTester.run('no-empty-strings', rule, {
   invalid: [
+    // <fbt>
     {
       code: `
         <fbt desc="Greeting"></fbt>;
@@ -96,6 +97,8 @@ ruleTester.run('no-empty-strings', rule, {
         },
       ],
     },
+
+    // fbt()
     {
       code: `
         fbt('', 'Greeting');
@@ -140,6 +143,8 @@ ruleTester.run('no-empty-strings', rule, {
         },
       ],
     },
+
+    // fbs()
     {
       code: `
         fbs('', 'Greeting');
@@ -153,6 +158,7 @@ ruleTester.run('no-empty-strings', rule, {
     },
   ],
   valid: [
+    // <fbt>
     {
       code: `
         <fbt desc="Greeting">Hello world</fbt>;
@@ -171,17 +177,6 @@ ruleTester.run('no-empty-strings', rule, {
     {
       code: `
         <fbt desc="Greeting">{'Hello'}</fbt>;
-      `,
-    },
-    {
-      code: `
-        fbt('Hello world', 'Greeting');
-      `,
-    },
-    {
-      code: `
-        const text = 'Hello';
-        fbt(text, 'Greeting');
       `,
     },
     {
@@ -213,6 +208,52 @@ ruleTester.run('no-empty-strings', rule, {
         </fbt>;
       `,
     },
+    {
+      code: `
+        <fbt desc="buy prompt">
+          Buy a new
+          <fbt:enum 
+            enum-range={{
+              CAR: 'car',
+              HOUSE: 'house',
+              BOAT: 'boat',
+              HOUSEBOAT: 'houseboat',
+            }} 
+            value={enumVal} 
+          />!
+        </fbt>;
+      `,
+    },
+    {
+      code: `
+        <fbt desc="welcome message">
+          Hello
+          <fbt:param name="name" value="Steve" />
+        </fbt>;
+      `,
+    },
+    {
+      code: `
+        <fbt desc="greeting">
+          <Component />
+        </fbt>;
+      `,
+    },
+
+    // fbt()
+    {
+      code: `
+        fbt('Hello world', 'Greeting');
+      `,
+    },
+    {
+      code: `
+        const text = 'Hello';
+        fbt(text, 'Greeting');
+      `,
+    },
+
+    // other
     {
       code: `
         name.replaceAll(' ', '-');

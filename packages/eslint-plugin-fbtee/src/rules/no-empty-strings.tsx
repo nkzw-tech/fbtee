@@ -94,6 +94,13 @@ function validateChildren(
     }
 
     if (child.type === 'JSXElement' || child.type === 'JSXFragment') {
+      const childName = elementType(child);
+
+      if (/^[A-Z]/.test(childName) || childName.startsWith('fbt:')) {
+        hasTextContent = true;
+        continue;
+      }
+
       hasTextContent ||= validateChildren(child, nodesToReport);
     }
 
