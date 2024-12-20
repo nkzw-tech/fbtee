@@ -1,8 +1,8 @@
 import {
   createRule,
+  getPropName,
   hasFbtParent,
-  isNodeFbt,
-  propName,
+  isFbtNode,
   resolveNodeValue,
 } from '../utils.tsx';
 
@@ -23,18 +23,15 @@ export default createRule<Options, 'unwrappedString'>({
       options[0].ignoredWords.map((s) => s.trim().toLowerCase()),
     );
 
-    function isIgnoredWord(value: unknown) {
-      return (
-        typeof value === 'string' &&
-        ignoredWords.has(value.trim().toLowerCase())
-      );
+    function isIgnoredWord(value: string) {
+      return ignoredWords.has(value.trim().toLowerCase());
     }
 
     return {
       JSXAttribute(node) {
-        const attrName = propName(node);
+        const propName = getPropName(node);
 
-        if (!attributes.has(attrName)) {
+        if (!attributes.has(propName)) {
           return;
         }
 
@@ -50,7 +47,7 @@ export default createRule<Options, 'unwrappedString'>({
 
         if (
           node.value?.type === 'JSXExpressionContainer' &&
-          isNodeFbt(node.value.expression)
+          isFbtNode(node.value.expression)
         ) {
           return;
         }

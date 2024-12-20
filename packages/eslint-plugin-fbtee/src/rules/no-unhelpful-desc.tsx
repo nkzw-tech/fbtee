@@ -1,7 +1,7 @@
 import {
   createRule,
   elementType,
-  isNodeFbt,
+  isFbtNode,
   resolveJsxElementTextContent,
   resolveNodeValue,
 } from '../utils.tsx';
@@ -13,7 +13,7 @@ export default createRule<
   create(context) {
     return {
       CallExpression(node) {
-        if (!isNodeFbt(node)) {
+        if (!isFbtNode(node)) {
           return;
         }
 

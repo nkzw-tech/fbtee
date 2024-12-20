@@ -2,7 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import {
   createRule,
   elementType,
-  isNodeFbt,
+  isFbtNode,
   resolveNodeValue,
 } from '../utils.tsx';
 
@@ -10,7 +10,7 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   create(context) {
     return {
       CallExpression(node) {
-        if (!isNodeFbt(node)) {
+        if (!isFbtNode(node)) {
           return;
         }
 

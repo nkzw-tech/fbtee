@@ -108,7 +108,7 @@ export function resolveNodeValue(
   return null;
 }
 
-export function propName(prop: TSESTree.JSXAttribute) {
+export function getPropName(prop: TSESTree.JSXAttribute) {
   if (prop.name.type === 'JSXNamespacedName') {
     return `${prop.name.namespace.name}:${prop.name.name.name}`;
   }
@@ -120,7 +120,7 @@ export function hasFbtParent(node: TSESTree.Node) {
   let current = node.parent;
 
   while (current) {
-    if (isNodeFbt(current)) {
+    if (isFbtNode(current)) {
       return true;
     }
     current = current.parent;
@@ -129,19 +129,23 @@ export function hasFbtParent(node: TSESTree.Node) {
   return false;
 }
 
-export function isNodeFbt(node?: TSESTree.Node) {
-  if (node?.type === 'JSXElement') {
+export function isFbtNode(node?: TSESTree.Node) {
+  if (!node) {
+    return null;
+  }
+
+  if (node.type === 'JSXElement') {
     const name = elementType(node);
     return name === 'fbt' || name === 'fbs' || name?.startsWith('fbt:');
   }
 
-  if (node?.type === 'CallExpression' && node.callee.type === 'Identifier') {
+  if (node.type === 'CallExpression' && node.callee.type === 'Identifier') {
     const name = node.callee.name;
     return name === 'fbt' || name === 'fbs';
   }
 
   if (
-    node?.type === 'MemberExpression' &&
+    node.type === 'MemberExpression' &&
     node.object.type === 'CallExpression' &&
     node.object.callee.type === 'Identifier'
   ) {
