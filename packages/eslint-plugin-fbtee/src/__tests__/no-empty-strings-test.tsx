@@ -66,7 +66,70 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">{}</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {null}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {undefined}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {/* This is a comment */}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -79,7 +142,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -92,7 +155,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
