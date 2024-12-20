@@ -206,5 +206,12 @@ ruleTester.run('no-empty-strings', rule, {
         </fbt>;
       `,
     },
+    {
+      code: `
+        <fbt desc="Greeting">
+          Apple{' '}Banana
+        </fbt>;
+      `,
+    },
   ],
 });

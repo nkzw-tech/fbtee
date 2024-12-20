@@ -78,7 +78,15 @@ function validateChildren(
       child.type === 'JSXExpressionContainer' &&
       child.expression.type !== 'JSXEmptyExpression'
     ) {
-      if (isEmptyString(child.expression)) {
+      if (
+        isEmptyString(child.expression) &&
+        (node.children.length === 1 ||
+          node.children.every(
+            (otherChild) =>
+              child === otherChild ||
+              (otherChild.type === 'JSXText' && otherChild.value.trim() === ''),
+          ))
+      ) {
         nodesToReport.add(child.expression);
       } else {
         hasTextContent = true;
