@@ -144,12 +144,12 @@ importers:
       '@babel/preset-react':
         specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.0)
+      '@nkzw/eslint-plugin-fbtee':
+        specifier: workspace:^
+        version: link:../packages/eslint-plugin-fbtee
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.0.3(@types/node@22.10.2)(terser@5.36.0)(yaml@2.6.1))
-      eslint-plugin-fbtee:
-        specifier: workspace:^
-        version: link:../packages/eslint-plugin-fbtee
       vite:
         specifier: ^6.0.3
         version: 6.0.3(@types/node@22.10.2)(terser@5.36.0)(yaml@2.6.1)
