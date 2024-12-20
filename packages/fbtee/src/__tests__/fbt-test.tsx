@@ -1,6 +1,6 @@
 /// <reference types="../../ReactTypes.d.ts" />
 
-import { describe, expect, it, jest } from '@jest/globals';
+import { afterEach, describe, expect, it, jest } from '@jest/globals';
 import { PatternHash } from '@nkzw/babel-plugin-fbtee';
 import { render } from '@testing-library/react';
 import { Children, Component } from 'react';
@@ -21,6 +21,11 @@ import type {
 
 setupFbtee({
   translations: { en_US: {} },
+});
+
+const consoleError = console.error;
+afterEach(() => {
+  console.error = consoleError;
 });
 
 describe('fbt', () => {
@@ -406,4 +411,25 @@ describe('fbt', () => {
       ),
     );
   });
+});
+
+test('ensure unique keys for React elements', () => {
+  console.error = jest.fn();
+
+  const { asFragment } = render(
+    <span>
+      <fbt desc="Test description.">
+        <fbt:param name="hello">
+          <div>Apple</div>
+        </fbt:param>
+        <fbt:param name="world">
+          <div>Banana</div>
+        </fbt:param>
+      </fbt>
+    </span>,
+  );
+
+  expect(console.error).not.toHaveBeenCalled();
+
+  expect(asFragment()).toMatchSnapshot();
 });

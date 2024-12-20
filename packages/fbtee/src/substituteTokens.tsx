@@ -36,18 +36,18 @@ export default function substituteTokens(
   const stringPieces = template
     .replace(
       parameterRegexp,
-      (_match: string, parameter: string, punctuation: string): string => {
-        let argument = args[parameter];
+      (_match: string, name: string, punctuation: string): string => {
+        let argument = args[name];
         if (argument != null && typeof argument === 'object') {
           if ('key' in argument && argument.key === null) {
-            argument = { ...argument, key: `${index++}` };
+            argument = { ...argument, key: `$fbtee-${name}-${index++}$` };
           }
           objectPieces.push(argument);
-          argNames.push(parameter);
+          argNames.push(name);
           // End of Transmission Block sentinel marker
           return '\u0017' + punctuation;
         } else if (argument == null) {
-          return '{' + parameter + '}' + punctuation;
+          return '{' + name + '}' + punctuation;
         }
         return String(argument) + dedupeStops(String(argument), punctuation);
       },

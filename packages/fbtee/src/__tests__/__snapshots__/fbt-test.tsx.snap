@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ensure unique keys for React elements 1`] = `
+<DocumentFragment>
+  <span>
+    <div>
+      Apple
+    </div>
+    <div>
+      Banana
+    </div>
+  </span>
+</DocumentFragment>
+`;
+
 exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=comment, count=1
  should produce proper nested fbt results 1`] = `
 [
