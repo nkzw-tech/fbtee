@@ -164,6 +164,15 @@ Add the following configuration to your ESLint configuration:
 
 ```js
 {
+  extends: ['plugin:@nkzw/eslint-plugin-fbtee/recommended'],
+  plugins: ['@nkzw/eslint-plugin-fbtee'],
+}
+```
+
+If you want stricter enforcement of translation rules, you can use the strict configuration, which enables the `no-untranslated-strings` rule. This ensures that all strings in your codebase are marked for translation.
+
+```js
+{
   extends: ['plugin:@nkzw/eslint-plugin-fbtee/strict'],
   plugins: ['@nkzw/eslint-plugin-fbtee'],
 }
@@ -177,6 +186,7 @@ Or, if you'd like more granular control over the rules:
   rules: {
     '@nkzw/fbtee/no-empty-strings': 'error',
     '@nkzw/fbtee/no-unhelpful-desc': 'error',
+    '@nkzw/fbtee/no-untranslated-strings': 'error',
   },
 }
 ```

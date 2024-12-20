@@ -3,7 +3,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 
 export const createRule = ESLintUtils.RuleCreator(
   (name) =>
-    `https://github.com/nkzw-tech/fbtee/tree/main/packages/eslint-plugin-fbt/docs/rules/${name}`,
+    `https://github.com/nkzw-tech/fbtee/blob/main/packages/eslint-plugin-fbtee/docs/rules/${name}.md`,
 );
 
 function resolveMemberExpressions(
@@ -47,7 +47,7 @@ export function elementType(
 }
 
 export function resolveJsxElementTextContent(
-  node: TSESTree.JSXElement,
+  node: TSESTree.JSXElement | TSESTree.JSXFragment,
 ): string {
   return node.children
     .map((child) => {
@@ -106,4 +106,52 @@ export function resolveNodeValue(
   }
 
   return null;
+}
+
+export function getPropName(prop: TSESTree.JSXAttribute) {
+  if (prop.name.type === 'JSXNamespacedName') {
+    return `${prop.name.namespace.name}:${prop.name.name.name}`;
+  }
+
+  return prop.name.name;
+}
+
+export function hasFbtParent(node: TSESTree.Node) {
+  let current = node.parent;
+
+  while (current) {
+    if (isFbtNode(current)) {
+      return true;
+    }
+    current = current.parent;
+  }
+
+  return false;
+}
+
+export function isFbtNode(node?: TSESTree.Node) {
+  if (!node) {
+    return null;
+  }
+
+  if (node.type === 'JSXElement') {
+    const name = elementType(node);
+    return name === 'fbt' || name === 'fbs' || name?.startsWith('fbt:');
+  }
+
+  if (node.type === 'CallExpression' && node.callee.type === 'Identifier') {
+    const name = node.callee.name;
+    return name === 'fbt' || name === 'fbs';
+  }
+
+  if (
+    node.type === 'MemberExpression' &&
+    node.object.type === 'CallExpression' &&
+    node.object.callee.type === 'Identifier'
+  ) {
+    const name = node.object.callee.name;
+    return name === 'fbt' || name === 'fbs';
+  }
+
+  return false;
 }

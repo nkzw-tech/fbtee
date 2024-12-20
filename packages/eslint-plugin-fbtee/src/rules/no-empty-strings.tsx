@@ -1,14 +1,16 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createRule, elementType, resolveNodeValue } from '../utils.tsx';
+import {
+  createRule,
+  elementType,
+  isFbtNode,
+  resolveNodeValue,
+} from '../utils.tsx';
 
 export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   create(context) {
     return {
       CallExpression(node) {
-        if (
-          node.callee.type !== 'Identifier' ||
-          !(node.callee.name === 'fbt' || node.callee.name === 'fbs')
-        ) {
+        if (!isFbtNode(node)) {
           return;
         }
 
@@ -23,7 +25,11 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
       },
 
       JSXElement(node) {
-        if (elementType(node) !== 'fbt') {
+        if (!isFbtNode(node)) {
+          return;
+        }
+
+        if (node.openingElement.name.type === 'JSXNamespacedName') {
           return;
         }
 
@@ -46,9 +52,9 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
     },
     messages: {
       emptyString:
-        'Empty strings are not allowed in fbt() or fbs() function arguments.',
+        'Empty strings are not allowed in fbt() and fbs() function arguments.',
       jsxEmptyString:
-        'Empty strings are not allowed as children of <fbt> tags.',
+        'Empty strings are not allowed as children of `<fbt>` and `<fbs>` tags.',
     },
     schema: [],
     type: 'problem',

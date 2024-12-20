@@ -1,6 +1,6 @@
 import {
   createRule,
-  elementType,
+  isFbtNode,
   resolveJsxElementTextContent,
   resolveNodeValue,
 } from '../utils.tsx';
@@ -12,10 +12,7 @@ export default createRule<
   create(context) {
     return {
       CallExpression(node) {
-        if (
-          node.callee.type !== 'Identifier' ||
-          !(node.callee.name === 'fbt' || node.callee.name === 'fbs')
-        ) {
+        if (!isFbtNode(node)) {
           return;
         }
 
@@ -56,7 +53,7 @@ export default createRule<
       },
 
       JSXAttribute(node) {
-        if (elementType(node.parent.parent) !== 'fbt') {
+        if (!isFbtNode(node.parent.parent)) {
           return;
         }
 
