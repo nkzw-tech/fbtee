@@ -19,7 +19,7 @@ export default {
   prettierPath: null,
   projects: [
     {
-      displayName: 'babel-plugin-fbt',
+      displayName: '@nkzw/babel-plugin-fbtee',
       roots: ['<rootDir>/packages/babel-plugin-fbtee/src'],
       transform: {
         '\\.(j|t)sx?$': [
@@ -33,11 +33,11 @@ export default {
       },
     },
     {
-      displayName: 'babel-plugin-fbt-runtime',
+      displayName: '@nkzw/babel-plugin-fbtee-runtime',
       roots: ['<rootDir>/packages/babel-plugin-fbtee-runtime'],
     },
     {
-      displayName: 'fbt',
+      displayName: 'fbtee',
       modulePaths: ['<rootDir>/packages/fbtee/src'],
       roots: ['<rootDir>/packages/fbtee/src'],
       testEnvironment: 'jsdom',
@@ -79,7 +79,7 @@ export default {
       },
     },
     {
-      displayName: 'eslint-plugin-fbtee',
+      displayName: '@nkzw/eslint-plugin-fbtee',
       modulePaths: ['<rootDir>/packages/eslint-plugin-fbtee'],
       roots: ['<rootDir>/packages/eslint-plugin-fbtee/src'],
       transform: {

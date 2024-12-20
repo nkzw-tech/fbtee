@@ -1,7 +1,7 @@
 module.exports = {
-  plugins: ['fbtee'],
+  plugins: ['@nkzw/eslint-plugin-fbtee'],
   rules: {
-    'fbtee/no-empty-strings': 'error',
-    'fbtee/no-unhelpful-desc': 'error',
+    '@nkzw/fbtee/no-empty-strings': 'error',
+    '@nkzw/fbtee/no-unhelpful-desc': 'error',
   },
 };
