@@ -213,5 +213,10 @@ ruleTester.run('no-empty-strings', rule, {
         </fbt>;
       `,
     },
+    {
+      code: `
+        name.replaceAll(' ', '-');
+      `,
+    },
   ],
 });

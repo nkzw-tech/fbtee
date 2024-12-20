@@ -6,7 +6,7 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
     return {
       CallExpression(node) {
         if (
-          node.callee.type === 'Identifier' &&
+          node.callee.type !== 'Identifier' ||
           !(node.callee.name === 'fbt' || node.callee.name === 'fbs')
         ) {
           return;
