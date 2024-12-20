@@ -119,7 +119,9 @@ export default function getNamespacedArgs(
 
       let children = filterEmptyNodes(node.children).filter((child) => {
         return (
-          child.type === 'JSXExpressionContainer' || child.type === 'JSXElement'
+          child.type === 'JSXExpressionContainer' ||
+          child.type === 'JSXElement' ||
+          child.type === 'JSXFragment'
         );
       });
 

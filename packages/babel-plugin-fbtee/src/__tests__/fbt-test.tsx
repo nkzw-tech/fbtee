@@ -81,3 +81,21 @@ describe('fbt variable binding detection', () => {
     });
   });
 });
+
+test('fragments inside of <fbt:param>', () => {
+  expect(
+    snapshotTransform(
+      withFbtRequireStatement(
+        `<fbt desc="d">
+          <fbt:param name="param">
+            <>
+              <b>Test</b>
+              <fbt desc="test">simple</fbt>
+            </>
+          </fbt:param>
+          test
+        </fbt>`,
+      ),
+    ),
+  ).toMatchSnapshot();
+});

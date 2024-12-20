@@ -88,3 +88,30 @@ fbt._(
 );
 
 `;
+
+exports[`fragments inside of <fbt:param> 1`] = `
+const { fbt } = require("fbtee");
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "d", text: "{param} test" } },
+    project: "",
+  } /* __FBT__ end */,
+  [
+    fbt._param(
+      "param",
+      /*#__PURE__*/ React.createElement(
+        React.Fragment,
+        null,
+        /*#__PURE__*/ React.createElement("b", null, "Test"),
+        fbt._(
+          /* __FBT__ start */ {
+            jsfbt: { m: [], t: { desc: "test", text: "simple" } },
+            project: "",
+          } /* __FBT__ end */
+        )
+      )
+    ),
+  ]
+);
+
+`;
