@@ -1,4 +1,4 @@
-# Enforce strings to be wrapped with `<fbt>` (fbtee/no-unwrapped-strings)
+# Enforce strings to be wrapped with `<fbt>` (fbtee/no-untranslated-strings)
 
 ## Rule Details
 
@@ -38,7 +38,7 @@ Examples of **correct** code for this rule:
 
 ```js
 ...
-"fbt/no-unwrapped-strings": [<enabled>, {"ignoredWords": Array<string>}]
+"fbt/no-untranslated-strings": [<enabled>, {"ignoredWords": Array<string>}]
 ...
 ```
 
@@ -47,7 +47,7 @@ Examples of **correct** code for this rule:
 A list of words that are not required to be translated. Like so:
 
 ```jsx
-"fbt/no-unwrapped-strings": ["warn", { "ignoredWords": ["GitHub"] }]
+"fbt/no-untranslated-strings": ["warn", { "ignoredWords": ["GitHub"] }]
 ```
 
 ## When Not To Use It

@@ -137,5 +137,5 @@ export default createRule<Options, 'unwrappedString'>({
     type: 'problem',
   },
 
-  name: 'no-unwrapped-strings',
+  name: 'no-untranslated-strings',
 });

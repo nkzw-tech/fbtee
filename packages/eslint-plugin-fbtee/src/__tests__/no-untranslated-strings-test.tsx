@@ -1,5 +1,5 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
-import rule from '../rules/no-unwrapped-strings.tsx';
+import rule from '../rules/no-untranslated-strings.tsx';
 
 const ruleTester = new RuleTester({
   languageOptions: {
@@ -11,7 +11,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('no-unwrapped-strings', rule, {
+ruleTester.run('no-untranslated-strings', rule, {
   invalid: [
     {
       code: `
