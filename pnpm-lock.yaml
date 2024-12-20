@@ -147,6 +147,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.0.3(@types/node@22.10.2)(terser@5.36.0)(yaml@2.6.1))
+      eslint-plugin-fbtee:
+        specifier: workspace:^
+        version: link:../packages/eslint-plugin-fbtee
       vite:
         specifier: ^6.0.3
         version: 6.0.3(@types/node@22.10.2)(terser@5.36.0)(yaml@2.6.1)
@@ -251,6 +254,16 @@ importers:
       '@nkzw/babel-plugin-fbtee-auto-import':
         specifier: workspace:^
         version: link:../babel-plugin-fbtee-auto-import
+
+  packages/eslint-plugin-fbtee:
+    dependencies:
+      '@typescript-eslint/utils':
+        specifier: ^8.18.0
+        version: 8.18.0(eslint@8.57.1)(typescript@5.7.2)
+    devDependencies:
+      '@typescript-eslint/rule-tester':
+        specifier: ^8.18.0
+        version: 8.18.0(eslint@8.57.1)(typescript@5.7.2)
 
   packages/fbtee:
     dependencies:
@@ -1137,6 +1150,12 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.8.0'
+
+  '@typescript-eslint/rule-tester@8.18.0':
+    resolution: {integrity: sha512-y3ZqVb6eMssPFJklplsQ+2MKcic7HqRgCkcu7MQryhRmqmhAgn+1hJnpqOipZIBTOWZeCiQ/X/XrbHdqjHFivQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
 
   '@typescript-eslint/scope-manager@5.62.0':
     resolution: {integrity: sha512-VXuvVvZeQCQb5Zgf4HAxc04q5j+WrNAtNh9OwCsCgpKqESMTu3tF/jhZ3xG6T4NZwWl65Bg8KuS2uEvhSfLl0w==}
@@ -4793,6 +4812,19 @@ snapshots:
       typescript: 5.7.2
     transitivePeerDependencies:
       - supports-color
+
+  '@typescript-eslint/rule-tester@8.18.0(eslint@8.57.1)(typescript@5.7.2)':
+    dependencies:
+      '@typescript-eslint/typescript-estree': 8.18.0(typescript@5.7.2)
+      '@typescript-eslint/utils': 8.18.0(eslint@8.57.1)(typescript@5.7.2)
+      ajv: 6.12.6
+      eslint: 8.57.1
+      json-stable-stringify-without-jsonify: 1.0.1
+      lodash.merge: 4.6.2
+      semver: 7.6.3
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   '@typescript-eslint/scope-manager@5.62.0':
     dependencies:

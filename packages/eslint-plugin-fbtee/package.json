@@ -1,0 +1,26 @@
+{
+  "name": "eslint-plugin-fbtee",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/eslint-plugin-fbtee"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "import": "./lib/index.js",
+    "require": "./lib/index.cjs"
+  },
+  "scripts": {
+    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --no-splitting --dts"
+  },
+  "dependencies": {
+    "@typescript-eslint/utils": "^8.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/rule-tester": "^8.18.0"
+  }
+}

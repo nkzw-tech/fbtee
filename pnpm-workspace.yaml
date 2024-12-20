@@ -5,3 +5,4 @@ packages:
   - 'packages/babel-plugin-fbtee'
   - 'packages/babel-fbtee'
   - 'packages/fbtee'
+  - 'packages/eslint-plugin-fbtee'
