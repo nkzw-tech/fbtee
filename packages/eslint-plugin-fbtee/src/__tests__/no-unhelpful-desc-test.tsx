@@ -114,6 +114,19 @@ ruleTester.run('unhelpful-desc', rule, {
       ],
     },
 
+    // <fbs>
+    {
+      code: `
+        <fbt desc="">Hello world</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyDesc',
+        },
+      ],
+    },
+
     // fbt()
     {
       code: `
@@ -271,6 +284,13 @@ ruleTester.run('unhelpful-desc', rule, {
           return 'Greeting';
         }
         <fbt desc={getDescription()}>Hello</fbt>;
+      `,
+    },
+
+    // <fbs>
+    {
+      code: `
+        <fbs desc="Greeting">Hello world</fbs>;
       `,
     },
 

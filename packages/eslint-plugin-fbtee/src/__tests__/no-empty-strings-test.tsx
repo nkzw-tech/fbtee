@@ -161,6 +161,19 @@ ruleTester.run('no-empty-strings', rule, {
       ],
     },
 
+    // <fbs>
+    {
+      code: `
+        <fbs desc="Greeting"></fbs>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+
     // fbt()
     {
       code: `
@@ -307,6 +320,13 @@ ruleTester.run('no-empty-strings', rule, {
         <fbt desc="greeting">
           <Component />
         </fbt>;
+      `,
+    },
+
+    // <fbs>
+    {
+      code: `
+        <fbs desc="Greeting">Hello world</fbs>;
       `,
     },
 

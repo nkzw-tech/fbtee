@@ -1,6 +1,5 @@
 import {
   createRule,
-  elementType,
   isFbtNode,
   resolveJsxElementTextContent,
   resolveNodeValue,
@@ -54,7 +53,7 @@ export default createRule<
       },
 
       JSXAttribute(node) {
-        if (elementType(node.parent.parent) !== 'fbt') {
+        if (!isFbtNode(node.parent.parent)) {
           return;
         }
 
