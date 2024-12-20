@@ -74,12 +74,25 @@ function validateChildren(
       }
     }
 
-    if (
-      child.type === 'JSXExpressionContainer' &&
-      child.expression.type !== 'JSXEmptyExpression'
-    ) {
+    if (child.type === 'JSXExpressionContainer') {
+      if (child.expression.type === 'JSXEmptyExpression') {
+        nodesToReport.add(child.expression);
+        continue;
+      }
+
+      // Ignore when a variable is used <fbt desc="Greeting">{dynamicValue}</fbt>
       if (
-        isEmptyString(child.expression) &&
+        child.expression.type === 'Identifier' &&
+        child.expression.name !== 'undefined'
+      ) {
+        hasTextContent = true;
+        continue;
+      }
+
+      const value = resolveNodeValue(child.expression)?.trim();
+
+      if (
+        !value &&
         (node.children.length === 1 ||
           node.children.every(
             (otherChild) =>
@@ -105,6 +118,7 @@ function validateChildren(
     }
 
     if (hasTextContent) {
+      nodesToReport.clear();
       break;
     }
   }

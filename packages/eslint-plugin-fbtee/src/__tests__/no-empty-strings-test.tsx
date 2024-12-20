@@ -73,6 +73,69 @@ ruleTester.run('no-empty-strings', rule, {
     },
     {
       code: `
+        <fbt desc="Greeting">{}</fbt>;
+      `,
+      errors: [
+        {
+          line: 2,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {null}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {undefined}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
+        <fbt desc="Greeting">
+          {/* This is a comment */}
+        </fbt>;
+      `,
+      errors: [
+        {
+          line: 3,
+          messageId: 'jsxEmptyString',
+        },
+      ],
+    },
+    {
+      code: `
         <fbt desc="Greeting">
           <span></span>
         </fbt>;
@@ -202,6 +265,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
     },
     {
+      // only: true,
       code: `
         <fbt desc="Greeting">
           Apple{' '}Banana
