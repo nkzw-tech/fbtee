@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/babel-plugin-fbtee",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
