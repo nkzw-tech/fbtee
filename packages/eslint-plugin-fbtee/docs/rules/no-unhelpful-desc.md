@@ -2,7 +2,7 @@
 
 ## Rule Details
 
-This rule enforces that meaningful and non-empty descriptions are provided to <fbt> elements and fbt()/fbs() function calls. Descriptions (desc) are crucial for ensuring proper translation context and avoiding ambiguous or unhelpful translations.
+This rule enforces that meaningful and non-empty descriptions are provided to `<fbt>` elements and fbt()/fbs() function calls. Descriptions (desc) are crucial for ensuring proper translation context and avoiding ambiguous or unhelpful translations.
 
 Examples of **incorrect** code for this rule:
 

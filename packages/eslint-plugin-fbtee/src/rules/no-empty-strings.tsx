@@ -1,14 +1,16 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createRule, elementType, resolveNodeValue } from '../utils.tsx';
+import {
+  createRule,
+  elementType,
+  isNodeFbt,
+  resolveNodeValue,
+} from '../utils.tsx';
 
 export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   create(context) {
     return {
       CallExpression(node) {
-        if (
-          node.callee.type !== 'Identifier' ||
-          !(node.callee.name === 'fbt' || node.callee.name === 'fbs')
-        ) {
+        if (!isNodeFbt(node)) {
           return;
         }
 

@@ -229,6 +229,13 @@ ruleTester.run('no-empty-strings', rule, {
     },
     {
       code: `
+        <fbt desc="Greeting">
+          Hello <span>world</span>
+        </fbt>;
+      `,
+    },
+    {
+      code: `
         <fbt desc="Greeting">{dynamicValue}</fbt>;
       `,
     },

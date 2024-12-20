@@ -47,7 +47,7 @@ export function elementType(
 }
 
 export function resolveJsxElementTextContent(
-  node: TSESTree.JSXElement,
+  node: TSESTree.JSXElement | TSESTree.JSXFragment,
 ): string {
   return node.children
     .map((child) => {
@@ -106,4 +106,48 @@ export function resolveNodeValue(
   }
 
   return null;
+}
+
+export function propName(prop: TSESTree.JSXAttribute) {
+  if (prop.name.type === 'JSXNamespacedName') {
+    return `${prop.name.namespace.name}:${prop.name.name.name}`;
+  }
+
+  return prop.name.name;
+}
+
+export function hasFbtParent(node: TSESTree.Node) {
+  let current = node.parent;
+
+  while (current) {
+    if (isNodeFbt(current)) {
+      return true;
+    }
+    current = current.parent;
+  }
+
+  return false;
+}
+
+export function isNodeFbt(node?: TSESTree.Node) {
+  if (node?.type === 'JSXElement') {
+    const name = elementType(node);
+    return name === 'fbt' || name === 'fbs' || name?.startsWith('fbt:');
+  }
+
+  if (node?.type === 'CallExpression' && node.callee.type === 'Identifier') {
+    const name = node.callee.name;
+    return name === 'fbt' || name === 'fbs';
+  }
+
+  if (
+    node?.type === 'MemberExpression' &&
+    node.object.type === 'CallExpression' &&
+    node.object.callee.type === 'Identifier'
+  ) {
+    const name = node.object.callee.name;
+    return name === 'fbt' || name === 'fbs';
+  }
+
+  return false;
 }
