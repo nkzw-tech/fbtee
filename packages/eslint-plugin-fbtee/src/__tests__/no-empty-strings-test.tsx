@@ -66,7 +66,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -90,7 +90,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -103,7 +103,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -116,7 +116,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -129,7 +129,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -142,7 +142,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -155,7 +155,7 @@ ruleTester.run('no-empty-strings', rule, {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           messageId: 'jsxEmptyString',
         },
       ],
@@ -265,7 +265,6 @@ ruleTester.run('no-empty-strings', rule, {
       `,
     },
     {
-      // only: true,
       code: `
         <fbt desc="Greeting">
           Apple{' '}Banana

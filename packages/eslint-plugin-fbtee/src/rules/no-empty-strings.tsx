@@ -28,16 +28,13 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
         }
 
         //  Collect nodes to report and validate all children recursively.
-        const nodesToReport = new Set<TSESTree.Node>();
-        const hasTextContent = validateChildren(node, nodesToReport);
+        const hasTextContent = validateChildren(node);
 
         if (!hasTextContent) {
-          for (const node of nodesToReport) {
-            context.report({
-              messageId: 'jsxEmptyString',
-              node,
-            });
-          }
+          context.report({
+            messageId: 'jsxEmptyString',
+            node,
+          });
         }
       },
     };
@@ -61,22 +58,16 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
 
 function validateChildren(
   node: TSESTree.JSXElement | TSESTree.JSXFragment,
-  nodesToReport: Set<TSESTree.Node>,
 ): boolean {
   let hasTextContent = false;
 
   for (const child of node.children) {
-    if (child.type === 'JSXText' && node.children.length === 1) {
-      if (child.value.trim() === '') {
-        nodesToReport.add(child);
-      } else {
-        hasTextContent = true;
-      }
+    if (child.type === 'JSXText' && child.value.trim() !== '') {
+      hasTextContent = true;
     }
 
     if (child.type === 'JSXExpressionContainer') {
       if (child.expression.type === 'JSXEmptyExpression') {
-        nodesToReport.add(child.expression);
         continue;
       }
 
@@ -91,17 +82,7 @@ function validateChildren(
 
       const value = resolveNodeValue(child.expression)?.trim();
 
-      if (
-        !value &&
-        (node.children.length === 1 ||
-          node.children.every(
-            (otherChild) =>
-              child === otherChild ||
-              (otherChild.type === 'JSXText' && otherChild.value.trim() === ''),
-          ))
-      ) {
-        nodesToReport.add(child.expression);
-      } else {
+      if (value) {
         hasTextContent = true;
       }
     }
@@ -114,17 +95,12 @@ function validateChildren(
         continue;
       }
 
-      hasTextContent ||= validateChildren(child, nodesToReport);
+      hasTextContent ||= validateChildren(child);
     }
 
     if (hasTextContent) {
-      nodesToReport.clear();
       break;
     }
-  }
-
-  if (!hasTextContent && nodesToReport.size === 0) {
-    nodesToReport.add(node);
   }
 
   return hasTextContent;
