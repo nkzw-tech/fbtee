@@ -152,6 +152,35 @@ npm run fbtee:translate
 
 After generating the translations file, your app is ready to display translated content in other languages.
 
+## ESLint Plugin
+
+You can install the optional eslint plugin to catch common mistakes and enforce best practices when using **fbtee**:
+
+```bash
+npm install @nkzw/eslint-plugin-fbtee
+```
+
+Add the following configuration to your ESLint configuration:
+
+```js
+{
+  extends: ['plugin:@nkzw/eslint-plugin-fbtee/strict'],
+  plugins: ['@nkzw/eslint-plugin-fbtee'],
+}
+```
+
+Or, if you'd like more granular control over the rules:
+
+```js
+{
+  plugins: ['@nkzw/eslint-plugin-fbtee'],
+  rules: {
+    '@nkzw/fbtee/no-empty-strings': 'error',
+    '@nkzw/fbtee/no-unhelpful-desc': 'error',
+  },
+}
+```
+
 ## What's better about `fbtee` than `fbt`?
 
 Facebook has done an amazing job with `fbt`, an internationalization library that has been successfully used in production at Facebook for over 10 years. Their work provided a strong foundation for modern localization tools.
@@ -159,7 +188,7 @@ Facebook has done an amazing job with `fbt`, an internationalization library tha
 The open-source version of `fbt`, however, became unmaintained, difficult to set up, and incompatible with modern tools. It was eventually archived in November 2024. **fbtee** builds on this foundation with several improvements:
 
 - **Easier Setup:** fbtee works with modern tools like Vite.
-- **Fully Typed:**
+- **Statically Typed:** The fbtee compiler ensures correct usage of fbtee, libary TypeScript types are provided, and an eslint plugin helps fix common mistakes.
 - **Improved React Compatibility:** Removed React-specific hacks and added support for implicit React fragments (`<>`).
 - **Enhanced Features:** Fixed and exported `intlList`, which was not functional in the original `fbt`.
 - **Modernized Codebase:** Rewritten using TypeScript, ES modules (ESM), eslint, and modern JavaScript standards. Removed cruft and legacy code.

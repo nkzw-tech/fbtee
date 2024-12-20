@@ -11,3 +11,12 @@ export const rules = {
   'no-empty-strings': noEmptyStringsRule,
   'no-unhelpful-desc': noUnhelpfulDesc,
 };
+
+export const configs = {
+  strict: {
+    rules: {
+      '@nkzw/fbtee/no-empty-strings': 2,
+      '@nkzw/fbtee/no-unhelpful-desc': 2,
+    },
+  },
+};
