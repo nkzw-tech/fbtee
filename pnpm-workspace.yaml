@@ -3,6 +3,6 @@ packages:
   - 'packages/babel-plugin-fbtee-auto-import'
   - 'packages/babel-plugin-fbtee-runtime'
   - 'packages/babel-plugin-fbtee'
-  - 'packages/babel-fbtee'
+  - 'packages/babel-preset-fbtee'
   - 'packages/fbtee'
   - 'packages/eslint-plugin-fbtee'
