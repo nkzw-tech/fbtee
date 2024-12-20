@@ -15,6 +15,12 @@ export const rules = {
 };
 
 export const configs = {
+  recommended: {
+    rules: {
+      '@nkzw/fbtee/no-empty-strings': 2,
+      '@nkzw/fbtee/no-unhelpful-desc': 2,
+    },
+  },
   strict: {
     rules: {
       '@nkzw/fbtee/no-empty-strings': 2,
