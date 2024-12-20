@@ -1,6 +1,6 @@
 import { PatternHash } from '@nkzw/babel-plugin-fbtee';
 import FbtResult from './FbtResult.tsx';
-import FbtTranslations, { TranslationDict } from './FbtTranslations.tsx';
+import FbtTranslations, { TranslationDictionary } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
 import Hook, { Hooks } from './Hooks.tsx';
 import IntlViewerContext from './IntlViewerContext.tsx';
@@ -17,7 +17,7 @@ export default function setupFbtee({
   translations,
 }: {
   hooks?: Hooks | null;
-  translations: TranslationDict;
+  translations: TranslationDictionary;
 }) {
   FbtTranslations.registerTranslations(translations);
 

@@ -11,3 +11,10 @@ export { default as intlList } from './intlList.tsx';
 
 export const fbt = fbtInternal as unknown as FbtAPI;
 export const fbs = fbsInternal as unknown as FbsAPI;
+
+export type {
+  FbtRuntimeInput,
+  FbtRuntimeInput as Translation,
+} from './Hooks.tsx';
+export type { TranslatedString } from './Types.d.ts';
+export type { TranslationDictionary } from './FbtTranslations.tsx';

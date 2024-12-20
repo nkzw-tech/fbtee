@@ -4,18 +4,18 @@ import Hooks, {
   FbtTranslatedInput,
 } from './Hooks.tsx';
 
-export type TranslationDict = {
+export type TranslationDictionary = {
   [locale: string]: {
     [hashKey: string]: FbtRuntimeInput;
   };
 };
 
-let currentTranslations: TranslationDict = {};
+let currentTranslations: TranslationDictionary = {};
 
 const defaultLocale = 'en_US';
 
 export default {
-  getRegisteredTranslations(): TranslationDict {
+  getRegisteredTranslations(): TranslationDictionary {
     return currentTranslations;
   },
 
@@ -41,7 +41,7 @@ export default {
         };
   },
 
-  mergeTranslations(newTranslations: TranslationDict) {
+  mergeTranslations(newTranslations: TranslationDictionary) {
     Object.keys(newTranslations).forEach((locale) => {
       currentTranslations[locale] = Object.assign(
         currentTranslations[locale] ?? {},
@@ -50,7 +50,7 @@ export default {
     });
   },
 
-  registerTranslations(translations: TranslationDict) {
+  registerTranslations(translations: TranslationDictionary) {
     currentTranslations = translations;
   },
 };

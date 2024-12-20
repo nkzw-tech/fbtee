@@ -183,7 +183,7 @@ type ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
   FbtParamOutput
 >;
 
-type TranslatedString = string & { __fbt_do_not_access: true };
+export type TranslatedString = string & { __fbt_do_not_access: true };
 
 export type FbtAPI = StringBasedFbtFunctionAPI<
   TranslatedString,
