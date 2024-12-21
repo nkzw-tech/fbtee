@@ -3,14 +3,14 @@ import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
   testSection,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 const testData = {
   'can handle multiple variations in nested strings': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         Level 1
         <fbt:param name="foo">
@@ -37,7 +37,7 @@ const testData = {
   },
 
   'can handle multiple variations in nested strings and a subject gender': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="description" subject={g0}>
         Level 1
         <a href="#new">
@@ -58,7 +58,7 @@ const testData = {
 
   'can handle multiple variations in nested strings with substrings that look identical':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="description" subject={g0}>
           Level 1
           <a href="#new">
@@ -78,7 +78,7 @@ const testData = {
 
   'prevent token name collisions among fbt constructs across all nesting levels (v1)':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="some-desc">
           Level 1
           <fbt:param name="foo">
@@ -98,7 +98,7 @@ const testData = {
 
   'prevent token name collisions among fbt constructs across all nesting levels (v2)':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="some-desc">
           Level 1
           <fbt:param name="bar">
@@ -126,7 +126,7 @@ const testData = {
     },
 
   'should auto wrap a simple test with a nested level': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <Link href="#">
           Your friends
@@ -138,7 +138,7 @@ const testData = {
   },
 
   'should auto wrap a simple test with one level': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <link href="#">Your friends</link>
         liked your video
@@ -147,7 +147,7 @@ const testData = {
   },
 
   'should work with multiple <fbt> calls in one file': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<div>
         <fbt desc="one">
           <div href="#">first</div>
@@ -162,7 +162,7 @@ const testData = {
   },
 
   'should wrap a <fbt> child nested in an explicit <fbt:param>': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <fbt:param name="explicit fbt param">
           <div>
@@ -177,7 +177,7 @@ const testData = {
   },
 
   'should wrap a <fbt> child next to an explicit <fbt:param>': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <fbt:param name="explicit param next to">
           <div>
@@ -190,7 +190,7 @@ const testData = {
   },
 
   'should wrap a single unwrapped <fbt> child and a string above': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <b>
           This is
@@ -202,7 +202,7 @@ const testData = {
   },
 
   'should wrap a single unwrapped <fbt> child and a string below': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div href="#">this is</div>
         a singly nested test
@@ -212,7 +212,7 @@ const testData = {
 
   'should wrap a string next to an explicit <fbt:param> that has a implicit <fbt:param> within it':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="d">
         outer string that should not appear in inner desc
         <fbt:param name="explicit fbt param">
@@ -228,7 +228,7 @@ const testData = {
     },
 
   'should wrap an outer and inner child': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div href="#">
           <div href="#">this is</div>
@@ -240,7 +240,7 @@ const testData = {
   },
 
   'should wrap explicit params nested in implicit params with []': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div>
           this is a test
@@ -275,7 +275,7 @@ const testData = {
   },
 
   'should wrap two children with one nested level': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div href="#">
           <div href="#">this is</div>
@@ -288,7 +288,7 @@ const testData = {
   },
 
   'should wrap two nested next to each other': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div href="#">
           one
@@ -303,7 +303,7 @@ const testData = {
   },
 
   'should wrap two nested next to each other with an extra level': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div href="#">
           one
@@ -321,7 +321,7 @@ const testData = {
   },
 
   'should wrap two unwrapped <fbt> children': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div>wrap once</div>
         <div>wrap twice</div>
@@ -330,7 +330,7 @@ const testData = {
   },
 
   'should wrap two unwrapped <fbt> children and 1 nested': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
         <div>
           wrap once

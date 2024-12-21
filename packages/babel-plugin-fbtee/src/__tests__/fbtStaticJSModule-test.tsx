@@ -7,7 +7,7 @@ import {
   snapshotTransform,
   testSection,
   transform,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 function runTest(
@@ -28,7 +28,7 @@ describe('fbt preserveWhitespace argument', () => {
   describe('should NOT preserve whitespaces that do not neighbor raw text', () => {
     const snapshotTestData = {
       'jsx elements and raw text': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <span>
@@ -43,7 +43,7 @@ describe('fbt preserveWhitespace argument', () => {
         `),
       },
       'jsx elements and string variation arguments nested inside jsx element': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <a>OuterJsx1</a>
@@ -58,7 +58,7 @@ describe('fbt preserveWhitespace argument', () => {
         `),
       },
       'jsx elements with string variation arguments': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <span>
@@ -77,7 +77,7 @@ describe('fbt preserveWhitespace argument', () => {
         `),
       },
       'should not preserve whitespace around text in JSXExpression': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <a>OuterJsx1</a>
@@ -97,7 +97,7 @@ describe('fbt preserveWhitespace argument', () => {
         `),
       },
       'should preserve voluntarily added spaces between NON-raw text': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <a>OuterJsx1</a>
@@ -118,7 +118,7 @@ describe('fbt preserveWhitespace argument', () => {
         `),
       },
       'should treat comments in JSXExpression like they are not here': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               <a>OuterJsx1</a>
@@ -144,7 +144,7 @@ describe('fbt preserveWhitespace argument', () => {
   describe('should preserve whitespace around text', () => {
     const snapshotTestData = {
       'with inner text and string variation': {
-        input: withFbtRequireStatement(`
+        input: withFbtImportStatement(`
           var x =
             <fbt desc="d">
               outerText
@@ -165,10 +165,10 @@ describe('fbt preserveWhitespace argument', () => {
 
   it('should preserve whitespace in text when requested', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(${payload({
           jsfbt: {
             m: [],
@@ -182,10 +182,10 @@ describe('fbt preserveWhitespace argument', () => {
     });
 
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         'var x = fbt("two  spaces", "one space", {preserveWhitespace:true});',
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(${payload({
           jsfbt: {
             m: [],
@@ -201,11 +201,11 @@ describe('fbt preserveWhitespace argument', () => {
 
   it('should preserve whitespace in desc when requested', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`,
       ),
 
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {
@@ -221,10 +221,10 @@ describe('fbt preserveWhitespace argument', () => {
     });
 
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('one space', 'two  spaces', {preserveWhitespace: true});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {
@@ -242,10 +242,10 @@ describe('fbt preserveWhitespace argument', () => {
 
   it('should coalesce whitespace in text when not requested', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('two  spaces', 'one space', {preserveWhitespace: false});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {
@@ -261,10 +261,10 @@ describe('fbt preserveWhitespace argument', () => {
     });
 
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {
@@ -282,10 +282,10 @@ describe('fbt preserveWhitespace argument', () => {
 
   it('should coalesce whitespace in desc when not requested', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {
@@ -301,10 +301,10 @@ describe('fbt preserveWhitespace argument', () => {
     });
 
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt('one space', 'two spaces', {preserveWhitespace: false});`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
             ${payload({
               jsfbt: {

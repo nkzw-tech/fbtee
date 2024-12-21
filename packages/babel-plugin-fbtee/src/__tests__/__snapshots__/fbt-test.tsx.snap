@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test double-lined params should remove the new line for param names that are two lines 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "d", text: "{two lines} test" } },
@@ -60,7 +60,7 @@ fbt._(
 `;
 
 exports[`fbt() API:  using FBT subject should accept "subject" as a parameter 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -75,7 +75,7 @@ fbt._(
 `;
 
 exports[`fbt() API:  using FBT subject with string templates should accept "subject" as a parameter 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -90,7 +90,7 @@ fbt._(
 `;
 
 exports[`fragments inside of <fbt:param> 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "d", text: "{param} test" } },

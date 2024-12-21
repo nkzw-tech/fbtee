@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { getChildToParentRelationships } from '../index.tsx';
-import { transform, withFbtRequireStatement } from './FbtTestUtil.tsx';
+import { transform, withFbtImportStatement } from './FbtTestUtil.tsx';
 
 function testChildToParentRelationships([, testData]: readonly [
   name: string,
@@ -18,7 +18,7 @@ const testData = [
   [
     'should find the parent for a simple level',
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="d">
             <link href="#">Your friends</link>
             liked your video
@@ -30,7 +30,7 @@ const testData = [
   [
     'should find the parents for a nested level',
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="d">
             <Link href="#">
               Your friends
@@ -45,7 +45,7 @@ const testData = [
   [
     'should find the parents for a multi-nested level',
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="phrase 0">
             <div>
               phrase 1<div>phrase 2</div>
@@ -61,7 +61,7 @@ const testData = [
   [
     'should not count an explicit fbt:param as a child',
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="phrase 0">
             <fbt:param name="should not be a child">
               <div href="#">
@@ -85,7 +85,7 @@ const testData = [
   [
     'should work with children with multiple fbt calls in one file',
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<div>
             <fbt desc="phrase 0">
               <div href="#">phrase 1</div>

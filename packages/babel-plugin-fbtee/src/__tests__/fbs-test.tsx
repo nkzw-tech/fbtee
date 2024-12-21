@@ -3,7 +3,7 @@ import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest.tsx';
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
-  withFbsRequireStatement,
+  withFbsImportStatement,
 } from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
@@ -12,7 +12,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should convert a simple string', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(
+        withFbsImportStatement(
           `const fbsElem = <fbs desc='str_description'>a simple string</fbs>;`,
         ),
       ),
@@ -21,7 +21,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should convert a string with a parameter', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsElem = <fbs desc='str_description'>
             a string with a
             <fbs:param name="param name">{parameter}</fbs:param>
@@ -33,7 +33,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should convert a common string', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsCommonElem = <fbs common={true}>Post</fbs>;
         `),
         {
@@ -47,7 +47,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should reject an <fbs> child element', () => {
     expect(() =>
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsElem = <fbs desc='str_description'>
             a simple string
             <fbs>nested</fbs>
@@ -59,7 +59,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should reject an <fbt> child element', () => {
     expect(() =>
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsElem = <fbs desc='str_description'>
             a simple string
             <fbt>nested</fbt>
@@ -71,7 +71,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should reject an <fbt:param> child element', () => {
     expect(() =>
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsElem = <fbs desc='str_description'>
             a simple string
             <fbt:param name="param name">{parameter}</fbt:param>
@@ -83,8 +83,8 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
   it('should handle <fbs:enum>', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`
-          let aEnum = require('Test$FbtEnum');
+        withFbsImportStatement(`
+          import aEnum from 'Test$FbtEnum';
           var x = (
             <fbs desc="enums!">
               Click to see
@@ -102,7 +102,7 @@ describe('Test functional fbs() syntax translation', () => {
   it('should convert a simple string', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(
+        withFbsImportStatement(
           `const fbsCall = fbs('a simple string', 'str_description');`,
         ),
       ),
@@ -111,8 +111,8 @@ describe('Test functional fbs() syntax translation', () => {
   it('should convert a string with a gender parameter', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`
-          const IntlVariations = require('IntlVariations');
+        withFbsImportStatement(`
+          import IntlVariations from 'IntlVariations';
           const fbsCall = fbs(
             'a string with a ' + fbs.param('param name', parameter, {gender: IntlVariations.GENDER_MALE}),
             'str_description'
@@ -124,7 +124,7 @@ describe('Test functional fbs() syntax translation', () => {
   it('should convert a common string', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`const fbsCommonCall = fbs.c('Post');`),
+        withFbsImportStatement(`const fbsCommonCall = fbs.c('Post');`),
       ),
     ).toMatchSnapshot();
   });
@@ -132,7 +132,7 @@ describe('Test functional fbs() syntax translation', () => {
   it('should reject an fbt parameter', () => {
     expect(() =>
       snapshotTransform(
-        withFbsRequireStatement(`
+        withFbsImportStatement(`
           const fbsCall = fbs(
             'a string with a ' + fbt.param('param name', parameter, {gender: 'male'}),
             'str_description'
@@ -150,7 +150,7 @@ describe('Test functional fbs() syntax translation', () => {
           'str_description'
         );`,
       ),
-    ).toThrow(`fbs is not bound. Did you forget to require('fbs')?`);
+    ).toThrow(`fbs is not bound. Did you forget to import fbs?`);
   });
 
   it('should throw when using <fbs> and the fbs variable is not bound', () => {
@@ -158,14 +158,14 @@ describe('Test functional fbs() syntax translation', () => {
       snapshotTransform(
         `const fbsCall = <fbs desc="str_description">basic</fbs>;`,
       ),
-    ).toThrow(`fbs is not bound. Did you forget to require('fbs')?`);
+    ).toThrow(`fbs is not bound. Did you forget to import fbs?`);
   });
 
   it('should handle fbs.enum', () => {
     expect(
       snapshotTransform(
-        withFbsRequireStatement(`
-          let aEnum = require('Test$FbtEnum');
+        withFbsImportStatement(`
+          import aEnum from 'Test$FbtEnum';
           var x = fbs('Click to see ' + fbs.enum(id, aEnum), 'enums!');
         `),
         { fbtEnumManifest: TestFbtEnumManifest },
