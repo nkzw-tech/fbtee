@@ -20,7 +20,6 @@ import {
   isJSXElement,
   isJSXEmptyExpression,
   isJSXExpressionContainer,
-  isJSXIdentifier,
   isJSXNamespacedName,
   isJSXSpreadAttribute,
   isJSXText,
@@ -52,7 +51,6 @@ import {
 } from '@babel/types';
 import invariant from 'invariant';
 import type { AnyFbtNode } from './fbt-nodes/FbtNode.tsx';
-import { ConcreteFbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
 import type {
   BindingName,
   FbtOptionConfig,
@@ -87,60 +85,6 @@ export function normalizeSpaces(
   // We're  willingly preserving non-breaking space characters (\u00A0)
   // See D33402749 for more info.
   return value.replaceAll(/[^\S\u00A0]+/g, ' ');
-}
-
-/**
- * Validates the type of fbt construct inside <fbt>.
- * Currently detected:
- *   <fbt:param>, <FbtParam>
- *   <fbt:enum>,  <FbtEnum>
- *   <fbt:name>,  <FbtName>
- *   etc...
- * @param node The node that may be a JSX fbt construct
- * @return Returns the name of a corresponding handler (fbt construct).
- * If a child is not valid, it is flagged as an Implicit Parameter (`implicitParamMarker`)
- */
-export function validateNamespacedFbtElement(
-  moduleName: string,
-  node: Node,
-): ConcreteFbtNodeType | 'implicitParamMarker' {
-  let valid = false;
-  let handlerName;
-
-  // Actual namespaced version, e.g. <fbt:param>
-  if (isJSXNamespacedName(node)) {
-    handlerName = node.name.name;
-    valid =
-      isJSXIdentifier(node.namespace) &&
-      node.namespace.name === moduleName &&
-      (handlerName === 'enum' ||
-        handlerName === 'param' ||
-        handlerName === 'plural' ||
-        handlerName === 'pronoun' ||
-        handlerName === 'name' ||
-        handlerName === 'same-param');
-    // React's version, e.g. <FbtParam>, or <FbtEnum>
-  } else if (isJSXIdentifier(node)) {
-    handlerName = node.name.slice(3).toLowerCase();
-    valid =
-      node.name === 'FbtEnum' ||
-      node.name === 'FbtParam' ||
-      node.name === 'FbtPlural' ||
-      node.name === 'FbtPronoun' ||
-      node.name === 'FbtName' ||
-      node.name === 'FbtSameParam';
-  }
-
-  if (!valid) {
-    handlerName = 'implicitParamMarker';
-  }
-
-  if (handlerName === 'same-param' || handlerName === 'sameparam') {
-    handlerName = 'sameParam';
-  }
-
-  invariant(handlerName != null, 'handlerName must not be null');
-  return handlerName as ConcreteFbtNodeType;
 }
 
 function isNodeCallExpressionArg(value: Node): value is CallExpressionArg {

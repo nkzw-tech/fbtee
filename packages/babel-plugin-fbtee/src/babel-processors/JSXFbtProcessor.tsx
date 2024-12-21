@@ -11,17 +11,23 @@ import {
   isCallExpression,
   isJSXElement,
   isJSXFragment,
+  isJSXNamespacedName,
   isStringLiteral,
   JSXAttribute,
   JSXElement,
   JSXExpressionContainer,
   jsxExpressionContainer,
+  JSXNamespacedName,
   memberExpression,
   ObjectExpression,
   StringLiteral,
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
+import {
+  ConcreteFbtNodeType,
+  isConcreteFbtNode,
+} from '../fbt-nodes/FbtNodeType.tsx';
 import {
   getCommonDescription,
   getUnknownCommonStringErrorMessage,
@@ -44,7 +50,6 @@ import {
   getAttributeByNameOrThrow,
   getOptionsFromAttributes,
   normalizeSpaces,
-  validateNamespacedFbtElement,
   varDump,
 } from '../FbtUtil.tsx';
 import getNamespacedArgs from '../getNamespacedArgs.tsx';
@@ -236,9 +241,37 @@ export default class JSXFbtProcessor {
   _transformChildrenForFbtCallSyntax(): Array<
     CallExpression | JSXElement | StringLiteral
   > {
-    this.path.traverse(jsxFbtConstructToFunctionalFormTransform, {
-      moduleName: this.moduleName,
+    this.path.traverse({
+      JSXElement: (path: NodePath) => {
+        const { node } = path;
+        if (!isJSXNamespacedName(node.openingElement.name)) {
+          return;
+        }
+
+        const name = validateNamespacedFbtElement(
+          this.moduleName,
+          node.openingElement.name,
+        );
+        if (name) {
+          const namespace = getNamespacedArgs(this.moduleName);
+          const args = namespace[name as keyof typeof namespace](node);
+          const fbtConstructCall = callExpression(
+            memberExpression(
+              identifier(this.moduleName),
+              identifier(name),
+              false,
+            ),
+            args as Array<CallExpressionArg>,
+          );
+          path.replaceWith(
+            isJSXElement(path.parent) || isJSXFragment(path.parent)
+              ? jsxExpressionContainer(fbtConstructCall)
+              : fbtConstructCall,
+          );
+        }
+      },
     });
+
     return (
       filterEmptyNodes(this.node.children) as ReadonlyArray<JSXElementChild>
     ).map((node) => {
@@ -358,30 +391,12 @@ export default class JSXFbtProcessor {
   }
 }
 
-/**
- * Traverse all JSXElements, replace those that are JSX fbt constructs (e.g. <fbt:param>)
- * to their functional form equivalents (e.g. fbt.param()).
- */
-const jsxFbtConstructToFunctionalFormTransform = {
-  JSXElement(path: NodePath) {
-    const { node } = path;
-    const { moduleName } = this as unknown as { moduleName: BindingName };
-    const name = validateNamespacedFbtElement(
-      moduleName,
-      node.openingElement.name,
-    );
-    if (name !== 'implicitParamMarker') {
-      const namespace = getNamespacedArgs(moduleName);
-      const args = namespace[name as keyof typeof namespace](node);
-      let fbtConstructCall: CallExpression | JSXExpressionContainer =
-        callExpression(
-          memberExpression(identifier(moduleName), identifier(name), false),
-          args as Array<CallExpressionArg>,
-        );
-      if (isJSXElement(path.parent) || isJSXFragment(path.parent)) {
-        fbtConstructCall = jsxExpressionContainer(fbtConstructCall);
-      }
-      path.replaceWith(fbtConstructCall);
-    }
-  },
-} as const;
+const validateNamespacedFbtElement = (
+  moduleName: string,
+  node: JSXNamespacedName,
+): ConcreteFbtNodeType | null => {
+  const name = node.name.name === 'same-param' ? 'sameParam' : node.name.name;
+  return name && node.namespace.name === moduleName && isConcreteFbtNode(name)
+    ? name
+    : null;
+};
