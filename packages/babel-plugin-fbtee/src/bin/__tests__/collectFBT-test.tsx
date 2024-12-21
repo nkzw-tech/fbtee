@@ -46,14 +46,14 @@ async function collect(
 describe('collectFbt', () => {
   it('should extract fbt strings', async () => {
     const res = await collect(
-      'const fbt = require(\'fbt\');<fbt desc="foo">bar</fbt>',
+      'import { fbt } from \'fbt\';<fbt desc="foo">bar</fbt>',
     );
     expect(res).toMatchSnapshot();
   });
 
   it('should extract fbs strings', async () => {
     const res = await collect(
-      'const fbs = require(\'fbs\');<fbs desc="foo">bar</fbs>',
+      'import { fbs } from \'fbs\';<fbs desc="foo">bar</fbs>',
     );
     expect(res).toMatchSnapshot();
   });
@@ -62,7 +62,7 @@ describe('collectFbt', () => {
     const res = await collect(
       [
         '// @fbt {"project": "someproject", "author": "Sponge Bob"}',
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo">bar</fbt>',
       ].join('\n'),
     );
@@ -73,7 +73,7 @@ describe('collectFbt', () => {
     const res = await collect(
       [
         '// @fbt {"project": "someproject", "doNotExtract": false}',
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo">bar</fbt>',
       ].join('\n'),
     );
@@ -84,7 +84,7 @@ describe('collectFbt', () => {
     const res = await collect(
       [
         '// @fbt {"project": "someproject", "doNotExtract": true}',
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo">bar</fbt>',
       ].join('\n'),
     );
@@ -96,7 +96,7 @@ describe('collectFbt', () => {
     const res = await collect(
       [
         '// @fbt {"project": "someproject", "doNotExtract": true}',
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo" doNotExtract="false">bar</fbt>',
       ].join('\n'),
     );
@@ -107,7 +107,7 @@ describe('collectFbt', () => {
   it('should still extract strings if in-line doNotExtract is set to false', async () => {
     const res = await collect(
       [
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo" doNotExtract="false">bar</fbt>',
       ].join('\n'),
     );
@@ -118,7 +118,7 @@ describe('collectFbt', () => {
   it('should not extract strings if in-line doNotExtract is set to true', async () => {
     const res = await collect(
       [
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         '<fbt desc="foo" doNotExtract="true">bar</fbt>',
       ].join('\n'),
     );
@@ -129,7 +129,7 @@ describe('collectFbt', () => {
   it('should still extract strings if fbt call param doNotExtract is set to false', async () => {
     const res = await collect(
       [
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         'fbt("bar", "foo", {doNotExtract: false});',
       ].join('\n'),
     );
@@ -140,7 +140,7 @@ describe('collectFbt', () => {
   it('should not extract strings if fbt call param doNotExtract is set to true', async () => {
     const res = await collect(
       [
-        "const fbt = require('fbtee');",
+        "import { fbt } from 'fbtee';",
         'fbt("bar", "foo", {doNotExtract: true});',
       ].join('\n'),
     );
@@ -150,7 +150,7 @@ describe('collectFbt', () => {
 
   it('should extract common strings from <fbt common={true}>', async () => {
     const res = await collect(`
-      const fbt = require('fbtee');
+      import { fbt } from 'fbtee';
       <fbt common={true}>Required</fbt>;
     `);
 
@@ -159,7 +159,7 @@ describe('collectFbt', () => {
 
   it('should extract fbt.c strings', async () => {
     const res = await collect(`
-      const fbt = require('fbtee');
+      import { fbt } from 'fbtee';
       fbt.c('Required');
     `);
 
@@ -169,7 +169,7 @@ describe('collectFbt', () => {
   it('should dedupe fbt:plurals', async () => {
     const res = await collect(
       [
-        `const fbt = require('fbtee');`,
+        `import { fbt } from 'fbtee';`,
         `<fbt desc="desc...">`,
         `  There`,
         `  <fbt:plural count={num} many="are">is</fbt:plural>{' '}`,
@@ -188,7 +188,7 @@ describe('collectFbt', () => {
     it('should extract correctly with just string contents', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const uh = 0;',
           'fbt(`simple`, "ok");',
         ].join('\n'),
@@ -200,7 +200,7 @@ describe('collectFbt', () => {
     it('should extract correctly with a param', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const uh = 0;',
           'fbt(`testing ${fbt.param("it", uh)} works`, "great");',
         ].join('\n'),
@@ -212,7 +212,7 @@ describe('collectFbt', () => {
     it('should extract correctly with the param being first', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const uh = 0;',
           'fbt(`${fbt.param("it", uh)} still works`, "well");',
         ].join('\n'),
@@ -224,7 +224,7 @@ describe('collectFbt', () => {
     it('should extract correctly multiple params', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const uh = 0;',
           'fbt(`${fbt.param("1", uh)} ${fbt.param("2", uh)} ${fbt.sameParam("2")} 3`, "counting");',
         ].join('\n'),
@@ -236,7 +236,7 @@ describe('collectFbt', () => {
     it('should extract correctly supports tables ie fbt:enum', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const uh = 0;',
           "fbt(`${fbt.enum(uh, {0:'a', 1:'b'})} ${fbt.param(\"2\", uh)}\n" +
             '${fbt.sameParam("2")} 3`, "counting");',
@@ -248,8 +248,8 @@ describe('collectFbt', () => {
     it('should extract correctly name, pronoun, plural', async () => {
       const res = await collect(
         [
-          "const fbt = require('fbtee');",
-          "const IntlVariations = require('IntlVariations');",
+          "import { fbt } from 'fbtee';",
+          "import IntlVariations from 'IntlVariations';",
           'const gender = IntlVariations.GENDER_FEMALE;',
           "fbt(`${fbt.name('name', 'Sally', gender)} sells ${fbt.pronoun('possessive', gender)} ${fbt.plural('item', 5)}`, 'desc');",
         ].join('\n'),
@@ -262,7 +262,7 @@ describe('collectFbt', () => {
     expect(() =>
       collect(
         [
-          "const fbt = require('fbtee');",
+          "import { fbt } from 'fbtee';",
           'const bad = () => {};',
           'fbt(`dont do ${bad()} stuff`, "ok");',
         ].join('\n'),
@@ -284,7 +284,7 @@ describe('collectFbt', () => {
   it('should expose the outer token names if needed', async () => {
     expect(
       await collect(
-        `const fbt = require('fbtee');
+        `import { fbt } from 'fbtee';
         <fbt desc="Expose outer token name when script option is given">
           Hello
           <i>World</i>
@@ -299,7 +299,7 @@ describe('collectFbt', () => {
   it('should not expose the outer token names by default', async () => {
     expect(
       await collect(
-        `const fbt = require('fbtee');
+        `import { fbt } from 'fbtee';
         <fbt desc="Do not expose outer token name by default">
           Hello
           <i>World</i>
@@ -312,7 +312,7 @@ describe('collectFbt', () => {
   it('should expose the subject option on top level and inner phrases', async () => {
     expect(
       await collect(
-        `const fbt = require('fbtee');
+        `import { fbt } from 'fbtee';
         <fbt desc="expose subject" subject={aSubject}>
           You
           <i>see the world</i>
@@ -328,7 +328,7 @@ describe('collectFbt', () => {
         [
           'example1.react.js',
           `
-            const fbt = require('fbtee');
+            import { fbt } from 'fbtee';
             <fbt desc="some desc">
               This is a{' '}
               <b>
@@ -339,7 +339,7 @@ describe('collectFbt', () => {
         [
           './example2.react.js.in',
           `
-            const fbt = require('fbtee');
+            import { fbt } from 'fbtee';
             <fbt desc="some desc">
               Link:
               <a href="https://somewhere.random">link</a>
@@ -352,7 +352,7 @@ describe('collectFbt', () => {
   describe('fbt nodes:', () => {
     it('should expose the FbtElementNodes when needed', async () => {
       const ret = await collect(
-        `const fbt = require('fbtee');
+        `import { fbt } from 'fbtee';
           <fbt desc="some desc">
             This is a
             <a className="neatoLink" href="https://somewhere.random" tabindex={123} id={"uniq"}>
@@ -377,7 +377,7 @@ describe('collectFbt', () => {
 
     it('should expose the FbtElementNodes where there are two nested React elements', async () => {
       const ret = await collect(
-        `const fbt = require('fbtee');
+        `import { fbt } from 'fbtee';
         <fbt desc="example 1">
           <fbt:param name="name" gender={this.state.ex1Gender}>
             <b className="padRight">{this.state.ex1Name}</b>

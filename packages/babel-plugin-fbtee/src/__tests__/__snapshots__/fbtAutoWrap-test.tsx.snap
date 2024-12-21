@@ -2,7 +2,7 @@
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1;
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 (fbt_sv_arg_0 = fbt._name("bar", bar, g)),
   (fbt_sv_arg_1 = fbt._plural(num, "baz")),
   fbt._(
@@ -107,7 +107,7 @@ const { fbt } = require("fbtee");
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings and a subject gender 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 (fbt_sv_arg_0 = fbt._subject(g0)),
   (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
   (fbt_sv_arg_2 = fbt._plural(num, "foo")),
@@ -301,7 +301,7 @@ const { fbt } = require("fbtee");
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings with substrings that look identical 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 (fbt_sv_arg_0 = fbt._subject(g0)),
   (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
   (fbt_sv_arg_2 = fbt._pronoun(1, g2)),
@@ -607,7 +607,7 @@ const { fbt } = require("fbtee");
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should auto wrap a simple test with a nested level 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -670,7 +670,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should auto wrap a simple test with one level 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -711,7 +711,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should work with multiple <fbt> calls in one file 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 /*#__PURE__*/ React.createElement(
   "div",
   null,
@@ -789,7 +789,7 @@ const { fbt } = require("fbtee");
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a <fbt> child nested in an explicit <fbt:param> 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "d", text: "{explicit fbt param}" } },
@@ -843,7 +843,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a <fbt> child next to an explicit <fbt:param> 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -895,7 +895,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a single unwrapped <fbt> child and a string above 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -958,7 +958,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a single unwrapped <fbt> child and a string below 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -999,7 +999,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a string next to an explicit <fbt:param> that has a implicit <fbt:param> within it 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1059,7 +1059,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap an outer and inner child 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1124,7 +1124,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap explicit params nested in implicit params with [] 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1291,7 +1291,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two children with one nested level 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1380,7 +1380,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two nested next to each other 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1490,7 +1490,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two nested next to each other with an extra level 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1624,7 +1624,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two unwrapped <fbt> children 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -1682,7 +1682,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two unwrapped <fbt> children and 1 nested 1`] = `
-const { fbt } = require("fbtee");
+import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
     jsfbt: {

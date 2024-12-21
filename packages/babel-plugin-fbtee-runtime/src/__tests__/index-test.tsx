@@ -5,7 +5,7 @@ import fbtee from '@nkzw/babel-plugin-fbtee';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
 import {
   assertSourceAstEqual,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from '@nkzw/babel-plugin-fbtee/src/__tests__/FbtTestUtil.tsx';
 import fbteeRuntime from '../index.tsx';
 
@@ -23,10 +23,10 @@ const runTest = (data: { input: string; output: string }) =>
 describe('Test hash key generation', () => {
   it('should generate hash key for simply string', () => {
     const data = {
-      input: withFbtRequireStatement(`
+      input: withFbtImportStatement(`
         fbt('Foo', 'Bar');
       `),
-      output: withFbtRequireStatement(`
+      output: withFbtImportStatement(`
         fbt._('Foo', null, {hk: '3ktBJ2'});
       `),
     };
@@ -35,7 +35,7 @@ describe('Test hash key generation', () => {
 
   it('should generate hash key for nested fbts', () => {
     const data = {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `<fbt desc="d">
           <fbt:param
             name="two
@@ -47,7 +47,7 @@ lines">
           test
         </fbt>;`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `fbt._(
           '{two lines} test',
           [
@@ -117,10 +117,10 @@ lines">
 describe('Test enum hash keys generation', () => {
   it('should generate single hash key for fbt with enum under regular mode', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`,
       ),
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `fbt._(
             {
               "a": "Foo A",
@@ -143,7 +143,7 @@ describe('Test enum hash keys generation', () => {
 
 test('Test replacing clear token names with mangled tokens', () => {
   const data = {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">
           <b>Your</b>
           friends
@@ -157,7 +157,7 @@ test('Test replacing clear token names with mangled tokens', () => {
         </fbt>;`,
     ),
     output: `var fbt_sv_arg_0;
-      const { fbt } = require("fbtee");
+      import { fbt } from "fbtee";
       fbt_sv_arg_0 = fbt._plural(ex1.count, "number"),
       fbt._(
         {

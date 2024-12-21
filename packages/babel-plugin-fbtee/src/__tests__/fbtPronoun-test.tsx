@@ -4,7 +4,7 @@ import {
   assertSourceAstEqual,
   payload,
   transform,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 function runTest(
@@ -19,7 +19,7 @@ function runTest(
 describe('fbt pronoun support', () => {
   it('"capitalize" option accepts boolean literal true', () => {
     runTest({
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt(
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
@@ -27,7 +27,7 @@ describe('fbt pronoun support', () => {
           );`,
       ),
 
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
           ${payload({
             jsfbt: {
@@ -56,7 +56,7 @@ describe('fbt pronoun support', () => {
 
   it('Should throw when using non-Boolean option value', () => {
     // Note: Using StringLiteral '"true"' instead of BooleanLiteral 'true'.
-    const input = withFbtRequireStatement(
+    const input = withFbtImportStatement(
       `var x = fbt(
         'Today is ' +
           fbt.pronoun('possessive', gender, {human: 'true'}) +
@@ -71,7 +71,7 @@ describe('fbt pronoun support', () => {
 
   it('Should throw when using non-Boolean option value in a template', () => {
     // Note: Using StringLiteral '"true"' instead of BooleanLiteral 'true'.
-    const input = withFbtRequireStatement(
+    const input = withFbtImportStatement(
       `var x = fbt(
         \`Today is \${fbt.pronoun('possessive', gender, {
           human: 'true',
@@ -86,7 +86,7 @@ describe('fbt pronoun support', () => {
 
   it('Should throw when using unknown "usage" value', () => {
     // Note: Using "possession" instead of "possessive".
-    const input = withFbtRequireStatement(
+    const input = withFbtImportStatement(
       `var x = fbt(
         'Today is ' +
           fbt.pronoun('possession', gender, {human: false}) +
@@ -104,7 +104,7 @@ describe('fbt pronoun support', () => {
     runTest({
       input:
         // I.e. Wish them a happy birthday.
-        withFbtRequireStatement(
+        withFbtImportStatement(
           `var x = fbt(
             'Wish ' +
               fbt.pronoun('object', gender, {human: true}) +
@@ -113,7 +113,7 @@ describe('fbt pronoun support', () => {
           );`,
         ),
 
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
           ${payload({
             jsfbt: {
