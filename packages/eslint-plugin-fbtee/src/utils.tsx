@@ -105,6 +105,20 @@ export function resolveNodeValue(
     return resolveNodeValue(node.expression);
   }
 
+  if (node.type === 'ConditionalExpression') {
+    const consequent = resolveNodeValue(node.consequent);
+    const alternate = resolveNodeValue(node.alternate);
+
+    return consequent || alternate || null;
+  }
+
+  if (node.type === 'LogicalExpression') {
+    const left = resolveNodeValue(node.left);
+    const right = resolveNodeValue(node.right);
+
+    return left || right || null;
+  }
+
   return null;
 }
 
