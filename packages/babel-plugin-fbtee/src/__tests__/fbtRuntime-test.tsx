@@ -1,18 +1,17 @@
 import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import { describe, it } from '@jest/globals';
-import fbtee from '@nkzw/babel-plugin-fbtee';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
+import fbtee from '../index.tsx';
 import {
   assertSourceAstEqual,
   withFbtImportStatement,
-} from '@nkzw/babel-plugin-fbtee/src/__tests__/FbtTestUtil.tsx';
-import fbteeRuntime from '../index.tsx';
+} from './FbtTestUtil.tsx';
 
 const transform = (source: string) =>
   transformSync(source, {
     ast: false,
-    plugins: [fbtAutoImport, fbtee, fbteeRuntime],
+    plugins: [fbtAutoImport, fbtee],
     presets: [presetReact],
     sourceType: 'module',
   })?.code || '';

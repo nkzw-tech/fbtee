@@ -29,7 +29,6 @@
   "devDependencies": {},
   "peerDependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",
-    "@nkzw/babel-plugin-fbtee-runtime": "workspace:^",
     "react": "^19.0.0"
   }
 }
