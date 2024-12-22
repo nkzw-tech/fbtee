@@ -7,7 +7,7 @@ import {
   payload,
   testSection,
   transform,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 type TestCase = Readonly<{
@@ -23,21 +23,21 @@ type TestCases = Record<string, TestCase>;
 
 const testCases: TestCases = {
   'should accept well-formed options': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `fbt('A string that moved files', 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
       });`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `fbt(['A string that moved files'], 'options!', {
         author: 'jwatson',
         project: 'Super Secret',
       });`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `fbt._(
         ${payload({
           jsfbt: {
@@ -54,7 +54,7 @@ const testCases: TestCases = {
   },
 
   'should allow description concatenation': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'A short string',
         'With a ridiculously long description that' +
@@ -62,7 +62,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -80,8 +80,8 @@ const testCases: TestCases = {
   'should avoid creating identifers with conflicted name when there exist inner strings and string variations':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var fbt_sv_arg_2 = 2;
         function a(fbt_sv_arg_3) {
           var fbt_sv_arg_0 = 1;
@@ -105,8 +105,8 @@ const testCases: TestCases = {
         }`,
       ),
 
-      output: withFbtRequireStatement(
-        `var React = require('react');
+      output: withFbtImportStatement(
+        `import React from 'react';
         var fbt_sv_arg_2 = 2;
         function a(fbt_sv_arg_3) {
           var fbt_sv_arg_1, fbt_sv_arg_4;
@@ -252,18 +252,18 @@ const testCases: TestCases = {
     },
 
   'should be able to nest within React nodes': {
-    input: withFbtRequireStatement(
-      `var React = require('react');
+    input: withFbtImportStatement(
+      `import React from 'react';
       var x = <div>{fbt('A nested string', 'nested!')}</div>;`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
-      `var React = require('react');
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
       var x = <div>{fbt(['A nested string'], 'nested!')}</div>;`,
     ),
 
-    output: withFbtRequireStatement(
-      `var React = require('react');
+    output: withFbtImportStatement(
+      `import React from 'react';
       var x = React.createElement(
         'div',
         null,
@@ -283,11 +283,11 @@ const testCases: TestCases = {
   },
 
   'should convert simple strings': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt('A simple string', "It's simple");`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'A simple string',
@@ -296,7 +296,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -312,7 +312,7 @@ const testCases: TestCases = {
   },
 
   'should deduplicate branches when fbt.enum() calls share the same key': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Look! ' +
           fbt.enum('groups', {
@@ -331,7 +331,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Look! ',
@@ -351,7 +351,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -385,7 +385,7 @@ const testCases: TestCases = {
 
   'should deduplicate branches when fbt.enum() calls share the same key in string templates':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var x = fbt(
           \`Look!  \${fbt.enum('groups', {
             groups: 'Groups',
@@ -400,7 +400,7 @@ const testCases: TestCases = {
         );`,
       ),
 
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -434,17 +434,17 @@ const testCases: TestCases = {
 
   'should get project from docblock': {
     input: `/** @fbt {"project": "dev"}*/
-      ${withFbtRequireStatement(
+      ${withFbtImportStatement(
         `var x = fbt('Also simple string', "It's simple");`,
       )}`,
 
     inputWithArraySyntax: `/** @fbt {"project": "dev"}*/
-      ${withFbtRequireStatement(
+      ${withFbtImportStatement(
         `var x = fbt(['Also simple string'], "It's simple");`,
       )}`,
 
     output: `/** @fbt {"project": "dev"}*/
-      ${withFbtRequireStatement(
+      ${withFbtImportStatement(
         `var x = fbt._(
           ${payload({
             jsfbt: {
@@ -462,8 +462,8 @@ const testCases: TestCases = {
 
   'should handle JSX fbt with multiple levels of nested strings': {
     input: '',
-    inputWithArraySyntax: withFbtRequireStatement(
-      `var React = require('react');
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
       <fbt desc="example 1">
         <b className="padRight">
           <fbt:enum enum-range={['today', 'yesterday']} value={enumVal} />
@@ -489,8 +489,8 @@ const testCases: TestCases = {
     /* eslint-disable sort-keys-fix/sort-keys-fix */
     output: `
       var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3;
-      const { fbt } = require("fbtee");
-      var React = require('react');
+      import { fbt } from "fbtee";
+      import React from 'react';
       (
         fbt_sv_arg_0 = fbt._enum(enumVal, {"today": "today", "yesterday": "yesterday"}),
         fbt_sv_arg_1 = fbt._param(
@@ -929,8 +929,8 @@ const testCases: TestCases = {
 
   'should handle JSX fbt with two nested React elements': {
     input: '',
-    inputWithArraySyntax: withFbtRequireStatement(
-      `var React = require('react');
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
       <fbt desc="example 1">
         <fbt:param name="name" gender={this.state.ex1Gender}>
           <b className="padRight">{this.state.ex1Name}</b>
@@ -952,8 +952,8 @@ const testCases: TestCases = {
 
     output: `
       var fbt_sv_arg_0, fbt_sv_arg_1;
-      const { fbt } = require('fbtee');
-      var React = require('react');
+      import { fbt } from 'fbtee';
+      import React from 'react';
       (
         fbt_sv_arg_0 = fbt._param(
           "name",
@@ -1094,8 +1094,8 @@ const testCases: TestCases = {
 
   'should handle a JSX fragment nested with fbt.param as an argument': {
     input: '',
-    inputWithArraySyntax: withFbtRequireStatement(
-      `var React = require('react');
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
       var x = fbt(
         [
           'A1 ',
@@ -1123,8 +1123,8 @@ const testCases: TestCases = {
 
     output: `
       var fbt_sv_arg_0;
-      const { fbt } = require("fbtee");
-      var React = require('react');
+      import { fbt } from "fbtee";
+      import React from 'react';
       var x = (fbt_sv_arg_0 = fbt._subject(subjectValue), fbt._(
         ${payload({
           jsfbt: {
@@ -1193,7 +1193,7 @@ const testCases: TestCases = {
   },
 
   'should handle duplicate enums': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Look! ' +
           fbt.enum('groups', {
@@ -1212,7 +1212,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Look! ',
@@ -1233,7 +1233,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1266,14 +1266,14 @@ const testCases: TestCases = {
   },
 
   'should handle enums (with array values)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Click to see ' + fbt.enum('groups', ['groups', 'photos', 'videos']),
         'enum as an array',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Click to see ',
@@ -1283,7 +1283,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1316,7 +1316,7 @@ const testCases: TestCases = {
   },
 
   'should handle enums (with enum range as variable)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var aEnum = require('Test$FbtEnum');
       var x = fbt(
         'Click to see ' + fbt.enum('id1', aEnum),
@@ -1324,7 +1324,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var aEnum = require('Test$FbtEnum');
       var x = fbt(
         [
@@ -1335,7 +1335,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var aEnum = require('Test$FbtEnum');
       var x = fbt._(
         ${payload({
@@ -1365,7 +1365,7 @@ const testCases: TestCases = {
   },
 
   'should handle enums (with value map)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Click to see ' +
           fbt.enum('id1', {id1: 'groups', id2: 'photos', id3: 'videos'}),
@@ -1373,7 +1373,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Click to see ',
@@ -1383,7 +1383,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1416,14 +1416,14 @@ const testCases: TestCases = {
   },
 
   'should handle enums with more text after': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Hello, ' + fbt.enum('groups', ['groups', 'photos', 'videos']) + '!',
         'enums!',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Hello, ',
@@ -1433,7 +1433,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1466,7 +1466,7 @@ const testCases: TestCases = {
   },
 
   'should handle multiple plurals with no showCount (i.e. no named params)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'There ' +
         fbt.plural('is ', count, {many: 'are '}) +
@@ -1475,7 +1475,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'There ',
@@ -1485,7 +1485,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1519,14 +1519,14 @@ const testCases: TestCases = {
   },
 
   'should handle names': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'You just friended ' + fbt.name('name', personname, gender),
         'names',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'You just friended ',
@@ -1535,7 +1535,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1559,7 +1559,7 @@ const testCases: TestCases = {
   },
 
   'should handle object pronoun': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
           'I know ' +
             fbt.pronoun('object', gender) +
@@ -1568,7 +1568,7 @@ const testCases: TestCases = {
         );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
           [
             'I know ',
@@ -1579,7 +1579,7 @@ const testCases: TestCases = {
         );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1610,7 +1610,7 @@ const testCases: TestCases = {
   },
 
   'should handle params': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'A parameterized message to ' +
           fbt.param('personName', truthy ? ifTrue : ifFalse),
@@ -1618,7 +1618,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'A parameterized message to ',
@@ -1628,7 +1628,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1645,7 +1645,7 @@ const testCases: TestCases = {
   },
 
   'should handle plurals that have different count variables': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         fbt.plural('cat', catCount, {name: 'cat_token', showCount: 'yes'}) +
         ' and ' +
@@ -1654,7 +1654,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           fbt.plural('cat', catCount, {name: 'cat_token', showCount: 'yes'}),
@@ -1665,7 +1665,7 @@ const testCases: TestCases = {
       )`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1715,7 +1715,7 @@ const testCases: TestCases = {
   },
 
   'should handle plurals that share the same count variable': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'There ' +
           fbt.plural('was ', count, {showCount: 'no', many: 'were '}) +
@@ -1724,7 +1724,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'There ',
@@ -1735,7 +1735,7 @@ const testCases: TestCases = {
       )`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1771,7 +1771,7 @@ const testCases: TestCases = {
   'should handle possessive pronoun': {
     input:
       // I.e. It is her birthday.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           'It is ' + fbt.pronoun('possessive', gender) + ' birthday.',
           'possessive pronoun',
@@ -1780,7 +1780,7 @@ const testCases: TestCases = {
 
     inputWithArraySyntax:
       // I.e. It is her birthday.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           [
             'It is ',
@@ -1790,7 +1790,7 @@ const testCases: TestCases = {
         );`,
       ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1819,7 +1819,7 @@ const testCases: TestCases = {
   'should handle subject and reflexive pronouns': {
     input:
       // I.e. He wished himself a happy birthday.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           fbt.pronoun('subject', gender, {capitalize: true, human: true}) +
             ' wished ' +
@@ -1831,7 +1831,7 @@ const testCases: TestCases = {
 
     inputWithArraySyntax:
       // I.e. He wished himself a happy birthday.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           [
             fbt.pronoun('subject', gender, {capitalize: true, human: true}),
@@ -1842,7 +1842,7 @@ const testCases: TestCases = {
         );`,
       ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1878,14 +1878,14 @@ const testCases: TestCases = {
   },
 
   'should handle variations': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'Click to see ' + fbt.param('count', c, {number: true}) + ' links',
         'variations!',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'Click to see ',
@@ -1895,7 +1895,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -1919,7 +1919,7 @@ const testCases: TestCases = {
   },
 
   'should handle variations + same param': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var val = 42;
       fbt(
         'You have ' +
@@ -1931,7 +1931,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var val = 42;
       fbt(
         [
@@ -1944,7 +1944,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var val = 42;
       fbt._(
         ${payload({
@@ -1969,13 +1969,13 @@ const testCases: TestCases = {
   },
 
   'should handler wrapping parens': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt('foo' + 'bar' + 'baz' + 'qux', 'desc');
       var y = fbt('foo' + ('bar' + 'baz' + 'qux'), 'desc');
       var q = fbt('foo' + 'bar' + ('baz' + 'qux'), 'desc');`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           ('foo'),
@@ -2002,7 +2002,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -2040,14 +2040,14 @@ const testCases: TestCases = {
   },
 
   'should insert param in place of fbt.sameParam if it exists': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name1'),
         'd',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           fbt.param('name1', val1),
@@ -2057,7 +2057,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var z = fbt._(
         ${payload({
           jsfbt: {
@@ -2075,7 +2075,7 @@ const testCases: TestCases = {
 
   // Initially needed for JS source maps accuracy
   'should maintain intra-argument newlines': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         fbt.param(
           'name1',
@@ -2093,7 +2093,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           fbt.param(
@@ -2112,7 +2112,7 @@ const testCases: TestCases = {
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var z = fbt._(
         ${payload({
           jsfbt: {
@@ -2141,7 +2141,7 @@ const testCases: TestCases = {
   },
 
   'should maintain newlines': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'A simple string... ' +
         'with some other stuff.',
@@ -2150,7 +2150,7 @@ const testCases: TestCases = {
       baz();`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -2170,7 +2170,7 @@ const testCases: TestCases = {
   // This is useful only for testing column/line coordinates
   // Newlines are not preserved in the extracted fbt string
   'should maintain newlines when using string templates': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         \`A simple string...
 with some other stuff.\`,
@@ -2179,7 +2179,7 @@ with some other stuff.\`,
       baz();`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           \`A simple string...
@@ -2190,7 +2190,7 @@ with some other stuff.\`
       baz();`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -2208,7 +2208,7 @@ with some other stuff.\`
 
   // Initially needed for JS source maps accuracy
   'should maintain newlines within arguments': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         'a' +
         ' b ' +
@@ -2222,7 +2222,7 @@ with some other stuff.\`
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           'a',
@@ -2237,7 +2237,7 @@ with some other stuff.\`
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var z = fbt._(
         ${payload({
           jsfbt: {
@@ -2256,8 +2256,8 @@ with some other stuff.\`
   'should not throw for string with a nested JSX fragment and string variation arguments':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2278,8 +2278,8 @@ with some other stuff.\`
       ),
 
       output: `var fbt_sv_arg_0, fbt_sv_arg_1;
-      const { fbt } = require("fbtee");
-      var React = require('react');
+      import { fbt } from "fbtee";
+      import React from 'react';
       var x = (
         fbt_sv_arg_0 = fbt._param("count", someRandomFunction(), [0]),
         fbt_sv_arg_1 = fbt._plural(catCount, "cat_token", someValueFunction()),
@@ -2368,7 +2368,7 @@ with some other stuff.\`
 
   'should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name':
     {
-      input: withFbtRequireStatement(
+      input: withFbtImportStatement(
         `var z = fbt(
         'a ' +
         fbt.name(
@@ -2384,7 +2384,7 @@ with some other stuff.\`
       );`,
       ),
 
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           'a ',
@@ -2401,7 +2401,7 @@ with some other stuff.\`
       );`,
       ),
 
-      output: withFbtRequireStatement(
+      output: withFbtImportStatement(
         `var z = fbt._(
         ${payload({
           jsfbt: {
@@ -2444,11 +2444,11 @@ with some other stuff.\`
     },
 
   'should respect the doNotExtract option': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt('A doNotExtract string', "should not be extracted", {doNotExtract: true});`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'A doNotExtract string',
@@ -2458,7 +2458,7 @@ with some other stuff.\`
       );`,
     ),
 
-    output: withFbtRequireStatement(
+    output: withFbtImportStatement(
       `var x = fbt._(
         ${payload({
           jsfbt: {
@@ -2476,8 +2476,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested class instantiation.':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2503,8 +2503,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:enum).':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2530,8 +2530,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:name).':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2557,8 +2557,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:param with gender).':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2584,8 +2584,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:param with number).':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2611,8 +2611,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:plural).':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2638,8 +2638,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:pronoun)':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2665,8 +2665,8 @@ with some other stuff.\`
   'should throw for string with a nested JSX fragment and subject gender contains function calls':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
-        `var React = require('react');
+      inputWithArraySyntax: withFbtImportStatement(
+        `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -2692,14 +2692,14 @@ with some other stuff.\`
     },
 
   'should throw if the sameParam refers to a plural construct': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         fbt.plural('cat', count, {value: someValueFunction(), name: 'tokenName', showCount: 'yes'}) + ' and ' + fbt.sameParam('tokenName'),
         'd',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           fbt.plural('cat', count, {value: someValueFunction(), name: 'tokenName', showCount: 'yes'}),
@@ -2717,7 +2717,7 @@ with some other stuff.\`
   'should throw if the token name of a sameParam construct in a nested string is not defined':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           fbt.param('name', val1),
@@ -2736,14 +2736,14 @@ with some other stuff.\`
     },
 
   'should throw if the token name of a sameParam construct is not defined': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         fbt.param('name1', val1) + ' and ' + fbt.sameParam('name2'),
         'd',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           fbt.param('name1', val1),
@@ -2759,14 +2759,14 @@ with some other stuff.\`
   },
 
   'should throw on bad showCount value': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {showCount: 'badkey'}),
         'plurals',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'There were ',
@@ -2781,7 +2781,7 @@ with some other stuff.\`
   'should throw on pronoun usage invalid': {
     input:
       // Note 'POSSESSION' instead of 'possessive'.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           'It is ' + fbt.pronoun('POSSESSION', gender) + ' birthday.',
           'throw because of unknown pronoun type',
@@ -2790,7 +2790,7 @@ with some other stuff.\`
 
     inputWithArraySyntax:
       // Note 'POSSESSION' instead of 'possessive'.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var x = fbt(
           [
             'It is ',
@@ -2809,7 +2809,7 @@ with some other stuff.\`
   'should throw on pronoun usage not StringLiteral': {
     input:
       // Note use of variable for pronoun usage.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var u = 'possessive';
         var x = fbt(
           'It is ' + fbt.pronoun(u, gender) + ' birthday.',
@@ -2819,7 +2819,7 @@ with some other stuff.\`
 
     inputWithArraySyntax:
       // Note use of variable for pronoun usage.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `var u = 'possessive';
         var x = fbt(
           [
@@ -2835,14 +2835,14 @@ with some other stuff.\`
   },
 
   'should throw on unknown options': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = fbt(
         'There were ' + fbt.plural('a like', count, {whatisthis: 'huh?'}),
         'plurals',
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
         [
           'There were ',
@@ -2855,7 +2855,7 @@ with some other stuff.\`
   },
 
   'should throw when a fbt.param is nested inside a fbt.name': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         'a ' +
         fbt.name('name', fbt.param('paramName', val2), gender) +
@@ -2864,7 +2864,7 @@ with some other stuff.\`
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           'a ',
@@ -2880,7 +2880,7 @@ with some other stuff.\`
   },
 
   'should throw when a fbt.param is nested inside another fbt.param': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         'a ' +
         fbt.param('name', fbt.param('name2', val2)) +
@@ -2889,7 +2889,7 @@ with some other stuff.\`
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           'a ',
@@ -2905,7 +2905,7 @@ with some other stuff.\`
   },
 
   'should throw when a fbt.param is used outside of fbt': {
-    input: withFbtRequireStatement(`var z = fbt.param('name', val);`),
+    input: withFbtImportStatement(`var z = fbt.param('name', val);`),
 
     throws:
       `Fbt constructs can only be used within the scope of an fbt` +
@@ -2916,7 +2916,7 @@ with some other stuff.\`
   'should throw when concatenating an fbt construct to a string while using the array argument syntax':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var x = fbt(
           [
             'It is ' + fbt.pronoun('possessive', gender) + ' birthday.'
@@ -2932,7 +2932,7 @@ with some other stuff.\`
   'should throw when multiple tokens have the same names due to implicit params':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           'Hello ',
@@ -2949,7 +2949,7 @@ with some other stuff.\`
   'should throw when multiple tokens have the same names due to implicit params and an fbt.param':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           'Hello ',
@@ -2966,7 +2966,7 @@ with some other stuff.\`
   'should throw when multiple tokens have the same names due to implicit params and an fbt.plural':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           'Hello ',
@@ -2985,7 +2985,7 @@ with some other stuff.\`
   'should throw when multiple tokens have the same names due to implicit params and fbt.enum':
     {
       input: '',
-      inputWithArraySyntax: withFbtRequireStatement(
+      inputWithArraySyntax: withFbtImportStatement(
         `var z = fbt(
         [
           'Hello ',
@@ -3002,7 +3002,7 @@ with some other stuff.\`
     },
 
   'should throw when two arguments have the same names': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var z = fbt(
         'a ' +
         fbt.param('name', val1) +
@@ -3012,7 +3012,7 @@ with some other stuff.\`
       );`,
     ),
 
-    inputWithArraySyntax: withFbtRequireStatement(
+    inputWithArraySyntax: withFbtImportStatement(
       `var z = fbt(
         [
           'a ',

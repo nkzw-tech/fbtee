@@ -57,13 +57,13 @@ export const snapshotTransformKeepJsx = (
 ): Promise<string> =>
   transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
 
-export function withFbsRequireStatement(code: string): string {
-  return `const { fbs } = require("fbtee");
+export function withFbsImportStatement(code: string): string {
+  return `import { fbs } from "fbtee";
   ${code}`;
 }
 
-export function withFbtRequireStatement(code: string): string {
-  return `const { fbt } = require("fbtee");
+export function withFbtImportStatement(code: string): string {
+  return `import { fbt } from "fbtee";
   ${code}`;
 }
 

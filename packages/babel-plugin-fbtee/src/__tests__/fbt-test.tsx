@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import {
   jsCodeFbtCallSerializer,
   snapshotTransform,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
@@ -12,7 +12,7 @@ describe('fbt() API: ', () => {
     it('should accept "subject" as a parameter', () => {
       expect(
         snapshotTransform(
-          withFbtRequireStatement(`fbt("Foo", "Bar", {subject: foo});`),
+          withFbtImportStatement(`fbt("Foo", "Bar", {subject: foo});`),
         ),
       ).toMatchSnapshot();
     });
@@ -22,7 +22,7 @@ describe('fbt() API: ', () => {
     it('should accept "subject" as a parameter', () => {
       expect(
         snapshotTransform(
-          withFbtRequireStatement('fbt(`Foo`, "Bar", {subject: foo});'),
+          withFbtImportStatement('fbt(`Foo`, "Bar", {subject: foo});'),
         ),
       ).toMatchSnapshot();
     });
@@ -33,7 +33,7 @@ describe('Test double-lined params', () => {
   it('should remove the new line for param names that are two lines', () => {
     expect(
       snapshotTransform(
-        withFbtRequireStatement(
+        withFbtImportStatement(
           `<fbt desc="d">
           <fbt:param
             name="two
@@ -85,7 +85,7 @@ describe('fbt variable binding detection', () => {
 test('fragments inside of <fbt:param>', () => {
   expect(
     snapshotTransform(
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `<fbt desc="d">
           <fbt:param name="param">
             <>

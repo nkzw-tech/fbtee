@@ -164,7 +164,7 @@ export default class FbtFunctionCallProcessor {
     if (!this.nodeChecker.isJSModuleBound<typeof path.node>(path)) {
       throw errorAt(
         path.node,
-        `${moduleName} is not bound. Did you forget to require('${moduleName}')?`,
+        `${moduleName} is not bound. Did you forget to import ${moduleName}?`,
       );
     }
     return this;

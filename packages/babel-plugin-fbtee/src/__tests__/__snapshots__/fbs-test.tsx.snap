@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a common string 1`] = `
-const { fbs } = require("fbtee");
+import { fbs } from "fbtee";
 const fbsCommonElem = fbs._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "Button to post a comment", text: "Post" } },
@@ -12,7 +12,7 @@ const fbsCommonElem = fbs._(
 `;
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a simple string 1`] = `
-const { fbs } = require("fbtee");
+import { fbs } from "fbtee";
 const fbsElem = fbs._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "str_description", text: "a simple string" } },
@@ -23,7 +23,7 @@ const fbsElem = fbs._(
 `;
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a string with a parameter 1`] = `
-const { fbs } = require("fbtee");
+import { fbs } from "fbtee";
 const fbsElem = fbs._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -38,8 +38,8 @@ const fbsElem = fbs._(
 `;
 
 exports[`Test declarative (jsx) <fbs> syntax translation should handle <fbs:enum> 1`] = `
-const { fbs } = require("fbtee");
-let aEnum = require("Test$FbtEnum");
+import { fbs } from "fbtee";
+import aEnum from "Test$FbtEnum";
 var x = fbs._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -58,7 +58,7 @@ var x = fbs._(
 `;
 
 exports[`Test functional fbs() syntax translation should convert a common string 1`] = `
-const { fbs } = require("fbtee");
+import { fbs } from "fbtee";
 const fbsCommonCall = fbs._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "Button to post a comment", text: "Post" } },
@@ -69,7 +69,7 @@ const fbsCommonCall = fbs._(
 `;
 
 exports[`Test functional fbs() syntax translation should convert a simple string 1`] = `
-const { fbs } = require("fbtee");
+import { fbs } from "fbtee";
 const fbsCall = fbs._(
   /* __FBT__ start */ {
     jsfbt: { m: [], t: { desc: "str_description", text: "a simple string" } },
@@ -80,8 +80,8 @@ const fbsCall = fbs._(
 `;
 
 exports[`Test functional fbs() syntax translation should convert a string with a gender parameter 1`] = `
-const { fbs } = require("fbtee");
-const IntlVariations = require("IntlVariations");
+import { fbs } from "fbtee";
+import IntlVariations from "IntlVariations";
 const fbsCall = fbs._(
   /* __FBT__ start */ {
     jsfbt: {
@@ -98,8 +98,8 @@ const fbsCall = fbs._(
 `;
 
 exports[`Test functional fbs() syntax translation should handle fbs.enum 1`] = `
-const { fbs } = require("fbtee");
-let aEnum = require("Test$FbtEnum");
+import { fbs } from "fbtee";
+import aEnum from "Test$FbtEnum";
 var x = fbs._(
   /* __FBT__ start */ {
     jsfbt: {

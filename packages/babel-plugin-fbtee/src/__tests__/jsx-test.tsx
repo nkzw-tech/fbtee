@@ -3,14 +3,14 @@ import {
   jsCodeFbtCallSerializer,
   snapshotTransformKeepJsx,
   testSectionAsync,
-  withFbtRequireStatement,
+  withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 const testData = {
   'Enable explicit whitespace': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="squelched">
         <fbt:param name="one">{one}</fbt:param>
         {" "}
@@ -22,7 +22,7 @@ const testData = {
   },
 
   'Squelch whitespace when in an expression': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x =
         <fbt desc="squelched">
           {"Squelched white space... "}
@@ -34,7 +34,7 @@ const testData = {
   },
 
   'fbt:param with multiple children should error': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         <fbt:param name="foo">
           {foo}
@@ -47,7 +47,7 @@ const testData = {
   },
 
   'fbt:param with multiple empty expression containers should be ok': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         <fbt:param name="foo">
           {}
@@ -60,7 +60,7 @@ const testData = {
   },
 
   'should be able to house arbitrary markup within fbt:param nodes': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<div>
         <fbt desc="...">
           <fbt:param name="time">{formatDate(date, "F d, Y")}</fbt:param>
@@ -76,7 +76,7 @@ const testData = {
   },
 
   'should be able to nest within React nodes': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <div>
         <fbt desc="nested!">
           A nested string
@@ -86,13 +86,13 @@ const testData = {
   },
 
   'should convert simple strings': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="It's simple">A simple string</fbt>;`,
     ),
   },
 
   'should correctly destruct expression values in options': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">str
         <fbt:param name="count" number={someNum}>
           {getNum()}
@@ -102,7 +102,7 @@ const testData = {
   },
 
   'should filter comment and empty expressions from children': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="It's simple">
         {
         }A sim{/*
@@ -113,7 +113,7 @@ const testData = {
   },
 
   'should handle common string': {
-    input: withFbtRequireStatement(`<fbt common={true}>Done</fbt>`),
+    input: withFbtImportStatement(`<fbt common={true}>Done</fbt>`),
 
     options: {
       fbtCommon: { Done: 'The description for the common string "Done"' },
@@ -121,7 +121,7 @@ const testData = {
   },
 
   'should handle concatenated descriptions': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc={"A very long description " + "that we will concatenate " +
         "a few times"}
         project={"With" + "a" + "project"}>
@@ -131,7 +131,7 @@ const testData = {
   },
 
   'should handle empty string': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="a message!">
         A parameterized message to:
         <fbt:param name="emptyString"> </fbt:param>
@@ -140,7 +140,7 @@ const testData = {
   },
 
   'should handle enums (with array values)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="enums!">
         Click to see
         <fbt:enum
@@ -156,7 +156,7 @@ const testData = {
   },
 
   'should handle enums (with object values)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="enums!">
         Click to see
         <fbt:enum
@@ -172,7 +172,7 @@ const testData = {
   },
 
   'should handle enums with more text': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="enums!">
         Click to see
         <fbt:enum
@@ -189,7 +189,7 @@ const testData = {
   },
 
   'should handle fbt common attribute without value': {
-    input: withFbtRequireStatement(`<fbt common>Okay</fbt>`),
+    input: withFbtImportStatement(`<fbt common>Okay</fbt>`),
 
     options: {
       fbtCommon: { Okay: 'The description for the common string "Okay"' },
@@ -197,7 +197,7 @@ const testData = {
   },
 
   'should handle number={true} - (same output as above test)': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="variations!">
         Click to see
         <fbt:param name="count" number={true}>{c}</fbt:param>
@@ -207,7 +207,7 @@ const testData = {
   },
 
   'should handle object pronoun': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc={"d"} project={"p"}>
           I know <fbt:pronoun type="object" gender={gender}/>.
         </fbt>;`,
@@ -215,7 +215,7 @@ const testData = {
   },
 
   'should handle params': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="a message!">
           A parameterized message to:
           <fbt:param name="personName">{theName}</fbt:param>
@@ -224,7 +224,7 @@ const testData = {
   },
 
   'should handle single expression with concentated strings': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="foo">
         {"foo" + "bar"}
       </fbt>`,
@@ -234,7 +234,7 @@ const testData = {
   'should handle subject+reflexive pronouns': {
     input:
       // She wished herself a happy birthday.
-      withFbtRequireStatement(
+      withFbtImportStatement(
         `<fbt desc={"d"} project={"p"}>
           <fbt:pronoun type="subject" gender={gender} capitalize={true} human={true}/>
           wished <fbt:pronoun type="reflexive" gender={gender} human={true}/> a happy birthday.
@@ -243,7 +243,7 @@ const testData = {
   },
 
   'should handle template descriptions': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc={\`A very long description
         that will be a
         template across multiple lines\`}
@@ -254,7 +254,7 @@ const testData = {
   },
 
   'should handle variations': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x = <fbt desc="variations!">
         Click to see
         <fbt:param name="count" number="true">{c}</fbt:param>
@@ -264,7 +264,7 @@ const testData = {
   },
 
   'should ignore __private attributes': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt __self="fbt" desc="some-desc">
         <fbt:param __self="param" name="foo">
           {foo}
@@ -274,7 +274,7 @@ const testData = {
   },
 
   'should ignore non-expression children in fbt:param': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         <fbt:param name="foo">
           !{foo}!
@@ -284,7 +284,7 @@ const testData = {
   },
 
   'should insert param value for same-param': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="d">str
         <fbt:param name="foo">{Bar}</fbt:param> and
         <fbt:same-param name="foo"/>
@@ -293,7 +293,7 @@ const testData = {
   },
 
   'should maintain order of params and enums': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         Hello,
         <fbt:param name="foo">
@@ -308,7 +308,7 @@ const testData = {
   },
 
   'should not insert extra space': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="Greating in i18n demo">
         Hello, <fbt:param name="guest">
           {guest}
@@ -318,7 +318,7 @@ const testData = {
   },
 
   'should strip out more newlines': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x =
         <fbt desc="moar lines">
           A simple string...
@@ -329,7 +329,7 @@ const testData = {
   },
 
   'should strip out newlines': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `var x =
         <fbt desc="Test trailing space when not last child">
           Preamble
@@ -340,7 +340,7 @@ const testData = {
   },
 
   'should support html escapes': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="foo &quot;bar&quot;">&times;</fbt>`,
     ),
   },
@@ -348,7 +348,7 @@ const testData = {
   'should support non-breasking space character': {
     // multiple spaces are normalized to a single space
     // but &nbsp characters are preserved
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="desc with    non-breaking&nbsp;&nbsp;&nbsp;space">
           text with    non-breaking&nbsp;&nbsp;&nbsp;space
       </fbt>`,
@@ -356,7 +356,7 @@ const testData = {
   },
 
   'should support unicode characters': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `// A backslash \\ in comments
       <fbt desc="unicode characters">
         A copyright sign {'\\u00A9'},
@@ -368,7 +368,7 @@ const testData = {
 
   'should throw for fbt that has description and common attribute (without value)':
     {
-      input: withFbtRequireStatement(`<fbt common={true} desc='d'>No</fbt>`),
+      input: withFbtImportStatement(`<fbt common={true} desc='d'>No</fbt>`),
 
       options: {
         fbtCommon: { No: 'The description for the common string "No"' },
@@ -378,7 +378,7 @@ const testData = {
     },
 
   'should throw for strings with `common` attribute equal to false': {
-    input: withFbtRequireStatement(`<fbt common={false}>Yes</fbt>`),
+    input: withFbtImportStatement(`<fbt common={false}>Yes</fbt>`),
 
     options: {
       fbtCommon: { Yes: 'The description for the common string "Yes"' },
@@ -388,7 +388,7 @@ const testData = {
   },
 
   'should throw on invalid attributes in fbt:param': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="some-desc">
         <fbt:param name="foo" qux="foo" desc="foo-desc">
           {foo}
@@ -400,7 +400,7 @@ const testData = {
   },
 
   'should throw on undefined common string': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt common={true}>Some undefined common string</fbt>`,
     ),
 
@@ -410,7 +410,7 @@ const testData = {
   },
 
   'should treat multiline descs as a single line': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<fbt desc="hi how are you today im doing well i guess
         how is your mother is she well yeah why not lets go
         home and never come back.">
@@ -420,7 +420,7 @@ const testData = {
   },
 
   'should work with fragments': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<Fragment>
         <fbt desc="...">
           <fbt:param name="time">{formatDate(date, "F d, Y")}</fbt:param>
@@ -436,7 +436,7 @@ const testData = {
   },
 
   'should work with implicit fragments': {
-    input: withFbtRequireStatement(
+    input: withFbtImportStatement(
       `<>
         <fbt desc="...">
           <fbt:param name="time">{formatDate(date, "F d, Y")}</fbt:param>
@@ -460,20 +460,21 @@ describe('Test declarative (jsx) fbt syntax translation', () =>
 describe('Test fbt transforms without the jsx transform', () => {
   it('not nested', async () => {
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require("fbtee");
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         let x =
           <fbt desc="nested!">
             A nested string
           </fbt>;
       `),
+      ),
     ).toMatchSnapshot(); // Should be like fbt._()
   });
 
   it('nested in div', async () => {
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require("fbtee");
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         let x =
           <div>
             <fbt desc="nested!">
@@ -481,35 +482,38 @@ describe('Test fbt transforms without the jsx transform', () => {
             </fbt>
           </div>;
       `),
+      ),
     ).toMatchSnapshot(); // Should be like <div>{fbt._()}</div>
   });
 
   it('short bool syntax for doNotExtract attribute', async () => {
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require("fbtee");
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         let x = <fbt desc="" doNotExtract>Test</fbt>;
       `),
+      ),
     ).toMatchSnapshot();
   });
 
   it('short bool syntax for number attribute', async () => {
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require("fbtee");
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         let x =
           <fbt desc="">
             <fbt:param name="name" number>{'name'}</fbt:param>
           </fbt>;
       `),
+      ),
     ).toMatchSnapshot();
   });
 
   describe('when using within template literals', () => {
     it('should work with a basic <fbt>', async () => {
       expect(
-        await snapshotTransformKeepJsx(`
-          const fbt = require("fbtee");
+        await snapshotTransformKeepJsx(
+          withFbtImportStatement(`
           html\`<div>
             \${
               <fbt desc="some desc" project="some project">
@@ -518,13 +522,14 @@ describe('Test fbt transforms without the jsx transform', () => {
             }
           </div>\`;
         `),
+        ),
       ).toMatchSnapshot();
     });
 
     it('should work with basic <fbt> auto-parameterization', async () => {
       expect(
-        await snapshotTransformKeepJsx(`
-          const fbt = require("fbtee");
+        await snapshotTransformKeepJsx(
+          withFbtImportStatement(`
           html\`<div>
             \${
               <fbt desc="some desc" project="some project">
@@ -536,13 +541,14 @@ describe('Test fbt transforms without the jsx transform', () => {
             }
           </div>\`;
         `),
+        ),
       ).toMatchSnapshot();
     });
 
     it('should dedupe plurals', async () => {
       expect(
-        await snapshotTransformKeepJsx(`
-          const fbt = require("fbtee");
+        await snapshotTransformKeepJsx(
+          withFbtImportStatement(`
           <fbt desc="desc...">
             There
             <fbt:plural count={num} many="are">is</fbt:plural>{' '}
@@ -551,13 +557,14 @@ describe('Test fbt transforms without the jsx transform', () => {
             </fbt:plural>.
           </fbt>
         `),
+        ),
       ).toMatchSnapshot();
     });
 
     it('should work with a nested <fbt> within an <fbt:param>', async () => {
       expect(
-        await snapshotTransformKeepJsx(`
-          const fbt = require("fbtee");
+        await snapshotTransformKeepJsx(
+          withFbtImportStatement(`
           html\`<div>
             \${
               <fbt desc="some desc" project="some project">
@@ -580,6 +587,7 @@ describe('Test fbt transforms without the jsx transform', () => {
             }
           </div>\`;
         `),
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -587,20 +595,21 @@ describe('Test fbt transforms without the jsx transform', () => {
   // TODO: Fix preserving whitespace for JSX text.
   it('should fail to preserve whitespace in text when preserveWhitespace=true (known bug)', async () => {
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require('fbtee');
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         <fbt desc="desc with 3   spaces" preserveWhitespace={true}>
           Some text with 3   spaces in between.
         </fbt>;
       `),
+      ),
     ).toMatchSnapshot();
   });
 
   // TODO: We should NOT insert a space between two <fbt:plural>'s
   it(`[legacy buggy behavior] <fbt:pronoun> should insert a space character between two fbt constructs that don't neighbor raw text`, async () =>
     expect(
-      await snapshotTransformKeepJsx(`
-        const fbt = require("fbtee");
+      await snapshotTransformKeepJsx(
+        withFbtImportStatement(`
         <fbt desc="">
           You can add
           <fbt:plural count={count} many="these">
@@ -612,6 +621,7 @@ describe('Test fbt transforms without the jsx transform', () => {
           to anything.
         </fbt>
       `),
+      ),
     ).toMatchSnapshot());
 });
 
@@ -621,18 +631,16 @@ test('Test common fbt with value-less `common` attribute should have same runtim
   };
   expect(
     await snapshotTransformKeepJsx(
-      `
-        const fbt = require("fbtee");
+      withFbtImportStatement(`
         let x = <fbt common>Submit</fbt>;
-      `,
+      `),
       options,
     ),
   ).toEqual(
     await snapshotTransformKeepJsx(
-      `
-        const fbt = require("fbtee");
+      withFbtImportStatement(`
         let x = <fbt common={true}>Submit</fbt>;
-      `,
+      `),
       options,
     ),
   );
