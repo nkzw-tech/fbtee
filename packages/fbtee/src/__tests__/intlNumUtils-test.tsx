@@ -208,9 +208,6 @@ describe('intlNumUtils:', () => {
       expect(intlNumUtils.formatNumber(12_345.1, 1)).toBe('12345#1');
       // Above the thousand separator threshold.
       expect(intlNumUtils.formatNumber(123_456.1, 1)).toBe('123456#1');
-
-      // Clean up.
-      jest.resetModules();
     });
   });
 
@@ -275,7 +272,6 @@ describe('intlNumUtils:', () => {
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.1)).toBe(
         '12,34,567.1',
       );
-      jest.resetModules();
     });
 
     it('Should render native digits when available', () => {
@@ -293,7 +289,6 @@ describe('intlNumUtils:', () => {
       expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.1)).toBe(
         '\u0967\u0968,\u0969\u096A,\u096B\u096C\u096D.\u0967',
       );
-      jest.resetModules();
     });
 
     it('Should respect user locale for number formatting', () => {
@@ -314,9 +309,6 @@ describe('intlNumUtils:', () => {
       expect(
         intlNumUtils.formatNumberWithThousandDelimiters(123_456.1, 1),
       ).toBe('123/456#1');
-
-      // Clean up.
-      jest.resetModules();
     });
   });
 
@@ -512,9 +504,6 @@ describe('intlNumUtils:', () => {
           '\u0661\u0662\u0663\u066c\u0664\u0665\u0666\u066b\u0667\u0668\u0669',
         ),
       ).toBe(123_456.789); // decimal
-
-      // Clean up.
-      jest.resetModules();
     });
 
     it('Should parse numbers with Persian keyboard input characters', () => {
@@ -549,9 +538,6 @@ describe('intlNumUtils:', () => {
           '-\u06f1\u06f2\u06f3\u066C\u06f4\u06f5\u06f6\u066C\u06f7\u06f8\u06f9',
         ),
       ).toBe(-123_456_789);
-
-      // Clean up.
-      jest.resetModules();
     });
   });
 

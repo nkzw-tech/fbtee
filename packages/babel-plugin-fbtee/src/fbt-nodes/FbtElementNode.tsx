@@ -45,6 +45,7 @@ import { GenderStringVariationArg } from './FbtArguments.tsx';
 import FbtEnumNode from './FbtEnumNode.tsx';
 import FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
 import type FbtImplicitParamNodeType from './FbtImplicitParamNode.tsx';
+import FbtListNode from './FbtListNode.tsx';
 import FbtNameNode from './FbtNameNode.tsx';
 import type { AnyFbtNode, FbtChildNode } from './FbtNode.tsx';
 import FbtNode from './FbtNode.tsx';
@@ -110,6 +111,7 @@ const childNodeClasses = new Map(
     FbtNameNode,
     FbtParamNode,
     FbtPluralNode,
+    FbtListNode,
     FbtPronounNode,
     FbtSameParamNode,
   ].map(
@@ -235,10 +237,10 @@ export default class FbtElementNode
   }
 
   /**
-   * Run some sanity checks before producing text
+   * Run some checks before producing text
    * @throws if some fbt nodes in the tree have duplicate token names
    */
-  static beforeGetTextSanityCheck(
+  static beforeGetTextCheck(
     instance: FbtElementNode | FbtImplicitParamNodeType,
     argsMap: StringVariationArgsMap,
   ) {
@@ -252,16 +254,16 @@ export default class FbtElementNode
   }
 
   /**
-   * Run some sanity checks before producing text
+   * Run some checks before producing text
    * @throws if some fbt nodes in the tree have duplicate token names
    */
-  _beforeGetTextSanityCheck(argsMap: StringVariationArgsMap) {
-    FbtElementNode.beforeGetTextSanityCheck(this, argsMap);
+  _beforeGetTextCheck(argsMap: StringVariationArgsMap) {
+    FbtElementNode.beforeGetTextCheck(this, argsMap);
   }
 
   override getText(argsMap: StringVariationArgsMap): string {
     try {
-      this._beforeGetTextSanityCheck(argsMap);
+      this._beforeGetTextCheck(argsMap);
       return getTextFromFbtNodeTree(
         this,
         argsMap,
@@ -291,7 +293,7 @@ export default class FbtElementNode
    * @see IFbtElementNode#getDescription
    */
   getDescription(_args: StringVariationArgsMap): string {
-    const [_, descriptionNode] = this.getCallNodeArguments() || [];
+    const [, descriptionNode] = this.getCallNodeArguments() || [];
     invariant(
       descriptionNode != null,
       'fbt description argument cannot be found',

@@ -2,6 +2,7 @@
 
 import type { FbtTableKey, PatternString } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';
+import { ReactElement } from 'react';
 import FbtResult from './FbtResult.tsx';
 import type {
   ParamVariationType,
@@ -22,6 +23,7 @@ import {
   getGenderVariations,
   getNumberVariations,
 } from './IntlVariationResolver.tsx';
+import list, { Conjunction, Delimiter } from './list.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
 import type { BaseResult, NestedFbtContentItems } from './Types.d.ts';
 
@@ -125,17 +127,14 @@ export function createRuntime<P, T extends BaseResult>({
             }
           }
 
-          substitutions = getAllSubstitutions(args);
           invariant(table !== null, 'Table access failed');
+          substitutions = getAllSubstitutions(args);
         }
 
         const patternString = Array.isArray(table) ? table[0] : table;
         if (typeof patternString !== 'string') {
           throw new Error(
-            'Table access did not result in string: ' +
-              (table === undefined ? 'undefined' : JSON.stringify(table)) +
-              ', Type: ' +
-              typeof table,
+            `Table access did not result in string: ${table === undefined ? 'undefined' : JSON.stringify(table)}, Type: ${typeof table}`,
           );
         }
 
@@ -171,9 +170,19 @@ export function createRuntime<P, T extends BaseResult>({
         }
         return FbtTableAccessor.getEnumResult(value);
       },
-
       _implicitParam: (label: string, value: P, variations?: Variations) =>
         param(label, value, variations),
+      _list: (
+        label: string,
+        items: ReadonlyArray<string | ReactElement | null | undefined>,
+        conjunction?: Conjunction,
+        delimiter?: Delimiter,
+      ) => [
+        null,
+        {
+          [label]: list(items, conjunction, delimiter),
+        },
+      ],
 
       _name: (label: string, value: P, gender: GenderConst) =>
         FbtTableAccessor.getGenderResult(getGenderVariations(gender), {

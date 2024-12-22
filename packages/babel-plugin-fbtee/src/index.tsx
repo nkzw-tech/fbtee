@@ -149,9 +149,8 @@ export type Phrase = FbtCallSiteOptions & {
   line_end: number;
   project: string;
 } & ObjectWithJSFBT;
-type ChildToParentMap = {
-  [childIndex: number]: number;
-};
+
+type ChildToParentMap = Map<number, number>;
 
 /**
  * Default options passed from a docblock.
@@ -200,7 +199,7 @@ export default function transform() {
       validFbtExtraOptions = pluginOptions.extraOptions || {};
       initDefaultOptions(visitor);
       allMetaPhrases = [];
-      childToParent = {};
+      childToParent = new Map();
     },
     visitor: {
       /**
@@ -267,7 +266,7 @@ export default function transform() {
             addMetaPhrase(metaPhrase, pluginOptions);
 
             if (metaPhrase.parentIndex != null) {
-              addEnclosingString(
+              childToParent.set(
                 index + initialPhraseCount,
                 metaPhrase.parentIndex + initialPhraseCount,
               );
@@ -307,9 +306,7 @@ export default function transform() {
               ) {
                 throw errorAt(
                   path.node,
-                  `Fbt constructs can only be used within the scope of an fbt` +
-                    ` string. I.e. It should be used directly inside an ` +
-                    `‹fbt› / ‹fbs› callsite`,
+                  `fbt constructs must be used within the scope of other fbt constructs.`,
                 );
               }
             },
@@ -352,10 +349,6 @@ function addMetaPhrase(metaPhrase: MetaPhrase, pluginOptions: PluginOptions) {
   });
 }
 
-function addEnclosingString(childIdx: number, parentIdx: number) {
-  childToParent[childIdx] = parentIdx;
-}
-
 function getEnumManifest(opts: PluginOptions): EnumManifest | null {
   const { fbtEnumManifest, fbtEnumPath, fbtEnumToPath } = opts;
   if (fbtEnumManifest != null) {
@@ -377,7 +370,7 @@ export function getExtractedStrings(): Array<Phrase> {
 }
 
 export function getChildToParentRelationships(): ChildToParentMap {
-  return childToParent || {};
+  return childToParent;
 }
 
 export function getFbtElementNodes(): Array<PlainFbtNode> {

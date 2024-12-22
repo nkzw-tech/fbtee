@@ -1,10 +1,18 @@
+import { afterEach, describe, it, jest } from '@jest/globals';
 import { jsCodeNonASCIICharSerializer } from '../../__tests__/FbtTestUtil.tsx';
 import { Options, processJSON } from '../translateUtils.tsx';
 
 expect.addSnapshotSerializer(jsCodeNonASCIICharSerializer);
 
+const consoleError = console.error;
+
+afterEach(() => {
+  console.error = consoleError;
+});
+
 function testTranslateNewPhrases(options: Options) {
   it('should not throw on missing translations', async () => {
+    console.error = jest.fn();
     const result = await processJSON(
       {
         phrases: [
@@ -43,6 +51,7 @@ function testTranslateNewPhrases(options: Options) {
       options,
     );
     expect(result).toMatchSnapshot();
+    expect(console.error).toHaveBeenCalled();
   });
 
   it('should translate string with no variation', async () => {

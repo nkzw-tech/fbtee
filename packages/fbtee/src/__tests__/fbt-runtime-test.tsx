@@ -8,7 +8,7 @@ import intlNumUtils from '../intlNumUtils.tsx';
 // in jest tests. We might need to move these modules inside beforeEach().
 // These ones can stay here for now since they have a consistent behavior across this test suite.
 import IntlVariations from '../IntlVariations.tsx';
-import IntlViewerContext from '../IntlViewerContext.tsx';
+import IntlViewerContext from '../ViewerContext.tsx';
 
 const ONE = String(IntlVariations.NUMBER_ONE);
 const FEW = String(IntlVariations.NUMBER_FEW);

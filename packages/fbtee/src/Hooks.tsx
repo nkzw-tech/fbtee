@@ -5,7 +5,6 @@ import type {
 } from '@nkzw/babel-plugin-fbtee';
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
-import IntlViewerContext from './IntlViewerContext.tsx';
 import type {
   BaseResult,
   FbtErrorContext,
@@ -13,6 +12,7 @@ import type {
   NestedFbtContentItems,
   PureStringResult,
 } from './Types.d.ts';
+import IntlViewerContext from './ViewerContext.tsx';
 
 export type ResolverFn<T extends BaseResult> = (
   contents: NestedFbtContentItems,

@@ -96,10 +96,7 @@ export const FbtBooleanOptions = {
 } as const;
 
 export const CommonOption = 'common';
-export const FbtCallMustHaveAtLeastOneOfTheseAttributes = new Set([
-  'desc',
-  CommonOption,
-]);
+export const RequiredFbtAttributes = new Set(['desc', CommonOption]);
 
 export const FbtRequiredAttributes = {
   desc: true,

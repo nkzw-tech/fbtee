@@ -26,6 +26,6 @@
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["packages/*/lib/", "node_modules"],
+  "exclude": ["packages/*/lib/", "packages/*/lib-tmp/", "node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]
 }

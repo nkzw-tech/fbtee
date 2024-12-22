@@ -93,7 +93,7 @@ export default class FbtImplicitParamNode
 
   override getText(argsMap: StringVariationArgsMap): string {
     try {
-      FbtElementNode.beforeGetTextSanityCheck(this, argsMap);
+      FbtElementNode.beforeGetTextCheck(this, argsMap);
       return getTextFromFbtNodeTree(
         this,
         argsMap,

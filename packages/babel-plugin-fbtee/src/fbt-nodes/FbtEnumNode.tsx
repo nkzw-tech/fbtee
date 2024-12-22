@@ -161,7 +161,7 @@ export default class FbtEnumNode extends FbtNode<
   }
 
   override getFbtRuntimeArg(): CallExpression {
-    const [_, rangeArg] = this.getCallNodeArguments() || [];
+    const [, rangeArg] = this.getCallNodeArguments() || [];
 
     let runtimeRange = null;
     if (isIdentifier(rangeArg)) {

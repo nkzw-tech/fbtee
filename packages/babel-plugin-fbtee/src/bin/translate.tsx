@@ -92,7 +92,7 @@ const argv = y
   .default('fbt-hash-module', false)
   .describe(
     'fbt-hash-module',
-    `Similar to --${'jenkins'}, but pass the hash-module of your choice.  The ` +
+    `Similar to --jenkins, but pass the hash-module of your choice.  The ` +
       'module should export a function with the same signature and operation ' +
       'of fbt-hash-module',
   )

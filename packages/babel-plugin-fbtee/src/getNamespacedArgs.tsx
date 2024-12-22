@@ -1,7 +1,10 @@
 import {
+  isJSXExpressionContainer,
+  isStringLiteral,
   JSXElement,
   jsxExpressionContainer,
   Node,
+  nullLiteral,
   stringLiteral,
 } from '@babel/types';
 import { ConcreteFbtNodeType } from './fbt-nodes/FbtNodeType.tsx';
@@ -18,6 +21,7 @@ import {
   errorAt,
   expandStringConcat,
   filterEmptyNodes,
+  getAttributeByName,
   getAttributeByNameOrThrow,
   getOptionsFromAttributes,
   normalizeSpaces,
@@ -25,57 +29,71 @@ import {
 
 export default function getNamespacedArgs(
   moduleName: string,
-): Record<ConcreteFbtNodeType, (node: JSXElement) => Array<Node | null>> {
+): Record<ConcreteFbtNodeType, (node: JSXElement) => Array<Node>> {
   return {
-    /**
-     * <fbt:enum> or <FbtEnum>
-     */
     enum(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
-        throw errorAt(node, `Expected ${moduleName}:enum to be selfClosing.`);
+        throw errorAt(node, `Expected ${moduleName}:enum to be self closing.`);
       }
 
-      const rangeAttr = getAttributeByNameOrThrow(
-        node.openingElement.attributes,
-        'enum-range',
-      );
-
-      if (rangeAttr.value?.type !== 'JSXExpressionContainer') {
+      const range = getAttributeByNameOrThrow(node, 'enum-range');
+      if (range.value?.type !== 'JSXExpressionContainer') {
         throw errorAt(
           node,
           'Expected JSX Expression for enum-range attribute but got ' +
-            rangeAttr.value?.type,
+            range.value?.type,
         );
       }
 
-      const valueAttr = getAttributeByNameOrThrow(
-        node.openingElement.attributes,
-        'value',
-      );
-
-      if (valueAttr.value?.type === 'JSXExpressionContainer') {
-        return [valueAttr.value.expression, rangeAttr.value.expression];
-      } else if (valueAttr.value?.type === 'StringLiteral') {
-        return [valueAttr.value, rangeAttr.value.expression];
+      const value = getAttributeByNameOrThrow(node, 'value');
+      if (value.value?.type === 'JSXExpressionContainer') {
+        return [value.value.expression, range.value.expression];
+      } else if (value.value?.type === 'StringLiteral') {
+        return [value.value, range.value.expression];
       }
 
       throw errorAt(
         node,
-        `Expected value attribute of <${moduleName}:enum> to be an expression ` +
-          `but got ${valueAttr.value?.type}`,
+        `Expected value attribute of <${moduleName}:enum> to be an expression but got ${value.value?.type}`,
       );
     },
 
-    /**
-     * <fbt:name> or <FbtName>
-     */
+    list(node: JSXElement) {
+      if (!node.openingElement.selfClosing) {
+        throw errorAt(node, `Expected ${moduleName}:list to be self closing.`);
+      }
+
+      const name = getAttributeByNameOrThrow(node, 'name').value;
+      const items = getAttributeByNameOrThrow(node, 'items');
+
+      if (!isJSXExpressionContainer(items.value)) {
+        throw errorAt(
+          node,
+          `${moduleName}:param expects an array as "items" attribute.`,
+        );
+      }
+
+      const conjunction = getAttributeByName(node, 'conjunction');
+      const delimiter = getAttributeByName(node, 'delimiter');
+      return [
+        name,
+        items.value.expression,
+        isStringLiteral(conjunction?.value)
+          ? conjunction.value
+          : isJSXExpressionContainer(conjunction?.value)
+            ? conjunction.value
+            : nullLiteral(),
+        isStringLiteral(delimiter?.value)
+          ? delimiter.value
+          : isJSXExpressionContainer(delimiter?.value)
+            ? delimiter.value.expression
+            : nullLiteral(),
+      ];
+    },
+
     name(node: JSXElement) {
-      const attributes = node.openingElement.attributes;
-      const nameAttribute = getAttributeByNameOrThrow(attributes, 'name').value;
-      const genderAttribute = getAttributeByNameOrThrow(
-        attributes,
-        'gender',
-      ).value;
+      const name = getAttributeByNameOrThrow(node, 'name').value;
+      const genderAttribute = getAttributeByNameOrThrow(node, 'gender').value;
 
       const children = filterEmptyNodes(node.children).filter(
         (child) =>
@@ -97,20 +115,17 @@ export default function getNamespacedArgs(
       }
 
       return [
-        nameAttribute,
+        name,
         singularArg,
         genderAttribute?.type === 'JSXExpressionContainer'
           ? genderAttribute.expression
-          : null,
+          : nullLiteral(),
       ];
     },
 
-    /**
-     * <fbt:param> or <FbtParam>
-     */
     param(node: JSXElement) {
       const attributes = node.openingElement.attributes;
-      const nameAttr = getAttributeByNameOrThrow(attributes, 'name');
+      const name = getAttributeByNameOrThrow(node, 'name').value;
       const options = getOptionsFromAttributes(
         attributes,
         ValidParamOptions,
@@ -125,9 +140,7 @@ export default function getNamespacedArgs(
         );
       });
 
-      // <fbt:param> </fbt:param>
-      // should be the equivalent of
-      // <fbt:param>{' '}</fbt:param>
+      // <fbt:param> </fbt:param> should be the equivalent of <fbt:param>{' '}</fbt:param>
       if (
         children.length === 0 &&
         node.children.length === 1 &&
@@ -146,16 +159,15 @@ export default function getNamespacedArgs(
         );
       }
 
-      const nameAttrValue = nameAttr.value;
       if (
-        nameAttrValue?.type === 'StringLiteral' &&
-        nameAttrValue.loc &&
-        nameAttrValue.loc.end.line > nameAttrValue.loc.start.line
+        name?.type === 'StringLiteral' &&
+        name.loc &&
+        name.loc.end.line > name.loc.start.line
       ) {
-        nameAttrValue.value = normalizeSpaces(nameAttrValue.value);
+        name.value = normalizeSpaces(name.value);
       }
       const paramArgs = [
-        nameAttrValue,
+        name,
         (children[0].type === 'JSXExpressionContainer' &&
           children[0].expression) ||
           children[0],
@@ -168,9 +180,6 @@ export default function getNamespacedArgs(
       return paramArgs;
     },
 
-    /**
-     * <fbt:plural> or <FbtPlural>
-     */
     plural(node: JSXElement) {
       const attributes = node.openingElement.attributes;
       const options = getOptionsFromAttributes(
@@ -178,7 +187,7 @@ export default function getNamespacedArgs(
         PluralOptions,
         PluralRequiredAttributes,
       );
-      const countAttr = getAttributeByNameOrThrow(attributes, 'count').value;
+      const count = getAttributeByNameOrThrow(node, 'count').value;
       const children = filterEmptyNodes(node.children).filter(
         (child) =>
           child.type === 'JSXText' || child.type === 'JSXExpressionContainer',
@@ -197,20 +206,17 @@ export default function getNamespacedArgs(
           singularNode,
       );
       const singularArg = stringLiteral(
-        normalizeSpaces(singularText.value).trimRight(),
+        normalizeSpaces(singularText.value).trimEnd(),
       );
       return [
         singularArg,
-        countAttr?.type === 'JSXExpressionContainer'
-          ? countAttr.expression
-          : null,
+        count?.type === 'JSXExpressionContainer'
+          ? count.expression
+          : nullLiteral(),
         options,
       ];
     },
 
-    /**
-     * <fbt:pronoun> or <FbtPronoun>
-     */
     pronoun(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
         throw errorAt(
@@ -220,8 +226,8 @@ export default function getNamespacedArgs(
       }
 
       const attributes = node.openingElement.attributes;
-      const typeAttr = getAttributeByNameOrThrow(attributes, 'type').value;
-      if (typeAttr?.type !== 'StringLiteral') {
+      const typeAttribute = getAttributeByNameOrThrow(node, 'type').value;
+      if (typeAttribute?.type !== 'StringLiteral') {
         throw errorAt(
           node,
           `${moduleName}:pronoun attribute "type" must have StringLiteral content`,
@@ -230,7 +236,7 @@ export default function getNamespacedArgs(
       if (
         !Object.prototype.hasOwnProperty.call(
           ValidPronounUsages,
-          typeAttr.value,
+          typeAttribute.value,
         )
       ) {
         throw errorAt(
@@ -240,9 +246,9 @@ export default function getNamespacedArgs(
             ']',
         );
       }
-      const result: Array<Node> = [stringLiteral(typeAttr.value)];
 
-      const genderExpr = getAttributeByNameOrThrow(attributes, 'gender').value;
+      const result: Array<Node> = [stringLiteral(typeAttribute.value)];
+      const genderExpr = getAttributeByNameOrThrow(node, 'gender').value;
       if (genderExpr?.type === 'JSXExpressionContainer') {
         result.push(genderExpr.expression);
       }
@@ -259,9 +265,6 @@ export default function getNamespacedArgs(
       return result;
     },
 
-    /**
-     * <fbt:same-param> or <FbtSameParam>
-     */
     sameParam(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
         throw errorAt(
@@ -270,12 +273,7 @@ export default function getNamespacedArgs(
         );
       }
 
-      const nameAttr = getAttributeByNameOrThrow(
-        node.openingElement.attributes,
-        'name',
-      );
-
-      return [nameAttr.value];
+      return [getAttributeByNameOrThrow(node, 'name').value];
     },
   };
 }

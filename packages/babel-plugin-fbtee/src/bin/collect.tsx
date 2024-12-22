@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import path, { resolve } from 'node:path';
 import yargs from 'yargs';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
@@ -12,9 +13,9 @@ import {
   getPackagers,
 } from './collectFbtUtils.tsx';
 import type {
-  ChildParentMappings,
   IFbtCollector,
   PackagerPhrase,
+  RawChildParentMappings,
 } from './FbtCollector.tsx';
 
 /**
@@ -39,13 +40,12 @@ export type CollectFbtOutput = {
    *   Index 1: phrase for "to the {=jungle}"
    *   Index 2: phrase for "jungle"
    *
-   * Consequently, `childParentMappings` will be:
+   * Consequently, `childParentMappings` maps from childIndex to parentIndex:
    *
    * ```
    * "childParentMappings": {
-   *   // childIndex: parentIndex
-   *   "1": 0,
-   *   "2": 1
+   *   1: 0,
+   *   2: 1,
    * }
    * ```
    *
@@ -53,7 +53,7 @@ export type CollectFbtOutput = {
    * The phrase at index 1 has a parent at index 0.
    * The phrase at index 2 has a parent at index 1; so it's a grand-child.
    */
-  childParentMappings: ChildParentMappings;
+  childParentMappings: RawChildParentMappings;
   /**
    * List fbt element nodes (which in a sense represents the fbt DOM tree) for each fbt callsite
    * found in the source code.
@@ -80,112 +80,105 @@ export type CollectFbtOutput = {
 
 export type CollectFbtOutputPhrase = CollectFbtOutput['phrases'][number];
 
-const args = {
-  COMMON_STRINGS: 'fbt-common-path',
-  CUSTOM_COLLECTOR: 'custom-collector',
-  GEN_FBT_NODES: 'gen-fbt-nodes',
-  GEN_OUTER_TOKEN_NAME: 'gen-outer-token-name',
-  HASH: 'hash-module',
-  HELP: 'h',
-  MANIFEST: 'manifest',
-  OPTIONS: 'options',
-  PACKAGER: 'packager',
-  PLUGINS: 'plugins',
-  PRESETS: 'presets',
-  PRETTY: 'pretty',
-  TRANSFORM: 'transform',
-} as const;
-
 const y = yargs(process.argv.slice(2));
 const argv = y
   .usage('Collect fbt instances from source:\n$0 [options]')
-  .string(args.HASH)
-  .describe(args.HASH, 'Path to hashing module to use in text packager.')
-  .default(args.PACKAGER, 'text')
+  .string('hash-module')
+  .describe('hash-module', 'Path to hashing module to use in text packager.')
+  .default('packager', 'text')
   .describe(
-    args.PACKAGER,
+    'packager',
     'Packager to use.  Choices are:\n' +
       "  'text' - hashing is done at the text (or leaf) level (more granular)\n" +
       "'phrase' - hashing is done at the phrase (entire fbt callsite) level\n" +
       "  'both' - Both phrase and text hashing are performed\n" +
       "  'none' - No hashing or alteration of phrase data\n",
   )
-  .choices(args.PACKAGER, Object.values(packagerTypes))
-  .describe(args.HELP, 'Display usage message')
-  .alias(args.HELP, 'help')
-  .boolean(args.MANIFEST)
-  .default(args.MANIFEST, false)
+  .choices('packager', Object.values(packagerTypes))
+  .describe('h', 'Display usage message')
+  .alias('h', 'help')
+  .boolean('manifest')
+  .default('manifest', false)
   .describe(
-    args.MANIFEST,
+    'manifest',
     'Interpret stdin as JSON map of {<enum-manifest-file>: ' +
       '[<source_file1>, ...]}. Otherwise stdin itself will be parsed',
   )
-  .string(args.COMMON_STRINGS)
-  .default(args.COMMON_STRINGS, '')
+  .string('fbt-common-path')
+  .default('fbt-common-path', '')
   .describe(
-    args.COMMON_STRINGS,
+    'fbt-common-path',
     'Optional path to the common strings module. ' +
       'This is a map from {[text]: [description]}.',
   )
-  .boolean(args.PRETTY)
-  .default(args.PRETTY, false)
-  .describe(args.PRETTY, 'Pretty-print the JSON output')
-  .boolean(args.GEN_OUTER_TOKEN_NAME)
-  .default(args.GEN_OUTER_TOKEN_NAME, false)
+  .boolean('pretty')
+  .default('pretty', false)
+  .describe('pretty', 'Pretty-print the JSON output')
+  .boolean('gen-outer-token-name')
+  .default('gen-outer-token-name', false)
   .describe(
-    args.GEN_OUTER_TOKEN_NAME,
+    'gen-outer-token-name',
     'Generate the outer token name of an inner string in the JSON output. ' +
       'E.g. For the fbt string `<fbt>Hello <i>World</i></fbt>`, ' +
       'the outer string is "Hello {=World}", and the inner string is: "World". ' +
       'So the outer token name of the inner string will be "=World"',
   )
-  .boolean(args.GEN_FBT_NODES)
-  .default(args.GEN_FBT_NODES, false)
+  .boolean('gen-fbt-nodes')
+  .default('gen-fbt-nodes', false)
   .describe(
-    args.GEN_FBT_NODES,
+    'gen-fbt-nodes',
     'Generate the abstract representation of the fbt callsites as FbtNode trees.',
   )
-  .string(args.TRANSFORM)
-  .default(args.TRANSFORM, null)
+  .string('transform')
+  .default('transform', null)
   .describe(
-    args.TRANSFORM,
+    'transform',
     'A custom transform to call into rather than the default provided. ' +
       'Expects a signature of (source, options, filename) => mixed, and ' +
       'for babel-pluginf-fbt to be run within the transform.',
   )
-  .array(args.PLUGINS)
-  .default(args.PLUGINS, [])
+  .array('plugins')
+  .default('plugins', [])
   .describe(
-    args.PLUGINS,
+    'plugins',
     'List of auxiliary Babel plugins to enable for parsing source.\n' +
       'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator',
   )
-  .array(args.PRESETS)
-  .default(args.PRESETS, [])
+  .array('presets')
+  .default('presets', [])
   .describe(
-    args.PRESETS,
+    'presets',
     'List of auxiliary Babel presets to enable for parsing source.\n' +
       'E.g. --presets @babel/preset-typescript',
   )
-  .string(args.OPTIONS)
+  .string('options')
   .describe(
-    args.OPTIONS,
+    'options',
     'additional options that fbt(..., {can: "take"}).  ' +
-      `i.e. --${args.OPTIONS} "locale,qux,id"`,
+      `i.e. --options "locale,qux,id"`,
   )
-  .string(args.CUSTOM_COLLECTOR)
+  .string('custom-collector')
   .describe(
-    args.CUSTOM_COLLECTOR,
+    'custom-collector',
     `In some complex scenarios, passing custom Babel presets or plugins to preprocess ` +
       `the input JS is not flexible enough. As an alternative, you can provide your own ` +
       `implementation of the FbtCollector module. ` +
       `It must at least expose the same public methods to expose the extract fbt phrases.\n` +
-      `i.e. --${args.CUSTOM_COLLECTOR} myFbtCollector.js`,
+      `i.e. --custom-collector myFbtCollector.js`,
+  )
+  .boolean('include-default-strings')
+  .default('include-default-strings', true)
+  .describe(
+    'include-default-strings',
+    `Include the default strings required by fbtee, such as for '<fbt:list>'.`,
   )
   .parseSync();
 
+const root = process.cwd();
+const require = createRequire(root);
 const extraOptions: FbtOptionConfig = {};
-const cliExtraOptions = argv[args.OPTIONS];
+const cliExtraOptions = argv['options'];
+
 if (cliExtraOptions) {
   const opts = cliExtraOptions.split(',');
   for (let ii = 0; ii < opts.length; ++ii) {
@@ -199,7 +192,7 @@ async function processJsonSource(collector: IFbtCollector, source: string) {
     let manifest: EnumManifest = {};
     if (existsSync(manifestPath)) {
       manifest = (
-        await import(path.resolve(process.cwd(), manifestPath), {
+        await import(path.resolve(root, manifestPath), {
           with: { type: 'json' },
         })
       ).default;
@@ -214,12 +207,33 @@ async function processJsonSource(collector: IFbtCollector, source: string) {
 
 async function writeOutput(collector: IFbtCollector) {
   const packagers = await getPackagers(
-    argv[args.PACKAGER] || 'text',
-    argv[args.HASH] || null,
+    argv['packager'] || 'text',
+    argv['hash-module'] || null,
   );
   const output = buildCollectFbtOutput(collector, packagers, {
-    genFbtNodes: argv[args.GEN_FBT_NODES],
+    genFbtNodes: argv['gen-fbt-nodes'],
   });
+
+  if (argv['include-default-strings']) {
+    try {
+      const json = (
+        await import(require.resolve('fbtee/Strings.json'), {
+          with: { type: 'json' },
+        })
+      ).default as CollectFbtOutput;
+
+      output.childParentMappings = {
+        ...output.childParentMappings,
+        ...json.childParentMappings,
+      };
+      output.phrases.push(...json.phrases);
+    } catch (error) {
+      console.error(
+        `Attempted to include default strings from 'fbtee', but couldn't locate them.${error instanceof Error ? `\nError: ${error.message}` : ''}`,
+      );
+    }
+  }
+
   process.stdout.write(
     JSON.stringify(output, null, argv.pretty ? ' ' : undefined),
   );
@@ -227,7 +241,7 @@ async function writeOutput(collector: IFbtCollector) {
 }
 
 async function processSource(collector: IFbtCollector, source: string) {
-  await (argv[args.MANIFEST]
+  await (argv['manifest']
     ? processJsonSource(collector, source)
     : collector.collectFromOneFile(source, 'file.js'));
 }
@@ -235,13 +249,13 @@ async function processSource(collector: IFbtCollector, source: string) {
 if (argv.help) {
   y.showHelp();
 } else {
-  const transformPath = argv[args.TRANSFORM];
+  const transformPath = argv['transform'];
   const transform = transformPath
     ? (await import(transformPath)).default
     : null;
 
-  const commonFile = argv[args.COMMON_STRINGS]?.length
-    ? resolve(process.cwd(), argv[args.COMMON_STRINGS])
+  const commonFile = argv['fbt-common-path']?.length
+    ? resolve(root, argv['fbt-common-path'])
     : null;
   const fbtCommon = commonFile?.length
     ? (commonFile.endsWith('.json')
@@ -255,13 +269,13 @@ if (argv.help) {
   const collector = await getFbtCollector(
     {
       fbtCommon,
-      generateOuterTokenName: argv[args.GEN_OUTER_TOKEN_NAME],
-      plugins: argv[args.PLUGINS].map(require),
-      presets: argv[args.PRESETS].map(require),
+      generateOuterTokenName: argv['gen-outer-token-name'],
+      plugins: argv['plugins'].map(require),
+      presets: argv['presets'].map(require),
       transform,
     },
     extraOptions,
-    argv[args.CUSTOM_COLLECTOR],
+    argv['custom-collector'],
   );
 
   if (!argv._.length) {

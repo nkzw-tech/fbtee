@@ -1,3 +1,5 @@
+import { Conjunction } from './src/list.tsx';
+
 enum IntlVariations {
   BITMASK_NUMBER = 28,
   NUMBER_ZERO = 16,
@@ -110,36 +112,51 @@ type FbsOutput = {
 
 type FbtEnumProps = {
   'enum-range': Array<string> | { [enumKey: string]: string };
+  key?: string | null;
   value: string;
 };
 
 type FbtParamProps = ParamOptions & {
+  key?: string | null;
   name: string;
 };
 
 type FbtPluralProps = PluralOptions & {
   count: number;
+  key?: string | null;
 };
 
 type FbtPronounProps = PronounOptions & {
   gender: GenderConst;
+  key?: string | null;
   type: PronounType;
 };
 
 type FbtNameProps = {
   gender: IntlVariations;
+  key?: string | null;
   name: string;
 };
 
 type FbtSameParamProps = {
+  key?: string | null;
   name: string;
 };
 
-type FbtProps =
+type FbtProps = { key?: string | null } & (
   | (FbtOptions & {
       desc: string;
     })
-  | { common: true };
+  | { common: true }
+);
+
+type FbtListProps = {
+  conjunction?: Conjunction;
+  delimiter?: Delimiter;
+  items: Array<string | React.ReactElement | null | undefined>;
+  key?: string | null;
+  name: string;
+};
 
 declare module 'react' {
   namespace JSX {
@@ -158,6 +175,7 @@ declare module 'react' {
       'fbs:same-param': FbtSameParamProps;
       fbt: PropsWithChildren<FbtProps>;
       'fbt:enum': FbtEnumProps;
+      'fbt:list': FbtListProps;
       'fbt:name': PropsWithChildren<FbtNameProps>;
       'fbt:param': PropsWithChildren<FbtParamProps>;
       'fbt:plural': PropsWithChildren<FbtPluralProps>;

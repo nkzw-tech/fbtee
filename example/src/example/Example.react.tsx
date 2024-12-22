@@ -185,7 +185,6 @@ export default function Example() {
               </span>
             </span>
           </fieldset>
-
           <fieldset>
             <span className="sentence example_row">
               <fbt desc="example 1">
@@ -202,7 +201,6 @@ export default function Example() {
               </fbt>
             </span>
           </fieldset>
-
           <fieldset>
             <span className={classNames('example_row', 'example_row--multi')}>
               <span
@@ -286,6 +284,28 @@ export default function Example() {
                 <fbt:enum enum-range={ExampleEnum} value={ex2Object} />.
               </fbt>
             </span>
+          </fieldset>
+          <fieldset>
+            <label>
+              <fbt desc="List example.">
+                Do you want to share a{' '}
+                <fbt:list
+                  conjunction="or"
+                  items={[
+                    <fbt desc="Item in a list." key="photo">
+                      photo
+                    </fbt>,
+                    <fbt desc="Item in a list." key="photo">
+                      link
+                    </fbt>,
+                    <fbt desc="Item in a list." key="video">
+                      video
+                    </fbt>,
+                  ]}
+                  name="list"
+                />?
+              </fbt>
+            </label>
           </fieldset>
           <fieldset>
             <span className="example_row">

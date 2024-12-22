@@ -200,7 +200,7 @@ The open-source version of `fbt`, however, became unmaintained, difficult to set
 - **Easier Setup:** fbtee works with modern tools like Vite.
 - **Statically Typed:** The fbtee compiler ensures correct usage of fbtee, libary TypeScript types are provided, and an eslint plugin helps fix common mistakes.
 - **Improved React Compatibility:** Removed React-specific hacks and added support for implicit React fragments (`<>`).
-- **Enhanced Features:** Fixed and exported `intlList`, which was not functional in the original `fbt`.
+- **Enhanced Features:** Fixed and exported `inltList` as a new `<fbt:list>` construt, which was not functional in the original `fbt`.
 - **Modernized Codebase:** Rewritten using TypeScript, ES modules (ESM), eslint, and modern JavaScript standards. Removed cruft and legacy code.
 - **Updated Tooling:** Uses modern tools like pnpm, Vite, and esbuild for faster and more efficient development of **fbtee**.
 

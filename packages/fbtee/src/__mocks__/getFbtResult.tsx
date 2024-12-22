@@ -1,4 +1,4 @@
-import FbtResult from '../FbtResult.tsx';
+import type FbtResult from '../FbtResult.tsx';
 import type { NestedFbtContentItems } from '../Types.d.ts';
 
 export default function getFbtResult(

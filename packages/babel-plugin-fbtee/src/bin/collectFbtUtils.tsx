@@ -28,7 +28,9 @@ export function buildCollectFbtOutput(
   },
 ): CollectFbtOutput {
   return {
-    childParentMappings: fbtCollector.getChildParentMappings(),
+    childParentMappings: Object.fromEntries(
+      fbtCollector.getChildParentMappings(),
+    ),
     fbtElementNodes: options.genFbtNodes
       ? fbtCollector.getFbtElementNodes()
       : // using `undefined` so that the field is not outputted by JSON.stringify

@@ -3,10 +3,14 @@ const { existsSync, readFileSync } = require('node:fs');
 
 module.exports = {
   extends: ['@nkzw'],
-  ignorePatterns: ['packages/*/lib'],
+  ignorePatterns: ['packages/*/lib', 'packages/fbtee/lib-tmp/'],
   overrides: [
     {
-      files: ['**/__tests__/**/*.tsx'],
+      files: [
+        './packages/babel-plugin-fbtee/src/bin/*.tsx',
+        './packages/fbtee/babel-build.config.js',
+        '**/__tests__/**/*.tsx',
+      ],
       rules: {
         'no-console': 0,
         'workspaces/no-relative-imports': 0,
@@ -29,6 +33,7 @@ module.exports = {
         devDependencies: [
           './example/vite.config.ts',
           './jest-preprocessor.js',
+          './packages/fbtee/babel-build.config.js',
           '**/__tests__/**/*.tsx',
         ],
         packageDir: [__dirname].concat(

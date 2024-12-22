@@ -31,7 +31,6 @@ import FbtElementNode from '../fbt-nodes/FbtElementNode.tsx';
 import FbtImplicitParamNode from '../fbt-nodes/FbtImplicitParamNode.tsx';
 import type { AnyFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { isConcreteFbtNode } from '../fbt-nodes/FbtNodeType.tsx';
-import FbtParamNode from '../fbt-nodes/FbtParamNode.tsx';
 import type {
   BindingName,
   FbtCallSiteOptions,
@@ -463,7 +462,7 @@ export default class FbtFunctionCallProcessor {
             }
 
             if (fbtNode instanceof FbtElementNode) {
-              // gather list of svArgsMap for all args combination for later sanity checks
+              // gather list of svArgsMap for all args combination for later checks
               svArgsMapList.push(svArgsMap);
             } else if (this.pluginOptions.generateOuterTokenName === true) {
               leaf.outerTokenName = fbtNode.getTokenName(svArgsMap);
@@ -565,23 +564,15 @@ export default class FbtFunctionCallProcessor {
               return;
             }
 
-            const parentFbtConstructName =
-              nodeChecker.getFbtNodeType(parentNode);
-            if (
-              parentFbtConstructName &&
-              isConcreteFbtNode(parentFbtConstructName)
-            ) {
+            const parentName = nodeChecker.getFbtNodeType(parentNode);
+            if (parentName && isConcreteFbtNode(parentName)) {
               throw errorAt(
                 parentNode,
-                `Expected fbt constructs to not nest inside fbt constructs, ` +
-                  `but found ` +
-                  `${nodeChecker.moduleName}.${
-                    nullthrows(childFbtConstructName) as string
-                  } ` +
-                  `nest inside ` +
-                  `${nodeChecker.moduleName}.${
-                    nullthrows(parentFbtConstructName) as string
-                  }`,
+                `'fbt' constructs should not be nested inside of other fbt constructs. Found '${nodeChecker.moduleName}.${nullthrows(
+                  childFbtConstructName,
+                )}' nested inside '${nodeChecker.moduleName}.${nullthrows(
+                  parentName,
+                )}'.`,
               );
             }
             parentPath = parentPath.parentPath;
@@ -666,9 +657,10 @@ export default class FbtFunctionCallProcessor {
     const fbtRuntimeArgs = [];
     for (const child of fbtNode.children) {
       if (
-        child instanceof FbtParamNode &&
-        child.options.gender == null &&
-        child.options.number == null
+        child.type === 'list' ||
+        (child.type === 'param' &&
+          child.options.gender == null &&
+          child.options.number == null)
       ) {
         fbtRuntimeArgs.push(child.getFbtRuntimeArg());
       }

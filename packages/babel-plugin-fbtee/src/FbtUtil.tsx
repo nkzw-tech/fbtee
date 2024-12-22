@@ -33,7 +33,6 @@ import {
   JSXElement,
   JSXExpressionContainer,
   JSXFragment,
-  JSXOpeningElement,
   JSXSpreadAttribute,
   JSXText,
   memberExpression,
@@ -61,8 +60,6 @@ import { ModuleNameRegExp } from './FbtConstants.tsx';
 import nullthrows from './nullthrows.tsx';
 
 const { hasOwnProperty } = Object.prototype;
-
-type JSXAttributes = ReadonlyArray<JSXOpeningElement['attributes'][number]>;
 
 export type CallExpressionArg =
   | Expression
@@ -129,6 +126,10 @@ export function checkOption<K extends string>(
   value?: Node | null | string | boolean,
 ): K {
   const optionName = option as K;
+
+  if (optionName === 'key') {
+    return optionName;
+  }
 
   const validValues = validOptions[optionName];
   if (!hasOwnProperty.call(validOptions, optionName) || validValues == null) {
@@ -506,27 +507,29 @@ const isJSXAttributeWithValue = (
 ): node is JSXAttributeWithValue => node.value != null;
 
 export function getAttributeByNameOrThrow(
-  attributes: JSXAttributes,
+  node: JSXElement,
   name: string,
-  node: Node | null = null,
 ): JSXAttributeWithValue {
-  const attribute = getAttributeByName(attributes, name);
+  const attribute = getAttributeByName(node, name);
   if (attribute == null) {
-    throw errorAt(node, `Unable to find attribute "${name}".`);
+    throw errorAt(node, `This node requires a '${name}' attribute.`);
   }
 
   if (!isJSXAttributeWithValue(attribute)) {
-    throw errorAt(node, `Attribute "${name}" has no value.`);
+    throw errorAt(
+      node,
+      `This '${name}' attribute of this node requires a value.`,
+    );
   }
 
   return attribute;
 }
 
 export function getAttributeByName(
-  attributes: JSXAttributes,
+  node: JSXElement,
   name: string,
 ): JSXAttribute | null {
-  for (const attribute of attributes) {
+  for (const attribute of node.openingElement.attributes) {
     if (isJSXAttribute(attribute) && attribute.name.name === name) {
       return attribute;
     }

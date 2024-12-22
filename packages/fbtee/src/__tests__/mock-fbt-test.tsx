@@ -1,8 +1,8 @@
 import { describe, expect, it } from '@jest/globals';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
 import { fbt } from '../index.tsx';
-import IntlViewerContext from '../IntlViewerContext.tsx';
 import setupFbtee from '../setupFbtee.tsx';
+import IntlViewerContext from '../ViewerContext.tsx';
 
 setupFbtee({
   hooks: {
