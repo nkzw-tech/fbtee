@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer';
 import type { NodePath } from '@babel/core';
 import {
   ArgumentPlaceholder,
@@ -188,19 +187,14 @@ export default class FbtFunctionCallProcessor {
     stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes,
   ): CallExpression {
     const { phrase } = metaPhrases[metaPhraseIndex];
-    const { pluginOptions } = this;
 
     // 1st argument - Sentinel Payload
     const argsOutput = JSON.stringify({
       jsfbt: phrase.jsfbt,
       project: phrase.project,
     } as SentinelPayload);
-    const encodedOutput =
-      pluginOptions.fbtBase64 === true
-        ? Buffer.from(argsOutput).toString('base64')
-        : argsOutput;
     const args: Array<Expression | SpreadElement | ArgumentPlaceholder> = [
-      stringLiteral(SENTINEL + encodedOutput + SENTINEL),
+      stringLiteral(SENTINEL + argsOutput + SENTINEL),
     ];
 
     // 2nd argument - `FbtTableArgs` in the fbt runtime calls

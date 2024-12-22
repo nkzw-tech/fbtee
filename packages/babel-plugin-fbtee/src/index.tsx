@@ -72,7 +72,6 @@ export type PluginOptions = {
   // without doing any further processing on them.
   // We only accept plain string literals as option values at the moment.
   extraOptions: FbtOptionConfig;
-  fbtBase64?: boolean;
   fbtCommon?: FbtCommonMap | null;
   // Function that would return an fbt manifest object
   fbtEnumManifest?: EnumManifest | null;
