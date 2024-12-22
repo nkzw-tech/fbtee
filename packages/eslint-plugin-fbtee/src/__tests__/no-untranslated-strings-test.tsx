@@ -72,7 +72,48 @@ ruleTester.run('no-untranslated-strings', rule, {
     },
     {
       code: `
-        <>Hello world</>
+        <>Hello world</>;
+       `,
+      errors: [
+        {
+          messageId: 'unwrappedString',
+        },
+      ],
+    },
+    {
+      code: `
+        <span>{foo ? 'bar' : 'baz'}</span>;
+       `,
+      errors: [
+        {
+          messageId: 'unwrappedString',
+        },
+      ],
+    },
+    {
+      code: `
+        <span>{foo ?? 'bar'}</span>;
+       `,
+      errors: [
+        {
+          messageId: 'unwrappedString',
+        },
+      ],
+    },
+    {
+      code: `
+        <span>{foo || 'bar'}</span>;
+       `,
+      errors: [
+        {
+          messageId: 'unwrappedString',
+        },
+      ],
+    },
+    {
+      code: `
+        const foo = true;
+        <span>{foo && 'bar'}</span>;
        `,
       errors: [
         {
@@ -217,6 +258,21 @@ ruleTester.run('no-untranslated-strings', rule, {
     {
       code: `
        foo.bar('Baz')
+       `,
+    },
+    {
+      code: `
+       const foo = isGreeting ? 'Hello' : 'Goodbye'
+       `,
+    },
+    {
+      code: `
+       const foo = helloGreeting ?? 'goodbye'
+       `,
+    },
+    {
+      code: `
+       const foo = helloGreeting || 'goodbye'
        `,
     },
   ],
