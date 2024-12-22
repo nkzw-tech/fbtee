@@ -6,29 +6,12 @@ import { fbt } from "fbtee";
 (fbt_sv_arg_0 = fbt._name("bar", bar, g)),
   (fbt_sv_arg_1 = fbt._plural(num, "baz")),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [
-          { token: "bar", type: 1 },
-          { singular: true, token: "baz", type: 2 },
-        ],
-        t: {
-          "*": {
-            "*": {
-              desc: "some-desc",
-              text: "Level 1 {foo}{=Level 2 [bar]Level 3 [baz] cats}",
-              tokenAliases: { "=Level 2 [bar]Level 3 [baz] cats": "=m2" },
-            },
-            _1: {
-              desc: "some-desc",
-              text: "Level 1 {foo}{=Level 2 [bar]Level 3 1 cat}",
-              tokenAliases: { "=Level 2 [bar]Level 3 1 cat": "=m2" },
-            },
-          },
-        },
+    {
+      "*": {
+        "*": "Level 1 {foo}{=m2}",
+        _1: "Level 1 {foo}{=m2}",
       },
-      project: "",
-    } /* __FBT__ end */,
+    },
     [
       fbt_sv_arg_0,
       fbt_sv_arg_1,
@@ -39,29 +22,12 @@ import { fbt } from "fbtee";
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [
-                  { token: "bar", type: 1 },
-                  { singular: true, token: "baz", type: 2 },
-                ],
-                t: {
-                  "*": {
-                    "*": {
-                      desc: 'In the phrase: "Level 1 {foo}{=Level 2 [bar]Level 3 [baz] cats}"',
-                      text: "Level 2 {bar}{=Level 3 [baz] cats}",
-                      tokenAliases: { "=Level 3 [baz] cats": "=m2" },
-                    },
-                    _1: {
-                      desc: 'In the phrase: "Level 1 {foo}{=Level 2 [bar]Level 3 1 cat}"',
-                      text: "Level 2 {bar}{=Level 3 1 cat}",
-                      tokenAliases: { "=Level 3 1 cat": "=m2" },
-                    },
-                  },
-                },
+            {
+              "*": {
+                "*": "Level 2 {bar}{=m2}",
+                _1: "Level 2 {bar}{=m2}",
               },
-              project: "",
-            } /* __FBT__ end */,
+            },
             [
               fbt_sv_arg_0,
               fbt_sv_arg_1,
@@ -71,36 +37,30 @@ import { fbt } from "fbtee";
                   "b",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [
-                          { token: "bar", type: 1 },
-                          { singular: true, token: "baz", type: 2 },
-                        ],
-                        t: {
-                          "*": {
-                            "*": {
-                              desc: 'In the phrase: "Level 1 {foo}Level 2 {bar}{=Level 3 [baz] cats}"',
-                              text: "Level 3 {baz} cats",
-                            },
-                            _1: {
-                              desc: 'In the phrase: "Level 1 {foo}Level 2 {bar}{=Level 3 1 cat}"',
-                              text: "Level 3 1 cat",
-                            },
-                          },
-                        },
+                    {
+                      "*": {
+                        "*": "Level 3 {baz} cats",
+                        _1: "Level 3 1 cat",
                       },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0, fbt_sv_arg_1]
+                    },
+                    [fbt_sv_arg_0, fbt_sv_arg_1],
+                    {
+                      hk: "3hoLPG",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "1TQlfE",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "2Aoh3a",
+    }
   );
 
 `;
@@ -112,74 +72,22 @@ import { fbt } from "fbtee";
   (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
   (fbt_sv_arg_2 = fbt._plural(num, "foo")),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [
-          { token: "__subject__", type: 1 },
-          null,
-          { singular: true, token: "foo", type: 2 },
-        ],
-        t: {
-          "*": {
-            1: {
-              "*": {
-                desc: "description",
-                text: "Level 1 {=her some_pronoun}{=Level 2 [foo] cats}",
-                tokenAliases: {
-                  "=her some_pronoun": "=m1",
-                  "=Level 2 [foo] cats": "=m2",
-                },
-              },
-              _1: {
-                desc: "description",
-                text: "Level 1 {=her some_pronoun}{=Level 2 1 cat}",
-                tokenAliases: {
-                  "=her some_pronoun": "=m1",
-                  "=Level 2 1 cat": "=m2",
-                },
-              },
-            },
-            2: {
-              "*": {
-                desc: "description",
-                text: "Level 1 {=his some_pronoun}{=Level 2 [foo] cats}",
-                tokenAliases: {
-                  "=his some_pronoun": "=m1",
-                  "=Level 2 [foo] cats": "=m2",
-                },
-              },
-              _1: {
-                desc: "description",
-                text: "Level 1 {=his some_pronoun}{=Level 2 1 cat}",
-                tokenAliases: {
-                  "=his some_pronoun": "=m1",
-                  "=Level 2 1 cat": "=m2",
-                },
-              },
-            },
-            "*": {
-              "*": {
-                desc: "description",
-                text: "Level 1 {=their some_pronoun}{=Level 2 [foo] cats}",
-                tokenAliases: {
-                  "=their some_pronoun": "=m1",
-                  "=Level 2 [foo] cats": "=m2",
-                },
-              },
-              _1: {
-                desc: "description",
-                text: "Level 1 {=their some_pronoun}{=Level 2 1 cat}",
-                tokenAliases: {
-                  "=their some_pronoun": "=m1",
-                  "=Level 2 1 cat": "=m2",
-                },
-              },
-            },
-          },
+    {
+      "*": {
+        1: {
+          "*": "Level 1 {=m1}{=m2}",
+          _1: "Level 1 {=m1}{=m2}",
+        },
+        2: {
+          "*": "Level 1 {=m1}{=m2}",
+          _1: "Level 1 {=m1}{=m2}",
+        },
+        "*": {
+          "*": "Level 1 {=m1}{=m2}",
+          _1: "Level 1 {=m1}{=m2}",
         },
       },
-      project: "",
-    } /* __FBT__ end */,
+    },
     [
       fbt_sv_arg_0,
       fbt_sv_arg_1,
@@ -192,51 +100,26 @@ import { fbt } from "fbtee";
             href: "#new",
           },
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [
-                  { token: "__subject__", type: 1 },
-                  null,
-                  { singular: true, token: "foo", type: 2 },
-                ],
-                t: {
-                  "*": {
-                    1: {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "her some_pronoun",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 1 cat}"',
-                        text: "her some_pronoun",
-                      },
-                    },
-                    2: {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "his some_pronoun",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 1 cat}"',
-                        text: "his some_pronoun",
-                      },
-                    },
-                    "*": {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "their some_pronoun",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 1 cat}"',
-                        text: "their some_pronoun",
-                      },
-                    },
-                  },
+            {
+              "*": {
+                1: {
+                  "*": "her some_pronoun",
+                  _1: "her some_pronoun",
+                },
+                2: {
+                  "*": "his some_pronoun",
+                  _1: "his some_pronoun",
+                },
+                "*": {
+                  "*": "their some_pronoun",
+                  _1: "their some_pronoun",
                 },
               },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2]
+            },
+            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+            {
+              hk: "4sbfj7",
+            }
           )
         )
       ),
@@ -246,55 +129,33 @@ import { fbt } from "fbtee";
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [
-                  { token: "__subject__", type: 1 },
-                  null,
-                  { singular: true, token: "foo", type: 2 },
-                ],
-                t: {
-                  "*": {
-                    1: {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "Level 2 {foo} cats",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 1 cat}"',
-                        text: "Level 2 1 cat",
-                      },
-                    },
-                    2: {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "Level 2 {foo} cats",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 1 cat}"',
-                        text: "Level 2 1 cat",
-                      },
-                    },
-                    "*": {
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 [foo] cats}"',
-                        text: "Level 2 {foo} cats",
-                      },
-                      _1: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 1 cat}"',
-                        text: "Level 2 1 cat",
-                      },
-                    },
-                  },
+            {
+              "*": {
+                1: {
+                  "*": "Level 2 {foo} cats",
+                  _1: "Level 2 1 cat",
+                },
+                2: {
+                  "*": "Level 2 {foo} cats",
+                  _1: "Level 2 1 cat",
+                },
+                "*": {
+                  "*": "Level 2 {foo} cats",
+                  _1: "Level 2 1 cat",
                 },
               },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2]
+            },
+            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+            {
+              hk: "2Eow7W",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "3S7xV4",
+    }
   );
 
 `;
@@ -306,94 +167,25 @@ import { fbt } from "fbtee";
   (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
   (fbt_sv_arg_2 = fbt._pronoun(1, g2)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [{ token: "__subject__", type: 1 }, null, null],
-        t: {
-          "*": {
-            1: {
-              1: {
-                desc: "description",
-                text: "Level 1 {=her some_pronoun}{=Level 2 her some_pronoun}",
-                tokenAliases: {
-                  "=her some_pronoun": "=m1",
-                  "=Level 2 her some_pronoun": "=m2",
-                },
-              },
-              2: {
-                desc: "description",
-                text: "Level 1 {=her some_pronoun}{=Level 2 his some_pronoun}",
-                tokenAliases: {
-                  "=her some_pronoun": "=m1",
-                  "=Level 2 his some_pronoun": "=m2",
-                },
-              },
-              "*": {
-                desc: "description",
-                text: "Level 1 {=her some_pronoun}{=Level 2 their some_pronoun}",
-                tokenAliases: {
-                  "=her some_pronoun": "=m1",
-                  "=Level 2 their some_pronoun": "=m2",
-                },
-              },
-            },
-            2: {
-              1: {
-                desc: "description",
-                text: "Level 1 {=his some_pronoun}{=Level 2 her some_pronoun}",
-                tokenAliases: {
-                  "=his some_pronoun": "=m1",
-                  "=Level 2 her some_pronoun": "=m2",
-                },
-              },
-              2: {
-                desc: "description",
-                text: "Level 1 {=his some_pronoun}{=Level 2 his some_pronoun}",
-                tokenAliases: {
-                  "=his some_pronoun": "=m1",
-                  "=Level 2 his some_pronoun": "=m2",
-                },
-              },
-              "*": {
-                desc: "description",
-                text: "Level 1 {=his some_pronoun}{=Level 2 their some_pronoun}",
-                tokenAliases: {
-                  "=his some_pronoun": "=m1",
-                  "=Level 2 their some_pronoun": "=m2",
-                },
-              },
-            },
-            "*": {
-              1: {
-                desc: "description",
-                text: "Level 1 {=their some_pronoun}{=Level 2 her some_pronoun}",
-                tokenAliases: {
-                  "=their some_pronoun": "=m1",
-                  "=Level 2 her some_pronoun": "=m2",
-                },
-              },
-              2: {
-                desc: "description",
-                text: "Level 1 {=their some_pronoun}{=Level 2 his some_pronoun}",
-                tokenAliases: {
-                  "=their some_pronoun": "=m1",
-                  "=Level 2 his some_pronoun": "=m2",
-                },
-              },
-              "*": {
-                desc: "description",
-                text: "Level 1 {=their some_pronoun}{=Level 2 their some_pronoun}",
-                tokenAliases: {
-                  "=their some_pronoun": "=m1",
-                  "=Level 2 their some_pronoun": "=m2",
-                },
-              },
-            },
-          },
+    {
+      "*": {
+        1: {
+          1: "Level 1 {=m1}{=m2}",
+          2: "Level 1 {=m1}{=m2}",
+          "*": "Level 1 {=m1}{=m2}",
+        },
+        2: {
+          1: "Level 1 {=m1}{=m2}",
+          2: "Level 1 {=m1}{=m2}",
+          "*": "Level 1 {=m1}{=m2}",
+        },
+        "*": {
+          1: "Level 1 {=m1}{=m2}",
+          2: "Level 1 {=m1}{=m2}",
+          "*": "Level 1 {=m1}{=m2}",
         },
       },
-      project: "",
-    } /* __FBT__ end */,
+    },
     [
       fbt_sv_arg_0,
       fbt_sv_arg_1,
@@ -406,59 +198,29 @@ import { fbt } from "fbtee";
             href: "#new",
           },
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [{ token: "__subject__", type: 1 }, null, null],
-                t: {
-                  "*": {
-                    1: {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "her some_pronoun",
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "her some_pronoun",
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "her some_pronoun",
-                      },
-                    },
-                    2: {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "his some_pronoun",
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "his some_pronoun",
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "his some_pronoun",
-                      },
-                    },
-                    "*": {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "their some_pronoun",
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "their some_pronoun",
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "their some_pronoun",
-                      },
-                    },
-                  },
+            {
+              "*": {
+                1: {
+                  1: "her some_pronoun",
+                  2: "her some_pronoun",
+                  "*": "her some_pronoun",
+                },
+                2: {
+                  1: "his some_pronoun",
+                  2: "his some_pronoun",
+                  "*": "his some_pronoun",
+                },
+                "*": {
+                  1: "their some_pronoun",
+                  2: "their some_pronoun",
+                  "*": "their some_pronoun",
                 },
               },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2]
+            },
+            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+            {
+              hk: "3VitZN",
+            }
           )
         )
       ),
@@ -468,67 +230,25 @@ import { fbt } from "fbtee";
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [{ token: "__subject__", type: 1 }, null, null],
-                t: {
-                  "*": {
-                    1: {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "Level 2 {=her some_pronoun}",
-                        tokenAliases: { "=her some_pronoun": "=m1" },
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "Level 2 {=his some_pronoun}",
-                        tokenAliases: { "=his some_pronoun": "=m1" },
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=her some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "Level 2 {=their some_pronoun}",
-                        tokenAliases: { "=their some_pronoun": "=m1" },
-                      },
-                    },
-                    2: {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "Level 2 {=her some_pronoun}",
-                        tokenAliases: { "=her some_pronoun": "=m1" },
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "Level 2 {=his some_pronoun}",
-                        tokenAliases: { "=his some_pronoun": "=m1" },
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=his some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "Level 2 {=their some_pronoun}",
-                        tokenAliases: { "=their some_pronoun": "=m1" },
-                      },
-                    },
-                    "*": {
-                      1: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 her some_pronoun}"',
-                        text: "Level 2 {=her some_pronoun}",
-                        tokenAliases: { "=her some_pronoun": "=m1" },
-                      },
-                      2: {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 his some_pronoun}"',
-                        text: "Level 2 {=his some_pronoun}",
-                        tokenAliases: { "=his some_pronoun": "=m1" },
-                      },
-                      "*": {
-                        desc: 'In the phrase: "Level 1 {=their some_pronoun}{=Level 2 their some_pronoun}"',
-                        text: "Level 2 {=their some_pronoun}",
-                        tokenAliases: { "=their some_pronoun": "=m1" },
-                      },
-                    },
-                  },
+            {
+              "*": {
+                1: {
+                  1: "Level 2 {=m1}",
+                  2: "Level 2 {=m1}",
+                  "*": "Level 2 {=m1}",
+                },
+                2: {
+                  1: "Level 2 {=m1}",
+                  2: "Level 2 {=m1}",
+                  "*": "Level 2 {=m1}",
+                },
+                "*": {
+                  1: "Level 2 {=m1}",
+                  2: "Level 2 {=m1}",
+                  "*": "Level 2 {=m1}",
                 },
               },
-              project: "",
-            } /* __FBT__ end */,
+            },
             [
               fbt_sv_arg_0,
               fbt_sv_arg_1,
@@ -541,67 +261,43 @@ import { fbt } from "fbtee";
                     href: "#new",
                   },
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [{ token: "__subject__", type: 1 }, null, null],
-                        t: {
-                          "*": {
-                            1: {
-                              1: {
-                                desc: 'In the phrase: "Level 1 {=her some_pronoun}Level 2 {=her some_pronoun}"',
-                                text: "her some_pronoun",
-                              },
-                              2: {
-                                desc: 'In the phrase: "Level 1 {=her some_pronoun}Level 2 {=his some_pronoun}"',
-                                text: "his some_pronoun",
-                              },
-                              "*": {
-                                desc: 'In the phrase: "Level 1 {=her some_pronoun}Level 2 {=their some_pronoun}"',
-                                text: "their some_pronoun",
-                              },
-                            },
-                            2: {
-                              1: {
-                                desc: 'In the phrase: "Level 1 {=his some_pronoun}Level 2 {=her some_pronoun}"',
-                                text: "her some_pronoun",
-                              },
-                              2: {
-                                desc: 'In the phrase: "Level 1 {=his some_pronoun}Level 2 {=his some_pronoun}"',
-                                text: "his some_pronoun",
-                              },
-                              "*": {
-                                desc: 'In the phrase: "Level 1 {=his some_pronoun}Level 2 {=their some_pronoun}"',
-                                text: "their some_pronoun",
-                              },
-                            },
-                            "*": {
-                              1: {
-                                desc: 'In the phrase: "Level 1 {=their some_pronoun}Level 2 {=her some_pronoun}"',
-                                text: "her some_pronoun",
-                              },
-                              2: {
-                                desc: 'In the phrase: "Level 1 {=their some_pronoun}Level 2 {=his some_pronoun}"',
-                                text: "his some_pronoun",
-                              },
-                              "*": {
-                                desc: 'In the phrase: "Level 1 {=their some_pronoun}Level 2 {=their some_pronoun}"',
-                                text: "their some_pronoun",
-                              },
-                            },
-                          },
+                    {
+                      "*": {
+                        1: {
+                          1: "her some_pronoun",
+                          2: "his some_pronoun",
+                          "*": "their some_pronoun",
+                        },
+                        2: {
+                          1: "her some_pronoun",
+                          2: "his some_pronoun",
+                          "*": "their some_pronoun",
+                        },
+                        "*": {
+                          1: "her some_pronoun",
+                          2: "his some_pronoun",
+                          "*": "their some_pronoun",
                         },
                       },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2]
+                    },
+                    [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+                    {
+                      hk: "3LBN3N",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "2SjiyB",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "4anRqJ",
+    }
   );
 
 `;
@@ -609,17 +305,7 @@ import { fbt } from "fbtee";
 exports[`Test jsx auto-wrapping of implicit parameters should auto wrap a simple test with a nested level 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=Your friends liked} your video",
-        tokenAliases: { "=Your friends liked": "=m0" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} your video",
   [
     fbt._implicitParam(
       "=m0",
@@ -629,42 +315,29 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Your friends liked} your video"',
-                text: "Your friends {=liked}",
-                tokenAliases: { "=liked": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "Your friends {=m1}",
           [
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
                 "b",
                 null,
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "Your friends {=liked} your video"',
-                        text: "liked",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("liked", null, {
+                  hk: "6REFx",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "1h9ToV",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "1C8Sp8",
+  }
 );
 
 `;
@@ -672,17 +345,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should auto wrap a simple test with one level 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=Your friends} liked your video",
-        tokenAliases: { "=Your friends": "=m0" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} liked your video",
   [
     fbt._implicitParam(
       "=m0",
@@ -691,21 +354,15 @@ fbt._(
         {
           href: "#",
         },
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Your friends} liked your video"',
-                text: "Your friends",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("Your friends", null, {
+          hk: "EXsAo",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "JEQEn",
+  }
 );
 
 `;
@@ -716,17 +373,7 @@ import { fbt } from "fbtee";
   "div",
   null,
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [],
-        t: {
-          desc: "one",
-          text: "{=first} fbt call",
-          tokenAliases: { "=first": "=m0" },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    "{=m0} fbt call",
     [
       fbt._implicitParam(
         "=m0",
@@ -735,34 +382,18 @@ import { fbt } from "fbtee";
           {
             href: "#",
           },
-          fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'In the phrase: "{=first} fbt call"',
-                  text: "first",
-                },
-              },
-              project: "",
-            } /* __FBT__ end */
-          )
+          fbt._("first", null, {
+            hk: "20XRQM",
+          })
         )
       ),
-    ]
+    ],
+    {
+      hk: "2oLntp",
+    }
   ),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [],
-        t: {
-          desc: "two",
-          text: "{=second} test",
-          tokenAliases: { "=second": "=m0" },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    "{=m0} test",
     [
       fbt._implicitParam(
         "=m0",
@@ -771,18 +402,15 @@ import { fbt } from "fbtee";
           {
             href: "#",
           },
-          fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [],
-                t: { desc: 'In the phrase: "{=second} test"', text: "second" },
-              },
-              project: "",
-            } /* __FBT__ end */
-          )
+          fbt._("second", null, {
+            hk: "2kqUOm",
+          })
         )
       ),
-    ]
+    ],
+    {
+      hk: "2f9gKU",
+    }
   )
 );
 
@@ -791,10 +419,7 @@ import { fbt } from "fbtee";
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a <fbt> child nested in an explicit <fbt:param> 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "d", text: "{explicit fbt param}" } },
-    project: "",
-  } /* __FBT__ end */,
+  "{explicit fbt param}",
   [
     fbt._param(
       "explicit fbt param",
@@ -802,42 +427,29 @@ fbt._(
         "div",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: "d2",
-                text: "explicit fbt param {=with a nested implicit param}",
-                tokenAliases: { "=with a nested implicit param": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "explicit fbt param {=m1}",
           [
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
                 "div",
                 null,
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "explicit fbt param {=with a nested implicit param}"',
-                        text: "with a nested implicit param",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("with a nested implicit param", null, {
+                  hk: "47XKzg",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "4aGXvg",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "1t6SVf",
+  }
 );
 
 `;
@@ -845,29 +457,16 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a <fbt> child next to an explicit <fbt:param> 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{explicit param next to}{=an implicit param}",
-        tokenAliases: { "=an implicit param": "=m1" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{explicit param next to}{=m1}",
   [
     fbt._param(
       "explicit param next to",
       /*#__PURE__*/ React.createElement(
         "div",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: { m: [], t: { desc: "d2", text: "explicit param next to" } },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("explicit param next to", null, {
+          hk: "4BQGPe",
+        })
       )
     ),
     fbt._implicitParam(
@@ -875,21 +474,15 @@ fbt._(
       /*#__PURE__*/ React.createElement(
         "div",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{explicit param next to}{=an implicit param}"',
-                text: "an implicit param",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("an implicit param", null, {
+          hk: "140tMj",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "voXwD",
+  }
 );
 
 `;
@@ -897,17 +490,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a single unwrapped <fbt> child and a string above 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=This is a nested} test",
-        tokenAliases: { "=This is a nested": "=m0" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} test",
   [
     fbt._implicitParam(
       "=m0",
@@ -915,17 +498,7 @@ fbt._(
         "b",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=This is a nested} test"',
-                text: "This is {=a nested}",
-                tokenAliases: { "=a nested": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "This is {=m1}",
           [
             fbt._implicitParam(
               "=m1",
@@ -934,25 +507,22 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "This is {=a nested} test"',
-                        text: "a nested",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("a nested", null, {
+                  hk: "2neJtx",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "2sVZgG",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "18fFtb",
+  }
 );
 
 `;
@@ -960,17 +530,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a single unwrapped <fbt> child and a string below 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=this is} a singly nested test",
-        tokenAliases: { "=this is": "=m0" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} a singly nested test",
   [
     fbt._implicitParam(
       "=m0",
@@ -979,21 +539,15 @@ fbt._(
         {
           href: "#",
         },
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=this is} a singly nested test"',
-                text: "this is",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("this is", null, {
+          hk: "1p5dUU",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "1O44Kn",
+  }
 );
 
 `;
@@ -1001,16 +555,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap a string next to an explicit <fbt:param> that has a implicit <fbt:param> within it 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "outer string that should not appear in inner desc {explicit fbt param}",
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "outer string that should not appear in inner desc {explicit fbt param}",
   [
     fbt._param(
       "explicit fbt param",
@@ -1018,42 +563,29 @@ fbt._(
         "div",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: "d2",
-                text: "explicit fbt param {=with a nested implicit param}",
-                tokenAliases: { "=with a nested implicit param": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "explicit fbt param {=m1}",
           [
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
                 "div",
                 null,
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "explicit fbt param {=with a nested implicit param}"',
-                        text: "with a nested implicit param",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("with a nested implicit param", null, {
+                  hk: "47XKzg",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "4aGXvg",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "1sItWb",
+  }
 );
 
 `;
@@ -1061,17 +593,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap an outer and inner child 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=this is a doubly} nested test",
-        tokenAliases: { "=this is a doubly": "=m0" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} nested test",
   [
     fbt._implicitParam(
       "=m0",
@@ -1081,17 +603,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=this is a doubly} nested test"',
-                text: "{=this is} a doubly",
-                tokenAliases: { "=this is": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "{=m1} a doubly",
           [
             fbt._implicitParam(
               "=m1",
@@ -1100,25 +612,22 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "{=this is} a doubly nested test"',
-                        text: "this is",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("this is", null, {
+                  hk: "24utmg",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "1OBj79",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "8VKqN",
+  }
 );
 
 `;
@@ -1126,20 +635,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap explicit params nested in implicit params with [] 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=this is a test [to make sure that explicit params under an implicit node][and ones that are next to each other] under an implicit tag are wrapped with [ ]}{but free standing ones are not}",
-        tokenAliases: {
-          "=this is a test [to make sure that explicit params under an implicit node][and ones that are next to each other] under an implicit tag are wrapped with [ ]":
-            "=m0",
-        },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{but free standing ones are not}",
   [
     fbt._param(
       "but free standing ones are not",
@@ -1147,38 +643,22 @@ fbt._(
         "link",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: "d3",
-                text: "but free standing ones {=are not}",
-                tokenAliases: { "=are not": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "but free standing ones {=m1}",
           [
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
                 "b",
                 null,
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "but free standing ones {=are not}"',
-                        text: "are not",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("are not", null, {
+                  hk: "cn4P1",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "3vSpVu",
+          }
         )
       )
     ),
@@ -1188,16 +668,7 @@ fbt._(
         "div",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=this is a test [to make sure that explicit params under an implicit node][and ones that are next to each other] under an implicit tag are wrapped with [ ]}{but free standing ones are not}"',
-                text: "this is a test {to make sure that explicit params under an implicit node}{and ones that are next to each other} under an implicit tag are wrapped with [ ]",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "this is a test {to make sure that explicit params under an implicit node}{and ones that are next to each other} under an implicit tag are wrapped with [ ]",
           [
             fbt._param(
               "to make sure that explicit params under an implicit node",
@@ -1205,38 +676,22 @@ fbt._(
                 "link",
                 null,
                 fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: "d2",
-                        text: "to make sure that explicit tags {=under an implicit node}",
-                        tokenAliases: { "=under an implicit node": "=m1" },
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */,
+                  "to make sure that explicit tags {=m1}",
                   [
                     fbt._implicitParam(
                       "=m1",
                       /*#__PURE__*/ React.createElement(
                         "b",
                         null,
-                        fbt._(
-                          /* __FBT__ start */ {
-                            jsfbt: {
-                              m: [],
-                              t: {
-                                desc: 'In the phrase: "to make sure that explicit tags {=under an implicit node}"',
-                                text: "under an implicit node",
-                              },
-                            },
-                            project: "",
-                          } /* __FBT__ end */
-                        )
+                        fbt._("under an implicit node", null, {
+                          hk: "3bb4W4",
+                        })
                       )
                     ),
-                  ]
+                  ],
+                  {
+                    hk: "tcca3",
+                  }
                 )
               )
             ),
@@ -1246,46 +701,36 @@ fbt._(
                 "link",
                 null,
                 fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: "d3",
-                        text: "and ones that are next {=to each other}",
-                        tokenAliases: { "=to each other": "=m1" },
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */,
+                  "and ones that are next {=m1}",
                   [
                     fbt._implicitParam(
                       "=m1",
                       /*#__PURE__*/ React.createElement(
                         "b",
                         null,
-                        fbt._(
-                          /* __FBT__ start */ {
-                            jsfbt: {
-                              m: [],
-                              t: {
-                                desc: 'In the phrase: "and ones that are next {=to each other}"',
-                                text: "to each other",
-                              },
-                            },
-                            project: "",
-                          } /* __FBT__ end */
-                        )
+                        fbt._("to each other", null, {
+                          hk: "1UQ1NN",
+                        })
                       )
                     ),
-                  ]
+                  ],
+                  {
+                    hk: "Z04GD",
+                  }
                 )
               )
             ),
-          ]
+          ],
+          {
+            hk: "3J9Kls",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "25v3pA",
+  }
 );
 
 `;
@@ -1293,20 +738,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two children with one nested level 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=this is a doubly} nested test {=with an additional level}",
-        tokenAliases: {
-          "=this is a doubly": "=m0",
-          "=with an additional level": "=m2",
-        },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0} nested test {=m2}",
   [
     fbt._implicitParam(
       "=m0",
@@ -1316,17 +748,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=this is a doubly} nested test {=with an additional level}"',
-                text: "{=this is} a doubly",
-                tokenAliases: { "=this is": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "{=m1} a doubly",
           [
             fbt._implicitParam(
               "=m1",
@@ -1335,21 +757,15 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "{=this is} a doubly nested test {=with an additional level}"',
-                        text: "this is",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("this is", null, {
+                  hk: "1TKqkn",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "36ZVtu",
+          }
         )
       )
     ),
@@ -1360,21 +776,15 @@ fbt._(
         {
           href: "#",
         },
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=this is a doubly} nested test {=with an additional level}"',
-                text: "with an additional level",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("with an additional level", null, {
+          hk: "3seQMP",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "3gjk4F",
+  }
 );
 
 `;
@@ -1382,17 +792,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two nested next to each other 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=one two}{=three four}",
-        tokenAliases: { "=one two": "=m0", "=three four": "=m1" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{=m1}",
   [
     fbt._implicitParam(
       "=m0",
@@ -1402,17 +802,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=one two}{=three four}"',
-                text: "one {=two}",
-                tokenAliases: { "=two": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "one {=m1}",
           [
             fbt._implicitParam(
               "=m1",
@@ -1421,21 +811,15 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "one {=two}{=three four}"',
-                        text: "two",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("two", null, {
+                  hk: "3iKuUF",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "4adxZQ",
+          }
         )
       )
     ),
@@ -1447,17 +831,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=one two}{=three four}"',
-                text: "three {=four}",
-                tokenAliases: { "=four": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "three {=m1}",
           [
             fbt._implicitParam(
               "=m1",
@@ -1466,25 +840,22 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "{=one two}three {=four}"',
-                        text: "four",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("four", null, {
+                  hk: "n5ibk",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "1O7uqf",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "8Ppxz",
+  }
 );
 
 `;
@@ -1492,17 +863,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two nested next to each other with an extra level 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=one two [=test]}{=three four}",
-        tokenAliases: { "=one two [=test]": "=m0", "=three four": "=m1" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{=m1}",
   [
     fbt._implicitParam(
       "=m0",
@@ -1512,17 +873,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=one two [=test]}{=three four}"',
-                text: "one {=two test}",
-                tokenAliases: { "=two test": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "one {=m1}",
           [
             fbt._implicitParam(
               "=m1",
@@ -1532,17 +883,7 @@ fbt._(
                   href: "#",
                 },
                 fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "one {=two test}{=three four}"',
-                        text: "two {=test}",
-                        tokenAliases: { "=test": "=m1" },
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */,
+                  "two {=m1}",
                   [
                     fbt._implicitParam(
                       "=m1",
@@ -1551,25 +892,22 @@ fbt._(
                         {
                           href: "#",
                         },
-                        fbt._(
-                          /* __FBT__ start */ {
-                            jsfbt: {
-                              m: [],
-                              t: {
-                                desc: 'In the phrase: "one two {=test}{=three four}"',
-                                text: "test",
-                              },
-                            },
-                            project: "",
-                          } /* __FBT__ end */
-                        )
+                        fbt._("test", null, {
+                          hk: "2OdL6Y",
+                        })
                       )
                     ),
-                  ]
+                  ],
+                  {
+                    hk: "OL15x",
+                  }
                 )
               )
             ),
-          ]
+          ],
+          {
+            hk: "43pnQG",
+          }
         )
       )
     ),
@@ -1581,17 +919,7 @@ fbt._(
           href: "#",
         },
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=one two [=test]}{=three four}"',
-                text: "three {=four}",
-                tokenAliases: { "=four": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "three {=m1}",
           [
             fbt._implicitParam(
               "=m1",
@@ -1600,25 +928,22 @@ fbt._(
                 {
                   href: "#",
                 },
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "{=one two [=test]}three {=four}"',
-                        text: "four",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("four", null, {
+                  hk: "cB79p",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "2TH8xE",
+          }
         )
       )
     ),
-  ]
+  ],
+  {
+    hk: "3UXE0m",
+  }
 );
 
 `;
@@ -1626,35 +951,16 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two unwrapped <fbt> children 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=wrap once}{=wrap twice}",
-        tokenAliases: { "=wrap once": "=m0", "=wrap twice": "=m1" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{=m1}",
   [
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
         "div",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=wrap once}{=wrap twice}"',
-                text: "wrap once",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("wrap once", null, {
+          hk: "1K1zDK",
+        })
       )
     ),
     fbt._implicitParam(
@@ -1662,21 +968,15 @@ fbt._(
       /*#__PURE__*/ React.createElement(
         "div",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=wrap once}{=wrap twice}"',
-                text: "wrap twice",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("wrap twice", null, {
+          hk: "1zVLer",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "2NQyTl",
+  }
 );
 
 `;
@@ -1684,17 +984,7 @@ fbt._(
 exports[`Test jsx auto-wrapping of implicit parameters should wrap two unwrapped <fbt> children and 1 nested 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=wrap once and also}{=wrap twice} complicated",
-        tokenAliases: { "=wrap once and also": "=m0", "=wrap twice": "=m1" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{=m1} complicated",
   [
     fbt._implicitParam(
       "=m0",
@@ -1702,38 +992,22 @@ fbt._(
         "div",
         null,
         fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=wrap once and also}{=wrap twice} complicated"',
-                text: "wrap once {=and also}",
-                tokenAliases: { "=and also": "=m1" },
-              },
-            },
-            project: "",
-          } /* __FBT__ end */,
+          "wrap once {=m1}",
           [
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
                 "div",
                 null,
-                fbt._(
-                  /* __FBT__ start */ {
-                    jsfbt: {
-                      m: [],
-                      t: {
-                        desc: 'In the phrase: "wrap once {=and also}{=wrap twice} complicated"',
-                        text: "and also",
-                      },
-                    },
-                    project: "",
-                  } /* __FBT__ end */
-                )
+                fbt._("and also", null, {
+                  hk: "2aIvXj",
+                })
               )
             ),
-          ]
+          ],
+          {
+            hk: "4nWdli",
+          }
         )
       )
     ),
@@ -1742,21 +1016,15 @@ fbt._(
       /*#__PURE__*/ React.createElement(
         "div",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=wrap once and also}{=wrap twice} complicated"',
-                text: "wrap twice",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("wrap twice", null, {
+          hk: "1fMpSn",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "4rDpDG",
+  }
 );
 
 `;

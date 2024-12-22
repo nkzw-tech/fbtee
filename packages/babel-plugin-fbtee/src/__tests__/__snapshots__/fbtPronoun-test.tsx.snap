@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fbt pronoun support "capitalize" option accepts boolean literal true 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  {
+    1: "Her birthday is today.",
+    2: "His birthday is today.",
+    "*": "Their birthday is today.",
+  },
+  [fbt._pronoun(1, gender)],
+  {
+    hk: "2PfBiX",
+  }
+);
+
+`;
+
+exports[`fbt pronoun support Should elide false "human" option from fbt.pronoun() 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  {
+    1: "Wish her a happy birthday.",
+    2: "Wish him a happy birthday.",
+    "*": "Wish them a happy birthday.",
+  },
+  [
+    fbt._pronoun(0, gender, {
+      human: 1,
+    }),
+  ],
+  {
+    hk: "YiRZy",
+  }
+);
+
+`;
