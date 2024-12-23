@@ -29,7 +29,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@babel/types": "^7.26.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
-    "@jest/globals": "^29.7.0",
+    "@jest/globals": "^30.0.0-alpha.6",
     "@nkzw/eslint-config": "^1.18.1",
     "@testing-library/react": "^16.1.0",
     "@types/babel__core": "^7.20.5",
@@ -40,15 +40,15 @@
     "@types/json-diff": "^1.0.3",
     "@types/node": "^22.10.2",
     "@types/prettier-2": "npm:@types/prettier@^2.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@types/yargs": "^17.0.33",
     "eslint": "^8.0.0",
     "eslint-plugin-workspaces": "^0.10.1",
     "invariant": "^2.2.4",
     "jest": "^30.0.0-alpha.6",
-    "jest-environment-jsdom": "^29.7.0",
-    "npm-run-all2": "^7.0.1",
+    "jest-environment-jsdom": "^30.0.0-alpha.6",
+    "npm-run-all2": "^7.0.2",
     "nullthrows": "^1.1.1",
     "prettier": "^4.0.0-alpha.10",
     "prettier-2": "npm:prettier@^2.8.8",
@@ -60,7 +60,9 @@
   "pnpm": {
     "updateConfig": {
       "ignoreDependencies": [
-        "eslint"
+        "@types/prettier-2",
+        "eslint",
+        "prettier-2"
       ]
     },
     "overrides": {
