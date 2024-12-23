@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<fbt:list> 1`] = `
+import { fbt } from "fbtee";
+const x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [],
+      t: { desc: "Lists", text: "Available Locations: {locations}." },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"])]
+);
+
+`;
+
+exports[`<fbt:list> 2`] = `
+import { fbt } from "fbtee";
+const x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [],
+      t: { desc: "Lists", text: "Available Locations: {locations}." },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "and")]
+);
+
+`;
+
+exports[`<fbt:list> 3`] = `
+import { fbt } from "fbtee";
+const x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [],
+      t: { desc: "Lists", text: "Available Locations: {locations}." },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "bullet")]
+);
+
+`;
+
+exports[`<fbt:list> 4`] = `
+import { fbt } from "fbtee";
+const x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [],
+      t: { desc: "Lists", text: "Available Locations: {locations}." },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "or", "bullet")]
+);
+
+`;
+
+exports[`fbt.list() 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [],
+      t: { desc: "Lists", text: "Available Locations: {locations}" },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "or")]
+);
+
+`;

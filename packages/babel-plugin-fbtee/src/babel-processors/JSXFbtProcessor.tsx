@@ -35,8 +35,8 @@ import {
 import type { BindingName, FbtOptionConfig } from '../FbtConstants.tsx';
 import {
   CommonOption,
-  FbtCallMustHaveAtLeastOneOfTheseAttributes,
   FbtRequiredAttributes,
+  RequiredFbtAttributes,
   ValidFbtOptions,
 } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
@@ -79,6 +79,16 @@ export default class JSXFbtProcessor {
     this.nodeChecker = nodeChecker;
     this.path = path;
     this.validFbtExtraOptions = validFbtExtraOptions;
+
+    const { node } = this;
+    for (const attribute of node.openingElement.attributes) {
+      if (attribute.type === 'JSXSpreadAttribute') {
+        throw errorAt(
+          node,
+          `<${this.moduleName}> does not support spreading attributes.`,
+        );
+      }
+    }
   }
 
   static create({
@@ -139,10 +149,10 @@ export default class JSXFbtProcessor {
           getUnknownCommonStringErrorMessage(moduleName, textValue),
         );
       }
-      if (getAttributeByName(this._getOpeningElementAttributes(), 'desc')) {
+      if (getAttributeByName(this.node, 'desc')) {
         throw errorAt(
           node,
-          `<${moduleName} common={true}> must not have "desc" attribute`,
+          `<${moduleName} common> must not have "desc" attribute.`,
         );
       }
       desc = stringLiteral(descValue);
@@ -153,13 +163,12 @@ export default class JSXFbtProcessor {
   }
 
   _getOptions(): ObjectExpression | null {
-    // Optional attributes to be passed as options.
-    const attrs = this._getOpeningElementAttributes();
+    const attributes = this.node.openingElement.attributes;
     this._assertHasMandatoryAttributes();
     const options =
-      attrs.length > 0
+      attributes.length > 0
         ? getOptionsFromAttributes(
-            attrs,
+            attributes,
             { ...this.validFbtExtraOptions, ...ValidFbtOptions },
             FbtRequiredAttributes,
           )
@@ -167,40 +176,20 @@ export default class JSXFbtProcessor {
     return (options?.properties.length ?? 0) > 0 ? options : null;
   }
 
-  _getOpeningElementAttributes(): ReadonlyArray<JSXAttribute> {
-    if (this._openingElementAttributes != null) {
-      return this._openingElementAttributes;
-    }
-
-    const { node } = this;
-    this._openingElementAttributes = node.openingElement.attributes.map(
-      (attribute) => {
-        if (attribute.type === 'JSXSpreadAttribute') {
-          throw errorAt(
-            node,
-            `<${this.moduleName}> does not support JSX spread attribute`,
-          );
-        }
-        return attribute;
-      },
-    );
-    return this._openingElementAttributes;
-  }
-
   _assertHasMandatoryAttributes() {
     if (
-      !this._getOpeningElementAttributes().some(
+      !this.node.openingElement.attributes.some(
         (attribute) =>
+          attribute.type === 'JSXAttribute' &&
           attribute.name.type === 'JSXIdentifier' &&
-          FbtCallMustHaveAtLeastOneOfTheseAttributes.has(attribute.name.name),
+          RequiredFbtAttributes.has(attribute.name.name),
       )
     ) {
       throw errorAt(
         this.node,
-        `<${this.moduleName}> must have at least ` +
-          `one of these attributes: ${[
-            ...FbtCallMustHaveAtLeastOneOfTheseAttributes,
-          ].join(', ')}`,
+        `<${this.moduleName}> must have at least one of these attributes: ${[
+          ...RequiredFbtAttributes,
+        ].join(', ')}`,
       );
     }
   }
@@ -317,10 +306,7 @@ export default class JSXFbtProcessor {
 
   _getDescAttributeValue(): Expression {
     const { moduleName } = this;
-    const descAttr = getAttributeByNameOrThrow(
-      this._getOpeningElementAttributes(),
-      'desc',
-    );
+    const descAttr = getAttributeByNameOrThrow(this.node, 'desc');
     const { node } = this;
     if (!descAttr || descAttr.value == null) {
       throw errorAt(node, `<${moduleName}> requires a "desc" attribute`);
@@ -344,10 +330,7 @@ export default class JSXFbtProcessor {
   }
 
   _getCommonAttributeValue(): null | BooleanLiteral {
-    const commonAttr = getAttributeByName(
-      this._getOpeningElementAttributes(),
-      CommonOption,
-    );
+    const commonAttr = getAttributeByName(this.node, CommonOption);
     if (commonAttr == null) {
       return null;
     }

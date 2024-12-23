@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build && pnpm install && pnpm copy-files && cd example && pnpm build:fbtee",
-    "clean": "rm -rf packages/*/lib; cd example pnpm clean",
-    "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
+    "build:all": "pnpm -r build && pnpm install && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && cd example && pnpm build:fbtee",
+    "clean": "rm -rf packages/*/lib packages/fbtee/lib-tmp; cd example pnpm clean",
+    "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE Strings.json {} \\;",
     "dev": "cd example && pnpm build:fbtee && pnpm dev",
     "format": "prettier --write .",
     "jest": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest",
@@ -19,10 +19,12 @@
     "tsc:check": "tsc"
   },
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.26.3",
     "@babel/parser": "^7.26.3",
     "@babel/plugin-syntax-import-attributes": "^7.26.0",
+    "@babel/plugin-syntax-typescript": "^7.25.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@babel/types": "^7.26.3",

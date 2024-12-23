@@ -3,8 +3,8 @@ import FbtResult from './FbtResult.tsx';
 import FbtTranslations, { TranslationDictionary } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
 import Hook, { Hooks } from './Hooks.tsx';
-import IntlViewerContext from './IntlViewerContext.tsx';
 import type { IFbtErrorListener, NestedFbtContentItems } from './Types.js';
+import IntlViewerContext from './ViewerContext.tsx';
 
 const getFbtResult = (
   contents: NestedFbtContentItems,

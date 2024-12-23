@@ -29,9 +29,9 @@ export type CollectorConfig = {
   transform?: ExternalTransform | null;
 };
 type ParentPhraseIndex = number;
-export type ChildParentMappings = {
-  [childPhraseIndex: number]: ParentPhraseIndex;
-};
+export type ChildParentMappings = Map<number, ParentPhraseIndex>;
+export type RawChildParentMappings = Record<string, number>;
+
 export type HashToLeaf = Partial<
   Record<
     PatternHash,
@@ -88,17 +88,13 @@ const transform = (
 };
 
 export default class FbtCollector implements IFbtCollector {
-  _phrases: Array<PackagerPhrase>;
-  _childParentMappings: ChildParentMappings;
-  _extraOptions: FbtOptionConfig;
-  _config: CollectorConfig;
+  _phrases: Array<PackagerPhrase> = [];
+  _childParentMappings: ChildParentMappings = new Map();
 
-  constructor(config: CollectorConfig, extraOptions: FbtOptionConfig) {
-    this._phrases = [];
-    this._childParentMappings = {};
-    this._extraOptions = extraOptions;
-    this._config = config;
-  }
+  constructor(
+    private readonly config: CollectorConfig,
+    private readonly extraOptions: FbtOptionConfig,
+  ) {}
 
   async collectFromOneFile(
     source: string,
@@ -107,37 +103,35 @@ export default class FbtCollector implements IFbtCollector {
   ): Promise<void> {
     const options = {
       collectFbt: true,
-      extraOptions: this._extraOptions,
-      fbtCommon: this._config.fbtCommon,
+      extraOptions: this.extraOptions,
+      fbtCommon: this.config.fbtCommon,
       fbtEnumManifest,
       filename,
-      generateOuterTokenName: this._config.generateOuterTokenName,
+      generateOuterTokenName: this.config.generateOuterTokenName,
     } as const;
 
     if (!textContainsFbtLikeModule(source)) {
       return;
     }
 
-    const externalTransform = this._config.transform;
+    const externalTransform = this.config.transform;
     if (externalTransform) {
       externalTransform(source, options, filename);
     } else {
       transform(
         source,
         options,
-        this._config.plugins || [],
-        this._config.presets || [],
+        this.config.plugins || [],
+        this.config.presets || [],
       );
     }
 
     const newPhrases = getExtractedStrings();
     const newChildParentMappings = getChildToParentRelationships();
     const offset = this._phrases.length;
-    Object.entries(newChildParentMappings).forEach(
-      ([childIndex, parentIndex]) => {
-        this._childParentMappings[offset + +childIndex] = offset + parentIndex;
-      },
-    );
+    for (const [childIndex, parentIndex] of newChildParentMappings) {
+      this._childParentMappings.set(offset + childIndex, offset + parentIndex);
+    }
 
     // PackagerPhrase is an extended type of Phrase
     this._phrases.push(...(newPhrases as Array<PackagerPhrase>));

@@ -374,7 +374,7 @@ const testData = {
         fbtCommon: { No: 'The description for the common string "No"' },
       },
 
-      throws: `<fbt common={true}> must not have "desc" attribute`,
+      throws: `<fbt common> must not have "desc" attribute.`,
     },
 
   'should throw for strings with `common` attribute equal to false': {
@@ -384,7 +384,7 @@ const testData = {
       fbtCommon: { Yes: 'The description for the common string "Yes"' },
     },
 
-    throws: `Unable to find attribute "desc".`,
+    throws: `This node requires a 'desc' attribute.`,
   },
 
   'should throw on invalid attributes in fbt:param': {

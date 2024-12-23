@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode, ReactPortal } from 'react';
 import GenderConst from './GenderConst.tsx';
 import IntlVariations from './IntlVariations.tsx';
+import { Conjunction, Delimiter } from './list.tsx';
 
 /**
  * Translated string from an `fbt()` call.
@@ -137,11 +138,13 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     value: string,
     range: ReadonlyArray<string> | Readonly<{ [key: string]: string }>,
   ) => ParamOutput;
-  name: (
-    tokenName: string,
-    value: string,
-    gender: IntlVariations,
+  list: (
+    name: string,
+    items: ReadonlyArray<string | null | undefined>,
+    conjunction?: Conjunction,
+    delimiter?: Delimiter,
   ) => ParamOutput;
+  name: (name: string, value: string, gender: IntlVariations) => ParamOutput;
   param: (
     name: string,
     value: ParamInput,

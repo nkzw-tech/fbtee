@@ -239,6 +239,11 @@ exports[`Example.react renders the example 1`] = `
           </span>
         </fieldset>
         <fieldset>
+          <label>
+            Do you want to share a photo, link or video?
+          </label>
+        </fieldset>
+        <fieldset>
           <span
             class="example_row"
           >

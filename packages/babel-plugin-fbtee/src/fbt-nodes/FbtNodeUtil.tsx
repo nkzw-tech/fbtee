@@ -211,12 +211,12 @@ export function buildFbtNodeMapForSameParam(
   } = {};
   runOnNestedChildren(fbtNode, (child) => {
     if (child instanceof FbtSameParamNode) {
-      tokenNameToSameParamNode[child.getTokenName(argsMap)] = child;
+      tokenNameToSameParamNode[child.getTokenName()] = child;
       return;
     } else if (
       // FbtImplicitParamNode token names appear redundant but
       // they'll be deduplicated via the token name mangling logic
-      child instanceof FbtImplicitParamNode
+      child.type === 'implicitParam'
     ) {
       return;
     }

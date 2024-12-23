@@ -5,4 +5,5 @@ example/source_strings.json
 example/src/translatedFbts
 example/src/translatedFbts.json
 packages/*/lib/
+packages/fbtee/lib-tmp/
 pnpm-lock.yaml

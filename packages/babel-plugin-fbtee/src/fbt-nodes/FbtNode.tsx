@@ -17,6 +17,7 @@ import type {
 } from './FbtArguments.tsx';
 import type FbtEnumNode from './FbtEnumNode.tsx';
 import type FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
+import FbtListNode from './FbtListNode.tsx';
 import type FbtNameNode from './FbtNameNode.tsx';
 import { FbtNodeType } from './FbtNodeType.tsx';
 import type FbtParamNode from './FbtParamNode.tsx';
@@ -27,6 +28,7 @@ import type FbtTextNode from './FbtTextNode.tsx';
 
 export type FbtChildNode =
   | FbtEnumNode
+  | FbtListNode
   | FbtImplicitParamNode
   | FbtNameNode
   | FbtParamNode
@@ -255,15 +257,12 @@ export default abstract class FbtNode<
   getArgsForStringVariationCalc(): ReadonlyArray<SVArgument> {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      `'getArgsForStringVariationCalc' must be implemented in a child class.`,
     );
   }
 
   getText(_argsMap: StringVariationArgsMap): string {
-    throw errorAt(
-      this.node,
-      'This method must be implemented in a child class',
-    );
+    throw errorAt(this.node, `'getText' must be implemented in a child class.`);
   }
 
   getTokenAliases(_argsMap: StringVariationArgsMap): TokenAliases | null {
@@ -296,7 +295,7 @@ export default abstract class FbtNode<
       if (
         error instanceof Error &&
         error.message.includes(
-          'This method must be implemented in a child class',
+          `'getArgsForStringVariationCalc': This method must be implemented in a child class.`,
         )
       ) {
         stringVariationArgs = error;
@@ -380,7 +379,7 @@ export default abstract class FbtNode<
   getFbtRuntimeArg(): CallExpression | null {
     throw errorAt(
       this.node,
-      'This method must be implemented in a child class',
+      `'getFbtRuntimeArg' must be implemented in a child class.`,
     );
   }
 

@@ -78,7 +78,7 @@ export default class FbtPluralNode extends FbtNode<
     );
 
     try {
-      const [_, countArg] = this.getCallNodeArguments() || [];
+      const [, countArg] = this.getCallNodeArguments() || [];
       const count = enforceNodeCallExpressionArg(
         countArg,
         '`count`, the second function argument',

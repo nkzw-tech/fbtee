@@ -1,5 +1,10 @@
 import { ReactElement } from 'react';
+import fbs from './fbs.tsx';
 import intlNumUtils from './intlNumUtils.tsx';
+
+// Ensure the local version of `fbs` is used instead of auto-importing `fbtee`.
+// eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
+fbs;
 
 function formatNumber(value: number, decimals?: number | null): string {
   return intlNumUtils.formatNumber(value, decimals);

@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest.tsx';
 import {
   jsCodeFbtCallSerializer,
@@ -8,21 +8,15 @@ import {
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
-function runTest(data: { input: string; throws?: string }) {
-  expect(
-    snapshotTransform(data.input, { fbtEnumManifest: TestFbtEnumManifest }),
-  ).toMatchSnapshot();
-}
-
-describe('Test Fbt Enum', () => {
-  beforeEach(() => {
-    // Ensure the Enum registrar config is reset.
-    jest.resetModules();
+const transform = (input: string) =>
+  snapshotTransform(withFbtImportStatement(input), {
+    fbtEnumManifest: TestFbtEnumManifest,
   });
 
+describe('Test Fbt Enum', () => {
   it('should handle jsx enums (with references)', () => {
-    runTest({
-      input: withFbtImportStatement(
+    expect(
+      transform(
         `import aEnum from 'Test$FbtEnum';
         var x = (
           <fbt desc="enums!">
@@ -31,12 +25,12 @@ describe('Test Fbt Enum', () => {
           </fbt>
         );`,
       ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should handle jsx string literals', () => {
-    runTest({
-      input: withFbtImportStatement(
+    expect(
+      transform(
         `import aEnum from 'Test$FbtEnum';
         var x = (
           <fbt desc="enums!">
@@ -45,45 +39,43 @@ describe('Test Fbt Enum', () => {
           </fbt>
         );`,
       ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should handle functional enums (with references) (require)', () => {
-    runTest({
-      input: withFbtImportStatement(
+    expect(
+      transform(
         `import aEnum from 'Test$FbtEnum';
         var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
       ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should handle functional enums (with references) (import default)', () => {
-    runTest({
-      input: `
-        import { fbt } from 'fbt';
+    expect(
+      transform(`
         import aEnum from 'Test$FbtEnum';
         var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');
-      `,
-    });
+      `),
+    ).toMatchSnapshot();
   });
 
   it('should handle functional enums (with references) (import star)', () => {
-    runTest({
-      input: `
-        import { fbt } from 'fbt';
+    expect(
+      transform(`
         import * as aEnum from 'Test$FbtEnum';
         var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');
-      `,
-    });
+      `),
+    ).toMatchSnapshot();
   });
 
   it('should handle functional enums (with references) in templates', () => {
-    runTest({
-      input: withFbtImportStatement(
+    expect(
+      transform(
         `import aEnum from 'Test$FbtEnum';
           var x = fbt(\`Click to see \${fbt.enum(id, aEnum)}\`, 'enums!');`,
       ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should throw when enum values are not strings', () => {

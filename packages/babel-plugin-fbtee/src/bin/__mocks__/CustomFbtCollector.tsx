@@ -60,10 +60,7 @@ export default class CustomFbtCollector implements IFbtCollector {
   }
 
   getChildParentMappings(): ChildParentMappings {
-    return {
-      // We need an object keyed by numbers only
-      [1]: 0,
-    };
+    return new Map([[1, 0]]);
   }
 
   getFbtElementNodes(): Array<PlainFbtNode> {

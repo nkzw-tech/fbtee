@@ -2874,9 +2874,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws:
-      `Expected fbt constructs to not nest inside fbt constructs, ` +
-      `but found fbt.param nest inside fbt.name`,
+    throws: `'fbt' constructs should not be nested inside of other fbt constructs. Found 'fbt.param' nested inside 'fbt.name'.`,
   },
 
   'should throw when a fbt.param is nested inside another fbt.param': {
@@ -2899,18 +2897,13 @@ with some other stuff.\`
       );`,
     ),
 
-    throws:
-      `Expected fbt constructs to not nest inside fbt constructs, ` +
-      `but found fbt.param nest inside fbt.param`,
+    throws: `'fbt' constructs should not be nested inside of other fbt constructs. Found 'fbt.param' nested inside 'fbt.param'.`,
   },
 
   'should throw when a fbt.param is used outside of fbt': {
     input: withFbtImportStatement(`var z = fbt.param('name', val);`),
 
-    throws:
-      `Fbt constructs can only be used within the scope of an fbt` +
-      ` string. I.e. It should be used directly inside an ` +
-      `‹fbt› / ‹fbs› callsite`,
+    throws: `fbt constructs must be used within the scope of other fbt constructs.`,
   },
 
   'should throw when concatenating an fbt construct to a string while using the array argument syntax':

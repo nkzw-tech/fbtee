@@ -8,7 +8,6 @@ import invariant from 'invariant';
 import { BindingName } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import { errorAt } from '../FbtUtil.tsx';
-import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
@@ -61,13 +60,13 @@ export default class FbtSameParamNode extends FbtNode<
     }
   }
 
-  override getTokenName(_argsMap: StringVariationArgsMap): string {
+  override getTokenName(): string {
     return this.options.name;
   }
 
-  override getText(_argsList: StringVariationArgsMap): string {
+  override getText(): string {
     try {
-      return tokenNameToTextPattern(this.getTokenName(_argsList));
+      return tokenNameToTextPattern(this.getTokenName());
     } catch (error) {
       throw errorAt(this.node, error);
     }

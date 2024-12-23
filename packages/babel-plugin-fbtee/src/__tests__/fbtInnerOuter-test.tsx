@@ -2,17 +2,15 @@ import { describe, expect, it } from '@jest/globals';
 import { getChildToParentRelationships } from '../index.tsx';
 import { transform, withFbtImportStatement } from './FbtTestUtil.tsx';
 
-function testChildToParentRelationships([, testData]: readonly [
+const testChildToParentRelationships = ([, testData]: readonly [
   name: string,
-  { input: string; output: Record<number, number> },
-]) {
-  const body = testData.input.replace(/\/\*\*(?:\/|[^*]|\*+[^*/])*\*+\//, '');
-  transform(body, { collectFbt: true });
-
-  expect(JSON.stringify(testData.output, null, ' ')).toEqual(
-    JSON.stringify(getChildToParentRelationships(), null, ' '),
-  );
-}
+  { input: string; output: Map<number, number> },
+]) => {
+  transform(testData.input.replace(/\/\*\*(?:\/|[^*]|\*+[^*/])*\*+\//, ''), {
+    collectFbt: true,
+  });
+  expect(testData.output).toEqual(getChildToParentRelationships());
+};
 
 const testData = [
   [
@@ -24,7 +22,7 @@ const testData = [
             liked your video
           </fbt>;`,
       ),
-      output: { 1: 0 },
+      output: new Map([[1, 0]]),
     },
   ],
   [
@@ -39,7 +37,10 @@ const testData = [
             your video
           </fbt>;`,
       ),
-      output: { 1: 0, 2: 1 },
+      output: new Map([
+        [1, 0],
+        [2, 1],
+      ]),
     },
   ],
   [
@@ -55,7 +56,12 @@ const testData = [
             </div>
           </fbt>;`,
       ),
-      output: { 1: 0, 2: 1, 3: 0, 4: 3 },
+      output: new Map([
+        [1, 0],
+        [2, 1],
+        [3, 0],
+        [4, 3],
+      ]),
     },
   ],
   [
@@ -79,7 +85,10 @@ const testData = [
             <div href="#">another child!</div>
           </fbt>;`,
       ),
-      output: { 1: 0, 4: 3 },
+      output: new Map([
+        [1, 0],
+        [4, 3],
+      ]),
     },
   ],
   [
@@ -95,7 +104,10 @@ const testData = [
             </fbt>
           </div>;`,
       ),
-      output: { 1: 0, 3: 2 },
+      output: new Map([
+        [1, 0],
+        [3, 2],
+      ]),
     },
   ],
 ] as const;

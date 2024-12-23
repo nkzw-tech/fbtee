@@ -140,7 +140,7 @@ function checkAndFilterTranslations(
       if (options.strict) {
         throw new Error(message);
       } else {
-        process.stderr.write(`${message}\n`);
+        console.error(message);
       }
     } else {
       filteredTranslations[hash] = translations[hash];
