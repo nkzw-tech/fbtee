@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",
-    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^",
-    "@nkzw/babel-plugin-fbtee-runtime": "workspace:^"
+    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^"
   }
 }

@@ -2,37 +2,28 @@
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a common string 1`] = `
 import { fbs } from "fbtee";
-const fbsCommonElem = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "Button to post a comment", text: "Post" } },
-    project: "",
-  } /* __FBT__ end */
-);
+const fbsCommonElem = fbs._("Post", null, {
+  hk: "2y9OIZ",
+});
 
 `;
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a simple string 1`] = `
 import { fbs } from "fbtee";
-const fbsElem = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "str_description", text: "a simple string" } },
-    project: "",
-  } /* __FBT__ end */
-);
+const fbsElem = fbs._("a simple string", null, {
+  hk: "1jd7FI",
+});
 
 `;
 
 exports[`Test declarative (jsx) <fbs> syntax translation should convert a string with a parameter 1`] = `
 import { fbs } from "fbtee";
 const fbsElem = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "str_description", text: "a string with a {param name}" },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbs._param("param name", parameter)]
+  "a string with a {param name}",
+  [fbs._param("param name", parameter)],
+  {
+    hk: "46D2WH",
+  }
 );
 
 `;
@@ -41,41 +32,32 @@ exports[`Test declarative (jsx) <fbs> syntax translation should handle <fbs:enum
 import { fbs } from "fbtee";
 import aEnum from "Test$FbtEnum";
 var x = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [null],
-      t: {
-        id1: { desc: "enums!", text: "Click to see groups" },
-        id2: { desc: "enums!", text: "Click to see photos" },
-        id3: { desc: "enums!", text: "Click to see videos" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbs._enum(id, aEnum)]
+  {
+    id1: "Click to see groups",
+    id2: "Click to see photos",
+    id3: "Click to see videos",
+  },
+  [fbs._enum(id, aEnum)],
+  {
+    hk: "3SHnwE",
+  }
 );
 
 `;
 
 exports[`Test functional fbs() syntax translation should convert a common string 1`] = `
 import { fbs } from "fbtee";
-const fbsCommonCall = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "Button to post a comment", text: "Post" } },
-    project: "",
-  } /* __FBT__ end */
-);
+const fbsCommonCall = fbs._("Post", null, {
+  hk: "2y9OIZ",
+});
 
 `;
 
 exports[`Test functional fbs() syntax translation should convert a simple string 1`] = `
 import { fbs } from "fbtee";
-const fbsCall = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "str_description", text: "a simple string" } },
-    project: "",
-  } /* __FBT__ end */
-);
+const fbsCall = fbs._("a simple string", null, {
+  hk: "1jd7FI",
+});
 
 `;
 
@@ -83,16 +65,13 @@ exports[`Test functional fbs() syntax translation should convert a string with a
 import { fbs } from "fbtee";
 import IntlVariations from "IntlVariations";
 const fbsCall = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [{ token: "param name", type: 1 }],
-      t: {
-        "*": { desc: "str_description", text: "a string with a {param name}" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbs._param("param name", parameter, [1, IntlVariations.GENDER_MALE])]
+  {
+    "*": "a string with a {param name}",
+  },
+  [fbs._param("param name", parameter, [1, IntlVariations.GENDER_MALE])],
+  {
+    hk: "3lgixW",
+  }
 );
 
 `;
@@ -101,18 +80,15 @@ exports[`Test functional fbs() syntax translation should handle fbs.enum 1`] = `
 import { fbs } from "fbtee";
 import aEnum from "Test$FbtEnum";
 var x = fbs._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [null],
-      t: {
-        id1: { desc: "enums!", text: "Click to see groups" },
-        id2: { desc: "enums!", text: "Click to see photos" },
-        id3: { desc: "enums!", text: "Click to see videos" },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbs._enum(id, aEnum)]
+  {
+    id1: "Click to see groups",
+    id2: "Click to see photos",
+    id3: "Click to see videos",
+  },
+  [fbs._enum(id, aEnum)],
+  {
+    hk: "3SHnwE",
+  }
 );
 
 `;

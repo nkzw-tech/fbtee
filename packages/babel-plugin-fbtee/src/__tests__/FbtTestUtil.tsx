@@ -1,4 +1,4 @@
-import babel, { PluginItem, PluginOptions, transformSync } from '@babel/core';
+import { PluginOptions, transformSync } from '@babel/core';
 import generate from '@babel/generator';
 import { parse as babelParse } from '@babel/parser';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
@@ -7,7 +7,6 @@ import presetTypeScript from '@babel/preset-typescript';
 import { Node } from '@babel/types';
 import { expect } from '@jest/globals';
 import prettier from 'prettier-2';
-import { SENTINEL } from '../FbtConstants.tsx';
 import fbt from '../index.tsx';
 
 export function payload(obj: Record<string, unknown>): string {
@@ -32,7 +31,7 @@ export function snapshotTransform(
   source: string,
   pluginOptions?: PluginOptions,
 ): string {
-  return transform(source, { fbtBase64: true, ...pluginOptions });
+  return prettier.format(transform(source, pluginOptions), { parser: 'babel' });
 }
 
 async function transformKeepJsx(
@@ -54,8 +53,7 @@ async function transformKeepJsx(
 export const snapshotTransformKeepJsx = (
   source: string,
   pluginOptions?: PluginOptions,
-): Promise<string> =>
-  transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
+): Promise<string> => transformKeepJsx(source, pluginOptions);
 
 export function withFbsImportStatement(code: string): string {
   return `import { fbs } from "fbtee";
@@ -75,14 +73,7 @@ export function withFbtImportStatement(code: string): string {
  */
 export const jsCodeFbtCallSerializer = {
   serialize(rawValue: string) {
-    const decoded = rawValue.replaceAll(
-      /(["'])__FBT__(.*?)__FBT__\1/gm,
-      (_match, _quote, body) => {
-        const json = Buffer.from(body, 'base64').toString('utf8');
-        return `/* ${SENTINEL} start */ ${json} /* ${SENTINEL} end */`;
-      },
-    );
-    return prettier.format(decoded, { parser: 'babel' });
+    return prettier.format(rawValue, { parser: 'babel' });
   },
 
   test(rawValue: unknown): rawValue is string {
@@ -337,22 +328,4 @@ export function testSection(
       }
     });
   });
-}
-
-export function testCase(
-  name: string,
-  plugins: Array<PluginItem>,
-  testData: TestCases,
-  options: Options,
-) {
-  describe(name, () =>
-    testSection(
-      testData,
-      (source: string) =>
-        babel.transformSync(source, {
-          plugins,
-        })?.code || '',
-      options,
-    ),
-  );
 }
