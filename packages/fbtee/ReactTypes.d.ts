@@ -1,4 +1,8 @@
-import { Conjunction } from './src/list.tsx';
+import {
+  FbtConjunction,
+  FbtDelimiter,
+  FbtWithoutString,
+} from './lib/index.d.ts';
 
 enum IntlVariations {
   BITMASK_NUMBER = 28,
@@ -151,9 +155,9 @@ type FbtProps = { key?: string | null } & (
 );
 
 type FbtListProps = {
-  conjunction?: Conjunction;
-  delimiter?: Delimiter;
-  items: Array<string | React.ReactElement | null | undefined>;
+  conjunction?: FbtConjunction;
+  delimiter?: FbtDelimiter;
+  items: Array<FbtWithoutString | React.ReactElement | null | undefined>;
   key?: string | null;
   name: string;
 };

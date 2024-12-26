@@ -23,9 +23,14 @@ import {
   getGenderVariations,
   getNumberVariations,
 } from './IntlVariationResolver.tsx';
-import list, { Conjunction, Delimiter } from './list.tsx';
+import list from './list.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
-import type { BaseResult, NestedFbtContentItems } from './Types.d.ts';
+import type {
+  BaseResult,
+  FbtConjunction,
+  FbtDelimiter,
+  NestedFbtContentItems,
+} from './Types.d.ts';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,
@@ -175,8 +180,8 @@ export function createRuntime<P, T extends BaseResult>({
       _list: (
         label: string,
         items: ReadonlyArray<string | ReactElement | null | undefined>,
-        conjunction?: Conjunction,
-        delimiter?: Delimiter,
+        conjunction?: FbtConjunction,
+        delimiter?: FbtDelimiter,
       ) => [
         null,
         {

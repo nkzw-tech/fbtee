@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode, ReactPortal } from 'react';
 import GenderConst from './GenderConst.tsx';
 import IntlVariations from './IntlVariations.tsx';
-import { Conjunction, Delimiter } from './list.tsx';
 
 /**
  * Translated string from an `fbt()` call.
@@ -123,6 +122,9 @@ export type FbsParamInput = PureStringResult | string;
 type FbsParamOutput = string;
 type FbtParamOutput = FbsParamOutput;
 
+export type FbtConjunction = 'and' | 'none' | 'or';
+export type FbtDelimiter = 'bullet' | 'comma' | 'semicolon';
+
 type FbtAPIT<Output, ParamInput, ParamOutput> = {
   (
     text: string | ReadonlyArray<string>,
@@ -140,9 +142,9 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
   ) => ParamOutput;
   list: (
     name: string,
-    items: ReadonlyArray<string | null | undefined>,
-    conjunction?: Conjunction,
-    delimiter?: Delimiter,
+    items: ReadonlyArray<FbtWithoutString | null | undefined>,
+    conjunction?: FbtConjunction,
+    delimiter?: FbtDelimiter,
   ) => ParamOutput;
   name: (name: string, value: string, gender: IntlVariations) => ParamOutput;
   param: (

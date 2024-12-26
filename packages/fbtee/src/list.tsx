@@ -3,14 +3,12 @@
 import invariant from 'invariant';
 import { isValidElement, ReactElement, ReactNode } from 'react';
 import fbt from './fbt.tsx';
-
-export type Conjunction = 'and' | 'none' | 'or';
-export type Delimiter = 'bullet' | 'comma' | 'semicolon';
+import type { FbtConjunction, FbtDelimiter } from './Types.d.ts';
 
 export default function list(
   items: ReadonlyArray<string | ReactElement | null | undefined>,
-  conjunction: Conjunction = 'and',
-  delimiter: Delimiter = 'comma',
+  conjunction: FbtConjunction = 'and',
+  delimiter: FbtDelimiter = 'comma',
 ): ReactNode {
   // Ensure the local version of `fbt` is used instead of auto-importing `fbtee`.
   // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
@@ -41,7 +39,7 @@ export default function list(
     switch (delimiter) {
       case 'semicolon':
         output = (
-          <fbt desc='A list of items of various types, for example: "San Francisco; London; Tokyo;". {previous items} and {following items} are themselves lists that contain one or more items.'>
+          <fbt desc='A list of items of various types, for example: "San Francisco; London; Tokyo". {previous items} and {following items} are themselves lists that contain one or more items.'>
             <fbt:param name="previous items">{output}</fbt:param>
             {'; '}
             <fbt:param name="following items">{items[index]}</fbt:param>
@@ -58,7 +56,7 @@ export default function list(
         break;
       default:
         output = (
-          <fbt desc="A list of items of various types. {previous items} and {following items} are themselves lists that contain one or more items.">
+          <fbt desc='A list of items of various types separated by commas, for example: "San Francisco, London, Tokyo". {previous items} and {following items} are themselves lists that contain one or more items.'>
             <fbt:param name="previous items">{output}</fbt:param>
             {', '}
             <fbt:param name="following items">{items[index]}</fbt:param>
@@ -126,8 +124,8 @@ export function List({
   delimiter,
   items,
 }: {
-  conjunction?: Conjunction;
-  delimiter?: Delimiter;
+  conjunction?: FbtConjunction;
+  delimiter?: FbtDelimiter;
   items: Array<string | React.ReactElement | null | undefined>;
 }) {
   return list(items, conjunction, delimiter);
