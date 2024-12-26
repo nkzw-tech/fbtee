@@ -3,73 +3,60 @@
 exports[`Test double-lined params should remove the new line for param names that are two lines 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "d", text: "{two lines} test" } },
-    project: "",
-  } /* __FBT__ end */,
+  "{two lines} test",
   [
     fbt._param(
       "two lines",
       /*#__PURE__*/ React.createElement(
         "b",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: { m: [], t: { desc: "test", text: "simple" } },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("simple", null, {
+          hk: "2pjKFw",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "2xRGl8",
+  }
 );
 
 `;
 
 exports[`fbt variable binding detection should handle commonJS require() 1`] = `
 const fbt = require("fbtee");
-fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "Bar", text: "Foo" } },
-    project: "",
-  } /* __FBT__ end */
-);
+fbt._("Foo", null, {
+  hk: "3ktBJ2",
+});
 
 `;
 
 exports[`fbt variable binding detection using ES6 should handle fbt default export 1`] = `
 import fbt from "fbtee";
-fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "Bar", text: "Foo" } },
-    project: "",
-  } /* __FBT__ end */
-);
+fbt._("Foo", null, {
+  hk: "3ktBJ2",
+});
 
 `;
 
 exports[`fbt variable binding detection using ES6 should handle the named fbt export 1`] = `
 import { fbt } from "fbtee";
-fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "Bar", text: "Foo" } },
-    project: "",
-  } /* __FBT__ end */
-);
+fbt._("Foo", null, {
+  hk: "3ktBJ2",
+});
 
 `;
 
 exports[`fbt() API:  using FBT subject should accept "subject" as a parameter 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [{ token: "__subject__", type: 1 }],
-      t: { "*": { desc: "Bar", text: "Foo" } },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._subject(foo)]
+  {
+    "*": "Foo",
+  },
+  [fbt._subject(foo)],
+  {
+    hk: "7I4k2",
+  }
 );
 
 `;
@@ -77,14 +64,13 @@ fbt._(
 exports[`fbt() API:  using FBT subject with string templates should accept "subject" as a parameter 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [{ token: "__subject__", type: 1 }],
-      t: { "*": { desc: "Bar", text: "Foo" } },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._subject(foo)]
+  {
+    "*": "Foo",
+  },
+  [fbt._subject(foo)],
+  {
+    hk: "7I4k2",
+  }
 );
 
 `;
@@ -92,10 +78,7 @@ fbt._(
 exports[`fragments inside of <fbt:param> 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "d", text: "{param} test" } },
-    project: "",
-  } /* __FBT__ end */,
+  "{param} test",
   [
     fbt._param(
       "param",
@@ -103,15 +86,15 @@ fbt._(
         React.Fragment,
         null,
         /*#__PURE__*/ React.createElement("b", null, "Test"),
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: { m: [], t: { desc: "test", text: "simple" } },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("simple", null, {
+          hk: "2pjKFw",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "154Qct",
+  }
 );
 
 `;

@@ -1,6 +1,5 @@
 import fbt, { PluginOptions } from '@nkzw/babel-plugin-fbtee';
 import autoImport from '@nkzw/babel-plugin-fbtee-auto-import';
-import fbtRuntime from '@nkzw/babel-plugin-fbtee-runtime';
 
 export default function preset(
   _: unknown,
@@ -10,7 +9,6 @@ export default function preset(
     plugins: [
       ...(options?.disableAutoImport ? [] : [autoImport]),
       [fbt, options],
-      fbtRuntime,
     ],
   };
 }

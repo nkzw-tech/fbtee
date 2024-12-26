@@ -36,10 +36,6 @@ export default {
       },
     },
     {
-      displayName: '@nkzw/babel-plugin-fbtee-runtime',
-      roots: ['<rootDir>/packages/babel-plugin-fbtee-runtime'],
-    },
-    {
       displayName: 'fbtee',
       modulePaths: ['<rootDir>/packages/fbtee/src'],
       roots: ['<rootDir>/packages/fbtee/src'],
