@@ -36,7 +36,7 @@
     "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^",
     "glob": "^11.0.0",
     "invariant": "^2.2.4",
-    "jest-docblock": "^30.0.0-alpha.6",
+    "jest-docblock": "30.0.0-alpha.6",
     "nullthrows": "^1.1.1",
     "yargs": "^17.7.2"
   },
