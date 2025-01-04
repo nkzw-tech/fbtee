@@ -311,7 +311,7 @@ var x = fbt._(
 
 `;
 
-exports[`Test declarative (jsx) fbt syntax translation should handle single expression with concentated strings 1`] = `
+exports[`Test declarative (jsx) fbt syntax translation should handle single expression with concatenated strings 1`] = `
 import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
@@ -506,7 +506,7 @@ fbt._(
 
 `;
 
-exports[`Test declarative (jsx) fbt syntax translation should support non-breasking space character 1`] = `
+exports[`Test declarative (jsx) fbt syntax translation should support non-breaking space character 1`] = `
 import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {

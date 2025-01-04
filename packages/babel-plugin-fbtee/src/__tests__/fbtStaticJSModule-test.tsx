@@ -5,7 +5,6 @@ import {
   jsCodeFbtCallSerializer,
   payload,
   snapshotTransform,
-  testSection,
   transform,
   withFbtImportStatement,
 } from './FbtTestUtil.tsx';
@@ -26,140 +25,163 @@ describe('fbt preserveWhitespace argument', () => {
   // Here we are intentionally testing for the wrong behavior. We will come
   // back and update the expected output after we fix space normalization.
   describe('should NOT preserve whitespaces that do not neighbor raw text', () => {
-    const snapshotTestData = {
-      'jsx elements and raw text': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <span>
-                Where do
-              </span>
-              <b>spaces</b>
-              <i>go?</i>
-              Good
-              <i>question</i>
-              !
-            </fbt>;
-        `),
-      },
-      'jsx elements and string variation arguments nested inside jsx element': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <a>OuterJsx1</a>
-              RawText
-              <b>OuterJsx2</b>
-              <b>
-                <i>InnerJsx1</i>
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-                <i>InnerJsx2</i>
-              </b>
-            </fbt>;
-        `),
-      },
-      'jsx elements with string variation arguments': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <span>
-                There should be
-              </span>
-              <b>
-                <fbt:plural
-                  many="spaces"
-                  showCount="ifMany"
-                  count={this.state.ex1Count}>
-                  a space
-                </fbt:plural>
-              </b>
-              !
-            </fbt>;
-        `),
-      },
-      'should not preserve whitespace around text in JSXExpression': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <a>OuterJsx1</a>
-              {'textInJSXExpression'}
-              <b>OuterJsx2</b>
-              <b>
-                rawText
+    it('jsx elements and raw text', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <span>
+                  Where do
+                </span>
+                <b>spaces</b>
+                <i>go?</i>
+                Good
+                <i>question</i>
+                !
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('jsx elements and string variation arguments nested inside jsx element', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <a>OuterJsx1</a>
+                RawText
+                <b>OuterJsx2</b>
+                <b>
+                  <i>InnerJsx1</i>
+                  <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                  <i>InnerJsx2</i>
+                </b>
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('jsx elements with string variation arguments', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <span>
+                  There should be
+                </span>
+                <b>
+                  <fbt:plural
+                    many="spaces"
+                    showCount="ifMany"
+                    count={this.state.ex1Count}>
+                    a space
+                  </fbt:plural>
+                </b>
+                !
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('should not preserve whitespace around text in JSXExpression', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <a>OuterJsx1</a>
                 {'textInJSXExpression'}
-                <i>InnerJsx1</i>
-                {'textInJSXExpression'}
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-                {'text' + 'InJSXExpression'}
-                <i>InnerJsx2</i>
-                {\`text${'InJSXExpression'}\`}
-              </b>
-            </fbt>;
-        `),
-      },
-      'should preserve voluntarily added spaces between NON-raw text': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <a>OuterJsx1</a>
-              {' '}
-              <b>OuterJsx2</b>
-              <b>
+                <b>OuterJsx2</b>
+                <b>
+                  rawText
+                  {'textInJSXExpression'}
+                  <i>InnerJsx1</i>
+                  {'textInJSXExpression'}
+                  <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                  {'text' + 'InJSXExpression'}
+                  <i>InnerJsx2</i>
+                  {\`text${'InJSXExpression'}\`}
+                </b>
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('should preserve voluntarily added spaces between NON-raw text', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <a>OuterJsx1</a>
                 {' '}
-                <i>InnerJsx1</i>
-                {' '}
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-                {' '}
-                <i>InnerJsx2</i>
-                {' '}
-                <i>InnerJsx3</i>
-                {' '}
-              </b>
-            </fbt>;
-        `),
-      },
-      'should treat comments in JSXExpression like they are not here': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              <a>OuterJsx1</a>
-              {/* someComment */}
-              <b>OuterJsx2</b>
-              <b>
+                <b>OuterJsx2</b>
+                <b>
+                  {' '}
+                  <i>InnerJsx1</i>
+                  {' '}
+                  <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                  {' '}
+                  <i>InnerJsx2</i>
+                  {' '}
+                  <i>InnerJsx3</i>
+                  {' '}
+                </b>
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('should treat comments in JSXExpression like they are not here', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                <a>OuterJsx1</a>
                 {/* someComment */}
-                <i>InnerJsx1</i>
-                {/* someComment */}
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-                {/* someComment */}
-                rawText
-              </b>
-            </fbt>;
-        `),
-      },
-    };
-    testSection(snapshotTestData, snapshotTransform, {
-      matchSnapshot: true,
+                <b>OuterJsx2</b>
+                <b>
+                  {/* someComment */}
+                  <i>InnerJsx1</i>
+                  {/* someComment */}
+                  <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                  {/* someComment */}
+                  rawText
+                </b>
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
     });
   });
 
   describe('should preserve whitespace around text', () => {
-    const snapshotTestData = {
-      'with inner text and string variation': {
-        input: withFbtImportStatement(`
-          var x =
-            <fbt desc="d">
-              outerText
-              <a>outerJsx</a>
-              <b>
-                <i>innerJsx</i>
-                innerText
-                <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
-              </b>
-            </fbt>;
-        `),
-      },
-    };
-    testSection(snapshotTestData, snapshotTransform, {
-      matchSnapshot: true,
+    it('with inner text and string variation', () => {
+      expect(
+        snapshotTransform(
+          withFbtImportStatement(`
+            var x =
+              <fbt desc="d">
+                outerText
+                <a>outerJsx</a>
+                <b>
+                  <i>innerJsx</i>
+                  innerText
+                  <fbt:plural count={this.state.ex1Count}>(plural)</fbt:plural>
+                </b>
+              </fbt>;
+          `),
+        ),
+      ).toMatchSnapshot();
     });
   });
 
