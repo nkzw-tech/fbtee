@@ -20,7 +20,9 @@ setupFbtee({
 });
 
 // Ignore missing translations.
-console.warn = jest.fn();
+console.warn = jest.fn().mockImplementation((message) => {
+  expect(message).toBe(`Translations have not been provided.`);
+});
 
 describe('fbt', () => {
   it('should handle variated numbers', () => {
