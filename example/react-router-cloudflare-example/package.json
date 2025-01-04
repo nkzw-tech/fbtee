@@ -1,0 +1,44 @@
+{
+  "name": "react-router-cloudflare-fbtee",
+  "description": "React Router Cloudflare with fbtee",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "NODE_ENV=production react-router build",
+    "fbtee:manifest": "fbtee manifest --src app",
+    "fbtee:collect": "fbtee collect --manifest < .src_manifest.json > .source_strings.json",
+    "fbtee:translate": "fbtee translate --translations app/i18n/*.json --jenkins > app/translations.json",
+    "dev": "react-router dev",
+    "start": "wrangler dev",
+    "typecheck": "react-router typegen && wrangler types && tsc",
+    "preview": "wrangler versions upload --env preview",
+    "deploy:production": "wrangler deploy"
+  },
+  "dependencies": {
+    "@react-router/serve": "^7.1.1",
+    "drizzle-orm": "~0.38.3",
+    "fbtee": "^0.2.0",
+    "isbot": "^5.1.19",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.1.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241230.0",
+    "@nkzw/babel-preset-fbtee": "^0.2.0",
+    "@react-router/dev": "^7.1.1",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vite-tsconfig-paths": "^5.1.4",
+    "wrangler": "^3.99.0"
+  },
+  "packageManager": "pnpm@9.15.2"
+}

@@ -1,0 +1,17 @@
+.DS_Store
+/node_modules/
+
+# React Router
+/.react-router/
+/build/
+
+# Cloudflare
+.dev.vars
+.mf
+.wrangler
+worker-configuration.d.ts
+
+.src_manifest.json
+.source_strings.json
+.enum_manifest.json
+app/translations.json

@@ -1,0 +1,17 @@
+#:schema node_modules/wrangler/config-schema.json
+
+# Visit https://developers.cloudflare.com/workers/wrangler/configuration/ to see full list of options for this file
+
+name = "react-router-cloudflare-fbtee"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+main = "./build/server/worker.js"
+
+[build]
+command = "pnpm build"
+
+[assets]
+directory = "./build/client"
+
+[vars]
+VALUE_FROM_CLOUDFLARE="How would we translate something like this?"
