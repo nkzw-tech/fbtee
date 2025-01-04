@@ -1,4 +1,4 @@
-import babel, { PluginItem, PluginOptions, transformSync } from '@babel/core';
+import { PluginOptions, transformSync } from '@babel/core';
 import generate from '@babel/generator';
 import { parse as babelParse } from '@babel/parser';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
@@ -35,10 +35,7 @@ export function snapshotTransform(
   return transform(source, { fbtBase64: true, ...pluginOptions });
 }
 
-async function transformKeepJsx(
-  source: string,
-  pluginOptions?: PluginOptions,
-): Promise<string> {
+function transformKeepJsx(source: string, pluginOptions?: PluginOptions) {
   return prettier.format(
     transformSync(source, {
       ast: false,
@@ -54,8 +51,7 @@ async function transformKeepJsx(
 export const snapshotTransformKeepJsx = (
   source: string,
   pluginOptions?: PluginOptions,
-): Promise<string> =>
-  transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
+) => transformKeepJsx(source, { fbtBase64: true, ...pluginOptions });
 
 export function withFbsImportStatement(code: string): string {
   return `import { fbs } from "fbtee";
@@ -167,7 +163,7 @@ function parse(code: string) {
   });
 }
 
-export function generateFormattedCodeFromAST(node: Node) {
+function generateFormattedCodeFromAST(node: Node) {
   return generate.default(node, { comments: true }, '').code.trim();
 }
 
@@ -195,24 +191,6 @@ function normalizeSourceCode(sourceCode: string) {
       sourceCode,
     )
     .code.trim();
-}
-
-/**
- * This function allows you to use mutliline template strings in your test
- * cases without worrying about non standard loc's. It does this by stripping
- * leading whitespace so the contents lines up based on the first lines
- * offset.
- */
-export function stripCodeBlockWhitespace(code: string) {
-  // Find standard whitespace offset for block
-  const match = code.match(/(\n\s*)\S/);
-  const strippedCode =
-    match == null
-      ? code
-      : // Strip from each line
-        code.replaceAll(new RegExp(match[1], 'g'), '\n');
-
-  return strippedCode;
 }
 
 const indent = (code: string) =>
@@ -274,44 +252,6 @@ ${indent(excerptDiffFromReceived)}
   }
 }
 
-export function testSectionAsync(
-  testData: TestCases,
-  transform: (
-    source: string,
-    options?: Record<string, unknown>,
-  ) => Promise<string>,
-  options: Options,
-) {
-  Object.entries(testData).forEach(([title, testInfo]) => {
-    test(title, async () => {
-      if (testInfo.throws === true) {
-        await expect(
-          transform(testInfo.input, testInfo.options),
-        ).rejects.toThrow();
-      } else if (typeof testInfo.throws === 'string') {
-        await expect(
-          transform(testInfo.input, testInfo.options),
-        ).rejects.toThrow(testInfo.throws);
-      } else {
-        expect(
-          (async () => {
-            const transformOutput = await transform(
-              testInfo.input,
-              testInfo.options,
-            );
-            if (options && options.matchSnapshot) {
-              expect(transformOutput).toMatchSnapshot();
-            } else if (testInfo.output) {
-              assertSourceAstEqual(testInfo.output, transformOutput, options);
-            }
-            return true;
-          })(),
-        ).resolves.toBe(true);
-      }
-    });
-  });
-}
-
 export function testSection(
   testData: TestCases,
   transform: (source: string, options?: Options) => string,
@@ -337,22 +277,4 @@ export function testSection(
       }
     });
   });
-}
-
-export function testCase(
-  name: string,
-  plugins: Array<PluginItem>,
-  testData: TestCases,
-  options: Options,
-) {
-  describe(name, () =>
-    testSection(
-      testData,
-      (source: string) =>
-        babel.transformSync(source, {
-          plugins,
-        })?.code || '',
-      options,
-    ),
-  );
 }

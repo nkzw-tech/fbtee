@@ -998,7 +998,7 @@ fbt._(
 
 `;
 
-exports[`Test jsx auto-wrapping of implicit parameters should wrap a string next to an explicit <fbt:param> that has a implicit <fbt:param> within it 1`] = `
+exports[`Test jsx auto-wrapping of implicit parameters should wrap a string next to an explicit <fbt:param> that has an implicit <fbt:param> within it 1`] = `
 import { fbt } from "fbtee";
 fbt._(
   /* __FBT__ start */ {
