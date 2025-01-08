@@ -5,7 +5,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "NODE_ENV=production react-router build",
+    "build": "NODE_ENV=production pnpm fbtee:manifest && pnpm fbtee:collect && pnpm fbtee:translate && react-router build",
     "fbtee:manifest": "fbtee manifest --src app",
     "fbtee:collect": "fbtee collect --manifest < .src_manifest.json > .source_strings.json",
     "fbtee:translate": "fbtee translate --translations app/i18n/*.json --jenkins > app/translations.json",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@react-router/serve": "^7.1.1",
     "drizzle-orm": "~0.38.3",
-    "fbtee": "^0.2.0",
+    "fbtee": "workspace:^",
     "isbot": "^5.1.19",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241230.0",
-    "@nkzw/babel-preset-fbtee": "^0.2.0",
+    "@nkzw/babel-preset-fbtee": "workspace:^",
     "@react-router/dev": "^7.1.1",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",

@@ -4,8 +4,8 @@ import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import fbteePreset from '@nkzw/babel-preset-fbtee';
-import react from '@vitejs/plugin-react';
+import fbteePreset from "@nkzw/babel-preset-fbtee";
+import react from "@vitejs/plugin-react";
 import { getLoadContext } from "./load-context";
 
 export default defineConfig(({ isSsrBuild }) => ({
@@ -26,25 +26,6 @@ export default defineConfig(({ isSsrBuild }) => ({
       plugins: [tailwindcss, autoprefixer],
     },
   },
-  ssr: {
-    target: "webworker",
-    noExternal: true,
-    external: ["node:async_hooks"],
-    resolve: {
-      conditions: ["workerd", "browser"],
-    },
-    optimizeDeps: {
-      include: [
-        "react",
-        "react/jsx-runtime",
-        "react/jsx-dev-runtime",
-        "react-dom",
-        "react-dom/server",
-        "react-router",
-        "fbtee"
-      ],
-    },
-  },
   plugins: [
     react({
       babel: {
@@ -54,9 +35,6 @@ export default defineConfig(({ isSsrBuild }) => ({
     cloudflareDevProxy({ getLoadContext }),
     reactRouter(),
     {
-      // This plugin is required so both `index.js` / `worker.js can be
-      // generated for the `build` config above
-      name: "react-router-cloudflare-workers",
       config: () => ({
         build: {
           rollupOptions: isSsrBuild
@@ -68,7 +46,29 @@ export default defineConfig(({ isSsrBuild }) => ({
             : undefined,
         },
       }),
+      // This plugin is required so both `index.js` / `worker.js can be
+      // generated for the `build` config above
+      name: "react-router-cloudflare-workers",
     },
     tsconfigPaths(),
   ],
+  ssr: {
+    external: ["node:async_hooks"],
+    noExternal: true,
+    optimizeDeps: {
+      include: [
+        "react",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "react-dom",
+        "react-dom/server",
+        "react-router",
+        "fbtee",
+      ],
+    },
+    resolve: {
+      conditions: ["workerd", "browser"],
+    },
+    target: "webworker",
+  },
 }));

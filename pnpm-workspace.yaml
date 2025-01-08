@@ -1,5 +1,6 @@
 packages:
-  - 'example'
+  - 'example/original-example'
+  - 'example/react-router-cloudflare-example'
   - 'packages/babel-plugin-fbtee-auto-import'
   - 'packages/babel-plugin-fbtee-runtime'
   - 'packages/babel-plugin-fbtee'
