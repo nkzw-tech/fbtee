@@ -889,6 +889,50 @@ var x =
 
 `;
 
+exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "two lines", text: "one line" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "two spaces", text: "one space" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "one space", text: "two spaces" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "one line", text: "two lines" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
 exports[`fbt preserveWhitespace argument should preserve whitespace around text with inner text and string variation 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
@@ -1005,5 +1049,49 @@ var x =
       ),
     ]
   ));
+
+`;
+
+exports[`fbt preserveWhitespace argument should preserve whitespace in desc when requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "two\\nlines", text: "one line" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should preserve whitespace in desc when requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "two  spaces", text: "one space" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should preserve whitespace in text when requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "one line", text: "two\\nlines" } },
+    project: "",
+  } /* __FBT__ end */
+);
+
+`;
+
+exports[`fbt preserveWhitespace argument should preserve whitespace in text when requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._(
+  /* __FBT__ start */ {
+    jsfbt: { m: [], t: { desc: "one space", text: "two  spaces" } },
+    project: "",
+  } /* __FBT__ end */
+);
 
 `;
