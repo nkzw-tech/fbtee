@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-**fbtee** uses three scripts to manage translations. These scripts help automate the process of collecting, creating, and compiling translations. Dependending on your setup you might adjust want to adjust them, which we'll cover below. It is recommended to add them to your `package.json`:
+**fbtee** uses three scripts to manage translations. These scripts help automate the process of collecting, creating, and compiling translations. It is recommended to add them to your `package.json`:
 
 ```json
 {
@@ -56,19 +56,19 @@ export default {
 }
 ```
 
-Let's go through these commands ones by one:
+Here is what each command does:
 
-- `fbtee manifest --src src` searches through files in the `src` directory and generates a manifest file (`.src_manifest.json`) that lists all the files containing `<fbt>` tags. In addition it creates `.enum_manifest.json` which lists all the files containing `<fbt:enum>` tags. These files will be put into `.gitignore` as they are auto-generated and should not be checked into version control. You can adjust the `--src` parameter to point to your source directory. If your source directory is for example the root use `--src .` or if it's an app folder use `--src app`.
-- `fbtee collect --manifest < .src_manifest.json > .source_strings.json` reads the manifest file and extracts all the strings marked for translation into a `.source_strings.json` file. This file should be uploaded to your translation provider as the source for your translations. The file itself will also be put into `.gitignore`. As you might be able to see in theory both the output file name of the manifest command, as well as input and ouput of the collect command are configurable. Yet we recommend to stick with the default values.
-- `fbtee translate --translations translations/*.json --jenkins > src/translations.json` reads all the translations in the `translations/` directory and compiles them into a single `src/translations.json` file. This file is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function). You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation file used by **fbtee**. This file is going to be referred to in your applications entry point, therefor it needs to be generated as part of the build, but should not be part of your version control. Also here you should adjust the output file name to your needs. For example if we're going with an app folder structure we could use `> app/translations.json`. As this command requires the translations to be present in the `translations/` directory to create a valid json to be used, you first need to create such files based on the `.source_strings.json` received as part of the collect command.
+- `fbtee manifest --src src` searches through files in the `src` directory and generates a manifest file (`.src_manifest.json`) that lists all the files translatable strings marked with `<fbt>`. In addition it creates `.enum_manifest.json` which lists all the files containing `<fbt:enum>` tags. Since these files are auto-generated, we recommend adding them to your `.gitignore`.
+- `fbtee collect --manifest < .src_manifest.json > .source_strings.json` reads the manifest file and extracts all the strings marked for translation into a `.source_strings.json` file. This file should be uploaded to your translation provider as the source for your translations.
+- `fbtee translate --translations translations/*.json --jenkins > src/translations.json` reads all the translations in the `translations/` directory and compiles them into a single `src/translations.json` file. This file is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function). You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation file used by **fbtee**. This file is going to be referred to in your applications entry point, therefor it needs to be generated as part of the build, but should not be part of version control. This command requires the translations to be present in the `translations/` directory, created based on real translations of what was previously collected using the `collect` command.
 
-So in a first step - given you've added the commands to your package.json script section - run these commands to set up the initial files:
+Now, the first step is to run these commands to set up the initial strings for translation:
 
 ```bash
 npm run fbtee:manifest && npm run fbtee:collect
 ```
 
-The files generated by these - as previously said - should not be checked into version control. Add the following entries to your `.gitignore`:
+The files generated by these commands should be added to `.gitignore`:
 
 ```
 .src_manifest.json
@@ -76,8 +76,6 @@ The files generated by these - as previously said - should not be checked into v
 .enum_manifest.json
 src/translations.json
 ```
-
-Be sure to adjust the paths to your needs if you're not using the default values.
 
 Next, set up **fbtee** in your app's initialization code (e.g., `src/index.tsx`):
 
@@ -95,12 +93,6 @@ setupFbtee({
   translations,
 });
 ```
-
-> [!NOTE]
-> At this point you've not yet generated the translation file. Therefore you'll see an error for it no tbeing able to find the module `./translations.json`. This is expected and will be resolved once you've generated the translation file. Simply running the command at this point wouldn't remedy it, as the empty json file wouldn't adhere to the expected type and would also throw an error.
-
-> [!WARNING]
-> To be described: How to handle e.g. React Router with "framework mode" with a client and server entry. How to define the language based on e.g. the users browser settings and ensure that there are no hydration errors or the like. Currently the sample is a hardcoded locale and gender.
 
 Next up, if you are using React and TypeScript in your project, you need to add TypeScript types for **fbtee** to enable proper type checking in JSX. You can do this by referencing the `ReactTypes.d.ts` file in your main `index.tsx` file or a global type declaration file (e.g., `types.d.ts`):
 
@@ -166,74 +158,76 @@ npm run fbtee:manifest && npm run fbtee:collect
 
 You can now upload the `.source_strings.json` file to your translation provider. One sample for such a translation provider is [Crowdin](https://crowdin.com/).
 
-As a sample the `.source_strings.json` could look like this:
+### Generated File Structure
+
+Your `.source_strings.json` might look like this:
 
 ```json
 {
-    "childParentMappings": {},
-    "phrases": [
+  "childParentMappings": {},
+  "phrases": [
+    {
+      "hashToLeaf": {
+        "MB6OYuvCF1VzjOmqinI42g==": {
+          "desc": "What's next question",
+          "text": "What's next?"
+        }
+      },
+      "col_beg": 12,
+      "col_end": 68,
+      "filepath": "app/welcome/welcome.tsx",
+      "line_beg": 43,
+      "line_end": 43,
+      "project": "",
+      "jsfbt": {
+        "m": [],
+        "t": {
+          "desc": "What's next question",
+          "text": "What's next?"
+        }
+      }
+    }
+  ]
+}
+```
+
+Based on the above source string, the US English translation (ie. `translations/en_US.json`) might look like this:
+
+```json
+{
+  "fb-locale": "en_US",
+  "translations": {
+    "MB6OYuvCF1VzjOmqinI42g==": {
+      "tokens": [],
+      "types": [],
+      "translations": [
         {
-            "hashToLeaf": {
-                "MB6OYuvCF1VzjOmqinI42g==": {
-                    "desc": "What's next question",
-                    "text": "What's next?"
-                }
-            },
-            "col_beg": 12,
-            "col_end": 68,
-            "filepath": "app/welcome/welcome.tsx",
-            "line_beg": 43,
-            "line_end": 43,
-            "project": "",
-            "jsfbt": {
-                "m": [],
-                "t": {
-                    "desc": "What's next question",
-                    "text": "What's next?"
-                }
-            }
+          "translation": "What's next?",
+          "variations": []
         }
-    ]
+      ]
+    }
+  }
 }
 ```
 
-With the translated filed being for english US (see fbtee setup above) (e.g. `translations/en_US.json`):
+And German (`translations/de_DE.json`) might look like this:
 
 ```json
 {
-    "fb-locale": "en_US",
-    "translations": {
-        "MB6OYuvCF1VzjOmqinI42g==": {
-            "tokens": [],
-            "types": [],
-            "translations": [
-                {
-                    "translation": "What's next?",
-                    "variations": []
-                }
-            ]
+  "fb-locale": "de_DE",
+  "translations": {
+    "MB6OYuvCF1VzjOmqinI42g==": {
+      "tokens": [],
+      "types": [],
+      "translations": [
+        {
+          "translation": "Was kommt jetzt?",
+          "variations": []
         }
+      ]
     }
-}
-```
-
-For another locale, such as german it could be another file such as `translations/de_DE.json`:
-
-```json
-{
-    "fb-locale": "de_DE",
-    "translations": {
-        "MB6OYuvCF1VzjOmqinI42g==": {
-            "tokens": [],
-            "types": [],
-            "translations": [
-                {
-                    "translation": "Was kommt jetzt?",
-                    "variations": []
-                }
-            ]
-        }
-    }
+  }
 }
 ```
 
@@ -246,12 +240,15 @@ npm run fbtee:translate
 This will generate the `translation.json` file referred to in the setup done before. This file might look like this:
 
 ```json
-{"de_DE":{"2HVYhv":"Was kommt jetzt?"},"en_US":{"2HVYhv":"What's next?"}}
+{
+  "de_DE": { "2HVYhv": "Was kommt jetzt?" },
+  "en_US": { "2HVYhv": "What's next?" }
+}
 ```
 
 After generating the translations file, your app is ready to display translated content in other languages. The error you had until now in the `setupFbtee` with regards to the imported translations file should be resolved now.
 
-Keep in mind that the `translations.json` file needs to be created during your build process in order for **fbtee** to work correctly. You can add the `fbtee:translate` command to your build script.
+Since the `translations.json` is an auto-generated file part of your build process, the `fbtee:translate` command should be added to your build step.
 
 ## ESLint Plugin
 
