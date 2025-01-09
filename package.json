@@ -38,9 +38,9 @@
     "@types/invariant": "^2.2.37",
     "@types/jest": "^29.5.14",
     "@types/json-diff": "^1.0.3",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@types/prettier-2": "npm:@types/prettier@^2.0.0",
-    "@types/react": "^19.0.2",
+    "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.2",
     "@types/yargs": "^17.0.33",
     "eslint": "^8.0.0",
@@ -55,7 +55,7 @@
     "prettier-plugin-packagejson": "^2.5.6",
     "react-dom": "^19.0.0",
     "tsup": "^8.3.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "pnpm": {
     "updateConfig": {
