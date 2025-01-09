@@ -199,7 +199,7 @@ const indent = (code: string) =>
     .map((line) => ' '.repeat(2) + line)
     .join('\n');
 
-export function assertSourceAstEqual(
+function assertSourceAstEqual(
   expected: string,
   actual: string,
   options?: Options,

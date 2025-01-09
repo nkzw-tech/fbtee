@@ -1,22 +1,9 @@
-import { PluginOptions } from '@babel/core';
 import { describe, expect, it } from '@jest/globals';
 import {
-  assertSourceAstEqual,
   jsCodeFbtCallSerializer,
-  payload,
   snapshotTransform,
-  transform,
   withFbtImportStatement,
 } from './FbtTestUtil.tsx';
-
-function runTest(
-  data: { input: string; output: string },
-  extra?: PluginOptions,
-) {
-  const expected = data.output;
-  const actual = transform(data.input, extra);
-  assertSourceAstEqual(expected, actual);
-}
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
@@ -186,159 +173,74 @@ describe('fbt preserveWhitespace argument', () => {
   });
 
   it('should preserve whitespace in text when requested', () => {
-    runTest({
-      input: withFbtImportStatement(
-        String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          String.raw`var x = fbt("two\nlines", "one line", {preserveWhitespace:true});`,
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(${payload({
-          jsfbt: {
-            m: [],
-            t: {
-              desc: 'one line',
-              text: 'two\nlines',
-            },
-          },
-        })})`,
-      ),
-    });
+    ).toMatchSnapshot();
 
-    runTest({
-      input: withFbtImportStatement(
-        'var x = fbt("two  spaces", "one space", {preserveWhitespace:true});',
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          'var x = fbt("two  spaces", "one space", {preserveWhitespace:true});',
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(${payload({
-          jsfbt: {
-            m: [],
-            t: {
-              desc: 'one space',
-              text: 'two  spaces',
-            },
-          },
-        })})`,
-      ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should preserve whitespace in desc when requested', () => {
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`,
+        ),
       ),
+    ).toMatchSnapshot();
 
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'two\nlines',
-                  text: 'one line',
-                },
-              },
-            })},
-          );`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('one space', 'two  spaces', {preserveWhitespace: true});`,
+        ),
       ),
-    });
-
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('one space', 'two  spaces', {preserveWhitespace: true});`,
-      ),
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'two  spaces',
-                  text: 'one space',
-                },
-              },
-            })},
-          );`,
-      ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should coalesce whitespace in text when not requested', () => {
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('two  spaces', 'one space', {preserveWhitespace: false});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('two  spaces', 'one space', {preserveWhitespace: false});`,
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'one space',
-                  text: 'two spaces',
-                },
-              },
-            })},
-          );`,
-      ),
-    });
+    ).toMatchSnapshot();
 
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`,
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'one line',
-                  text: 'two lines',
-                },
-              },
-            })},
-          );`,
-      ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('should coalesce whitespace in desc when not requested', () => {
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`,
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'two lines',
-                  text: 'one line',
-                },
-              },
-            })},
-          );`,
-      ),
-    });
+    ).toMatchSnapshot();
 
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt('one space', 'two spaces', {preserveWhitespace: false});`,
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt('one space', 'two spaces', {preserveWhitespace: false});`,
+        ),
       ),
-      output: withFbtImportStatement(
-        `var x = fbt._(
-            ${payload({
-              jsfbt: {
-                m: [],
-                t: {
-                  desc: 'two spaces',
-                  text: 'one space',
-                },
-              },
-            })},
-          );`,
-      ),
-    });
+    ).toMatchSnapshot();
   });
 });

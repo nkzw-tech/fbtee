@@ -1,57 +1,26 @@
-import { PluginOptions } from '@babel/core';
 import { describe, expect, it } from '@jest/globals';
 import {
-  assertSourceAstEqual,
-  payload,
+  jsCodeFbtCallSerializer,
+  snapshotTransform,
   transform,
   withFbtImportStatement,
 } from './FbtTestUtil.tsx';
 
-function runTest(
-  data: { input: string; output: string },
-  extra?: PluginOptions,
-) {
-  const expected = data.output;
-  const actual = transform(data.input, extra);
-  assertSourceAstEqual(expected, actual);
-}
+expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 describe('fbt pronoun support', () => {
   it('"capitalize" option accepts boolean literal true', () => {
-    runTest({
-      input: withFbtImportStatement(
-        `var x = fbt(
+    expect(
+      snapshotTransform(
+        withFbtImportStatement(
+          `var x = fbt(
             fbt.pronoun('possessive', gender, {capitalize: true}) +
               ' birthday is today.',
             'Capitalized possessive pronoun',
           );`,
+        ),
       ),
-
-      output: withFbtImportStatement(
-        `var x = fbt._(
-          ${payload({
-            jsfbt: {
-              m: [null],
-              t: {
-                '*': {
-                  desc: 'Capitalized possessive pronoun',
-                  text: 'Their birthday is today.',
-                },
-                1: {
-                  desc: 'Capitalized possessive pronoun',
-                  text: 'Her birthday is today.',
-                },
-                2: {
-                  desc: 'Capitalized possessive pronoun',
-                  text: 'His birthday is today.',
-                },
-              },
-            },
-          })},
-          [fbt._pronoun(1, gender)],
-        );`,
-      ),
-    });
+    ).toMatchSnapshot();
   });
 
   it('Should throw when using non-Boolean option value', () => {
@@ -101,8 +70,8 @@ describe('fbt pronoun support', () => {
   });
 
   it('Should elide false "human" option from fbt.pronoun()', () => {
-    runTest({
-      input:
+    expect(
+      snapshotTransform(
         // I.e. Wish them a happy birthday.
         withFbtImportStatement(
           `var x = fbt(
@@ -112,31 +81,7 @@ describe('fbt pronoun support', () => {
             'Elided false option',
           );`,
         ),
-
-      output: withFbtImportStatement(
-        `var x = fbt._(
-          ${payload({
-            jsfbt: {
-              m: [null],
-              t: {
-                '*': {
-                  desc: 'Elided false option',
-                  text: 'Wish them a happy birthday.',
-                },
-                1: {
-                  desc: 'Elided false option',
-                  text: 'Wish her a happy birthday.',
-                },
-                2: {
-                  desc: 'Elided false option',
-                  text: 'Wish him a happy birthday.',
-                },
-              },
-            },
-          })},
-          [fbt._pronoun(0, gender, {human: 1})],
-        );`,
       ),
-    });
+    ).toMatchSnapshot();
   });
 });
