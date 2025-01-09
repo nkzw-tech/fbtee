@@ -20,9 +20,7 @@ setupFbtee({
 });
 
 // Ignore missing translations.
-console.warn = jest.fn().mockImplementation((message) => {
-  expect(message).toBe(`Translations have not been provided.`);
-});
+console.warn = jest.fn();
 
 describe('fbt', () => {
   it('should handle variated numbers', () => {
@@ -47,6 +45,8 @@ describe('fbt', () => {
         { num: displayNumber },
       ]);
     }
+
+    expect(console.warn).not.toHaveBeenCalled();
   });
 
   it('should access table with fallback logic', () => {
@@ -139,5 +139,9 @@ describe('fbt', () => {
       { arg: [B, other, name], expected: 'B,FEMALE,OTHER Bob has 20' },
     ];
     tests.forEach(runTest);
+
+    expect(console.warn).toHaveBeenCalledWith(
+      'Translations have not been provided.',
+    );
   });
 });
