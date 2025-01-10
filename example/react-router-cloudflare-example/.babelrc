@@ -1,0 +1,9 @@
+{
+    "presets": [
+        "@babel/preset-typescript",
+        "@nkzw/babel-preset-fbtee"
+    ],
+    "plugins": [
+        "babel-plugin-react-compiler"
+    ]
+}

@@ -184,6 +184,9 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     devDependencies:
+      '@babel/preset-typescript':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.0)
       '@cloudflare/workers-types':
         specifier: ^4.20241230.0
         version: 4.20250109.0
@@ -205,6 +208,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.49)
+      babel-plugin-react-compiler:
+        specifier: ^19.0.0-beta-63e3235-20250105
+        version: 19.0.0-beta-63e3235-20250105
       postcss:
         specifier: ^8.4.49
         version: 8.4.49
@@ -2113,6 +2119,9 @@ packages:
   babel-plugin-jest-hoist@30.0.0-alpha.6:
     resolution: {integrity: sha512-e/aPv0pmnvJqXM5SfCBpyMwZFEZrKW1Mb4unwTkxewk6/0TjwBk6l3B3F9H9OKZ3ErhkH4b+Epd3IIM5E53I2g==}
     engines: {node: ^16.10.0 || ^18.12.0 || >=20.0.0}
+
+  babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105:
+    resolution: {integrity: sha512-38qEX4e1nNOZ9K7rVAF4VVijcjTHBbRHd+ftYpfim2Oabitd1NGjvrL0bnwFymDTBB4MqswqIHTYjYfuy1OeTQ==}
 
   babel-preset-current-node-syntax@1.1.0:
     resolution: {integrity: sha512-ldYss8SbBlWva1bs28q78Ju5Zq1F+8BrqBZZ0VFhLBvhh6lCpC2o3gDJi/5DRLs9FgYZCnmPYIVFU4lRXCkyUw==}
@@ -7702,6 +7711,10 @@ snapshots:
       '@babel/template': 7.25.9
       '@babel/types': 7.26.3
       '@types/babel__core': 7.20.5
+
+  babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105:
+    dependencies:
+      '@babel/types': 7.26.3
 
   babel-preset-current-node-syntax@1.1.0(@babel/core@7.26.0):
     dependencies:
