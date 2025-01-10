@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/eslint-plugin-fbtee",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "keywords": [],
   "repository": {
@@ -14,6 +14,7 @@
     "import": "./lib/index.js",
     "require": "./lib/index.cjs"
   },
+  "main": "lib/index.cjs",
   "scripts": {
     "build": "tsup src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --no-splitting --dts"
   },

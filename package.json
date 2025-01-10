@@ -30,7 +30,7 @@
     "@babel/types": "^7.26.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@jest/globals": "30.0.0-alpha.6",
-    "@nkzw/eslint-config": "^1.19.0",
+    "@nkzw/eslint-config": "^2.0.0",
     "@testing-library/react": "^16.1.0",
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.6.8",
@@ -43,7 +43,7 @@
     "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.2",
     "@types/yargs": "^17.0.33",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "eslint-plugin-workspaces": "^0.10.1",
     "invariant": "^2.2.4",
     "jest": "30.0.0-alpha.6",
@@ -61,7 +61,6 @@
     "updateConfig": {
       "ignoreDependencies": [
         "@types/prettier-2",
-        "eslint",
         "prettier-2"
       ]
     },
