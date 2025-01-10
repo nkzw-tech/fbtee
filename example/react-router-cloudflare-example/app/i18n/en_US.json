@@ -1,0 +1,205 @@
+{
+    "fb-locale": "en_US",
+    "translations": {
+        "AVrNqoG3X+l8hnqlz3Xdog==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Logo (Light Theme)",
+                    "variations": []
+                }
+            ]
+        },
+        "18xkirS9e0xU8IRCHMd3gw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Logo (Dark Theme)",
+                    "variations": []
+                }
+            ]
+        },
+        "dsRuQvnOcNtkhbuxPKeqdA==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "What would you like to explore next?",
+                    "variations": []
+                }
+            ]
+        },
+        "AMkOUkL8fUoOtjIbwn6neg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Enter your name",
+                    "variations": []
+                }
+            ]
+        },
+        "3mvB4MI1lOARl/+Jc8xmtg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Enter your email",
+                    "variations": []
+                }
+            ]
+        },
+        "BgSvlypTwAFrk2d6HaWgWg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Sign Guest Book",
+                    "variations": []
+                }
+            ]
+        },
+        "LX26KmswI2EEmVbMK6vOQg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Signed by:",
+                    "variations": []
+                }
+            ]
+        },
+        "5NxvFP0aRobeLIAhMo+kYg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Docs",
+                    "variations": []
+                }
+            ]
+        },
+        "ZUSCPj6/KNAgeCzWrx+/aw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Join React Router Discord",
+                    "variations": []
+                }
+            ]
+        },
+        "0sODr0flsxjeEy2tTqR+rw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Cloudflare Workers Docs",
+                    "variations": []
+                }
+            ]
+        },
+        "GBEzmNSccKkNifFEuwOJFw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Join Cloudflare Discord",
+                    "variations": []
+                }
+            ]
+        },
+        "8665X6L/oBLWVfMOiWSafQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "View a pre-rendered route",
+                    "variations": []
+                }
+            ]
+        },
+        "ULPSr2BLrf8XXYS4T5bXTQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "This route is pre-rendered at build time, based on the config defined in {=react-router.config.ts}.",
+                    "variations": []
+                }
+            ]
+        },
+        "5D1EJB13qCxj5euZqiH9JQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "react-router.config.ts",
+                    "variations": []
+                }
+            ]
+        },
+        "2r4cNLf338/UBWcQFmHwzg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Return to Home",
+                    "variations": []
+                }
+            ]
+        },
+        "r2LL+z73HnZx68Zkz5cnBg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Home | React Router App on Cloudflare",
+                    "variations": []
+                }
+            ]
+        },
+        "ky5xiqbgG0UQpYKJxUUWiw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Welcome to a React Router app hosted on Cloudflare Workers.",
+                    "variations": []
+                }
+            ]
+        },
+        "7nBUL+C/yKp5SyGVkPfDAA==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Both name and email are required.",
+                    "variations": []
+                }
+            ]
+        },
+        "GqjPqabAef2Sx6AXoEdfZw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Both name and email fields must be filled out.",
+                    "variations": []
+                }
+            ]
+        },
+        "xNiQ+tEWqtUtaPvC1Vpm4g==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Failed to save your entry. Please try again.",
+                    "variations": []
+                }
+            ]
+        }
+    }
+}

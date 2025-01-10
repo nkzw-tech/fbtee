@@ -1,0 +1,205 @@
+{
+    "fb-locale": "de_DE",
+    "translations": {
+        "AVrNqoG3X+l8hnqlz3Xdog==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Logo (Light Theme)",
+                    "variations": []
+                }
+            ]
+        },
+        "18xkirS9e0xU8IRCHMd3gw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Logo (Dark Theme)",
+                    "variations": []
+                }
+            ]
+        },
+        "dsRuQvnOcNtkhbuxPKeqdA==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Was möchtest du als Nächstes entdecken?",
+                    "variations": []
+                }
+            ]
+        },
+        "AMkOUkL8fUoOtjIbwn6neg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Trage deinen Namen ein",
+                    "variations": []
+                }
+            ]
+        },
+        "3mvB4MI1lOARl/+Jc8xmtg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Trage deine E-Mail ein",
+                    "variations": []
+                }
+            ]
+        },
+        "BgSvlypTwAFrk2d6HaWgWg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Gästebuch signieren",
+                    "variations": []
+                }
+            ]
+        },
+        "LX26KmswI2EEmVbMK6vOQg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Unterzeichnet von:",
+                    "variations": []
+                }
+            ]
+        },
+        "5NxvFP0aRobeLIAhMo+kYg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Docs",
+                    "variations": []
+                }
+            ]
+        },
+        "ZUSCPj6/KNAgeCzWrx+/aw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "React Router Discord beitreten",
+                    "variations": []
+                }
+            ]
+        },
+        "0sODr0flsxjeEy2tTqR+rw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Cloudflare Workers Docs",
+                    "variations": []
+                }
+            ]
+        },
+        "GBEzmNSccKkNifFEuwOJFw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Cloudflare Discord beitreten",
+                    "variations": []
+                }
+            ]
+        },
+        "8665X6L/oBLWVfMOiWSafQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Anzeige einer vorgerenderten Route",
+                    "variations": []
+                }
+            ]
+        },
+        "ULPSr2BLrf8XXYS4T5bXTQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Diese Route wird zur Erstellungszeit basierend auf der in {=react-router.config.ts} definierten Konfiguration vorgerendert.",
+                    "variations": []
+                }
+            ]
+        },
+        "5D1EJB13qCxj5euZqiH9JQ==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "react-router.config.ts",
+                    "variations": []
+                }
+            ]
+        },
+        "2r4cNLf338/UBWcQFmHwzg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Zurück zur Startseite",
+                    "variations": []
+                }
+            ]
+        },
+        "r2LL+z73HnZx68Zkz5cnBg==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Startseite | React Router App auf Cloudflare",
+                    "variations": []
+                }
+            ]
+        },
+        "ky5xiqbgG0UQpYKJxUUWiw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Willkommen bei einer auf Cloudflare Workers gehosteten React Router-App.",
+                    "variations": []
+                }
+            ]
+        },
+        "7nBUL+C/yKp5SyGVkPfDAA==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Sowohl Name als auch E-Mail sind erforderlich.",
+                    "variations": []
+                }
+            ]
+        },
+        "GqjPqabAef2Sx6AXoEdfZw==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Sowohl das Namens- als auch das E-Mail-Feld müssen ausgefüllt werden.",
+                    "variations": []
+                }
+            ]
+        },
+        "xNiQ+tEWqtUtaPvC1Vpm4g==": {
+            "tokens": [],
+            "types": [],
+            "translations": [
+                {
+                    "translation": "Dein Eintrag konnte nicht gespeichert werden. Bitte versuchen es erneut.",
+                    "variations": []
+                }
+            ]
+        }
+    }
+}
