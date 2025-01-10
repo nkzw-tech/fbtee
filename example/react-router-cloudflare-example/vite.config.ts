@@ -5,7 +5,7 @@ import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import fbteePreset from "@nkzw/babel-preset-fbtee";
-import react from "@vitejs/plugin-react";
+import babel from "vite-plugin-babel";
 import { getLoadContext } from "./load-context";
 
 export default defineConfig(({ isSsrBuild }) => ({
@@ -27,8 +27,8 @@ export default defineConfig(({ isSsrBuild }) => ({
     },
   },
   plugins: [
-    react({
-      babel: {
+    babel({
+      babelConfig: {
         presets: [fbteePreset],
       },
     }),
