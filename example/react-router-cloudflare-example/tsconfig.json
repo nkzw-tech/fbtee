@@ -36,9 +36,6 @@
       "./.react-router/types"
     ],
     "paths": {
-      "~/database/*": [
-        "./database/*"
-      ],
       "~/*": [
         "./app/*"
       ]
