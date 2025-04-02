@@ -51,7 +51,7 @@ export default {
   "scripts": {
     "fbtee:manifest": "fbtee manifest --src src",
     "fbtee:collect": "fbtee collect --manifest < .src_manifest.json > .source_strings.json",
-    "fbtee:translate": "fbtee translate --translations translations/*.json --jenkins > src/translations.json"
+    "fbtee:translate": "fbtee translate --translations translations/*.json > src/translations.json"
   }
 }
 ```
@@ -60,7 +60,7 @@ Here is what each command does:
 
 - `fbtee manifest --src src` searches through files in the `src` directory and generates a manifest file (`.src_manifest.json`) that lists all the files translatable strings marked with `<fbt>`. In addition it creates `.enum_manifest.json` which lists all the files containing `<fbt:enum>` tags. Since these files are auto-generated, we recommend adding them to your `.gitignore`.
 - `fbtee collect --manifest < .src_manifest.json > .source_strings.json` reads the manifest file and extracts all the strings marked for translation into a `.source_strings.json` file. This file should be uploaded to your translation provider as the source for your translations.
-- `fbtee translate --translations translations/*.json --jenkins > src/translations.json` reads all the translations in the `translations/` directory and compiles them into a single `src/translations.json` file. This file is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function). You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation file used by **fbtee**. This file is going to be referred to in your applications entry point, therefor it needs to be generated as part of the build, but should not be part of version control. This command requires the translations to be present in the `translations/` directory, created based on real translations of what was previously collected using the `collect` command.
+- `fbtee translate --translations translations/*.json --jenkins > src/translations.json` reads all the translations in the `translations/` directory and compiles them into a single `src/translations.json` file. This file is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function). You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation file used by **fbtee**. This file is going to be referred to in your applications entrypoint, therefore it needs to be generated as part of the build, but should not be part of version control. This command requires the translations to be present in the `translations/` directory, created based on real translations of what was previously collected using the `collect` command. Instead of outputting a single file, you can also specify `--output-dir` instead.
 
 Now, the first step is to run these commands to set up the initial strings for translation:
 
