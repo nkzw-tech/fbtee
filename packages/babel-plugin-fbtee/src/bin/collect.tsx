@@ -215,9 +215,32 @@ async function writeOutput(collector: IFbtCollector) {
   });
 
   if (argv['include-default-strings']) {
+    const getDefaultStringModulePath = () => {
+      const stringModulePath = 'fbtee/Strings.json';
+      try {
+        return require.resolve(stringModulePath);
+      } catch {
+        /* empty */
+      }
+
+      const modulePath = path.join(
+        process.cwd(),
+        'node_modules',
+        stringModulePath,
+      );
+      if (existsSync(modulePath)) {
+        return modulePath;
+      }
+
+      throw new Error(
+        `Could not find default strings module at '${stringModulePath}'. Please install 'fbtee'.`,
+      );
+    };
+
     try {
+      const modulePath = getDefaultStringModulePath();
       const json = (
-        await import(require.resolve('fbtee/Strings.json'), {
+        await import(modulePath, {
           with: { type: 'json' },
         })
       ).default as CollectFbtOutput;
