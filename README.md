@@ -255,7 +255,7 @@ Since the `translations.json` is an auto-generated file part of your build proce
 You can install the optional eslint plugin to catch common mistakes and enforce best practices when using **fbtee**:
 
 ```bash
-npm install @nkzw/eslint-plugin-fbtee
+npm install -D @nkzw/eslint-plugin-fbtee
 ```
 
 Add the following configuration to your ESLint configuration:
