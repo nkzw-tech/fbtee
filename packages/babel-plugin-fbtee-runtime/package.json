@@ -24,10 +24,10 @@
     "build": "tsup src/index.tsx -d lib --target=node22 --format=esm --clean --no-splitting --dts"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.10",
     "@babel/preset-react": "^7.26.3",
-    "@babel/traverse": "^7.26.4",
-    "@babel/types": "^7.26.3",
+    "@babel/traverse": "^7.27.0",
+    "@babel/types": "^7.27.0",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
