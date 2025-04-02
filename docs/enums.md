@@ -95,11 +95,11 @@ them available to the `babel-plugin-fbt` at "build-time".
 ```js
 // Example$FbtEnum.js
 const Example$FbtEnum = {
-  LINK: "link",
-  PAGE: "page",
-  PHOTO: "photo",
-  POST: "post",
-  VIDEO: "video",
+  LINK: 'link',
+  PAGE: 'page',
+  PHOTO: 'photo',
+  POST: 'post',
+  VIDEO: 'video',
 };
 module.exports = Example$FbtEnum;
 
@@ -108,12 +108,9 @@ const Example$FbtEnum = require('Example$FbtEnum');
 <fbt desc="Example enum">
   <fbt:param name="name">{this.state.ex2Name}</fbt:param>
   has a
-  <fbt:enum
-    enum-range={Example$FbtEnum}
-    value={this.state.exampleObject}
-  />
+  <fbt:enum enum-range={Example$FbtEnum} value={this.state.exampleObject} />
   to share!
-</fbt>
+</fbt>;
 ```
 
 ### ES6 Import/export syntax
@@ -124,11 +121,11 @@ ES6 import/export syntax is supported but the Enum must be exported as a
 ```js
 // Example$FbtEnum.js
 const Example$FbtEnum = {
-  LINK: "link",
-  PAGE: "page",
-  PHOTO: "photo",
-  POST: "post",
-  VIDEO: "video",
+  LINK: 'link',
+  PAGE: 'page',
+  PHOTO: 'photo',
+  POST: 'post',
+  VIDEO: 'video',
 };
 export default Example$FbtEnum;
 
@@ -137,10 +134,7 @@ import Example$FbtEnum from 'Example$FbtEnum';
 <fbt desc="Example enum">
   <fbt:param name="name">{this.state.ex2Name}</fbt:param>
   has a
-  <fbt:enum
-    enum-range={Example$FbtEnum}
-    value={this.state.exampleObject}
-  />
+  <fbt:enum enum-range={Example$FbtEnum} value={this.state.exampleObject} />
   to share!
-</fbt>
+</fbt>;
 ```
