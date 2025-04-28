@@ -24,7 +24,7 @@
     "fbtee": "lib/bin.js"
   },
   "scripts": {
-    "build": "tsup src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --no-splitting --dts"
+    "build": "tsdown src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --dts"
   },
   "dependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",

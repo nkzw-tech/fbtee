@@ -16,7 +16,7 @@
   },
   "main": "lib/index.cjs",
   "scripts": {
-    "build": "tsup src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --no-splitting --dts"
+    "build": "tsdown src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --dts"
   },
   "dependencies": {
     "@typescript-eslint/utils": "^8.31.0"
