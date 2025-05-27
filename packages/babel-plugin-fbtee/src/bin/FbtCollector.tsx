@@ -42,9 +42,9 @@ export type HashToLeaf = Partial<
   >
 >;
 export type PackagerPhrase = Phrase & {
-  hashToLeaf?: HashToLeaf;
   hash_code?: number;
   hash_key?: string;
+  hashToLeaf?: HashToLeaf;
 };
 
 export interface IFbtCollector {

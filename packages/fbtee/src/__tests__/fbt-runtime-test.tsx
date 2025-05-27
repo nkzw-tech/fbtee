@@ -59,6 +59,7 @@ describe('fbt', () => {
     });
 
     const table: FbtRuntimeInput = {
+      __vcg: 1,
       '*': {
         A: {
           '*': 'A,UNKNOWN,OTHER {name} has {num}',
@@ -83,7 +84,6 @@ describe('fbt', () => {
           [ONE]: 'A,MALE,ONE {name} has {num}',
         },
       },
-      __vcg: 1,
     };
 
     const few = fbtRuntime._param('num', 10, [0] /*Variations.NUMBER*/);

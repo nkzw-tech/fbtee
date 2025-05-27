@@ -1,4 +1,5 @@
 import babel from '@babel/core';
+// eslint-disable-next-line import-x/no-unresolved
 import pluginSyntaxAttributes from '@babel/plugin-syntax-import-attributes';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';

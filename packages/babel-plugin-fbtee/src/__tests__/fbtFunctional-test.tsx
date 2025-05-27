@@ -1,3 +1,5 @@
+/* eslint-disable perfectionist/sort-objects */
+
 import { describe, expect, jest, test } from '@jest/globals';
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest.tsx';
 import FbtFunctionCallProcessor from '../babel-processors/FbtFunctionCallProcessor.tsx';
@@ -486,7 +488,6 @@ const testCases: TestCases = {
         </a>
       </fbt>;`,
     ),
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
     output: `
       var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3;
       import { fbt } from "fbtee";
@@ -924,7 +925,6 @@ const testCases: TestCases = {
           )
         )
       ]));`,
-    /* eslint-enable sort-keys-fix/sort-keys-fix */
   },
 
   'should handle JSX fbt with two nested React elements': {

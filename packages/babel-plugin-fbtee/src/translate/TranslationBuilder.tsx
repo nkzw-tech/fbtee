@@ -65,8 +65,8 @@ type TranslationTree =
 export type TranslationResult =
   | TranslationTree
   | {
-      [key: FbtTableKey]: TranslationTree;
       __vcg: number;
+      [key: FbtTableKey]: TranslationTree;
     };
 
 type MetadataToken = string;

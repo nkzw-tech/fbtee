@@ -13,7 +13,7 @@ export default [
     rules: {
       '@nkzw/no-instanceof': 0,
       '@typescript-eslint/array-type': [2, { default: 'generic' }],
-      'import/no-extraneous-dependencies': [
+      'import-x/no-extraneous-dependencies': [
         2,
         {
           devDependencies: [
@@ -37,12 +37,6 @@ export default [
                 ),
               ),
           ),
-        },
-      ],
-      'import/no-unresolved': [
-        2,
-        {
-          ignore: ['@typescript-eslint/*'],
         },
       ],
       'unicorn/prefer-dom-node-append': 0,

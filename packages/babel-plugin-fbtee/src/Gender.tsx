@@ -39,7 +39,6 @@ const NotAPerson = {
 };
 
 const data: Partial<Record<GenderConst, GenderConfig>> = {
-  [GenderConst.NOT_A_PERSON]: NotAPerson,
   [GenderConst.FEMALE_SINGULAR]: {
     is_female: true,
     is_male: false,
@@ -62,17 +61,7 @@ const data: Partial<Record<GenderConst, GenderConfig>> = {
     string: 'male singular',
     subject: 'he',
   },
-  [GenderConst.UNKNOWN_SINGULAR]: {
-    is_female: false,
-    is_male: false,
-    is_plural: false,
-    is_unknown: true,
-    object: 'them',
-    possessive: 'their',
-    reflexive: 'themself',
-    string: 'unknown singular',
-    subject: 'they',
-  },
+  [GenderConst.NOT_A_PERSON]: NotAPerson,
   [GenderConst.UNKNOWN_PLURAL]: {
     is_female: false,
     is_male: false,
@@ -82,6 +71,17 @@ const data: Partial<Record<GenderConst, GenderConfig>> = {
     possessive: 'their',
     reflexive: 'themselves',
     string: 'unknown plural',
+    subject: 'they',
+  },
+  [GenderConst.UNKNOWN_SINGULAR]: {
+    is_female: false,
+    is_male: false,
+    is_plural: false,
+    is_unknown: true,
+    object: 'them',
+    possessive: 'their',
+    reflexive: 'themself',
+    string: 'unknown singular',
     subject: 'they',
   },
 } as const;

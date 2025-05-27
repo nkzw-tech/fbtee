@@ -15,7 +15,6 @@ describe('IntlPunctuation', () => {
   it('strips redundant stops', () => {
     const expected = {
       '!': ['!', FW_BANG, '?', FW_Q_MARK, '.', HINDI_FS, MYANMAR_FS, CJK_FS],
-      '.': ['.', HINDI_FS, MYANMAR_FS, CJK_FS, '!', FW_BANG],
       '?': [
         '?',
         FW_Q_MARK,
@@ -30,6 +29,7 @@ describe('IntlPunctuation', () => {
         LAOTIAN_ELLIP,
         MONGOLIAN_ELLIP,
       ],
+      '.': ['.', HINDI_FS, MYANMAR_FS, CJK_FS, '!', FW_BANG],
       [CJK_FS]: ['.', HINDI_FS, MYANMAR_FS, CJK_FS, '!', FW_BANG],
       [ELLIP]: [
         ELLIP,

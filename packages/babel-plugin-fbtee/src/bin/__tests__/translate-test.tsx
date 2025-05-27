@@ -113,13 +113,13 @@ function testTranslateNewPhrases(options: Options) {
             col_end: 14,
             filepath: 'src/example/Example.react.js',
             hashToLeaf: {
-              'PqPPir8Kg9xSlqdednPFOg==': {
-                desc: 'example 1',
-                text: '{name} has shared {=a photo} with you. View a photo',
-              },
               'gVKMc/8jq5vnYR5v2bb32g==': {
                 desc: 'example 1',
                 text: '{name} has shared {=[number] photos} with you. View =[number] photos',
+              },
+              'PqPPir8Kg9xSlqdednPFOg==': {
+                desc: 'example 1',
+                text: '{name} has shared {=a photo} with you. View a photo',
               },
             },
             jsfbt: {
@@ -136,18 +136,18 @@ function testTranslateNewPhrases(options: Options) {
               ],
               t: {
                 '*': {
-                  '*': {
-                    desc: 'example 1',
-                    text: '{name} has shared {=[number] photos} with you. View =[number] photos',
-                    tokenAliases: {
-                      '=[number] photos': '=m2',
-                    },
-                  },
                   _1: {
                     desc: 'example 1',
                     text: '{name} has shared {=a photo} with you. View a photo',
                     tokenAliases: {
                       '=a photo': '=m2',
+                    },
+                  },
+                  '*': {
+                    desc: 'example 1',
+                    text: '{name} has shared {=[number] photos} with you. View =[number] photos',
+                    tokenAliases: {
+                      '=[number] photos': '=m2',
                     },
                   },
                 },
@@ -185,14 +185,14 @@ function testTranslateNewPhrases(options: Options) {
               ],
               t: {
                 '*': {
-                  '*': {
-                    desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
-                    text: '{number} photos',
-                    tokenAliases: {},
-                  },
                   _1: {
                     desc: 'In the phrase: "{name} has shared {=a photo} with you. View a photo"',
                     text: 'a photo',
+                    tokenAliases: {},
+                  },
+                  '*': {
+                    desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
+                    text: '{number} photos',
                     tokenAliases: {},
                   },
                 },
@@ -229,30 +229,6 @@ function testTranslateNewPhrases(options: Options) {
                 ],
                 types: [],
               },
-              'PqPPir8Kg9xSlqdednPFOg==': {
-                tokens: ['name'],
-                translations: [
-                  {
-                    id: 108_537_963,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
-                    variations: { '0': 2 },
-                  },
-                  {
-                    id: 108_537_953,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
-                    variations: { '0': 1 },
-                  },
-                  {
-                    id: 108_537_972,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
-                    variations: { '0': 3 },
-                  },
-                ],
-                types: [3],
-              },
               'gVKMc/8jq5vnYR5v2bb32g==': {
                 tokens: ['name'],
                 translations: [
@@ -272,6 +248,30 @@ function testTranslateNewPhrases(options: Options) {
                     id: 108_537_972,
                     translation:
                       'translation is: {name} has shared {=[number] photos}. View =[number] photos',
+                    variations: { '0': 3 },
+                  },
+                ],
+                types: [3],
+              },
+              'PqPPir8Kg9xSlqdednPFOg==': {
+                tokens: ['name'],
+                translations: [
+                  {
+                    id: 108_537_963,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
+                    variations: { '0': 2 },
+                  },
+                  {
+                    id: 108_537_953,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
+                    variations: { '0': 1 },
+                  },
+                  {
+                    id: 108_537_972,
+                    translation:
+                      'translation is: {name} has shared {=a photo}. View a photo',
                     variations: { '0': 3 },
                   },
                 ],
