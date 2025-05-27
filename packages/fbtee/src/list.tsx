@@ -3,7 +3,7 @@
 import invariant from 'invariant';
 import { isValidElement, ReactElement, ReactNode } from 'react';
 import fbt from './fbt.tsx';
-import type { FbtConjunction, FbtDelimiter } from './Types.d.ts';
+import type { FbtConjunction, FbtDelimiter } from './Types.ts';
 
 export default function list(
   items: ReadonlyArray<string | ReactElement | null | undefined>,

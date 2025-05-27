@@ -1,6 +1,6 @@
 import fbsInternal from './fbs.tsx';
 import fbtInternal from './fbt.tsx';
-import type { FbsAPI, FbtAPI } from './Types.d.ts';
+import type { FbsAPI, FbtAPI } from './Types.ts';
 
 export { default as IntlVariations } from './IntlVariations.tsx';
 export { default as setupFbtee } from './setupFbtee.tsx';
@@ -21,5 +21,5 @@ export type {
   FbtDelimiter,
   FbtWithoutString,
   TranslatedString,
-} from './Types.d.ts';
+} from './Types.ts';
 export type { TranslationDictionary } from './FbtTranslations.tsx';

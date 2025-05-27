@@ -1,7 +1,7 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import FbtResult from '../FbtResult.tsx';
 import Hooks from '../Hooks.tsx';
-import type { IFbtErrorListener } from '../Types.d.ts';
+import type { IFbtErrorListener } from '../Types.ts';
 
 let errorListener: IFbtErrorListener | null;
 

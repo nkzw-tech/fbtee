@@ -8,7 +8,7 @@ import type {
 } from '../index.tsx';
 import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
-import type { PatternHash, PatternString } from '../Types.d.ts';
+import type { PatternHash, PatternString } from '../Types.ts';
 import type {
   FbtSiteHashifiedTableJSFBTTree,
   FbtSiteHashToTextAndDesc,

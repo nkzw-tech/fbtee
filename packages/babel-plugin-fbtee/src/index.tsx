@@ -22,7 +22,7 @@ import FbtEnumRegistrar from './FbtEnumRegistrar.tsx';
 import FbtNodeChecker from './FbtNodeChecker.tsx';
 import { checkOption, errorAt } from './FbtUtil.tsx';
 import { FbtVariationType } from './translate/IntlVariations.tsx';
-import type { FbtTableKey, PatternHash, PatternString } from './Types.d.ts';
+import type { FbtTableKey, PatternHash, PatternString } from './Types.ts';
 
 export type { FbtTableKey, PatternHash, PatternString };
 export { SENTINEL } from './FbtConstants.tsx';

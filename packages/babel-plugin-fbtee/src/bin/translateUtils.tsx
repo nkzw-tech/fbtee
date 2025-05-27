@@ -10,7 +10,7 @@ import TranslationBuilder from '../translate/TranslationBuilder.tsx';
 import TranslationConfig from '../translate/TranslationConfig.tsx';
 import type { SerializedTranslationData } from '../translate/TranslationData.tsx';
 import TranslationData from '../translate/TranslationData.tsx';
-import type { PatternHash, PatternString } from '../Types.d.ts';
+import type { PatternHash, PatternString } from '../Types.ts';
 import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect.tsx';
 
 export type Options = Readonly<{

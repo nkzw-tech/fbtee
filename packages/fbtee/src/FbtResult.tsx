@@ -3,7 +3,7 @@ import type {
   BaseResult,
   IFbtErrorListener,
   NestedFbtContentItems,
-} from './Types.d.ts';
+} from './Types.ts';
 
 type Props = Readonly<{
   content: NestedFbtContentItems;

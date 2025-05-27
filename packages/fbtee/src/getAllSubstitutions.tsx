@@ -2,7 +2,7 @@ import invariant from 'invariant';
 import FbtTable from './FbtTable.tsx';
 import { FbtTableArgs } from './Hooks.tsx';
 import { Substitutions } from './substituteTokens.tsx';
-import type { FbtContentItem } from './Types.d.ts';
+import type { FbtContentItem } from './Types.ts';
 
 export default function getAllSubstitutions(args: FbtTableArgs) {
   let substitutions: Substitutions | null = null;

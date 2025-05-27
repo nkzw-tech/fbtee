@@ -30,7 +30,7 @@ import type {
   FbtConjunction,
   FbtDelimiter,
   NestedFbtContentItems,
-} from './Types.d.ts';
+} from './Types.ts';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,

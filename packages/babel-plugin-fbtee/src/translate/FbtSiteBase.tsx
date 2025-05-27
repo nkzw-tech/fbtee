@@ -1,5 +1,5 @@
 import type { HashToLeaf } from '../bin/FbtCollector.tsx';
-import type { FbtTableKey, PatternHash, PatternString } from '../Types.d.ts';
+import type { FbtTableKey, PatternHash, PatternString } from '../Types.ts';
 import type {
   IntlFbtVariationTypeValue,
   IntlVariationMaskValue,

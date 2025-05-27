@@ -17,7 +17,7 @@ import type {
   BaseResult,
   IFbtErrorListener,
   NestedFbtContentItems,
-} from '../Types.d.ts';
+} from '../Types.ts';
 
 setupFbtee({
   translations: { en_US: {} },

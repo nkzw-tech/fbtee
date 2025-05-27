@@ -11,7 +11,7 @@ import type {
   IFbtErrorListener,
   NestedFbtContentItems,
   PureStringResult,
-} from './Types.d.ts';
+} from './Types.ts';
 import IntlViewerContext from './ViewerContext.tsx';
 
 export type ResolverFn<T extends BaseResult> = (

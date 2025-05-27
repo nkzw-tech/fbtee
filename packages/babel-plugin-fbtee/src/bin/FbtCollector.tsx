@@ -14,7 +14,7 @@ import fbt, {
   getExtractedStrings,
   getFbtElementNodes,
 } from '../index.tsx';
-import type { PatternHash, PatternString } from '../Types.d.ts';
+import type { PatternHash, PatternString } from '../Types.ts';
 
 export type ExternalTransform = (
   src: string,

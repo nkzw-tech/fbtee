@@ -3,7 +3,7 @@ import {
   dedupeStops,
   PUNCT_CHAR_CLASS,
 } from './IntlPunctuation.tsx';
-import type { FbtContentItem, NestedFbtContentItems } from './Types.d.ts';
+import type { FbtContentItem, NestedFbtContentItems } from './Types.ts';
 
 // This pattern finds tokens inside a string: 'string with {token} inside'.
 // It also grabs any punctuation that may be present after the token, such as

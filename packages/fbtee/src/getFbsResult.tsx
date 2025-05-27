@@ -1,6 +1,6 @@
 import { PatternHash } from '@nkzw/babel-plugin-fbtee';
 import FbtPureStringResult from './FbtPureStringResult.tsx';
-import type { IFbtErrorListener, NestedFbtContentItems } from './Types.d.ts';
+import type { IFbtErrorListener, NestedFbtContentItems } from './Types.ts';
 
 export default function getFbsResult(
   contents: NestedFbtContentItems,
