@@ -24,10 +24,10 @@
     "build": "tsdown src/index.tsx -d lib --target=node22 --format=esm --clean --dts"
   },
   "dependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.27.4",
     "@babel/preset-react": "^7.27.1",
-    "@babel/traverse": "^7.27.1",
-    "@babel/types": "^7.27.1",
+    "@babel/traverse": "^7.27.4",
+    "@babel/types": "^7.27.3",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
