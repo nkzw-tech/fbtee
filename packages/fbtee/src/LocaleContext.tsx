@@ -16,10 +16,11 @@ export type TranslationPromise = Promise<{
 }>;
 export type LocaleLoaderFn = (locale: string) => TranslationPromise;
 
-type LocaleContextProps = Readonly<{
+export type LocaleContextProps = Readonly<{
   availableLanguages: ReadonlyMap<string, string>;
   clientLocales: ReadonlyArray<string>;
   fallbackLocale?: string;
+  gender?: IntlVariations;
   hooks?: Hooks;
   loadLocale: LocaleLoaderFn;
   translations?: TranslationDictionary;
@@ -29,6 +30,7 @@ export function setupLocaleContext({
   availableLanguages,
   clientLocales,
   fallbackLocale = 'en_US',
+  gender = IntlVariations.GENDER_UNKNOWN,
   hooks,
   loadLocale,
   translations = { [fallbackLocale]: {} },
@@ -107,7 +109,7 @@ export function setupLocaleContext({
     hooks: {
       ...hooks,
       getViewerContext: () => ({
-        GENDER: IntlVariations.GENDER_UNKNOWN,
+        GENDER: gender,
         locale: getLocale(),
       }),
     },
@@ -131,6 +133,7 @@ export default function LocaleContext({
   children,
   clientLocales,
   fallbackLocale,
+  gender,
   hooks,
   loadLocale,
   translations,
@@ -144,6 +147,7 @@ export default function LocaleContext({
         availableLanguages,
         clientLocales,
         fallbackLocale,
+        gender,
         hooks,
         loadLocale,
         translations,
@@ -151,6 +155,7 @@ export default function LocaleContext({
     [
       availableLanguages,
       clientLocales,
+      gender,
       fallbackLocale,
       hooks,
       loadLocale,
