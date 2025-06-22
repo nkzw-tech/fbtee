@@ -25,16 +25,16 @@ export default function setupFbtee({
     hooks = {};
   }
 
-  if (hooks.getFbtResult == null) {
+  if (!hooks.getFbtResult) {
     hooks.getFbtResult = getFbtResult;
   }
-  if (hooks.getFbsResult == null) {
+  if (!hooks.getFbsResult) {
     hooks.getFbsResult = getFbsResult;
   }
-  if (hooks.getTranslatedInput == null) {
+  if (!hooks.getTranslatedInput) {
     hooks.getTranslatedInput = FbtTranslations.getTranslatedInput;
   }
-  if (hooks.getViewerContext == null) {
+  if (!hooks.getViewerContext) {
     hooks.getViewerContext = () => IntlViewerContext;
   }
 

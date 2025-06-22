@@ -4,9 +4,6 @@ import { FbtTableArg } from '../FbtTableAccessor.tsx';
 import Hooks, { FbtRuntimeInput } from '../Hooks.tsx';
 import { setupFbtee } from '../index.tsx';
 import intlNumUtils from '../intlNumUtils.tsx';
-// Warning: importing JS modules outside of beforeEach blocks is generally bad practice
-// in jest tests. We might need to move these modules inside beforeEach().
-// These ones can stay here for now since they have a consistent behavior across this test suite.
 import IntlVariations from '../IntlVariations.tsx';
 import IntlViewerContext from '../ViewerContext.tsx';
 

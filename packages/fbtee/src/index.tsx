@@ -23,3 +23,11 @@ export type {
   TranslatedString,
 } from './Types.ts';
 export type { TranslationDictionary } from './FbtTranslations.tsx';
+
+export {
+  type LocaleLoaderFn,
+  type TranslationPromise,
+  default as LocaleContext,
+  useLocaleContext,
+  setupLocaleContext,
+} from './LocaleContext.tsx';
