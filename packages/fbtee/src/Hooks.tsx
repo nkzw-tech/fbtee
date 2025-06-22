@@ -112,7 +112,7 @@ export default {
   },
 
   getFbtResult(
-    contenst: NestedFbtContentItems,
+    contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
   ): FbtResult {
@@ -120,7 +120,7 @@ export default {
     if (!getFbtResult) {
       throw new Error(`Hooks: 'getFbtResult' is not registered`);
     }
-    return getFbtResult(contenst, hashKey, errorListener);
+    return getFbtResult(contents, hashKey, errorListener);
   },
 
   getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {

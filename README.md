@@ -4,9 +4,9 @@ _**fbtee** (Far Better Translations, Extended Edition) is an internationalizatio
 
 ## Why `fbtee`?
 
-- **Inline Translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
-- **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage, serving billions of users and one year of production usage in [Athena Crisis](https://athenacrisis.com).
-- **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, and optimizes the runtime output for performance.
+- **Inline translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
+- **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage, serving billions of users and two years of production usage in [Athena Crisis](https://athenacrisis.com).
+- **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, then optimizes the runtime output for performance.
 - **Easy Setup:** Quick integration with tools like Babel and Vite means you can get started instantly.
 
 ## Status: Ready for Early Adopters
@@ -14,6 +14,13 @@ _**fbtee** (Far Better Translations, Extended Edition) is an internationalizatio
 This is a fork of Facebook's original `fbt` library, which has been archived. The aim of this fork is to create the best and most modern internationalization library for JavaScript & React.
 
 ## Getting Started
+
+Tired of setting up new projects? Check out these templates for web and React Native that come with **fbtee** pre-configured:
+
+- [Web App Template](https://github.com/nkzw-tech/web-app-template)
+- [Expo App Template](https://github.com/nkzw-tech/expo-app-template)
+
+### Installation
 
 **fbtee** requires at least Node 22, and React 19 if you are using React.
 
@@ -26,6 +33,8 @@ In addition to `fbtee`, you need to install the Babel preset and React plugin fo
 ```bash
 npm install -D @nkzw/babel-preset-fbtee @vitejs/plugin-react
 ```
+
+### Tooling Setup
 
 In your `vite.config.ts`:
 
@@ -49,23 +58,29 @@ export default {
 ```json
 {
   "scripts": {
-    "fbtee:manifest": "fbtee manifest --src src",
     "fbtee:collect": "fbtee collect --manifest < .src_manifest.json > source_strings.json",
-    "fbtee:translate": "fbtee translate --translations translations/*.json > src/translations.json"
+    "fbtee:manifest": "fbtee manifest --src src",
+    "fbtee:translate": "fbtee translate --source-strings source_strings.json --translations translations/*.json --jenkins --output-dir src/translations/"
   }
 }
 ```
 
-Here is what each command does:
+_See the [Command Overview](#command-overview) section for details on what these commands do._
 
-- `fbtee manifest --src src` searches through files in the `src` directory and generates a manifest file (`.src_manifest.json`) that lists all the files translatable strings marked with `<fbt>`. In addition it creates `.enum_manifest.json` which lists all the files containing `<fbt:enum>` tags. Since these files are auto-generated, we recommend adding them to your `.gitignore`.
-- `fbtee collect --manifest < .src_manifest.json > source_strings.json` reads the manifest file and extracts all the strings marked for translation into a `source_strings.json` file. This file should be uploaded to your translation provider as the source for your translations.
-- `fbtee translate --translations translations/*.json --jenkins > src/translations.json` reads all the translations in the `translations/` directory and compiles them into a single `src/translations.json` file. This file is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function). You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation file used by **fbtee**. This file is going to be referred to in your applications entrypoint, therefore it needs to be generated as part of the build, but should not be part of version control. This command requires the translations to be present in the `translations/` directory, created based on real translations of what was previously collected using the `collect` command. Instead of outputting a single file, you can also specify `--output-dir` instead.
+You can also add a command to run all of them at once:
 
-Now, the first step is to run these commands to set up the initial strings for translation:
+```json
+{
+  "scripts": {
+    "fbtee": "pnpm run fbtee:manifest && pnpm run fbtee:collect && pnpm run fbtee:translate"
+  }
+}
+```
+
+Now, run these commands to set up the initial strings for translation:
 
 ```bash
-npm run fbtee:manifest && npm run fbtee:collect
+pnpm fbtee:manifest && pnpm fbtee:collect
 ```
 
 The files generated by these commands should be added to `.gitignore`:
@@ -74,10 +89,99 @@ The files generated by these commands should be added to `.gitignore`:
 .src_manifest.json
 .enum_manifest.json
 source_strings.json
-src/translations.json
+src/translations/
 ```
 
-Next, set up **fbtee** in your app's initialization code (e.g., `src/index.tsx`):
+### App Setup
+
+**fbtee**'s runtime can manage the currently selected locale for you through the `<LocaleContext />` component. All you need to do is define the available languages, the locales provided by the browser or device, and a function to load translations for a given locale:
+
+```tsx
+import { getLocales } from 'expo-localization';
+import { LocaleContext } from 'fbtee';
+
+// Define the available languages in your app:
+const availableLanguages = new Map([
+  ['en_US', 'English'],
+  ['ja_JP', '日本語 (Japanese)'],
+]);
+
+// Web:
+const clientLocalesWeb = [navigator.language, ...navigator.languages];
+// React Native:
+const clientLocalesRN = getLocales().map(({ languageTag }) => languageTag);
+
+// A loader function to fetch translations for a given locale:
+const loadLocale = async (locale: string) => {
+  if (locale === 'ja_JP') {
+    return (await import('./translations/ja_JP.json')).default.ja_JP;
+  }
+
+  return {};
+};
+
+// Now wrap your app with `LocaleContext`:
+const MyAppEntryPoint = () => (
+  <LocaleContext
+    availableLanguages={availableLanguages}
+    clientLocales={clientLocalesWeb} // or clientLocalesRN for React Native
+    loadLocale={loadLocale}
+  >
+    <App />
+  </LocaleContext>
+);
+```
+
+If you need to access the current locale or set the locale, you can use the `useLocaleContext` hook:
+
+```tsx
+import { useLocaleContext } from 'fbtee';
+
+const MyComponent = () => {
+  const { locale, setLocale } = useLocaleContext();
+
+  return (
+    <div>
+      <p>Current Locale: {locale}</p>
+      <button onClick={() => setLocale('ja_JP')}>Switch to Japanese</button>
+    </div>
+  );
+};
+```
+
+Next up, if you are using React and TypeScript in your project, you need to add TypeScript types for **fbtee** to enable proper type checking in JSX. You can do this by referencing the `ReactTypes.d.ts` file in your main `index.tsx` file or a global type declaration file (e.g., `types.d.ts`):
+
+```tsx
+/// <reference types="fbtee/ReactTypes.d.ts" />
+```
+
+_You’re now ready to define your first translatable element!_
+
+### Alternative Setup Methods
+
+If you need to build your own locale context with custom functionality, you can use the `setupLocaleContext` function. It takes the same arguments as the `LocaleContext` component, but gives you full control over how you manage locales.
+
+```tsx
+const { getLocale, setLocale } = setupLocaleContext({
+  availableLanguages: AvailableLanguages,
+  clientLocales,
+  fallbackLocale,
+  hooks,
+  loadLocale,
+  translations,
+});
+
+// Now you can call `getLocale` and `setLocale` anytime, even outside of React components.
+if (getLocale() === 'en_US') {
+  setLocale('ja_JP'); // Switch to Japanese locale
+}
+```
+
+A full example of using `setupLocaleContext` to build your own `LocaleContext` abstraction can be found in the [Athena Crisis](https://github.com/nkzw-tech/athena-crisis/blob/main/hera/i18n/LocaleContext.tsx#L41) repository.
+
+#### Full Customization
+
+Finally, if you are using something other than React, or need even more control over how **fbtee** is configured, you can use the `setupFbtee` function. This function allows you to set up **fbtee** with custom hooks and translations:
 
 ```tsx
 import { IntlVariations, setupFbtee } from 'fbtee';
@@ -94,19 +198,11 @@ setupFbtee({
 });
 ```
 
-Next up, if you are using React and TypeScript in your project, you need to add TypeScript types for **fbtee** to enable proper type checking in JSX. You can do this by referencing the `ReactTypes.d.ts` file in your main `index.tsx` file or a global type declaration file (e.g., `types.d.ts`):
-
-```tsx
-/// <reference types="fbtee/ReactTypes.d.ts" />
-```
-
-_You’re now ready to define your first translatable element!_
-
 ## Usage
 
-_If you want to learn by example, check out the [examples](https://github.com/nkzw-tech/fbtee/tree/main/example) directory._
+_If you want to learn by example, check out the [examples](https://github.com/nkzw-tech/fbtee/tree/main/example) directory. You can also check out [Athena Crisis](https://github.com/nkzw-tech/athena-crisis), a large open source video game using **fbtee**_
 
-All strings need to be wrapped by `<fbt>` (for React/JSX) or `fbt()` (for JavaScript). This ensures strings can be extracted and translated properly. The `desc` attribute is required and provides context for translators, helping them understand the intended meaning of the string.
+With **fbtee**, all strings need to be wrapped using `<fbt>` (for React/JSX) or `fbt()` (for JavaScript). This ensures strings can be extracted and translated properly. The `desc` attribute is required and provides context for translators, helping them understand the intended meaning of the string.
 
 Here are some basic examples:
 
@@ -153,7 +249,7 @@ _Note: `<fbt>` is auto-imported for you by the `@nkzw/babel-preset-fbtee` plugin
 After marking your strings for translation with `<fbt>`, run the following commands to extract, and compile translations:
 
 ```bash
-npm run fbtee:manifest && npm run fbtee:collect
+pnpm fbtee:manifest && pnpm fbtee:collect
 ```
 
 You can now upload the `source_strings.json` file to your translation provider. One sample for such a translation provider is [Crowdin](https://crowdin.com/).
@@ -234,7 +330,7 @@ And German (`translations/de_DE.json`) might look like this:
 Once you have the translated strings stored in a `translations/` folder as JSON files, you can run the following command to generate the translations file:
 
 ```bash
-npm run fbtee:translate
+pnpm fbtee:translate
 ```
 
 This will generate the `translation.json` file referred to in the setup done before. This file might look like this:
@@ -249,6 +345,24 @@ This will generate the `translation.json` file referred to in the setup done bef
 After generating the translations file, your app is ready to display translated content in other languages. The error you had until now in the `setupFbtee` with regards to the imported translations file should be resolved now.
 
 Since the `translations.json` is an auto-generated file part of your build process, the `fbtee:translate` command should be added to your build step.
+
+## Command Overview
+
+### `fbtee manifest`
+
+`fbtee manifest --src src` searches through files in the `src` directory and generates a manifest file (`.src_manifest.json`) that lists all the files with translatable strings. In addition it creates `.enum_manifest.json` which lists all the files containing `<fbt:enum>` tags. Since these files are auto-generated, we recommend adding them to your `.gitignore`.
+
+### `fbtee collect`
+
+`fbtee collect --manifest < .src_manifest.json > source_strings.json` reads the manifest file and extracts all the translatable strings into a `source_strings.json` file. This file should be uploaded to your translation provider as the source for your translations.
+
+### `fbtee translate`
+
+`fbtee translate --source-strings source_strings.json --translations translations/*.json --jenkins --output-dir src/translations/` reads all the translations in the `translations/` directory and compiles them into a `src/translations/` folder. This folder is used by **fbtee** to display translated content in your app. The `--translations` parameter specifies the path to the translation files. The `--jenkins` flag is used to define the utilized [hash function](https://en.wikipedia.org/wiki/Jenkins_hash_function).
+
+You can adjust the `--translations` parameter to point to your translation directory. If your translations are within your app directory in a folder called `i18n`, for example, you'd use `--translations app/i18n/*.json`. The output is the translation folder used by **fbtee**, and it's up to you to define how to load them in your app. Since this folder is generated through the build process, it should not be part of version control.
+
+This command requires the translations to be present in the `translations/` directory, created based on real translations of what was previously collected using the `collect` command. Instead of outputting a folder, you can also remove the `--output-dir` parameter to output a single file such as `translations.json`, which can be used directly in your app without loading individual translation files.
 
 ## ESLint Plugin
 
@@ -296,9 +410,9 @@ Facebook has done an amazing job with `fbt`, an internationalization library tha
 The open-source version of `fbt`, however, became unmaintained, difficult to set up, and incompatible with modern tools. It was eventually archived in November 2024. **fbtee** builds on this foundation with several improvements:
 
 - **Easier Setup:** fbtee works with modern tools like Vite.
-- **Statically Typed:** The fbtee compiler ensures correct usage of fbtee, libary TypeScript types are provided, and an eslint plugin helps fix common mistakes.
+- **Statically Typed:** The fbtee compiler ensures correct usage of fbtee, library TypeScript types are provided, and an eslint plugin helps fix common mistakes.
 - **Improved React Compatibility:** Removed React-specific hacks and added support for implicit React fragments (`<>`).
-- **Enhanced Features:** Fixed and exported `inltList` as a new `<fbt:list>` construt, which was not functional in the original `fbt`.
+- **Enhanced Features:** Fixed and exported `inltList` as a new `<fbt:list>` construct, which was not functional in the original `fbt`.
 - **Modernized Codebase:** Rewritten using TypeScript, ES modules (ESM), eslint, and modern JavaScript standards. Removed cruft and legacy code.
 - **Updated Tooling:** Uses modern tools like pnpm, Vite, and esbuild for faster and more efficient development of **fbtee**.
 
