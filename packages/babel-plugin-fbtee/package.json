@@ -34,9 +34,9 @@
     "@babel/traverse": "^7.27.4",
     "@babel/types": "^7.27.6",
     "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^",
-    "glob": "^11.0.2",
+    "glob": "^11.0.3",
     "invariant": "^2.2.4",
-    "jest-docblock": "30.0.0-beta.3",
+    "jest-docblock": "30.0.1",
     "nullthrows": "^1.1.1",
     "yargs": "^18.0.0"
   },
