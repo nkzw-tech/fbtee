@@ -104,7 +104,7 @@ const argv = y
       'from STDIN as a monolithic JSON payload',
   )
   .string('source-strings')
-  .default('source-strings', join(process.cwd(), '.source_strings.json'))
+  .default('source-strings', join(process.cwd(), 'source_strings.json'))
   .describe(
     'source-strings',
     'The file containing source strings, as collected by collectFbt.js',

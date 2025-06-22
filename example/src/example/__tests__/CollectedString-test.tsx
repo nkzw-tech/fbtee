@@ -5,10 +5,11 @@ import { CollectFbtOutput } from '../../../../packages/babel-plugin-fbtee/src/bi
 
 const { childParentMappings, phrases } = JSON.parse(
   readFileSync(
-    join(import.meta.dirname, '../../../.source_strings.json'),
+    join(import.meta.dirname, '../../../source_strings.json'),
     'utf8',
   ),
 ) as CollectFbtOutput;
+
 test('fbtee strings are included in the collected strings of the example project', () => {
   expect(
     phrases.some(

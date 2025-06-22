@@ -3,7 +3,6 @@
 .pnpm-debug.log
 **/node_modules
 example/.enum_manifest.json
-example/.source_strings.json
 example/.src_manifest.json
 example/source_strings.json
 example/src/translatedFbts
