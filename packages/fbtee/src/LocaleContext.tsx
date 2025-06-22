@@ -1,5 +1,6 @@
 import {
   createContext,
+  Fragment,
   ReactNode,
   use,
   useCallback,
@@ -177,7 +178,7 @@ export default function LocaleContext({
         ),
       }}
     >
-      {children}
+      <Fragment key={locale}>{children}</Fragment>
     </Context>
   );
 }
