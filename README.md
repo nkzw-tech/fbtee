@@ -53,6 +53,26 @@ export default {
 };
 ```
 
+#### Using Babel directly instead of Vite's React Plugin
+
+If you are not using `@vitejs/plugin-react`, for example because you are using the latest version of React Router in framework mode, you can use `vite-plugin-babel` instead:
+
+```tsx
+import fbteePreset from '@nkzw/babel-preset-fbtee';
+import { reactRouter } from '@react-router/dev/vite';
+import { defineConfig } from 'vite';
+import babel from 'vite-plugin-babel';
+
+export default defineConfig({
+  plugins: [
+    babel({
+      babelConfig: { presets: [fbteePreset] },
+    }),
+    reactRouter(),
+  ],
+});
+```
+
 **fbtee** uses three scripts to manage translations. These scripts help automate the process of collecting, creating, and compiling translations. It is recommended to add them to your `package.json`:
 
 ```json
