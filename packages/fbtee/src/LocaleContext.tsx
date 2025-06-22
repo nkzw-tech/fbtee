@@ -51,11 +51,11 @@ export function setupLocaleContext({
             }
 
             const [first = '', second] = locale.toLowerCase().split(/-|_/);
-            if (!first.length) {
+            if (!first?.length) {
               return null;
             }
 
-            return second.length
+            return second?.length
               ? [`${first}${second ? `_${second.toUpperCase()}` : ''}`, first]
               : [first];
           })
