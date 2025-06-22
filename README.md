@@ -73,6 +73,8 @@ export default defineConfig({
 });
 ```
 
+#### Scripts
+
 **fbtee** uses three scripts to manage translations. These scripts help automate the process of collecting, creating, and compiling translations. It is recommended to add them to your `package.json`:
 
 ```json
