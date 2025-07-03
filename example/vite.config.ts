@@ -6,9 +6,6 @@ import CommonStrings from './common_strings.json' with { type: 'json' };
 const root = process.cwd();
 
 export default {
-  build: {
-    target: 'modules',
-  },
   define: {
     'process.env.NODE_ENV': `"development"`,
   },

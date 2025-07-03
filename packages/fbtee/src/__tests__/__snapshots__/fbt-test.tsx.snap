@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ensure unique keys for React elements 1`] = `
 <DocumentFragment>
@@ -13,8 +13,7 @@ exports[`ensure unique keys for React elements 1`] = `
 </DocumentFragment>
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -32,8 +31,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -51,8 +49,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -70,8 +67,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=FEMALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -89,8 +85,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -108,8 +103,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -127,8 +121,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -146,8 +139,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=MALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -165,8 +157,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -184,8 +175,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -203,8 +193,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -222,8 +211,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Betty, ownerGender=UNKNOWN_PLURAL, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Betty clicked on ",
   <strong>
@@ -241,8 +229,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Betty, owner
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -260,8 +247,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -279,8 +265,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -298,8 +283,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=FEMALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -317,8 +301,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -336,8 +319,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -355,8 +337,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -374,8 +355,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=MALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -393,8 +373,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -412,8 +391,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -431,8 +409,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -450,8 +427,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGender=UNKNOWN_PLURAL, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Bob clicked on ",
   <strong>
@@ -469,8 +445,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Bob, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -488,8 +463,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -507,8 +481,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -526,8 +499,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=FEMALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -545,8 +517,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -564,8 +535,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -583,8 +553,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -602,8 +571,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=MALE_SINGULAR, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -621,8 +589,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=comment, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=comment, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -640,8 +607,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=comment, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=comment, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -659,8 +625,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=photo, count=1
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=photo, count=1\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
@@ -678,8 +643,7 @@ exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGe
 ]
 `;
 
-exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=photo, count=10
- should produce proper nested fbt results 1`] = `
+exports[`fbt : given a string with implicit parameters where viewer=Kim, ownerGender=UNKNOWN_PLURAL, object=photo, count=10\\n should produce proper nested fbt results 1`] = `
 [
   "Kim clicked on ",
   <strong>
