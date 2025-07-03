@@ -25,10 +25,10 @@ export type {
 export type { TranslationDictionary } from './FbtTranslations.tsx';
 
 export {
-  default as LocaleContext,
+  default as createLocaleContext,
   setupLocaleContext,
   type LocaleContextProps,
   type LocaleLoaderFn,
   type TranslationPromise,
   useLocaleContext,
-} from './LocaleContext.tsx';
+} from './createLocaleContext.tsx';

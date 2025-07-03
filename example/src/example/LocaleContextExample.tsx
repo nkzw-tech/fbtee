@@ -4,44 +4,29 @@ import {
   fbt,
   GenderConst,
   IntlVariations,
-  LocaleContext,
+  createLocaleContext,
   useLocaleContext,
 } from 'fbtee';
-import { ChangeEvent, StrictMode, useCallback, useState } from 'react';
+import {
+  ChangeEvent,
+  StrictMode,
+  useCallback,
+  useEffect,
+  useState,
+  useTransition,
+} from 'react';
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale } from './Locales.tsx';
 import translations from '../translatedFbts.json' with { type: 'json' };
 import { VStack } from '@nkzw/stack';
 
 type SharedObj = keyof typeof ExampleEnum;
-
-const availableLanguages = new Map(
-  Object.keys(Locales).map((locale) => {
-    return [
-      locale,
-      Locales[locale as keyof typeof Locales].displayName,
-    ] as const;
-  }),
-);
-const clientLocales = [...navigator.languages, navigator.language];
-
-export default function Root() {
-  return (
-    <StrictMode>
-      <LocaleContext
-        availableLanguages={availableLanguages}
-        clientLocales={clientLocales}
-        loadLocale={() => Promise.resolve({})}
-        translations={translations}
-      >
-        <Example />
-      </LocaleContext>
-    </StrictMode>
-  );
-}
+type LocaleKey = keyof typeof Locales;
 
 const Example = () => {
-  const { locale, setLocale } = useLocaleContext();
+  const [, startTransition] = useTransition();
+  const { locale, localeChangeIsPending, setLocale } = useLocaleContext();
+  const [newLocale, setNewLocale] = useState(locale);
   const [ex1Name, setEx1Name] = useState('Someone');
   const [ex1Gender, setEx1Gender] = useState(IntlVariations.GENDER_UNKNOWN);
   const [ex1Count, setEx1Count] = useState(1);
@@ -51,15 +36,25 @@ const Example = () => {
 
   const updateLocale = useCallback(
     async (locale: Locale) => {
-      await setLocale(locale);
-      const html = document.getElementsByTagName('html')[0];
-      if (html != null) {
-        html.lang = Locales[locale].bcp47;
-      }
-      document.body.className = Locales[locale].rtl ? 'rtl' : 'ltr';
+      setNewLocale(locale);
+      startTransition(() => {
+        setLocale(locale);
+      });
     },
     [setLocale],
   );
+
+  useEffect(() => {
+    if (locale && !localeChangeIsPending) {
+      const html = document.getElementsByTagName('html')[0]!;
+      html.lang = Locales[locale as LocaleKey].bcp47;
+      document.body.className = Locales[locale as LocaleKey].rtl
+        ? 'rtl'
+        : 'ltr';
+    }
+  }, [locale, localeChangeIsPending]);
+
+  const highlightedLocale = localeChangeIsPending ? newLocale : locale;
 
   const onSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
     event.stopPropagation();
@@ -271,17 +266,17 @@ const Example = () => {
       <ul className="languages">
         {Object.keys(Locales).map((loc) => (
           <li key={loc}>
-            {locale === loc ? (
-              Locales[loc as keyof typeof Locales].displayName
+            {highlightedLocale === loc ? (
+              Locales[loc as LocaleKey].displayName
             ) : (
               <a
                 href={`#${loc}`}
                 onClick={(event: React.UIEvent) => {
                   event.preventDefault();
-                  updateLocale(loc as keyof typeof Locales);
+                  updateLocale(loc as LocaleKey);
                 }}
               >
-                {Locales[loc as keyof typeof Locales].displayName}
+                {Locales[loc as LocaleKey].displayName}
               </a>
             )}
           </li>
@@ -290,3 +285,24 @@ const Example = () => {
     </div>
   );
 };
+
+const LocaleContext = createLocaleContext({
+  availableLanguages: new Map(
+    Object.keys(Locales).map(
+      (locale) => [locale, Locales[locale as LocaleKey].displayName] as const,
+    ),
+  ),
+  clientLocales: [...navigator.languages, navigator.language],
+  loadLocale: () => Promise.resolve({}),
+  translations,
+});
+
+export default function Root() {
+  return (
+    <StrictMode>
+      <LocaleContext>
+        <Example />
+      </LocaleContext>
+    </StrictMode>
+  );
+}

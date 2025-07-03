@@ -120,7 +120,7 @@ src/translations/
 
 ```tsx
 import { getLocales } from 'expo-localization';
-import { LocaleContext } from 'fbtee';
+import { createLocaleContext } from 'fbtee';
 
 // Define the available languages in your app:
 const availableLanguages = new Map([
@@ -142,13 +142,15 @@ const loadLocale = async (locale: string) => {
   return {};
 };
 
+const LocaleContext = createLocaleContext({
+  availableLangauges,
+  clientLocales: clientLocalesWeb, // or clientLocalesRN for React Native
+  loadLocale,
+});
+
 // Now wrap your app with `LocaleContext`:
 const MyAppEntryPoint = () => (
-  <LocaleContext
-    availableLanguages={availableLanguages}
-    clientLocales={clientLocalesWeb} // or clientLocalesRN for React Native
-    loadLocale={loadLocale}
-  >
+  <LocaleContext>
     <App />
   </LocaleContext>
 );

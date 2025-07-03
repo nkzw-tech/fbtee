@@ -7,11 +7,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
-import LocaleContext, {
+import createLocaleContext, {
   setupLocaleContext,
   TranslationPromise,
   useLocaleContext,
-} from '../LocaleContext.tsx';
+} from '../createLocaleContext.tsx';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],
@@ -34,14 +34,16 @@ const InvalidLocaleButton = () => {
 
 test('locale context allows setting up a full fbtee context', async () => {
   const loadLocale = jest.fn(async (locale: string) => ({}));
+  const LocaleContext = createLocaleContext({
+    availableLanguages,
+    clientLocales: ['en_US', 'de_AT'],
+    fallbackLocale: 'en_US',
+    hooks,
+    loadLocale,
+  });
+
   const { asFragment } = render(
-    <LocaleContext
-      availableLanguages={availableLanguages}
-      clientLocales={['en_US', 'de_AT']}
-      fallbackLocale="en_US"
-      hooks={hooks}
-      loadLocale={loadLocale}
-    >
+    <LocaleContext>
       <Button />
     </LocaleContext>,
   );
@@ -72,14 +74,16 @@ test('locale context allows setting up a full fbtee context', async () => {
 
 test('locale context does not allow setting invalid locales', async () => {
   const loadLocale = jest.fn(async (locale: string) => ({}));
+  const LocaleContext = createLocaleContext({
+    availableLanguages,
+    clientLocales: ['en_US'],
+    fallbackLocale: 'en_US',
+    hooks,
+    loadLocale,
+  });
+
   const { asFragment } = render(
-    <LocaleContext
-      availableLanguages={availableLanguages}
-      clientLocales={['en_US']}
-      fallbackLocale="en_US"
-      hooks={hooks}
-      loadLocale={loadLocale}
-    >
+    <LocaleContext>
       <InvalidLocaleButton />
     </LocaleContext>,
   );
@@ -101,7 +105,8 @@ test('locale context does not allow setting invalid locales', async () => {
 });
 
 test('loading locales mutates the translations object', async () => {
-  const { getLocale, setLocale, translations } = setupLocaleContext({
+  const translations = { en_US: {} };
+  const { getLocale, setLocale } = setupLocaleContext({
     availableLanguages: new Map([
       ['en_US', 'English'],
       ['de_AT', 'German'],
@@ -115,6 +120,7 @@ test('loading locales mutates the translations object', async () => {
             }
           : {},
     ),
+    translations,
   });
 
   expect(translations).toMatchInlineSnapshot(`
