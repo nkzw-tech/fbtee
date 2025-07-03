@@ -17,12 +17,16 @@ test('fbtee strings are included in the collected strings of the example project
     ),
   ).toBe(true);
 });
+
 test('fbtee child-parent mappings are included in the collected strings of the example project', () => {
   expect(childParentMappings).toMatchInlineSnapshot(`
-   {
-     "14": 13,
-     "23": 22,
-     "24": 23,
-   }
-  `);
+{
+  "10": 9,
+  "19": 18,
+  "20": 19,
+  "40": 39,
+  "49": 48,
+  "50": 49,
+}
+`);
 });

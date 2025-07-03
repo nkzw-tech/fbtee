@@ -3,6 +3,8 @@ import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 import translations from '../translatedFbts.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
+import Locales, { Locale } from './Locales.tsx';
+import { VStack } from '@nkzw/stack';
 
 let viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
@@ -16,52 +18,6 @@ setupFbtee({
   translations,
 });
 
-const LOCALES = {
-  ar_AR: {
-    bcp47: 'ar',
-    displayName: '\u0627\u0644\u0639\u0631\u0628\u064A\u0629',
-    englishName: 'Arabic',
-    rtl: true,
-  },
-  en_US: {
-    bcp47: 'en-US',
-    displayName: 'English (US)\u200e',
-    englishName: 'English (US)',
-    rtl: false,
-  },
-  es_LA: {
-    bcp47: 'es-419',
-    displayName: 'Espa\u00F1ol',
-    englishName: 'Spanish',
-    rtl: false,
-  },
-  fb_HX: {
-    bcp47: 'fb-HX',
-    displayName: 'l33t 5p34k',
-    englishName: 'FB H4x0r',
-    rtl: false,
-  },
-  he_IL: {
-    bcp47: 'he',
-    displayName: '\u05E2\u05D1\u05E8\u05D9\u05EA',
-    englishName: 'Hebrew',
-    rtl: true,
-  },
-  ja_JP: {
-    bcp47: 'ja',
-    displayName: '\u65E5\u672C\u8A9E',
-    englishName: 'Japanese',
-    rtl: false,
-  },
-  ru_RU: {
-    bcp47: 'ru',
-    displayName: 'Русский',
-    englishName: 'Russian',
-    rtl: false,
-  },
-} as const;
-
-type Locale = keyof typeof LOCALES;
 type SharedObj = keyof typeof ExampleEnum;
 
 export default function Example() {
@@ -81,9 +37,9 @@ export default function Example() {
     setLocale(locale);
     const html = document.getElementsByTagName('html')[0];
     if (html != null) {
-      html.lang = LOCALES[locale].bcp47;
+      html.lang = Locales[locale].bcp47;
     }
-    document.body.className = LOCALES[locale].rtl ? 'rtl' : 'ltr';
+    document.body.className = Locales[locale].rtl ? 'rtl' : 'ltr';
   }, []);
 
   const onSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
@@ -107,7 +63,7 @@ export default function Example() {
             See `--fbt-common-path` option from `fbt-collect` and common_strings.json */}
           <fbt common>Use the form below to see FBT in action.</fbt>
         </h2>
-        <form action="" method="get" onSubmit={onSubmit}>
+        <VStack action="" as="form" gap method="get" onSubmit={onSubmit}>
           <fieldset>
             <span className="example_row">
               <span className="example_input--30">
@@ -320,22 +276,22 @@ export default function Example() {
               </button>
             </span>
           </fieldset>
-        </form>
+        </VStack>
       </div>
       <ul className="languages">
-        {Object.keys(LOCALES).map((loc) => (
+        {Object.keys(Locales).map((loc) => (
           <li key={loc}>
             {locale === loc ? (
-              LOCALES[loc].displayName
+              Locales[loc].displayName
             ) : (
               <a
                 href={`#${loc}`}
                 onClick={(event: React.UIEvent) => {
                   event.preventDefault();
-                  updateLocale(loc as keyof typeof LOCALES);
+                  updateLocale(loc as keyof typeof Locales);
                 }}
               >
-                {LOCALES[loc as keyof typeof LOCALES].displayName}
+                {Locales[loc as keyof typeof Locales].displayName}
               </a>
             )}
           </li>

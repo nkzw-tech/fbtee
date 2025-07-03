@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:^",
+    "@nkzw/stack": "^2.1.1",
     "classnames": "^2.5.1",
     "fbtee": "workspace:^",
     "invariant": "^2.2.4",

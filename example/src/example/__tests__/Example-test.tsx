@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import Example from '../Example.react.tsx';
+import Example from '../Example.tsx';
 
 describe('Example.react', () => {
   it('renders the example', () => {

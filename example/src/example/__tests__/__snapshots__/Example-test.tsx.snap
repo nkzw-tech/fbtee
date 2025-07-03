@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Example.react renders the example 1`] = `
 <DocumentFragment>
@@ -20,6 +20,7 @@ exports[`Example.react renders the example 1`] = `
       <form
         action=""
         method="get"
+        style="display: flex; flex-direction: column; flex-wrap: nowrap; justify-content: flex-start; gap: 8px;"
       >
         <fieldset>
           <span
