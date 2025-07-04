@@ -26,7 +26,7 @@ import { buildConstraintKey } from './VariationConstraintUtils.tsx';
 
 /**
  * Map from a string's hash to its translation payload.
- * If the translation is string type, it implies it was machine generatd.
+ * If the translation is string type, it implies it was machine generated.
  */
 export type HashToTranslation = Partial<
   Record<PatternHash, TranslationData | string | null>

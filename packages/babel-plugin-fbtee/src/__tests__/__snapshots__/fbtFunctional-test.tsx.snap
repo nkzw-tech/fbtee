@@ -1,12 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should accept well-formed options" 1`] = `
 [
   {
     "author": "jwatson",
-    "col_beg": 2,
-    "col_end": 8,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -14,8 +12,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "A string that moved files",
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 8,
+        "index": 148,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 2,
+        "index": 31,
+        "line": 2,
+      },
+    },
     "project": "Super Secret",
   },
 ]
@@ -24,9 +34,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should avoid creating identifers with conflicted name when there exist inner strings and string variations" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 16,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -58,14 +66,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 6,
-    "line_end": 22,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 16,
+        "index": 740,
+        "line": 22,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 165,
+        "line": 6,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 12,
-    "col_end": 16,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -99,14 +117,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 11,
-    "line_end": 20,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 16,
+        "index": 702,
+        "line": 20,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 12,
+        "index": 377,
+        "line": 11,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 23,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -134,8 +162,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 12,
-    "line_end": 19,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 23,
+        "index": 685,
+        "line": 19,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 453,
+        "line": 12,
+      },
+    },
     "project": "",
   },
 ]
@@ -144,9 +184,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should be able to nest within React nodes" 1`] = `
 [
   {
-    "col_beg": 20,
-    "col_end": 55,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -154,8 +192,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "A nested string",
       },
     },
-    "line_beg": 3,
-    "line_end": 3,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 55,
+        "index": 113,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 20,
+        "index": 78,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -164,9 +214,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should convert simple strings" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -174,8 +222,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "A simple string",
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 124,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -184,9 +244,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should deduplicate branches when fbt.enum() calls share the same key" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -206,8 +264,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 18,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 405,
+        "line": 18,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -216,9 +286,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should get project from docblock" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 52,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -226,8 +294,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "Also simple string",
       },
     },
-    "line_beg": 3,
-    "line_end": 3,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 52,
+        "index": 117,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 75,
+        "line": 3,
+      },
+    },
     "project": "dev",
   },
 ]
@@ -236,9 +316,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle JSX fbt with multiple levels of nested strings" 1`] = `
 [
   {
-    "col_beg": 6,
-    "col_end": 12,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -368,14 +446,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 23,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 12,
+        "index": 718,
+        "line": 23,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 6,
+        "index": 64,
+        "line": 3,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 8,
-    "col_end": 12,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -469,14 +557,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 4,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 12,
+        "index": 207,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 8,
+        "index": 95,
+        "line": 4,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 8,
-    "col_end": 12,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -606,14 +704,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 11,
-    "line_end": 22,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 12,
+        "index": 705,
+        "line": 22,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 8,
+        "index": 362,
+        "line": 11,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 10,
-    "col_end": 19,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -707,8 +815,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 16,
-    "line_end": 21,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 19,
+        "index": 692,
+        "line": 21,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 546,
+        "line": 16,
+      },
+    },
     "project": "",
   },
 ]
@@ -717,9 +837,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle JSX fbt with two nested React elements" 1`] = `
 [
   {
-    "col_beg": 6,
-    "col_end": 12,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -751,14 +869,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 19,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 12,
+        "index": 575,
+        "line": 19,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 6,
+        "index": 64,
+        "line": 3,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 8,
-    "col_end": 12,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -792,14 +920,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 8,
-    "line_end": 17,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 12,
+        "index": 545,
+        "line": 17,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 8,
+        "index": 256,
+        "line": 8,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 10,
-    "col_end": 19,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -827,8 +965,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 9,
-    "line_end": 16,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 19,
+        "index": 532,
+        "line": 16,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 328,
+        "line": 9,
+      },
+    },
     "project": "",
   },
 ]
@@ -837,9 +987,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle a JSX fragment nested with fbt.param as an argument" 1`] = `
 [
   {
-    "col_beg": 14,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -857,8 +1005,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 25,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 595,
+        "line": 25,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 72,
+        "line": 3,
+      },
+    },
     "project": "",
     "subject": Node {
       "end": 576,
@@ -885,9 +1045,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     },
   },
   {
-    "col_beg": 10,
-    "col_end": 14,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -906,8 +1064,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 6,
-    "line_end": 18,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 14,
+        "index": 461,
+        "line": 18,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 114,
+        "line": 6,
+      },
+    },
     "project": "",
     "subject": Node {
       "end": 576,
@@ -934,9 +1104,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     },
   },
   {
-    "col_beg": 12,
-    "col_end": 16,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -952,8 +1120,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 8,
-    "line_end": 16,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 16,
+        "index": 431,
+        "line": 16,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 12,
+        "index": 145,
+        "line": 8,
+      },
+    },
     "project": "",
     "subject": Node {
       "end": 576,
@@ -985,9 +1165,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle duplicate enums" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1007,8 +1185,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 19,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 414,
+        "line": 19,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1017,9 +1207,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with array values)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1039,8 +1227,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 189,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1049,9 +1249,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with enum range as variable)" 1`] = `
 [
   {
-    "col_beg": 14,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1071,8 +1269,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 204,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 82,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -1081,9 +1291,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with value map)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1103,8 +1311,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 202,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1113,9 +1333,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle enums with more text after" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1135,8 +1353,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 180,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1145,9 +1375,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle multiple plurals with no showCount (i.e. no named params)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1172,8 +1400,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 232,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1182,9 +1422,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle names" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1199,8 +1437,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 161,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1209,9 +1459,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle object pronoun" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1235,8 +1483,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 188,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1245,9 +1505,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle params" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1255,8 +1513,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "A parameterized message to {personName}",
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 198,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1265,9 +1535,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle plurals that have different count variables" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1304,8 +1572,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 266,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1314,9 +1594,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle plurals that share the same count variable" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1341,8 +1619,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 259,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1351,9 +1641,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle possessive pronoun" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1373,8 +1661,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 194,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1383,9 +1683,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle subject and reflexive pronouns" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -1412,8 +1710,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 303,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1422,9 +1732,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle variations + same param" 1`] = `
 [
   {
-    "col_beg": 6,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1439,8 +1747,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 11,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 296,
+        "line": 11,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 6,
+        "index": 51,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -1449,9 +1769,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handle variations" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1466,8 +1784,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 183,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1476,9 +1806,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should handler wrapping parens" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1486,14 +1814,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 2,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 155,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1501,14 +1839,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 10,
-    "line_end": 17,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 287,
+        "line": 17,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 171,
+        "line": 10,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1516,8 +1864,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 18,
-    "line_end": 25,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 419,
+        "line": 25,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 303,
+        "line": 18,
+      },
+    },
     "project": "",
   },
 ]
@@ -1526,9 +1886,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should insert param in place of fbt.sameParam if it exists" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1536,8 +1894,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "{name1} and {name1}",
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 166,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1546,9 +1916,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should maintain intra-argument newlines" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1556,8 +1924,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "{name1} blah {name2}",
       },
     },
-    "line_beg": 2,
-    "line_end": 17,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 315,
+        "line": 17,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1566,9 +1946,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should maintain newlines when using string templates" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1576,8 +1954,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "A simple string... with some other stuff.",
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 142,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1586,9 +1976,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should maintain newlines within arguments" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1596,8 +1984,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "a b {name1} c d {name2} e",
       },
     },
-    "line_beg": 2,
-    "line_end": 13,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 254,
+        "line": 13,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -1606,9 +2006,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should not throw for string with a nested JSX fragment and string variation arguments" 1`] = `
 [
   {
-    "col_beg": 16,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1640,14 +2038,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 19,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 545,
+        "line": 19,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 16,
+        "index": 74,
+        "line": 3,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 12,
-    "col_end": 16,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1681,14 +2089,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 6,
-    "line_end": 15,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 16,
+        "index": 456,
+        "line": 15,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 12,
+        "index": 122,
+        "line": 6,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 18,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1716,8 +2134,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 8,
-    "line_end": 13,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 18,
+        "index": 422,
+        "line": 13,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 157,
+        "line": 8,
+      },
+    },
     "project": "",
   },
 ]
@@ -1726,9 +2156,7 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
 exports[`Functional FBT API using array arguments: Meta-data collection should collect correct meta data for scenario "should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -1743,14 +2171,24 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 15,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 289,
+        "line": 15,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 12,
-    "col_end": 13,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -1758,8 +2196,20 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
         "text": "{paramName}",
       },
     },
-    "line_beg": 7,
-    "line_end": 10,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 13,
+        "index": 212,
+        "line": 10,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 12,
+        "index": 122,
+        "line": 7,
+      },
+    },
     "project": "",
   },
 ]
@@ -5975,9 +6425,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 [
   {
     "author": "jwatson",
-    "col_beg": 2,
-    "col_end": 8,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -5985,8 +6433,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A string that moved files",
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 8,
+        "index": 146,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 2,
+        "index": 31,
+        "line": 2,
+      },
+    },
     "project": "Super Secret",
   },
 ]
@@ -5995,9 +6455,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should allow description concatenation" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6005,8 +6463,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A short string",
       },
     },
-    "line_beg": 2,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 168,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6015,9 +6485,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should be able to nest within React nodes" 1`] = `
 [
   {
-    "col_beg": 20,
-    "col_end": 53,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6025,8 +6493,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A nested string",
       },
     },
-    "line_beg": 3,
-    "line_end": 3,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 53,
+        "index": 111,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 20,
+        "index": 78,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -6035,9 +6515,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should convert simple strings" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 47,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6045,8 +6523,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A simple string",
       },
     },
-    "line_beg": 2,
-    "line_end": 2,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 47,
+        "index": 76,
+        "line": 2,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6055,9 +6545,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should deduplicate branches when fbt.enum() calls share the same key in string templates" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6077,8 +6565,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 13,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 360,
+        "line": 13,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6087,9 +6587,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should deduplicate branches when fbt.enum() calls share the same key" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6109,8 +6607,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 17,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 395,
+        "line": 17,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6119,9 +6629,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should get project from docblock" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 50,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6129,8 +6637,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "Also simple string",
       },
     },
-    "line_beg": 3,
-    "line_end": 3,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 50,
+        "index": 115,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 75,
+        "line": 3,
+      },
+    },
     "project": "dev",
   },
 ]
@@ -6139,9 +6659,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle duplicate enums" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6161,8 +6679,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 17,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 395,
+        "line": 17,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6171,9 +6701,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with array values)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6193,8 +6721,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 157,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6203,9 +6743,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with enum range as variable)" 1`] = `
 [
   {
-    "col_beg": 14,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6225,8 +6763,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 172,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 82,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -6235,9 +6785,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle enums (with value map)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6257,8 +6805,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 180,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6267,9 +6827,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle enums with more text after" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6289,8 +6847,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 147,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6299,9 +6869,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle multiple plurals with no showCount (i.e. no named params)" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6326,8 +6894,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 215,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6336,9 +6916,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle names" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -6353,8 +6931,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 137,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6363,9 +6953,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle object pronoun" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6389,8 +6977,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 164,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6399,9 +6999,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle params" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6409,8 +7007,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A parameterized message to {personName}",
       },
     },
-    "line_beg": 2,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 176,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6419,9 +7029,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle plurals that have different count variables" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -6458,8 +7066,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 241,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6468,9 +7088,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle plurals that share the same count variable" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6495,8 +7113,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 7,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 238,
+        "line": 7,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6505,9 +7135,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle possessive pronoun" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6527,8 +7155,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 156,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6537,9 +7177,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle subject and reflexive pronouns" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 9,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         null,
@@ -6566,8 +7204,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 8,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 9,
+        "index": 290,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6576,9 +7226,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle variations + same param" 1`] = `
 [
   {
-    "col_beg": 6,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -6593,8 +7241,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 3,
-    "line_end": 10,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 277,
+        "line": 10,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 6,
+        "index": 51,
+        "line": 3,
+      },
+    },
     "project": "",
   },
 ]
@@ -6603,9 +7263,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handle variations" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -6620,8 +7278,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 150,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6630,9 +7300,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should handler wrapping parens" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 52,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6640,14 +7308,24 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 2,
-    "line_end": 2,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 52,
+        "index": 81,
+        "line": 2,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 58,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6655,14 +7333,24 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 3,
-    "line_end": 3,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 58,
+        "index": 141,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 97,
+        "line": 3,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 14,
-    "col_end": 58,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6670,8 +7358,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "foobarbazqux",
       },
     },
-    "line_beg": 4,
-    "line_end": 4,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 58,
+        "index": 201,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 14,
+        "index": 157,
+        "line": 4,
+      },
+    },
     "project": "",
   },
 ]
@@ -6680,9 +7380,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should insert param in place of fbt.sameParam if it exists" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6690,8 +7388,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "{name1} and {name1}",
       },
     },
-    "line_beg": 2,
-    "line_end": 5,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 133,
+        "line": 5,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6700,9 +7410,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should maintain intra-argument newlines" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6710,8 +7418,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "{name1} blah {name2}",
       },
     },
-    "line_beg": 2,
-    "line_end": 16,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 284,
+        "line": 16,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6720,9 +7440,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should maintain newlines when using string templates" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6730,8 +7448,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A simple string... with some other stuff.",
       },
     },
-    "line_beg": 2,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 120,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6740,9 +7470,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should maintain newlines within arguments" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6750,8 +7478,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "a b {name1} c d {name2} e",
       },
     },
-    "line_beg": 2,
-    "line_end": 12,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 231,
+        "line": 12,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6760,9 +7500,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should maintain newlines" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6770,8 +7508,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "A simple string... with some other stuff.",
       },
     },
-    "line_beg": 2,
-    "line_end": 6,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 132,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
 ]
@@ -6780,9 +7530,7 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name" 1`] = `
 [
   {
-    "col_beg": 10,
-    "col_end": 7,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [
         {
@@ -6797,14 +7545,24 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         },
       },
     },
-    "line_beg": 2,
-    "line_end": 14,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 7,
+        "index": 258,
+        "line": 14,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 39,
+        "line": 2,
+      },
+    },
     "project": "",
   },
   {
-    "col_beg": 10,
-    "col_end": 11,
-    "filepath": null,
+    "filename": null,
     "jsfbt": {
       "m": [],
       "t": {
@@ -6812,8 +7570,20 @@ exports[`Functional FBT API using string-concatenated arguments: Meta-data colle
         "text": "{paramName}",
       },
     },
-    "line_beg": 6,
-    "line_end": 9,
+    "loc": SourceLocation {
+      "end": Position {
+        "column": 11,
+        "index": 189,
+        "line": 9,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 10,
+        "index": 105,
+        "line": 6,
+      },
+    },
     "project": "",
   },
 ]

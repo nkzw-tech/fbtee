@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`collectFbt When using string templates should extract correctly multiple params 1`] = `
 {
@@ -6,9 +6,7 @@ exports[`collectFbt When using string templates should extract correctly multipl
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 86,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -16,8 +14,20 @@ exports[`collectFbt When using string templates should extract correctly multipl
           "text": "{1} {2} {2} 3",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 86,
+          "index": 129,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 43,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -30,9 +40,7 @@ exports[`collectFbt When using string templates should extract correctly name, p
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 119,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -77,8 +85,20 @@ exports[`collectFbt When using string templates should extract correctly name, p
           },
         },
       },
-      "line_beg": 4,
-      "line_end": 4,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 119,
+          "index": 238,
+          "line": 4,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 119,
+          "line": 4,
+        },
+      },
       "project": "",
     },
   ],
@@ -91,9 +111,7 @@ exports[`collectFbt When using string templates should extract correctly support
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 37,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [
           null,
@@ -109,8 +127,20 @@ exports[`collectFbt When using string templates should extract correctly support
           },
         },
       },
-      "line_beg": 3,
-      "line_end": 4,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 37,
+          "index": 139,
+          "line": 4,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 43,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -123,9 +153,7 @@ exports[`collectFbt When using string templates should extract correctly with a 
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 52,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -133,8 +161,20 @@ exports[`collectFbt When using string templates should extract correctly with a 
           "text": "testing {it} works",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 52,
+          "index": 95,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 43,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -147,9 +187,7 @@ exports[`collectFbt When using string templates should extract correctly with ju
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 19,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -157,8 +195,20 @@ exports[`collectFbt When using string templates should extract correctly with ju
           "text": "simple",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 19,
+          "index": 62,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 43,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -171,9 +221,7 @@ exports[`collectFbt When using string templates should extract correctly with th
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 49,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -181,8 +229,20 @@ exports[`collectFbt When using string templates should extract correctly with th
           "text": "{it} still works",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 49,
+          "index": 92,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 43,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -604,9 +664,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
   ],
   "phrases": [
     {
-      "col_beg": 10,
-      "col_end": 16,
-      "filepath": "test.js",
+      "filename": "test.js",
       "hashToLeaf": {
         "6CzFRF22gqmcMT9hNd4lFQ==": {
           "desc": "some desc",
@@ -623,14 +681,24 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 7,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 16,
+          "index": 233,
+          "line": 7,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 10,
+          "index": 39,
+          "line": 2,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 12,
-      "col_end": 16,
-      "filepath": "test.js",
+      "filename": "test.js",
       "hashToLeaf": {
         "vInz7SvwK8Zthis7azxV9Q==": {
           "desc": "In the phrase: "This is a {=link}"",
@@ -644,8 +712,20 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
           "text": "link",
         },
       },
-      "line_beg": 4,
-      "line_end": 6,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 16,
+          "index": 216,
+          "line": 6,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 12,
+          "index": 96,
+          "line": 4,
+        },
+      },
       "project": "",
     },
   ],
@@ -1143,9 +1223,7 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
   ],
   "phrases": [
     {
-      "col_beg": 8,
-      "col_end": 14,
-      "filepath": "test.js",
+      "filename": "test.js",
       "hashToLeaf": {
         "PqPPir8Kg9xSlqdednPFOg==": {
           "desc": "example 1",
@@ -1187,14 +1265,24 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 18,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 14,
+          "index": 580,
+          "line": 18,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 8,
+          "index": 37,
+          "line": 2,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 10,
-      "col_end": 14,
-      "filepath": "test.js",
+      "filename": "test.js",
       "hashToLeaf": {
         "2u1unDTClahYJKZKS5RVCQ==": {
           "desc": "In the phrase: "{name} has shared {=[number] photos} with you"",
@@ -1236,14 +1324,24 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
           },
         },
       },
-      "line_beg": 7,
-      "line_end": 16,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 14,
+          "index": 546,
+          "line": 16,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 10,
+          "index": 239,
+          "line": 7,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 12,
-      "col_end": 21,
-      "filepath": "test.js",
+      "filename": "test.js",
       "hashToLeaf": {
         "Q9mOAQ+ogHG20z2QkEkNmQ==": {
           "desc": "In the phrase: "{name} has shared {=a photo} with you"",
@@ -1279,8 +1377,20 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
           },
         },
       },
-      "line_beg": 8,
-      "line_end": 15,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 21,
+          "index": 531,
+          "line": 15,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 12,
+          "index": 313,
+          "line": 8,
+        },
+      },
       "project": "",
     },
   ],
@@ -1297,9 +1407,7 @@ exports[`collectFbt should create correct child parent mapping for multiple file
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 12,
-      "col_end": 18,
-      "filepath": "example1.react.js",
+      "filename": "example1.react.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1310,14 +1418,24 @@ exports[`collectFbt should create correct child parent mapping for multiple file
           },
         },
       },
-      "line_beg": 3,
-      "line_end": 8,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 18,
+          "index": 209,
+          "line": 8,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 12,
+          "index": 54,
+          "line": 3,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 14,
-      "col_end": 18,
-      "filepath": "example1.react.js",
+      "filename": "example1.react.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1328,14 +1446,24 @@ exports[`collectFbt should create correct child parent mapping for multiple file
           },
         },
       },
-      "line_beg": 5,
-      "line_end": 7,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 18,
+          "index": 189,
+          "line": 7,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 14,
+          "index": 120,
+          "line": 5,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 26,
-      "col_end": 46,
-      "filepath": "example1.react.js",
+      "filename": "example1.react.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1343,14 +1471,24 @@ exports[`collectFbt should create correct child parent mapping for multiple file
           "text": "italic inside",
         },
       },
-      "line_beg": 6,
-      "line_end": 6,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 46,
+          "index": 170,
+          "line": 6,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 26,
+          "index": 150,
+          "line": 6,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 12,
-      "col_end": 18,
-      "filepath": "./example2.react.js.in",
+      "filename": "./example2.react.js.in",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1361,14 +1499,24 @@ exports[`collectFbt should create correct child parent mapping for multiple file
           },
         },
       },
-      "line_beg": 3,
-      "line_end": 6,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 18,
+          "index": 173,
+          "line": 6,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 12,
+          "index": 54,
+          "line": 3,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 14,
-      "col_end": 57,
-      "filepath": "./example2.react.js.in",
+      "filename": "./example2.react.js.in",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1376,8 +1524,20 @@ exports[`collectFbt should create correct child parent mapping for multiple file
           "text": "link",
         },
       },
-      "line_beg": 5,
-      "line_end": 5,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 57,
+          "index": 154,
+          "line": 5,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 14,
+          "index": 111,
+          "line": 5,
+        },
+      },
       "project": "",
     },
   ],
@@ -1390,9 +1550,7 @@ exports[`collectFbt should dedupe fbt:plurals 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 6,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [
           null,
@@ -1417,8 +1575,20 @@ exports[`collectFbt should dedupe fbt:plurals 1`] = `
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 9,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 6,
+          "index": 264,
+          "line": 9,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 29,
+          "line": 2,
+        },
+      },
       "project": "",
     },
   ],
@@ -1433,9 +1603,7 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 8,
-      "col_end": 14,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1446,14 +1614,24 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 5,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 14,
+          "index": 155,
+          "line": 5,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 8,
+          "index": 37,
+          "line": 2,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 10,
-      "col_end": 22,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1462,8 +1640,20 @@ exports[`collectFbt should expose the outer token names if needed 1`] = `
           "text": "World",
         },
       },
-      "line_beg": 4,
-      "line_end": 4,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 22,
+          "index": 140,
+          "line": 4,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 10,
+          "index": 128,
+          "line": 4,
+        },
+      },
       "project": "",
     },
   ],
@@ -1478,9 +1668,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 8,
-      "col_end": 14,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -1498,8 +1686,20 @@ exports[`collectFbt should expose the subject option on top level and inner phra
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 5,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 14,
+          "index": 143,
+          "line": 5,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 8,
+          "index": 37,
+          "line": 2,
+        },
+      },
       "project": "",
       "subject": Node {
         "end": 81,
@@ -1526,9 +1726,7 @@ exports[`collectFbt should expose the subject option on top level and inner phra
       },
     },
     {
-      "col_beg": 10,
-      "col_end": 30,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [
           {
@@ -1543,8 +1741,20 @@ exports[`collectFbt should expose the subject option on top level and inner phra
           },
         },
       },
-      "line_beg": 4,
-      "line_end": 4,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 30,
+          "index": 128,
+          "line": 4,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 10,
+          "index": 108,
+          "line": 4,
+        },
+      },
       "project": "",
       "subject": Node {
         "end": 81,
@@ -1580,10 +1790,8 @@ exports[`collectFbt should extract common strings from <fbt common={true}> 1`] =
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 6,
-      "col_end": 39,
       "common": true,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1591,8 +1799,20 @@ exports[`collectFbt should extract common strings from <fbt common={true}> 1`] =
           "text": "Required",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 39,
+          "index": 75,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 6,
+          "index": 42,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -1605,9 +1825,7 @@ exports[`collectFbt should extract fbs strings 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 26,
-      "col_end": 51,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1615,8 +1833,20 @@ exports[`collectFbt should extract fbs strings 1`] = `
           "text": "bar",
         },
       },
-      "line_beg": 1,
-      "line_end": 1,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 51,
+          "index": 51,
+          "line": 1,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 26,
+          "index": 26,
+          "line": 1,
+        },
+      },
       "project": "",
     },
   ],
@@ -1629,9 +1859,7 @@ exports[`collectFbt should extract fbt strings 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 26,
-      "col_end": 51,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1639,8 +1867,20 @@ exports[`collectFbt should extract fbt strings 1`] = `
           "text": "bar",
         },
       },
-      "line_beg": 1,
-      "line_end": 1,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 51,
+          "index": 51,
+          "line": 1,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 26,
+          "index": 26,
+          "line": 1,
+        },
+      },
       "project": "",
     },
   ],
@@ -1653,10 +1893,8 @@ exports[`collectFbt should extract fbt.c strings 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 6,
-      "col_end": 23,
       "common": true,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1664,8 +1902,20 @@ exports[`collectFbt should extract fbt.c strings 1`] = `
           "text": "Required",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 23,
+          "index": 59,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 6,
+          "index": 42,
+          "line": 3,
+        },
+      },
       "project": "",
     },
   ],
@@ -1680,9 +1930,7 @@ exports[`collectFbt should extract strings from a custom collector 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 8,
-      "col_end": 14,
-      "filepath": "",
+      "filename": "",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1691,14 +1939,20 @@ exports[`collectFbt should extract strings from a custom collector 1`] = `
           "tokenAliases": {},
         },
       },
-      "line_beg": 3,
-      "line_end": 5,
+      "loc": {
+        "end": {
+          "column": 14,
+          "line": 5,
+        },
+        "start": {
+          "column": 8,
+          "line": 3,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 16,
-      "col_end": 38,
-      "filepath": "",
+      "filename": "",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1708,8 +1962,16 @@ exports[`collectFbt should extract strings from a custom collector 1`] = `
           "tokenAliases": {},
         },
       },
-      "line_beg": 4,
-      "line_end": 4,
+      "loc": {
+        "end": {
+          "column": 38,
+          "line": 4,
+        },
+        "start": {
+          "column": 16,
+          "line": 4,
+        },
+      },
       "project": "",
     },
   ],
@@ -1723,9 +1985,7 @@ exports[`collectFbt should extract the author from Docblock 1`] = `
   "phrases": [
     {
       "author": "Sponge Bob",
-      "col_beg": 0,
-      "col_end": 25,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1733,8 +1993,20 @@ exports[`collectFbt should extract the author from Docblock 1`] = `
           "text": "bar",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 25,
+          "index": 113,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 88,
+          "line": 3,
+        },
+      },
       "project": "someproject",
     },
   ],
@@ -1749,9 +2021,7 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 8,
-      "col_end": 14,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1762,14 +2032,24 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
           },
         },
       },
-      "line_beg": 2,
-      "line_end": 5,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 14,
+          "index": 145,
+          "line": 5,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 8,
+          "index": 37,
+          "line": 2,
+        },
+      },
       "project": "",
     },
     {
-      "col_beg": 10,
-      "col_end": 22,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1777,8 +2057,20 @@ exports[`collectFbt should not expose the outer token names by default 1`] = `
           "text": "World",
         },
       },
-      "line_beg": 4,
-      "line_end": 4,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 22,
+          "index": 130,
+          "line": 4,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 10,
+          "index": 118,
+          "line": 4,
+        },
+      },
       "project": "",
     },
   ],
@@ -1791,9 +2083,7 @@ exports[`collectFbt should still extract strings if fbt call param doNotExtract 
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 40,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1801,8 +2091,20 @@ exports[`collectFbt should still extract strings if fbt call param doNotExtract 
           "text": "bar",
         },
       },
-      "line_beg": 2,
-      "line_end": 2,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 40,
+          "index": 69,
+          "line": 2,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 29,
+          "line": 2,
+        },
+      },
       "project": "",
     },
   ],
@@ -1815,9 +2117,7 @@ exports[`collectFbt should still extract strings if file-level doNotExtract is s
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 25,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1825,8 +2125,20 @@ exports[`collectFbt should still extract strings if file-level doNotExtract is s
           "text": "bar",
         },
       },
-      "line_beg": 3,
-      "line_end": 3,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 25,
+          "index": 112,
+          "line": 3,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 87,
+          "line": 3,
+        },
+      },
       "project": "someproject",
     },
   ],
@@ -1839,9 +2151,7 @@ exports[`collectFbt should still extract strings if in-line doNotExtract is set 
   "fbtElementNodes": undefined,
   "phrases": [
     {
-      "col_beg": 0,
-      "col_end": 46,
-      "filepath": "test.js",
+      "filename": "test.js",
       "jsfbt": {
         "m": [],
         "t": {
@@ -1849,8 +2159,20 @@ exports[`collectFbt should still extract strings if in-line doNotExtract is set 
           "text": "bar",
         },
       },
-      "line_beg": 2,
-      "line_end": 2,
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 46,
+          "index": 75,
+          "line": 2,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 29,
+          "line": 2,
+        },
+      },
       "project": "",
     },
   ],

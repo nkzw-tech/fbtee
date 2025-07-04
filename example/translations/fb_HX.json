@@ -21,16 +21,6 @@
       ],
       "types": []
     },
-    "+JZjqgCHObNg6jWov91o+w==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "unkn0wn (plur4l)",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "+Owe0R1Wgj++SFlrgb3vIg==": {
       "tokens": [],
       "translations": [
@@ -55,7 +45,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 l1nk 70 5h4r3\u00a0! {=View} 7h31r l1nk.",
+          "translation": "{name} h45 4 l1nk 70 5h4r3 ! {=View} 7h31r l1nk.",
           "variations": {}
         }
       ],
@@ -75,7 +65,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 ph070 70 5h4r3\u00a0! {=View} h15 ph070.",
+          "translation": "{name} h45 4 ph070 70 5h4r3 ! {=View} h15 ph070.",
           "variations": {}
         }
       ],
@@ -85,7 +75,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p463 70 5h4r3\u00a0! {=View} h15 p463.",
+          "translation": "{name} h45 4 p463 70 5h4r3 ! {=View} h15 p463.",
           "variations": {}
         }
       ],
@@ -125,7 +115,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p057 70 5h4r3\u00a0! {=View} h3r p057.",
+          "translation": "{name} h45 4 p057 70 5h4r3 ! {=View} h3r p057.",
           "variations": {}
         }
       ],
@@ -145,7 +135,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 ph070 70 5h4r3\u00a0! {=View} 7h31r ph070.",
+          "translation": "{name} h45 4 ph070 70 5h4r3 ! {=View} 7h31r ph070.",
           "variations": {}
         }
       ],
@@ -155,7 +145,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 v1d30 70 5h4r3\u00a0! {=View} h3r v1d30.",
+          "translation": "{name} h45 4 v1d30 70 5h4r3 ! {=View} h3r v1d30.",
           "variations": {}
         }
       ],
@@ -165,7 +155,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "7ry 17 0u7\u00a0!",
+          "translation": "7ry 17 0u7 !",
           "variations": {}
         }
       ],
@@ -195,7 +185,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "G3nd3r\u00a0:",
+          "translation": "G3nd3r :",
           "variations": {}
         }
       ],
@@ -215,7 +205,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p057 70 5h4r3\u00a0! {=View} h15 p057.",
+          "translation": "{name} h45 4 p057 70 5h4r3 ! {=View} h15 p057.",
           "variations": {}
         }
       ],
@@ -265,7 +255,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "y0ur 63nd3r\u00a0:",
+          "translation": "y0ur 63nd3r :",
           "variations": {}
         }
       ],
@@ -275,7 +265,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 v1d30 70 5h4r3\u00a0! {=View} h15 v1d30.",
+          "translation": "{name} h45 4 v1d30 70 5h4r3 ! {=View} h15 v1d30.",
           "variations": {}
         }
       ],
@@ -285,7 +275,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p057 70 5h4r3\u00a0! {=View} 7h31r p057.",
+          "translation": "{name} h45 4 p057 70 5h4r3 ! {=View} 7h31r p057.",
           "variations": {}
         }
       ],
@@ -325,7 +315,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 v1d30 70 5h4r3\u00a0! {=View} 7h31r v1d30.",
+          "translation": "{name} h45 4 v1d30 70 5h4r3 ! {=View} 7h31r v1d30.",
           "variations": {}
         }
       ],
@@ -445,7 +435,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 l1nk 70 5h4r3\u00a0! {=View} h3r l1nk.",
+          "translation": "{name} h45 4 l1nk 70 5h4r3 ! {=View} h3r l1nk.",
           "variations": {}
         }
       ],
@@ -485,7 +475,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p463 70 5h4r3\u00a0! {=View} h3r p463.",
+          "translation": "{name} h45 4 p463 70 5h4r3 ! {=View} h3r p463.",
           "variations": {}
         }
       ],
@@ -555,7 +545,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 p463 70 5h4r3\u00a0! {=View} 7h31r p463.",
+          "translation": "{name} h45 4 p463 70 5h4r3 ! {=View} 7h31r p463.",
           "variations": {}
         }
       ],
@@ -575,7 +565,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 l1nk 70 5h4r3\u00a0! {=View} h15 l1nk.",
+          "translation": "{name} h45 4 l1nk 70 5h4r3 ! {=View} h15 l1nk.",
           "variations": {}
         }
       ],
@@ -635,7 +625,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} h45 4 ph070 70 5h4r3\u00a0! {=View} h3r ph070.",
+          "translation": "{name} h45 4 ph070 70 5h4r3 ! {=View} h3r ph070.",
           "variations": {}
         }
       ],
@@ -646,6 +636,186 @@
       "translations": [
         {
           "translation": "{=View}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1zt7aP/cVQqI5IyAJQku8w==": {
+      "description": "Gender Select label",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Unknown (plural)",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "E9cv0amPwjV70PBD0XyIAw==": {
+      "description": "List example.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Do you want to share a {list}?",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XWOy1r8lQxGmBtCn03YSnQ==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "photo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Z1GfhhBITgeqZUQ1GgP35Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "link",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "GzijBgnhfi6GiUsHFZlY7Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "video",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{number}+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<{number}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items} • {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}, {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} and {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} or {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} • {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, {last item}",
           "variations": {}
         }
       ],

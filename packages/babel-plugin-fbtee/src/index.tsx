@@ -142,11 +142,20 @@ export type ObjectWithJSFBT = {
   jsfbt: TableJSFBT;
 };
 export type Phrase = FbtCallSiteOptions & {
-  col_beg: number;
-  col_end: number;
-  filepath: string | null;
-  line_beg: number;
-  line_end: number;
+  filename: string | null;
+  loc:
+    | {
+        end: {
+          column: number;
+          line: number;
+        };
+        start: {
+          column: number;
+          line: number;
+        };
+      }
+    | null
+    | undefined;
   project: string;
 } & ObjectWithJSFBT;
 
@@ -338,11 +347,8 @@ function addMetaPhrase(metaPhrase: MetaPhrase, pluginOptions: PluginOptions) {
   allMetaPhrases.push({
     ...metaPhrase,
     phrase: {
-      col_beg: fbtNode.node.loc?.start.column || 0,
-      col_end: fbtNode.node.loc?.end.column || 0,
-      filepath: pluginOptions.filename || null,
-      line_beg: fbtNode.node.loc?.start.line || 0,
-      line_end: fbtNode.node.loc?.end.line || 0,
+      filename: pluginOptions.filename || null,
+      loc: fbtNode.node.loc,
       project: metaPhrase.phrase.project || '',
       ...metaPhrase.phrase,
     },

@@ -24,9 +24,7 @@ export default class CustomFbtCollector implements IFbtCollector {
   getPhrases(): Array<PackagerPhrase> {
     return [
       {
-        col_beg: 8,
-        col_end: 14,
-        filepath: '',
+        filename: '',
         jsfbt: {
           m: [],
           t: {
@@ -35,14 +33,20 @@ export default class CustomFbtCollector implements IFbtCollector {
             tokenAliases: {},
           },
         },
-        line_beg: 3,
-        line_end: 5,
+        loc: {
+          end: {
+            column: 14,
+            line: 5,
+          },
+          start: {
+            column: 8,
+            line: 3,
+          },
+        },
         project: '',
       },
       {
-        col_beg: 16,
-        col_end: 38,
-        filepath: '',
+        filename: '',
         jsfbt: {
           m: [],
           t: {
@@ -52,8 +56,16 @@ export default class CustomFbtCollector implements IFbtCollector {
             tokenAliases: {},
           },
         },
-        line_beg: 4,
-        line_end: 4,
+        loc: {
+          end: {
+            column: 38,
+            line: 4,
+          },
+          start: {
+            column: 16,
+            line: 4,
+          },
+        },
         project: '',
       },
     ];

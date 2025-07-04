@@ -5,7 +5,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041c\u0443\u0436\u0441\u043a\u043e\u0439 (\u0435\u0434\u0438\u043d\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e)",
+          "translation": "Мужской (единственное число)",
           "variations": {}
         }
       ],
@@ -16,16 +16,6 @@
       "translations": [
         {
           "translation": "{=View}",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "+JZjqgCHObNg6jWov91o+w==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e (\u043c\u043d\u043e\u0436\u0435\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e)",
           "variations": {}
         }
       ],
@@ -45,7 +35,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0416\u0435\u043d\u0441\u043a\u0438\u0439 (\u0435\u0434\u0438\u043d\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e)",
+          "translation": "Женский (единственное число)",
           "variations": {}
         }
       ],
@@ -55,7 +45,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0441\u0441\u044b\u043b\u043a\u043e\u0439! {=View} \u0441\u0441\u044b\u043b\u043a\u0443.",
+          "translation": "{name} хочет поделиться ссылкой! {=View} ссылку.",
           "variations": {}
         }
       ],
@@ -65,7 +55,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -75,7 +65,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0444\u043e\u0442\u043e! {=View} \u0435\u0433\u043e \u0444\u043e\u0442\u043e.",
+          "translation": "{name} хочет поделиться фото! {=View} его фото.",
           "variations": {}
         }
       ],
@@ -85,7 +75,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0435\u0439! {=View} \u0435\u0433\u043e \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0443.",
+          "translation": "{name} хочет поделиться Страницей! {=View} его Страницу.",
           "variations": {}
         }
       ],
@@ -95,7 +85,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 \u0444\u043e\u0440\u043c\u0443 \u043d\u0438\u0436\u0435, \u0447\u0442\u043e\u0431\u044b \u0443\u0432\u0438\u0434\u0435\u0442\u044c FBT \u0432 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0438.",
+          "translation": "Используйте форму ниже, чтобы увидеть FBT в действии.",
           "variations": {}
         }
       ],
@@ -105,7 +95,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -115,7 +105,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -125,7 +115,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0435\u0439! {=View} \u0435\u0435 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
+          "translation": "{name} хочет поделиться публикацией! {=View} ее публикацию.",
           "variations": {}
         }
       ],
@@ -135,7 +125,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -145,7 +135,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0444\u043e\u0442\u043e! {=View} \u0444\u043e\u0442\u043e.",
+          "translation": "{name} хочет поделиться фото! {=View} фото.",
           "variations": {}
         }
       ],
@@ -155,7 +145,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432\u0438\u0434\u0435\u043e! {=View} \u0435\u0435 \u0432\u0438\u0434\u0435\u043e.",
+          "translation": "{name} хочет поделиться видео! {=View} ее видео.",
           "variations": {}
         }
       ],
@@ -165,7 +155,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u043f\u0440\u043e\u0431\u043e\u0432\u0430\u0442\u044c!",
+          "translation": "Попробовать!",
           "variations": {}
         }
       ],
@@ -175,7 +165,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041d\u0435 \u0447\u0435\u043b\u043e\u0432\u0435\u043a",
+          "translation": "Не человек",
           "variations": {}
         }
       ],
@@ -195,7 +185,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u043b:",
+          "translation": "Пол:",
           "variations": {}
         }
       ],
@@ -215,7 +205,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0435\u0439! {=View} \u0435\u0433\u043e \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
+          "translation": "{name} хочет поделиться публикацией! {=View} его публикацию.",
           "variations": {}
         }
       ],
@@ -245,7 +235,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -255,7 +245,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -265,7 +255,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0412\u0430\u0448 \u043f\u043e\u043b:",
+          "translation": "Ваш пол:",
           "variations": {}
         }
       ],
@@ -275,7 +265,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432\u0438\u0434\u0435\u043e! {=View} \u0435\u0433\u043e \u0432\u0438\u0434\u0435\u043e.",
+          "translation": "{name} хочет поделиться видео! {=View} его видео.",
           "variations": {}
         }
       ],
@@ -285,7 +275,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0435\u0439! {=View} \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
+          "translation": "{name} хочет поделиться публикацией! {=View} публикацию.",
           "variations": {}
         }
       ],
@@ -295,7 +285,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0438\u043c\u044f",
+          "translation": "имя",
           "variations": {}
         }
       ],
@@ -305,7 +295,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e",
+          "translation": "количество",
           "variations": {}
         }
       ],
@@ -325,7 +315,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432\u0438\u0434\u0435\u043e! {=View} \u0432\u0438\u0434\u0435\u043e.",
+          "translation": "{name} хочет поделиться видео! {=View} видео.",
           "variations": {}
         }
       ],
@@ -335,7 +325,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -345,7 +335,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -355,7 +345,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e (\u0435\u0434\u0438\u043d\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e)",
+          "translation": "Неизвестно (единственное число)",
           "variations": {}
         }
       ],
@@ -365,19 +355,19 @@
       "tokens": ["name"],
       "translations": [
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0430\u0441\u044c \u0441 \u0432\u0430\u043c\u0438 {=a photo}",
+          "translation": "{name} поделилась с вами {=a photo}",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0441\u044f \u0441 \u0432\u0430\u043c\u0438 {=a photo}",
+          "translation": "{name} поделился с вами {=a photo}",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0441\u044f(-\u0430\u0441\u044c) \u0441 \u0432\u0430\u043c\u0438 {=a photo}",
+          "translation": "{name} поделился(-ась) с вами {=a photo}",
           "variations": {
             "0": 3
           }
@@ -389,7 +379,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0421\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0439",
+          "translation": "Составление предложений",
           "variations": {}
         }
       ],
@@ -399,7 +389,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0444\u043e\u0442\u043e",
+          "translation": "фото",
           "variations": {}
         }
       ],
@@ -449,7 +439,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -459,7 +449,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0441\u0441\u044b\u043b\u043a\u043e\u0439! {=View} \u0435\u0435 \u0441\u0441\u044b\u043b\u043a\u0443.",
+          "translation": "{name} хочет поделиться ссылкой! {=View} ее ссылку.",
           "variations": {}
         }
       ],
@@ -469,7 +459,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e",
+          "translation": "Неизвестно",
           "variations": {}
         }
       ],
@@ -489,7 +479,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0414\u0435\u043c\u043e\u043d\u0441\u0442\u0440\u0430\u0446\u0438\u044f FBT",
+          "translation": "Демонстрация FBT",
           "variations": {}
         }
       ],
@@ -499,7 +489,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0435\u0439! {=View} \u0435\u0435 \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0443.",
+          "translation": "{name} хочет поделиться Страницей! {=View} ее Страницу.",
           "variations": {}
         }
       ],
@@ -509,7 +499,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u0416\u0435\u043d\u0441\u043a\u0438\u0439",
+          "translation": "Женский",
           "variations": {}
         }
       ],
@@ -519,19 +509,19 @@
       "tokens": ["name"],
       "translations": [
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0441\u044f \u0441 \u0432\u0430\u043c\u0438 {=[number] photos}",
+          "translation": "{name} поделился с вами {=[number] photos}",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0441\u044f(-\u0430\u0441\u044c) \u0441 \u0432\u0430\u043c\u0438 {=[number] photos}",
+          "translation": "{name} поделился(-ась) с вами {=[number] photos}",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "{name} \u043f\u043e\u0434\u0435\u043b\u0438\u043b\u0430\u0441\u044c \u0441 \u0432\u0430\u043c\u0438 {=[number] photos}",
+          "translation": "{name} поделилась с вами {=[number] photos}",
           "variations": {
             "0": 2
           }
@@ -553,7 +543,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -563,7 +553,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -573,7 +563,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041c\u0443\u0436\u0441\u043a\u043e\u0439",
+          "translation": "Мужской",
           "variations": {}
         }
       ],
@@ -583,7 +573,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0435\u0439! {=View} \u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0443.",
+          "translation": "{name} хочет поделиться Страницей! {=View} Страницу.",
           "variations": {}
         }
       ],
@@ -593,7 +583,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -603,7 +593,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0441\u0441\u044b\u043b\u043a\u043e\u0439! {=View} \u0435\u0433\u043e \u0441\u0441\u044b\u043b\u043a\u0443.",
+          "translation": "{name} хочет поделиться ссылкой! {=View} его ссылку.",
           "variations": {}
         }
       ],
@@ -623,7 +613,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -633,7 +623,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{number} \u0444\u043e\u0442\u043e",
+          "translation": "{number} фото",
           "variations": {}
         }
       ],
@@ -643,7 +633,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -653,7 +643,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c",
+          "translation": "Посмотреть",
           "variations": {}
         }
       ],
@@ -663,7 +653,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{name} \u0445\u043e\u0447\u0435\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0444\u043e\u0442\u043e! {=View} \u0435\u0435 \u0444\u043e\u0442\u043e.",
+          "translation": "{name} хочет поделиться фото! {=View} ее фото.",
           "variations": {}
         }
       ],
@@ -674,6 +664,186 @@
       "translations": [
         {
           "translation": "{=View}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1zt7aP/cVQqI5IyAJQku8w==": {
+      "description": "Gender Select label",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Unknown (plural)",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "E9cv0amPwjV70PBD0XyIAw==": {
+      "description": "List example.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Do you want to share a {list}?",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XWOy1r8lQxGmBtCn03YSnQ==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "photo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Z1GfhhBITgeqZUQ1GgP35Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "link",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "GzijBgnhfi6GiUsHFZlY7Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "video",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{number}+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<{number}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items} • {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}, {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} and {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} or {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} • {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, {last item}",
           "variations": {}
         }
       ],

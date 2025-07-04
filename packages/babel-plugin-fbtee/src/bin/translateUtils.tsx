@@ -14,17 +14,8 @@ import type { PatternHash, PatternString } from '../Types.ts';
 import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect.tsx';
 
 export type Options = Readonly<{
-  // Similar to `jenkins`, but pass the hash-module of your choice.
-  // The module should export a function with the same signature and operation
-  // of fbt-hash-module.
   hashModule: boolean | string;
-  // By default, we output the translations as an associative array whose
-  // indices match the phrases provided.  If instead, you'd like a mapping
-  // from the associated "jenkins" hash to translation payload (for use in
-  // babel-fbt-runtime plugin, for instance) you can use this.
   jenkins: boolean;
-  // By default, we log missing values in the translation file to stderr. If you
-  // instead would like to stop execution on missing values you can use this.
   strict: boolean;
 }>;
 
@@ -41,12 +32,12 @@ type TranslatedGroup = Readonly<{
 export type TranslatedGroups = ReadonlyArray<TranslatedGroup>;
 
 /** Translations in a specific locale */
-type TranslationGroup = Readonly<{
+export type TranslationGroup = Readonly<{
   ['fb-locale']: string;
   translations: Translations;
 }>;
 
-type Translations = Partial<
+export type Translations = Partial<
   Record<PatternString, SerializedTranslationData | null>
 >;
 
@@ -56,7 +47,7 @@ type InputJSONType = Readonly<{
   translationGroups: ReadonlyArray<TranslationGroup>;
 }>;
 
-function parseJSONFile<T>(filepath: string): T {
+export function loadJSON<T>(filepath: string): T {
   try {
     return JSON.parse(readFileSync(filepath).toString());
   } catch (error) {
@@ -72,13 +63,15 @@ export async function processFiles(
   translationFiles: ReadonlyArray<string>,
   options: Options,
 ): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
-  const { phrases } = parseJSONFile<CollectFbtOutput>(stringFile);
+  const { phrases } = loadJSON<CollectFbtOutput>(stringFile);
   const fbtSites = phrases.map(createFbtSiteFromJSON);
-  const translatedGroups = translationFiles.map((file) => {
-    const group = parseJSONFile<TranslationGroup>(file);
-    return processTranslations(fbtSites, group, options);
-  });
-  return await processGroups(phrases, translatedGroups, options);
+  return await processGroups(
+    phrases,
+    translationFiles.map((file) =>
+      processTranslations(fbtSites, loadJSON<TranslationGroup>(file), options),
+    ),
+    options,
+  );
 }
 
 export async function processJSON(

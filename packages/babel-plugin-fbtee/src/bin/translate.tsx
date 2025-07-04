@@ -32,7 +32,7 @@
  *    }
  *  }
  *
- * and by default, returns the translated phrases in the following format:
+ * and returns the translated phrases in the following format:
  *
  * [
  *   {
@@ -80,21 +80,18 @@ const y = yargs(process.argv.slice(2));
 const argv = y
   .usage('Translate fbt phrases with provided translations:\n$0 [options]')
   .boolean('jenkins')
-  .default('jenkins', false)
+  .default('jenkins', true)
   .describe(
     'jenkins',
-    'By default, we output the translations as an associative array whose ' +
-      "indices match the phrases provided.  If instead, you'd like a mapping " +
-      'from the associated "jenkins" hash to translation payload (for use in ' +
-      'babel-fbt-runtime plugin, for instance) you can use this',
+    `By default translations are output mapping the associated "jenkins" hash to the translation payload.
+    Disabling this option will output the translations as an associative array whose
+    indices match the phrases provided.`,
   )
   .string('fbt-hash-module')
   .default('fbt-hash-module', false)
   .describe(
     'fbt-hash-module',
-    `Similar to --jenkins, but pass the hash-module of your choice.  The ` +
-      'module should export a function with the same signature and operation ' +
-      'of fbt-hash-module',
+    `The hash-module of your choice. The module should export a function with the same signature and operation of fbt-hash-module`,
   )
   .boolean('stdin')
   .default('stdin', false)
@@ -104,7 +101,7 @@ const argv = y
       'from STDIN as a monolithic JSON payload',
   )
   .string('source-strings')
-  .default('source-strings', join(process.cwd(), 'source_strings.json'))
+  .default('source-strings', 'source_strings.json')
   .describe(
     'source-strings',
     'The file containing source strings, as collected by collectFbt.js',
@@ -137,9 +134,8 @@ const argv = y
   )
   .parseSync();
 
-function createJSON(obj: unknown) {
-  return JSON.stringify(obj, null, argv.pretty ? 2 : undefined);
-}
+const toJSON = (obj: unknown) =>
+  JSON.stringify(obj, null, argv.pretty ? 2 : undefined);
 
 function writeOutput(
   output: LocaleToHashToTranslationResult | TranslatedGroups,
@@ -151,11 +147,11 @@ function writeOutput(
       writeFileSync(
         path.join(outputDir, `${locale}.json`),
         // @ts-expect-error
-        createJSON({ [locale]: output[locale] }),
+        toJSON({ [locale]: output[locale] }),
       );
     });
   } else {
-    process.stdout.write(createJSON(output));
+    process.stdout.write(toJSON(output));
   }
 }
 
@@ -184,7 +180,7 @@ if (argv['stdin']) {
 } else {
   writeOutput(
     await processFiles(
-      argv['source-strings'],
+      join(process.cwd(), argv['source-strings']),
       argv['translations']?.map(String) || [],
       translationOptions,
     ),

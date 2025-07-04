@@ -5,7 +5,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05d6\u05db\u05e8 (\u05d9\u05d7\u05d9\u05d3)",
+          "translation": "זכר (יחיד)",
           "variations": {}
         }
       ],
@@ -16,16 +16,6 @@
       "translations": [
         {
           "translation": "{=View}",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "+JZjqgCHObNg6jWov91o+w==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "\u05dc\u05d0 \u05d9\u05d3\u05d5\u05e2 (\u05e8\u05d1\u05d9\u05dd)",
           "variations": {}
         }
       ],
@@ -45,7 +35,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05e0\u05e7\u05d1\u05d4 (\u05d9\u05d7\u05d9\u05d3)",
+          "translation": "נקבה (יחיד)",
           "variations": {}
         }
       ],
@@ -55,7 +45,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e7\u05d9\u05e9\u05d5\u05e8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5/\u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש קישור כדי לשתף! {=View} בסרטון שלו/שלה.",
           "variations": {}
         }
       ],
@@ -65,19 +55,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
@@ -89,7 +79,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05ea\u05de\u05d5\u05e0\u05d4 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5.",
+          "translation": "ל{name} יש תמונה כדי לשתף! {=View} בסרטון שלו.",
           "variations": {}
         }
       ],
@@ -99,7 +89,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05d3\u05e3 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5.",
+          "translation": "ל{name} יש דף כדי לשתף! {=View} בסרטון שלו.",
           "variations": {}
         }
       ],
@@ -109,7 +99,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05db\u05d3\u05d9 \u05dc\u05e8\u05d0\u05d5\u05ea \u05d0\u05ea FBT \u05d1\u05e4\u05e2\u05d5\u05dc\u05d4 \u05d9\u05e9 \u05dc\u05d4\u05e9\u05ea\u05de\u05e9 \u05d1\u05d8\u05d5\u05e4\u05e1 \u05dc\u05de\u05d8\u05d4.",
+          "translation": "כדי לראות את FBT בפעולה יש להשתמש בטופס למטה.",
           "variations": {}
         }
       ],
@@ -119,19 +109,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
@@ -143,19 +133,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -167,7 +157,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e4\u05d5\u05e1\u05d8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש פוסט כדי לשתף! {=View} בסרטון שלה.",
           "variations": {}
         }
       ],
@@ -177,19 +167,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -201,7 +191,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05ea\u05de\u05d5\u05e0\u05d4 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5/\u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש תמונה כדי לשתף! {=View} בסרטון שלו/שלה.",
           "variations": {}
         }
       ],
@@ -211,7 +201,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e1\u05e8\u05d8\u05d5\u05df \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש סרטון כדי לשתף! {=View} בסרטון שלה.",
           "variations": {}
         }
       ],
@@ -221,7 +211,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05db\u05d3\u05d0\u05d9 \u05dc\u05e0\u05e1\u05d5\u05ea!",
+          "translation": "כדאי לנסות!",
           "variations": {}
         }
       ],
@@ -231,7 +221,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc\u05d0 \u05d0\u05d3\u05dd",
+          "translation": "לא אדם",
           "variations": {}
         }
       ],
@@ -251,7 +241,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05de\u05d9\u05df:",
+          "translation": "מין:",
           "variations": {}
         }
       ],
@@ -271,7 +261,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e4\u05d5\u05e1\u05d8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5.",
+          "translation": "ל{name} יש פוסט כדי לשתף! {=View} בסרטון שלו.",
           "variations": {}
         }
       ],
@@ -301,19 +291,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
@@ -325,19 +315,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
@@ -349,7 +339,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05d4\u05de\u05d9\u05df \u05e9\u05dc\u05da:",
+          "translation": "המין שלך:",
           "variations": {}
         }
       ],
@@ -359,7 +349,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e1\u05e8\u05d8\u05d5\u05df \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5.",
+          "translation": "ל{name} יש סרטון כדי לשתף! {=View} בסרטון שלו.",
           "variations": {}
         }
       ],
@@ -369,7 +359,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e4\u05d5\u05e1\u05d8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5/\u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש פוסט כדי לשתף! {=View} בסרטון שלו/שלה.",
           "variations": {}
         }
       ],
@@ -379,7 +369,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05e9\u05dd",
+          "translation": "שם",
           "variations": {}
         }
       ],
@@ -389,7 +379,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05e1\u05e4\u05d9\u05e8\u05d4",
+          "translation": "ספירה",
           "variations": {}
         }
       ],
@@ -409,7 +399,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e1\u05e8\u05d8\u05d5\u05df \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5/\u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש סרטון כדי לשתף! {=View} בסרטון שלו/שלה.",
           "variations": {}
         }
       ],
@@ -419,19 +409,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -443,19 +433,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
@@ -467,7 +457,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc\u05d0 \u05d9\u05d3\u05d5\u05e2 (\u05d9\u05d7\u05d9\u05d3)",
+          "translation": "לא ידוע (יחיד)",
           "variations": {}
         }
       ],
@@ -477,19 +467,19 @@
       "tokens": ["name"],
       "translations": [
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e4\u05d4 \u05d0\u05d9\u05ea\u05da {=a photo}",
+          "translation": "{name} שיתפה איתך {=a photo}",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e3 \u05d0\u05d9\u05ea\u05da {=a photo}",
+          "translation": "{name} שיתף איתך {=a photo}",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e3/\u05e9\u05d9\u05ea\u05e4\u05d4 \u05d0\u05d9\u05ea\u05da {=a photo}",
+          "translation": "{name} שיתף/שיתפה איתך {=a photo}",
           "variations": {
             "0": 3
           }
@@ -501,7 +491,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05d1\u05e0\u05d9\u05d9\u05ea \u05de\u05e9\u05e4\u05d8\u05d9\u05dd",
+          "translation": "בניית משפטים",
           "variations": {}
         }
       ],
@@ -511,7 +501,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05ea\u05de\u05d5\u05e0\u05d4",
+          "translation": "תמונה",
           "variations": {}
         }
       ],
@@ -561,19 +551,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -585,7 +575,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e7\u05d9\u05e9\u05d5\u05e8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש קישור כדי לשתף! {=View} בסרטון שלה.",
           "variations": {}
         }
       ],
@@ -595,7 +585,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc\u05d0 \u05d9\u05d3\u05d5\u05e2",
+          "translation": "לא ידוע",
           "variations": {}
         }
       ],
@@ -615,7 +605,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05d4\u05d3\u05d2\u05de\u05ea \u05d4-FBT \u05e9\u05dc\u05da",
+          "translation": "הדגמת ה-FBT שלך",
           "variations": {}
         }
       ],
@@ -625,7 +615,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05d3\u05e3 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש דף כדי לשתף! {=View} בסרטון שלה.",
           "variations": {}
         }
       ],
@@ -635,7 +625,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05e0\u05e7\u05d1\u05d4",
+          "translation": "נקבה",
           "variations": {}
         }
       ],
@@ -645,19 +635,19 @@
       "tokens": ["name"],
       "translations": [
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e3 \u05d0\u05d9\u05ea\u05da {=[number] photos}",
+          "translation": "{name} שיתף איתך {=[number] photos}",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e3/\u05e9\u05d9\u05ea\u05e4\u05d4 \u05d0\u05d9\u05ea\u05da {=[number] photos}",
+          "translation": "{name} שיתף/שיתפה איתך {=[number] photos}",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "{name} \u05e9\u05d9\u05ea\u05e4\u05d4 \u05d0\u05d9\u05ea\u05da {=[number] photos}",
+          "translation": "{name} שיתפה איתך {=[number] photos}",
           "variations": {
             "0": 2
           }
@@ -679,19 +669,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
@@ -703,19 +693,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
@@ -727,7 +717,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05d6\u05db\u05e8",
+          "translation": "זכר",
           "variations": {}
         }
       ],
@@ -737,7 +727,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05d3\u05e3 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5/\u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש דף כדי לשתף! {=View} בסרטון שלו/שלה.",
           "variations": {}
         }
       ],
@@ -747,19 +737,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -771,7 +761,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05e7\u05d9\u05e9\u05d5\u05e8 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d5.",
+          "translation": "ל{name} יש קישור כדי לשתף! {=View} בסרטון שלו.",
           "variations": {}
         }
       ],
@@ -791,19 +781,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
@@ -815,7 +805,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "{number} \u05ea\u05de\u05d5\u05e0\u05d5\u05ea",
+          "translation": "{number} תמונות",
           "variations": {}
         }
       ],
@@ -825,19 +815,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -849,19 +839,19 @@
       "tokens": ["__viewing_user__"],
       "translations": [
         {
-          "translation": "\u05e6\u05e4\u05d9",
+          "translation": "צפי",
           "variations": {
             "0": 2
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4/\u05e6\u05e4\u05d9",
+          "translation": "צפה/צפי",
           "variations": {
             "0": 3
           }
         },
         {
-          "translation": "\u05e6\u05e4\u05d4",
+          "translation": "צפה",
           "variations": {
             "0": 1
           }
@@ -873,7 +863,7 @@
       "tokens": [],
       "translations": [
         {
-          "translation": "\u05dc{name} \u05d9\u05e9 \u05ea\u05de\u05d5\u05e0\u05d4 \u05db\u05d3\u05d9 \u05dc\u05e9\u05ea\u05e3! {=View} \u05d1\u05e1\u05e8\u05d8\u05d5\u05df \u05e9\u05dc\u05d4.",
+          "translation": "ל{name} יש תמונה כדי לשתף! {=View} בסרטון שלה.",
           "variations": {}
         }
       ],
@@ -884,6 +874,186 @@
       "translations": [
         {
           "translation": "{=View}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1zt7aP/cVQqI5IyAJQku8w==": {
+      "description": "Gender Select label",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Unknown (plural)",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "E9cv0amPwjV70PBD0XyIAw==": {
+      "description": "List example.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Do you want to share a {list}?",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XWOy1r8lQxGmBtCn03YSnQ==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "photo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Z1GfhhBITgeqZUQ1GgP35Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "link",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "GzijBgnhfi6GiUsHFZlY7Q==": {
+      "description": "Item in a list.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "video",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{number}+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<{number}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items} • {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}, {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} and {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} or {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} • {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, {last item}",
           "variations": {}
         }
       ],

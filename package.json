@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build && pnpm install && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && cd example && pnpm build:fbtee",
+    "build:all": "pnpm -r build && pnpm install && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && cd example && pnpm fbtee:all",
     "clean": "rm -rf packages/*/lib packages/fbtee/lib-tmp; cd example pnpm clean",
     "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
-    "dev": "cd example && pnpm build:fbtee && pnpm dev",
+    "dev": "cd example && pnpm fbtee:all && pnpm dev",
     "format": "prettier --experimental-cli --write .",
     "preinstall": "command -v git >/dev/null 2>&1 && git config core.hooksPath git-hooks || exit 0",
     "jest": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest",
