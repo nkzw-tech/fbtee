@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`manifest should extract strings 1`] = `
-"{
-  "bin/__fixtures__/.enum_manifest.json": []
-}"
+"[
+  "bin/__fixtures__/TestFile.tsx"
+]"
 `;
 
 exports[`manifest should extract strings 2`] = `

@@ -1,18 +1,16 @@
-import path from 'node:path';
+import { join } from 'node:path';
 import { generateManifest } from '../manifestUtils.tsx';
 
 describe('manifest', () => {
   it('should extract strings', async () => {
-    const srcPath = 'bin/__fixtures__';
-    const enumManifestPath = path.join(srcPath, '.enum_manifest.json');
+    const srcPath = join(import.meta.dirname, '../__fixtures__');
 
-    const { enumManifest, srcManifest } = await generateManifest(
-      enumManifestPath,
+    const { enumManifest, files } = await generateManifest(
       [srcPath],
       import.meta.dirname + '/../..',
     );
 
-    expect(JSON.stringify(srcManifest, null, 2)).toMatchSnapshot();
+    expect(JSON.stringify(files, null, 2)).toMatchSnapshot();
     expect(JSON.stringify(enumManifest, null, 2)).toMatchSnapshot();
   });
 });

@@ -12,13 +12,11 @@ async function collect(
   options: {
     customCollector?: string;
     genFbtNodes?: boolean;
-    genOuterTokenName?: boolean;
     packagerType?: string;
   } = {},
 ) {
   const opts = {
     fbtCommon,
-    generateOuterTokenName: options?.genOuterTokenName,
     plugins: [],
     presets: [],
     transform: null,
@@ -278,21 +276,6 @@ describe('collectFbt', () => {
           '../__mocks__/CustomFbtCollector.tsx',
         ),
       }),
-    ).toMatchSnapshot();
-  });
-
-  it('should expose the outer token names if needed', async () => {
-    expect(
-      await collect(
-        `import { fbt } from 'fbtee';
-        <fbt desc="Expose outer token name when script option is given">
-          Hello
-          <i>World</i>
-        </fbt>`,
-        {
-          genOuterTokenName: true,
-        },
-      ),
     ).toMatchSnapshot();
   });
 

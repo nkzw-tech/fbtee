@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/babel-plugin-fbtee",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -34,7 +34,6 @@
     "@babel/traverse": "^7.28.0",
     "@babel/types": "^7.28.0",
     "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^",
-    "glob": "^11.0.3",
     "invariant": "^2.2.4",
     "jest-docblock": "30.0.1",
     "nullthrows": "^1.1.1",
@@ -43,7 +42,6 @@
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.27.1",
     "@types/babel__core": "^7.20.5",
-    "@types/babel__traverse": "^7.20.7",
-    "@types/glob": "^9.0.0"
+    "@types/babel__traverse": "^7.20.7"
   }
 }

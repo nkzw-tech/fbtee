@@ -7,8 +7,11 @@ import { HashToLeaf } from './FbtCollector.tsx';
 import { PatternString } from '../Types.ts';
 import { SerializedTranslationData } from '../translate/TranslationData.tsx';
 
+const root = process.cwd();
+
 const y = yargs(process.argv.slice(2));
 const argv = y
+  .scriptName('fbtee')
   .usage(
     'Prepare translation files by merging phrases with existing translations:\n$0 [options]',
   )
@@ -18,9 +21,9 @@ const argv = y
     'source-strings',
     'The file containing source strings, as collected by collectFbt.js',
   )
-  .demandOption('output-dir')
-  .default('output-dir', null)
+  .string('output-dir')
   .alias('output-dir', 'o')
+  .default('output-dir', 'translations/')
   .describe(
     'output-dir',
     'The directory where all translation files will be written. Existing translation files will be loaded from this directory.',
@@ -30,9 +33,6 @@ const argv = y
     'A list of locales to process. Useful to create the initial translation files if none exist.',
   )
   .array('locales')
-  .boolean('pretty')
-  .default('pretty', true)
-  .describe('pretty', 'pretty print the translation output')
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .parseSync();
@@ -49,9 +49,6 @@ type TranslationsWithMetadata = Partial<
     | null
   >
 >;
-
-const toJSON = (obj: unknown) =>
-  JSON.stringify(obj, null, argv.pretty ? 2 : undefined);
 
 const updateTranslations = (
   phrases: HashToLeaf,
@@ -94,21 +91,10 @@ const updateTranslations = (
   return updatedTranslations;
 };
 
-const outputDir = argv['output-dir'];
-
-if (!outputDir) {
-  console.error(
-    `fbtee: Output directory is required. Use '--output-dir' or '-o' to specify the path to your translation files.`,
-  );
-  process.exit(1);
-}
-
-const outputDirectory = join(process.cwd(), outputDir);
+const outputDirectory = join(root, argv['output-dir']);
 const files = globSync(join(outputDirectory, '*.json'));
 
-const source = loadJSON<CollectFbtOutput>(
-  join(process.cwd(), argv['source-strings']),
-);
+const source = loadJSON<CollectFbtOutput>(join(root, argv['source-strings']));
 
 let phrases: HashToLeaf = Object.create(null);
 for (const phrase of source.phrases) {
@@ -131,10 +117,14 @@ for (const locale of locales) {
 
   writeFileSync(
     filePath,
-    toJSON({
-      'fb-locale': locale,
-      ...props,
-      translations: updateTranslations(phrases, translations),
-    } satisfies TranslationGroup),
+    JSON.stringify(
+      {
+        'fb-locale': locale,
+        ...props,
+        translations: updateTranslations(phrases, translations),
+      } satisfies TranslationGroup,
+      null,
+      2,
+    ),
   );
 }

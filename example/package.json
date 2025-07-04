@@ -6,14 +6,12 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf .enum_manifest.json .src_manifest.json source_strings.json src/translatedFbts.json src/translatedFbts .test_*.json 2&> /dev/null || exit 0",
+    "clean": "rm -rf source_strings.json src/translatedFbts.json src/translatedFbts 2&> /dev/null || exit 0",
     "dev": "vite",
-    "fbtee:all": "pnpm fbtee:manifest && pnpm fbtee:collect && pnpm fbtee:translate && pnpm fbtee:translate-multiple && pnpm fbtee:translate-single",
-    "fbtee:collect": "fbtee collect --fbt-common-path ./common_strings.json --pretty --manifest < .src_manifest.json > source_strings.json",
-    "fbtee:manifest": "fbtee manifest --src src",
-    "fbtee:translate": "fbtee translate --translations translations/*.json --jenkins > src/translatedFbts.json",
-    "fbtee:translate-multiple": "fbtee translate --translations translations/*.json --jenkins --output-dir src/translatedFbts",
-    "fbtee:translate-single": "fbtee translate --jenkins --stdin < translation_input.json > src/translatedFbts.json"
+    "fbtee:all": "pnpm fbtee:collect && pnpm fbtee:translate-multiple && pnpm fbtee:translate",
+    "fbtee:collect": "fbtee collect --common ./common_strings.json --src src",
+    "fbtee:translate": "fbtee translate --stdin < translation_input.json > src/translatedFbts.json",
+    "fbtee:translate-multiple": "fbtee translate -o src/translatedFbts"
   },
   "dependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:^",

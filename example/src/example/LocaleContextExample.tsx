@@ -72,7 +72,7 @@ const Example = () => {
         </h1>
         <h2>
           {/* For fbt common strings, the description will be sourced from an external manifest.
-            See `--fbt-common-path` option from `fbt-collect` and common_strings.json */}
+            See `--common` option from `fbtee collect` and common_strings.json */}
           <fbt common>Use the form below to see FBT in action.</fbt>
         </h2>
         <VStack action="" as="form" gap method="get" onSubmit={onSubmit}>

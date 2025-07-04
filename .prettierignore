@@ -1,6 +1,5 @@
 example/.enum_manifest.json
 example/source_strings.json
-example/.src_manifest.json
 example/src/translatedFbts
 example/src/translatedFbts.json
 packages/*/lib/

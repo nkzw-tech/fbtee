@@ -62,7 +62,7 @@ export async function processFiles(
   stringFile: string,
   translationFiles: ReadonlyArray<string>,
   options: Options,
-): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
+): Promise<LocaleToHashToTranslationResult> {
   const { phrases } = loadJSON<CollectFbtOutput>(stringFile);
   const fbtSites = phrases.map(createFbtSiteFromJSON);
   return await processGroups(
@@ -92,7 +92,7 @@ async function processGroups(
   phrases: ReadonlyArray<CollectFbtOutputPhrase>,
   translatedGroups: TranslatedGroups,
   options: Options,
-): Promise<LocaleToHashToTranslationResult | TranslatedGroups> {
+): Promise<LocaleToHashToTranslationResult> {
   let fbtHash: typeof FbtHashKey | null = null;
   if (options.jenkins) {
     fbtHash = (await import('../fbtHashKey.tsx')).default;
@@ -101,7 +101,7 @@ async function processGroups(
   }
 
   if (!fbtHash) {
-    return translatedGroups;
+    return translatedGroups as unknown as LocaleToHashToTranslationResult;
   }
 
   const localeToHashToFbt: LocaleToHashToTranslationResult = {};

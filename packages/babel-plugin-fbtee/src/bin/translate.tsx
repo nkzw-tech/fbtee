@@ -50,7 +50,7 @@
  * babel-fbt-runtime plugin), You can:
  *
  *  (A) Rely on the jenkins hash default and pass the --jenkins option OR
- *  (B) Pass in a custom hash module as --fbt-hash-module.
+ *  (B) Pass in a custom hash module as --hash-module.
  *    You MUST ensure this is the same hash module as used in the
  *    babel-fbt-runtime.  Otherwise, you'll have a BAD time
  *
@@ -66,18 +66,20 @@
  *
  */
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { globSync, mkdirSync, writeFileSync } from 'node:fs';
 import path, { join } from 'node:path';
 import yargs from 'yargs';
 import {
   LocaleToHashToTranslationResult,
   processFiles,
   processJSON,
-  TranslatedGroups,
 } from './translateUtils.tsx';
+
+const root = process.cwd();
 
 const y = yargs(process.argv.slice(2));
 const argv = y
+  .scriptName('fbtee')
   .usage('Translate fbt phrases with provided translations:\n$0 [options]')
   .boolean('jenkins')
   .default('jenkins', true)
@@ -87,11 +89,11 @@ const argv = y
     Disabling this option will output the translations as an associative array whose
     indices match the phrases provided.`,
   )
-  .string('fbt-hash-module')
-  .default('fbt-hash-module', false)
+  .string('hash-module')
+  .default('hash-module', false)
   .describe(
-    'fbt-hash-module',
-    `The hash-module of your choice. The module should export a function with the same signature and operation of fbt-hash-module`,
+    'hash-module',
+    `The hash-module of your choice. The module should export a function with the same signature and operation of hash-module`,
   )
   .boolean('stdin')
   .default('stdin', false)
@@ -107,18 +109,16 @@ const argv = y
     'The file containing source strings, as collected by collectFbt.js',
   )
   .array('translations')
+  .default('translations', globSync('translations/*.json', { cwd: root }))
   .describe(
     'translations',
     'The translation files containing translations corresponding to source-strings',
   )
-  .boolean('pretty')
-  .default('pretty', false)
-  .describe('pretty', 'pretty print the translation output')
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .string('output-dir')
-  .default('output-dir', null)
   .alias('output-dir', 'o')
+  .default('output-dir', 'src/translations/')
   .describe(
     'output-dir',
     'By default, we write the output to stdout. If you instead would like to split ' +
@@ -134,34 +134,26 @@ const argv = y
   )
   .parseSync();
 
-const toJSON = (obj: unknown) =>
-  JSON.stringify(obj, null, argv.pretty ? 2 : undefined);
-
-function writeOutput(
-  output: LocaleToHashToTranslationResult | TranslatedGroups,
-) {
-  const outputDir = argv['output-dir'];
-  if (outputDir) {
-    mkdirSync(outputDir, { recursive: true });
-    Object.keys(output).forEach((locale) => {
-      writeFileSync(
-        path.join(outputDir, `${locale}.json`),
-        // @ts-expect-error
-        toJSON({ [locale]: output[locale] }),
-      );
-    });
-  } else {
-    process.stdout.write(toJSON(output));
-  }
-}
-
 if (argv.help) {
   y.showHelp();
   process.exit(0);
 }
 
+const writeOutput = (
+  outputDir: string,
+  output: LocaleToHashToTranslationResult,
+) => {
+  mkdirSync(outputDir, { recursive: true });
+  Object.keys(output).forEach((locale) => {
+    writeFileSync(
+      path.join(outputDir, `${locale}.json`),
+      JSON.stringify({ [locale]: output[locale] }, null, 2),
+    );
+  });
+};
+
 const translationOptions = {
-  hashModule: argv['fbt-hash-module'],
+  hashModule: argv['hash-module'],
   jenkins: argv['jenkins'],
   strict: argv['strict'],
 } as const;
@@ -175,12 +167,19 @@ if (argv['stdin']) {
       source += chunk;
     })
     .on('end', async () => {
-      writeOutput(await processJSON(JSON.parse(source), translationOptions));
+      process.stdout.write(
+        JSON.stringify(
+          await processJSON(JSON.parse(source), translationOptions),
+          null,
+          2,
+        ),
+      );
     });
-} else {
+} else if (argv['output-dir']) {
   writeOutput(
+    join(root, argv['output-dir']),
     await processFiles(
-      join(process.cwd(), argv['source-strings']),
+      join(root, argv['source-strings']),
       argv['translations']?.map(String) || [],
       translationOptions,
     ),

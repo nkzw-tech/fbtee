@@ -1,10 +1,9 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import path, { resolve } from 'node:path';
+import path, { join, resolve } from 'node:path';
 import yargs from 'yargs';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { FbtOptionConfig } from '../FbtConstants.tsx';
-import { EnumManifest } from '../FbtEnumRegistrar.tsx';
 import type { TableJSFBT } from '../index.tsx';
 import packagerTypes from './collectFbtConstants.tsx';
 import {
@@ -17,6 +16,7 @@ import type {
   PackagerPhrase,
   RawChildParentMappings,
 } from './FbtCollector.tsx';
+import { generateManifest } from './manifestUtils.tsx';
 
 /**
  * This represents the JSON output format of this script.
@@ -80,8 +80,11 @@ export type CollectFbtOutput = {
 
 export type CollectFbtOutputPhrase = CollectFbtOutput['phrases'][number];
 
+const root = process.cwd();
+
 const y = yargs(process.argv.slice(2));
 const argv = y
+  .scriptName('fbtee')
   .usage('Collect fbt instances from source:\n$0 [options]')
   .string('hash-module')
   .describe('hash-module', 'Path to hashing module to use in text packager.')
@@ -97,36 +100,24 @@ const argv = y
   .choices('packager', Object.values(packagerTypes))
   .describe('h', 'Display usage message')
   .alias('h', 'help')
-  .boolean('manifest')
-  .default('manifest', false)
+  .string('common')
+  .default('common', '')
   .describe(
-    'manifest',
-    'Interpret stdin as JSON map of {<enum-manifest-file>: ' +
-      '[<source_file1>, ...]}. Otherwise stdin itself will be parsed',
-  )
-  .string('fbt-common-path')
-  .default('fbt-common-path', '')
-  .describe(
-    'fbt-common-path',
+    'common',
     'Optional path to the common strings module. ' +
       'This is a map from {[text]: [description]}.',
   )
-  .boolean('pretty')
-  .default('pretty', false)
-  .describe('pretty', 'Pretty-print the JSON output')
-  .boolean('gen-outer-token-name')
-  .default('gen-outer-token-name', false)
+  .string('enum-manifest')
+  .default('enum-manifest', join(root, '.enum_manifest.json'))
   .describe(
-    'gen-outer-token-name',
-    'Generate the outer token name of an inner string in the JSON output. ' +
-      'E.g. For the fbt string `<fbt>Hello <i>World</i></fbt>`, ' +
-      'the outer string is "Hello {=World}", and the inner string is: "World". ' +
-      'So the outer token name of the inner string will be "=World"',
+    'enum-manifest',
+    'The path or filename to write the enum manfiest (accessed when ' +
+      'processing shared enums)',
   )
-  .boolean('gen-fbt-nodes')
-  .default('gen-fbt-nodes', false)
+  .boolean('generate-fbt-nodes')
+  .default('generate-fbt-nodes', false)
   .describe(
-    'gen-fbt-nodes',
+    'generate-fbt-nodes',
     'Generate the abstract representation of the fbt callsites as FbtNode trees.',
   )
   .string('transform')
@@ -172,9 +163,18 @@ const argv = y
     'include-default-strings',
     `Include the default strings required by fbtee, such as for '<fbt:list>'.`,
   )
+  .array('src')
+  .default('src', [root])
+  .describe(
+    'src',
+    'The source folder(s) or files in which to look for JS source containing fbt and ' +
+      'files with the $FbtEnum.js suffix. Defaults to CWD',
+  )
+  .string('out')
+  .default('out', 'source_strings.json')
+  .describe('out', 'Output file to write the collected fbt strings to.')
   .parseSync();
 
-const root = process.cwd();
 const require = createRequire(root);
 const extraOptions: FbtOptionConfig = {};
 const cliExtraOptions = argv['options'];
@@ -186,32 +186,13 @@ if (cliExtraOptions) {
   }
 }
 
-async function processJsonSource(collector: IFbtCollector, source: string) {
-  const json = JSON.parse(source);
-  for (const manifestPath of Object.keys(json)) {
-    let manifest: EnumManifest = {};
-    if (existsSync(manifestPath)) {
-      manifest = (
-        await import(path.resolve(root, manifestPath), {
-          with: { type: 'json' },
-        })
-      ).default;
-    }
-    const sources: Array<[string, string]> = [];
-    for (const file of json[manifestPath]) {
-      sources.push([file, readFileSync(file, 'utf8')]);
-    }
-    collector.collectFromFiles(sources, manifest);
-  }
-}
-
 async function writeOutput(collector: IFbtCollector) {
   const packagers = await getPackagers(
     argv['packager'] || 'text',
     argv['hash-module'] || null,
   );
   const output = buildCollectFbtOutput(collector, packagers, {
-    genFbtNodes: argv['gen-fbt-nodes'],
+    genFbtNodes: argv['generate-fbt-nodes'],
   });
 
   if (argv['include-default-strings']) {
@@ -223,11 +204,7 @@ async function writeOutput(collector: IFbtCollector) {
         /* empty */
       }
 
-      const modulePath = path.join(
-        process.cwd(),
-        'node_modules',
-        stringModulePath,
-      );
+      const modulePath = path.join(root, 'node_modules', stringModulePath);
       if (existsSync(modulePath)) {
         return modulePath;
       }
@@ -257,68 +234,47 @@ async function writeOutput(collector: IFbtCollector) {
     }
   }
 
-  process.stdout.write(
-    JSON.stringify(output, null, argv.pretty ? ' ' : undefined),
-  );
-  process.stdout.write('\n');
-}
-
-async function processSource(collector: IFbtCollector, source: string) {
-  await (argv['manifest']
-    ? processJsonSource(collector, source)
-    : collector.collectFromOneFile(source, 'file.js'));
+  writeFileSync(join(root, argv['out']), JSON.stringify(output, null, 2));
 }
 
 if (argv.help) {
   y.showHelp();
-} else {
-  const transformPath = argv['transform'];
-  const transform = transformPath
-    ? (await import(transformPath)).default
-    : null;
-
-  const commonFile = argv['fbt-common-path']?.length
-    ? resolve(root, argv['fbt-common-path'])
-    : null;
-  const fbtCommon = commonFile?.length
-    ? (commonFile.endsWith('.json')
-        ? await import(commonFile, {
-            with: { type: 'json' },
-          })
-        : await import(commonFile)
-      ).default
-    : null;
-
-  const collector = await getFbtCollector(
-    {
-      fbtCommon,
-      generateOuterTokenName: argv['gen-outer-token-name'],
-      plugins: argv['plugins'].map(require),
-      presets: argv['presets'].map(require),
-      transform,
-    },
-    extraOptions,
-    argv['custom-collector'],
-  );
-
-  if (!argv._.length) {
-    // No files given, read stdin as the sole input.
-    const stream = process.stdin;
-    let source = '';
-    stream.setEncoding('utf8');
-    stream.on('data', (chunk) => {
-      source += chunk;
-    });
-    stream.on('end', async () => {
-      await processSource(collector, source);
-      await writeOutput(collector);
-    });
-  } else {
-    const sources: Array<[string, string]> = [];
-    for (const file of argv._) {
-      sources.push([String(file), readFileSync(file, 'utf8')]);
-    }
-    collector.collectFromFiles(sources);
-    await writeOutput(collector);
-  }
+  process.exit(0);
 }
+
+const transformPath = argv['transform'];
+const transform = transformPath ? (await import(transformPath)).default : null;
+
+const commonFile = argv['common']?.length
+  ? resolve(root, argv['common'])
+  : null;
+const fbtCommon = commonFile?.length
+  ? (commonFile.endsWith('.json')
+      ? await import(commonFile, {
+          with: { type: 'json' },
+        })
+      : await import(commonFile)
+    ).default
+  : null;
+
+const collector = await getFbtCollector(
+  {
+    fbtCommon,
+    plugins: argv['plugins'].map(require),
+    presets: argv['presets'].map(require),
+    transform,
+  },
+  extraOptions,
+  argv['custom-collector'],
+);
+
+const { enumManifest, files } = await generateManifest(argv.src);
+
+writeFileSync(argv['enum-manifest'], JSON.stringify(enumManifest));
+
+const sources: Array<[string, string]> = [];
+for (const file of files) {
+  sources.push([file, readFileSync(file, 'utf8')]);
+}
+collector.collectFromFiles(sources, enumManifest);
+await writeOutput(collector);

@@ -3,7 +3,6 @@
 .pnpm-debug.log
 **/node_modules
 example/.enum_manifest.json
-example/.src_manifest.json
 example/source_strings.json
 example/src/translatedFbts
 example/src/translatedFbts.json
@@ -12,7 +11,6 @@ packages/*/lib
 packages/*/LICENSE
 packages/*/README.md
 packages/fbtee/.enum_manifest.json
-packages/fbtee/.src_manifest.json
 packages/fbtee/lib-tmp
 packages/fbtee/Strings.json
 tsconfig.tsbuildinfo
