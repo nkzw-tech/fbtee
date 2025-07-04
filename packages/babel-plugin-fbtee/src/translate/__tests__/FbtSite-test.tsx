@@ -6,9 +6,7 @@ describe('FbtSite: testing fromScan', () => {
 
   beforeEach(() => {
     fbtSite = FbtSite.fromScan({
-      col_beg: 10,
-      col_end: 20,
-      filepath: 'Example.react.js',
+      filename: 'Example.react.js',
       hashToLeaf: {
         'gVKMc/8jq5vnYR5v2bb32g==': {
           desc: 'example 1',
@@ -50,8 +48,16 @@ describe('FbtSite: testing fromScan', () => {
           },
         },
       },
-      line_beg: 9,
-      line_end: 10,
+      loc: {
+        end: {
+          column: 20,
+          line: 10,
+        },
+        start: {
+          column: 10,
+          line: 9,
+        },
+      },
       project: 'fbt-demo-project',
     });
   });

@@ -17,9 +17,7 @@ function testTranslateNewPhrases(options: Options) {
       {
         phrases: [
           {
-            col_beg: 12,
-            col_end: 49,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
             hashToLeaf: {
               '2dcba29d4a842c6be5d76fe996fcd9f4': {
                 desc: 'title',
@@ -34,8 +32,16 @@ function testTranslateNewPhrases(options: Options) {
                 tokenAliases: {},
               },
             },
-            line_beg: 130,
-            line_end: 130,
+            loc: {
+              end: {
+                column: 49,
+                line: 130,
+              },
+              start: {
+                column: 12,
+                line: 130,
+              },
+            },
             project: 'fbt-demo-project',
           },
         ],
@@ -59,9 +65,7 @@ function testTranslateNewPhrases(options: Options) {
       {
         phrases: [
           {
-            col_beg: 12,
-            col_end: 49,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
             hashToLeaf: {
               '2dcba29d4a842c6be5d76fe996fcd9f4': {
                 desc: 'title',
@@ -76,8 +80,16 @@ function testTranslateNewPhrases(options: Options) {
                 tokenAliases: {},
               },
             },
-            line_beg: 130,
-            line_end: 130,
+            loc: {
+              end: {
+                column: 49,
+                line: 130,
+              },
+              start: {
+                column: 12,
+                line: 130,
+              },
+            },
             project: 'fbt-demo-project',
           },
         ],
@@ -109,9 +121,7 @@ function testTranslateNewPhrases(options: Options) {
       {
         phrases: [
           {
-            col_beg: 8,
-            col_end: 14,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
             hashToLeaf: {
               'gVKMc/8jq5vnYR5v2bb32g==': {
                 desc: 'example 1',
@@ -153,14 +163,21 @@ function testTranslateNewPhrases(options: Options) {
                 },
               },
             },
-            line_beg: 127,
-            line_end: 142,
+            loc: {
+              end: {
+                column: 14,
+                line: 142,
+              },
+              start: {
+                column: 8,
+                line: 127,
+              },
+            },
             project: 'fbt-demo-project',
           },
           {
-            col_beg: 10,
-            col_end: 14,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
+
             hashToLeaf: {
               '/gj3gwqx1z8Xw233oZgOpQ==': {
                 desc: 'In the phrase: "{name} has shared {=[number] photos} with you. View =[number] photos"',
@@ -198,8 +215,16 @@ function testTranslateNewPhrases(options: Options) {
                 },
               },
             },
-            line_beg: 133,
-            line_end: 140,
+            loc: {
+              end: {
+                column: 14,
+                line: 140,
+              },
+              start: {
+                column: 10,
+                line: 133,
+              },
+            },
             project: 'fbt-demo-project',
           },
         ],
@@ -291,9 +316,7 @@ function testTranslateNewPhrases(options: Options) {
       {
         phrases: [
           {
-            col_beg: 6,
-            col_end: 12,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
             hashToLeaf: {
               'j9fTl1uOEIuslim41sMkdQ==': {
                 desc: 'Example enum',
@@ -329,8 +352,16 @@ function testTranslateNewPhrases(options: Options) {
                 },
               },
             },
-            line_beg: 127,
-            line_end: 130,
+            loc: {
+              end: {
+                column: 14,
+                line: 130,
+              },
+              start: {
+                column: 6,
+                line: 127,
+              },
+            },
             project: 'fbt-demo-project',
           },
         ],
@@ -382,9 +413,7 @@ function testTranslateNewPhrases(options: Options) {
       {
         phrases: [
           {
-            col_beg: 6,
-            col_end: 12,
-            filepath: 'src/example/Example.react.js',
+            filename: 'src/example/Example.react.js',
             hashToLeaf: {
               '/3R5GnCZ5eU3EgRAiLf1vA==': {
                 desc: 'Example enum',
@@ -432,8 +461,16 @@ function testTranslateNewPhrases(options: Options) {
                 },
               },
             },
-            line_beg: 127,
-            line_end: 133,
+            loc: {
+              end: {
+                column: 12,
+                line: 133,
+              },
+              start: {
+                column: 6,
+                line: 127,
+              },
+            },
             project: 'fbt-demo-project',
           },
         ],
