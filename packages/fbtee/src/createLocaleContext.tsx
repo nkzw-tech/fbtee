@@ -1,4 +1,11 @@
-import { createContext, Fragment, ReactNode, use, useActionState } from 'react';
+import {
+  createContext,
+  Context as ReactContext,
+  Fragment,
+  ReactNode,
+  use,
+  useActionState,
+} from 'react';
 import { FbtRuntimeInput, Hooks } from './Hooks.tsx';
 import { TranslationDictionary } from './index.tsx';
 import IntlVariations from './IntlVariations.tsx';
@@ -25,9 +32,10 @@ export type LocaleContext = {
   setLocale: (locale: string) => void;
 };
 
-export const Context = createContext<LocaleContext>(
-  null as unknown as LocaleContext,
-);
+export const Context = (() =>
+  typeof window === 'undefined'
+    ? (null as unknown as ReactContext<LocaleContext>)
+    : createContext<LocaleContext>(null as unknown as LocaleContext))();
 
 export function useLocaleContext(): LocaleContext {
   return use(Context);
