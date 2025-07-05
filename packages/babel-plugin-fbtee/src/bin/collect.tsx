@@ -163,6 +163,12 @@ const argv = y
     'include-default-strings',
     `Include the default strings required by fbtee, such as for '<fbt:list>'.`,
   )
+  .boolean('legacy-format')
+  .default('legacy-format', false)
+  .describe(
+    'legacy-format',
+    `Use the legacy output format for the fbt strings for use with various translation providers.`,
+  )
   .array('src')
   .default('src', [root])
   .describe(
@@ -234,6 +240,20 @@ async function writeOutput(collector: IFbtCollector) {
     }
   }
 
+  if (argv['legacy-format']) {
+    for (const [key, phrase] of output.phrases.entries()) {
+      output.phrases[key] = {
+        ...phrase,
+        ...({
+          col_beg: phrase.loc?.start.column,
+          col_end: phrase.loc?.end.column,
+          filepath: phrase.filename,
+          line_beg: phrase.loc?.start.line,
+          line_end: phrase.loc?.end.line,
+        } as object),
+      };
+    }
+  }
   writeFileSync(join(root, argv['out']), JSON.stringify(output, null, 2));
 }
 
