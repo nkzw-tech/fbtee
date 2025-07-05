@@ -8,10 +8,11 @@ import {
 } from '@testing-library/react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
 import createLocaleContext, {
-  setupLocaleContext,
-  TranslationPromise,
   useLocaleContext,
 } from '../createLocaleContext.tsx';
+import setupLocaleContext, {
+  TranslationPromise,
+} from '../setupLocaleContext.tsx';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],

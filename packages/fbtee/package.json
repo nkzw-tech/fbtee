@@ -19,9 +19,18 @@
   },
   "license": "MIT",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "react-server": "./lib/index-server.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "pnpm build:babel && pnpm build:prepend && tsdown lib-tmp/index.tsx -d lib --target=node22 --format=esm --clean --dts",
+    "build": "pnpm build:babel && pnpm build:prepend && tsdown lib-tmp/index.tsx -d lib --target=node22 --format=esm --clean --dts && tsdown lib-tmp/index-server.tsx -d lib --target=node22 --format=esm --no-clean --dts",
     "build:babel": "babel --delete-dir-on-start --copy-files --config-file ./babel-build.config.js --out-dir=lib-tmp --extensions=.tsx --keep-file-extension --ignore='src/**/__tests__/*.tsx' src",
     "build:fbtee-strings": "pnpm fbtee collect --include-default-strings=false --src src/*.tsx --out Strings.json && ./scripts/rewrite-filepaths.ts",
     "build:prepend": "node -e \"const file = './lib-tmp/list.tsx'; fs.writeFileSync(file, '// @ts-nocheck\\n' + fs.readFileSync(file, 'utf8'));\""
