@@ -33,6 +33,7 @@ const argv = y
     'A list of locales to process. Useful to create the initial translation files if none exist.',
   )
   .array('locales')
+  .alias('locales', 'locale')
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .parseSync();
