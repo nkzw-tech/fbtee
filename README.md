@@ -9,16 +9,13 @@ _**fbtee** (Far Better Translations, Extended Edition) is an internationalizatio
 - **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, then optimizes the runtime output for performance.
 - **Easy Setup:** Quick integration with tools like Babel and Vite means you can get started instantly.
 
-## Status: Ready for Early Adopters
-
-This is a fork of Facebook's original `fbt` library, which has been archived. The aim of this fork is to create the best and most modern internationalization library for JavaScript & React.
-
 ## Getting Started
 
 Tired of setting up new projects? Check out these templates for web and React Native that come with **fbtee** pre-configured:
 
 - [Web App Template](https://github.com/nkzw-tech/web-app-template)
 - [Expo App Template](https://github.com/nkzw-tech/expo-app-template)
+- [Next.js App fbtee Example](https://github.com/cpojer/nextjs-fbtee-example)
 
 ### Installation
 
@@ -28,13 +25,19 @@ Tired of setting up new projects? Check out these templates for web and React Na
 npm install fbtee
 ```
 
-In addition to `fbtee`, you need to install the Babel preset and React plugin for Vite:
+In addition to `fbtee`, you need to install the Babel preset.
 
 ```bash
-npm install -D @nkzw/babel-preset-fbtee @vitejs/plugin-react
+npm install -D @nkzw/babel-preset-fbtee
 ```
 
 ### Tooling Setup
+
+If you are using Vite, install the React plugin for Vite:
+
+```bash
+npm install -D @vitejs/plugin-react
+```
 
 In your `vite.config.ts`:
 
@@ -71,6 +74,16 @@ export default defineConfig({
     reactRouter(),
   ],
 });
+```
+
+#### Using **fbtee** with Next.js
+
+Create a `babel.config.js` file in the root of your Next.js project and add the **fbtee** preset:
+
+```tsx
+export default {
+  presets: ['next/babel', '@nkzw/babel-preset-fbtee'],
+};
 ```
 
 #### Scripts
@@ -226,6 +239,12 @@ setupFbtee({
   translations,
 });
 ```
+
+### Usage with Next.js
+
+If you are using Next.js with App Router, check out the [Next.js App fbtee Example](https://github.com/cpojer/nextjs-fbtee-example). You'll need to set up a `<LocaleContext />` as a Client Component, and call `setupFbtee` in the root layout of your app for Server Component support.
+
+When using Next.js with **fbtee**, it will insert translated strings when your Server Components are rendered. This means that changing locales on the client will not automatically update the Server Component's translated strings. To handle locale changes, you need to call a server action that updates the locale, and then re-render your app with the new locale, for example by reloading the page. If you are exclusively using **fbtee** within Client Components, you can handle locale changes directly on the client only.
 
 ## Usage
 
