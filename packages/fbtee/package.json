@@ -1,6 +1,6 @@
 {
   "name": "fbtee",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -21,9 +21,10 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "react-server": "./lib/index-server.js",
-      "types": "./lib/index.d.ts"
+      "default": "./lib/index.js"
     },
     "./ReactTypes": {
       "types": "./ReactTypes.d.ts"
