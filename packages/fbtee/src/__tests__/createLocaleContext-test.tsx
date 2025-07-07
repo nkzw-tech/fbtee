@@ -13,6 +13,7 @@ import createLocaleContext, {
 import setupLocaleContext, {
   TranslationPromise,
 } from '../setupLocaleContext.tsx';
+import { useTransition } from 'react';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],
@@ -24,13 +25,23 @@ const hooks = {
 } as const;
 
 const Button = () => {
+  const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
-  return <button onClick={() => setLocale('de_AT')}>{locale}</button>;
+  return (
+    <button onClick={() => startTransition(() => setLocale('de_AT'))}>
+      {locale}
+    </button>
+  );
 };
 
 const InvalidLocaleButton = () => {
+  const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
-  return <button onClick={() => setLocale('pirate')}>{locale}</button>;
+  return (
+    <button onClick={() => startTransition(() => setLocale('pirate'))}>
+      {locale}
+    </button>
+  );
 };
 
 test('locale context allows setting up a full fbtee context', async () => {
@@ -130,7 +141,9 @@ test('loading locales mutates the translations object', async () => {
    }
   `);
 
-  await setLocale('de_AT');
+  await act(async () => {
+    await setLocale('de_AT');
+  });
 
   expect(getLocale()).toBe('de_AT');
   expect(translations).toMatchInlineSnapshot(`
