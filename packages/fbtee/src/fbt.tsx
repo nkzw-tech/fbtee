@@ -81,7 +81,7 @@ export type Variations =
   | [variation: ParamVariationType['number'], value?: number | null]
   | [variation: ParamVariationType['gender'], value: GenderConst];
 
-export function createRuntime<P, T extends BaseResult>({
+export function createRuntime<P, T extends BaseResult | string>({
   getResult,
   param,
   plural,
@@ -219,7 +219,7 @@ export function createRuntime<P, T extends BaseResult>({
   );
 }
 
-export default createRuntime<string | number, FbtResult>({
+export default createRuntime<string | number, FbtResult | string>({
   getResult: Hooks.getFbtResult,
   param: (label: string, value: number | string, variations?: Variations) => {
     const substitution = { [label]: value };
