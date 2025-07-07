@@ -6,3 +6,4 @@ packages:
   - 'packages/babel-preset-fbtee'
   - 'packages/fbtee'
   - 'packages/eslint-plugin-fbtee'
+  - 'website'

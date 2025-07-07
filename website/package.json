@@ -1,0 +1,46 @@
+{
+  "name": "@nkzw/fbtee-website",
+  "version": "0.0.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nkzw-tech/fbtee.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build:website": "vite build",
+    "dev": "vite dev",
+    "dev:setup": "pnpm fbtee:all",
+    "fbtee:all": "pnpm fbtee collect && pnpm fbtee translate"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "@nkzw/stack": "^2.1.1",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "fbtee": "workspace:^",
+    "lucide-react": "^0.525.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "shiki": "^3.7.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@nkzw/babel-preset-fbtee": "workspace:^",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
+    "vite": "^7.0.2"
+  }
+}

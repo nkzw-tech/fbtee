@@ -1,15 +1,20 @@
-name: push
+name: deploy-website
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: ['main']
+
+  workflow_dispatch:
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     concurrency:
@@ -17,7 +22,8 @@ jobs:
       cancel-in-progress: true
     permissions:
       contents: read
-      deployments: write
+      id-token: write
+      pages: write
     strategy:
       matrix:
         node-version: [24]
@@ -36,21 +42,26 @@ jobs:
         with:
           version: 10.*
           run_install: false
-
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
       - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-store-
-
       - name: Run setup
         run: pnpm install && pnpm build:all
-
-      - name: Run tests
-        run: pnpm test
+      - name: Build website
+        run: cd website && pnpm build:website
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'website/dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

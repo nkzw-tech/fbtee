@@ -10,7 +10,7 @@ export type LocaleLoaderFn = (locale: string) => TranslationPromise;
 
 export type LocaleContextProps = Readonly<{
   availableLanguages: ReadonlyMap<string, string>;
-  clientLocales: ReadonlyArray<string>;
+  clientLocales: ReadonlyArray<string | null>;
   fallbackLocale?: string;
   gender?: IntlVariations;
   hooks?: Hooks;
@@ -39,7 +39,7 @@ export default function setupLocaleContext({
     Array.from(
       new Set(
         [...clientLocales, fallbackLocale]
-          .flatMap((locale: string) => {
+          .flatMap((locale) => {
             if (!locale) {
               return null;
             }
