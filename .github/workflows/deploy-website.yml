@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ github.repository == 'nkzw-tech/fbtee' }}
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
