@@ -43,13 +43,13 @@ export default function substituteTokens(
       parameterRegexp,
       (_match: string, name: string, punctuation: string): string => {
         let argument = args[name];
-        // If token value is a React component
+        // If token value is a React component.
         if (argument != null && typeof argument === 'object') {
-          // Add an implicit "key" property to help React keep track of each array item
+          // Add an implicit "key" property to help React keep track of each array item.
           if ('key' in argument && argument.key === null) {
             argument = { ...argument, key: `$fbtee-${name}-${index++}$` };
           }
-          // Save the token value into objectPieces and replace its string with a placeholder
+          // Save the token value into objectPieces and replace its string with a placeholder.
           objectPieces.push(argument);
           return TOKEN_VALUE_PLACEHOLDER_CHAR + punctuation;
         } else if (argument == null) {
