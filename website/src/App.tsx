@@ -374,7 +374,7 @@ export default function App() {
                   <CardContent>
                     <Button
                       asChild
-                      className="border-purple-200 hover:bg-purple-50 bg-transparent duration-200 transition-background"
+                      className="border-purple-200 hover:bg-purple-50 dark:hover:bg-purple-900 bg-transparent duration-200 transition-background"
                       size="sm"
                       variant="outline"
                     >
@@ -408,7 +408,7 @@ export default function App() {
                   <CardContent>
                     <Button
                       asChild
-                      className="border-pink-200 hover:bg-pink-50 bg-transparent duration-200 transition-background"
+                      className="border-pink-200 hover:bg-pink-50 dark:hover:bg-pink-900 bg-transparent duration-200 transition-background"
                       size="sm"
                       variant="outline"
                     >
