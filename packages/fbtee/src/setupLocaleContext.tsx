@@ -8,11 +8,25 @@ export type TranslationPromise = Promise<{
 }>;
 export type LocaleLoaderFn = (locale: string) => TranslationPromise;
 
+export type Gender = IntlVariations | 'male' | 'female' | 'unknown';
+
+const resolveGender = (gender: Gender): IntlVariations => {
+  if (gender === 'male') {
+    return IntlVariations.GENDER_MALE;
+  } else if (gender === 'female') {
+    return IntlVariations.GENDER_FEMALE;
+  } else if (gender === 'unknown') {
+    return IntlVariations.GENDER_UNKNOWN;
+  }
+
+  return gender;
+};
+
 export type LocaleContextProps = Readonly<{
   availableLanguages: ReadonlyMap<string, string>;
   clientLocales: ReadonlyArray<string | null>;
   fallbackLocale?: string;
-  gender?: IntlVariations;
+  gender?: Gender;
   hooks?: Hooks;
   loadLocale: LocaleLoaderFn;
   translations?: TranslationDictionary;
@@ -22,13 +36,14 @@ export default function setupLocaleContext({
   availableLanguages,
   clientLocales,
   fallbackLocale = 'en_US',
-  gender = IntlVariations.GENDER_UNKNOWN,
+  gender: initialGender = IntlVariations.GENDER_UNKNOWN,
   hooks,
   loadLocale,
   translations = { [fallbackLocale]: {} },
 }: LocaleContextProps) {
   const availableLocales = new Map<string, string>();
   let currentLocale: string | null;
+  let gender = resolveGender(initialGender);
 
   for (const [locale] of availableLanguages) {
     availableLocales.set(locale, locale);
@@ -97,6 +112,10 @@ export default function setupLocaleContext({
     return currentLocale || getLocale();
   };
 
+  const setGender = (newGender: Gender) => {
+    return (gender = resolveGender(newGender));
+  };
+
   setupFbtee({
     hooks: {
       ...hooks,
@@ -108,5 +127,5 @@ export default function setupLocaleContext({
     translations,
   });
 
-  return { getLocale, setLocale };
+  return { gender, getLocale, setGender, setLocale };
 }

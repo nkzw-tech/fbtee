@@ -239,6 +239,41 @@ if (getLocale() === 'en_US') {
 
 A full example of using `setupLocaleContext` to build your own `LocaleContext` abstraction can be found in the [Athena Crisis](https://github.com/nkzw-tech/athena-crisis/blob/main/hera/i18n/LocaleContext.tsx#L41) repository.
 
+### Gender Variations
+
+`createLocaleContext` and `setupLocaleContext` also support setting the user's gender:
+
+```tsx
+createLocaleContext({
+  …
+  gender: 'female', // 'male', 'female' or 'unknown' are supported.
+});
+```
+
+If you need to adjust the user's gender dynamically, you can use the `setGender` function provided by the `useLocaleContext` hook:
+
+```tsx
+import { useLocaleContext } from 'fbtee';
+
+const GenderSelector = () => {
+  const { gender, setGender } = useLocaleContext();
+
+  return (
+    <div>
+      <button onClick={() => setGender('male')}>
+        <fbt desc="Male gender">Male</fbt>
+      </button>
+      <button onClick={() => setGender('female')}>
+        <fbt desc="Female gender">Female</fbt>
+      </button>
+      <button onClick={() => setGender('unknown')}>
+        <fbt desc="Unknown gender">Unknown</fbt>
+      </button>
+    </div>
+  );
+};
+```
+
 #### Full Customization
 
 Finally, if you are using something other than React, or need even more control over how **fbtee** is configured, you can use the `setupFbtee` function. This function allows you to set up **fbtee** with custom hooks and translations:

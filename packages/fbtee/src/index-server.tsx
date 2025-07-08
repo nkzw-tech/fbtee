@@ -25,8 +25,9 @@ export type {
 export type { TranslationDictionary } from './FbtTranslations.tsx';
 
 export {
-  type TranslationPromise,
+  type Gender,
   type LocaleContextProps,
   type LocaleLoaderFn,
+  type TranslationPromise,
   default as setupLocaleContext,
 } from './setupLocaleContext.tsx';
