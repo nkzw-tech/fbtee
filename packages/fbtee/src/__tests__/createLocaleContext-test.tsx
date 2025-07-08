@@ -34,6 +34,11 @@ const Button = () => {
   );
 };
 
+const GenderButton = () => {
+  const { gender, setGender } = useLocaleContext();
+  return <button onClick={() => setGender('female')}>{gender}</button>;
+};
+
 const InvalidLocaleButton = () => {
   const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
@@ -154,4 +159,42 @@ test('loading locales mutates the translations object', async () => {
      "en_US": {},
    }
   `);
+});
+
+test('the gender can be changed', async () => {
+  const loadLocale = jest.fn(async (locale: string) => ({}));
+  const LocaleContext = createLocaleContext({
+    availableLanguages,
+    clientLocales: ['en_US', 'de_AT'],
+    gender: 'unknown',
+    hooks,
+    loadLocale,
+  });
+
+  const { asFragment } = render(
+    <LocaleContext>
+      <GenderButton />
+    </LocaleContext>,
+  );
+
+  expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  <button>
+    3
+  </button>
+</DocumentFragment>
+`);
+
+  await act(async () => {
+    fireEvent.click(screen.getByRole('button'));
+  });
+  await waitFor(() => expect(screen.getByRole('button').textContent).toBe('2'));
+
+  expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  <button>
+    2
+  </button>
+</DocumentFragment>
+`);
 });

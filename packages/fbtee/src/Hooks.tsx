@@ -87,7 +87,7 @@ export type FbtImpressionOptions = {
 export type Hooks = Partial<{
   errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
   getFbsResult: ResolverFn<PureStringResult>;
-  getFbtResult: ResolverFn<FbtResult | string>;
+  getFbtResult: ResolverFn<FbtResult>;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
 }>;
@@ -115,7 +115,7 @@ export default {
     contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
-  ): FbtResult | string {
+  ): FbtResult {
     const { getFbtResult } = _registrations;
     if (!getFbtResult) {
       throw new Error(`Hooks: 'getFbtResult' is not registered`);

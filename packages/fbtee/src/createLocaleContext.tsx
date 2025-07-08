@@ -5,14 +5,20 @@ import {
   ReactNode,
   use,
   useActionState,
+  useCallback,
+  useState,
 } from 'react';
 import setupLocaleContext, {
+  Gender,
   LocaleContextProps,
 } from './setupLocaleContext.tsx';
+import IntlVariations from './IntlVariations.tsx';
 
 export type LocaleContext = {
+  gender: IntlVariations;
   locale: string;
   localeChangeIsPending: boolean;
+  setGender: (gender: Gender) => void;
   setLocale: (locale: string) => void;
 };
 
@@ -26,7 +32,12 @@ export function useLocaleContext(): LocaleContext {
 }
 
 export default function createLocaleContext(props: LocaleContextProps) {
-  const { getLocale, setLocale } = setupLocaleContext(props);
+  const {
+    gender: initialGender,
+    getLocale,
+    setGender,
+    setLocale,
+  } = setupLocaleContext(props);
 
   return function LocaleContext({ children }: { children: ReactNode }) {
     const [locale, _setLocale, localeChangeIsPending] = useActionState(
@@ -39,15 +50,29 @@ export default function createLocaleContext(props: LocaleContextProps) {
       getLocale(),
     );
 
+    const [gender, _setGender] = useState(initialGender);
+    const changeGender = useCallback(
+      (newGender: Gender) => {
+        if (newGender !== gender) {
+          const gender = setGender(newGender);
+          _setGender(gender);
+        }
+        return newGender;
+      },
+      [gender],
+    );
+
     return (
       <Context
         value={{
+          gender,
           locale,
           localeChangeIsPending,
+          setGender: changeGender,
           setLocale: _setLocale,
         }}
       >
-        <Fragment key={locale}>{children}</Fragment>
+        <Fragment key={`${locale}-${gender}`}>{children}</Fragment>
       </Context>
     );
   };

@@ -2,7 +2,19 @@
 
 _**fbtee** (Far Better Translations, Extended Edition) is an internationalization framework for JavaScript & React designed to be **powerful**, **flexible**, and **intuitive**._
 
-## Why **fbtee**?
+fbtee features inline translations and supports dynamic content, pluralization, lists, and more. It is built on top of Facebook's `fbt` library, which has been used in production for over a decade, serving billions of users.
+
+```tsx
+const Greeting = ({ name }) => (
+  <div>
+    <fbt desc="Greeting">
+      Hello, <Name name={name} />!
+    </fbt>
+  </div>
+);
+```
+
+## Why choose **fbtee**?
 
 - **Inline translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
 - **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage, serving billions of users and two years of production usage in [Athena Crisis](https://athenacrisis.com).
@@ -226,6 +238,41 @@ if (getLocale() === 'en_US') {
 ```
 
 A full example of using `setupLocaleContext` to build your own `LocaleContext` abstraction can be found in the [Athena Crisis](https://github.com/nkzw-tech/athena-crisis/blob/main/hera/i18n/LocaleContext.tsx#L41) repository.
+
+### Gender Variations
+
+`createLocaleContext` and `setupLocaleContext` also support setting the user's gender:
+
+```tsx
+createLocaleContext({
+  …
+  gender: 'female', // 'male', 'female' or 'unknown' are supported.
+});
+```
+
+If you need to adjust the user's gender dynamically, you can use the `setGender` function provided by the `useLocaleContext` hook:
+
+```tsx
+import { useLocaleContext } from 'fbtee';
+
+const GenderSelector = () => {
+  const { gender, setGender } = useLocaleContext();
+
+  return (
+    <div>
+      <button onClick={() => setGender('male')}>
+        <fbt desc="Male gender">Male</fbt>
+      </button>
+      <button onClick={() => setGender('female')}>
+        <fbt desc="Female gender">Female</fbt>
+      </button>
+      <button onClick={() => setGender('unknown')}>
+        <fbt desc="Unknown gender">Unknown</fbt>
+      </button>
+    </div>
+  );
+};
+```
 
 #### Full Customization
 
@@ -499,6 +546,62 @@ By default, **fbtee** outputs the generated translations in `src/translations`. 
 ```
 
 After generating the translation files, your app is ready to display translated content in other languages. Since the `src/translations` folder is auto-generated, it should be ignored by version control and be part of your build process.
+
+## Setting the initial locale
+
+If you know the user's locale ahead of time, you can set it when creating the `LocaleContext` by passing the locale as the first item in the `clientLocales` array:
+
+```tsx
+// Read the user locale from localStorage etc.
+const userLocale = localStorage.getItem('locale');
+const LocaleContext = createLocaleContext({
+  availableLanguages,
+  clientLocales: [userLocale, navigator.language, ...navigator.languages],
+  loadLocale,
+});
+```
+
+Note that if you are picking the locale ahead of time like this, you need to manually load the translations. This is because the `loadLocale` function is only called when the locale changes, and not when the context is first created. This gives you full control over your app's startup:
+
+```tsx
+const loadLocale = async (locale: string) => {
+  if (locale === 'ja_JP') {
+    return (await import('./translations/ja_JP.json')).default.ja_JP;
+  }
+  return {};
+};
+
+const translations = {
+  [userLocale]: await loadLocale(userLocale),
+};
+
+const LocaleContext = createLocaleContext({
+  availableLanguages,
+  clientLocales: [userLocale, navigator.language, ...navigator.languages],
+  loadLocale,
+  translations,
+});
+```
+
+If you have to wait for data from your server to determine the user's locale, you can use the `setLocale` function provided by `useLocaleContext` to set the locale after the initial render:
+
+```tsx
+import { useLocaleContext } from 'fbtee';
+
+const Root = () => {
+  // Fetch the locale from the server.
+  const userLocale = useUserLocale();
+  const { locale, setLocale } = useLocaleContext();
+
+  useEffect(() => {
+    if (locale !== userLocale) {
+      setLocale(userLocale);
+    }
+  }, [locale, setLocale, userLocale]);
+
+  return children;
+};
+```
 
 ## ESLint Plugin
 

@@ -5,3 +5,6 @@ example/src/translatedFbts.json
 packages/*/lib/
 packages/fbtee/lib-tmp/
 pnpm-lock.yaml
+website/.enum_manifest.json
+website/dist/
+website/source_strings.json

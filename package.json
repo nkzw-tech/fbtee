@@ -1,12 +1,12 @@
 {
   "name": "@nkzw/fbtee-internal",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build && pnpm install && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && cd example && pnpm fbtee:all",
+    "build:all": "pnpm -r build && pnpm install && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && (cd example && pnpm fbtee:all) && (cd website && pnpm fbtee collect && pnpm fbtee translate)",
     "clean": "rm -rf packages/*/lib packages/fbtee/lib-tmp; cd example pnpm clean",
     "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "dev": "cd example && pnpm fbtee:all && pnpm dev",
@@ -55,6 +55,7 @@
     "prettier": "^3.6.2",
     "prettier-2": "npm:prettier@^2.8.8",
     "prettier-plugin-packagejson": "^2.5.17",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "react-dom": "^19.1.0",
     "tsdown": "^0.12.9",
     "typescript": "^5.8.3"

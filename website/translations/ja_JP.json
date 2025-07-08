@@ -1,0 +1,1458 @@
+{
+  "fb-locale": "ja_JP",
+  "translations": {
+    "YXGG6IGB2IcE4Azra7zpCw==": {
+      "description": "fbtee tagline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JavaScript & React 向けの i18n フレームワーク。{=powerful}・{=flexible}・{=intuitive} を目指して設計。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "mKv/nNNGtziUDs2ICowcZA==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "パワフル",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Y8tdcisumiuBSWlTlz1ToQ==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "フレキシブル",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "a3ruXfPRZE9V0OoG50TZsA==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "直感的",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pOl7oSFgfjVk20HI5NuAaA==": {
+      "description": "Get started button label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Get Started",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MQD9HBoX6W0fWQVvw/tYqw==": {
+      "description": "Button label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub で見る",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "DYwuzHoJKPdWasr4FKf8+Q==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "なぜ {=fbtee} なの？",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "DIiWZ+8sgakov9aJHRmWSQ==": {
+      "description": "In the phrase: \"Why choose {=fbtee}?\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "um7IOz7hqqi2EOts+SPEWw==": {
+      "description": "Tagline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "アプリと一緒にスケールするモダンな国際化。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "r332atz0zpj1tPYHA9bxLg==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "インライン翻訳",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xVlfN3WYeu1Z0UX4Co25jg==": {
+      "description": "Inline translations description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "翻訳を直接コードに埋め込もう。翻訳キー管理や t() ラップは不要。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1s2Ppp4gtg5utziIfKWtug==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "本番実績あり",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "C+fvuSEWW3TxUfTPTEoFEA==": {
+      "description": "Proven in production description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook の fbt ベース。10 年以上の本番運用で数十億ユーザーに配信。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9Qp9rwPj9B1F36GjFZqbMQ==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "最適化パフォーマンス",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xH73MTwKNro8J46F2hG8jg==": {
+      "description": "Optimized performance description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "翻訳を IR にコンパイルして抽出し、Runtime 出力をチューニング。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "hXmKlD2ro3KLyZIwIUvTXg==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Easy Setup",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "K2NyOS9g4YXJmAVF+9J/4A==": {
+      "description": "Easy setup description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Babel や Vite とすぐにインテグレーションして即スタート可能。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CetlqOO8fxjko5CtDavVnw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee} を体験",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f3OCQH2RlTCTxEEnQq01sQ==": {
+      "description": "In the phrase: \"{=fbtee} in Action\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "uWlp6qxnGSj1kcOcgCAs5A==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "はじめに",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3MJoDuZ8IyRaQfkP3dVIwQ==": {
+      "description": "Getting started description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee} を始める方法を選ぼう。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "X0lAzogS5rVBbC+bH9rx2A==": {
+      "description": "In the phrase: \"Choose your preferred way to start with {=fbtee}.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "tWliywddMrGpPnQl/Lmzkg==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "クイックスタートテンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "B8nYsgdtEH5ECx+d/uwAkg==": {
+      "description": "Quick start templates description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "セットアップ不要！{=fbtee} プリセット済みテンプレートですぐ使える：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "HOI4qkpGnEfVV7IWRVVhMw==": {
+      "description": "In the phrase: \"Skip the setup hassle! These templates come with {=fbtee} pre-configured and ready to go:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "DMCQ1tp7mc+EZ55+71TdUA==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Web アプリ テンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T45ZbBruXjGB/by5xOR7ow==": {
+      "description": "Web app template description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite + React のフル Web アプリ構成",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+cCnj8bOzMV+WbaBvtN0sg==": {
+      "description": "Use template link",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "テンプレートを使う",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "gdAiCCpPwzIulcmoDbooEg==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo アプリ テンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nlLGLYi/l3Pbrx7034dXOQ==": {
+      "description": "Expo app template description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React Native + Expo 構成のモバイルアプリ",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "fXyZo7XCtl8HVonWK1x+1w==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Manual Installation",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "y8rvXwPvHELbND3UCqRpYA==": {
+      "description": "Manual installation description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=Requirements:} Node 22+、React 19+（React 使用時）",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9NsZwnoMGl0KPYnzc3UAVg==": {
+      "description": "In the phrase: \"{=Requirements:} Node 22+, React 19+ (if using React)\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "必須環境:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6rsQ77+auQMnifojc8qiVA==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Framework Setup",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "07f/GCPfC7XR1j5YaGIaTA==": {
+      "description": "Vite setup instructions",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite React プラグインを install し、vite.config.ts を configure：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "SVLfBGjHRthMP9kussescw==": {
+      "description": "Next.js setup instructions",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "プロジェクトルートに babel.config.js を作成：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xhXGYhQ6K+V71ba06GgzvQ==": {
+      "description": "Next.js tip",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=Next.js Tip:} 完全なセットアップ例は {=Next.js App fbtee Example} を参照。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "RH9xi/IVFMZpHZLP6++8NA==": {
+      "description": "In the phrase: \"{=Next.js Tip:} Check out the {=Next.js App fbtee Example} for a complete setup with App Router and Server Components.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js ヒント:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Lvi1n/ZUfNDAlHZisYsrxA==": {
+      "description": "In the phrase: \"{=Next.js Tip:} Check out the {=Next.js App fbtee Example} for a complete setup with App Router and Server Components.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js アプリ fbtee サンプル",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "URg1ydfsdm1CkjJlOwYNtQ==": {
+      "description": "Babel setup instructions",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "カスタム Babel ではプリセットを .babelrc か babel.config.js に追加：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "z1GmksAdwHDXNleFA8iZzA==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Usage Guide",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1cBQ72agh5WU3Wcbn6yKmw==": {
+      "description": "Usage guide description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee} を使いこなすためのすべて。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "q7pMKLLXTWuIwSLQL4hhCQ==": {
+      "description": "In the phrase: \"Everything you need to know to use {=fbtee} effectively.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "jRRPiI3khD9ur0/Cxq4E8w==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "App Setup",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VYsxlkc3OMRSmXhpZzTEtg==": {
+      "description": "App setup description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee} ランタイムをセットアップしてアプリのロケールを管理。まずは TypeScript サポートを追加：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZT8AKH4PUS59Z0KzAYXUBA==": {
+      "description": "In the phrase: \"Set up {=fbtee}'s runtime to manage locales in your app. First, add TypeScript support:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AwoXXd9GjL99rG5VteeyiQ==": {
+      "description": "LocaleContext setup description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "続いて LocaleContext を作成して翻訳を管理：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+XjHppHVcJzydgHiea8OQw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Usage",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KQ234chDORKpAE9Wi+szdg==": {
+      "description": "Usage description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "翻訳対象の文字列は {=<fbt>} または {=fbt()} で必ずラップ：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f4FO5zzwHv3uKZi7tXH9kg==": {
+      "description": "In the phrase: \"All translatable strings must be wrapped with {=<fbt>} or {=fbt()}:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "OdKGx+2gWpMb8ODVaVlIcA==": {
+      "description": "In the phrase: \"All translatable strings must be wrapped with {=<fbt>} or {=fbt()}:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pi/vl6o/HrM10sZlafe75g==": {
+      "description": "Before example label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "変更前",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "yWcskzN9tcKQQS0gizrTIw==": {
+      "description": "After example label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "変更後",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MGhQMvfdx7YOT7HsLPuE1Q==": {
+      "description": "Usage note",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=Note:} {=desc} 属性は必須で翻訳者にコンテキストを提供します。{=<fbt>} は Babel プリセットで自動インポートされます。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Ji+ZSAy6pvCaeU8xcEz5CA==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "注意:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pJijCqsdiVqbruv5Y9Mprw==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "desc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "uTCnEkcojX0/2eOXCjHzhg==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3MmQF/3KhnTBURnswKgLKw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "動的コンテンツ",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VCAdOF1lfa4ODfE+xMVlAA==": {
+      "description": "Dynamic content description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=<fbt:param>} で変数・React コンポーネントを挿入：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Pmtg41ZMoBZWDO8wN3I4yA==": {
+      "description": "In the phrase: \"Use {=<fbt:param>} to insert variables and React components:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:param>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "4r+UzWLdG09uofFvGnED6Q==": {
+      "description": "Tab label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "パラメータ",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "7M4hsn9/uv67UiYw9F5z7w==": {
+      "description": "Tab label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "コンポーネント",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XDevh+92VUnyXJEVQ9dJtg==": {
+      "description": "Components explanation",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React コンポーネントは自動で {=<fbt:param>} に変換：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "52s1Ppy4jJL+I3dDXWytgA==": {
+      "description": "In the phrase: \"React components are automatically converted to {=<fbt:param>}:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:param>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "JeqqcSUwdTueCm92kJgw9Q==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "リスト & 接続詞",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CovVNe0jaw6i3lRS+kOW1A==": {
+      "description": "Lists description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=<fbt:list>} で文法的に正しいリストを生成：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "/HLRFgU8HIN5JxSyOta0uA==": {
+      "description": "In the phrase: \"{=<fbt:list>} handles grammatical lists with proper conjunctions:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:list>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AixVh4g7kZ3Gu9a7bL7ppQ==": {
+      "description": "List function description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React 外でも list() が使える：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "cnIUroypfAyebUf/04Ha0A==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "複数形",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "4HQ3+2tr8I58NE+PWec8YA==": {
+      "description": "Pluralization description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=<fbt:plural>} で単数・複数を処理：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ULAElsCi6M6dmSlU52A4KA==": {
+      "description": "In the phrase: \"Handle singular and plural forms with {=<fbt:plural>} :\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:plural>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "enkZiMwkF3rr6kps7uLNHQ==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "代名詞",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "yjp0PW/j2B3thCAeKAqH4g==": {
+      "description": "Pronouns description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=<fbt:pronoun>} で性別代名詞を処理：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "OtqDxJYwKDOTjv2BYJiYHg==": {
+      "description": "In the phrase: \"Handle gendered pronouns with {=<fbt:pronoun>} :\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:pronoun>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9pCIk6EoRVD84mA+YLXt7A==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "プレーンテキスト利用",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "qI5wrwfeI3KD+OBhrmScqA==": {
+      "description": "Plain text usage description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "HTML 属性など JSX 以外では {=fbs()} を使おう：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AU3Be48rTUvvqx6WgXr4Lw==": {
+      "description": "In the phrase: \"For non-JSX contexts like HTML attributes, use {=fbs()}:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbs()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "wTsBxwyJpkYoQhLh/ugkyw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "翻訳ワークフロー",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "34jivRi0nKqlFsByjvKu9A==": {
+      "description": "Step number and description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "1. 文字列を抽出",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nrttT+FIp/qMJjX14M+diQ==": {
+      "description": "Extract strings explanation",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "翻訳対象文字列を含む {=source_strings.json} を生成",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "cLjyPjzy3AtOb54P8vy+ng==": {
+      "description": "In the phrase: \"Creates {=source_strings.json} with all translatable strings\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "source_strings.json",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "APA77x+uC6gRaNXu1Qw+Uw==": {
+      "description": "Step number and description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "2. 翻訳ファイルを作成",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f3jnCmXbVRrVARksV9Aw+Q==": {
+      "description": "Translation files instructions",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=source_strings.json} を翻訳サービスにアップロード、または手動でファイル生成：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ocboKMkJc1a7JA2HowcYFQ==": {
+      "description": "In the phrase: \"Upload {=source_strings.json} to your translation service, or create files manually:\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "source_strings.json",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KPF2LYJFuIRu8N9gkLA84A==": {
+      "description": "Step number and description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "3. 翻訳をコンパイル",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6MeES0vCXxbYK/IeG//8Ug==": {
+      "description": "Compile translations explanation",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=src/translations/} に最適化翻訳を生成",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AKX9Jat0dpSM8EKeKmWeLg==": {
+      "description": "In the phrase: \"Generates optimized translation files in {=src/translations/}\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "src/translations/",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "A8CQ6/neJ7fj5yPKO4iN0w==": {
+      "description": "Step number and description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "4. .gitignore に追加",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IqkziQ3d6Q1/kmnNpSdNcQ==": {
+      "description": "Step number and description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "5. カスタムスクリプト（任意）",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CqsG1fFHuvzzEmZ/QuQPXQ==": {
+      "description": "Custom scripts instructions",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "package.json にカスタムコマンドを追加：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "u1l+padxcuOpYCLADHjUdQ==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ロケール管理",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "thOW5VrWzZ+FmCuMPwRckw==": {
+      "description": "Locale management description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "コンポーネントでロケールにアクセス & 変更：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1ELjVsSsR+y3iUna1gK4sw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESLint プラグイン",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "/1k7Maf2J9SWX2C2l4NCJQ==": {
+      "description": "ESLint plugin description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "よくあるミスを検出する ESLint プラグインを install：",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QIKC0NXBZPcVoWeqCnAxqA==": {
+      "description": "Tab label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "推奨",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xigUMASeemQ0bZMJ1MkTGw==": {
+      "description": "Tab label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "厳格",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "UGcRnemPDzaw+kkUwOfJUA==": {
+      "description": "Tab label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "カスタム",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KaK2lUyhF1plm8QbaklvFw==": {
+      "description": "Strict configuration description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "未翻訳文字列があるとエラーになります。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9gmOpqn2VjoCiKv69PoViw==": {
+      "description": "Headline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee が優れている理由",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "mljjlBaFU7/a0alt8QYBTw==": {
+      "description": "Better about fbtee description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook が開発し、ゼロからリライト。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "O4dWPo3ZP2Le5kFxOBp5fg==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "かんたん Setup",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "2T8pLseRrxvsEYAQZWnKQQ==": {
+      "description": "Easier setup description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite・Next.js・Expo とシームレスに連携。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZU4cF/6HC+9uU8j2zPMYJw==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "静的 Typing",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3Lme3LwrPYIJ13kApHX5zw==": {
+      "description": "Statically typed description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "TypeScript 完全対応。コンパイラ検証 & ESLint プラグイン付き。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "z64a79xidr/j2RPVZXNgxQ==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React 互換強化",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "tQGcI/JqTXLW7BmX0vV90A==": {
+      "description": "React compatibility description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Fragments・Server Components など最新パターン対応。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bclZ6HQ/qt7YnodyNeQEhA==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "機能強化",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1+qnimygwe1q6HM2Eij1Zg==": {
+      "description": "Enhanced features description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "intlList を修正し、関数型 <fbt:list> としてエクスポート。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T9g23EMIfyPFcMkYXYWh3A==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "モダンコードベース",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "92Ftcxxod+ZPVI7Zx/7Acg==": {
+      "description": "Modernized codebase description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "TypeScript + ESM で刷新、最新 JS 標準に準拠。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IA4h9W2Xt60cOsujxn9Cgg==": {
+      "description": "Feature title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ツール更新",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "hcCHpPR8LpIq4Fn6EQu/VA==": {
+      "description": "Updated tooling description",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "pnpm・Vite・esbuild で高速 & 効率的な開発。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pBJxNIfBaxv6/UMhf+aJEA==": {
+      "description": "Tagline",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Far Better Translations, Extended Edition",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nfAmxL08ysZoiBF4jhamSQ==": {
+      "description": "Footer section title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "リソース",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "vR9BuJzB+B7s3dCVypDlww==": {
+      "description": "Link text",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js サンプル",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QYKnZ4YgDLWkUdq7cpQkhQ==": {
+      "description": "Footer section title",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "テンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TIuY8tk+15dcL3ZAAQP2wg==": {
+      "description": "Link text",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Web アプリ テンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "2xjuG69JR0hAj0T9tzkDFA==": {
+      "description": "Link text",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo アプリ テンプレート",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bu70QyRYJVrMa600vgiEuw==": {
+      "description": "Footer credit",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook が開発 • {=Nakazawa Tech} がメンテナンス",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VNNXf1SGDLLfoxNjWNMqrg==": {
+      "description": "In the phrase: \"Originally created by Facebook • Maintained by {=Nakazawa Tech}\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Nakazawa Tech",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3p2EdDkpFI0G0wt2Q/55Aw==": {
+      "description": "Button label",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub で Star",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{number}+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<{number}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items} • {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}, {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} と {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} または {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} • {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6/ZbJcEx19aXKls64qknkg==": {
+      "description": "Locale switcher button",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "言語切替",
+          "variations": {}
+        }
+      ],
+      "types": []
+    }
+  }
+}

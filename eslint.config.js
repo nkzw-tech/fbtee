@@ -6,7 +6,12 @@ import workspaces from 'eslint-plugin-workspaces';
 export default [
   ...nkzw,
   {
-    ignores: ['packages/*/lib', 'packages/fbtee/lib-tmp/'],
+    ignores: [
+      'packages/*/lib',
+      'packages/fbtee/lib-tmp/',
+      'website/dist/',
+      'website/vite.config.ts.timestamp-*',
+    ],
   },
   {
     plugins: { workspaces },
@@ -20,6 +25,7 @@ export default [
             './example/vite.config.ts',
             './jest-preprocessor.js',
             './packages/fbtee/babel-build.config.js',
+            './website/vite.config.ts',
             '**/__tests__/**/*.tsx',
             'eslint.config.js',
           ],
