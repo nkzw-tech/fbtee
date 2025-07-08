@@ -18,6 +18,12 @@ export type Substitutions = {
 };
 
 /**
+ * Placeholder character for a token value within translation pattern strings
+ * using the "End of Transmission Block" unicode character.
+ */
+const TOKEN_VALUE_PLACEHOLDER_CHAR = '\u0017';
+
+/**
  * Does the token substitution fbt() but without the string lookup.
  * Used for in-place substitutions in translation mode.
  */
@@ -31,28 +37,28 @@ export default function substituteTokens(
 
   // Splice in the arguments while keeping rich object ones separate.
   const objectPieces: Array<FbtContentItem> = [];
-  const argNames = [];
   let index = 0;
   const stringPieces = template
     .replace(
       parameterRegexp,
       (_match: string, name: string, punctuation: string): string => {
         let argument = args[name];
+        // If token value is a React component.
         if (argument != null && typeof argument === 'object') {
+          // Add an implicit "key" property to help React keep track of each array item.
           if ('key' in argument && argument.key === null) {
             argument = { ...argument, key: `$fbtee-${name}-${index++}$` };
           }
+          // Save the token value into objectPieces and replace its string with a placeholder.
           objectPieces.push(argument);
-          argNames.push(name);
-          // End of Transmission Block sentinel marker
-          return '\u0017' + punctuation;
+          return TOKEN_VALUE_PLACEHOLDER_CHAR + punctuation;
         } else if (argument == null) {
           return '{' + name + '}' + punctuation;
         }
         return String(argument) + dedupeStops(String(argument), punctuation);
       },
     )
-    .split('\u0017')
+    .split(TOKEN_VALUE_PLACEHOLDER_CHAR)
     .map(applyPhonologicalRules);
 
   if (stringPieces.length === 1) {

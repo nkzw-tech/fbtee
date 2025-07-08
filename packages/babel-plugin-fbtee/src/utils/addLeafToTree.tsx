@@ -1,4 +1,5 @@
 import invariant from 'invariant';
+import { FbtTableKey } from '../Types.ts';
 
 /**
  * Adds a leaf value to a given tree-like object, using the given list of keys (i.e. path).
@@ -62,7 +63,7 @@ import invariant from 'invariant';
  */
 export default function addLeafToTree<V, T extends Record<string, unknown>>(
   tree: T,
-  keys: ReadonlyArray<string | number>,
+  keys: ReadonlyArray<FbtTableKey>,
   leaf: V,
 ) {
   let branch = tree;
