@@ -149,7 +149,14 @@ export default function Example() {
                 </fbt:param>
                 has shared
                 <a className="neatoLink" href="#">
-                  <fbt:plural count={ex1Count} many="photos" showCount="ifMany">
+                  <fbt:plural
+                    count={ex1Count}
+                    few="a few photos"
+                    many="photos"
+                    showCount="ifMany"
+                    two="two photos"
+                    zero="zero photos"
+                  >
                     a photo
                   </fbt:plural>
                 </a>

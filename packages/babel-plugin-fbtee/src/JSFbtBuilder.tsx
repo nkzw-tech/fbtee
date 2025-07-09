@@ -25,7 +25,7 @@ import {
   NUMBER_ANY,
   SUBJECT,
 } from './translate/IntlVariations.tsx';
-import type { IntlNumberVariations as IntlNumberVariationsType } from './translate/IntlVariations.tsx';
+import type { IntlVariations } from './translate/IntlVariations.tsx';
 
 /**
  * Helper class to assemble the JSFBT table data.
@@ -52,7 +52,7 @@ export default class JSFbtBuilder {
     [pluralsArgCode: string]:
       | typeof EXACTLY_ONE
       | typeof NUMBER_ANY
-      | IntlNumberVariationsType;
+      | IntlVariations;
   };
   /**
    * Map of fbt:pronoun at the current recursion level of `_getStringVariationCombinations()`

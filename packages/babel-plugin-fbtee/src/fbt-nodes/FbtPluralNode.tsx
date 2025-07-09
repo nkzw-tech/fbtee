@@ -28,8 +28,8 @@ import {
   EXACTLY_ONE,
   NUMBER_ANY,
   IntlNumberVariations,
+  IntlVariations,
 } from '../translate/IntlVariations.tsx';
-import type { IntlNumberVariations as IntlNumberVariationsType } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { NumberStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
@@ -38,16 +38,16 @@ import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 type Options = {
   // Represents the number used for determining the plural case at runtime
   count: CallExpressionArg;
-  few?: string | null; // text to show when count is FEW (e.g., 2-4 in Russian)
-  many?: string | null; // text to show when count>1 (existing behavior)
+  few?: string | null; // text to show when count is few (e.g., 2-4 in Russian)
+  many?: string | null; // text to show when count > 1 (existing behavior)
   name: string | null; // token name,
   // If `yes`, show the `count` number as a prefix of the current plural text
   // If `ifMany`, behaves as `yes` when the count value is greater than 1
   // Else, `no` to hide the `count` number
   showCount: keyof typeof ShowCountKeys;
-  two?: string | null; // text to show when count is TWO (e.g., exactly 2 in Arabic)
+  two?: string | null; // text to show when count is two (e.g., exactly 2 in Arabic)
   value?: CallExpressionArg | null; // optional value to replace token (rather than count)
-  zero?: string | null; // text to show when count is ZERO (e.g., 0 in Arabic)
+  zero?: string | null; // text to show when count is zero (e.g., 0 in Arabic)
 };
 
 /**
@@ -130,32 +130,6 @@ export default class FbtPluralNode extends FbtNode<
     scenario: {
       anyNumber: () => T;
       exactlyOne: () => T;
-    },
-  ): T {
-    const svArg = argsMap.get(this);
-    const svArgValue = nullthrows(svArg.value);
-
-    switch (svArgValue) {
-      case EXACTLY_ONE: {
-        return scenario.exactlyOne();
-      }
-      case NUMBER_ANY: {
-        return scenario.anyNumber();
-      }
-      default:
-        invariant(
-          false,
-          'Unsupported string variation value: %s',
-          varDump(svArgValue),
-        );
-    }
-  }
-
-  _branchByNumberVariationExtended<T>(
-    argsMap: StringVariationArgsMap,
-    scenario: {
-      anyNumber: () => T;
-      exactlyOne: () => T;
       few?: () => T;
       two?: () => T;
       zero?: () => T;
@@ -194,97 +168,39 @@ export default class FbtPluralNode extends FbtNode<
   }
 
   override getTokenName(argsMap: StringVariationArgsMap): string | null {
-    // Use original behavior when no new CLDR props are provided
-    if (!this.options.zero && !this.options.two && !this.options.few) {
-      return this._branchByNumberVariation(argsMap, {
-        anyNumber: () => {
-          return this.options.showCount !== ShowCountKeys.no
-            ? this._getStaticTokenName()
-            : null;
-        },
-        exactlyOne: () => null,
-      });
-    }
-
-    // Use extended behavior when new CLDR props are provided
-    return this._branchByNumberVariationExtended(argsMap, {
+    return this._branchByNumberVariation(argsMap, {
       anyNumber: () => {
         return this.options.showCount !== ShowCountKeys.no
           ? this._getStaticTokenName()
           : null;
       },
       exactlyOne: () => null,
-      few: () => {
-        return this.options.showCount !== ShowCountKeys.no
-          ? this._getStaticTokenName()
-          : null;
-      },
-      two: () => {
-        return this.options.showCount !== ShowCountKeys.no
-          ? this._getStaticTokenName()
-          : null;
-      },
-      zero: () => {
-        return this.options.showCount !== ShowCountKeys.no
-          ? this._getStaticTokenName()
-          : null;
-      },
+      few: () => null,
+      two: () => null,
+      zero: () => null,
     });
   }
 
   override getText(argsMap: StringVariationArgsMap): string {
     try {
       const { showCount } = this.options;
-      const tokenPattern =
-        showCount !== ShowCountKeys.no
-          ? tokenNameToTextPattern(this._getStaticTokenName()) + ' '
-          : '';
+      const anyNumber = () => {
+        const many = this.options.many ?? this._getSingularText() + 's';
+        return (
+          (showCount !== ShowCountKeys.no
+            ? tokenNameToTextPattern(this._getStaticTokenName()) + ' '
+            : '') + many
+        );
+      };
 
-      // Use the original simple branching when no new CLDR props are provided
-      if (!this.options.zero && !this.options.two && !this.options.few) {
-        return this._branchByNumberVariation(argsMap, {
-          anyNumber: () => {
-            const many = this.options.many ?? this._getSingularText() + 's';
-            return showCount !== ShowCountKeys.no
-              ? tokenNameToTextPattern(this._getStaticTokenName()) + ' ' + many
-              : many;
-          },
-          exactlyOne: () =>
-            (showCount === ShowCountKeys.yes ? '1 ' : '') +
-            this._getSingularText(),
-        });
-      }
-
-      // Use the extended branching when new CLDR props are provided
-      return this._branchByNumberVariationExtended(argsMap, {
-        anyNumber: () => {
-          const many = this.options.many ?? this._getSingularText() + 's';
-          return tokenPattern + many;
-        },
+      return this._branchByNumberVariation(argsMap, {
+        anyNumber,
         exactlyOne: () =>
           (showCount === ShowCountKeys.yes ? '1 ' : '') +
           this._getSingularText(),
-        few: () => {
-          const few =
-            this.options.few ??
-            this.options.many ??
-            this._getSingularText() + 's';
-          return tokenPattern + few;
-        },
-        two: () => {
-          const two =
-            this.options.two ??
-            this.options.many ??
-            this._getSingularText() + 's';
-          return tokenPattern + two;
-        },
-        zero: () => {
-          const zero =
-            this.options.zero ??
-            this.options.many ??
-            this._getSingularText() + 's';
-          return tokenPattern + zero;
-        },
+        few: () => this.options.few ?? anyNumber(),
+        two: () => this.options.two ?? anyNumber(),
+        zero: () => this.options.zero ?? anyNumber(),
       });
     } catch (error) {
       throw errorAt(this.node, error);
@@ -302,22 +218,10 @@ export default class FbtPluralNode extends FbtNode<
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<NumberStringVariationArg> {
-    // Use original behavior when no new CLDR props are provided
-    if (!this.options.zero && !this.options.two && !this.options.few) {
-      return [
-        new NumberStringVariationArg(this, this.options.count, [
-          NUMBER_ANY,
-          EXACTLY_ONE,
-        ]),
-      ];
-    }
-
-    // Use extended behavior when new CLDR props are provided
     const candidateValues: Array<
-      typeof NUMBER_ANY | typeof EXACTLY_ONE | IntlNumberVariationsType
+      typeof NUMBER_ANY | typeof EXACTLY_ONE | IntlVariations
     > = [NUMBER_ANY];
 
-    // Add CLDR variations based on provided props
     if (this.options.zero != null) {
       candidateValues.push(IntlNumberVariations.ZERO);
     }
@@ -328,7 +232,6 @@ export default class FbtPluralNode extends FbtNode<
       candidateValues.push(IntlNumberVariations.FEW);
     }
 
-    // Always add EXACTLY_ONE last to maintain original order
     candidateValues.push(EXACTLY_ONE);
 
     return [
