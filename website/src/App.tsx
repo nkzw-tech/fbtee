@@ -37,6 +37,7 @@ import {
 } from 'lucide-react';
 import Code from './components/Code.tsx';
 import cx from './lib/cx.tsx';
+import { VStack } from '@nkzw/stack';
 
 const Github = createLucideIcon('github', [
   [
@@ -74,12 +75,12 @@ const LocaleSwitcher = () => {
           <fbt desc="Locale switcher button">Change Language</fbt>
         </button>
       </Button>
-      <div
-        className="pointer-events-none flex absolute w-screen h-screen items-center justify-center bg-transparent"
+      <Card
+        className="self-center justify-self-center bg-white dark:bg-black border-purple-100 hover:border-purple-200 shadow hover:shadow-lg transition-all group"
         id="locale-switcher"
         popover="auto"
       >
-        <Card className="pointer-events-auto self-center flex flex-col p-6 gap-4 bg-white dark:bg-black border-purple-100 hover:border-purple-200 shadow hover:shadow-lg transition-all group">
+        <VStack alignCenter center gap={12} padding={16}>
           {[...AvailableLanguages.entries()].map(([locale, name]) => (
             <Button
               asChild
@@ -94,7 +95,7 @@ const LocaleSwitcher = () => {
               variant="outline"
             >
               <a
-                className="cursor-pointer"
+                className="flex-1 w-full p-2 cursor-pointer"
                 onClick={() =>
                   startTransition(() => {
                     setLocale(locale);
@@ -106,8 +107,8 @@ const LocaleSwitcher = () => {
               </a>
             </Button>
           ))}
-        </Card>
-      </div>
+        </VStack>
+      </Card>
     </>
   );
 };

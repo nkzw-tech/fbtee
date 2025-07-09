@@ -155,3 +155,22 @@ code {
 ::backdrop {
   backdrop-filter: blur(4px);
 }
+
+[popover] {
+  transition:
+    opacity 300ms ease-in-out,
+    display 300ms ease-out allow-discrete,
+    overlay 300ms ease-out allow-discrete;
+  opacity: 0;
+}
+
+[popover]:popover-open {
+  opacity: 1;
+  display: block;
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+  }
+}
