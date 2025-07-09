@@ -2851,7 +2851,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `Invalid option "whatisthis". Only allowed: many, name, showCount, value, count`,
+    throws: `Invalid option "whatisthis". Only allowed: few, many, name, showCount, two, value, zero, count`,
   },
 
   'should throw when a fbt.param is nested inside a fbt.name': {

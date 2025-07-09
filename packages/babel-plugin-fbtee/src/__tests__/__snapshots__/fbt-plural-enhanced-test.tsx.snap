@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Enhanced fbt:plural API with CLDR categories should fallback to many when CLDR categories are not provided 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [{ singular: true, token: "count", type: 2 }],
+      t: {
+        20: {
+          desc: "Partial CLDR support",
+          text: "{count} некоторые элементы",
+        },
+        "*": { desc: "Partial CLDR support", text: "{count} много элементов" },
+        _1: { desc: "Partial CLDR support", text: "1 один элемент" },
+      },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._plural(count, "count")]
+);
+
+`;
+
+exports[`Enhanced fbt:plural API with CLDR categories should maintain backward compatibility with just many prop 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [{ singular: true, token: "itemCount", type: 2 }],
+      t: {
+        "*": { desc: "Simple English plural", text: "{itemCount} items" },
+        _1: { desc: "Simple English plural", text: "1 item" },
+      },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._plural(itemCount, "itemCount")]
+);
+
+`;
+
+exports[`Enhanced fbt:plural API with CLDR categories should support Arabic plurals with zero, two, and few props 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [{ singular: true, token: "photoCount", type: 2 }],
+      t: {
+        8: { desc: "Arabic photo count", text: "{photoCount} صورتان" },
+        16: { desc: "Arabic photo count", text: "{photoCount} لا توجد صور" },
+        20: { desc: "Arabic photo count", text: "{photoCount} صور" },
+        "*": { desc: "Arabic photo count", text: "{photoCount} صورة" },
+        _1: { desc: "Arabic photo count", text: "1 صورة واحدة" },
+      },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._plural(photoCount, "photoCount")]
+);
+
+`;
+
+exports[`Enhanced fbt:plural API with CLDR categories should support Hebrew plurals with two prop 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [{ singular: true, token: "bookCount", type: 2 }],
+      t: {
+        8: { desc: "Hebrew book count", text: "{bookCount} שני ספרים" },
+        "*": { desc: "Hebrew book count", text: "{bookCount} ספרים" },
+        _1: { desc: "Hebrew book count", text: "1 ספר אחד" },
+      },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._plural(bookCount, "bookCount")]
+);
+
+`;
+
+exports[`Enhanced fbt:plural API with CLDR categories should support Russian plurals with few prop 1`] = `
+import { fbt } from "fbtee";
+fbt._(
+  /* __FBT__ start */ {
+    jsfbt: {
+      m: [{ singular: true, token: "appleCount", type: 2 }],
+      t: {
+        20: { desc: "Russian apple count", text: "У вас {appleCount} яблока" },
+        "*": { desc: "Russian apple count", text: "У вас {appleCount} яблок" },
+        _1: { desc: "Russian apple count", text: "У вас 1 яблоко" },
+      },
+    },
+    project: "",
+  } /* __FBT__ end */,
+  [fbt._plural(appleCount, "appleCount")]
+);
+
+`;

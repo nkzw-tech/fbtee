@@ -25,6 +25,7 @@ import {
   NUMBER_ANY,
   SUBJECT,
 } from './translate/IntlVariations.tsx';
+import type { IntlNumberVariations as IntlNumberVariationsType } from './translate/IntlVariations.tsx';
 
 /**
  * Helper class to assemble the JSFBT table data.
@@ -48,7 +49,10 @@ export default class JSFbtBuilder {
    * Map of fbt:plural at the current recursion level of `_getStringVariationCombinations()`
    */
   readonly usedPlurals: {
-    [pluralsArgCode: string]: typeof EXACTLY_ONE | typeof NUMBER_ANY;
+    [pluralsArgCode: string]:
+      | typeof EXACTLY_ONE
+      | typeof NUMBER_ANY
+      | IntlNumberVariationsType;
   };
   /**
    * Map of fbt:pronoun at the current recursion level of `_getStringVariationCombinations()`
@@ -233,7 +237,7 @@ export default class JSFbtBuilder {
         this._getStringVariationCombinations(
           combos,
           curArgIndex + 1,
-          prevArgs.concat(curArg.cloneWithValue(value as '*', isCollapsible)),
+          prevArgs.concat(curArg.cloneWithValue(value as never, isCollapsible)),
         );
       });
 

@@ -42,10 +42,13 @@ export const ShowCountKeys = {
 } as const;
 
 export const PluralOptions = {
+  few: true,
   many: true,
   name: true,
   showCount: ShowCount,
+  two: true,
   value: true,
+  zero: true,
 } as const;
 
 export const ValidPluralOptions = {

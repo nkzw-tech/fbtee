@@ -17,6 +17,8 @@ export const IntlNumberVariations = {
 
 export type IntlVariations =
   (typeof IntlNumberVariations)[keyof typeof IntlNumberVariations];
+export type IntlNumberVariations =
+  (typeof IntlNumberVariations)[keyof typeof IntlNumberVariations];
 
 // Must match with `IntlVariations.js`
 export const Gender = {

@@ -8,6 +8,7 @@ import {
   GENDER_ANY,
   NUMBER_ANY,
 } from '../translate/IntlVariations.tsx';
+import type { IntlNumberVariations as IntlNumberVariationsType } from '../translate/IntlVariations.tsx';
 import type { AnyFbtNode } from './FbtNode.tsx';
 
 export type AnyStringVariationArg =
@@ -186,7 +187,7 @@ export class GenderStringVariationArg extends StringVariationArg<
 > {}
 
 export class NumberStringVariationArg extends StringVariationArg<
-  typeof NUMBER_ANY | typeof EXACTLY_ONE,
+  typeof NUMBER_ANY | typeof EXACTLY_ONE | IntlNumberVariationsType,
   Node | null
 > {}
 
