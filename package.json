@@ -59,21 +59,5 @@
     "react-dom": "^19.1.0",
     "tsdown": "^0.12.9",
     "typescript": "^5.8.3"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "unrs-resolver"
-    ],
-    "updateConfig": {
-      "ignoreDependencies": [
-        "@types/prettier-2",
-        "prettier-2"
-      ]
-    },
-    "overrides": {
-      "react@^19": "^19.1.0",
-      "react-dom@^19": "^19.1.0",
-      "react-is": "^19.1.0"
-    }
   }
 }
