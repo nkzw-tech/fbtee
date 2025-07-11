@@ -1,8 +1,8 @@
+import { FbtTableKey } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';
 import Hooks from './Hooks.tsx';
 import IntlNumberType from './IntlNumberType.tsx';
 import IntlVariations from './IntlVariations.tsx';
-import { FbtTableKey } from '@nkzw/babel-plugin-fbtee';
 
 // Same as `EXACTLY_ONE` from babel-plugin-fbtee/src/translate/IntlVariations.tsx
 export const EXACTLY_ONE = '_1';

@@ -1,7 +1,24 @@
+import { VStack } from '@nkzw/stack';
 import { useLocaleContext } from 'fbtee';
+import {
+  ArrowRight,
+  CheckCircle,
+  Code as CodeIcon,
+  createLucideIcon,
+  ExternalLink,
+  FileText,
+  Globe,
+  Languages,
+  Rocket,
+  Settings,
+  Shield,
+  Sparkles,
+  Terminal,
+  Users,
+  Zap,
+} from 'lucide-react';
 import { AnchorHTMLAttributes, useTransition } from 'react';
 import AvailableLanguages from './AvailableLanguages.tsx';
-
 import { Badge } from './components/Badge.tsx';
 import { Button } from './components/Button.tsx';
 import {
@@ -11,6 +28,7 @@ import {
   CardHeader,
   CardTitle,
 } from './components/Card.tsx';
+import Code from './components/Code.tsx';
 import { Separator } from './components/Separator.tsx';
 import {
   Tabs,
@@ -18,26 +36,7 @@ import {
   TabsList,
   TabsTrigger,
 } from './components/Tabs.tsx';
-import {
-  Code as CodeIcon,
-  Globe,
-  Zap,
-  ExternalLink,
-  CheckCircle,
-  ArrowRight,
-  Sparkles,
-  Rocket,
-  Shield,
-  Users,
-  Terminal,
-  FileText,
-  Settings,
-  Languages,
-  createLucideIcon,
-} from 'lucide-react';
-import Code from './components/Code.tsx';
 import cx from './lib/cx.tsx';
-import { VStack } from '@nkzw/stack';
 
 const Github = createLucideIcon('github', [
   [

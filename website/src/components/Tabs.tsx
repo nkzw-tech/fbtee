@@ -1,7 +1,6 @@
-import { Root, List, Content, Trigger } from '@radix-ui/react-tabs';
-
-import cx from '../lib/cx.tsx';
+import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+import cx from '../lib/cx.tsx';
 
 const Tabs = Root;
 

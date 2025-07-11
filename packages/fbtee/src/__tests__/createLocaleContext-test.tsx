@@ -6,6 +6,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
+import { useTransition } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
 import createLocaleContext, {
   useLocaleContext,
@@ -13,7 +14,6 @@ import createLocaleContext, {
 import setupLocaleContext, {
   TranslationPromise,
 } from '../setupLocaleContext.tsx';
-import { useTransition } from 'react';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],

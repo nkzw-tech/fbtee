@@ -1,11 +1,11 @@
 import { existsSync, globSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import yargs from 'yargs';
-import { loadJSON, TranslationGroup, Translations } from './translateUtils.tsx';
+import { SerializedTranslationData } from '../translate/TranslationData.tsx';
+import { PatternString } from '../Types.ts';
 import { CollectFbtOutput } from './collect.tsx';
 import { HashToLeaf } from './FbtCollector.tsx';
-import { PatternString } from '../Types.ts';
-import { SerializedTranslationData } from '../translate/TranslationData.tsx';
+import { loadJSON, TranslationGroup, Translations } from './translateUtils.tsx';
 
 const root = process.cwd();
 

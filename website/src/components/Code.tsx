@@ -1,6 +1,6 @@
 import { createHighlighter, ThemeRegistrationResolved } from 'shiki';
-import Licht from '../themes/licht.json' with { type: 'json' };
 import Dunkel from '../themes/dunkel.json' with { type: 'json' };
+import Licht from '../themes/licht.json' with { type: 'json' };
 
 const highlighter = await createHighlighter({
   langs: ['js', 'ts', 'tsx'],
