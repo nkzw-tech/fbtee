@@ -14,7 +14,7 @@ packages/fbtee/.enum_manifest.json
 packages/fbtee/lib-tmp
 packages/fbtee/Strings.json
 tsconfig.tsbuildinfo
-websie/.enum_manifest.json
+website/.enum_manifest.json
 website/dist/
 website/source_strings.json
 website/src/translations
