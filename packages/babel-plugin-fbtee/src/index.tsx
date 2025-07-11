@@ -24,11 +24,13 @@ import { checkOption, errorAt } from './FbtUtil.tsx';
 import { FbtVariationType } from './translate/IntlVariations.tsx';
 import type { FbtTableKey, PatternHash, PatternString } from './Types.ts';
 
-export type { FbtTableKey, PatternHash, PatternString };
-export { SENTINEL } from './FbtConstants.tsx';
 export { default as fbtHashKey } from './fbtHashKey.tsx';
-export { mapLeaves } from './JSFbtUtil.tsx';
 export { default as replaceClearTokensWithTokenAliases } from './replaceClearTokensWithTokenAliases.tsx';
+export { mapLeaves } from './JSFbtUtil.tsx';
+export { ModuleName, BindingNames } from './FbtConstants.tsx';
+export { SENTINEL } from './FbtConstants.tsx';
+export type { FbtTableKey, PatternHash, PatternString };
+export type { TranslationGroup } from './bin/translateUtils.tsx';
 
 const isRequireCall = (node: CallExpression) =>
   node.type === 'CallExpression' &&
@@ -392,5 +394,3 @@ export function getFbtElementNodes(): Array<PlainFbtNode> {
     )
     .filter((node): node is PlainFbtNode => node != null);
 }
-
-export { ModuleName, BindingNames } from './FbtConstants.tsx';
