@@ -50,6 +50,10 @@ export type PronounOptions = {
 
 export type PluralOptions = {
   /**
+   * Represents the "few" form of the string (e.g., 2-4 in Russian). Falls back to `many` if not provided.
+   */
+  few?: string;
+  /**
    * Represents the plural form of the string in English. Default is `{singular} + 's'`
    */
   many?: string;
@@ -69,9 +73,17 @@ export type PluralOptions = {
    */
   showCount?: 'yes' | 'no' | 'ifMany';
   /**
+   * Represents the "two" form of the string (e.g., exactly 2 in Arabic). Falls back to `many` if not provided.
+   */
+  two?: string;
+  /**
    * For overriding the displayed number
    */
   value?: unknown;
+  /**
+   * Represents the "zero" form of the string (e.g., 0 in Arabic). Falls back to `many` if not provided.
+   */
+  zero?: string;
 };
 
 export type FbtOptions = {
