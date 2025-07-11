@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/babel-plugin-fbtee-auto-import",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
