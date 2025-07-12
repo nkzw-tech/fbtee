@@ -19,7 +19,7 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@nkzw/stack": "^2.1.1",
+    "@nkzw/stack": "^2.2.0",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
@@ -41,6 +41,6 @@
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
-    "vite": "^7.0.2"
+    "vite": "^7.0.4"
   }
 }

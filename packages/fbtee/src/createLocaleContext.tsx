@@ -1,18 +1,18 @@
 import {
   createContext,
-  Context as ReactContext,
   Fragment,
+  Context as ReactContext,
   ReactNode,
   use,
   useActionState,
   useCallback,
   useState,
 } from 'react';
+import IntlVariations from './IntlVariations.tsx';
 import setupLocaleContext, {
   Gender,
   LocaleContextProps,
 } from './setupLocaleContext.tsx';
-import IntlVariations from './IntlVariations.tsx';
 
 export type LocaleContext = {
   gender: IntlVariations;

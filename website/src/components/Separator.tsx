@@ -1,7 +1,6 @@
 import { Root } from '@radix-ui/react-separator';
-
-import cx from '../lib/cx.tsx';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+import cx from '../lib/cx.tsx';
 
 const Separator = forwardRef<
   ComponentRef<typeof Root>,
@@ -13,7 +12,7 @@ const Separator = forwardRef<
   ) => (
     <Root
       className={cx(
-        'shrink-0 bg-border',
+        'bg-border shrink-0',
         orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
         className,
       )}

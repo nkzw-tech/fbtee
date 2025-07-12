@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:^",
-    "@nkzw/stack": "^2.1.1",
+    "@nkzw/stack": "^2.2.0",
     "classnames": "^2.5.1",
     "fbtee": "workspace:^",
     "invariant": "^2.2.4",
@@ -28,6 +28,6 @@
     "@nkzw/eslint-plugin-fbtee": "workspace:^",
     "@vitejs/plugin-react": "^4.6.0",
     "invariant": "^2.2.4",
-    "vite": "^7.0.0"
+    "vite": "^7.0.4"
   }
 }

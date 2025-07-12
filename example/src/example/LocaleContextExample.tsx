@@ -1,10 +1,11 @@
+import { VStack } from '@nkzw/stack';
 import classNames from 'classnames';
 import {
+  createLocaleContext,
   fbs,
   fbt,
   GenderConst,
   IntlVariations,
-  createLocaleContext,
   useLocaleContext,
 } from 'fbtee';
 import {
@@ -15,10 +16,9 @@ import {
   useState,
   useTransition,
 } from 'react';
+import translations from '../translatedFbts.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale } from './Locales.tsx';
-import translations from '../translatedFbts.json' with { type: 'json' };
-import { VStack } from '@nkzw/stack';
 
 type SharedObj = keyof typeof ExampleEnum;
 type LocaleKey = keyof typeof Locales;

@@ -1,6 +1,6 @@
 import { createHighlighter, ThemeRegistrationResolved } from 'shiki';
-import Licht from '../themes/licht.json' with { type: 'json' };
 import Dunkel from '../themes/dunkel.json' with { type: 'json' };
+import Licht from '../themes/licht.json' with { type: 'json' };
 
 const highlighter = await createHighlighter({
   langs: ['js', 'ts', 'tsx'],
@@ -12,7 +12,7 @@ const highlighter = await createHighlighter({
 
 export default function Code({ code }: { code: string }) {
   return (
-    <div className="bg-[#fffefc] dark:bg-[#141414] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-4">
+    <div className="mb-4 overflow-x-auto rounded-lg bg-[#fffefc] p-4 font-mono text-sm dark:bg-[#141414]">
       <div
         dangerouslySetInnerHTML={{
           __html: highlighter.codeToHtml(code, {

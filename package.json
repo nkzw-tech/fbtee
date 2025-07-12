@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/fbtee-internal",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -29,7 +29,7 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@babel/types": "^7.28.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@ianvs/prettier-plugin-sort-imports": "^4.5.1",
     "@jest/globals": "30.0.4",
     "@nkzw/eslint-config": "^3.0.1",
     "@prettier/plugin-oxc": "^0.0.4",
@@ -40,7 +40,7 @@
     "@types/invariant": "^2.2.37",
     "@types/jest": "^30.0.0",
     "@types/json-diff": "^1.0.3",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.13",
     "@types/prettier-2": "npm:@types/prettier@^2.0.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -54,26 +54,10 @@
     "nullthrows": "^1.1.1",
     "prettier": "^3.6.2",
     "prettier-2": "npm:prettier@^2.8.8",
-    "prettier-plugin-packagejson": "^2.5.17",
-    "prettier-plugin-tailwindcss": "^0.6.13",
+    "prettier-plugin-packagejson": "^2.5.18",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "react-dom": "^19.1.0",
     "tsdown": "^0.12.9",
     "typescript": "^5.8.3"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "unrs-resolver"
-    ],
-    "updateConfig": {
-      "ignoreDependencies": [
-        "@types/prettier-2",
-        "prettier-2"
-      ]
-    },
-    "overrides": {
-      "react@^19": "^19.1.0",
-      "react-dom@^19": "^19.1.0",
-      "react-is": "^19.1.0"
-    }
   }
 }

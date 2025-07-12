@@ -1,10 +1,10 @@
+import { VStack } from '@nkzw/stack';
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 import translations from '../translatedFbts.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale } from './Locales.tsx';
-import { VStack } from '@nkzw/stack';
 
 let viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
