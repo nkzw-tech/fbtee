@@ -17,6 +17,7 @@
     "lint:format": "prettier --experimental-cli --cache --check .",
     "ship": "pnpm clean && pnpm build:all && pnpm test && pnpm publish -r --access public",
     "test": "npm-run-all --parallel lint jest tsc:check lint:format",
+    "test:pristine": "pnpm install && pnpm clean && pnpm build:all && pnpm test",
     "tsc:check": "tsc"
   },
   "devDependencies": {
@@ -59,5 +60,8 @@
     "react-dom": "^19.1.0",
     "tsdown": "^0.12.9",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "pnpm": ">=10.0.0"
   }
 }
