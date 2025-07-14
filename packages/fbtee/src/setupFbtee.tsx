@@ -6,11 +6,24 @@ import Hook, { Hooks } from './Hooks.tsx';
 import type { IFbtErrorListener, NestedFbtContentItems } from './Types.js';
 import IntlViewerContext from './ViewerContext.tsx';
 
+const hasWindow = typeof window !== 'undefined';
+
 const getFbtResult = (
   contents: NestedFbtContentItems,
   hashKey: PatternHash | null | undefined,
   errorListener: IFbtErrorListener | null,
-) => new FbtResult(contents, errorListener, hashKey);
+) => {
+  const result = new FbtResult(contents, errorListener, hashKey);
+  if (hasWindow) {
+    return result;
+  }
+
+  const resolvedContents = result.getContents();
+  return (resolvedContents?.length === 1 &&
+  typeof resolvedContents[0] === 'string'
+    ? resolvedContents[0]
+    : resolvedContents) as unknown as FbtResult;
+};
 
 export default function setupFbtee({
   hooks,
