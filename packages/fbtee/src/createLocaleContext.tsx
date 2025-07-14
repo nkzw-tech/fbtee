@@ -24,7 +24,8 @@ export type LocaleContext = {
 
 export const Context = (() =>
   typeof window === 'undefined'
-    ? (null as unknown as ReactContext<LocaleContext>)
+    ? ((({ children }: { children: ReactNode }) =>
+        children) as unknown as ReactContext<LocaleContext>)
     : createContext<LocaleContext>(null as unknown as LocaleContext))();
 
 export function useLocaleContext(): LocaleContext {
