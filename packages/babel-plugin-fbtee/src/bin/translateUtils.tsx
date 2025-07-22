@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import FbtHashKey from '../fbtHashKey.tsx';
 import nullthrows from '../nullthrows.tsx';
 import { FbtSite } from '../translate/FbtSite.tsx';
@@ -97,7 +98,7 @@ async function processGroups(
   if (options.jenkins) {
     fbtHash = (await import('../fbtHashKey.tsx')).default;
   } else if (typeof options.hashModule === 'string') {
-    fbtHash = (await import(options.hashModule)).default;
+    fbtHash = (await import(pathToFileURL(options.hashModule).href)).default;
   }
 
   if (!fbtHash) {

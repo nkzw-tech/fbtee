@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path, { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import yargs from 'yargs';
 import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { FbtOptionConfig } from '../FbtConstants.tsx';
@@ -223,7 +224,7 @@ async function writeOutput(collector: IFbtCollector) {
     try {
       const modulePath = getDefaultStringModulePath();
       const json = (
-        await import(modulePath, {
+        await import(pathToFileURL(modulePath).href, {
           with: { type: 'json' },
         })
       ).default as CollectFbtOutput;
@@ -263,17 +264,19 @@ if (argv.help) {
 }
 
 const transformPath = argv['transform'];
-const transform = transformPath ? (await import(transformPath)).default : null;
+const transform = transformPath
+  ? (await import(pathToFileURL(transformPath).href)).default
+  : null;
 
 const commonFile = argv['common']?.length
   ? resolve(root, argv['common'])
   : null;
 const fbtCommon = commonFile?.length
   ? (commonFile.endsWith('.json')
-      ? await import(commonFile, {
+      ? await import(pathToFileURL(commonFile).href, {
           with: { type: 'json' },
         })
-      : await import(commonFile)
+      : await import(pathToFileURL(commonFile).href)
     ).default
   : null;
 

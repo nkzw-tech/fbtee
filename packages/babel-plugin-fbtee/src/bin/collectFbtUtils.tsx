@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import invariant from 'invariant';
 import type { FbtOptionConfig } from '../FbtConstants.tsx';
 import type { CollectFbtOutput } from './collect.tsx';
@@ -46,7 +47,7 @@ async function getTextPackager(
   hashModulePath: string | null,
 ): Promise<TextPackager> {
   const hashingModule = hashModulePath
-    ? ((await import(hashModulePath)).default as
+    ? ((await import(pathToFileURL(hashModulePath).href)).default as
         | HashFunction
         | {
             getFbtHash: HashFunction;

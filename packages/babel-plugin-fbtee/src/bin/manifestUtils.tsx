@@ -1,5 +1,6 @@
 import fs, { globSync, statSync } from 'node:fs';
 import { parse, relative, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import invariant from 'invariant';
 import { FBT_ENUM_MODULE_SUFFIX, ModuleNameRegExp } from '../FbtConstants.tsx';
 import type { EnumManifest, EnumModule } from '../FbtEnumRegistrar.tsx';
@@ -22,7 +23,7 @@ export async function generateManifest(
     );
     for (const filepath of enumFiles) {
       const name = parse(filepath).name;
-      const obj = (await import(resolve(filepath))).default;
+      const obj = (await import(pathToFileURL(resolve(filepath)).href)).default;
       const enumValue: EnumModule = obj.__esModule ? obj.default : obj;
 
       invariant(
