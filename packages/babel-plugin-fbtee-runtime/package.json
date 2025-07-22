@@ -27,7 +27,7 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/traverse": "^7.28.0",
-    "@babel/types": "^7.28.0",
+    "@babel/types": "^7.28.1",
     "invariant": "^2.2.4"
   },
   "devDependencies": {

@@ -29,7 +29,7 @@
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "shiki": "^3.7.0",
+    "shiki": "^3.8.1",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
@@ -37,10 +37,10 @@
     "@tailwindcss/postcss": "^4.1.11",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.6.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
-    "vite": "^7.0.4"
+    "vite": "^7.0.5"
   }
 }

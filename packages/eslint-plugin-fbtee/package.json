@@ -19,9 +19,9 @@
     "build": "tsdown src/index.tsx -d lib --target=node22 --format=esm,cjs --clean --dts"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^8.36.0"
+    "@typescript-eslint/utils": "^8.38.0"
   },
   "devDependencies": {
-    "@typescript-eslint/rule-tester": "^8.36.0"
+    "@typescript-eslint/rule-tester": "^8.38.0"
   }
 }

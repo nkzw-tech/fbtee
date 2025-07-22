@@ -1,22 +1,23 @@
 packages:
-  - 'example'
-  - 'packages/babel-plugin-fbtee-auto-import'
-  - 'packages/babel-plugin-fbtee-runtime'
-  - 'packages/babel-plugin-fbtee'
-  - 'packages/babel-preset-fbtee'
-  - 'packages/fbtee'
-  - 'packages/eslint-plugin-fbtee'
-  - 'website'
+  - example
+  - packages/babel-plugin-fbtee-auto-import
+  - packages/babel-plugin-fbtee-runtime
+  - packages/babel-plugin-fbtee
+  - packages/babel-preset-fbtee
+  - packages/fbtee
+  - packages/eslint-plugin-fbtee
+  - website
 
 onlyBuiltDependencies:
+  - esbuild
   - unrs-resolver
+
+overrides:
+  react-dom@^19: ^19.1.0
+  react-is: ^19.1.0
+  react@^19: ^19.1.0
 
 updateConfig:
   ignoreDependencies:
     - '@types/prettier-2'
-    - 'prettier-2'
-
-overrides:
-  react@^19: ^19.1.0
-  react-dom@^19: ^19.1.0
-  react-is: ^19.1.0
+    - prettier-2
