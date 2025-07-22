@@ -227,6 +227,28 @@ ruleTester.run('no-untranslated-strings', rule, {
     },
     {
       code: `
+        <div>
+          <p>GitHub is cool</p>
+          <p>{\`GitHub
+ is cool\`}</p>
+          <p>
+            GitHub
+            is
+            cool
+          </p>
+          <p>
+            GitHub  is  cool
+          </p>
+        </div>
+       `,
+      options: [
+        {
+          ignoredWords: ['GitHub is cool'],
+        },
+      ],
+    },
+    {
+      code: `
         <textarea rows={2}></textarea>
        `,
     },
@@ -273,6 +295,20 @@ ruleTester.run('no-untranslated-strings', rule, {
     {
       code: `
        const foo = helloGreeting || 'goodbye'
+       `,
+    },
+    {
+      code: `
+        <code>
+          console.log('Banana Banana Banana');
+        </code>
+       `,
+    },
+    {
+      code: `
+        <pre>{\`
+          console.log('Banana Banana Banana');
+        \`}</pre>
        `,
     },
   ],

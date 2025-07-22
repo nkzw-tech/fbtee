@@ -26,6 +26,6 @@
   "dependencies": {
     "@babel/core": "^7.28.0",
     "@babel/types": "^7.28.1",
-    "@nkzw/babel-plugin-fbtee": "workspace:^"
+    "@nkzw/babel-plugin-fbtee": "workspace:*"
   }
 }

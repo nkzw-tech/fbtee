@@ -605,7 +605,7 @@ const Root = () => {
 
 ## ESLint Plugin
 
-You can install the optional eslint plugin to catch common mistakes and enforce best practices when using **fbtee**:
+You can install the optional ESLint plugin to catch common mistakes and enforce best practices when using **fbtee**:
 
 ```bash
 npm install -D @nkzw/eslint-plugin-fbtee
@@ -614,32 +614,56 @@ npm install -D @nkzw/eslint-plugin-fbtee
 Add the following configuration to your ESLint configuration:
 
 ```js
-{
-  extends: ['plugin:@nkzw/eslint-plugin-fbtee/recommended'],
-  plugins: ['@nkzw/eslint-plugin-fbtee'],
-}
+import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee.configs.recommended,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+  },
+];
 ```
 
 If you want stricter enforcement of translation rules, you can use the strict configuration, which enables the `no-untranslated-strings` rule. This ensures that all strings in your codebase are marked for translation.
 
 ```js
-{
-  extends: ['plugin:@nkzw/eslint-plugin-fbtee/strict'],
-  plugins: ['@nkzw/eslint-plugin-fbtee'],
-}
+import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee.configs.strict,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+  },
+];
 ```
 
 Alternatively, if you'd like more granular control over the rules:
 
 ```js
-{
-  plugins: ['@nkzw/eslint-plugin-fbtee'],
-  rules: {
-    '@nkzw/fbtee/no-empty-strings': 'error',
-    '@nkzw/fbtee/no-unhelpful-desc': 'error',
-    '@nkzw/fbtee/no-untranslated-strings': 'error',
+import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+    rules: {
+      '@nkzw/fbtee/no-empty-strings': [
+        'error',
+        {
+          ignoredWords: ['Banana', 'pnpm install fbtee'],
+        },
+      ],
+      '@nkzw/fbtee/no-unhelpful-desc': 'error',
+      '@nkzw/fbtee/no-untranslated-strings': 'error',
+    },
   },
-}
+];
 ```
 
 ## What's better about `fbtee` than `fbt`?

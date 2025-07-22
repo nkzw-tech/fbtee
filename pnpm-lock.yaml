@@ -49,6 +49,9 @@ importers:
       '@nkzw/eslint-config':
         specifier: ^3.0.1
         version: 3.0.1(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.38.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      '@nkzw/eslint-plugin-fbtee':
+        specifier: workspace:*
+        version: link:packages/eslint-plugin-fbtee
       '@prettier/plugin-oxc':
         specifier: ^0.0.4
         version: 0.0.4
@@ -134,7 +137,7 @@ importers:
   example:
     dependencies:
       '@nkzw/babel-preset-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/babel-preset-fbtee
       '@nkzw/stack':
         specifier: ^2.2.0
@@ -143,7 +146,7 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       fbtee:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/fbtee
       invariant:
         specifier: ^2.2.4
@@ -162,7 +165,7 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1(@babel/core@7.28.0)
       '@nkzw/eslint-plugin-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/eslint-plugin-fbtee
       '@vitejs/plugin-react':
         specifier: ^4.7.0
@@ -192,7 +195,7 @@ importers:
         specifier: ^7.28.1
         version: 7.28.1
       '@nkzw/babel-plugin-fbtee-auto-import':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee-auto-import
       invariant:
         specifier: ^2.2.4
@@ -226,7 +229,7 @@ importers:
         specifier: ^7.28.1
         version: 7.28.1
       '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee
 
   packages/babel-plugin-fbtee-runtime:
@@ -244,26 +247,26 @@ importers:
         specifier: ^7.28.1
         version: 7.28.1
       '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
     devDependencies:
       '@nkzw/babel-plugin-fbtee-auto-import':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee-auto-import
 
   packages/babel-preset-fbtee:
     dependencies:
       '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee
       '@nkzw/babel-plugin-fbtee-auto-import':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee-auto-import
       '@nkzw/babel-plugin-fbtee-runtime':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee-runtime
 
   packages/eslint-plugin-fbtee:
@@ -279,10 +282,10 @@ importers:
   packages/fbtee:
     dependencies:
       '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee
       '@nkzw/babel-plugin-fbtee-runtime':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../babel-plugin-fbtee-runtime
       invariant:
         specifier: ^2.2.4
@@ -312,7 +315,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       fbtee:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/fbtee
       lucide-react:
         specifier: ^0.525.0
@@ -331,7 +334,7 @@ importers:
         version: 3.3.1
     devDependencies:
       '@nkzw/babel-preset-fbtee':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/babel-preset-fbtee
       '@tailwindcss/postcss':
         specifier: ^4.1.11

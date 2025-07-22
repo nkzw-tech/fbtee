@@ -31,9 +31,9 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:^"
+    "@nkzw/babel-plugin-fbtee-auto-import": "workspace:*"
   },
   "peerDependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:^"
+    "@nkzw/babel-plugin-fbtee": "workspace:*"
   }
 }

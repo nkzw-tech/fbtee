@@ -46,8 +46,8 @@
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:^",
-    "@nkzw/babel-plugin-fbtee-runtime": "workspace:^",
+    "@nkzw/babel-plugin-fbtee": "workspace:*",
+    "@nkzw/babel-plugin-fbtee-runtime": "workspace:*",
     "react": "^19.0.0"
   }
 }

@@ -1,3 +1,4 @@
+import { TSESTree } from '@typescript-eslint/utils';
 import {
   createRule,
   getPropName,
@@ -17,15 +18,25 @@ const attributes = new Set([
   'aria-errormessage',
 ]);
 
+const shouldIgnoreParent = (node: TSESTree.Node) => {
+  const { parent } = node;
+  const openingElement =
+    parent?.type === 'JSXElement' ? parent?.openingElement : null;
+  return (
+    openingElement?.type === 'JSXOpeningElement' &&
+    openingElement.name.type === 'JSXIdentifier' &&
+    (openingElement.name.name === 'pre' || openingElement.name.name === 'code')
+  );
+};
+
 export default createRule<Options, 'unwrappedString'>({
   create(context, options) {
     const ignoredWords = new Set(
-      options[0].ignoredWords.map((s) => s.trim().toLowerCase()),
+      options[0].ignoredWords.map((value) => value.trim().toLowerCase()),
     );
 
-    function isIgnoredWord(value: string) {
-      return ignoredWords.has(value.trim().toLowerCase());
-    }
+    const isIgnoredWord = (value: string) =>
+      ignoredWords.has(value.replaceAll(/\s+/g, ' ').toLowerCase());
 
     return {
       JSXAttribute(node) {
@@ -73,6 +84,10 @@ export default createRule<Options, 'unwrappedString'>({
           return;
         }
 
+        if (shouldIgnoreParent(node)) {
+          return;
+        }
+
         if (!hasFbtParent(node)) {
           context.report({
             messageId: 'unwrappedString',
@@ -89,6 +104,10 @@ export default createRule<Options, 'unwrappedString'>({
         }
 
         if (isIgnoredWord(value)) {
+          return;
+        }
+
+        if (shouldIgnoreParent(node)) {
           return;
         }
 

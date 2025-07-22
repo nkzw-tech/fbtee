@@ -446,14 +446,14 @@ export default function App() {
                     React)
                   </fbt>
                 </p>
-                <div className="space-y-2 font-mono text-sm">
+                <div className="space-y-2 text-sm">
                   <div className="flex items-center space-x-2">
-                    <span className="text-purple-300">$</span>
-                    <span>npm install fbtee</span>
+                    <code className="text-purple-300">$</code>
+                    <code>npm install fbtee</code>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-purple-300">$</span>
-                    <span>npm install -D @nkzw/babel-preset-fbtee</span>
+                    <code className="text-purple-300">$</code>
+                    <code>npm install -D @nkzw/babel-preset-fbtee</code>
                   </div>
                 </div>
               </div>
@@ -707,7 +707,7 @@ const App = () => (
               </p>
 
               <Tabs className="w-full" defaultValue="param">
-                <TabsList>
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="param">
                     <fbt desc="Tab label">Parameters</fbt>
                   </TabsTrigger>
@@ -959,7 +959,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   </h4>
                   <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
                     <code>
-                      <span className="text-purple-300">$</span> pnpm fbtee
+                      <code className="text-purple-300">$</code> pnpm fbtee
                       collect
                     </code>
                   </div>
@@ -997,7 +997,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   </h4>
                   <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
                     <code>
-                      <span className="text-purple-300">$</span> pnpm fbtee
+                      <code className="text-purple-300">$</code> pnpm fbtee
                       translate
                     </code>
                   </div>
@@ -1108,13 +1108,13 @@ const LocaleSwitcher = () => {
 
               <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
                 <code>
-                  <span className="text-purple-300">$</span> npm install -D
+                  <code className="text-purple-300">$</code> npm install -D
                   @nkzw/eslint-plugin-fbtee
                 </code>
               </div>
 
               <Tabs className="w-full" defaultValue="recommended">
-                <TabsList>
+                <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="recommended">
                     <fbt desc="Tab label">Recommended</fbt>
                   </TabsTrigger>
@@ -1127,10 +1127,16 @@ const LocaleSwitcher = () => {
                 </TabsList>
                 <TabsContent value="recommended">
                   <Code
-                    code={`{
-  "extends": ["plugin:@nkzw/eslint-plugin-fbtee/recommended"],
-  "plugins": ["@nkzw/eslint-plugin-fbtee"]
-}`}
+                    code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee.configs.recommended,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+  },
+];`}
                   />
                 </TabsContent>
                 <TabsContent value="strict">
@@ -1140,22 +1146,40 @@ const LocaleSwitcher = () => {
                     </fbt>
                   </div>
                   <Code
-                    code={`{
-  "extends": ["plugin:@nkzw/eslint-plugin-fbtee/strict"],
-  "plugins": ["@nkzw/eslint-plugin-fbtee"]
-}`}
+                    code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee.configs.strict,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+  },
+];`}
                   />
                 </TabsContent>
                 <TabsContent value="custom">
                   <Code
-                    code={`{
-  "plugins": ["@nkzw/eslint-plugin-fbtee"],
-  "rules": {
-    "@nkzw/fbtee/no-empty-strings": "error",
-    "@nkzw/fbtee/no-unhelpful-desc": "error",
-    "@nkzw/fbtee/no-untranslated-strings": "error"
-  }
-}`}
+                    code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
+
+export default [
+  fbtee,
+  {
+    plugins: {
+      '@nkzw/fbtee': fbtee,
+    },
+    rules: {
+      '@nkzw/fbtee/no-empty-strings': [
+        'error',
+        {
+          ignoredWords: ['Banana', 'pnpm install fbtee'],
+        },
+      ],
+      '@nkzw/fbtee/no-unhelpful-desc': 'error',
+      '@nkzw/fbtee/no-untranslated-strings': 'error',
+    },
+  },
+];`}
                   />
                 </TabsContent>
               </Tabs>
