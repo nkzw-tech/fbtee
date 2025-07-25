@@ -8,10 +8,12 @@ import {
   useCallback,
   useState,
 } from 'react';
+import Hooks from './Hooks.tsx';
 import IntlVariations from './IntlVariations.tsx';
 import setupLocaleContext, {
   Gender,
   LocaleContextProps,
+  resolveGender,
 } from './setupLocaleContext.tsx';
 
 export type LocaleContext = {
@@ -22,15 +24,43 @@ export type LocaleContext = {
   setLocale: (locale: string) => void;
 };
 
-export const Context = (() =>
-  typeof window === 'undefined'
-    ? ((({ children }: { children: ReactNode }) =>
-        children) as unknown as ReactContext<LocaleContext>)
-    : createContext<LocaleContext>(null as unknown as LocaleContext))();
+const hasWindow = typeof window !== 'undefined';
 
-export function useLocaleContext(): LocaleContext {
-  return use(Context);
-}
+export const Context = (() =>
+  hasWindow
+    ? createContext<LocaleContext>(null as unknown as LocaleContext)
+    : ((({ children }: { children: ReactNode }) =>
+        children) as unknown as ReactContext<LocaleContext>))();
+
+export const useLocaleContext = (() =>
+  hasWindow
+    ? () => use(Context)
+    : () => {
+        const viewerContext = Hooks.getViewerContext();
+        return {
+          gender: viewerContext.GENDER,
+          locale: viewerContext.locale,
+          localeChangeIsPending: false,
+          setGender: (gender: Gender) => {
+            const viewerContext = Hooks.getViewerContext();
+            Hooks.register({
+              getViewerContext: () => ({
+                ...viewerContext,
+                GENDER: resolveGender(gender),
+              }),
+            });
+          },
+          setLocale: (locale: string) => {
+            const viewerContext = Hooks.getViewerContext();
+            Hooks.register({
+              getViewerContext: () => ({
+                ...viewerContext,
+                locale,
+              }),
+            });
+          },
+        };
+      })();
 
 export default function createLocaleContext(props: LocaleContextProps) {
   const {

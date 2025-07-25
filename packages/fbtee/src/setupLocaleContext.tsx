@@ -10,7 +10,7 @@ export type LocaleLoaderFn = (locale: string) => TranslationPromise;
 
 export type Gender = IntlVariations | 'male' | 'female' | 'unknown';
 
-const resolveGender = (gender: Gender): IntlVariations => {
+export function resolveGender(gender: Gender): IntlVariations {
   if (gender === 'male') {
     return IntlVariations.GENDER_MALE;
   } else if (gender === 'female') {
@@ -20,7 +20,7 @@ const resolveGender = (gender: Gender): IntlVariations => {
   }
 
   return gender;
-};
+}
 
 export type LocaleContextProps = Readonly<{
   availableLanguages: ReadonlyMap<string, string>;

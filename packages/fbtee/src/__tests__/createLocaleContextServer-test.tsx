@@ -3,7 +3,9 @@
  */
 
 import { jest } from '@jest/globals';
-import createLocaleContext from '../createLocaleContext.tsx';
+import createLocaleContext, {
+  useLocaleContext,
+} from '../createLocaleContext.tsx';
 import fbtInternal from '../fbt.tsx';
 import FbtResult from '../FbtResult.tsx';
 
@@ -38,4 +40,16 @@ test('returns an array or string instead of an `FbtResult`', () => {
 
   expect(fbtInternal._('sample string') instanceof FbtResult).toBe(false);
   expect(fbtInternal._(['sample string', 'part 2'])).toEqual('sample string');
+});
+
+test('useLocaleContext does not crash on the server', () => {
+  expect(useLocaleContext()).toMatchInlineSnapshot(`
+{
+  "gender": 3,
+  "locale": "en_US",
+  "localeChangeIsPending": false,
+  "setGender": [Function],
+  "setLocale": [Function],
+}
+`);
 });
