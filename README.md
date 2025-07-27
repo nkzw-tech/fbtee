@@ -681,7 +681,7 @@ The open-source version of `fbt`, however, became unmaintained, difficult to set
 
 **fbtee** remains compatible with `fbt` and migration is straightforward.
 
-## Migration from `fbt`:
+## Migration from `fbt`
 
 **fbtee** is compatible with `fbt`. If you are already using `fbt`, migrating to fbtee is straightforward:
 
