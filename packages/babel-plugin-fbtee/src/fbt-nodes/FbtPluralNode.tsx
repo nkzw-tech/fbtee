@@ -24,7 +24,12 @@ import {
   varDump,
 } from '../FbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
-import { EXACTLY_ONE, NUMBER_ANY } from '../translate/IntlVariations.tsx';
+import {
+  EXACTLY_ONE,
+  NUMBER_ANY,
+  IntlNumberVariations,
+  IntlVariations,
+} from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { NumberStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
@@ -33,13 +38,16 @@ import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 type Options = {
   // Represents the number used for determining the plural case at runtime
   count: CallExpressionArg;
-  many?: string | null; // text to show when count>1,
+  few?: string | null; // text to show when count is few (e.g., 2-4 in Russian)
+  many?: string | null; // text to show when count > 1 (existing behavior)
   name: string | null; // token name,
   // If `yes`, show the `count` number as a prefix of the current plural text
   // If `ifMany`, behaves as `yes` when the count value is greater than 1
   // Else, `no` to hide the `count` number
   showCount: keyof typeof ShowCountKeys;
+  two?: string | null; // text to show when count is two (e.g., exactly 2 in Arabic)
   value?: CallExpressionArg | null; // optional value to replace token (rather than count)
+  zero?: string | null; // text to show when count is zero (e.g., 0 in Arabic)
 };
 
 /**
@@ -96,9 +104,11 @@ export default class FbtPluralNode extends FbtNode<
         (showCount !== ShowCountKeys.no ? PLURAL_PARAM_TOKEN : null);
       return {
         count,
+        few: enforceString.orNull(rawOptions.few, '`few` option'),
         many: enforceString.orNull(rawOptions.many, '`many` option'),
         name,
         showCount,
+        two: enforceString.orNull(rawOptions.two, '`two` option'),
         value:
           rawOptions.value != null &&
           typeof rawOptions.value !== 'string' &&
@@ -108,6 +118,7 @@ export default class FbtPluralNode extends FbtNode<
                 '`value` option',
               )
             : null,
+        zero: enforceString.orNull(rawOptions.zero, '`zero` option'),
       };
     } catch (error) {
       throw errorAt(this.node, error);
@@ -119,6 +130,9 @@ export default class FbtPluralNode extends FbtNode<
     scenario: {
       anyNumber: () => T;
       exactlyOne: () => T;
+      few?: () => T;
+      two?: () => T;
+      zero?: () => T;
     },
   ): T {
     const svArg = argsMap.get(this);
@@ -127,6 +141,15 @@ export default class FbtPluralNode extends FbtNode<
     switch (svArgValue) {
       case EXACTLY_ONE: {
         return scenario.exactlyOne();
+      }
+      case IntlNumberVariations.ZERO: {
+        return scenario.zero ? scenario.zero() : scenario.anyNumber();
+      }
+      case IntlNumberVariations.TWO: {
+        return scenario.two ? scenario.two() : scenario.anyNumber();
+      }
+      case IntlNumberVariations.FEW: {
+        return scenario.few ? scenario.few() : scenario.anyNumber();
       }
       case NUMBER_ANY: {
         return scenario.anyNumber();
@@ -152,22 +175,32 @@ export default class FbtPluralNode extends FbtNode<
           : null;
       },
       exactlyOne: () => null,
+      few: () => null,
+      two: () => null,
+      zero: () => null,
     });
   }
 
   override getText(argsMap: StringVariationArgsMap): string {
     try {
       const { showCount } = this.options;
+      const anyNumber = () => {
+        const many = this.options.many ?? this._getSingularText() + 's';
+        return (
+          (showCount !== ShowCountKeys.no
+            ? tokenNameToTextPattern(this._getStaticTokenName()) + ' '
+            : '') + many
+        );
+      };
+
       return this._branchByNumberVariation(argsMap, {
-        anyNumber: () => {
-          const many = this.options.many ?? this._getSingularText() + 's';
-          return showCount !== ShowCountKeys.no
-            ? tokenNameToTextPattern(this._getStaticTokenName()) + ' ' + many
-            : many;
-        },
+        anyNumber,
         exactlyOne: () =>
           (showCount === ShowCountKeys.yes ? '1 ' : '') +
           this._getSingularText(),
+        few: () => this.options.few ?? anyNumber(),
+        two: () => this.options.two ?? anyNumber(),
+        zero: () => this.options.zero ?? anyNumber(),
       });
     } catch (error) {
       throw errorAt(this.node, error);
@@ -185,11 +218,24 @@ export default class FbtPluralNode extends FbtNode<
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<NumberStringVariationArg> {
+    const candidateValues: Array<
+      typeof NUMBER_ANY | typeof EXACTLY_ONE | IntlVariations
+    > = [NUMBER_ANY];
+
+    if (this.options.zero != null) {
+      candidateValues.push(IntlNumberVariations.ZERO);
+    }
+    if (this.options.two != null) {
+      candidateValues.push(IntlNumberVariations.TWO);
+    }
+    if (this.options.few != null) {
+      candidateValues.push(IntlNumberVariations.FEW);
+    }
+
+    candidateValues.push(EXACTLY_ONE);
+
     return [
-      new NumberStringVariationArg(this, this.options.count, [
-        NUMBER_ANY,
-        EXACTLY_ONE,
-      ]),
+      new NumberStringVariationArg(this, this.options.count, candidateValues),
     ];
   }
 

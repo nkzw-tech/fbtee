@@ -182,6 +182,20 @@ describe('collectFbt', () => {
     expect(res).toMatchSnapshot();
   });
 
+  it('should support zero, two, few for <fbt:plural>', async () => {
+    const res = await collect(
+      [
+        `import { fbt } from 'fbtee';`,
+        `<fbt desc="desc...">`,
+        `  There`,
+        `  <fbt:plural count={num} two="are two photos" zero="are zero photos" few="are a few photos" many="are photos">is a photo</fbt:plural>{' '}`,
+        `</fbt>`,
+      ].join('\n'),
+    );
+
+    expect(res).toMatchSnapshot();
+  });
+
   describe('When using string templates', () => {
     it('should extract correctly with just string contents', async () => {
       const res = await collect(

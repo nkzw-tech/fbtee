@@ -2113,3 +2113,57 @@ exports[`collectFbt should still extract strings if in-line doNotExtract is set 
   ],
 }
 `;
+
+exports[`collectFbt should support zero, two, few for <fbt:plural> 1`] = `
+{
+  "childParentMappings": {},
+  "fbtElementNodes": undefined,
+  "phrases": [
+    {
+      "filename": "test.js",
+      "jsfbt": {
+        "m": [
+          null,
+        ],
+        "t": {
+          "*": {
+            "desc": "desc...",
+            "text": "There are photos",
+          },
+          "16": {
+            "desc": "desc...",
+            "text": "There are zero photos",
+          },
+          "20": {
+            "desc": "desc...",
+            "text": "There are a few photos",
+          },
+          "8": {
+            "desc": "desc...",
+            "text": "There are two photos",
+          },
+          "_1": {
+            "desc": "desc...",
+            "text": "There is a photo",
+          },
+        },
+      },
+      "loc": SourceLocation {
+        "end": Position {
+          "column": 6,
+          "index": 204,
+          "line": 5,
+        },
+        "filename": undefined,
+        "identifierName": undefined,
+        "start": Position {
+          "column": 0,
+          "index": 29,
+          "line": 2,
+        },
+      },
+      "project": "",
+    },
+  ],
+}
+`;
