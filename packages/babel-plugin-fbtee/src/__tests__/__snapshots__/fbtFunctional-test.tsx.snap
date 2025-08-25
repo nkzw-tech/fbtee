@@ -6421,6 +6421,572 @@ FbtElementNode {
 }
 `;
 
+exports[`Functional FBT API using array arguments: Translation transform should accept well-formed options 1`] = `
+"import { fbt } from "fbtee";
+fbt._("A string that moved files", null, {
+  hk: "r6xXC",
+  project: "Super Secret"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should avoid creating identifers with conflicted name when there exist inner strings and string variations 1`] = `
+"import { fbt } from "fbtee";
+import React from 'react';
+var fbt_sv_arg_2 = 2;
+function a(fbt_sv_arg_3) {
+  var fbt_sv_arg_1, fbt_sv_arg_4;
+  var fbt_sv_arg_0 = 1;
+  fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+    className: "padRight"
+  }, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_4 = fbt._plural(this.state.ex1Count, "number"), fbt._({
+    "*": {
+      "*": "{name} has shared {=m2} with you",
+      _1: "{name} has shared {=m2} with you"
+    }
+  }, [fbt_sv_arg_1, fbt_sv_arg_4, fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
+    className: "neatoLink",
+    href: "#",
+    tabindex: 123,
+    id: "uniq"
+  }, fbt._({
+    "*": {
+      "*": "{=m1}",
+      _1: "{=m1}"
+    }
+  }, [fbt_sv_arg_1, fbt_sv_arg_4, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("strong", null, fbt._({
+    "*": {
+      "*": "{number} photos",
+      _1: "a photo"
+    }
+  }, [fbt_sv_arg_1, fbt_sv_arg_4], {
+    hk: "BNUvh"
+  })))], {
+    hk: "1X90MQ"
+  })))], {
+    hk: "46j2Ai"
+  });
+}"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should be able to nest within React nodes 1`] = `
+"import { fbt } from "fbtee";
+import React from 'react';
+var x = /*#__PURE__*/React.createElement("div", null, fbt._("A nested string", null, {
+  hk: "2Z1yyy"
+}));"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should convert simple strings 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A simple string", null, {
+  hk: "pITkM"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should deduplicate branches when fbt.enum() calls share the same key 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Look! Groups and groups!",
+  photos: "Look! Photos and photos!",
+  videos: "Look! Videos and videos!"
+}, [fbt._enum('groups', {
+  "groups": "Groups",
+  "photos": "Photos",
+  "videos": "Videos"
+})], {
+  hk: "42UBbJ"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should get project from docblock 1`] = `
+"/** @fbt {"project": "dev"}*/
+import { fbt } from "fbtee";
+var x = fbt._("Also simple string", null, {
+  hk: "28mclU",
+  project: "dev"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle JSX fbt with multiple levels of nested strings 1`] = `
+"var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3;
+import { fbt } from "fbtee";
+import React from 'react';
+fbt_sv_arg_0 = fbt._enum(enumVal, {
+  "today": "today",
+  "yesterday": "yesterday"
+}), fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+  className: "padRight"
+}, viewerName), [1, viewerGender]), fbt_sv_arg_2 = fbt._plural(photoCount, "number"), fbt_sv_arg_3 = fbt._pronoun(0, otherGender, {
+  human: 1
+}), fbt._({
+  today: {
+    "*": {
+      "*": {
+        "1": "{=m0}, {name} has shared {=m4}",
+        "2": "{=m0}, {name} has shared {=m4}",
+        "*": "{=m0}, {name} has shared {=m4}"
+      },
+      _1: {
+        "1": "{=m0}, {name} has shared {=m4}",
+        "2": "{=m0}, {name} has shared {=m4}",
+        "*": "{=m0}, {name} has shared {=m4}"
+      }
+    }
+  },
+  yesterday: {
+    "*": {
+      "*": {
+        "1": "{=m0}, {name} has shared {=m4}",
+        "2": "{=m0}, {name} has shared {=m4}",
+        "*": "{=m0}, {name} has shared {=m4}"
+      },
+      _1: {
+        "1": "{=m0}, {name} has shared {=m4}",
+        "2": "{=m0}, {name} has shared {=m4}",
+        "*": "{=m0}, {name} has shared {=m4}"
+      }
+    }
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3, fbt._implicitParam("=m0", /*#__PURE__*/React.createElement("b", {
+  className: "padRight"
+}, fbt._({
+  today: {
+    "*": {
+      "*": {
+        "1": "today",
+        "2": "today",
+        "*": "today"
+      },
+      _1: {
+        "1": "today",
+        "2": "today",
+        "*": "today"
+      }
+    }
+  },
+  yesterday: {
+    "*": {
+      "*": {
+        "1": "yesterday",
+        "2": "yesterday",
+        "*": "yesterday"
+      },
+      _1: {
+        "1": "yesterday",
+        "2": "yesterday",
+        "*": "yesterday"
+      }
+    }
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3], {
+  hk: "28J3Kz"
+}))), fbt._implicitParam("=m4", /*#__PURE__*/React.createElement("a", {
+  className: "neatoLink",
+  href: "#"
+}, fbt._({
+  today: {
+    "*": {
+      "*": {
+        "1": "{number} photos with {=m4}",
+        "2": "{number} photos with {=m4}",
+        "*": "{number} photos with {=m4}"
+      },
+      _1: {
+        "1": "a photo with {=m4}",
+        "2": "a photo with {=m4}",
+        "*": "a photo with {=m4}"
+      }
+    }
+  },
+  yesterday: {
+    "*": {
+      "*": {
+        "1": "{number} photos with {=m4}",
+        "2": "{number} photos with {=m4}",
+        "*": "{number} photos with {=m4}"
+      },
+      _1: {
+        "1": "a photo with {=m4}",
+        "2": "a photo with {=m4}",
+        "*": "a photo with {=m4}"
+      }
+    }
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3, fbt._implicitParam("=m4", /*#__PURE__*/React.createElement("strong", null, fbt._({
+  today: {
+    "*": {
+      "*": {
+        "1": "her",
+        "2": "him",
+        "*": "them"
+      },
+      _1: {
+        "1": "her",
+        "2": "him",
+        "*": "them"
+      }
+    }
+  },
+  yesterday: {
+    "*": {
+      "*": {
+        "1": "her",
+        "2": "him",
+        "*": "them"
+      },
+      _1: {
+        "1": "her",
+        "2": "him",
+        "*": "them"
+      }
+    }
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3], {
+  hk: "2UiaDi"
+})))], {
+  hk: "1E4R2l"
+})))], {
+  hk: "1YA7gN"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle JSX fbt with two nested React elements 1`] = `
+"var fbt_sv_arg_0, fbt_sv_arg_1;
+import { fbt } from "fbtee";
+import React from 'react';
+fbt_sv_arg_0 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+  className: "padRight"
+}, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_1 = fbt._plural(this.state.ex1Count, "number"), fbt._({
+  "*": {
+    "*": "{name} has shared {=m2} with you",
+    _1: "{name} has shared {=m2} with you"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
+  className: "neatoLink",
+  href: "#",
+  tabindex: 123,
+  id: "uniq"
+}, fbt._({
+  "*": {
+    "*": "{=m1}",
+    _1: "{=m1}"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("strong", null, fbt._({
+  "*": {
+    "*": "{number} photos",
+    _1: "a photo"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1], {
+  hk: "BNUvh"
+})))], {
+  hk: "1X90MQ"
+})))], {
+  hk: "46j2Ai"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle a JSX fragment nested with fbt.param as an argument 1`] = `
+"var fbt_sv_arg_0;
+import { fbt } from "fbtee";
+import React from 'react';
+var x = (fbt_sv_arg_0 = fbt._subject(subjectValue), fbt._({
+  "*": "A1 {=m1} A2"
+}, [fbt_sv_arg_0, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
+  "*": "B1 {=m1} B2"
+}, [fbt_sv_arg_0, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("b", null, fbt._({
+  "*": "C1 {paramName} C2"
+}, [fbt_sv_arg_0, fbt._param("paramName", paramValue)], {
+  hk: "3BwwfU"
+})))], {
+  hk: "2jJ1x5"
+})))], {
+  hk: "4Byrsa"
+}));"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle duplicate enums 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Look! Groups and groups!",
+  photos: "Look! Photos and photos!",
+  videos: "Look! Videos and videos!"
+}, [fbt._enum('groups', {
+  "groups": "Groups",
+  "photos": "Photos",
+  "videos": "Videos"
+})], {
+  hk: "42UBbJ"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle enums (with array values) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Click to see groups",
+  photos: "Click to see photos",
+  videos: "Click to see videos"
+}, [fbt._enum('groups', {
+  "groups": "groups",
+  "photos": "photos",
+  "videos": "videos"
+})], {
+  hk: "1ScfXo"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle enums (with enum range as variable) 1`] = `
+"import { fbt } from "fbtee";
+var aEnum = require('Test$FbtEnum');
+var x = fbt._({
+  id1: "Click to see groups",
+  id2: "Click to see photos",
+  id3: "Click to see videos"
+}, [fbt._enum('id1', aEnum)], {
+  hk: "1xDhcs"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle enums (with value map) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  id1: "Click to see groups",
+  id2: "Click to see photos",
+  id3: "Click to see videos"
+}, [fbt._enum('id1', {
+  "id1": "groups",
+  "id2": "photos",
+  "id3": "videos"
+})], {
+  hk: "2seglL"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle enums with more text after 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Hello, groups!",
+  photos: "Hello, photos!",
+  videos: "Hello, videos!"
+}, [fbt._enum('groups', {
+  "groups": "groups",
+  "photos": "photos",
+  "videos": "videos"
+})], {
+  hk: "3vnBtJ"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle multiple plurals with no showCount (i.e. no named params) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "There are {number} likes"
+  },
+  _1: {
+    _1: "There is a like"
+  }
+}, [fbt._plural(count), fbt._plural(count, "number")], {
+  hk: "41Uj4v"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle names 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": "You just friended {name}"
+}, [fbt._name("name", personname, gender)], {
+  hk: "Gx1ns"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle object pronoun 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "0": "I know this.",
+  "1": "I know her.",
+  "2": "I know him.",
+  "*": "I know them."
+}, [fbt._pronoun(0, gender)], {
+  hk: "34RsDQ"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle params 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A parameterized message to {personName}", [fbt._param("personName", truthy ? ifTrue : ifFalse)], {
+  hk: "OwweW"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle plurals that have different count variables 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "{cat_token} cats and {dog_token} dogs",
+    _1: "{cat_token} cats and 1 dog"
+  },
+  _1: {
+    "*": "1 cat and {dog_token} dogs",
+    _1: "1 cat and 1 dog"
+  }
+}, [fbt._plural(catCount, "cat_token"), fbt._plural(dogCount, "dog_token")], {
+  hk: "4aQltX"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle plurals that share the same count variable 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "There were {number} likes"
+  },
+  _1: {
+    _1: "There was a like"
+  }
+}, [fbt._plural(count), fbt._plural(count, "number")], {
+  hk: "47YVix"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle possessive pronoun 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "1": "It is her birthday.",
+  "2": "It is his birthday.",
+  "*": "It is their birthday."
+}, [fbt._pronoun(1, gender)], {
+  hk: "2lyIqp"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle subject and reflexive pronouns 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "1": {
+    "1": "She wished herself a happy birthday."
+  },
+  "2": {
+    "2": "He wished himself a happy birthday."
+  },
+  "*": {
+    "*": "They wished themselves a happy birthday."
+  }
+}, [fbt._pronoun(3, gender, {
+  human: 1
+}), fbt._pronoun(2, gender, {
+  human: 1
+})], {
+  hk: "2MyuU3"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle variations + same param 1`] = `
+"import { fbt } from "fbtee";
+var val = 42;
+fbt._({
+  "*": "You have {count} likes. Comment on it to get more than {count} likes"
+}, [fbt._param("count", val, [0])], {
+  hk: "24dKBV"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handle variations 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": "Click to see {count} links"
+}, [fbt._param("count", c, [0])], {
+  hk: "35KbmT"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should handler wrapping parens 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});
+var y = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});
+var q = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should insert param in place of fbt.sameParam if it exists 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("{name1} and {name1}", [fbt._param("name1", val1)], {
+  hk: "t1C6F"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should maintain intra-argument newlines 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("{name1} blah {name2}", [fbt._param("name1", foo ? /*#__PURE__*/React.createElement("a", null, "bar") : qux), fbt._param("name2", qux)], {
+  hk: "3QeQu8"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should maintain newlines when using string templates 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A simple string... with some other stuff.", null, {
+  hk: "4EqKdm"
+});
+baz();"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should maintain newlines within arguments 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("a b {name1} c d {name2} e", [fbt._param("name1", val1), fbt._param("name2", val2)], {
+  hk: "1CrB0g"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should not throw for string with a nested JSX fragment and string variation arguments 1`] = `
+"var fbt_sv_arg_0, fbt_sv_arg_1;
+import { fbt } from "fbtee";
+import React from 'react';
+var x = (fbt_sv_arg_0 = fbt._param("count", someRandomFunction(), [0]), fbt_sv_arg_1 = fbt._plural(catCount, "cat_token", someValueFunction()), fbt._({
+  "*": {
+    "*": "A1 {=m1} A2",
+    _1: "A1 {=m1} A2"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
+  "*": {
+    "*": "B1 {=m1} B2",
+    _1: "B1 {=m1} B2"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("b", null, fbt._({
+  "*": {
+    "*": "C1 {count} C2 {cat_token} cats",
+    _1: "C1 {count} C2 cat"
+  }
+}, [fbt_sv_arg_0, fbt_sv_arg_1], {
+  hk: "2bFaQn"
+})))], {
+  hk: "2snmgP"
+})))], {
+  hk: "2DnOU6"
+}));"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._({
+  "*": "a {name} b"
+}, [fbt._name("name", fbt._("{paramName}", [fbt._param("paramName", val2)], {
+  hk: "3Z0xvC"
+}), gender)], {
+  hk: "4wSLAL"
+});"
+`;
+
+exports[`Functional FBT API using array arguments: Translation transform should respect the doNotExtract option 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A doNotExtract string", null, {
+  hk: "2KTsy7"
+});"
+`;
+
 exports[`Functional FBT API using string-concatenated arguments: Meta-data collection should collect correct meta data for scenario "should accept well-formed options" 1`] = `
 [
   {
@@ -10476,4 +11042,336 @@ FbtElementNode {
   },
   "parent": null,
 }
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should accept well-formed options 1`] = `
+"import { fbt } from "fbtee";
+fbt._("A string that moved files", null, {
+  hk: "r6xXC",
+  project: "Super Secret"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should allow description concatenation 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A short string", null, {
+  hk: "20I8rg"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should be able to nest within React nodes 1`] = `
+"import { fbt } from "fbtee";
+import React from 'react';
+var x = /*#__PURE__*/React.createElement("div", null, fbt._("A nested string", null, {
+  hk: "2Z1yyy"
+}));"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should convert simple strings 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A simple string", null, {
+  hk: "pITkM"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should deduplicate branches when fbt.enum() calls share the same key 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Look! Groups and groups!",
+  photos: "Look! Photos and photos!",
+  videos: "Look! Videos and videos!"
+}, [fbt._enum('groups', {
+  "groups": "Groups",
+  "photos": "Photos",
+  "videos": "Videos"
+})], {
+  hk: "42UBbJ"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should deduplicate branches when fbt.enum() calls share the same key in string templates 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Look! Groups and groups!",
+  photos: "Look! Photos and photos!",
+  videos: "Look! Videos and videos!"
+}, [fbt._enum('groups', {
+  "groups": "Groups",
+  "photos": "Photos",
+  "videos": "Videos"
+})], {
+  hk: "42UBbJ"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should get project from docblock 1`] = `
+"/** @fbt {"project": "dev"}*/
+import { fbt } from "fbtee";
+var x = fbt._("Also simple string", null, {
+  hk: "28mclU",
+  project: "dev"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle duplicate enums 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Look! Groups and groups!",
+  photos: "Look! Photos and photos!",
+  videos: "Look! Videos and videos!"
+}, [fbt._enum('groups', {
+  "groups": "Groups",
+  "photos": "Photos",
+  "videos": "Videos"
+})], {
+  hk: "42UBbJ"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle enums (with array values) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Click to see groups",
+  photos: "Click to see photos",
+  videos: "Click to see videos"
+}, [fbt._enum('groups', {
+  "groups": "groups",
+  "photos": "photos",
+  "videos": "videos"
+})], {
+  hk: "1ScfXo"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle enums (with enum range as variable) 1`] = `
+"import { fbt } from "fbtee";
+var aEnum = require('Test$FbtEnum');
+var x = fbt._({
+  id1: "Click to see groups",
+  id2: "Click to see photos",
+  id3: "Click to see videos"
+}, [fbt._enum('id1', aEnum)], {
+  hk: "1xDhcs"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle enums (with value map) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  id1: "Click to see groups",
+  id2: "Click to see photos",
+  id3: "Click to see videos"
+}, [fbt._enum('id1', {
+  "id1": "groups",
+  "id2": "photos",
+  "id3": "videos"
+})], {
+  hk: "2seglL"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle enums with more text after 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  groups: "Hello, groups!",
+  photos: "Hello, photos!",
+  videos: "Hello, videos!"
+}, [fbt._enum('groups', {
+  "groups": "groups",
+  "photos": "photos",
+  "videos": "videos"
+})], {
+  hk: "3vnBtJ"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle multiple plurals with no showCount (i.e. no named params) 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "There are {number} likes"
+  },
+  _1: {
+    _1: "There is a like"
+  }
+}, [fbt._plural(count), fbt._plural(count, "number")], {
+  hk: "41Uj4v"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle names 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": "You just friended {name}"
+}, [fbt._name("name", personname, gender)], {
+  hk: "Gx1ns"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle object pronoun 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "0": "I know this.",
+  "1": "I know her.",
+  "2": "I know him.",
+  "*": "I know them."
+}, [fbt._pronoun(0, gender)], {
+  hk: "34RsDQ"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle params 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A parameterized message to {personName}", [fbt._param("personName", truthy ? ifTrue : ifFalse)], {
+  hk: "OwweW"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle plurals that have different count variables 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "{cat_token} cats and {dog_token} dogs",
+    _1: "{cat_token} cats and 1 dog"
+  },
+  _1: {
+    "*": "1 cat and {dog_token} dogs",
+    _1: "1 cat and 1 dog"
+  }
+}, [fbt._plural(catCount, "cat_token"), fbt._plural(dogCount, "dog_token")], {
+  hk: "4aQltX"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle plurals that share the same count variable 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": {
+    "*": "There were {number} likes"
+  },
+  _1: {
+    _1: "There was a like"
+  }
+}, [fbt._plural(count), fbt._plural(count, "number")], {
+  hk: "47YVix"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle possessive pronoun 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "1": "It is her birthday.",
+  "2": "It is his birthday.",
+  "*": "It is their birthday."
+}, [fbt._pronoun(1, gender)], {
+  hk: "2lyIqp"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle subject and reflexive pronouns 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "1": {
+    "1": "She wished herself a happy birthday."
+  },
+  "2": {
+    "2": "He wished himself a happy birthday."
+  },
+  "*": {
+    "*": "They wished themselves a happy birthday."
+  }
+}, [fbt._pronoun(3, gender, {
+  human: 1
+}), fbt._pronoun(2, gender, {
+  human: 1
+})], {
+  hk: "2MyuU3"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle variations + same param 1`] = `
+"import { fbt } from "fbtee";
+var val = 42;
+fbt._({
+  "*": "You have {count} likes. Comment on it to get more than {count} likes"
+}, [fbt._param("count", val, [0])], {
+  hk: "24dKBV"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handle variations 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._({
+  "*": "Click to see {count} links"
+}, [fbt._param("count", c, [0])], {
+  hk: "35KbmT"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should handler wrapping parens 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});
+var y = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});
+var q = fbt._("foobarbazqux", null, {
+  hk: "3I3Hbn"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should insert param in place of fbt.sameParam if it exists 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("{name1} and {name1}", [fbt._param("name1", val1)], {
+  hk: "t1C6F"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should maintain intra-argument newlines 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("{name1} blah {name2}", [fbt._param("name1", foo ? /*#__PURE__*/React.createElement("a", null, "bar") : qux), fbt._param("name2", qux)], {
+  hk: "3QeQu8"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should maintain newlines 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A simple string... with some other stuff.", null, {
+  hk: "4EqKdm"
+});
+baz();"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should maintain newlines when using string templates 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A simple string... with some other stuff.", null, {
+  hk: "4EqKdm"
+});
+baz();"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should maintain newlines within arguments 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._("a b {name1} c d {name2} e", [fbt._param("name1", val1), fbt._param("name2", val2)], {
+  hk: "1CrB0g"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name 1`] = `
+"import { fbt } from "fbtee";
+var z = fbt._({
+  "*": "a {name} b"
+}, [fbt._name("name", fbt._("{paramName}", [fbt._param("paramName", val2)], {
+  hk: "3Z0xvC"
+}), gender)], {
+  hk: "4wSLAL"
+});"
+`;
+
+exports[`Functional FBT API using string-concatenated arguments: Translation transform should respect the doNotExtract option 1`] = `
+"import { fbt } from "fbtee";
+var x = fbt._("A doNotExtract string", null, {
+  hk: "2KTsy7"
+});"
 `;

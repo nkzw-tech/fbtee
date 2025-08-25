@@ -1,29 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`fbt pronoun support "capitalize" option accepts boolean literal true 1`] = `
 import { fbt } from "fbtee";
 var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [null],
-      t: {
-        1: {
-          desc: "Capitalized possessive pronoun",
-          text: "Her birthday is today.",
-        },
-        2: {
-          desc: "Capitalized possessive pronoun",
-          text: "His birthday is today.",
-        },
-        "*": {
-          desc: "Capitalized possessive pronoun",
-          text: "Their birthday is today.",
-        },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._pronoun(1, gender)]
+  {
+    1: "Her birthday is today.",
+    2: "His birthday is today.",
+    "*": "Their birthday is today.",
+  },
+  [fbt._pronoun(1, gender)],
+  {
+    hk: "2PfBiX",
+  }
 );
 
 `;
@@ -31,25 +19,19 @@ var x = fbt._(
 exports[`fbt pronoun support Should elide false "human" option from fbt.pronoun() 1`] = `
 import { fbt } from "fbtee";
 var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [null],
-      t: {
-        1: { desc: "Elided false option", text: "Wish her a happy birthday." },
-        2: { desc: "Elided false option", text: "Wish him a happy birthday." },
-        "*": {
-          desc: "Elided false option",
-          text: "Wish them a happy birthday.",
-        },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  {
+    1: "Wish her a happy birthday.",
+    2: "Wish him a happy birthday.",
+    "*": "Wish them a happy birthday.",
+  },
   [
     fbt._pronoun(0, gender, {
       human: 1,
     }),
-  ]
+  ],
+  {
+    hk: "YiRZy",
+  }
 );
 
 `;

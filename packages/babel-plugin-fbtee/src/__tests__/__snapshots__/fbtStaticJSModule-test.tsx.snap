@@ -1,42 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements and raw text 1`] = `
 import { fbt } from "fbtee";
 var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: {
-        desc: "d",
-        text: "{=Where do}{=spaces}{=go?} Good {=question} !",
-        tokenAliases: {
-          "=Where do": "=m0",
-          "=spaces": "=m1",
-          "=go?": "=m2",
-          "=question": "=m4",
-        },
-      },
-    },
-    project: "",
-  } /* __FBT__ end */,
+  "{=m0}{=m1}{=m2} Good {=m4} !",
   [
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
         "span",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
-                text: "Where do",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("Where do", null, {
+          hk: "2UCUDE",
+        })
       )
     ),
     fbt._implicitParam(
@@ -44,18 +20,9 @@ var x = fbt._(
       /*#__PURE__*/ React.createElement(
         "b",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
-                text: "spaces",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("spaces", null, {
+          hk: "99532",
+        })
       )
     ),
     fbt._implicitParam(
@@ -63,18 +30,9 @@ var x = fbt._(
       /*#__PURE__*/ React.createElement(
         "i",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
-                text: "go?",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("go?", null, {
+          hk: "130kuA",
+        })
       )
     ),
     fbt._implicitParam(
@@ -82,21 +40,15 @@ var x = fbt._(
       /*#__PURE__*/ React.createElement(
         "i",
         null,
-        fbt._(
-          /* __FBT__ start */ {
-            jsfbt: {
-              m: [],
-              t: {
-                desc: 'In the phrase: "{=Where do}{=spaces}{=go?} Good {=question} !"',
-                text: "question",
-              },
-            },
-            project: "",
-          } /* __FBT__ end */
-        )
+        fbt._("question", null, {
+          hk: "2K4Jua",
+        })
       )
     ),
-  ]
+  ],
+  {
+    hk: "1hjQfl",
+  }
 );
 
 `;
@@ -107,32 +59,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [null],
-        t: {
-          "*": {
-            desc: "d",
-            text: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=InnerJsx1(plural)sInnerJsx2": "=m3",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=InnerJsx1(plural)InnerJsx2": "=m3",
-            },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "{=m0} RawText {=m2}{=m3}",
+      _1: "{=m0} RawText {=m2}{=m3}",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -141,23 +71,14 @@ var x =
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
-                    text: "OuterJsx1",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
-                    text: "OuterJsx1",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx1",
+              _1: "OuterJsx1",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "3WznBY",
+            }
           )
         )
       ),
@@ -167,23 +88,14 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
-                    text: "OuterJsx2",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
-                    text: "OuterJsx2",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx2",
+              _1: "OuterJsx2",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "30JSgM",
+            }
           )
         )
       ),
@@ -193,24 +105,10 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)sInnerJsx2}"',
-                    text: "{=InnerJsx1}(plural)s{=InnerJsx2}",
-                    tokenAliases: { "=InnerJsx1": "=m1", "=InnerJsx2": "=m3" },
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1(plural)InnerJsx2}"',
-                    text: "{=InnerJsx1}(plural){=InnerJsx2}",
-                    tokenAliases: { "=InnerJsx1": "=m1", "=InnerJsx2": "=m3" },
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
+            {
+              "*": "{=m1}(plural)s{=m3}",
+              _1: "{=m1}(plural){=m3}",
+            },
             [
               fbt_sv_arg_0,
               fbt._implicitParam(
@@ -219,23 +117,14 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
-                            text: "InnerJsx1",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
-                            text: "InnerJsx1",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx1",
+                      _1: "InnerJsx1",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "24btfK",
+                    }
                   )
                 )
               ),
@@ -245,31 +134,28 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural)s{=InnerJsx2}"',
-                            text: "InnerJsx2",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1} RawText {=OuterJsx2}{=InnerJsx1}(plural){=InnerJsx2}"',
-                            text: "InnerJsx2",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx2",
+                      _1: "InnerJsx2",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "13rpFP",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "1Nv3G4",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "2gHC6Z",
+    }
   ));
 
 `;
@@ -280,27 +166,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count, "number")),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [{ singular: true, token: "number", type: 2 }],
-        t: {
-          "*": {
-            desc: "d",
-            text: "{=There should be}{=[number] spaces} !",
-            tokenAliases: {
-              "=There should be": "=m0",
-              "=[number] spaces": "=m1",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "{=There should be}{=a space} !",
-            tokenAliases: { "=There should be": "=m0", "=a space": "=m1" },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "{=m0}{=m1} !",
+      _1: "{=m0}{=m1} !",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -309,23 +178,14 @@ var x =
           "span",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [{ singular: true, token: "number", type: 2 }],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=There should be}{=[number] spaces} !"',
-                    text: "There should be",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=There should be}{=a space} !"',
-                    text: "There should be",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "There should be",
+              _1: "There should be",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "9ccJh",
+            }
           )
         )
       ),
@@ -335,27 +195,21 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [{ singular: true, token: "number", type: 2 }],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=There should be}{=[number] spaces} !"',
-                    text: "{number} spaces",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=There should be}{=a space} !"',
-                    text: "a space",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "{number} spaces",
+              _1: "a space",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "1tuYe0",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "15ZlDy",
+    }
   ));
 
 `;
@@ -366,34 +220,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [null],
-        t: {
-          "*": {
-            desc: "d",
-            text: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression":
-                "=m3",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression":
-                "=m3",
-            },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "{=m0}textInJSXExpression{=m2}{=m3}",
+      _1: "{=m0}textInJSXExpression{=m2}{=m3}",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -402,23 +232,14 @@ var x =
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "OuterJsx1",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "OuterJsx1",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx1",
+              _1: "OuterJsx1",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "4i3hty",
+            }
           )
         )
       ),
@@ -428,23 +249,14 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "OuterJsx2",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "OuterJsx2",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx2",
+              _1: "OuterJsx2",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "gfvaj",
+            }
           )
         )
       ),
@@ -454,24 +266,10 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)stextInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression",
-                    tokenAliases: { "=InnerJsx1": "=m2", "=InnerJsx2": "=m7" },
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}{=rawText textInJSXExpressionInnerJsx1textInJSXExpression(plural)textInJSXExpressionInnerJsx2textInJSXExpression}"',
-                    text: "rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression",
-                    tokenAliases: { "=InnerJsx1": "=m2", "=InnerJsx2": "=m7" },
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
+            {
+              "*": "rawText textInJSXExpression{=m2}textInJSXExpression(plural)stextInJSXExpression{=m7}textInJSXExpression",
+              _1: "rawText textInJSXExpression{=m2}textInJSXExpression(plural)textInJSXExpression{=m7}textInJSXExpression",
+            },
             [
               fbt_sv_arg_0,
               fbt._implicitParam(
@@ -480,23 +278,14 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
-                            text: "InnerJsx1",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
-                            text: "InnerJsx1",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx1",
+                      _1: "InnerJsx1",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "1x2Bnp",
+                    }
                   )
                 )
               ),
@@ -506,31 +295,28 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)stextInJSXExpression{=InnerJsx2}textInJSXExpression"',
-                            text: "InnerJsx2",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1}textInJSXExpression{=OuterJsx2}rawText textInJSXExpression{=InnerJsx1}textInJSXExpression(plural)textInJSXExpression{=InnerJsx2}textInJSXExpression"',
-                            text: "InnerJsx2",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx2",
+                      _1: "InnerJsx2",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "1xtOBl",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "20dibT",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "4f83iT",
+    }
   ));
 
 `;
@@ -541,32 +327,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [null],
-        t: {
-          "*": {
-            desc: "d",
-            text: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=InnerJsx1 (plural)s InnerJsx2 InnerJsx3": "=m3",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m2",
-              "=InnerJsx1 (plural) InnerJsx2 InnerJsx3": "=m3",
-            },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "{=m0} {=m2}{=m3}",
+      _1: "{=m0} {=m2}{=m3}",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -575,23 +339,14 @@ var x =
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
-                    text: "OuterJsx1",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
-                    text: "OuterJsx1",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx1",
+              _1: "OuterJsx1",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "2mmfyN",
+            }
           )
         )
       ),
@@ -601,23 +356,14 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
-                    text: "OuterJsx2",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
-                    text: "OuterJsx2",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx2",
+              _1: "OuterJsx2",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "Hdu8h",
+            }
           )
         )
       ),
@@ -627,32 +373,10 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural)s InnerJsx2 InnerJsx3}"',
-                    text: "{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}",
-                    tokenAliases: {
-                      "=InnerJsx1": "=m2",
-                      "=InnerJsx2": "=m6",
-                      "=InnerJsx3": "=m8",
-                    },
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1 (plural) InnerJsx2 InnerJsx3}"',
-                    text: "{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}",
-                    tokenAliases: {
-                      "=InnerJsx1": "=m2",
-                      "=InnerJsx2": "=m6",
-                      "=InnerJsx3": "=m8",
-                    },
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
+            {
+              "*": "{=m2} (plural)s {=m6} {=m8}",
+              _1: "{=m2} (plural) {=m6} {=m8}",
+            },
             [
               fbt_sv_arg_0,
               fbt._implicitParam(
@@ -661,23 +385,14 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx1",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx1",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx1",
+                      _1: "InnerJsx1",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "4C7fcW",
+                    }
                   )
                 )
               ),
@@ -687,23 +402,14 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx2",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx2",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx2",
+                      _1: "InnerJsx2",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "3jKBRy",
+                    }
                   )
                 )
               ),
@@ -713,31 +419,28 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural)s {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx3",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1} {=OuterJsx2}{=InnerJsx1} (plural) {=InnerJsx2} {=InnerJsx3}"',
-                            text: "InnerJsx3",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx3",
+                      _1: "InnerJsx3",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "c0FbP",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "1LC9MD",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "2mKrhF",
+    }
   ));
 
 `;
@@ -748,32 +451,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [null],
-        t: {
-          "*": {
-            desc: "d",
-            text: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m1",
-              "=InnerJsx1(plural)s rawText": "=m2",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}",
-            tokenAliases: {
-              "=OuterJsx1": "=m0",
-              "=OuterJsx2": "=m1",
-              "=InnerJsx1(plural) rawText": "=m2",
-            },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "{=m0}{=m1}{=m2}",
+      _1: "{=m0}{=m1}{=m2}",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -782,23 +463,14 @@ var x =
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
-                    text: "OuterJsx1",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
-                    text: "OuterJsx1",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx1",
+              _1: "OuterJsx1",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "1EWqrj",
+            }
           )
         )
       ),
@@ -808,23 +480,14 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
-                    text: "OuterJsx2",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
-                    text: "OuterJsx2",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "OuterJsx2",
+              _1: "OuterJsx2",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "wXKn7",
+            }
           )
         )
       ),
@@ -834,24 +497,10 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural)s rawText}"',
-                    text: "{=InnerJsx1}(plural)s rawText",
-                    tokenAliases: { "=InnerJsx1": "=m2" },
-                  },
-                  _1: {
-                    desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1(plural) rawText}"',
-                    text: "{=InnerJsx1}(plural) rawText",
-                    tokenAliases: { "=InnerJsx1": "=m2" },
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
+            {
+              "*": "{=m2}(plural)s rawText",
+              _1: "{=m2}(plural) rawText",
+            },
             [
               fbt_sv_arg_0,
               fbt._implicitParam(
@@ -860,76 +509,61 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural)s rawText"',
-                            text: "InnerJsx1",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "{=OuterJsx1}{=OuterJsx2}{=InnerJsx1}(plural) rawText"',
-                            text: "InnerJsx1",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "InnerJsx1",
+                      _1: "InnerJsx1",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "qALb9",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "48kyWu",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "4owcY6",
+    }
   ));
 
 `;
 
 exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 1`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "two lines", text: "one line" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("one line", null, {
+  hk: "GzUkS",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 2`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "two spaces", text: "one space" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("one space", null, {
+  hk: "20Ivrq",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 1`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "one space", text: "two spaces" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("two spaces", null, {
+  hk: "3yJQ6I",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 2`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "one line", text: "two lines" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("two lines", null, {
+  hk: "frweo",
+});
 
 `;
 
@@ -939,30 +573,10 @@ import { fbt } from "fbtee";
 var x =
   ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
   fbt._(
-    /* __FBT__ start */ {
-      jsfbt: {
-        m: [null],
-        t: {
-          "*": {
-            desc: "d",
-            text: "outerText {=outerJsx}{=innerJsx innerText (plural)s}",
-            tokenAliases: {
-              "=outerJsx": "=m1",
-              "=innerJsx innerText (plural)s": "=m2",
-            },
-          },
-          _1: {
-            desc: "d",
-            text: "outerText {=outerJsx}{=innerJsx innerText (plural)}",
-            tokenAliases: {
-              "=outerJsx": "=m1",
-              "=innerJsx innerText (plural)": "=m2",
-            },
-          },
-        },
-      },
-      project: "",
-    } /* __FBT__ end */,
+    {
+      "*": "outerText {=m1}{=m2}",
+      _1: "outerText {=m1}{=m2}",
+    },
     [
       fbt_sv_arg_0,
       fbt._implicitParam(
@@ -971,23 +585,14 @@ var x =
           "a",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
-                    text: "outerJsx",
-                  },
-                  _1: {
-                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
-                    text: "outerJsx",
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
-            [fbt_sv_arg_0]
+            {
+              "*": "outerJsx",
+              _1: "outerJsx",
+            },
+            [fbt_sv_arg_0],
+            {
+              hk: "1UvHDM",
+            }
           )
         )
       ),
@@ -997,24 +602,10 @@ var x =
           "b",
           null,
           fbt._(
-            /* __FBT__ start */ {
-              jsfbt: {
-                m: [null],
-                t: {
-                  "*": {
-                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)s}"',
-                    text: "{=innerJsx} innerText (plural)s",
-                    tokenAliases: { "=innerJsx": "=m1" },
-                  },
-                  _1: {
-                    desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx innerText (plural)}"',
-                    text: "{=innerJsx} innerText (plural)",
-                    tokenAliases: { "=innerJsx": "=m1" },
-                  },
-                },
-              },
-              project: "",
-            } /* __FBT__ end */,
+            {
+              "*": "{=m1} innerText (plural)s",
+              _1: "{=m1} innerText (plural)",
+            },
             [
               fbt_sv_arg_0,
               fbt._implicitParam(
@@ -1023,75 +614,60 @@ var x =
                   "i",
                   null,
                   fbt._(
-                    /* __FBT__ start */ {
-                      jsfbt: {
-                        m: [null],
-                        t: {
-                          "*": {
-                            desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)s"',
-                            text: "innerJsx",
-                          },
-                          _1: {
-                            desc: 'In the phrase: "outerText {=outerJsx}{=innerJsx} innerText (plural)"',
-                            text: "innerJsx",
-                          },
-                        },
-                      },
-                      project: "",
-                    } /* __FBT__ end */,
-                    [fbt_sv_arg_0]
+                    {
+                      "*": "innerJsx",
+                      _1: "innerJsx",
+                    },
+                    [fbt_sv_arg_0],
+                    {
+                      hk: "3AsEj4",
+                    }
                   )
                 )
               ),
-            ]
+            ],
+            {
+              hk: "3aHsRR",
+            }
           )
         )
       ),
-    ]
+    ],
+    {
+      hk: "1K3ejM",
+    }
   ));
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace in desc when requested 1`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "two\\nlines", text: "one line" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("one line", null, {
+  hk: "3zpJiU",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace in desc when requested 2`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "two  spaces", text: "one space" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("one space", null, {
+  hk: "4sRHxS",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace in text when requested 1`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "one line", text: "two\\nlines" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("two\\nlines", null, {
+  hk: "PeIvU",
+});
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace in text when requested 2`] = `
 import { fbt } from "fbtee";
-var x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: { m: [], t: { desc: "one space", text: "two  spaces" } },
-    project: "",
-  } /* __FBT__ end */
-);
+var x = fbt._("two  spaces", null, {
+  hk: "EwXmv",
+});
 
 `;

@@ -1,16 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<fbt:list> 1`] = `
 import { fbt } from "fbtee";
 const x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "Lists", text: "Available Locations: {locations}." },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._list("locations", ["Tokyo", "London", "Vienna"])]
+  "Available Locations: {locations}.",
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"])],
+  {
+    hk: "1b9IBP",
+  }
 );
 
 `;
@@ -18,14 +15,11 @@ const x = fbt._(
 exports[`<fbt:list> 2`] = `
 import { fbt } from "fbtee";
 const x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "Lists", text: "Available Locations: {locations}." },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "and")]
+  "Available Locations: {locations}.",
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "and")],
+  {
+    hk: "1b9IBP",
+  }
 );
 
 `;
@@ -33,14 +27,11 @@ const x = fbt._(
 exports[`<fbt:list> 3`] = `
 import { fbt } from "fbtee";
 const x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "Lists", text: "Available Locations: {locations}." },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "bullet")]
+  "Available Locations: {locations}.",
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "bullet")],
+  {
+    hk: "1b9IBP",
+  }
 );
 
 `;
@@ -48,14 +39,11 @@ const x = fbt._(
 exports[`<fbt:list> 4`] = `
 import { fbt } from "fbtee";
 const x = fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "Lists", text: "Available Locations: {locations}." },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "or", "bullet")]
+  "Available Locations: {locations}.",
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], "or", "bullet")],
+  {
+    hk: "1b9IBP",
+  }
 );
 
 `;
@@ -63,14 +51,11 @@ const x = fbt._(
 exports[`fbt.list() 1`] = `
 import { fbt } from "fbtee";
 fbt._(
-  /* __FBT__ start */ {
-    jsfbt: {
-      m: [],
-      t: { desc: "Lists", text: "Available Locations: {locations}" },
-    },
-    project: "",
-  } /* __FBT__ end */,
-  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "or")]
+  "Available Locations: {locations}",
+  [fbt._list("locations", ["Tokyo", "London", "Vienna"], null, "or")],
+  {
+    hk: "19372u",
+  }
 );
 
 `;

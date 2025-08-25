@@ -120,9 +120,9 @@ export default class JSXFbtProcessor {
   /**
    * @returns the description of the <fbt> as a , or null if it's a common string.
    */
-  _getDescription(texts: ArrayExpression): StringLiteral | Expression {
+  private getDescription(texts: ArrayExpression): StringLiteral | Expression {
     const { moduleName, node } = this;
-    const commonAttributeValue = this._getCommonAttributeValue();
+    const commonAttributeValue = this.getCommonAttributeValue();
     let desc;
 
     if (commonAttributeValue && commonAttributeValue.value) {
@@ -157,14 +157,14 @@ export default class JSXFbtProcessor {
       }
       desc = stringLiteral(descValue);
     } else {
-      desc = this._getDescAttributeValue();
+      desc = this.getDescAttributeValue();
     }
     return desc;
   }
 
-  _getOptions(): ObjectExpression | null {
+  private getOptions(): ObjectExpression | null {
     const attributes = this.node.openingElement.attributes;
-    this._assertHasMandatoryAttributes();
+    this.assertHasMandatoryAttributes();
     const options =
       attributes.length > 0
         ? getOptionsFromAttributes(
@@ -176,7 +176,7 @@ export default class JSXFbtProcessor {
     return (options?.properties.length ?? 0) > 0 ? options : null;
   }
 
-  _assertHasMandatoryAttributes() {
+  private assertHasMandatoryAttributes() {
     if (
       !this.node.openingElement.attributes.some(
         (attribute) =>
@@ -194,7 +194,7 @@ export default class JSXFbtProcessor {
     }
   }
 
-  _createFbtFunctionCallNode({
+  private createFbtFunctionCallNode({
     desc,
     options,
     text,
@@ -223,11 +223,11 @@ export default class JSXFbtProcessor {
     return callNode;
   }
 
-  _assertNoNestedFbts() {
+  private assertNoNestedFbts() {
     this.nodeChecker.assertNoNestedFbts(this.node);
   }
 
-  _transformChildrenForFbtCallSyntax(): Array<
+  private transformChildrenForFbtCallSyntax(): Array<
     CallExpression | JSXElement | StringLiteral
   > {
     this.path.traverse({
@@ -304,7 +304,7 @@ export default class JSXFbtProcessor {
     });
   }
 
-  _getDescAttributeValue(): Expression {
+  private getDescAttributeValue(): Expression {
     const { moduleName } = this;
     const descAttr = getAttributeByNameOrThrow(this.node, 'desc');
     const { node } = this;
@@ -329,7 +329,7 @@ export default class JSXFbtProcessor {
     );
   }
 
-  _getCommonAttributeValue(): null | BooleanLiteral {
+  private getCommonAttributeValue(): null | BooleanLiteral {
     const commonAttr = getAttributeByName(this.node, CommonOption);
     if (commonAttr == null) {
       return null;
@@ -356,18 +356,18 @@ export default class JSXFbtProcessor {
   }
 
   /**
-   * This method mutates the current node
+   * This method mutates the current node.
    */
   convertToFbtFunctionCallNode(_phraseIndex: number) {
-    this._assertNoNestedFbts();
-    const children = this._transformChildrenForFbtCallSyntax();
+    this.assertNoNestedFbts();
+    const children = this.transformChildrenForFbtCallSyntax();
     const text = this._getText(children);
-    const description = this._getDescription(text);
+    const description = this.getDescription(text);
 
     this.path.replaceWith(
-      this._createFbtFunctionCallNode({
+      this.createFbtFunctionCallNode({
         desc: description,
-        options: this._getOptions(),
+        options: this.getOptions(),
         text,
       }),
     );

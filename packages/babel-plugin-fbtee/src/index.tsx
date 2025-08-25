@@ -28,7 +28,6 @@ export { default as fbtHashKey } from './fbtHashKey.tsx';
 export { default as replaceClearTokensWithTokenAliases } from './replaceClearTokensWithTokenAliases.tsx';
 export { mapLeaves } from './JSFbtUtil.tsx';
 export { ModuleName, BindingNames } from './FbtConstants.tsx';
-export { SENTINEL } from './FbtConstants.tsx';
 export type { FbtTableKey, PatternHash, PatternString };
 export type { TranslationGroup } from './bin/translateUtils.tsx';
 
@@ -62,7 +61,6 @@ export type PluginOptions = {
   // without doing any further processing on them.
   // We only accept plain string literals as option values at the moment.
   extraOptions: FbtOptionConfig;
-  fbtBase64?: boolean;
   fbtCommon?: FbtCommonMap | null;
   // Function that would return an fbt manifest object
   fbtEnumManifest?: EnumManifest | null;
@@ -213,21 +211,6 @@ export default function transform() {
       childToParent = new Map();
     },
     visitor: {
-      /**
-       * Transform fbt("text", "desc", {project: "project"}) to semantically:
-       *
-       * fbt._(
-       *   SENTINEL +
-       *   JSON.stringify({
-       *     jsfbt: {
-       *      text: "text",
-       *      desc: "desc",
-       *     },
-       *     project: "project",
-       *   }) +
-       *   SENTINEL
-       * );
-       */
       CallExpression(path: NodePath<CallExpression>) {
         const visitor = toVisitor(this) ? this : null;
         if (!visitor) {

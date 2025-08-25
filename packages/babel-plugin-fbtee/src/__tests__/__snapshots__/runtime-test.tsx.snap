@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Test enum hash keys generation should generate single hash key for fbt with enum under regular mode 1`] = `
 "import { fbt } from "fbtee";
 fbt._({
-  "a": "Foo A",
-  "b": "Foo B",
-  "c": "Foo C"
+  a: "Foo A",
+  b: "Foo B",
+  c: "Foo C"
 }, [fbt._enum('a', {
   "a": "A",
   "b": "B",
@@ -40,7 +40,7 @@ fbt._("{two lines} test", [fbt._param("two lines", /*#__PURE__*/React.createElem
 });"
 `;
 
-exports[`Test hash key generation should generate hash key for simply string 1`] = `
+exports[`Test hash key generation should generate hash key for simple string 1`] = `
 "import { fbt } from "fbtee";
 fbt._("Foo", null, {
   hk: "3ktBJ2"
@@ -52,15 +52,15 @@ exports[`Test replacing clear token names with mangled tokens 1`] = `
 import { fbt } from "fbtee";
 fbt_sv_arg_0 = fbt._plural(ex1.count, "number"), fbt._({
   "*": "{=m0} friends {=m2}{number} photos",
-  "_1": "{=m0} friends {=m2} a photo"
+  _1: "{=m0} friends {=m2} a photo"
 }, [fbt_sv_arg_0, fbt._implicitParam("=m0", /*#__PURE__*/React.createElement("b", null, fbt._({
   "*": "Your",
-  "_1": "Your"
+  _1: "Your"
 }, [fbt_sv_arg_0], {
   hk: "3AIVHA"
 }))), fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("b", null, fbt._({
   "*": "shared",
-  "_1": "shared"
+  _1: "shared"
 }, [fbt_sv_arg_0], {
   hk: "3CHy8o"
 })))], {

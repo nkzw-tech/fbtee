@@ -1,21 +1,20 @@
 import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import { describe, it } from '@jest/globals';
-import fbtee from '@nkzw/babel-plugin-fbtee';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
-import { withFbtImportStatement } from '@nkzw/babel-plugin-fbtee/src/__tests__/FbtTestUtil.tsx';
-import fbteeRuntime from '../index.tsx';
+import fbtee from '../index.tsx';
+import { withFbtImportStatement } from './FbtTestUtil.tsx';
 
 const transform = (source: string) =>
   transformSync(source, {
     ast: false,
-    plugins: [fbtAutoImport, fbtee, fbteeRuntime],
+    plugins: [fbtAutoImport, fbtee],
     presets: [presetReact],
     sourceType: 'module',
   })?.code || '';
 
 describe('Test hash key generation', () => {
-  it('should generate hash key for simply string', () => {
+  it('should generate hash key for simple string', () => {
     expect(
       transform(
         withFbtImportStatement(`

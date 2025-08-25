@@ -23,8 +23,6 @@ export type FbtCallSiteOptions = Partial<{
 
 export type ValidPronounUsagesKey = keyof typeof ValidPronounUsages;
 
-export const SENTINEL = '__FBT__';
-
 export const PluralRequiredAttributes = {
   count: true,
 } as const;

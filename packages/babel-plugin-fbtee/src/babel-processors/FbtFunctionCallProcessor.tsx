@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer';
 import type { NodePath } from '@babel/core';
 import {
   ArgumentPlaceholder,
@@ -16,11 +15,15 @@ import {
   jsxExpressionContainer,
   memberExpression,
   Node,
+  nullLiteral,
+  objectExpression,
+  objectProperty,
   Program,
   SequenceExpression,
   sequenceExpression,
   SpreadElement,
   stringLiteral,
+  valueToNode,
   variableDeclaration,
   variableDeclarator,
 } from '@babel/types';
@@ -36,7 +39,6 @@ import type {
   FbtCallSiteOptions,
   FbtOptionConfig,
 } from '../FbtConstants.tsx';
-import { SENTINEL } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
@@ -46,11 +48,14 @@ import {
   errorAt,
   varDump,
 } from '../FbtUtil.tsx';
-import type {
-  ObjectWithJSFBT,
-  PluginOptions,
-  TableJSFBTTree,
-  TableJSFBTTreeLeaf,
+import {
+  fbtHashKey,
+  mapLeaves,
+  replaceClearTokensWithTokenAliases,
+  type ObjectWithJSFBT,
+  type PluginOptions,
+  type TableJSFBTTree,
+  type TableJSFBTTreeLeaf,
 } from '../index.tsx';
 import JSFbtBuilder from '../JSFbtBuilder.tsx';
 import nullthrows from '../nullthrows.tsx';
@@ -58,11 +63,7 @@ import addLeafToTree from '../utils/addLeafToTree.tsx';
 
 type CallExpressionPath = NodePath<CallExpression>;
 
-export type FbtFunctionCallPhrase = FbtCallSiteOptions & ObjectWithJSFBT;
-
-export type SentinelPayload = ObjectWithJSFBT & {
-  project: string;
-};
+type FbtFunctionCallPhrase = FbtCallSiteOptions & ObjectWithJSFBT;
 
 export type MetaPhrase = {
   compactStringVariations: CompactStringVariations;
@@ -187,30 +188,33 @@ export default class FbtFunctionCallProcessor {
     stringVariationRuntimeArgs: StringVariationRuntimeArgumentNodes,
   ): CallExpression {
     const { phrase } = metaPhrases[metaPhraseIndex];
-    const { pluginOptions } = this;
+    const { jsfbt, project } = phrase;
 
-    // 1st argument - Sentinel Payload
-    const argsOutput = JSON.stringify({
-      jsfbt: phrase.jsfbt,
-      project: phrase.project,
-    } as SentinelPayload);
-    const encodedOutput =
-      pluginOptions.fbtBase64 === true
-        ? Buffer.from(argsOutput).toString('base64')
-        : argsOutput;
     const args: Array<Expression | SpreadElement | ArgumentPlaceholder> = [
-      stringLiteral(SENTINEL + encodedOutput + SENTINEL),
+      valueToNode(
+        mapLeaves(jsfbt.t, (leaf) =>
+          replaceClearTokensWithTokenAliases(leaf.text, leaf.tokenAliases),
+        ),
+      ),
     ];
 
-    // 2nd argument - `FbtTableArgs` in the fbt runtime calls
     const fbtRuntimeArgs = this._createFbtRuntimeArgumentsForMetaPhrase(
       metaPhrases,
       metaPhraseIndex,
       stringVariationRuntimeArgs,
     );
-    if (fbtRuntimeArgs.length > 0) {
-      args.push(arrayExpression(fbtRuntimeArgs));
-    }
+
+    args.push(
+      fbtRuntimeArgs.length > 0
+        ? arrayExpression(fbtRuntimeArgs)
+        : nullLiteral(),
+      objectExpression([
+        objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
+        ...(project != null && project != ''
+          ? [objectProperty(identifier('project'), valueToNode(project))]
+          : []),
+      ]),
+    );
 
     return callExpression(
       memberExpression(identifier(this.moduleName), identifier('_')),

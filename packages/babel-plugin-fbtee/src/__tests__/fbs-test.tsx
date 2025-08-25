@@ -1,10 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import TestFbtEnumManifest from '../__mocks__/TestFbtEnumManifest.tsx';
-import {
-  jsCodeFbtCallSerializer,
-  snapshotTransform,
-  withFbsImportStatement,
-} from './FbtTestUtil.tsx';
+import { jsCodeFbtCallSerializer, snapshotTransform } from './FbtTestUtil.tsx';
+
+const withFbsImportStatement = (code: string) => `import { fbs } from "fbtee";
+  ${code}`;
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 

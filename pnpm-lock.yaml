@@ -232,31 +232,6 @@ importers:
         specifier: workspace:*
         version: link:../babel-plugin-fbtee
 
-  packages/babel-plugin-fbtee-runtime:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.0
-        version: 7.28.0
-      '@babel/preset-react':
-        specifier: ^7.27.1
-        version: 7.27.1(@babel/core@7.28.0)
-      '@babel/traverse':
-        specifier: ^7.28.0
-        version: 7.28.0
-      '@babel/types':
-        specifier: ^7.28.2
-        version: 7.28.2
-      '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:*
-        version: link:../babel-plugin-fbtee
-      invariant:
-        specifier: ^2.2.4
-        version: 2.2.4
-    devDependencies:
-      '@nkzw/babel-plugin-fbtee-auto-import':
-        specifier: workspace:*
-        version: link:../babel-plugin-fbtee-auto-import
-
   packages/babel-preset-fbtee:
     dependencies:
       '@nkzw/babel-plugin-fbtee':
@@ -265,9 +240,6 @@ importers:
       '@nkzw/babel-plugin-fbtee-auto-import':
         specifier: workspace:*
         version: link:../babel-plugin-fbtee-auto-import
-      '@nkzw/babel-plugin-fbtee-runtime':
-        specifier: workspace:*
-        version: link:../babel-plugin-fbtee-runtime
 
   packages/eslint-plugin-fbtee:
     dependencies:
@@ -284,9 +256,6 @@ importers:
       '@nkzw/babel-plugin-fbtee':
         specifier: workspace:*
         version: link:../babel-plugin-fbtee
-      '@nkzw/babel-plugin-fbtee-runtime':
-        specifier: workspace:*
-        version: link:../babel-plugin-fbtee-runtime
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
