@@ -20,7 +20,7 @@ jobs:
       deployments: write
     strategy:
       matrix:
-        node-version: [24]
+        node-version: [24.5]
 
     steps:
       - uses: actions/checkout@v4
