@@ -27,11 +27,11 @@
     "build": "tsdown src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --dts"
   },
   "dependencies": {
-    "@babel/core": "^7.28.0",
-    "@babel/generator": "^7.28.0",
+    "@babel/core": "^7.28.3",
+    "@babel/generator": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
-    "@babel/traverse": "^7.28.0",
+    "@babel/traverse": "^7.28.3",
     "@babel/types": "^7.28.2",
     "@nkzw/babel-plugin-fbtee-auto-import": "workspace:*",
     "invariant": "^2.2.4",
@@ -42,6 +42,6 @@
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.27.1",
     "@types/babel__core": "^7.20.5",
-    "@types/babel__traverse": "^7.20.7"
+    "@types/babel__traverse": "^7.28.0"
   }
 }

@@ -8,13 +8,14 @@ packages:
   - website
 
 onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
   - esbuild
   - unrs-resolver
 
 overrides:
-  react-dom@^19: ^19.1.0
-  react-is: ^19.1.0
-  react@^19: ^19.1.0
+  react-dom@^19: ^19.1.1
+  react-is: ^19.1.1
+  react@^19: ^19.1.1
 
 updateConfig:
   ignoreDependencies:

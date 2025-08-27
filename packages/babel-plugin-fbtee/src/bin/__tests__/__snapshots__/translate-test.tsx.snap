@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should not throw on missing translations 1`] = `
 [
