@@ -1,7 +1,6 @@
 /// <reference types="../../ReactTypes.d.ts" />
 
 import { describe, expect, it } from '@jest/globals';
-import React from 'react';
 import { fbs } from '../index.tsx';
 import setupFbtee from '../setupFbtee.tsx';
 import IntlViewerContext from '../ViewerContext.tsx';
