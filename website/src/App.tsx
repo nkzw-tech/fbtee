@@ -311,7 +311,7 @@ export default function App() {
         count={messageCount}
         many="messages"
         name="messageCount"
-        showCount="yes"
+        showCount="ifMany"
       >
         one message
       </fbt:plural>.
@@ -829,9 +829,9 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
     count={itemCount}
     many="items"
     name="itemCount"
-    showCount="yes"
+    showCount="ifMany"
   >
-    an item
+    one item
   </fbt:plural>
   in your cart.
 </fbt>

@@ -328,17 +328,13 @@ const Greeting = () => (
 ```tsx
 <fbt desc="Feed item">
   <fbt:list items={users} name="userList" />{' '}
-  <fbt:plural
-    count={users.length}
-    many="are"
-    name="number of players"
-    showCount="no"
-  >
-    is
-  </fbt:plural>{' '}
-  playing on
-  <fbt:param name="mapName">{game.mapName}</fbt:param>
-</fbt>
+  won the game against
+  <fbt:plural count={bots} many="bots" name="numberOfBots" showCount="ifMany">
+    a bot
+  </fbt:plural> on the map
+  <fbt:param name="mapName">{game.mapName}</fbt:param>.
+</fbt:plural>
+// Example Output: "Alice, Bob and Charlie won the game against 2 bots on the map Forest Battle."
 ```
 
 _Note: `<fbt>` is auto-imported for you by the `@nkzw/babel-preset-fbtee` plugin._
