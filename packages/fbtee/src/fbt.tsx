@@ -2,7 +2,7 @@
 
 import type { FbtTableKey, PatternString } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import FbtResult from './FbtResult.tsx';
 import type {
   ParamVariationType,

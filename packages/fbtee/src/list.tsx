@@ -1,7 +1,6 @@
 /// <reference types="../ReactTypes.d.ts" />
 
-import invariant from 'invariant';
-import { isValidElement, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import fbt from './fbt.tsx';
 import type { FbtConjunction, FbtDelimiter } from './Types.ts';
 
@@ -15,15 +14,6 @@ export default function list(
   fbt;
 
   items = items.filter(Boolean);
-
-  if (process.env.NODE_ENV === 'development') {
-    for (const item of items) {
-      invariant(
-        typeof item === 'string' || isValidElement(item),
-        `Must provide a string or ReactComponent to '<fbt:list>'.`,
-      );
-    }
-  }
 
   const count = items.length;
   if (count === 0) {

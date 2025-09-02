@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, ReactPortal } from 'react';
+import type { ReactElement, ReactNode, ReactPortal } from 'react';
 import GenderConst from './GenderConst.tsx';
 import IntlVariations from './IntlVariations.tsx';
 

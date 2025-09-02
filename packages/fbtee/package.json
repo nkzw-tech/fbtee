@@ -31,6 +31,11 @@
     },
     "./ReactTypes.d.ts": {
       "types": "./ReactTypes.d.ts"
+    },
+    "./server": {
+      "types": "./lib/index-server.d.ts",
+      "import": "./lib/index-server.js",
+      "default": "./lib/index-server.js"
     }
   },
   "main": "lib/index.js",
