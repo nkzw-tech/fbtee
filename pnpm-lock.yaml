@@ -80,8 +80,8 @@ importers:
         specifier: ^24.3.1
         version: 24.3.1
       '@types/prettier-2':
-        specifier: npm:@types/prettier@^3.0.0
-        version: '@types/prettier@3.0.0'
+        specifier: npm:@types/prettier@^2.0.0
+        version: '@types/prettier@2.7.3'
       '@types/react':
         specifier: ^19.1.12
         version: 19.1.12
@@ -116,8 +116,8 @@ importers:
         specifier: ^3.6.2
         version: 3.6.2
       prettier-2:
-        specifier: npm:prettier@^3.6.2
-        version: prettier@3.6.2
+        specifier: npm:prettier@^2.8.8
+        version: prettier@2.8.8
       prettier-plugin-packagejson:
         specifier: ^2.5.19
         version: 2.5.19(prettier@3.6.2)
@@ -1698,9 +1698,8 @@ packages:
   '@types/node@24.3.1':
     resolution: {integrity: sha512-3vXmQDXy+woz+gnrTvuvNrPzekOi+Ds0ReMxw0LzBiK3a+1k0kQn9f2NWk+lgD4rJehFUmYy2gMhJ2ZI+7YP9g==}
 
-  '@types/prettier@3.0.0':
-    resolution: {integrity: sha512-mFMBfMOz8QxhYVbuINtswBp9VL2b4Y0QqYHwqLz3YbgtfAcat2Dl6Y1o4e22S/OVE6Ebl9m7wWiMT2lSbAs1wA==}
-    deprecated: This is a stub types definition. prettier provides its own type definitions, so you do not need this installed.
+  '@types/prettier@2.7.3':
+    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
 
   '@types/react-dom@19.1.9':
     resolution: {integrity: sha512-qXRuZaOsAdXKFyOhRBg6Lqqc0yay13vN7KrIg4L7N4aaHN68ma9OK3NE1BoDFgFOTfM7zg+3/8+2n8rLUH3OKQ==}
@@ -3623,6 +3622,11 @@ packages:
         optional: true
       prettier-plugin-svelte:
         optional: true
+
+  prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
 
   prettier@3.6.2:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
@@ -5682,9 +5686,7 @@ snapshots:
     dependencies:
       undici-types: 7.10.0
 
-  '@types/prettier@3.0.0':
-    dependencies:
-      prettier: 3.6.2
+  '@types/prettier@2.7.3': {}
 
   '@types/react-dom@19.1.9(@types/react@19.1.12)':
     dependencies:
@@ -7923,6 +7925,8 @@ snapshots:
     optionalDependencies:
       '@ianvs/prettier-plugin-sort-imports': 4.7.0(@prettier/plugin-oxc@0.0.4)(prettier@3.6.2)
       '@prettier/plugin-oxc': 0.0.4
+
+  prettier@2.8.8: {}
 
   prettier@3.6.2: {}
 
