@@ -303,7 +303,7 @@ export default function App() {
             </h2>
           </div>
           <Code
-            code={`const WelcomeMessage = ({ user }) => (
+            code={`const WelcomeMessage = ({ messageCount, user }) => (
   <div>
     <fbt desc="Welcome message with user component">
       Welcome back, <UserWithAvatar user={user} />!
@@ -315,7 +315,6 @@ export default function App() {
       >
         one message
       </fbt:plural>.
-      Check out your <Link href="/dashboard">dashboard</Link>.
     </fbt>
   </div>
 );`}
