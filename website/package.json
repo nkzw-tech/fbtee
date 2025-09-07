@@ -34,13 +34,13 @@
   },
   "devDependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.2",
     "babel-plugin-react-compiler": "19.1.0-rc.3",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^4.1.13",
     "vite": "^7.1.4"
   }
 }
