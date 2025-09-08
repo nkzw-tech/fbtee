@@ -10,7 +10,7 @@ import type {
   FbtErrorContext,
   IFbtErrorListener,
   NestedFbtContentItems,
-  PureStringResult,
+  PlainStringResult,
 } from './Types.ts';
 import IntlViewerContext from './ViewerContext.tsx';
 
@@ -86,7 +86,7 @@ export type FbtImpressionOptions = {
 
 export type Hooks = Partial<{
   errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
-  getFbsResult: ResolverFn<PureStringResult>;
+  getFbsResult: ResolverFn<PlainStringResult>;
   getFbtResult: ResolverFn<FbtResult>;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
@@ -103,7 +103,7 @@ export default {
     contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
-  ): PureStringResult {
+  ): PlainStringResult {
     const { getFbsResult } = _registrations;
     if (!getFbsResult) {
       throw new Error(`Hooks: 'getFbsResult' is not registered`);

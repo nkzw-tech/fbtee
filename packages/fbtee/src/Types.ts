@@ -56,7 +56,7 @@ export type FbtCollection = Fbt | ReadonlyArray<Fbt>;
 export type FbtContentItem =
   | boolean
   | FbtElement
-  | PureStringResult
+  | PlainStringResult
   | FbtString
   | null
   | number
@@ -110,11 +110,11 @@ export type BaseResult = {
   toJSON(): string;
 };
 
-export type PureStringResult = BaseResult;
+export type PlainStringResult = string | BaseResult;
 
 // Represents the input of an fbt.param
 type FbtParamInput = ReactNode;
-export type FbsParamInput = PureStringResult | string;
+export type FbsParamInput = PlainStringResult | string;
 
 // Represents the output of an fbt.param, fbt.enum, etc...
 // It's voluntarily not an accurate representation of the real output.

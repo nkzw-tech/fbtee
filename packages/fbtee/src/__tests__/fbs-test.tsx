@@ -16,6 +16,8 @@ describe('fbs', () => {
   describe('when using plain text contents', () => {
     describe('with a basic text', () => {
       it('fbs() should work', () => {
+        expect(typeof fbs('Hello world', 'some desc')).toBe('string');
+
         expect(
           fbs('Hello world', 'some desc').toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);

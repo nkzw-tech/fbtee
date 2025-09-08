@@ -6,6 +6,6 @@ export default function getFbsResult(
   contents: NestedFbtContentItems,
   hashKey: PatternHash | null | undefined,
   errorListener: IFbtErrorListener | null,
-): FbtPureStringResult {
-  return new FbtPureStringResult(contents, errorListener, hashKey);
+) {
+  return String(new FbtPureStringResult(contents, errorListener, hashKey));
 }
