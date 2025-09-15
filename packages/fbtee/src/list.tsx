@@ -8,6 +8,7 @@ export default function list(
   items: ReadonlyArray<string | ReactElement | null | undefined>,
   conjunction: FbtConjunction = 'and',
   delimiter: FbtDelimiter = 'comma',
+  serialComma: boolean = false,
 ): ReactNode {
   // Ensure the local version of `fbt` is used instead of auto-importing `fbtee`.
   // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
@@ -57,19 +58,39 @@ export default function list(
 
   switch (conjunction) {
     case 'and':
+      if (serialComma && delimiter === 'comma' && count > 2) {
+        return (
+          <fbt desc='A list of items of various types with a serial comma, for example: "item1, item2, and item3"'>
+            <fbt:param name="list of items">{output}</fbt:param>
+            {', and '}
+            <fbt:param name="last item">{lastItem}</fbt:param>
+          </fbt>
+        );
+      }
+
       return (
         <fbt desc='A list of items of various types, for example: "item1, item2, item3 and item4"'>
           <fbt:param name="list of items">{output}</fbt:param>
-          and
+          {' and '}
           <fbt:param name="last item">{lastItem}</fbt:param>
         </fbt>
       );
 
     case 'or':
+      if (serialComma && delimiter === 'comma' && count > 2) {
+        return (
+          <fbt desc='A list of items of various types with a serial comma, for example: "item1, item2, or item3"'>
+            <fbt:param name="list of items">{output}</fbt:param>
+            {', or '}
+            <fbt:param name="last item">{lastItem}</fbt:param>
+          </fbt>
+        );
+      }
+
       return (
         <fbt desc='A list of items of various types, for example: "item1, item2, item3 or item4"'>
           <fbt:param name="list of items">{output}</fbt:param>
-          or
+          {' or '}
           <fbt:param name="last item">{lastItem}</fbt:param>
         </fbt>
       );
@@ -113,10 +134,12 @@ export function List({
   conjunction,
   delimiter,
   items,
+  serialComma,
 }: {
   conjunction?: FbtConjunction;
   delimiter?: FbtDelimiter;
   items: Array<string | React.ReactElement | null | undefined>;
+  serialComma?: boolean;
 }) {
-  return list(items, conjunction, delimiter);
+  return list(items, conjunction, delimiter, serialComma);
 }
