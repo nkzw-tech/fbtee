@@ -62,37 +62,47 @@ describe('list', () => {
       );
     });
     it('should use serial comma when serialComma is true for three items', () => {
-      expect(list(['first', 'second', 'third'], 'and', 'comma', true)).toBe(
-        'first, second, and third',
-      );
+      expect(
+        list(['first', 'second', 'third'], 'and', 'comma', {
+          serialComma: true,
+        }),
+      ).toBe('first, second, and third');
     });
     it('should use serial comma when serialComma is true for multiple items', () => {
-      expect(list(['1', '2', '3', '4'], 'and', 'comma', true)).toBe(
-        '1, 2, 3, and 4',
-      );
+      expect(
+        list(['1', '2', '3', '4'], 'and', 'comma', { serialComma: true }),
+      ).toBe('1, 2, 3, and 4');
     });
     it('should use serial comma with "or" conjunction', () => {
-      expect(list(['first', 'second', 'third'], 'or', 'comma', true)).toBe(
-        'first, second, or third',
-      );
+      expect(
+        list(['first', 'second', 'third'], 'or', 'comma', {
+          serialComma: true,
+        }),
+      ).toBe('first, second, or third');
     });
     it('should not affect two-item lists', () => {
-      expect(list(['first', 'second'], 'and', 'comma', true)).toBe(
-        'first and second',
-      );
+      expect(
+        list(['first', 'second'], 'and', 'comma', { serialComma: true }),
+      ).toBe('first and second');
     });
     it('should not affect single-item lists', () => {
-      expect(list(['first'], 'and', 'comma', true)).toBe('first');
+      expect(list(['first'], 'and', 'comma', { serialComma: true })).toBe(
+        'first',
+      );
     });
     it('should not use serial comma with non-comma delimiters', () => {
-      expect(list(['first', 'second', 'third'], 'and', 'semicolon', true)).toBe(
-        'first; second and third',
-      );
+      expect(
+        list(['first', 'second', 'third'], 'and', 'semicolon', {
+          serialComma: true,
+        }),
+      ).toBe('first; second and third');
     });
     it('should not use serial comma with "none" conjunction', () => {
-      expect(list(['first', 'second', 'third'], 'none', 'comma', true)).toBe(
-        'first, second, third',
-      );
+      expect(
+        list(['first', 'second', 'third'], 'none', 'comma', {
+          serialComma: true,
+        }),
+      ).toBe('first, second, third');
     });
   });
 });
