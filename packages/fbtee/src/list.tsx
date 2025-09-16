@@ -71,7 +71,7 @@ export default function list(
       return (
         <fbt desc='A list of items of various types, for example: "item1, item2, item3 and item4"'>
           <fbt:param name="list of items">{output}</fbt:param>
-          {' and '}
+          and
           <fbt:param name="last item">{lastItem}</fbt:param>
         </fbt>
       );
@@ -90,7 +90,7 @@ export default function list(
       return (
         <fbt desc='A list of items of various types, for example: "item1, item2, item3 or item4"'>
           <fbt:param name="list of items">{output}</fbt:param>
-          {' or '}
+          or
           <fbt:param name="last item">{lastItem}</fbt:param>
         </fbt>
       );
