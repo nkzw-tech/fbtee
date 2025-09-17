@@ -28,6 +28,6 @@
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
     "@vitejs/plugin-react": "^5.0.2",
     "invariant": "^2.2.4",
-    "vite": "^7.1.4"
+    "vite": "^7.1.5"
   }
 }
