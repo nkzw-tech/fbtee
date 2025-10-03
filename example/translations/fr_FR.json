@@ -1,0 +1,977 @@
+{
+  "fb-locale": "fr_FR",
+  "translations": {
+    "f9df2DVor1ccX0uzZbuDVQ==": {
+      "description": "title",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Votre démo FBT",
+          "variations": {}
+        }
+      ]
+    },
+    "PvA+AsZdpZXw81g/J3Ow0Q==": {
+      "description": "header",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Construire des phrases",
+          "variations": {}
+        }
+      ]
+    },
+    "2TyGkzVNJtXrFsOOeLJHmg==": {
+      "description": "Header title",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Utilisez le formulaire ci-dessous pour voir FBT en action.",
+          "variations": {}
+        }
+      ]
+    },
+    "HusiL84DARy+8jiK7kc7qg==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Votre genre :",
+          "variations": {}
+        }
+      ]
+    },
+    "aRgFYYwtEkSHmVCxJMiHQQ==": {
+      "description": "Unknown gender",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Inconnu",
+          "variations": {}
+        }
+      ]
+    },
+    "ljoRgg3SRs0vzbkgFv1tSA==": {
+      "description": "Male gender",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Masculin",
+          "variations": {}
+        }
+      ]
+    },
+    "gAWLgPJCoT4RWZyEUmFM+A==": {
+      "description": "Female gender",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Féminin",
+          "variations": {}
+        }
+      ]
+    },
+    "JBhJwfCe2TutVvTr9c9HLw==": {
+      "description": "name field",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "nom",
+          "variations": {}
+        }
+      ]
+    },
+    "K4iveOd+Z8ZNF2cfxBO+kw==": {
+      "description": "count field",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "nombre",
+          "variations": {}
+        }
+      ]
+    },
+    "DFDZjshVSmmTwi62nfXNfQ==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Genre :",
+          "variations": {}
+        }
+      ]
+    },
+    "gVKMc/8jq5vnYR5v2bb32g==": {
+      "description": "example 1",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a partagé {=[number] photos} avec vous",
+          "variations": {}
+        }
+      ]
+    },
+    "PqPPir8Kg9xSlqdednPFOg==": {
+      "description": "example 1",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a partagé {=a photo} avec vous",
+          "variations": {}
+        }
+      ]
+    },
+    "tYYOLLMbffdJQQlSVEVv/A==": {
+      "description": "In the phrase: \"{name} has shared {=[number] photos} with you\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{number} photos",
+          "variations": {}
+        }
+      ]
+    },
+    "Q9mOAQ+ogHG20z2QkEkNmQ==": {
+      "description": "In the phrase: \"{name} has shared {=a photo} with you\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "une photo",
+          "variations": {}
+        }
+      ]
+    },
+    "CcRrycO18VroWvGAcg0u7w==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Pas une personne",
+          "variations": {}
+        }
+      ]
+    },
+    "1zt7aP/cVQqI5IyAJQku8w==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Inconnu (pluriel)",
+          "variations": {}
+        }
+      ]
+    },
+    "Pcdu2jt+bnKzFRSeBLICcQ==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Inconnu (singulier)",
+          "variations": {}
+        }
+      ]
+    },
+    "+DJQa/brVSQ5ial+3ta3gg==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Masculin (singulier)",
+          "variations": {}
+        }
+      ]
+    },
+    "+jPpJbvCzEnvvfpvTTRVdg==": {
+      "description": "Gender Select label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Féminin (singulier)",
+          "variations": {}
+        }
+      ]
+    },
+    "Yjqpv79V3JSE255LFP0AAA==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a un lien à partager ! {=View} son lien.",
+          "variations": {}
+        }
+      ]
+    },
+    "pmznwyWXEqrG9HZwb5aGsQ==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a un lien à partager ! {=View} son lien.",
+          "variations": {}
+        }
+      ]
+    },
+    "/JQB0l8rEd+B7ae/lcLlVg==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a un lien à partager ! {=Voir} son lien.",
+          "variations": {}
+        }
+      ]
+    },
+    "fS9yqVLDDYOA627Xuxrxvw==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une page à partager ! {=Voir} sa page.",
+          "variations": {}
+        }
+      ]
+    },
+    "1gXZoVTrxY6d3TSX5/KrXg==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une page à partager ! {=Voir} sa page.",
+          "variations": {}
+        }
+      ]
+    },
+    "ocUjztl+ZCTxysGLukn+kw==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une page à partager ! {=Voir} sa page.",
+          "variations": {}
+        }
+      ]
+    },
+    "z67lDQSKUy/LXrqrRHj3aw==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une photo à partager ! {=Voir} sa photo.",
+          "variations": {}
+        }
+      ]
+    },
+    "1PKQnkF/lWmk79Tv/ys24A==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une photo à partager ! {=Voir} sa photo.",
+          "variations": {}
+        }
+      ]
+    },
+    "95jC7mDsBpqzCbCA3504zw==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une photo à partager ! {=Voir} sa photo.",
+          "variations": {}
+        }
+      ]
+    },
+    "7y2mltlG5nn8ihCz2AK1AQ==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une publication à partager ! {=Voir} sa publication.",
+          "variations": {}
+        }
+      ]
+    },
+    "FT9sU8nTJmNxzV6HXQDOdA==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une publication à partager ! {=Voir} sa publication.",
+          "variations": {}
+        }
+      ]
+    },
+    "Izavl3nyjFZGvIPhvrJYMA==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une publication à partager ! {=Voir} sa publication.",
+          "variations": {}
+        }
+      ]
+    },
+    "9fe4WrzDx/G3g9xlON2txA==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une vidéo à partager ! {=Voir} sa vidéo.",
+          "variations": {}
+        }
+      ]
+    },
+    "I3OyaQ+VNY1GA++1dByInA==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une vidéo à partager ! {=Voir} sa vidéo.",
+          "variations": {}
+        }
+      ]
+    },
+    "N4hL52x52Phrk/Bzp1RkTg==": {
+      "description": "Example enum & pronoun",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{name} a une vidéo à partager ! {=Voir} sa vidéo.",
+          "variations": {}
+        }
+      ]
+    },
+    "+Owe0R1Wgj++SFlrgb3vIg==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} her link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "q1N+TrH4hB6rKcUCIvn0LA==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} his link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "SstLBRSU3v7yXGZsOxZjfA==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} their link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "Fh9O2R9Ecm7yAu9A3DkE9Q==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} her page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "FAiBPkgSJICLgZnkc2PE1g==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} his page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "+GIAo9dvEfv5V1574993kQ==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} their page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "zNiUtG0pPyYDiWhQhd8m5g==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} her photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "QmD55w5xaIZyL7KH6IiL/g==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} his photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "kFRDiDKN3KACFyC0YzbdDg==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} their photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "U/ajWfEsN4CQrHpGY/vrjg==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} her post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "dM0FrjIfxfJN9ssJ+3KuiA==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} his post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "MV5PidWM4Z+cPo0rqGfplA==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} their post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "GZrheYAXDr0g8K9k2uDWKA==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} her video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "UdOsPgT8LuNeE+cmSqU8hw==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} his video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "D87XJZSHjYQzRdfgvXwPMg==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} their video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=Voir}",
+          "variations": {}
+        }
+      ]
+    },
+    "kWoh+a8Q6EYN5VFiM40S7g==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} her link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "HYOiaHtMv4SZkQ1G4kJzXg==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} his link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "vC7YhdaCftXBXQ/fitVzXw==": {
+      "description": "In the phrase: \"{name} has a link to share! {=View} their link.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "2g/nu1wXuAprwkG0x4g2Sg==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} her page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "WTvjwq3MRRlwqCfYcX7mPw==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} his page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "PY1wTdwttmhzWyQcxs2pjw==": {
+      "description": "In the phrase: \"{name} has a page to share! {=View} their page.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "kyOdXxi5Nw1ONx5Mv5NR0Q==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} her photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "0V7ZnHNmh24KOTMXet6egA==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} his photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "sN74Xit9wwCnSYYz1TrF0w==": {
+      "description": "In the phrase: \"{name} has a photo to share! {=View} their photo.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "62QihzloOzTvYfmN4kGi1g==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} her post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "pb4CFZWkRPo5gG05ZpMq+A==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} his post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "xV4+VPr3bTc8rxKqq1nvqw==": {
+      "description": "In the phrase: \"{name} has a post to share! {=View} their post.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "8K2CwVTkZPiVRBcu2gFh4A==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} her video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "HtVslFb7gTHOErVosGI4JQ==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} his video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "NZayMjBYVOrnk/YJIHEeMw==": {
+      "description": "In the phrase: \"{name} has a video to share! {=View} their video.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voir",
+          "variations": {}
+        }
+      ]
+    },
+    "E9cv0amPwjV70PBD0XyIAw==": {
+      "description": "List example.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Voulez-vous partager {list} ?",
+          "variations": {}
+        }
+      ]
+    },
+    "XWOy1r8lQxGmBtCn03YSnQ==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "photo",
+          "variations": {}
+        }
+      ]
+    },
+    "Z1GfhhBITgeqZUQ1GgP35Q==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "lien",
+          "variations": {}
+        }
+      ]
+    },
+    "GzijBgnhfi6GiUsHFZlY7Q==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "vidéo",
+          "variations": {}
+        }
+      ]
+    },
+    "AqPBSvlIt0d3coakQBEMpg==": {
+      "description": "Sign up button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Essayer",
+          "variations": {}
+        }
+      ]
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{number}+"
+        }
+      ]
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "<{number}"
+        }
+      ]
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{previous items} ; {following items}"
+        }
+      ]
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{previous items} • {following items}"
+        }
+      ]
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{previous items}, {following items}"
+        }
+      ]
+    },
+    "5hL7VXOBVnetm46YAjpX0g==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, and item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} et {last item}"
+        }
+      ]
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} et {last item}"
+        }
+      ]
+    },
+    "8kLAQ3ffiiFnQ/bWPqXfuQ==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, or item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} ou {last item}"
+        }
+      ]
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} ou {last item}"
+        }
+      ]
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{previous items} ; {last item}"
+        }
+      ]
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} • {last item}"
+        }
+      ]
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items}, {last item}"
+        }
+      ]
+    }
+  }
+}
