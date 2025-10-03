@@ -1,5 +1,7 @@
 import type { PluginItem } from '@babel/core';
 import { transformSync } from '@babel/core';
+import babelPluginProposalDecorators from '@babel/plugin-proposal-decorators';
+import presetEnv from '@babel/preset-env';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
@@ -72,8 +74,14 @@ const transform = (
     ast: false,
     code: false,
     filename: options.filename,
-    plugins: [fbtAutoImport, [fbt, options], ...plugins],
+    plugins: [
+      fbtAutoImport,
+      [fbt, options],
+      ...plugins,
+      [babelPluginProposalDecorators, { version: '2023-11' }],
+    ],
     presets: [
+      presetEnv,
       presetTypescript,
       [
         presetReact,
