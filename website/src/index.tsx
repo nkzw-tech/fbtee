@@ -13,6 +13,12 @@ const loadLocale = async (locale: string) => {
       return (await import('./translations/ja_JP.json')).default.ja_JP;
     case 'de_DE':
       return (await import('./translations/de_DE.json')).default.de_DE;
+    case 'es_ES':
+      return (await import('./translations/es_LA.json')).default.es_LA;
+    case 'ru_RU':
+      return (await import('./translations/ru_RU.json')).default.ru_RU;
+    case 'fb_HX':
+      return (await import('./translations/fb_HX.json')).default.fb_HX;
     default: {
       return {};
     }
