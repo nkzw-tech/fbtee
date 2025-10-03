@@ -1203,411 +1203,411 @@
     },
     "mljjlBaFU7/a0alt8QYBTw==": {
       "description": "Better about fbtee description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Originally created by Facebook, rewritten from the ground up.",
-          "variations": {}
+          "variations": {},
+          "translation": "أُنشِئ أصلًا بواسطة Facebook، وأُعيدت كتابته من الصفر."
         }
-      ],
-      "types": []
+      ]
     },
     "O4dWPo3ZP2Le5kFxOBp5fg==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Easier Setup",
-          "variations": {}
+          "variations": {},
+          "translation": "إعداد أسهل"
         }
-      ],
-      "types": []
+      ]
     },
     "2T8pLseRrxvsEYAQZWnKQQ==": {
       "description": "Easier setup description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Works seamlessly with modern tools like Vite, Next.js, and Expo.",
-          "variations": {}
+          "variations": {},
+          "translation": "يعمل بسلاسة مع أدوات حديثة مثل Vite وNext.js وExpo."
         }
-      ],
-      "types": []
+      ]
     },
     "ZU4cF/6HC+9uU8j2zPMYJw==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Statically Typed",
-          "variations": {}
+          "variations": {},
+          "translation": "أنواع ثابتة"
         }
-      ],
-      "types": []
+      ]
     },
     "3Lme3LwrPYIJ13kApHX5zw==": {
       "description": "Statically typed description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Full TypeScript support with compiler validation and ESLint plugin.",
-          "variations": {}
+          "variations": {},
+          "translation": "دعم كامل لـTypeScript مع تحقّق المُصرّف وإضافة ESLint."
         }
-      ],
-      "types": []
+      ]
     },
     "z64a79xidr/j2RPVZXNgxQ==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Improved React Compatibility",
-          "variations": {}
+          "variations": {},
+          "translation": "توافق مُحسَّن مع React"
         }
-      ],
-      "types": []
+      ]
     },
     "tQGcI/JqTXLW7BmX0vV90A==": {
       "description": "React compatibility description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Support for React fragments, Server Components, and modern patterns.",
-          "variations": {}
+          "variations": {},
+          "translation": "يدعم React Fragments ومكونات الخادم والأنماط الحديثة."
         }
-      ],
-      "types": []
+      ]
     },
     "bclZ6HQ/qt7YnodyNeQEhA==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Enhanced Features",
-          "variations": {}
+          "variations": {},
+          "translation": "ميزات مُحسَّنة"
         }
-      ],
-      "types": []
+      ]
     },
     "1+qnimygwe1q6HM2Eij1Zg==": {
       "description": "Enhanced features description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Fixed and exported intlList as functional <fbt:list> component.",
-          "variations": {}
+          "variations": {},
+          "translation": "تم إصلاح intlList وتصديره كمكوّن وظيفي <fbt:list>."
         }
-      ],
-      "types": []
+      ]
     },
     "T9g23EMIfyPFcMkYXYWh3A==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Modernized Codebase",
-          "variations": {}
+          "variations": {},
+          "translation": "قاعدة شيفرة مُحدَّثة"
         }
-      ],
-      "types": []
+      ]
     },
     "92Ftcxxod+ZPVI7Zx/7Acg==": {
       "description": "Modernized codebase description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Rewritten in TypeScript with ESM and modern JavaScript standards.",
-          "variations": {}
+          "variations": {},
+          "translation": "أُعيدت كتابتها بـTypeScript مع ESM ومعايير JavaScript الحديثة."
         }
-      ],
-      "types": []
+      ]
     },
     "IA4h9W2Xt60cOsujxn9Cgg==": {
       "description": "Feature title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Updated Tooling",
-          "variations": {}
+          "variations": {},
+          "translation": "أدوات مُحدَّثة"
         }
-      ],
-      "types": []
+      ]
     },
     "hcCHpPR8LpIq4Fn6EQu/VA==": {
       "description": "Updated tooling description",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Uses pnpm, Vite, and esbuild for faster, more efficient development.",
-          "variations": {}
+          "variations": {},
+          "translation": "يستخدم pnpm وVite وesbuild لتطوير أسرع وأكثر كفاءة."
         }
-      ],
-      "types": []
+      ]
     },
     "pBJxNIfBaxv6/UMhf+aJEA==": {
       "description": "Tagline",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Far Better Translations, Extended Edition",
-          "variations": {}
+          "variations": {},
+          "translation": "ترجمات أفضل بكثير، الإصدار الموسَّع"
         }
-      ],
-      "types": []
+      ]
     },
     "nfAmxL08ysZoiBF4jhamSQ==": {
       "description": "Footer section title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Resources",
-          "variations": {}
+          "variations": {},
+          "translation": "الموارد"
         }
-      ],
-      "types": []
+      ]
     },
     "vR9BuJzB+B7s3dCVypDlww==": {
       "description": "Link text",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Next.js Example",
-          "variations": {}
+          "variations": {},
+          "translation": "مثال Next.js"
         }
-      ],
-      "types": []
+      ]
     },
     "QYKnZ4YgDLWkUdq7cpQkhQ==": {
       "description": "Footer section title",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Templates",
-          "variations": {}
+          "variations": {},
+          "translation": "القوالب"
         }
-      ],
-      "types": []
+      ]
     },
     "TIuY8tk+15dcL3ZAAQP2wg==": {
       "description": "Link text",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Web App Template",
-          "variations": {}
+          "variations": {},
+          "translation": "قالب تطبيق ويب"
         }
-      ],
-      "types": []
+      ]
     },
     "2xjuG69JR0hAj0T9tzkDFA==": {
       "description": "Link text",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Expo App Template",
-          "variations": {}
+          "variations": {},
+          "translation": "قالب تطبيق Expo"
         }
-      ],
-      "types": []
+      ]
     },
     "bu70QyRYJVrMa600vgiEuw==": {
       "description": "Footer credit",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Originally created by Facebook • Maintained by {=Nakazawa Tech}",
-          "variations": {}
+          "variations": {},
+          "translation": "أُنشِئ أصلًا بواسطة Facebook • تتم صيانته بواسطة {=Nakazawa Tech}"
         }
-      ],
-      "types": []
+      ]
     },
     "VNNXf1SGDLLfoxNjWNMqrg==": {
       "description": "In the phrase: \"Originally created by Facebook • Maintained by {=Nakazawa Tech}\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Nakazawa Tech",
-          "variations": {}
+          "variations": {},
+          "translation": "Nakazawa Tech"
         }
-      ],
-      "types": []
+      ]
     },
     "3p2EdDkpFI0G0wt2Q/55Aw==": {
       "description": "Button label",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Star on GitHub",
-          "variations": {}
+          "variations": {},
+          "translation": "امنح نجمة على GitHub"
         }
-      ],
-      "types": []
+      ]
     },
     "IYUmtYxQtGdt1MucjXrsVA==": {
       "description": "Label with meaning 'at least number'",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{number}+",
-          "variations": {}
+          "variations": {},
+          "translation": "{number}+"
         }
-      ],
-      "types": []
+      ]
     },
     "ZIF1WhVQwt7WZJvFTEbMWw==": {
       "description": "Label with meaning 'less than number'",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "<{number}",
-          "variations": {}
+          "variations": {},
+          "translation": "<{number}"
         }
-      ],
-      "types": []
+      ]
     },
     "Oc/9PrbjfyLHS60BXceD1A==": {
       "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}; {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}؛ {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "AXXbKEUZuc0ji1IClRrOOw==": {
       "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items} • {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items} • {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "89ACgPMtnwlLDSeqhLBx2Q==": {
       "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}, {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}، {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "5hL7VXOBVnetm46YAjpX0g==": {
       "description": "A list of items of various types with a serial comma, for example: \"item1, item2, and item3\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items}, and {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items}، و{last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "icNetEL/crQv/PS6yhySVQ==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} and {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} و{last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "8kLAQ3ffiiFnQ/bWPqXfuQ==": {
       "description": "A list of items of various types with a serial comma, for example: \"item1, item2, or item3\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items}, or {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items}، أو {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "8eSaAzrWtAqn9ktNKfkaEg==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} or {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} أو {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "+IBI7kr/mMKdzp+3stDvkw==": {
       "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}; {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}؛ {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "55IeE8c0qqtjTU0lo7q9AA==": {
       "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} • {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} • {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "6PRJS0QalZfvaN8CkKCUCw==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items}, {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items}، {last item}"
         }
-      ],
-      "types": []
+      ]
     }
   }
 }

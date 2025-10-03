@@ -1444,15 +1444,39 @@
     },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Sprache ändern",
-          "variations": {}
+          "variations": {},
+          "translation": "Sprache ändern"
         }
-      ],
-      "types": []
+      ]
+    },
+    "5hL7VXOBVnetm46YAjpX0g==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, and item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} und {last item}"
+        }
+      ]
+    },
+    "8kLAQ3ffiiFnQ/bWPqXfuQ==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, or item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} oder {last item}"
+        }
+      ]
     }
   }
 }
