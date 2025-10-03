@@ -592,9 +592,7 @@
       "types": []
     },
     "tYYOLLMbffdJQQlSVEVv/A==": {
-      "tokens": [
-        "number"
-      ],
+      "tokens": ["number"],
       "translations": [
         {
           "translation": "صورتين",
@@ -633,9 +631,7 @@
           }
         }
       ],
-      "types": [
-        28
-      ]
+      "types": [28]
     },
     "vC7YhdaCftXBXQ/fitVzXw==": {
       "tokens": [],

@@ -352,9 +352,7 @@
       "types": []
     },
     "PqPPir8Kg9xSlqdednPFOg==": {
-      "tokens": [
-        "name"
-      ],
+      "tokens": ["name"],
       "translations": [
         {
           "translation": "{name} поделилась с вами {=a photo}",
@@ -375,9 +373,7 @@
           }
         }
       ],
-      "types": [
-        3
-      ]
+      "types": [3]
     },
     "PvA+AsZdpZXw81g/J3Ow0Q==": {
       "tokens": [],
@@ -510,9 +506,7 @@
       "types": []
     },
     "gVKMc/8jq5vnYR5v2bb32g==": {
-      "tokens": [
-        "name"
-      ],
+      "tokens": ["name"],
       "translations": [
         {
           "translation": "{name} поделился с вами {=[number] photos}",
@@ -533,9 +527,7 @@
           }
         }
       ],
-      "types": [
-        3
-      ]
+      "types": [3]
     },
     "kFRDiDKN3KACFyC0YzbdDg==": {
       "tokens": [],
