@@ -1,0 +1,1613 @@
+{
+  "fb-locale": "ar_AR",
+  "translations": {
+    "6/ZbJcEx19aXKls64qknkg==": {
+      "description": "Locale switcher button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "تغيير اللغة",
+          "variations": {}
+        }
+      ]
+    },
+    "YXGG6IGB2IcE4Azra7zpCw==": {
+      "description": "fbtee tagline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "إطار عمل لتدويل تطبيقات JavaScript وReact صُمم ليكون {=powerful} و{=flexible} و{=intuitive}.",
+          "variations": {}
+        }
+      ]
+    },
+    "mKv/nNNGtziUDs2ICowcZA==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "قوي",
+          "variations": {}
+        }
+      ]
+    },
+    "Y8tdcisumiuBSWlTlz1ToQ==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "مرن",
+          "variations": {}
+        }
+      ]
+    },
+    "a3ruXfPRZE9V0OoG50TZsA==": {
+      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "بديهي",
+          "variations": {}
+        }
+      ]
+    },
+    "pOl7oSFgfjVk20HI5NuAaA==": {
+      "description": "Get started button label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "ابدأ الآن",
+          "variations": {}
+        }
+      ]
+    },
+    "MQD9HBoX6W0fWQVvw/tYqw==": {
+      "description": "Button label",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "عرض على GitHub",
+          "variations": {}
+        }
+      ]
+    },
+    "DYwuzHoJKPdWasr4FKf8+Q==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "لماذا تختار {=fbtee}؟",
+          "variations": {}
+        }
+      ]
+    },
+    "DIiWZ+8sgakov9aJHRmWSQ==": {
+      "description": "In the phrase: \"Why choose {=fbtee}?\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ]
+    },
+    "um7IOz7hqqi2EOts+SPEWw==": {
+      "description": "Tagline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "تدويل حديث يتكيف مع نمو تطبيقك.",
+          "variations": {}
+        }
+      ]
+    },
+    "r332atz0zpj1tPYHA9bxLg==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "الترجمة المضمنة",
+          "variations": {}
+        }
+      ]
+    },
+    "xVlfN3WYeu1Z0UX4Co25jg==": {
+      "description": "Inline translations description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "أدرج الترجمات مباشرة في الشيفرة الخاصة بك دون الحاجة لإدارة مفاتيح الترجمة أو استخدام دوال t().",
+          "variations": {}
+        }
+      ]
+    },
+    "1s2Ppp4gtg5utziIfKWtug==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "مجرب في الإنتاج",
+          "variations": {}
+        }
+      ]
+    },
+    "C+fvuSEWW3TxUfTPTEoFEA==": {
+      "description": "Proven in production description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "مبني على fbt من Facebook، ويخدم مليارات المستخدمين منذ أكثر من عقد في بيئات إنتاج حقيقية.",
+          "variations": {}
+        }
+      ]
+    },
+    "9Qp9rwPj9B1F36GjFZqbMQ==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "أداء محسن",
+          "variations": {}
+        }
+      ]
+    },
+    "xH73MTwKNro8J46F2hG8jg==": {
+      "description": "Optimized performance description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "يحوّل الترجمات إلى تمثيل وسيط (IR) لاستخراج العبارات، ثم يحسن المخرجات في وقت التشغيل.",
+          "variations": {}
+        }
+      ]
+    },
+    "hXmKlD2ro3KLyZIwIUvTXg==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "سهولة الإعداد",
+          "variations": {}
+        }
+      ]
+    },
+    "K2NyOS9g4YXJmAVF+9J/4A==": {
+      "description": "Easy setup description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "التكامل السريع مع أدوات مثل Babel وVite يمكّنك من البدء فوراً.",
+          "variations": {}
+        }
+      ]
+    },
+    "CetlqOO8fxjko5CtDavVnw==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=fbtee} قيد العمل",
+          "variations": {}
+        }
+      ]
+    },
+    "f3OCQH2RlTCTxEEnQq01sQ==": {
+      "description": "In the phrase: \"{=fbtee} in Action\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ]
+    },
+    "uWlp6qxnGSj1kcOcgCAs5A==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "البدء",
+          "variations": {}
+        }
+      ]
+    },
+    "3MJoDuZ8IyRaQfkP3dVIwQ==": {
+      "description": "Getting started description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "اختر الطريقة التي تفضلها للبدء مع {=fbtee}.",
+          "variations": {}
+        }
+      ]
+    },
+    "X0lAzogS5rVBbC+bH9rx2A==": {
+      "description": "In the phrase: \"Choose your preferred way to start with {=fbtee}.\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ]
+    },
+    "tWliywddMrGpPnQl/Lmzkg==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "قوالب بداية سريعة",
+          "variations": {}
+        }
+      ]
+    },
+    "B8nYsgdtEH5ECx+d/uwAkg==": {
+      "description": "Quick start templates description",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "وفّر عناء الإعداد! هذه القوالب تأتي مع {=fbtee} مُجهز وجاهز للاستخدام:",
+          "variations": {}
+        }
+      ]
+    },
+    "HOI4qkpGnEfVV7IWRVVhMw==": {
+      "description": "In the phrase: \"Skip the setup hassle! These templates come with {=fbtee} pre-configured and ready to go:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "DMCQ1tp7mc+EZ55+71TdUA==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قالب تطبيق الويب",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T45ZbBruXjGB/by5xOR7ow==": {
+      "description": "Web app template description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إعداد متكامل لتطبيق ويب باستخدام Vite وReact",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+cCnj8bOzMV+WbaBvtN0sg==": {
+      "description": "Use template link",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "استخدم القالب",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "gdAiCCpPwzIulcmoDbooEg==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قالب Expo للتطبيقات",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nlLGLYi/l3Pbrx7034dXOQ==": {
+      "description": "Expo app template description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إعداد React Native مع Expo لتطبيقات الجوال",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "fXyZo7XCtl8HVonWK1x+1w==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "التثبيت اليدوي",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "y8rvXwPvHELbND3UCqRpYA==": {
+      "description": "Manual installation description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=Requirements:} Node 22+، React 19+ (إذا كنت تستخدم React)",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9NsZwnoMGl0KPYnzc3UAVg==": {
+      "description": "In the phrase: \"{=Requirements:} Node 22+, React 19+ (if using React)\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "المتطلبات:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6rsQ77+auQMnifojc8qiVA==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إعداد الإطار",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "07f/GCPfC7XR1j5YaGIaTA==": {
+      "description": "Vite setup instructions",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ثبّت إضافة Vite React وقم بضبط ملف vite.config.ts:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "SVLfBGjHRthMP9kussescw==": {
+      "description": "Next.js setup instructions",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "أنشئ ملف babel.config.js في جذر مشروعك:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xhXGYhQ6K+V71ba06GgzvQ==": {
+      "description": "Next.js tip",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=Next.js Tip:} اطلع على {=Next.js App fbtee Example} للحصول على إعداد كامل مع App Router وServer Components.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "RH9xi/IVFMZpHZLP6++8NA==": {
+      "description": "In the phrase: \"{=Next.js Tip:} Check out the {=Next.js App fbtee Example} for a complete setup with App Router and Server Components.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "نصيحة Next.js:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Lvi1n/ZUfNDAlHZisYsrxA==": {
+      "description": "In the phrase: \"{=Next.js Tip:} Check out the {=Next.js App fbtee Example} for a complete setup with App Router and Server Components.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "مثال تطبيق Next.js مع fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "URg1ydfsdm1CkjJlOwYNtQ==": {
+      "description": "Babel setup instructions",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "للتخصيص مع Babel، أضف preset إلى .babelrc أو babel.config.js:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "z1GmksAdwHDXNleFA8iZzA==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "دليل الاستخدام",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1cBQ72agh5WU3Wcbn6yKmw==": {
+      "description": "Usage guide description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "كل ما تحتاج معرفته لاستخدام {=fbtee} بفعالية.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "q7pMKLLXTWuIwSLQL4hhCQ==": {
+      "description": "In the phrase: \"Everything you need to know to use {=fbtee} effectively.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "jRRPiI3khD9ur0/Cxq4E8w==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إعداد التطبيق",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VYsxlkc3OMRSmXhpZzTEtg==": {
+      "description": "App setup description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قم بإعداد وقت تشغيل {=fbtee} للتحكم باللغات في تطبيقك. أولاً، أضف دعم TypeScript:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZT8AKH4PUS59Z0KzAYXUBA==": {
+      "description": "In the phrase: \"Set up {=fbtee}'s runtime to manage locales in your app. First, add TypeScript support:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AwoXXd9GjL99rG5VteeyiQ==": {
+      "description": "LocaleContext setup description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ثم أنشئ LocaleContext لإدارة الترجمات:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+XjHppHVcJzydgHiea8OQw==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "الاستخدام",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KQ234chDORKpAE9Wi+szdg==": {
+      "description": "Usage description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "يجب تغليف جميع العبارات القابلة للترجمة بعلامة {=<fbt>} أو {=fbt()}:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f4FO5zzwHv3uKZi7tXH9kg==": {
+      "description": "In the phrase: \"All translatable strings must be wrapped with {=<fbt>} or {=fbt()}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "OdKGx+2gWpMb8ODVaVlIcA==": {
+      "description": "In the phrase: \"All translatable strings must be wrapped with {=<fbt>} or {=fbt()}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pi/vl6o/HrM10sZlafe75g==": {
+      "description": "Before example label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قبل",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "yWcskzN9tcKQQS0gizrTIw==": {
+      "description": "After example label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "بعد",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MGhQMvfdx7YOT7HsLPuE1Q==": {
+      "description": "Usage note",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=ملاحظة:} السمة {=desc} مطلوبة وتوفر سياقًا للمترجمين. {=<fbt>} تتم إضافتها تلقائيًا بواسطة إعداد Babel.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Ji+ZSAy6pvCaeU8xcEz5CA==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ملاحظة:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pJijCqsdiVqbruv5Y9Mprw==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "desc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "uTCnEkcojX0/2eOXCjHzhg==": {
+      "description": "In the phrase: \"{=Note:} The {=desc} attribute is required and provides context for translators. {=<fbt>} is auto-imported by the Babel preset.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3MmQF/3KhnTBURnswKgLKw==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "محتوى ديناميكي",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VCAdOF1lfa4ODfE+xMVlAA==": {
+      "description": "Dynamic content description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "استخدم {=<fbt:param>} لإضافة متغيرات أو مكونات React:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Pmtg41ZMoBZWDO8wN3I4yA==": {
+      "description": "In the phrase: \"Use {=<fbt:param>} to insert variables and React components:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:param>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "4r+UzWLdG09uofFvGnED6Q==": {
+      "description": "Tab label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "المعلمات",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "7M4hsn9/uv67UiYw9F5z7w==": {
+      "description": "Tab label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "المكونات",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XDevh+92VUnyXJEVQ9dJtg==": {
+      "description": "Components explanation",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "يتم تحويل مكونات React تلقائيًا إلى {=<fbt:param>}:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "52s1Ppy4jJL+I3dDXWytgA==": {
+      "description": "In the phrase: \"React components are automatically converted to {=<fbt:param>}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:param>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "JeqqcSUwdTueCm92kJgw9Q==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "القوائم وروابط العطف",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CovVNe0jaw6i3lRS+kOW1A==": {
+      "description": "Lists description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=<fbt:list>} يدير القوائم النحوية مع روابط العطف بشكل صحيح:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "/HLRFgU8HIN5JxSyOta0uA==": {
+      "description": "In the phrase: \"{=<fbt:list>} handles grammatical lists with proper conjunctions:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:list>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AixVh4g7kZ3Gu9a7bL7ppQ==": {
+      "description": "List function description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "يمكنك أيضًا استخدام دالة القائمة خارج React:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "cnIUroypfAyebUf/04Ha0A==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "الجمع",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "4HQ3+2tr8I58NE+PWec8YA==": {
+      "description": "Pluralization description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "تعامل مع صيغ المفرد والجمع باستخدام {=<fbt:plural>} :",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ULAElsCi6M6dmSlU52A4KA==": {
+      "description": "In the phrase: \"Handle singular and plural forms with {=<fbt:plural>} :\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:plural>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "enkZiMwkF3rr6kps7uLNHQ==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "الضمائر",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "yjp0PW/j2B3thCAeKAqH4g==": {
+      "description": "Pronouns description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "تعامل مع الضمائر المرتبطة بالجنس باستخدام {=<fbt:pronoun>} :",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "OtqDxJYwKDOTjv2BYJiYHg==": {
+      "description": "In the phrase: \"Handle gendered pronouns with {=<fbt:pronoun>} :\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<fbt:pronoun>",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9pCIk6EoRVD84mA+YLXt7A==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "الاستخدام كنص عادي",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "qI5wrwfeI3KD+OBhrmScqA==": {
+      "description": "Plain text usage description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "للاستخدام في السياقات غير JSX مثل سمات HTML، استخدم {=fbs()}:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AU3Be48rTUvvqx6WgXr4Lw==": {
+      "description": "In the phrase: \"For non-JSX contexts like HTML attributes, use {=fbs()}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbs()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "wTsBxwyJpkYoQhLh/ugkyw==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "سير عمل الترجمة",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "34jivRi0nKqlFsByjvKu9A==": {
+      "description": "Step number and description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "١. استخراج النصوص",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nrttT+FIp/qMJjX14M+diQ==": {
+      "description": "Extract strings explanation",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "يُنشئ ملف {=source_strings.json} الذي يحتوي جميع النصوص القابلة للترجمة",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "cLjyPjzy3AtOb54P8vy+ng==": {
+      "description": "In the phrase: \"Creates {=source_strings.json} with all translatable strings\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "source_strings.json",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "APA77x+uC6gRaNXu1Qw+Uw==": {
+      "description": "Step number and description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "٢. إنشاء ملفات الترجمة",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f3jnCmXbVRrVARksV9Aw+Q==": {
+      "description": "Translation files instructions",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قم برفع {=source_strings.json} إلى خدمة الترجمة الخاصة بك، أو أنشئ الملفات يدويًا:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ocboKMkJc1a7JA2HowcYFQ==": {
+      "description": "In the phrase: \"Upload {=source_strings.json} to your translation service, or create files manually:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "source_strings.json",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KPF2LYJFuIRu8N9gkLA84A==": {
+      "description": "Step number and description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "٣. تجميع الترجمات",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6MeES0vCXxbYK/IeG//8Ug==": {
+      "description": "Compile translations explanation",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ينتج ملفات ترجمة محسّنة في {=src/translations/}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AKX9Jat0dpSM8EKeKmWeLg==": {
+      "description": "In the phrase: \"Generates optimized translation files in {=src/translations/}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "src/translations/",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "A8CQ6/neJ7fj5yPKO4iN0w==": {
+      "description": "Step number and description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "٤. أضف إلى .gitignore",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IqkziQ3d6Q1/kmnNpSdNcQ==": {
+      "description": "Step number and description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "٥. سكريبتات مخصصة (اختياري)",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CqsG1fFHuvzzEmZ/QuQPXQ==": {
+      "description": "Custom scripts instructions",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "أضف أوامر مخصصة في package.json:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "u1l+padxcuOpYCLADHjUdQ==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إدارة اللغة",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "thOW5VrWzZ+FmCuMPwRckw==": {
+      "description": "Locale management description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "يمكنك الوصول إلى اللغة وتغييرها من داخل المكوّنات:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1ELjVsSsR+y3iUna1gK4sw==": {
+      "description": "Headline",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "إضافة ESLint",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "/1k7Maf2J9SWX2C2l4NCJQ==": {
+      "description": "ESLint plugin description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "قم بتثبيت إضافة ESLint للعثور على الأخطاء الشائعة:",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QIKC0NXBZPcVoWeqCnAxqA==": {
+      "description": "Tab label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "موصى به",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xigUMASeemQ0bZMJ1MkTGw==": {
+      "description": "Tab label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "صارم",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "UGcRnemPDzaw+kkUwOfJUA==": {
+      "description": "Tab label",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "مخصص",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KaK2lUyhF1plm8QbaklvFw==": {
+      "description": "Strict configuration description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "تقوم هذه الإعدادات بإظهار الخطأ عند وجود أي نص غير مترجم.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9gmOpqn2VjoCiKv69PoViw==": {
+      "description": "Headline",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "ما الذي يميز fbtee؟",
+          "variations": {}
+        }
+      ]
+    },
+    "mljjlBaFU7/a0alt8QYBTw==": {
+      "description": "Better about fbtee description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Originally created by Facebook, rewritten from the ground up.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "O4dWPo3ZP2Le5kFxOBp5fg==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Easier Setup",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "2T8pLseRrxvsEYAQZWnKQQ==": {
+      "description": "Easier setup description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Works seamlessly with modern tools like Vite, Next.js, and Expo.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZU4cF/6HC+9uU8j2zPMYJw==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Statically Typed",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3Lme3LwrPYIJ13kApHX5zw==": {
+      "description": "Statically typed description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Full TypeScript support with compiler validation and ESLint plugin.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "z64a79xidr/j2RPVZXNgxQ==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Improved React Compatibility",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "tQGcI/JqTXLW7BmX0vV90A==": {
+      "description": "React compatibility description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Support for React fragments, Server Components, and modern patterns.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bclZ6HQ/qt7YnodyNeQEhA==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Enhanced Features",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1+qnimygwe1q6HM2Eij1Zg==": {
+      "description": "Enhanced features description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Fixed and exported intlList as functional <fbt:list> component.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T9g23EMIfyPFcMkYXYWh3A==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Modernized Codebase",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "92Ftcxxod+ZPVI7Zx/7Acg==": {
+      "description": "Modernized codebase description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Rewritten in TypeScript with ESM and modern JavaScript standards.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IA4h9W2Xt60cOsujxn9Cgg==": {
+      "description": "Feature title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Updated Tooling",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "hcCHpPR8LpIq4Fn6EQu/VA==": {
+      "description": "Updated tooling description",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Uses pnpm, Vite, and esbuild for faster, more efficient development.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "pBJxNIfBaxv6/UMhf+aJEA==": {
+      "description": "Tagline",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Far Better Translations, Extended Edition",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nfAmxL08ysZoiBF4jhamSQ==": {
+      "description": "Footer section title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Resources",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "vR9BuJzB+B7s3dCVypDlww==": {
+      "description": "Link text",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js Example",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QYKnZ4YgDLWkUdq7cpQkhQ==": {
+      "description": "Footer section title",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Templates",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TIuY8tk+15dcL3ZAAQP2wg==": {
+      "description": "Link text",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Web App Template",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "2xjuG69JR0hAj0T9tzkDFA==": {
+      "description": "Link text",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo App Template",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bu70QyRYJVrMa600vgiEuw==": {
+      "description": "Footer credit",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Originally created by Facebook • Maintained by {=Nakazawa Tech}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "VNNXf1SGDLLfoxNjWNMqrg==": {
+      "description": "In the phrase: \"Originally created by Facebook • Maintained by {=Nakazawa Tech}\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Nakazawa Tech",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "3p2EdDkpFI0G0wt2Q/55Aw==": {
+      "description": "Button label",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Star on GitHub",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "IYUmtYxQtGdt1MucjXrsVA==": {
+      "description": "Label with meaning 'at least number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{number}+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ZIF1WhVQwt7WZJvFTEbMWw==": {
+      "description": "Label with meaning 'less than number'",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "<{number}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "Oc/9PrbjfyLHS60BXceD1A==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "AXXbKEUZuc0ji1IClRrOOw==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items} • {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "89ACgPMtnwlLDSeqhLBx2Q==": {
+      "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}, {following items}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "5hL7VXOBVnetm46YAjpX0g==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, and item3\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, and {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "icNetEL/crQv/PS6yhySVQ==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} and {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8kLAQ3ffiiFnQ/bWPqXfuQ==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, or item3\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, or {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8eSaAzrWtAqn9ktNKfkaEg==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} or {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+IBI7kr/mMKdzp+3stDvkw==": {
+      "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{previous items}; {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "55IeE8c0qqtjTU0lo7q9AA==": {
+      "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items} • {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6PRJS0QalZfvaN8CkKCUCw==": {
+      "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
+      "status": "new",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list of items}, {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    }
+  }
+}
