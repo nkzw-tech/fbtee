@@ -20,14 +20,14 @@
     "fbtee": "workspace:*",
     "invariant": "^2.2.4",
     "normalize.css": "8.0.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.27.1",
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
-    "@vitejs/plugin-react": "^5.0.2",
+    "@vitejs/plugin-react": "^5.0.4",
     "invariant": "^2.2.4",
-    "vite": "^7.1.5"
+    "vite": "^7.1.9"
   }
 }
