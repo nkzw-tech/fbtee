@@ -352,7 +352,9 @@
       "types": []
     },
     "PqPPir8Kg9xSlqdednPFOg==": {
-      "tokens": ["name"],
+      "tokens": [
+        "name"
+      ],
       "translations": [
         {
           "translation": "{name} поделилась с вами {=a photo}",
@@ -373,7 +375,9 @@
           }
         }
       ],
-      "types": [3]
+      "types": [
+        3
+      ]
     },
     "PvA+AsZdpZXw81g/J3Ow0Q==": {
       "tokens": [],
@@ -506,7 +510,9 @@
       "types": []
     },
     "gVKMc/8jq5vnYR5v2bb32g==": {
-      "tokens": ["name"],
+      "tokens": [
+        "name"
+      ],
       "translations": [
         {
           "translation": "{name} поделился с вами {=[number] photos}",
@@ -527,7 +533,9 @@
           }
         }
       ],
-      "types": [3]
+      "types": [
+        3
+      ]
     },
     "kFRDiDKN3KACFyC0YzbdDg==": {
       "tokens": [],
@@ -671,11 +679,11 @@
     },
     "1zt7aP/cVQqI5IyAJQku8w==": {
       "description": "Gender Select label",
-      "status": "new",
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Unknown (plural)",
+          "translation": "Неизвестно (множественное число)",
           "variations": {}
         }
       ],
@@ -683,11 +691,11 @@
     },
     "E9cv0amPwjV70PBD0XyIAw==": {
       "description": "List example.",
-      "status": "new",
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Do you want to share a {list}?",
+          "translation": "Хочешь поделиться {list}?",
           "variations": {}
         }
       ],
@@ -695,11 +703,11 @@
     },
     "XWOy1r8lQxGmBtCn03YSnQ==": {
       "description": "Item in a list.",
-      "status": "new",
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "photo",
+          "translation": "фото",
           "variations": {}
         }
       ],
@@ -707,11 +715,11 @@
     },
     "Z1GfhhBITgeqZUQ1GgP35Q==": {
       "description": "Item in a list.",
-      "status": "new",
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "link",
+          "translation": "ссылкой",
           "variations": {}
         }
       ],
@@ -719,11 +727,11 @@
     },
     "GzijBgnhfi6GiUsHFZlY7Q==": {
       "description": "Item in a list.",
-      "status": "new",
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "video",
+          "translation": "видео",
           "variations": {}
         }
       ],
@@ -731,123 +739,147 @@
     },
     "IYUmtYxQtGdt1MucjXrsVA==": {
       "description": "Label with meaning 'at least number'",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{number}+",
-          "variations": {}
+          "variations": {},
+          "translation": "{number}+"
         }
-      ],
-      "types": []
+      ]
     },
     "ZIF1WhVQwt7WZJvFTEbMWw==": {
       "description": "Label with meaning 'less than number'",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "<{number}",
-          "variations": {}
+          "variations": {},
+          "translation": "<{number}"
         }
-      ],
-      "types": []
+      ]
     },
     "Oc/9PrbjfyLHS60BXceD1A==": {
       "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}; {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}; {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "AXXbKEUZuc0ji1IClRrOOw==": {
       "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items} • {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items} • {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "89ACgPMtnwlLDSeqhLBx2Q==": {
       "description": "A list of items of various types separated by commas, for example: \"San Francisco, London, Tokyo\". {previous items} and {following items} are themselves lists that contain one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}, {following items}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}, {following items}"
         }
-      ],
-      "types": []
+      ]
     },
     "icNetEL/crQv/PS6yhySVQ==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3 and item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} and {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} и {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "8eSaAzrWtAqn9ktNKfkaEg==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3 or item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} or {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} или {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "+IBI7kr/mMKdzp+3stDvkw==": {
       "description": "A list of items of various types, for example: \"San Francisco; London; Tokyo\". {previous items} itself contains one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{previous items}; {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{previous items}; {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "55IeE8c0qqtjTU0lo7q9AA==": {
       "description": "A list of items of various types separated by bullets, for example: \"San Francisco \\u2022 London \\u2022 Tokyo\". {previous items} contains one or more items.",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items} • {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items} • {last item}"
         }
-      ],
-      "types": []
+      ]
     },
     "6PRJS0QalZfvaN8CkKCUCw==": {
       "description": "A list of items of various types, for example: \"item1, item2, item3, item4\"",
-      "status": "new",
+      "types": [],
+      "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{list of items}, {last item}",
-          "variations": {}
+          "variations": {},
+          "translation": "{list of items}, {last item}"
         }
-      ],
-      "types": []
+      ]
+    },
+    "5hL7VXOBVnetm46YAjpX0g==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, and item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} и {last item}"
+        }
+      ]
+    },
+    "8kLAQ3ffiiFnQ/bWPqXfuQ==": {
+      "description": "A list of items of various types with a serial comma, for example: \"item1, item2, or item3\"",
+      "types": [],
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "variations": {},
+          "translation": "{list of items} или {last item}"
+        }
+      ]
     }
   }
 }
