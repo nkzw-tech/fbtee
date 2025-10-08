@@ -19,14 +19,14 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@nkzw/stack": "^2.2.0",
+    "@nkzw/stack": "^2.3.1",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fbtee": "workspace:*",
-    "lucide-react": "^0.544.0",
+    "lucide-react": "^0.545.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "shiki": "^3.13.0",
@@ -35,10 +35,10 @@
   "devDependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:*",
     "@tailwindcss/postcss": "^4.1.14",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
     "@vitejs/plugin-react": "^5.0.4",
-    "babel-plugin-react-compiler": "19.1.0-rc.3",
+    "babel-plugin-react-compiler": "^1.0.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.14",
     "vite": "^7.1.9"
