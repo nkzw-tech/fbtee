@@ -79,12 +79,12 @@ const LocaleSwitcher = () => {
         id="locale-switcher"
         popover="auto"
       >
-        <VStack alignCenter center gap={12} padding={16}>
+        <VStack alignCenter center className="w-64" gap={12} padding={16}>
           {[...AvailableLanguages.entries()].map(([locale, name]) => (
             <Button
               asChild
               className={cx(
-                'transition-background border-purple-200 bg-transparent duration-200 hover:border-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900',
+                'transition-background border-purple-200 bg-transparent duration-150 hover:border-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900',
                 {
                   'bg-purple-100 dark:bg-purple-900': currentLocale === locale,
                 },

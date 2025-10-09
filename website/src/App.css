@@ -158,9 +158,9 @@ code {
 
 [popover] {
   transition:
-    opacity 300ms ease-in-out,
-    display 300ms ease-out allow-discrete,
-    overlay 300ms ease-out allow-discrete;
+    opacity 150ms ease-in-out,
+    display 150ms ease-out allow-discrete,
+    overlay 150ms ease-out allow-discrete;
   opacity: 0;
 }
 

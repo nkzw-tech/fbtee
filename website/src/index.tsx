@@ -19,6 +19,11 @@ const translations = locale
     }
   : {};
 
+// Preload all locales so that switching is fast. After all, this is a website about localization.
+for (const [locale] of AvailableLanguages) {
+  loadLocale(locale);
+}
+
 const LocaleContext = createLocaleContext({
   availableLanguages: AvailableLanguages,
   clientLocales: [locale, navigator.language, ...navigator.languages],
