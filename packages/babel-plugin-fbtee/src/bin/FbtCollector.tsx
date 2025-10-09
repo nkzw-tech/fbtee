@@ -1,7 +1,6 @@
 import type { PluginItem } from '@babel/core';
 import { transformSync } from '@babel/core';
-import babelPluginProposalDecorators from '@babel/plugin-proposal-decorators';
-import presetEnv from '@babel/preset-env';
+import babelPluginSyntaxDecorators from '@babel/plugin-syntax-decorators';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
@@ -24,6 +23,7 @@ export type ExternalTransform = (
   filename?: string | null,
 ) => unknown;
 export type CollectorConfig = {
+  disableBabelConfig?: boolean;
   fbtCommon?: FbtCommonMap | null;
   generateOuterTokenName?: boolean;
   plugins?: ReadonlyArray<PluginItem>;
@@ -66,22 +66,24 @@ export interface IFbtCollector {
 
 const transform = (
   code: string,
-  options: { filename: string | null },
+  options: { disableBabelConfig: boolean; filename: string | null },
   plugins: ReadonlyArray<PluginItem>,
   presets: ReadonlyArray<PluginItem>,
 ) => {
   transformSync(code, {
     ast: false,
     code: false,
+    configFile: !options.disableBabelConfig,
     filename: options.filename,
     plugins: [
       fbtAutoImport,
       [fbt, options],
+      ...(options.disableBabelConfig
+        ? [[babelPluginSyntaxDecorators, { version: '2023-11' }]]
+        : []),
       ...plugins,
-      [babelPluginProposalDecorators, { version: '2023-11' }],
     ],
     presets: [
-      presetEnv,
       presetTypescript,
       [
         presetReact,
@@ -111,6 +113,7 @@ export default class FbtCollector implements IFbtCollector {
   ): Promise<void> {
     const options = {
       collectFbt: true,
+      disableBabelConfig: !!this.config.disableBabelConfig,
       extraOptions: this.extraOptions,
       fbtCommon: this.config.fbtCommon,
       fbtEnumManifest,

@@ -125,23 +125,7 @@ const argv = y
   .default('transform', null)
   .describe(
     'transform',
-    'A custom transform to call into rather than the default provided. ' +
-      'Expects a signature of (source, options, filename) => mixed, and ' +
-      'for babel-pluginf-fbt to be run within the transform.',
-  )
-  .array('plugins')
-  .default('plugins', [])
-  .describe(
-    'plugins',
-    'List of auxiliary Babel plugins to enable for parsing source.\n' +
-      'E.g. --plugins @babel/plugin-syntax-dynamic-import @babel/plugin-syntax-numeric-separator',
-  )
-  .array('presets')
-  .default('presets', [])
-  .describe(
-    'presets',
-    'List of auxiliary Babel presets to enable for parsing source.\n' +
-      'E.g. --presets @babel/preset-typescript',
+    'A custom transform to call into rather than the default provided.',
   )
   .string('options')
   .describe(
@@ -163,6 +147,12 @@ const argv = y
   .describe(
     'include-default-strings',
     `Include the default strings required by fbtee, such as for '<fbt:list>'.`,
+  )
+  .boolean('disable-babel-config')
+  .default('disable-babel-config', false)
+  .describe(
+    'disable-babel-config',
+    `Runs the collector without loading the Babel config specified in the repository.`,
   )
   .boolean('legacy-format')
   .default('legacy-format', false)
@@ -282,9 +272,8 @@ const fbtCommon = commonFile?.length
 
 const collector = await getFbtCollector(
   {
+    disableBabelConfig: argv['disable-babel-config'],
     fbtCommon,
-    plugins: argv['plugins'].map(require),
-    presets: argv['presets'].map(require),
     transform,
   },
   extraOptions,
