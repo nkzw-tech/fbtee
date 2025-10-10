@@ -81,16 +81,6 @@
       ],
       "types": []
     },
-    "2TyGkzVNJtXrFsOOeLJHmg==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "يمكنك استخدام النموذج أدناه لرؤية FBT أثناء العمل.",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "2g/nu1wXuAprwkG0x4g2Sg==": {
       "tokens": [],
       "translations": [
@@ -361,16 +351,6 @@
       ],
       "types": []
     },
-    "PvA+AsZdpZXw81g/J3Ow0Q==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "تكوين جمل",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "Q9mOAQ+ogHG20z2QkEkNmQ==": {
       "tokens": [],
       "translations": [
@@ -456,16 +436,6 @@
       "translations": [
         {
           "translation": "{=View}",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "f9df2DVor1ccX0uzZbuDVQ==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "عرض توضيحي لـ FBT",
           "variations": {}
         }
       ],
@@ -592,7 +562,9 @@
       "types": []
     },
     "tYYOLLMbffdJQQlSVEVv/A==": {
-      "tokens": ["number"],
+      "tokens": [
+        "number"
+      ],
       "translations": [
         {
           "translation": "صورتين",
@@ -631,7 +603,9 @@
           }
         }
       ],
-      "types": [28]
+      "types": [
+        28
+      ]
     },
     "vC7YhdaCftXBXQ/fitVzXw==": {
       "tokens": [],
@@ -681,54 +655,6 @@
       "translations": [
         {
           "translation": "غير معروف (جمع)",
-          "variations": {}
-        }
-      ]
-    },
-    "E9cv0amPwjV70PBD0XyIAw==": {
-      "description": "List example.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "هل تريد مشاركة {list}؟",
-          "variations": {}
-        }
-      ]
-    },
-    "XWOy1r8lQxGmBtCn03YSnQ==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "صورة",
-          "variations": {}
-        }
-      ]
-    },
-    "Z1GfhhBITgeqZUQ1GgP35Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "رابط",
-          "variations": {}
-        }
-      ]
-    },
-    "GzijBgnhfi6GiUsHFZlY7Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "فيديو",
           "variations": {}
         }
       ]
@@ -876,6 +802,102 @@
           "translation": "{list of items}، أو {last item}"
         }
       ]
+    },
+    "3ohyPKx/5C49J/nBRvrxwA==": {
+      "description": "title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "عرض توضيحي لـ {=fbtee}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xmJyhkZL5FDQ2WOwjQ6POA==": {
+      "description": "In the phrase: \"{=fbtee} Demo\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nkVIA2MuIWyvnUMrKYXT1g==": {
+      "description": "header",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "أمثلة على الجمل",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "EoI/atSwhowBOvl65nz9bA==": {
+      "description": "Header title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "استخدم النموذج أدناه لمشاهدة fbtee قيد العمل.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nBLatHASTDsvQusbc7E2gg==": {
+      "description": "List example.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "هل تريد مشاركة {list}؟",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "afg71jKCn44ReR0SUN1qvA==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "صورة",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "t2THURVt3Y/yNElkD2YZCQ==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "رابط",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TrHqU+/Jg6TcZ3VrzwMWMg==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "فيديو",
+          "variations": {}
+        }
+      ],
+      "types": []
     }
   }
 }

@@ -81,16 +81,6 @@
       ],
       "types": []
     },
-    "2TyGkzVNJtXrFsOOeLJHmg==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "下のフォームを使用して実際のFBTを確認します。",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "2g/nu1wXuAprwkG0x4g2Sg==": {
       "tokens": [],
       "translations": [
@@ -361,16 +351,6 @@
       ],
       "types": []
     },
-    "PvA+AsZdpZXw81g/J3Ow0Q==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "文の生成",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "Q9mOAQ+ogHG20z2QkEkNmQ==": {
       "tokens": [],
       "translations": [
@@ -456,16 +436,6 @@
       "translations": [
         {
           "translation": "{=View}",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "f9df2DVor1ccX0uzZbuDVQ==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "FBTデモ",
           "variations": {}
         }
       ],
@@ -653,54 +623,6 @@
         }
       ]
     },
-    "E9cv0amPwjV70PBD0XyIAw==": {
-      "description": "List example.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "{list}を共有しますか？",
-          "variations": {}
-        }
-      ]
-    },
-    "XWOy1r8lQxGmBtCn03YSnQ==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "写真",
-          "variations": {}
-        }
-      ]
-    },
-    "Z1GfhhBITgeqZUQ1GgP35Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "リンク",
-          "variations": {}
-        }
-      ]
-    },
-    "GzijBgnhfi6GiUsHFZlY7Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "動画",
-          "variations": {}
-        }
-      ]
-    },
     "IYUmtYxQtGdt1MucjXrsVA==": {
       "description": "Label with meaning 'at least number'",
       "types": [],
@@ -834,6 +756,102 @@
           "translation": "{list of items}、または{last item}"
         }
       ]
+    },
+    "3ohyPKx/5C49J/nBRvrxwA==": {
+      "description": "title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee} デモ",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xmJyhkZL5FDQ2WOwjQ6POA==": {
+      "description": "In the phrase: \"{=fbtee} Demo\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nkVIA2MuIWyvnUMrKYXT1g==": {
+      "description": "header",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "文例",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "EoI/atSwhowBOvl65nz9bA==": {
+      "description": "Header title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "下のフォームを使用して実際のfbteeを確認します。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nBLatHASTDsvQusbc7E2gg==": {
+      "description": "List example.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{list}を共有しますか？",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "afg71jKCn44ReR0SUN1qvA==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "写真",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "t2THURVt3Y/yNElkD2YZCQ==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "リンク",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TrHqU+/Jg6TcZ3VrzwMWMg==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "動画",
+          "variations": {}
+        }
+      ],
+      "types": []
     }
   }
 }

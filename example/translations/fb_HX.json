@@ -81,16 +81,6 @@
       ],
       "types": []
     },
-    "2TyGkzVNJtXrFsOOeLJHmg==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "u53 7h3 f0rm b3l0w 70 533 fb7 1n 4c710n.",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "2g/nu1wXuAprwkG0x4g2Sg==": {
       "tokens": [],
       "translations": [
@@ -361,16 +351,6 @@
       ],
       "types": []
     },
-    "PvA+AsZdpZXw81g/J3Ow0Q==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "c0n57ruc7 53n73nc35",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "Q9mOAQ+ogHG20z2QkEkNmQ==": {
       "tokens": [],
       "translations": [
@@ -456,16 +436,6 @@
       "translations": [
         {
           "translation": "{=View}",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "f9df2DVor1ccX0uzZbuDVQ==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "y0ur fb7 d3m0",
           "variations": {}
         }
       ],
@@ -653,54 +623,6 @@
         }
       ]
     },
-    "E9cv0amPwjV70PBD0XyIAw==": {
-      "description": "List example.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "D0 y0u w4n7 70 5h4r3 4 {list}?",
-          "variations": {}
-        }
-      ]
-    },
-    "XWOy1r8lQxGmBtCn03YSnQ==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "ph070",
-          "variations": {}
-        }
-      ]
-    },
-    "Z1GfhhBITgeqZUQ1GgP35Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "l1nk",
-          "variations": {}
-        }
-      ]
-    },
-    "GzijBgnhfi6GiUsHFZlY7Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "v1d30",
-          "variations": {}
-        }
-      ]
-    },
     "IYUmtYxQtGdt1MucjXrsVA==": {
       "description": "Label with meaning 'at least number'",
       "types": [],
@@ -844,6 +766,102 @@
           "translation": "{list of items}, 0r {last item}"
         }
       ]
+    },
+    "3ohyPKx/5C49J/nBRvrxwA==": {
+      "description": "title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "{=fbtee}: y0ur fb7 d3m0",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xmJyhkZL5FDQ2WOwjQ6POA==": {
+      "description": "In the phrase: \"{=fbtee} Demo\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nkVIA2MuIWyvnUMrKYXT1g==": {
+      "description": "header",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "53n73nc3 3x4mpl35",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "EoI/atSwhowBOvl65nz9bA==": {
+      "description": "Header title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "u53 7h3 f0rm b3l0w 70 533 fb7 1n 4c710n.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nBLatHASTDsvQusbc7E2gg==": {
+      "description": "List example.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "D0 y0u w4n7 70 5h4r3 {list}?",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "afg71jKCn44ReR0SUN1qvA==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "4 ph070",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "t2THURVt3Y/yNElkD2YZCQ==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "4 l1nk",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TrHqU+/Jg6TcZ3VrzwMWMg==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "4 v1d30",
+          "variations": {}
+        }
+      ],
+      "types": []
     }
   }
 }

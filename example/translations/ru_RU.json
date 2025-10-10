@@ -81,16 +81,6 @@
       ],
       "types": []
     },
-    "2TyGkzVNJtXrFsOOeLJHmg==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "Используйте форму ниже, чтобы увидеть FBT в действии.",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "2g/nu1wXuAprwkG0x4g2Sg==": {
       "tokens": [],
       "translations": [
@@ -352,7 +342,9 @@
       "types": []
     },
     "PqPPir8Kg9xSlqdednPFOg==": {
-      "tokens": ["name"],
+      "tokens": [
+        "name"
+      ],
       "translations": [
         {
           "translation": "{name} поделилась с вами {=a photo}",
@@ -373,17 +365,9 @@
           }
         }
       ],
-      "types": [3]
-    },
-    "PvA+AsZdpZXw81g/J3Ow0Q==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "Составление предложений",
-          "variations": {}
-        }
-      ],
-      "types": []
+      "types": [
+        3
+      ]
     },
     "Q9mOAQ+ogHG20z2QkEkNmQ==": {
       "tokens": [],
@@ -475,16 +459,6 @@
       ],
       "types": []
     },
-    "f9df2DVor1ccX0uzZbuDVQ==": {
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "Демонстрация FBT",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "fS9yqVLDDYOA627Xuxrxvw==": {
       "tokens": [],
       "translations": [
@@ -506,7 +480,9 @@
       "types": []
     },
     "gVKMc/8jq5vnYR5v2bb32g==": {
-      "tokens": ["name"],
+      "tokens": [
+        "name"
+      ],
       "translations": [
         {
           "translation": "{name} поделился с вами {=[number] photos}",
@@ -527,7 +503,9 @@
           }
         }
       ],
-      "types": [3]
+      "types": [
+        3
+      ]
     },
     "kFRDiDKN3KACFyC0YzbdDg==": {
       "tokens": [],
@@ -681,54 +659,6 @@
       ],
       "types": []
     },
-    "E9cv0amPwjV70PBD0XyIAw==": {
-      "description": "List example.",
-      "status": "translated",
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "Хочешь поделиться {list}?",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "XWOy1r8lQxGmBtCn03YSnQ==": {
-      "description": "Item in a list.",
-      "status": "translated",
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "фото",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "Z1GfhhBITgeqZUQ1GgP35Q==": {
-      "description": "Item in a list.",
-      "status": "translated",
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "ссылкой",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
-    "GzijBgnhfi6GiUsHFZlY7Q==": {
-      "description": "Item in a list.",
-      "status": "translated",
-      "tokens": [],
-      "translations": [
-        {
-          "translation": "видео",
-          "variations": {}
-        }
-      ],
-      "types": []
-    },
     "IYUmtYxQtGdt1MucjXrsVA==": {
       "description": "Label with meaning 'at least number'",
       "types": [],
@@ -872,6 +802,102 @@
           "translation": "{list of items} или {last item}"
         }
       ]
+    },
+    "3ohyPKx/5C49J/nBRvrxwA==": {
+      "description": "title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Демонстрация {=fbtee}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xmJyhkZL5FDQ2WOwjQ6POA==": {
+      "description": "In the phrase: \"{=fbtee} Demo\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nkVIA2MuIWyvnUMrKYXT1g==": {
+      "description": "header",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Примеры предложений",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "EoI/atSwhowBOvl65nz9bA==": {
+      "description": "Header title",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Используйте форму ниже, чтобы увидеть fbtee в действии.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nBLatHASTDsvQusbc7E2gg==": {
+      "description": "List example.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Хотите поделиться {list}?",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "afg71jKCn44ReR0SUN1qvA==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "фото",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "t2THURVt3Y/yNElkD2YZCQ==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ссылкой",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TrHqU+/Jg6TcZ3VrzwMWMg==": {
+      "description": "Item in a list.",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "видео",
+          "variations": {}
+        }
+      ],
+      "types": []
     }
   }
 }
