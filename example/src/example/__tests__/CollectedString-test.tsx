@@ -21,12 +21,14 @@ test('fbtee strings are included in the collected strings of the example project
 test('fbtee child-parent mappings are included in the collected strings of the example project', () => {
   expect(childParentMappings).toMatchInlineSnapshot(`
 {
-  "14": 13,
-  "23": 22,
+  "1": 0,
+  "15": 14,
   "24": 23,
-  "40": 39,
-  "49": 48,
-  "50": 49,
+  "25": 24,
+  "32": 31,
+  "42": 41,
+  "51": 50,
+  "52": 51,
 }
 `);
 });
