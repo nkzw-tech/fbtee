@@ -1,42 +1,6 @@
 {
   "fb-locale": "de_DE",
   "translations": {
-    "f9df2DVor1ccX0uzZbuDVQ==": {
-      "description": "title",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Deine FBT-Demo",
-          "variations": {}
-        }
-      ]
-    },
-    "PvA+AsZdpZXw81g/J3Ow0Q==": {
-      "description": "header",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Sätze bauen",
-          "variations": {}
-        }
-      ]
-    },
-    "2TyGkzVNJtXrFsOOeLJHmg==": {
-      "description": "Header title",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Use the form below to see FBT in action.",
-          "variations": {}
-        }
-      ]
-    },
     "HusiL84DARy+8jiK7kc7qg==": {
       "description": "Gender Select label",
       "tokens": [],
@@ -769,54 +733,6 @@
         }
       ]
     },
-    "E9cv0amPwjV70PBD0XyIAw==": {
-      "description": "List example.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Möchtest du {list} teilen?",
-          "variations": {}
-        }
-      ]
-    },
-    "XWOy1r8lQxGmBtCn03YSnQ==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Foto",
-          "variations": {}
-        }
-      ]
-    },
-    "Z1GfhhBITgeqZUQ1GgP35Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Link",
-          "variations": {}
-        }
-      ]
-    },
-    "GzijBgnhfi6GiUsHFZlY7Q==": {
-      "description": "Item in a list.",
-      "tokens": [],
-      "types": [],
-      "status": "translated",
-      "translations": [
-        {
-          "translation": "Video",
-          "variations": {}
-        }
-      ]
-    },
     "AqPBSvlIt0d3coakQBEMpg==": {
       "description": "Sign up button",
       "tokens": [],
@@ -960,6 +876,102 @@
         {
           "variations": {},
           "translation": "{list of items}, {last item}"
+        }
+      ]
+    },
+    "3ohyPKx/5C49J/nBRvrxwA==": {
+      "description": "title",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{=fbtee} Demo",
+          "variations": {}
+        }
+      ]
+    },
+    "xmJyhkZL5FDQ2WOwjQ6POA==": {
+      "description": "In the phrase: \"{=fbtee} Demo\"",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ]
+    },
+    "nkVIA2MuIWyvnUMrKYXT1g==": {
+      "description": "header",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Beispielsätze",
+          "variations": {}
+        }
+      ]
+    },
+    "EoI/atSwhowBOvl65nz9bA==": {
+      "description": "Header title",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Verwende dieses Formular um fbtee in Aktion zu sehen.",
+          "variations": {}
+        }
+      ]
+    },
+    "nBLatHASTDsvQusbc7E2gg==": {
+      "description": "List example.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Möchtest du {list} teilen?",
+          "variations": {}
+        }
+      ]
+    },
+    "afg71jKCn44ReR0SUN1qvA==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "ein Foto",
+          "variations": {}
+        }
+      ]
+    },
+    "t2THURVt3Y/yNElkD2YZCQ==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "einen Link",
+          "variations": {}
+        }
+      ]
+    },
+    "TrHqU+/Jg6TcZ3VrzwMWMg==": {
+      "description": "Item in a list.",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "ein Video",
+          "variations": {}
         }
       ]
     }
