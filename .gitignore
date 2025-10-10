@@ -5,7 +5,6 @@
 example/.enum_manifest.json
 example/source_strings.json
 example/src/translatedFbts
-example/src/translatedFbts.json
 node_modules
 packages/*/lib
 packages/*/LICENSE

@@ -1,7 +1,6 @@
 example/.enum_manifest.json
 example/source_strings.json
 example/src/translatedFbts
-example/src/translatedFbts.json
 example/translations/
 packages/*/lib/
 packages/fbtee/lib-tmp/

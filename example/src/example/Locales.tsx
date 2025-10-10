@@ -5,6 +5,12 @@ const Locales = {
     englishName: 'Arabic',
     rtl: true,
   },
+  de_DE: {
+    bcp47: 'de',
+    displayName: 'Deutsch',
+    englishName: 'German',
+    rtl: false,
+  },
   en_US: {
     bcp47: 'en-US',
     displayName: 'English (US)\u200e',
@@ -23,11 +29,23 @@ const Locales = {
     englishName: 'FB H4x0r',
     rtl: false,
   },
+  fr_FR: {
+    bcp47: 'fr',
+    displayName: 'Fran\u00E7ais',
+    englishName: 'French',
+    rtl: false,
+  },
   he_IL: {
     bcp47: 'he',
     displayName: '\u05E2\u05D1\u05E8\u05D9\u05EA',
     englishName: 'Hebrew',
     rtl: true,
+  },
+  it_IT: {
+    bcp47: 'it',
+    displayName: 'Italiano',
+    englishName: 'Italian',
+    rtl: false,
   },
   ja_JP: {
     bcp47: 'ja',

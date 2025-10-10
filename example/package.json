@@ -6,12 +6,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf source_strings.json src/translatedFbts.json src/translatedFbts 2&> /dev/null || exit 0",
+    "clean": "rm -rf source_strings.json src/translatedFbts 2&> /dev/null || exit 0",
     "dev": "vite",
-    "fbtee:all": "pnpm fbtee:collect && pnpm fbtee:translate-multiple && pnpm fbtee:translate",
+    "fbtee:all": "pnpm fbtee:collect && pnpm fbtee:translate",
     "fbtee:collect": "fbtee collect --common ./common_strings.json --src src",
-    "fbtee:translate": "fbtee translate --stdin < translation_input.json > src/translatedFbts.json",
-    "fbtee:translate-multiple": "fbtee translate -o src/translatedFbts"
+    "fbtee:translate": "fbtee translate -o src/translatedFbts"
   },
   "dependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:*",

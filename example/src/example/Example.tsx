@@ -2,9 +2,27 @@ import { VStack } from '@nkzw/stack';
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
-import translations from '../translatedFbts.json' with { type: 'json' };
+import ar_AR from '../translatedFbts/ar_AR.json' with { type: 'json' };
+import de_DE from '../translatedFbts/de_DE.json' with { type: 'json' };
+import es_LA from '../translatedFbts/es_LA.json' with { type: 'json' };
+import fb_HX from '../translatedFbts/fb_HX.json' with { type: 'json' };
+import fr_FR from '../translatedFbts/fr_FR.json' with { type: 'json' };
+import he_IL from '../translatedFbts/he_IL.json' with { type: 'json' };
+import it_IT from '../translatedFbts/it_IT.json' with { type: 'json' };
+import ja_JP from '../translatedFbts/ja_JP.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale } from './Locales.tsx';
+
+const translations = {
+  ar_AR: ar_AR.ar_AR,
+  de_DE: de_DE.de_DE,
+  es_LA: es_LA.es_LA,
+  fb_HX: fb_HX.fb_HX,
+  fr_FR: fr_FR.fr_FR,
+  he_IL: he_IL.he_IL,
+  it_IT: it_IT.it_IT,
+  ja_JP: ja_JP.ja_JP,
+};
 
 let viewerContext = {
   GENDER: IntlVariations.GENDER_UNKNOWN,
@@ -50,18 +68,20 @@ export default function Example() {
   return (
     <div>
       <div className="example">
-        <div className="warning">
+        <div className="headline">
           <>
-            <fbt desc="title">Your FBT Demo</fbt>
+            <fbt desc="title">
+              <b>fbtee </b> Demo
+            </fbt>
           </>
         </div>
         <h1>
-          <fbt desc="header">Construct sentences</fbt>
+          <fbt desc="header">Sentence Examples</fbt>
         </h1>
         <h2>
           {/* For fbt common strings, the description will be sourced from an external manifest.
             See `--common` option from `fbtee collect` and common_strings.json */}
-          <fbt common>Use the form below to see FBT in action.</fbt>
+          <fbt common>Use the form below to see fbtee in action.</fbt>
         </h2>
         <VStack action="" as="form" gap method="get" onSubmit={onSubmit}>
           <fieldset>
@@ -244,18 +264,18 @@ export default function Example() {
           <fieldset>
             <label>
               <fbt desc="List example.">
-                Do you want to share a{' '}
+                Do you want to share{' '}
                 <fbt:list
                   conjunction="or"
                   items={[
                     <fbt desc="Item in a list." key="photo">
-                      photo
+                      a photo
                     </fbt>,
                     <fbt desc="Item in a list." key="photo">
-                      link
+                      a link
                     </fbt>,
                     <fbt desc="Item in a list." key="video">
-                      video
+                      a video
                     </fbt>,
                   ]}
                   name="list"
@@ -267,9 +287,7 @@ export default function Example() {
             <span className="example_row">
               <button
                 className="bottom"
-                onClick={(e) => {
-                  window.open('https://github.com/nkzw-tech/fbtee', '_blank');
-                }}
+                onClick={() => window.open('https://fbtee.dev', '_blank')}
                 type="submit"
               >
                 {fbt('Try it out!', 'Sign up button')}

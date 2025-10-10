@@ -7,15 +7,18 @@ exports[`Example.react renders the example 1`] = `
       class="example"
     >
       <div
-        class="warning"
+        class="headline"
       >
-        Your FBT Demo
+        <b>
+          fbtee
+        </b>
+         Demo
       </div>
       <h1>
-        Construct sentences
+        Sentence Examples
       </h1>
       <h2>
-        Use the form below to see FBT in action.
+        Use the form below to see fbtee in action.
       </h2>
       <form
         action=""
@@ -241,7 +244,7 @@ exports[`Example.react renders the example 1`] = `
         </fieldset>
         <fieldset>
           <label>
-            Do you want to share a photo, link or video?
+            Do you want to share a photo, a link or a video?
           </label>
         </fieldset>
         <fieldset>
@@ -269,6 +272,13 @@ exports[`Example.react renders the example 1`] = `
         </a>
       </li>
       <li>
+        <a
+          href="#de_DE"
+        >
+          Deutsch
+        </a>
+      </li>
+      <li>
         English (US)‎
       </li>
       <li>
@@ -287,9 +297,23 @@ exports[`Example.react renders the example 1`] = `
       </li>
       <li>
         <a
+          href="#fr_FR"
+        >
+          Français
+        </a>
+      </li>
+      <li>
+        <a
           href="#he_IL"
         >
           עברית
+        </a>
+      </li>
+      <li>
+        <a
+          href="#it_IT"
+        >
+          Italiano
         </a>
       </li>
       <li>
