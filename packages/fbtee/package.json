@@ -1,6 +1,6 @@
 {
   "name": "fbtee",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -36,7 +36,8 @@
       "types": "./lib/index-server.d.ts",
       "import": "./lib/index-server.js",
       "default": "./lib/index-server.js"
-    }
+    },
+    "./Strings.json": "./Strings.json"
   },
   "main": "lib/index.js",
   "module": "lib/index.js",
