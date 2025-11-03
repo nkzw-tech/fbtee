@@ -1,7 +1,6 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import nkzw from '@nkzw/eslint-config';
 import fbtee from '@nkzw/eslint-plugin-fbtee';
+import { findWorkspacePackages } from '@pnpm/find-workspace-packages';
 import workspaces from 'eslint-plugin-workspaces';
 
 export default [
@@ -47,19 +46,8 @@ export default [
             '**/__tests__/**/*.tsx',
             '**/eslint.config.js',
           ],
-          packageDir: [import.meta.dirname].concat(
-            readFileSync('./pnpm-workspace.yaml', 'utf8')
-              .split('\n')
-              .slice(1)
-              .map((n) =>
-                join(
-                  import.meta.dirname,
-                  n
-                    .replaceAll(/\s*-\s+/g, '')
-                    .replaceAll("'", '')
-                    .replaceAll('\r', ''),
-                ),
-              ),
+          packageDir: await findWorkspacePackages(process.cwd()).then(
+            (packages) => packages.map((pkg) => pkg.dir),
           ),
         },
       ],
