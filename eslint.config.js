@@ -1,6 +1,6 @@
 import nkzw from '@nkzw/eslint-config';
 import fbtee from '@nkzw/eslint-plugin-fbtee';
-import { findWorkspacePackages } from '@pnpm/find-workspace-packages';
+import findWorkspaces from '@nkzw/find-workspaces';
 import workspaces from 'eslint-plugin-workspaces';
 
 export default [
@@ -46,9 +46,7 @@ export default [
             '**/__tests__/**/*.tsx',
             '**/eslint.config.js',
           ],
-          packageDir: await findWorkspacePackages(process.cwd()).then(
-            (packages) => packages.map((pkg) => pkg.dir),
-          ),
+          packageDir: findWorkspaces(import.meta.dirname),
         },
       ],
       'unicorn/prefer-dom-node-append': 0,
