@@ -21,10 +21,10 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "react-server": "./lib/index-server.js",
-      "default": "./lib/index.js"
+      "types": "./lib/index.d.mts",
+      "import": "./lib/index.mjs",
+      "react-server": "./lib/index-server.mjs",
+      "default": "./lib/index.mjs"
     },
     "./ReactTypes": {
       "types": "./ReactTypes.d.ts"
@@ -33,15 +33,15 @@
       "types": "./ReactTypes.d.ts"
     },
     "./server": {
-      "types": "./lib/index-server.d.ts",
-      "import": "./lib/index-server.js",
-      "default": "./lib/index-server.js"
+      "types": "./lib/index-server.d.mts",
+      "import": "./lib/index-server.mjs",
+      "default": "./lib/index-server.mjs"
     },
     "./Strings.json": "./Strings.json"
   },
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/index.mjs",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.mts",
   "scripts": {
     "build": "pnpm build:babel && pnpm build:prepend && tsdown lib-tmp/index.tsx -d lib --target=node22 --format=esm --clean --dts && tsdown lib-tmp/index-server.tsx -d lib --target=node22 --format=esm --no-clean --dts",
     "build:babel": "babel --delete-dir-on-start --copy-files --config-file ./babel-build.config.js --out-dir=lib-tmp --extensions=.tsx --keep-file-extension --ignore='src/**/__tests__/*.tsx' src",

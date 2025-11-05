@@ -141,7 +141,7 @@ export default function App() {
       </header>
       <section className="relative overflow-hidden px-4 py-10">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 dark:from-purple-950/20 dark:via-pink-950/20 dark:to-indigo-950/20"></div>
-        <div className="container relative mx-auto max-w-4xl text-center">
+        <div className="relative container mx-auto max-w-4xl text-center">
           <Badge
             className="mb-6 border-purple-200 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
             variant="secondary"

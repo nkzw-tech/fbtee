@@ -19,9 +19,9 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "lib/index.mjs",
   "bin": {
-    "fbtee": "lib/bin.js"
+    "fbtee": "lib/bin.mjs"
   },
   "scripts": {
     "build": "tsdown src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --dts"

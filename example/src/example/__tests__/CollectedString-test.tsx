@@ -13,7 +13,7 @@ const { childParentMappings, phrases } = JSON.parse(
 test('fbtee strings are included in the collected strings of the example project', () => {
   expect(
     phrases.some(
-      ({ filename }) => filename === 'node_modules/fbtee/lib/index.js',
+      ({ filename }) => filename === 'node_modules/fbtee/lib/index.mjs',
     ),
   ).toBe(true);
 });

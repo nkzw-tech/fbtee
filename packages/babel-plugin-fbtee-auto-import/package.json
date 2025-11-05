@@ -19,13 +19,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "lib/index.mjs",
   "scripts": {
     "build": "tsdown src/index.tsx -d lib --target=node22 --format=esm --clean --dts"
   },
   "dependencies": {
-    "@babel/core": "^7.28.4",
-    "@babel/types": "^7.28.4",
+    "@babel/core": "^7.28.5",
+    "@babel/types": "^7.28.5",
     "@nkzw/babel-plugin-fbtee": "workspace:*"
   }
 }

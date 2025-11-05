@@ -30,7 +30,7 @@ const CardTitle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       className={cx(
-        'text-2xl font-semibold leading-none tracking-tight',
+        'text-2xl leading-none font-semibold tracking-tight',
         className,
       )}
       ref={ref}

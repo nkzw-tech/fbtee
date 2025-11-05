@@ -2,7 +2,7 @@ import {
   FbtConjunction,
   FbtDelimiter,
   FbtWithoutString,
-} from './lib/index.d.ts';
+} from './lib/index.d.mts';
 
 enum IntlVariations {
   GENDER_MALE = 1,
