@@ -1,19 +1,71 @@
+import { createRequire } from 'node:module';
 import { PluginOptions, transformSync } from '@babel/core';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
 import presetReact from '@babel/preset-react';
 import presetTypeScript from '@babel/preset-typescript';
+import * as swc from '@swc/core';
 import prettier from 'prettier-2';
 import fbt from '../index.tsx';
 
+const require = createRequire(import.meta.url);
+
+function resolveSwcPluginPath() {
+  const tryPaths = [
+    '../../../swc-plugin-fbtee/target/wasm32-wasip1/debug/swc_plugin_fbtee.wasm',
+    '../../../swc-plugin-fbtee/target/wasm32-wasip1/release/swc_plugin_fbtee.wasm',
+  ];
+
+  for (const p of tryPaths) {
+    try {
+      return require.resolve(p);
+    } catch {
+      // continue
+    }
+  }
+
+  throw new Error(
+    'Could not resolve swc-plugin-fbtee .wasm. Please build it (e.g. cargo build --target wasm32-wasi).',
+  );
+}
+
+export const fbtSwcPlugin = resolveSwcPluginPath();
+
 export function transform(source: string, pluginOptions?: PluginOptions) {
+  const useSwc = process.env.USE_SWC === '1';
+
+  if (!useSwc) {
+    return (
+      transformSync(source, {
+        ast: false,
+        filename: 'source.js',
+        plugins: [[fbt, pluginOptions]],
+        presets: [presetTypeScript, presetReact],
+        sourceType: 'module',
+      })?.code || ''
+    );
+  }
+
   return (
-    transformSync(source, {
-      ast: false,
+    swc.transformSync(source, {
+      isModule: true,
       filename: 'source.js',
-      plugins: [[fbt, pluginOptions]],
-      presets: [presetTypeScript, presetReact],
-      sourceType: 'module',
-    })?.code || ''
+      jsc: {
+        target: 'es2020',
+        parser: {
+          syntax: 'ecmascript',
+          jsx: true,
+        },
+        transform: {
+          react: {
+            runtime: 'preserve',
+            throwIfNamespace: false,
+          },
+        },
+        experimental: {
+          plugins: [[fbtSwcPlugin, {}]],
+        },
+      },
+    }).code || ''
   );
 }
 
@@ -24,17 +76,46 @@ export function snapshotTransform(
   return transform(source, pluginOptions);
 }
 
-const transformKeepJsx = (source: string, pluginOptions?: PluginOptions) =>
-  prettier.format(
-    transformSync(source, {
-      ast: false,
+const transformKeepJsx = (source: string, pluginOptions?: PluginOptions) => {
+  const useSwc = process.env.USE_SWC === '1';
+
+  if (!useSwc) {
+    return prettier.format(
+      transformSync(source, {
+        ast: false,
+        filename: 'source.js',
+        plugins: [syntaxJSX, [fbt, pluginOptions]],
+        presets: [presetTypeScript],
+        sourceType: 'module',
+      })?.code || '',
+      { parser: 'babel' },
+    );
+  }
+
+  return prettier.format(
+    swc.transformSync(source, {
+      isModule: true,
       filename: 'source.js',
-      plugins: [syntaxJSX, [fbt, pluginOptions]],
-      presets: [presetTypeScript],
-      sourceType: 'module',
-    })?.code || '',
-    { parser: 'babel' },
+      jsc: {
+        target: 'es2020',
+        parser: {
+          syntax: 'ecmascript',
+          jsx: true,
+        },
+        transform: {
+          react: {
+            runtime: 'preserve',
+            throwIfNamespace: false,
+          },
+        },
+        experimental: {
+          plugins: [[fbtSwcPlugin, {}]],
+        },
+      },
+    }).code || '',
+    { parser: 'swc' },
   );
+};
 
 export const snapshotTransformKeepJsx = (
   source: string,
