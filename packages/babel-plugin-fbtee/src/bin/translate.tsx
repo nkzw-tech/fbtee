@@ -122,8 +122,8 @@ const argv = y
   .default('output-dir', 'src/translations/')
   .describe(
     'output-dir',
-    'By default, we write the output to stdout. If you instead would like to split ' +
-      'the output by locale you can use this arg to specify an output directory. ' +
+    'By default, we split the output into separate JSON files per locale (en_US.json) ' +
+      'in the `src/translations/` folder. Use this parameter to change the output folder. ' +
       'This is useful when you want to lazy load translations per locale.',
   )
   .boolean('strict')
@@ -136,7 +136,7 @@ const argv = y
   .string('out')
   .describe(
     'out',
-    'Output all translations in one JSON file mapped per languages.',
+    'Specify the file path where the combined translations should be written.',
   )
   .parseSync();
 
