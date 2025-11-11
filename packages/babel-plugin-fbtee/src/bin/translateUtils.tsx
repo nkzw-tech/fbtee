@@ -75,6 +75,14 @@ export async function processFiles(
   );
 }
 
+export async function processSingleFile(
+  stringFile: string,
+  translationFiles: ReadonlyArray<string>,
+  options: Options,
+): Promise<LocaleToHashToTranslationResult> {
+  return await processFiles(stringFile, translationFiles, options);
+}
+
 export async function processJSON(
   json: InputJSONType,
   options: Options,

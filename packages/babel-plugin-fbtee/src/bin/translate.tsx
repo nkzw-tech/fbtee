@@ -73,6 +73,7 @@ import {
   LocaleToHashToTranslationResult,
   processFiles,
   processJSON,
+  processSingleFile,
 } from './translateUtils.tsx';
 
 const root = process.cwd();
@@ -132,12 +133,25 @@ const argv = y
     'By default, we log missing values in the translation file to stderr. ' +
       'If you instead would like to stop execution on missing values you can use this.',
   )
+  .string('out')
+  .describe(
+    'out',
+    'Output all translations in one JSON file mapped per languages.',
+  )
   .parseSync();
 
 if (argv.help) {
   y.showHelp();
   process.exit(0);
 }
+
+const writeSingleOutput = (
+  outputFilePath: string,
+  output: LocaleToHashToTranslationResult,
+) => {
+  mkdirSync(path.dirname(outputFilePath), { recursive: true });
+  writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
+};
 
 const writeOutput = (
   outputDir: string,
@@ -175,6 +189,15 @@ if (argv['stdin']) {
         ),
       );
     });
+} else if (argv['out']) {
+  writeSingleOutput(
+    join(root, argv['out']),
+    await processSingleFile(
+      join(root, argv['source-strings']),
+      argv['translations']?.map(String) || [],
+      translationOptions,
+    ),
+  );
 } else if (argv['output-dir']) {
   writeOutput(
     join(root, argv['output-dir']),
