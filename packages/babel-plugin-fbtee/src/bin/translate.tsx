@@ -133,9 +133,9 @@ const argv = y
     'By default, we log missing values in the translation file to stderr. ' +
       'If you instead would like to stop execution on missing values you can use this.',
   )
-  .string('out')
+  .string('output-file')
   .describe(
-    'out',
+    'output-file',
     'Specify the file path where the combined translations should be written.',
   )
   .parseSync();
@@ -189,9 +189,9 @@ if (argv['stdin']) {
         ),
       );
     });
-} else if (argv['out']) {
+} else if (argv['output-file']) {
   writeSingleOutput(
-    join(root, argv['out']),
+    join(root, argv['output-file']),
     await processSingleFile(
       join(root, argv['source-strings']),
       argv['translations']?.map(String) || [],
