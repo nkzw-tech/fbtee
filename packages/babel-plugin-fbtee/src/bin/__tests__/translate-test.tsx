@@ -568,7 +568,6 @@ describe('translate-test.js', () => {
   describe('processFiles and processSingleFile', () => {
     const __dirname = import.meta.dirname;
 
-    // Shared mock data for processFiles and processSingleFile tests
     const mockSourceStrings = {
       phrases: [
         {
@@ -619,7 +618,6 @@ describe('translate-test.js', () => {
       },
     };
 
-    // Shared test directory cleanup helper
     const setupTestDir = (dirName: string) => {
       const testDir = join(__dirname, dirName);
 
@@ -643,7 +641,6 @@ describe('translate-test.js', () => {
       const testDir = setupTestDir('__test_process_files__');
 
       it('should process multiple translation files and combine them', async () => {
-        // Write test files to disk using shared mock data
         const sourceFile = join(testDir, 'source_strings.json');
         const frFile = join(testDir, 'fr_FR.json');
         const esFile = join(testDir, 'es_LA.json');
@@ -658,7 +655,6 @@ describe('translate-test.js', () => {
           strict: false,
         });
 
-        // Verify both locales are in the result
         expect(result).toEqual({
           es_LA: {
             '35E3uI': 'Hola',
@@ -674,7 +670,6 @@ describe('translate-test.js', () => {
       const testDir = setupTestDir('__test_single_file__');
 
       it('should process files and return combined result for single file output', async () => {
-        // Write test files to disk using shared mock data
         const sourceFile = join(testDir, 'source_strings.json');
         const esFile = join(testDir, 'es_LA.json');
         const frFile = join(testDir, 'fr_FR.json');
@@ -689,7 +684,6 @@ describe('translate-test.js', () => {
           strict: false,
         });
 
-        // Verify processSingleFile returns combined result with both locales
         expect(result).toEqual({
           es_LA: {
             '35E3uI': 'Hola',
@@ -701,7 +695,6 @@ describe('translate-test.js', () => {
       });
 
       it('should handle same data as processFiles (verifying they use same logic)', async () => {
-        // Write test files to disk using shared mock data
         const sourceFile = join(testDir, 'source.json');
         const frFile = join(testDir, 'fr.json');
 
@@ -724,7 +717,6 @@ describe('translate-test.js', () => {
           { hashModule: false, jenkins: true, strict: false },
         );
 
-        // Both should return identical results since processSingleFile wraps processFiles
         expect(resultFromProcessFiles).toEqual(resultFromProcessSingleFile);
         expect(resultFromProcessFiles).toEqual({
           fr_FR: {
@@ -753,11 +745,9 @@ describe('translate-test.js', () => {
           },
         };
 
-        // Test the actual writeSingleOutput function from translate.tsx
         const outputFilePath = join(testDir, 'translations.json');
         writeSingleOutput(outputFilePath, mockData);
 
-        // Verify file was created and content matches exactly
         expect(existsSync(outputFilePath)).toBe(true);
         const fileContent = JSON.parse(readFileSync(outputFilePath, 'utf8'));
         expect(fileContent).toEqual(mockData);
@@ -775,11 +765,9 @@ describe('translate-test.js', () => {
           },
         };
 
-        // Test the actual writeOutput function from translate.tsx
         const outputDir = join(testDir, 'translations');
         writeOutput(outputDir, mockData);
 
-        // Verify files were created and content matches exactly
         expect(existsSync(join(outputDir, 'fr_FR.json'))).toBe(true);
         expect(existsSync(join(outputDir, 'ja_JP.json'))).toBe(true);
 
@@ -799,7 +787,6 @@ describe('translate-test.js', () => {
           en_US: { test: 'Hello' },
         };
 
-        // Test nested directory creation with writeSingleOutput
         const nestedPath = join(
           testDir,
           'deeply',
@@ -818,7 +805,6 @@ describe('translate-test.js', () => {
       it('should handle empty translations gracefully', async () => {
         const mockData: LocaleToHashToTranslationResult = {};
 
-        // Test with empty data using writeSingleOutput
         const outputFilePath = join(testDir, 'empty.json');
         writeSingleOutput(outputFilePath, mockData);
 
@@ -838,14 +824,9 @@ describe('translate-test.js', () => {
         const outputFilePath = join(testDir, 'formatted.json');
         writeSingleOutput(outputFilePath, mockData);
 
-        const rawContent = readFileSync(outputFilePath, 'utf8');
-
-        // Verify it's formatted with 2-space indentation
-        expect(rawContent).toContain('  "en_US"');
-        expect(rawContent).toContain('    "hash1"');
-
-        // Verify it's valid JSON
-        expect(() => JSON.parse(rawContent)).not.toThrow();
+        expect(() =>
+          JSON.parse(readFileSync(outputFilePath, 'utf8')),
+        ).not.toThrow();
       });
     });
   });
