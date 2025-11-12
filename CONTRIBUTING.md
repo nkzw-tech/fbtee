@@ -19,7 +19,7 @@ To set up the project and run tests:
 ```bash
 pnpm install
 
-# Build Eveyrthing required for unit tests
+# Build everything required for unit tests
 pnpm build:all
 
 pnpm test
