@@ -7,21 +7,21 @@ Thank you for your interest in contributing to fbtee! This guide will help you g
 - **Node.js**: Version 24.0.0 or higher
 - **pnpm**: Version 10.0.0 or higher
 
+```bash
+pnpm env use --global 24
+nvm use 24
+```
+
 ## Getting Started
 
 To set up the project and run tests:
 
 ```bash
-# Install dependencies
 pnpm install
 
-# Build the example project (required before running tests)
-cd example
-pnpm install
-pnpm fbtee:all
-cd ..
+# Build Eveyrthing required for unit tests
+pnpm build:all
 
-# Run tests
 pnpm test
 ```
 
