@@ -66,14 +66,15 @@
  *
  */
 
-import { globSync, mkdirSync, writeFileSync } from 'node:fs';
-import path, { join } from 'node:path';
+import { globSync } from 'node:fs';
+import { join } from 'node:path';
 import yargs from 'yargs';
 import {
-  LocaleToHashToTranslationResult,
   processFiles,
   processJSON,
   processSingleFile,
+  writeOutput,
+  writeSingleOutput,
 } from './translateUtils.tsx';
 
 const root = process.cwd();
@@ -144,27 +145,6 @@ if (argv.help) {
   y.showHelp();
   process.exit(0);
 }
-
-const writeSingleOutput = (
-  outputFilePath: string,
-  output: LocaleToHashToTranslationResult,
-) => {
-  mkdirSync(path.dirname(outputFilePath), { recursive: true });
-  writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
-};
-
-const writeOutput = (
-  outputDir: string,
-  output: LocaleToHashToTranslationResult,
-) => {
-  mkdirSync(outputDir, { recursive: true });
-  Object.keys(output).forEach((locale) => {
-    writeFileSync(
-      path.join(outputDir, `${locale}.json`),
-      JSON.stringify({ [locale]: output[locale] }, null, 2),
-    );
-  });
-};
 
 const translationOptions = {
   hashModule: argv['hash-module'],

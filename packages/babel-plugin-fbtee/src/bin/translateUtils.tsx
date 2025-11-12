@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import FbtHashKey from '../fbtHashKey.tsx';
 import nullthrows from '../nullthrows.tsx';
@@ -178,3 +179,24 @@ function processTranslations(
 function createFbtSiteFromJSON(json: CollectFbtOutputPhrase): FbtSite {
   return FbtSite.fromScan(json);
 }
+
+export const writeSingleOutput = (
+  outputFilePath: string,
+  output: LocaleToHashToTranslationResult,
+) => {
+  mkdirSync(path.dirname(outputFilePath), { recursive: true });
+  writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
+};
+
+export const writeOutput = (
+  outputDir: string,
+  output: LocaleToHashToTranslationResult,
+) => {
+  mkdirSync(outputDir, { recursive: true });
+  Object.keys(output).forEach((locale) => {
+    writeFileSync(
+      path.join(outputDir, `${locale}.json`),
+      JSON.stringify({ [locale]: output[locale] }, null, 2),
+    );
+  });
+};
