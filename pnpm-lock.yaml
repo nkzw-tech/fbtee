@@ -263,7 +263,7 @@ importers:
   packages/fbtee:
     dependencies:
       '@nkzw/babel-plugin-fbtee':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../babel-plugin-fbtee
       invariant:
         specifier: ^2.2.4
