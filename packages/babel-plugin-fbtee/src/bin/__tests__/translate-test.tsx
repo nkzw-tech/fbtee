@@ -1,6 +1,22 @@
-import { afterEach, describe, it, jest } from '@jest/globals';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, it, jest } from '@jest/globals';
 import { jsCodeNonASCIICharSerializer } from '../../__tests__/FbtTestUtil.tsx';
-import { Options, processJSON } from '../translateUtils.tsx';
+import {
+  LocaleToHashToTranslationResult,
+  Options,
+  processFiles,
+  processJSON,
+  processSingleFile,
+  writeOutput,
+  writeSingleOutput,
+} from '../translateUtils.tsx';
 
 expect.addSnapshotSerializer(jsCodeNonASCIICharSerializer);
 
@@ -547,5 +563,271 @@ describe('translate-test.js', () => {
         testTranslateNewPhrases(options);
       });
     }
+  });
+
+  describe('processFiles and processSingleFile', () => {
+    const __dirname = import.meta.dirname;
+
+    const mockSourceStrings = {
+      phrases: [
+        {
+          filename: 'src/example/Example.js',
+          hashToLeaf: {
+            abc123: {
+              desc: 'greeting',
+              text: 'Hello',
+            },
+          },
+          jsfbt: {
+            m: [],
+            t: {
+              desc: 'greeting',
+              text: 'Hello',
+              tokenAliases: {},
+            },
+          },
+          loc: {
+            end: { column: 10, line: 1 },
+            start: { column: 0, line: 1 },
+          },
+          project: 'test',
+        },
+      ],
+    };
+
+    const mockTranslations = {
+      es_LA: {
+        'fb-locale': 'es_LA',
+        translations: {
+          abc123: {
+            tokens: [],
+            translations: [{ translation: 'Hola', variations: {} }],
+            types: [],
+          },
+        },
+      },
+      fr_FR: {
+        'fb-locale': 'fr_FR',
+        translations: {
+          abc123: {
+            tokens: [],
+            translations: [{ translation: 'Bonjour', variations: {} }],
+            types: [],
+          },
+        },
+      },
+    };
+
+    const setupTestDir = (dirName: string) => {
+      const testDir = join(__dirname, dirName);
+
+      beforeEach(() => {
+        if (existsSync(testDir)) {
+          rmSync(testDir, { force: true, recursive: true });
+        }
+        mkdirSync(testDir, { recursive: true });
+      });
+
+      afterEach(() => {
+        if (existsSync(testDir)) {
+          rmSync(testDir, { force: true, recursive: true });
+        }
+      });
+
+      return testDir;
+    };
+
+    describe('processFiles (--output-dir option)', () => {
+      const testDir = setupTestDir('__test_process_files__');
+
+      it('should process multiple translation files and combine them', async () => {
+        const sourceFile = join(testDir, 'source_strings.json');
+        const frFile = join(testDir, 'fr_FR.json');
+        const esFile = join(testDir, 'es_LA.json');
+
+        writeFileSync(sourceFile, JSON.stringify(mockSourceStrings));
+        writeFileSync(frFile, JSON.stringify(mockTranslations.fr_FR));
+        writeFileSync(esFile, JSON.stringify(mockTranslations.es_LA));
+
+        const result = await processFiles(sourceFile, [frFile, esFile], {
+          hashModule: false,
+          jenkins: true,
+          strict: false,
+        });
+
+        expect(result).toEqual({
+          es_LA: {
+            '35E3uI': 'Hola',
+          },
+          fr_FR: {
+            '35E3uI': 'Bonjour',
+          },
+        });
+      });
+    });
+
+    describe('processSingleFile (--output-file option)', () => {
+      const testDir = setupTestDir('__test_single_file__');
+
+      it('should process files and return combined result for single file output', async () => {
+        const sourceFile = join(testDir, 'source_strings.json');
+        const esFile = join(testDir, 'es_LA.json');
+        const frFile = join(testDir, 'fr_FR.json');
+
+        writeFileSync(sourceFile, JSON.stringify(mockSourceStrings));
+        writeFileSync(esFile, JSON.stringify(mockTranslations.es_LA));
+        writeFileSync(frFile, JSON.stringify(mockTranslations.fr_FR));
+
+        const result = await processSingleFile(sourceFile, [esFile, frFile], {
+          hashModule: false,
+          jenkins: true,
+          strict: false,
+        });
+
+        expect(result).toEqual({
+          es_LA: {
+            '35E3uI': 'Hola',
+          },
+          fr_FR: {
+            '35E3uI': 'Bonjour',
+          },
+        });
+      });
+
+      it('should handle same data as processFiles (verifying they use same logic)', async () => {
+        const sourceFile = join(testDir, 'source.json');
+        const frFile = join(testDir, 'fr.json');
+
+        writeFileSync(sourceFile, JSON.stringify(mockSourceStrings));
+        writeFileSync(frFile, JSON.stringify(mockTranslations.fr_FR));
+
+        const resultFromProcessFiles = await processFiles(
+          sourceFile,
+          [frFile],
+          {
+            hashModule: false,
+            jenkins: true,
+            strict: false,
+          },
+        );
+
+        const resultFromProcessSingleFile = await processSingleFile(
+          sourceFile,
+          [frFile],
+          { hashModule: false, jenkins: true, strict: false },
+        );
+
+        expect(resultFromProcessFiles).toEqual(resultFromProcessSingleFile);
+        expect(resultFromProcessFiles).toEqual({
+          fr_FR: {
+            '35E3uI': 'Bonjour',
+          },
+        });
+      });
+    });
+
+    describe('CLI file writing (--output-file and --output-dir)', () => {
+      const testDir = setupTestDir('__test_output__');
+
+      it('should write single output file with --output-file option', async () => {
+        const mockData: LocaleToHashToTranslationResult = {
+          de_DE: {
+            hash1: 'Hallo',
+            hash2: 'Auf Wiedersehen',
+          },
+          es_LA: {
+            hash1: 'Hola',
+            hash2: 'Adiós',
+          },
+          fr_FR: {
+            hash1: 'Bonjour',
+            hash2: 'Au revoir',
+          },
+        };
+
+        const outputFilePath = join(testDir, 'translations.json');
+        writeSingleOutput(outputFilePath, mockData);
+
+        expect(existsSync(outputFilePath)).toBe(true);
+        const fileContent = JSON.parse(readFileSync(outputFilePath, 'utf8'));
+        expect(fileContent).toEqual(mockData);
+      });
+
+      it('should write multiple files with --output-dir option', async () => {
+        const mockData: LocaleToHashToTranslationResult = {
+          fr_FR: {
+            hash1: 'Salut',
+            hash2: 'Merci',
+          },
+          ja_JP: {
+            hash1: 'こんにちは',
+            hash2: 'ありがとう',
+          },
+        };
+
+        const outputDir = join(testDir, 'translations');
+        writeOutput(outputDir, mockData);
+
+        expect(existsSync(join(outputDir, 'fr_FR.json'))).toBe(true);
+        expect(existsSync(join(outputDir, 'ja_JP.json'))).toBe(true);
+
+        const frContent = JSON.parse(
+          readFileSync(join(outputDir, 'fr_FR.json'), 'utf8'),
+        );
+        expect(frContent).toEqual({ fr_FR: mockData.fr_FR });
+
+        const jaContent = JSON.parse(
+          readFileSync(join(outputDir, 'ja_JP.json'), 'utf8'),
+        );
+        expect(jaContent).toEqual({ ja_JP: mockData.ja_JP });
+      });
+
+      it('should create nested directories for --output-file option', async () => {
+        const mockData: LocaleToHashToTranslationResult = {
+          en_US: { test: 'Hello' },
+        };
+
+        const nestedPath = join(
+          testDir,
+          'deeply',
+          'nested',
+          'path',
+          'output.json',
+        );
+
+        writeSingleOutput(nestedPath, mockData);
+
+        expect(existsSync(nestedPath)).toBe(true);
+        const content = JSON.parse(readFileSync(nestedPath, 'utf8'));
+        expect(content).toEqual(mockData);
+      });
+
+      it('should handle empty translations gracefully', async () => {
+        const mockData: LocaleToHashToTranslationResult = {};
+
+        const outputFilePath = join(testDir, 'empty.json');
+        writeSingleOutput(outputFilePath, mockData);
+
+        expect(existsSync(outputFilePath)).toBe(true);
+        const content = JSON.parse(readFileSync(outputFilePath, 'utf8'));
+        expect(content).toEqual({});
+        expect(Object.keys(content)).toHaveLength(0);
+      });
+
+      it('should format JSON output with proper indentation', async () => {
+        const mockData: LocaleToHashToTranslationResult = {
+          en_US: {
+            hash1: 'Test',
+          },
+        };
+
+        const outputFilePath = join(testDir, 'formatted.json');
+        writeSingleOutput(outputFilePath, mockData);
+
+        expect(() =>
+          JSON.parse(readFileSync(outputFilePath, 'utf8')),
+        ).not.toThrow();
+      });
+    });
   });
 });

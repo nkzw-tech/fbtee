@@ -66,13 +66,15 @@
  *
  */
 
-import { globSync, mkdirSync, writeFileSync } from 'node:fs';
-import path, { join } from 'node:path';
+import { globSync } from 'node:fs';
+import { join } from 'node:path';
 import yargs from 'yargs';
 import {
-  LocaleToHashToTranslationResult,
   processFiles,
   processJSON,
+  processSingleFile,
+  writeOutput,
+  writeSingleOutput,
 } from './translateUtils.tsx';
 
 const root = process.cwd();
@@ -121,8 +123,8 @@ const argv = y
   .default('output-dir', 'src/translations/')
   .describe(
     'output-dir',
-    'By default, we write the output to stdout. If you instead would like to split ' +
-      'the output by locale you can use this arg to specify an output directory. ' +
+    'By default, we split the output into separate JSON files per locale (en_US.json) ' +
+      'in the `src/translations/` folder. Use this parameter to change the output folder. ' +
       'This is useful when you want to lazy load translations per locale.',
   )
   .boolean('strict')
@@ -132,25 +134,17 @@ const argv = y
     'By default, we log missing values in the translation file to stderr. ' +
       'If you instead would like to stop execution on missing values you can use this.',
   )
+  .string('output-file')
+  .describe(
+    'output-file',
+    'Specify the file path where the combined translations should be written.',
+  )
   .parseSync();
 
 if (argv.help) {
   y.showHelp();
   process.exit(0);
 }
-
-const writeOutput = (
-  outputDir: string,
-  output: LocaleToHashToTranslationResult,
-) => {
-  mkdirSync(outputDir, { recursive: true });
-  Object.keys(output).forEach((locale) => {
-    writeFileSync(
-      path.join(outputDir, `${locale}.json`),
-      JSON.stringify({ [locale]: output[locale] }, null, 2),
-    );
-  });
-};
 
 const translationOptions = {
   hashModule: argv['hash-module'],
@@ -175,6 +169,15 @@ if (argv['stdin']) {
         ),
       );
     });
+} else if (argv['output-file']) {
+  writeSingleOutput(
+    join(root, argv['output-file']),
+    await processSingleFile(
+      join(root, argv['source-strings']),
+      argv['translations']?.map(String) || [],
+      translationOptions,
+    ),
+  );
 } else if (argv['output-dir']) {
   writeOutput(
     join(root, argv['output-dir']),

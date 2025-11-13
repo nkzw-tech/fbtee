@@ -114,7 +114,8 @@ export default {
 By default, **fbtee** expects your source code to be anywhere within your project, your translations in a `translations` folder, and the generated translations in `src/translations`. You can customize these paths using command line arguments:
 
 - The `--translations` parameter can be specified to `fbtee translate` to customize the path to the input translation files.
-- `--output-dir` can be specified to define where the output translations should be written so they can be loaded in your app. You can also use `--out` parameter to output a single file such as `translations.json`, which can be used directly in your app without loading individual translation files.
+- The `--output-dir` parameter defines where the output translation files per language should be written (one file per locale), so they can be lazy loaded in your app.
+- The `--output-file` parameter outputs all translations in a single combined file, which can be used directly in your app without loading individual files.
 
 If you want to use different paths, it is recommended to define custom commands in your `package.json`:
 
