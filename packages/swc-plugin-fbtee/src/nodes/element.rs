@@ -1,15 +1,16 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, iter};
 
 use anyhow::{bail, Result};
+use iter_tools::Itertools;
 use swc_core::{
     atoms::Atom,
-    common::util::take::Take,
+    common::{util::take::Take, Spanned},
     ecma::ast::{CallExpr, Expr, ExprOrSpread},
 };
 
 use crate::{
     nodes::{
-        arguments::{GenderConst, SVArgValue, StringVariationArg, StringVariationArgsMap},
+        arguments::{CandidateValues, GenderConst, StringVariationArg, StringVariationArgsMap},
         node::FbtNode,
         CallExprArg, FbtChildNodeEnum,
     },
@@ -32,22 +33,35 @@ pub struct FbtElementNode {
 impl FbtNode for FbtElementNode {
     fn get_args_for_string_variation_calc(&self) -> Vec<StringVariationArg> {
         let mut result = vec![];
-        if let Some(_subject) = &self.subject {
+        if let Some(subject) = &self.subject {
+            CandidateValues::GenderConsts(vec![GenderConst::Any]);
             result.push(StringVariationArg {
-                candidate_values: vec![SVArgValue::GenderConst(GenderConst::Any)],
-                valueIdx: None,
-                is_collapsible: false,
+                node: subject.span(),
+                candidate_values: CandidateValues::GenderConsts(vec![GenderConst::Any]),
             });
         }
+
+        self.children.iter().for_each(|child| {
+            result.append(&mut child.get_args_for_string_variation_calc());
+        });
         result
     }
 
     fn get_text(&self, args: &StringVariationArgsMap) -> String {
-        todo!()
+        normalize_spaces(
+            &self
+                .children
+                .iter()
+                .map(|child| child.get_text(args))
+                .join(""),
+        )
+        .trim()
+        .to_owned()
     }
 
-    fn get_token_aliases(&self, args: &StringVariationArgsMap) -> Option<HashMap<String, String>> {
-        todo!()
+    fn get_token_aliases(&self, _args: &StringVariationArgsMap) -> Option<HashMap<String, String>> {
+        // todo
+        return None;
     }
 }
 
@@ -92,6 +106,7 @@ impl FbtElementNode {
             subject: None,
         })
     }
+
 }
 
 // fn collect_options_from_fbt_construct(call: &CallExpr) -> Result<Option<ObjectLit>> {

@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::vec;
 
-use iter_tools::Itertools;
 use swc_core::atoms::{atom, Atom};
 use swc_core::common::util::take::Take;
 use swc_core::ecma::ast::{
@@ -14,6 +13,7 @@ use swc_core::ecma::visit::VisitMut;
 
 use crate::hash::fbt_hash_key;
 use crate::jsfbt::{TableJSFBTTree, TableJSFBTTreeLeaf, TableJSFbt};
+use crate::jsfbt_builder::{Combo, JSFbtBuilder};
 use crate::nodes::arguments::StringVariationArgsMap;
 use crate::nodes::element::FbtElementNode;
 use crate::nodes::node::{FbtChildNode, FbtNode};
@@ -70,9 +70,15 @@ fn replace_clear_tokens_with_token_aliases(
 }
 
 struct MetaPhrase {
+    compact_string_variations: CompactStringVariations,
     fbt_node: FbtElementNode,
     parent_index: Option<i32>,
     phrase: FbtFunctionCallPhrase,
+}
+
+struct CompactStringVariations {
+    array: Vec<Combo>,
+    index_map: Vec<usize>,
 }
 
 pub struct TransformVisitor {
@@ -86,7 +92,34 @@ impl TransformVisitor {
         }
     }
 
+    fn compact_string_variation_combinations(args: Vec<Combo>) -> CompactStringVariations {
+        let mut index_map = vec![];
+
+        let array = args
+            .into_iter()
+            .enumerate()
+            .filter_map(|(idx, arg)| {
+                if arg.is_collapsible {
+                    None
+                } else {
+                    index_map.push(idx);
+                    Some(arg)
+                }
+            })
+            .collect();
+
+        CompactStringVariations { array, index_map }
+    }
+
     fn meta_phrases(fbt_element: FbtElementNode) -> Vec<MetaPhrase> {
+        let string_variation_args = fbt_element.get_args_for_string_variation_calc();
+        let jsfbt_builder = JSFbtBuilder::new(string_variation_args);
+        let args_combinations = jsfbt_builder.__get_string_variation_combinations();
+
+        let compact_string_variations = Self::compact_string_variation_combinations(
+            args_combinations.first().cloned().unwrap_or_default(),
+        );
+
         let jsfbt_metadata = Vec::new();
 
         let mut phrase = FbtFunctionCallPhrase {
@@ -96,26 +129,36 @@ impl TransformVisitor {
             },
         };
 
-        // loop here
+        let args_combinations = if args_combinations.is_empty() {
+            vec![vec![]]
+        } else {
+            args_combinations
+        };
 
-        phrase.jsfbt.t = TableJSFBTTreeLeaf {
-            desc: fbt_element.desc.clone(),
-            text: normalize_spaces(
-                &fbt_element
-                    .children
-                    .iter()
-                    .map(|child| child.get_text(&StringVariationArgsMap::new()))
-                    .join(""),
-            )
-            .trim()
-            .to_owned(),
-            hash: None,
-            outer_token_name: None,
-            token_aliases: None,
+        for args_combination in args_combinations {
+            let sv_args_map = StringVariationArgsMap::new();
+            let arg_values = compact_string_variations
+                .index_map
+                .iter()
+                .map(|&idx| args_combination.get(idx).unwrap().value.to_string())
+                .collect::<Vec<_>>();
+
+            let leaf = TableJSFBTTreeLeaf {
+                desc: fbt_element.desc.clone(),
+                text: fbt_element.get_text(&sv_args_map),
+                token_aliases: fbt_element.get_token_aliases(&sv_args_map),
+                ..Default::default()
+            };
+
+            if !arg_values.is_empty() {
+                phrase.jsfbt.t.add_leave(arg_values, leaf);
+            } else {
+                phrase.jsfbt.t = leaf.into()
+            }
         }
-        .into();
 
         let meta_phrase = MetaPhrase {
+            compact_string_variations,
             fbt_node: fbt_element,
             parent_index: None,
             phrase,

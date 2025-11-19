@@ -6,6 +6,7 @@ use crate::visitors::jsx_visitor::JSXVisitor;
 
 mod hash;
 mod jsfbt;
+mod jsfbt_builder;
 mod nodes;
 mod test;
 mod transform;
