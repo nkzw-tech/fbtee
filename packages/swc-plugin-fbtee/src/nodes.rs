@@ -1,13 +1,21 @@
+use std::vec;
+
 use anyhow::{bail, Result};
 use iter_tools::Itertools;
 use swc_core::{
+    alloc::api::hashbrown::HashMap,
     atoms::{atom, Atom},
-    ecma::ast::{CallExpr, Callee, Expr, ExprOrSpread, Lit, MemberExpr, MemberProp},
+    common::Spanned,
+    ecma::ast::{
+        ArrayLit, CallExpr, Callee, Expr, ExprOrSpread, Lit, MemberExpr, MemberProp, Number,
+    },
 };
 
 use crate::{
     nodes::{
-        arguments::StringVariationArgsMap,
+        arguments::{
+            CandidateValues, GenderConst, NumberConst, StringVariationArg, StringVariationArgsMap,
+        },
         list::FbtListNode,
         node::{FbtChildNode, FbtNode},
     },
@@ -36,22 +44,23 @@ pub enum ValidProunounUsage {
 
 #[derive(Clone)]
 pub enum FbtChildNodeEnum {
-    // Enum {
-    //     range: HashMap<Atom, Atom>,
-    //     value: CallExprArg,
-    // },
+    Enum {
+        range: HashMap<Atom, Atom>,
+        value: CallExprArg,
+    },
     Name {
         module_name: Atom,
         gender: CallExprArg,
         name: Atom,
         value: CallExprArg,
     },
-    // Param {
-    //     gender: Option<Box<Expr>>,
-    //     name: String,
-    //     number: Option<Box<Expr>>, // todo: number?: true | null | Expression
-    //     value: CallExprArg,
-    // },
+    Param {
+        module_name: Atom,
+        gender: Option<Box<Expr>>,
+        name: String,
+        number: Option<Box<Expr>>, // todo: number?: true | null | Expression
+        value: CallExprArg,
+    },
     // Plural {
     //     count: CallExprArg,
     //     many: Option<String>,
@@ -76,22 +85,59 @@ pub enum FbtChildNodeEnum {
 impl FbtNode for FbtChildNodeEnum {
     fn get_text(&self, args: &StringVariationArgsMap) -> String {
         match self {
+            Self::Enum { .. } => todo!(),
             Self::Name { name, .. } => {
                 // invariant here
                 token_name_to_text_pattern(name)
             }
+            Self::Param { name, .. } => token_name_to_text_pattern(name),
             Self::List(fbt_list_node) => fbt_list_node.get_text(args),
             Self::Text(text) => text.clone(),
             Self::SameParam { name } => token_name_to_text_pattern(name),
         }
     }
 
-    fn get_token_name(&self, _args: &StringVariationArgsMap) -> Option<String> {
+    fn get_token_name(&self, args: &StringVariationArgsMap) -> Option<String> {
         match self {
             Self::Name { name, .. } => Some(name.to_string()),
-            Self::List(fbt_list_node) => fbt_list_node.get_token_name(_args),
+            Self::Param { name, .. } => Some(name.clone()),
+            Self::List(fbt_list_node) => fbt_list_node.get_token_name(args),
             Self::Text(_) => None,
             Self::SameParam { name } => Some(name.clone()),
+            _ => None,
+        }
+    }
+
+    fn get_args_for_string_variation_calc(&self) -> Vec<StringVariationArg> {
+        match self {
+            Self::Enum { range, value } => {
+                vec![StringVariationArg {
+                    node: value.span(),
+                    candidate_values: CandidateValues::EnumKeys(
+                        range.keys().map(|k| k.to_string()).collect(),
+                    ),
+                }]
+            }
+            Self::Name { gender, .. } => vec![StringVariationArg {
+                node: gender.span(),
+                candidate_values: CandidateValues::GenderConsts(vec![GenderConst::Any]),
+            }],
+            Self::Param { gender, number, .. } => match (gender, number) {
+                (Some(gender), None) => vec![StringVariationArg {
+                    node: gender.span(),
+                    candidate_values: CandidateValues::GenderConsts(vec![GenderConst::Any]),
+                }],
+                (None, Some(number)) => vec![StringVariationArg {
+                    // todo: number?: true | null | Expression
+                    node: number.span(),
+                    candidate_values: CandidateValues::Numbers(vec![NumberConst::Any]),
+                }],
+                (Some(_), Some(_)) => {
+                    panic!("Gender and number options must not be set at the same time")
+                }
+                _ => vec![],
+            },
+            _ => vec![],
         }
     }
 }
@@ -109,6 +155,38 @@ impl FbtChildNode for FbtChildNodeEnum {
                 args: vec![Expr::Lit(Lit::Str(name.into())).into(), value, gender],
                 ..Default::default()
             }),
+            Self::Param {
+                module_name,
+                gender,
+                name,
+                number,
+                value,
+            } => {
+                let mut args = vec![Expr::Lit(Lit::Str(name.into())).into(), value.into()];
+
+                let variation_values = match (gender, number) {
+                    (Some(gender), None) => vec![Expr::Lit(1.into()).into(), gender.into()],
+                    // todo: number?: true | null | Expression
+                    (None, Some(number)) => vec![Expr::Lit(0.into()).into(), number.into()],
+                    _ => vec![],
+                };
+
+                if !variation_values.is_empty() {
+                    args.push(
+                        Expr::Array(ArrayLit {
+                            elems: variation_values.into_iter().map(Some).collect(),
+                            ..Default::default()
+                        })
+                        .into(),
+                    )
+                }
+
+                Some(CallExpr {
+                    callee: member_callee(module_name, atom!("param")),
+                    args,
+                    ..Default::default()
+                })
+            }
             Self::List(fbt_list_node) => fbt_list_node.get_fbt_runtime_arg(),
             Self::SameParam { .. } => None,
             _ => None,
