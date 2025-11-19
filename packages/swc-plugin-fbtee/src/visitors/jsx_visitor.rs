@@ -210,11 +210,17 @@ impl VisitMut for JSXVisitor {
             }
         };
 
-        if let Ok(Some(call)) = self
-            .visit_fbt_root(*jsx_element)
-            .inspect_err(|err| println!("{:?}", err))
-        {
-            *expr = Expr::Call(call);
+        match self.visit_fbt_root(*jsx_element) {
+            Ok(Some(call)) => {
+                *expr = Expr::Call(call);
+            }
+            Ok(None) => {
+                *expr = "visit_fbt_root returned None".into();
+            }
+            Err(err) => {
+                println!("{:?}", err);
+                *expr = err.to_string().into();
+            }
         }
 
         expr.visit_mut_children_with(self);
@@ -233,14 +239,28 @@ impl VisitMut for JSXVisitor {
 
         node.visit_mut_children_with(self);
 
-        if let Ok(Some(call)) = self
-            .visit_fbt_root(*jsx_element)
-            .inspect_err(|err| println!("{:?}", err))
-        {
-            *node = JSXElementChild::JSXExprContainer(JSXExprContainer {
-                span: Default::default(),
-                expr: JSXExpr::Expr(call.into()),
-            });
+        match self.visit_fbt_root(*jsx_element) {
+            Ok(Some(call)) => {
+                *node = JSXElementChild::JSXExprContainer(JSXExprContainer {
+                    span: Default::default(),
+                    expr: JSXExpr::Expr(call.into()),
+                });
+            }
+            Ok(None) => {
+                *node = JSXElementChild::JSXExprContainer(JSXExprContainer {
+                    span: Default::default(),
+                    expr: JSXExpr::Expr(
+                        Expr::Lit(Lit::Str("visit_fbt_root returned None".into())).into(),
+                    ),
+                });
+            }
+            Err(err) => {
+                println!("{:?}", err);
+                *node = JSXElementChild::JSXExprContainer(JSXExprContainer {
+                    span: Default::default(),
+                    expr: JSXExpr::Expr(Expr::Lit(Lit::Str(err.to_string().into())).into()),
+                });
+            }
         }
     }
 }
