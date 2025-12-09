@@ -449,9 +449,7 @@ export function expandStringConcat(
   throw errorAt(
     node,
     `${moduleName} only accepts plain strings with params wrapped in ${moduleName}.param(...). ` +
-      `See the docs at https://facebook.github.io/fbt/ for more info. ` +
-      `Expected StringLiteral, TemplateLiteral, or concatenation; ` +
-      `got "${node.type}"`,
+      `See https://fbtee.dev for more info. Expected StringLiteral, TemplateLiteral, or concatenation; received "${node.type}".`,
   );
 }
 

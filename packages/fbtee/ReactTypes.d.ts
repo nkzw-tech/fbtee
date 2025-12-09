@@ -83,11 +83,10 @@ export type FbtOptions = {
    *  Use a "common" string repository
    *  To use the strings at runtime, there is the fbt.c(...) function call or the <fbt common=true>...</fbt> JSX API.
    *  NOTE: The transform will throw if it encounters a common string not in the map provided.
-   *  See: https://facebook.github.io/fbt/docs/common#runtime-api
    */
   common?: boolean;
   /**
-   *  Informs [collection](https://facebook.github.io/fbt/docs/collection/) to skip this string (useful for tests/mocks)
+   *  Informs the collect script to skip this string (useful for tests/mocks)
    */
   doNotExtract?: boolean;
   /**
@@ -99,7 +98,7 @@ export type FbtOptions = {
    */
   project?: string;
   /**
-   * IntlVariations.GENDER_*: Pass an [implicit subject](https://facebook.github.io/fbt/docs/implicit_params/) gender to a partially formed text
+   * IntlVariations.GENDER_*: Pass an implicit subject gender to a partially formed text
    */
   subject?: IntlVariations;
 };
