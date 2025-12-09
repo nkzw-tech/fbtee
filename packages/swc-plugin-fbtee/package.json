@@ -1,0 +1,15 @@
+{
+  "name": "swc-plugin-fbtee",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [
+    "swc-plugin"
+  ],
+  "license": "MIT",
+  "main": "target/wasm32-wasip1/release/swc_plugin_fbtee.wasm",
+  "files": [],
+  "scripts": {
+    "prepublishOnly": "cargo build-wasip1 --release"
+  },
+  "preferUnplugged": true
+}

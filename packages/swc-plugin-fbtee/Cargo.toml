@@ -1,0 +1,24 @@
+[package]
+name = "swc-plugin-fbtee"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+
+[dependencies]
+anyhow = "1.0.100"
+either = { version = "1.15.0", features = ["serde"] }
+iter_tools = "0.39.0"
+regex = "1.12.1"
+serde = "1"
+serde_json = "1.0.145"
+swc_core = { version = "46.0.*", features = ["ecma_plugin_transform"] }
+swc_ecma_lexer = "25.0"
+
+# .cargo/config.toml defines few alias to build plugin.
+# cargo build-wasip1 generates wasm32-wasip1 binary
+# cargo build-wasm32 generates wasm32-unknown-unknown binary.

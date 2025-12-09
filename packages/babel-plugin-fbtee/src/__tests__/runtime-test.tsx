@@ -2,16 +2,49 @@ import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import { describe, it } from '@jest/globals';
 import fbtAutoImport from '@nkzw/babel-plugin-fbtee-auto-import';
+import * as swc from '@swc/core';
 import fbtee from '../index.tsx';
-import { withFbtImportStatement } from './FbtTestUtil.tsx';
+import { fbtSwcPlugin, withFbtImportStatement } from './FbtTestUtil.tsx';
 
-const transform = (source: string) =>
-  transformSync(source, {
-    ast: false,
-    plugins: [fbtAutoImport, fbtee],
-    presets: [presetReact],
-    sourceType: 'module',
-  })?.code || '';
+const transform = (source: string) => {
+  const useSwc = process.env.USE_SWC === '1';
+
+  if (!useSwc) {
+    // Default to Babel until SWC plugin host compatibility is resolved.
+    return (
+      transformSync(source, {
+        ast: false,
+        filename: 'source.js',
+        plugins: [fbtAutoImport, fbtee],
+        presets: [presetReact],
+        sourceType: 'module',
+      })?.code || ''
+    );
+  }
+
+  return (
+    swc.transformSync(source, {
+      isModule: true,
+      filename: 'source.js',
+      jsc: {
+        target: 'es2020',
+        parser: {
+          syntax: 'ecmascript',
+          jsx: true,
+        },
+        transform: {
+          react: {
+            runtime: 'preserve',
+            throwIfNamespace: false,
+          },
+        },
+        experimental: {
+          plugins: [[fbtSwcPlugin, {}]],
+        },
+      },
+    }).code || ''
+  );
+};
 
 describe('Test hash key generation', () => {
   it('should generate hash key for simple string', () => {
