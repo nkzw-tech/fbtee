@@ -19,28 +19,28 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@nkzw/stack": "^2.3.1",
+    "@nkzw/stack": "^2.3.2",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fbtee": "workspace:*",
-    "lucide-react": "^0.552.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "shiki": "^3.14.0",
-    "tailwind-merge": "^3.3.1"
+    "lucide-react": "^0.556.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "shiki": "^3.19.0",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@nkzw/babel-preset-fbtee": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.16",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "babel-plugin-react-compiler": "^1.0.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.16",
-    "vite": "^7.2.0"
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.2.7"
   }
 }

@@ -194,7 +194,7 @@ describe('fbt preserveWhitespace argument', () => {
     expect(
       snapshotTransform(
         withFbtImportStatement(
-          `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: true});`,
+          String.raw`var x = fbt('one line', 'two\nlines', {preserveWhitespace: true});`,
         ),
       ),
     ).toMatchSnapshot();
@@ -220,7 +220,7 @@ describe('fbt preserveWhitespace argument', () => {
     expect(
       snapshotTransform(
         withFbtImportStatement(
-          `var x = fbt('two\\nlines', 'one line', {preserveWhitespace: false});`,
+          String.raw`var x = fbt('two\nlines', 'one line', {preserveWhitespace: false});`,
         ),
       ),
     ).toMatchSnapshot();
@@ -230,7 +230,7 @@ describe('fbt preserveWhitespace argument', () => {
     expect(
       snapshotTransform(
         withFbtImportStatement(
-          `var x = fbt('one line', 'two\\nlines', {preserveWhitespace: false});`,
+          String.raw`var x = fbt('one line', 'two\nlines', {preserveWhitespace: false});`,
         ),
       ),
     ).toMatchSnapshot();

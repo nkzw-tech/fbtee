@@ -474,11 +474,11 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
     expect(
       snapshotTransformKeepJsx(
         withFbtImportStatement(
-          `// A backslash \\ in comments
+          String.raw`// A backslash \ in comments
           <fbt desc="unicode characters">
-            A copyright sign {'\\u00A9'},
-            a multi byte character {'\\uD83D\\uDCA9'},
-            and a backslash {'\\\\'}.
+            A copyright sign {'\u00A9'},
+            a multi byte character {'\uD83D\uDCA9'},
+            and a backslash {'\\'}.
           </fbt>`,
         ),
       ),
