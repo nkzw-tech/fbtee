@@ -1,7 +1,6 @@
 import { VStack } from '@nkzw/stack';
 import { useLocaleContext } from 'fbtee';
 import {
-  ArrowRight,
   CheckCircle,
   Code as CodeIcon,
   createLucideIcon,
@@ -29,6 +28,7 @@ import {
   CardTitle,
 } from './components/Card.tsx';
 import Code from './components/Code.tsx';
+import H2 from './components/H2.tsx';
 import { Separator } from './components/Separator.tsx';
 import {
   Tabs,
@@ -61,7 +61,7 @@ const LocaleSwitcher = () => {
     <>
       <Button
         asChild
-        className="transition-background border-purple-200 bg-transparent duration-200 hover:border-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900"
+        className="hover:text-blue-600 dark:hover:text-blue-400"
         size="lg"
         variant="outline"
       >
@@ -83,12 +83,9 @@ const LocaleSwitcher = () => {
           {[...AvailableLanguages.entries()].map(([locale, name]) => (
             <Button
               asChild
-              className={cx(
-                'transition-background border-purple-200 bg-transparent duration-150 hover:border-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900',
-                {
-                  'bg-purple-100 dark:bg-purple-900': currentLocale === locale,
-                },
-              )}
+              className={cx({
+                'bg-blue-100 dark:bg-blue-900': currentLocale === locale,
+              })}
               key={locale}
               size="sm"
               variant="outline"
@@ -119,16 +116,16 @@ export default function App() {
         <div className="container mx-auto flex items-center justify-between px-4 py-1">
           <div className="flex items-center space-x-2">
             <div className="relative">
-              <Globe className="h-6 w-6 text-indigo-600" />
+              <Globe className="h-6 w-6 text-gray-600 dark:text-gray-200" />
             </div>
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-xl font-bold text-transparent">
+            <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text text-xl font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
               fbtee
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <Button asChild size="sm" variant="ghost">
               <Link
-                className="flex items-center space-x-1 hover:text-purple-600"
+                className="hover:text-blue-600 dark:hover:text-blue-400"
                 href="https://github.com/nkzw-tech/fbtee"
                 target="_blank"
               >
@@ -140,34 +137,33 @@ export default function App() {
         </div>
       </header>
       <section className="relative overflow-hidden px-4 py-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 dark:from-purple-950/20 dark:via-pink-950/20 dark:to-indigo-950/20"></div>
+        <div className="absolute inset-0 border-b bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/20 dark:to-blue-950/20"></div>
         <div className="relative container mx-auto max-w-4xl text-center">
           <Badge
-            className="mb-6 border-purple-200 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+            className="mb-6 border-blue-200 bg-blue-100 hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-900 dark:hover:bg-blue-900"
             variant="secondary"
           >
             <Sparkles className="mr-1 h-3 w-3" />
             Far Better Translations, Extended Edition
           </Badge>
           <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl">
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
               fbtee
             </span>
           </h1>
-          <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl">
+          <p className="mx-auto mb-8 max-w-2xl text-xl italic">
             <fbt desc="fbtee tagline">
               An internationalization framework for JavaScript & React designed
               to be{' '}
-              <span className="font-semibold text-purple-600">powerful</span>,{' '}
-              <span className="font-semibold text-indigo-600">flexible</span>,
-              and{' '}
-              <span className="font-semibold text-pink-600">intuitive</span>.
+              <span className="font-semibold text-sky-600">powerful</span>,{' '}
+              <span className="font-semibold text-blue-600">flexible</span>, and{' '}
+              <span className="font-semibold text-indigo-600">intuitive</span>.
             </fbt>
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
               asChild
-              className="transition-background bg-gradient-to-r from-purple-600 to-pink-600 duration-200 hover:from-purple-700 hover:to-pink-700"
+              className="transition-background bg-gradient-to-r from-blue-600 to-sky-600 duration-200 hover:from-blue-500 hover:to-sky-500"
               size="lg"
             >
               <Link
@@ -178,20 +174,15 @@ export default function App() {
                 <span>
                   <fbt desc="Get started button label">Get Started</fbt>
                 </span>
-                <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button
               asChild
-              className="transition-background border-purple-200 bg-transparent duration-200 hover:border-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900"
+              className="hover:text-blue-600 dark:hover:text-blue-400"
               size="lg"
               variant="outline"
             >
-              <Link
-                className="flex items-center space-x-1"
-                href="https://github.com/nkzw-tech/fbtee"
-                target="_blank"
-              >
+              <Link href="https://github.com/nkzw-tech/fbtee" target="_blank">
                 <Github className="h-4 w-4" />
                 <span>
                   <fbt desc="Button label">View on GitHub</fbt>
@@ -205,21 +196,21 @@ export default function App() {
       <section className="px-4 py-8">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-8 text-center">
-            <h2 className="mb-4 text-3xl">
+            <H2 className="mb-4 text-3xl">
               <fbt desc="Headline">
                 Why choose <span className="font-bold">fbtee</span>?
               </fbt>
-            </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl">
+            </H2>
+            <p className="mx-auto max-w-2xl">
               <fbt desc="Tagline">
                 Modern internationalization that scales with your application.
               </fbt>
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="group border-purple-100 shadow transition-all hover:border-purple-200 hover:shadow-lg">
+            <Card className="border-slate-100 shadow transition-all hover:border-slate-200 hover:shadow-lg">
               <CardHeader>
-                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-indigo-500 transition-transform duration-200 group-hover:scale-110">
+                <div className="squircle mb-2 flex h-12 w-12 items-center justify-center bg-gradient-to-br from-slate-500 to-indigo-500 transition-transform duration-200">
                   <CodeIcon className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">
@@ -227,7 +218,7 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm">
                   <fbt desc="Inline translations description">
                     Embed translations directly into your code. No need to
                     manage translation keys or wrap your code with t()
@@ -236,9 +227,9 @@ export default function App() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="group border-indigo-100 shadow transition-all hover:border-indigo-200 hover:shadow-lg">
+            <Card className="border-indigo-100 shadow transition-all hover:border-indigo-200 hover:shadow-lg">
               <CardHeader>
-                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500 transition-transform duration-200 group-hover:scale-110">
+                <div className="squircle mb-2 flex h-12 w-12 items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-500 transition-transform duration-200">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">
@@ -246,7 +237,7 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm">
                   <fbt desc="Proven in production description">
                     Built on Facebook&apos;s fbt, with over a decade of
                     production usage, serving billions of users.
@@ -254,9 +245,9 @@ export default function App() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="group border-blue-100 shadow transition-all hover:border-blue-200 hover:shadow-lg">
+            <Card className="border-blue-100 shadow transition-all hover:border-blue-200 hover:shadow-lg">
               <CardHeader>
-                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-pink-500 transition-transform duration-200 group-hover:scale-110">
+                <div className="squircle mb-2 flex h-12 w-12 items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500 transition-transform duration-200">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">
@@ -264,7 +255,7 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm">
                   <fbt desc="Optimized performance description">
                     Compiles translations into an Intermediate Representation
                     (IR) for extracting strings, then optimizes runtime output.
@@ -272,9 +263,9 @@ export default function App() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="group border-pink-100 shadow transition-all hover:border-pink-200 hover:shadow-lg">
+            <Card className="border-purple-100 shadow transition-all hover:border-purple-200 hover:shadow-lg">
               <CardHeader>
-                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-red-500 transition-transform duration-200 group-hover:scale-110">
+                <div className="squircle mb-2 flex h-12 w-12 items-center justify-center bg-gradient-to-br from-purple-500 to-slate-500 transition-transform duration-200">
                   <Rocket className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">
@@ -282,7 +273,7 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm">
                   <fbt desc="Easy setup description">
                     Quick integration with tools like Babel and Vite means you
                     can get started instantly.
@@ -295,13 +286,11 @@ export default function App() {
       </section>
       <section className="px-4 py-8">
         <div className="container mx-auto max-w-2xl">
-          <div className="text-center">
-            <h2 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text pb-4 text-3xl font-bold text-transparent">
-              <fbt desc="Headline">
-                <span className="font-bold">fbtee</span> in Action
-              </fbt>
-            </h2>
-          </div>
+          <H2 className="mb-4 text-center">
+            <fbt desc="Headline">
+              <span className="font-bold">fbtee</span> in Action
+            </fbt>
+          </H2>
           <Code
             code={`const WelcomeMessage = ({ messageCount, user }) => (
   <div>
@@ -322,15 +311,15 @@ export default function App() {
         </div>
       </section>
       <section
-        className="bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-indigo-50/50 px-4 py-8 dark:from-purple-950/10 dark:via-pink-950/10 dark:to-indigo-950/10"
+        className="bg-gradient-to-br from-blue-50/50 to-sky-50/50 px-4 py-8 dark:from-blue-950/10 dark:to-sky-950/10"
         id="getting-started"
       >
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8 text-center">
-            <h2 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text pb-4 text-3xl font-bold text-transparent">
+            <H2 className="mb-4 text-center">
               <fbt desc="Headline">Getting Started</fbt>
-            </h2>
-            <p className="text-muted-foreground">
+            </H2>
+            <p className="">
               <fbt desc="Getting started description">
                 Choose your preferred way to start with{' '}
                 <span className="font-bold">fbtee</span>.
@@ -341,14 +330,14 @@ export default function App() {
           <div className="space-y-12">
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-sky-500">
                   <Sparkles className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Quick Start Templates</fbt>
                 </h3>
               </div>
-              <p className="text-muted-foreground mb-6">
+              <p className="mb-6">
                 <fbt desc="Quick start templates description">
                   Skip the setup hassle! These templates come with{' '}
                   <span className="font-bold">fbtee</span> pre-configured and
@@ -356,10 +345,10 @@ export default function App() {
                 </fbt>
               </p>
               <div className="grid gap-6 md:grid-cols-2">
-                <Card className="group border-purple-200 shadow transition-all hover:border-purple-300 hover:shadow-lg">
+                <Card className="group border-blue-200 shadow transition-all hover:border-blue-300 hover:shadow-lg">
                   <CardHeader>
                     <div className="flex items-center space-x-2">
-                      <Globe className="h-5 w-5 text-purple-600" />
+                      <Globe className="h-5 w-5 text-blue-600" />
                       <CardTitle className="text-lg">
                         <fbt desc="Headline">Web App Template</fbt>
                       </CardTitle>
@@ -373,12 +362,11 @@ export default function App() {
                   <CardContent>
                     <Button
                       asChild
-                      className="transition-background border-purple-200 bg-transparent duration-200 hover:bg-purple-50 dark:hover:bg-purple-900"
+                      className="transition-background border-blue-200 bg-transparent duration-200 hover:bg-blue-50 dark:hover:bg-blue-900"
                       size="sm"
                       variant="outline"
                     >
                       <Link
-                        className="flex items-center space-x-2"
                         href="https://github.com/nkzw-tech/web-app-template"
                         target="_blank"
                       >
@@ -390,10 +378,10 @@ export default function App() {
                     </Button>
                   </CardContent>
                 </Card>
-                <Card className="group border-pink-200 shadow transition-all hover:border-pink-300 hover:shadow-lg">
+                <Card className="group border-sky-200 shadow transition-all hover:border-sky-300 hover:shadow-lg">
                   <CardHeader>
                     <div className="flex items-center space-x-2">
-                      <Users className="h-5 w-5 text-pink-600" />
+                      <Users className="h-5 w-5 text-sky-600" />
                       <CardTitle className="text-lg">
                         <fbt desc="Headline">Expo App Template</fbt>
                       </CardTitle>
@@ -407,12 +395,11 @@ export default function App() {
                   <CardContent>
                     <Button
                       asChild
-                      className="transition-background border-pink-200 bg-transparent duration-200 hover:bg-pink-50 dark:hover:bg-pink-900"
+                      className="transition-background border-sky-200 bg-transparent duration-200 hover:bg-sky-50 dark:hover:bg-sky-900"
                       size="sm"
                       variant="outline"
                     >
                       <Link
-                        className="flex items-center space-x-2"
                         href="https://github.com/nkzw-tech/expo-app-template"
                         target="_blank"
                       >
@@ -426,20 +413,19 @@ export default function App() {
                 </Card>
               </div>
             </div>
-
             <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-blue-500">
                   <Terminal className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Manual Installation</fbt>
                 </h3>
               </div>
-              <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 p-6 text-white">
-                <p className="mb-4 text-purple-100">
+              <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
+                <p className="mb-4 text-slate-200">
                   <fbt desc="Manual installation description">
                     <strong>Requirements:</strong> Node 22+, React 19+ (if using
                     React)
@@ -447,11 +433,11 @@ export default function App() {
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center space-x-2">
-                    <code className="text-purple-300">$</code>
+                    <code className="text-slate-200">$</code>
                     <code>npm install fbtee</code>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <code className="text-purple-300">$</code>
+                    <code className="text-slate-200">$</code>
                     <code>npm install -D @nkzw/babel-preset-fbtee</code>
                   </div>
                 </div>
@@ -460,10 +446,10 @@ export default function App() {
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-teal-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-emerald-500">
                   <Settings className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Framework Setup</fbt>
                 </h3>
               </div>
@@ -475,7 +461,7 @@ export default function App() {
                   <TabsTrigger value="babel">Babel</TabsTrigger>
                 </TabsList>
                 <TabsContent className="space-y-4" value="vite">
-                  <p className="text-muted-foreground">
+                  <p className="">
                     <fbt desc="Vite setup instructions">
                       Install the Vite React plugin and configure your
                       vite.config.ts:
@@ -497,7 +483,7 @@ export default {
                   />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="nextjs">
-                  <p className="text-muted-foreground">
+                  <p className="">
                     <fbt desc="Next.js setup instructions">
                       Create a babel.config.js file in your project root:
                     </fbt>
@@ -507,7 +493,7 @@ export default {
   presets: ['next/babel', '@nkzw/babel-preset-fbtee'],
 };`}
                   />
-                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:bg-blue-900">
+                  <div className="squircle border border-blue-200 bg-blue-50 p-4 dark:bg-blue-900">
                     <p className="text-sm text-blue-800 dark:text-blue-50">
                       <fbt desc="Next.js tip">
                         <strong>Next.js Tip:</strong> Check out the{' '}
@@ -525,7 +511,7 @@ export default {
                   </div>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="babel">
-                  <p className="text-muted-foreground">
+                  <p className="">
                     <fbt desc="Babel setup instructions">
                       For custom Babel setups, add the preset to your .babelrc
                       or babel.config.js:
@@ -545,10 +531,10 @@ export default {
       <section className="px-4 py-8">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8 text-center">
-            <h2 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text pb-4 text-3xl font-bold text-transparent">
+            <H2>
               <fbt desc="Headline">Usage Guide</fbt>
-            </h2>
-            <p className="text-muted-foreground">
+            </H2>
+            <p className="">
               <fbt desc="Usage guide description">
                 Everything you need to know to use{' '}
                 <span className="font-bold">fbtee</span> effectively.
@@ -559,15 +545,15 @@ export default {
           <div className="space-y-12">
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-500">
                   <Globe className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">App Setup</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-6">
+              <p className="mb-6">
                 <fbt desc="App setup description">
                   Set up <span className="font-bold">fbtee</span>&apos;s runtime
                   to manage locales in your app. First, add TypeScript support:
@@ -579,7 +565,7 @@ export default {
 /// <reference types="fbtee/ReactTypes.d.ts" />`}
               />
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="LocaleContext setup description">
                   Then create a LocaleContext to manage translations:
                 </fbt>
@@ -622,21 +608,20 @@ const App = () => (
   </LocaleContext>
 );`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-teal-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-emerald-500">
                   <CodeIcon className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Usage</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Usage description">
                   All translatable strings must be wrapped with{' '}
                   <code className="bg-muted rounded px-1">&lt;fbt&gt;</code> or{' '}
@@ -649,7 +634,7 @@ const App = () => (
                   <h4 className="mb-2 font-semibold text-red-600 dark:text-red-400">
                     <fbt desc="Before example label">Before</fbt>
                   </h4>
-                  <div className="rounded-lg border border-red-200 bg-red-50 p-4 font-mono text-sm dark:bg-red-900">
+                  <div className="squircle border border-red-200 bg-red-50 p-4 font-mono text-sm dark:bg-red-900">
                     <pre>{`const Greeting = () => (
   <div>Hello, World!</div>
 );`}</pre>
@@ -659,7 +644,7 @@ const App = () => (
                   <h4 className="mb-2 font-semibold text-green-600 dark:text-green-400">
                     <fbt desc="After example label">After</fbt>
                   </h4>
-                  <div className="rounded-lg border border-green-200 bg-green-50 p-4 font-mono text-sm dark:bg-green-900">
+                  <div className="squircle border border-green-200 bg-green-50 p-4 font-mono text-sm dark:bg-green-900">
                     <pre>{`const Greeting = () => (
   <div>
     <fbt desc="Greeting">
@@ -671,8 +656,8 @@ const App = () => (
                 </div>
               </div>
 
-              <div className="mt-4 rounded-lg border border-purple-200 bg-purple-50 p-4 dark:bg-purple-900">
-                <p className="text-sm text-purple-800 dark:text-purple-50">
+              <div className="squircle mt-4 border border-sky-200 bg-sky-50 p-4 dark:bg-sky-900">
+                <p className="text-sm text-sky-800 dark:text-sky-50">
                   <fbt desc="Usage note">
                     <strong>Note:</strong> The <code>desc</code> attribute is
                     required and provides context for translators.{' '}
@@ -690,12 +675,12 @@ const App = () => (
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500">
                   <Zap className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Dynamic Content</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Dynamic content description">
                   Use{' '}
                   <code className="bg-muted rounded px-1">
@@ -745,21 +730,20 @@ const App = () => (
                   />
                 </TabsContent>
               </Tabs>
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-sky-500">
                   <Users className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Lists & Conjunctions</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Lists description">
                   <code className="bg-muted rounded px-1">
                     &lt;fbt:list&gt;
@@ -785,7 +769,7 @@ const App = () => (
 // delimiter: "comma" | "semicolon" | "bullet"`}
               />
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="List function description">
                   You can also use the list function outside React:
                 </fbt>
@@ -797,21 +781,20 @@ const App = () => (
 const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 // "Alice, Bob, or Charlie"`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-purple-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
                   <Languages className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Pluralization</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Pluralization description">
                   Handle singular and plural forms with{' '}
                   <code className="bg-muted rounded px-1">
@@ -860,21 +843,20 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 // count={1}: "Do you want to play against a bot?"
 // count={3}: "Do you want to play against 3 bots?"`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-blue-500">
                   <Users className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Pronouns</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Pronouns description">
                   Handle gendered pronouns with{' '}
                   <code className="bg-muted rounded px-1">
@@ -899,21 +881,20 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 // Types: "subject" | "object" | "possessive" | "reflexive"
 // Gender: GENDER_MALE | GENDER_FEMALE | GENDER_UNKNOWN`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-green-500">
                   <FileText className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Plain Text Usage</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Plain text usage description">
                   For non-JSX contexts like HTML attributes, use{' '}
                   <code className="bg-muted rounded px-1">fbs()</code>:
@@ -935,16 +916,15 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
   Save
 </button>`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-500">
                   <Terminal className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Translation Workflow</fbt>
                 </h3>
               </div>
@@ -956,13 +936,13 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                       1. Extract Strings
                     </fbt>
                   </h4>
-                  <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
+                  <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
                     <code>
-                      <code className="text-purple-300">$</code> pnpm fbtee
+                      <code className="text-slate-200">$</code> pnpm fbtee
                       collect
                     </code>
                   </div>
-                  <p className="text-muted-foreground mt-2">
+                  <p className="mt-2">
                     <fbt desc="Extract strings explanation">
                       Creates <code>source_strings.json</code> with all
                       translatable strings
@@ -976,7 +956,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                       2. Create Translation Files
                     </fbt>
                   </h4>
-                  <p className="text-muted-foreground mb-2">
+                  <p className="mb-2">
                     <fbt desc="Translation files instructions">
                       Upload
                       <code>source_strings.json</code> to your translation
@@ -994,13 +974,13 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                       3. Compile Translations
                     </fbt>
                   </h4>
-                  <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
+                  <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
                     <code>
-                      <code className="text-purple-300">$</code> pnpm fbtee
+                      <code className="text-slate-200">$</code> pnpm fbtee
                       translate
                     </code>
                   </div>
-                  <p className="text-muted-foreground mt-2">
+                  <p className="mt-2">
                     <fbt desc="Compile translations explanation">
                       Generates optimized translation files in{' '}
                       <code>src/translations/</code>
@@ -1027,7 +1007,7 @@ src/translations/`}
                       5. Custom Scripts (Optional)
                     </fbt>
                   </h4>
-                  <p className="text-muted-foreground mb-2">
+                  <p className="mb-2">
                     <fbt desc="Custom scripts instructions">
                       Add custom commands to package.json:
                     </fbt>
@@ -1042,21 +1022,20 @@ src/translations/`}
                   />
                 </div>
               </div>
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-teal-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-emerald-500">
                   <Globe className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">Locale Management</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="Locale management description">
                   Access and change locales in your components:
                 </fbt>
@@ -1085,29 +1064,28 @@ const LocaleSwitcher = () => {
   );
 };`}
               />
+              <Separator />
             </div>
-
-            <Separator />
 
             <div>
               <div className="mb-6 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
                   <Shield className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl">
                   <fbt desc="Headline">ESLint Plugin</fbt>
                 </h3>
               </div>
 
-              <p className="text-muted-foreground mb-4">
+              <p className="mb-4">
                 <fbt desc="ESLint plugin description">
                   Install the ESLint plugin to catch common mistakes:
                 </fbt>
               </p>
 
-              <div className="mb-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white">
+              <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
                 <code>
-                  <code className="text-purple-300">$</code> npm install -D
+                  <code className="text-slate-200">$</code> npm install -D
                   @nkzw/eslint-plugin-fbtee
                 </code>
               </div>
@@ -1187,13 +1165,13 @@ export default [
         </div>
       </section>
 
-      <section className="bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-indigo-50/50 px-4 py-8 dark:from-purple-950/10 dark:via-pink-950/10 dark:to-indigo-950/10">
+      <section className="border-t bg-gradient-to-br from-sky-50 to-blue-50 px-4 py-8 dark:from-sky-950/20 dark:to-blue-950/20">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8 text-center">
-            <h2 className="mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-3xl font-bold text-transparent">
+            <H2 className="mb-4">
               <fbt desc="Headline">What&apos;s Better About fbtee?</fbt>
-            </h2>
-            <p className="text-muted-foreground">
+            </H2>
+            <p className="">
               <fbt desc="Better about fbtee description">
                 Originally created by Facebook, rewritten from the ground up.
               </fbt>
@@ -1203,14 +1181,14 @@ export default [
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-emerald-500">
+                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-emerald-500">
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-green-700">
+                  <h4 className="font-semibold text-emerald-600">
                     <fbt desc="Feature title">Easier Setup</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="Easier setup description">
                       Works seamlessly with modern tools like Vite, Next.js, and
                       Expo.
@@ -1223,10 +1201,10 @@ export default [
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-blue-700">
+                  <h4 className="font-semibold text-indigo-600">
                     <fbt desc="Feature title">Statically Typed</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="Statically typed description">
                       Full TypeScript support with compiler validation and
                       ESLint plugin.
@@ -1235,14 +1213,14 @@ export default [
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-purple-700">
+                  <h4 className="font-semibold text-purple-600">
                     <fbt desc="Feature title">Improved React Compatibility</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="React compatibility description">
                       Support for React fragments, Server Components, and modern
                       patterns.
@@ -1253,14 +1231,14 @@ export default [
             </div>
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500">
+                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-sky-500">
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-orange-700">
+                  <h4 className="font-semibold text-sky-600">
                     <fbt desc="Feature title">Enhanced Features</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="Enhanced features description">
                       Fixed and exported intlList as functional &lt;fbt:list&gt;
                       component.
@@ -1269,14 +1247,14 @@ export default [
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-green-500">
+                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-500">
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-teal-700">
+                  <h4 className="font-semibold text-blue-600">
                     <fbt desc="Feature title">Modernized Codebase</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="Modernized codebase description">
                       Rewritten in TypeScript with ESM and modern JavaScript
                       standards.
@@ -1285,14 +1263,14 @@ export default [
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-purple-500">
+                <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-emerald-500">
                   <CheckCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-pink-700">
+                  <h4 className="font-semibold text-emerald-600">
                     <fbt desc="Feature title">Updated Tooling</fbt>
                   </h4>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm">
                     <fbt desc="Updated tooling description">
                       Uses pnpm, Vite, and esbuild for faster, more efficient
                       development.
@@ -1305,36 +1283,38 @@ export default [
         </div>
       </section>
 
-      <footer className="border-t bg-gradient-to-br from-purple-50/30 via-pink-50/30 to-indigo-50/30 px-4 py-8 dark:from-purple-950/10 dark:via-pink-950/10 dark:to-indigo-950/10">
+      <footer className="border-t px-4 py-8">
         <div className="container mx-auto max-w-4xl">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="mb-4 flex items-center space-x-2">
-                <Globe className="h-5 w-5 text-indigo-600" />
-                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text font-bold text-transparent">
+                <div className="relative">
+                  <Globe className="h-6 w-6 text-gray-600 dark:text-gray-200" />
+                </div>
+                <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text text-xl font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
                   fbtee
                 </span>
               </div>
-              <p className="text-muted-foreground text-sm italic">
+              <p className="text-sm italic">
                 <fbt desc="Tagline">
                   Far Better Translations, Extended Edition
                 </fbt>
               </p>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold text-purple-700">
+              <h3 className="mb-4 font-semibold text-blue-600">
                 <fbt desc="Footer section title">Resources</fbt>
               </h3>
               <div className="space-y-2">
                 <Link
-                  className="text-muted-foreground block text-sm transition-colors hover:text-purple-600"
+                  className="block text-sm transition-colors hover:text-blue-600 dark:hover:text-blue-400"
                   href="https://github.com/nkzw-tech/fbtee"
                   target="_blank"
                 >
                   GitHub
                 </Link>
                 <Link
-                  className="text-muted-foreground block text-sm transition-colors hover:text-purple-600"
+                  className="block text-sm transition-colors hover:text-blue-600 dark:hover:text-blue-400"
                   href="https://github.com/cpojer/nextjs-fbtee-example"
                   target="_blank"
                 >
@@ -1343,19 +1323,19 @@ export default [
               </div>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold text-pink-700">
+              <h3 className="mb-4 font-semibold text-sky-600">
                 <fbt desc="Footer section title">Templates</fbt>
               </h3>
               <div className="space-y-2">
                 <Link
-                  className="text-muted-foreground block text-sm transition-colors hover:text-pink-600"
+                  className="block text-sm transition-colors hover:text-sky-600"
                   href="https://github.com/nkzw-tech/web-app-template"
                   target="_blank"
                 >
                   <fbt desc="Link text">Web App Template</fbt>
                 </Link>
                 <Link
-                  className="text-muted-foreground block text-sm transition-colors hover:text-pink-600"
+                  className="block text-sm transition-colors hover:text-sky-600"
                   href="https://github.com/nkzw-tech/expo-app-template"
                   target="_blank"
                 >
@@ -1492,12 +1472,12 @@ export default [
           </div>
           <Separator className="my-4" />
           <div className="flex flex-col items-center justify-between md:flex-row">
-            <div className="text-muted-foreground mb-4 text-sm md:mb-0">
+            <div className="mb-4 text-sm md:mb-0">
               <p>
                 <fbt desc="Footer credit">
                   Originally created by Facebook • Maintained by{' '}
                   <Link
-                    className="text-purple-600 hover:text-purple-700"
+                    className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
                     href="https://nakazawa.tech"
                     target="_blank"
                   >
@@ -1509,7 +1489,7 @@ export default [
             <div className="flex items-center space-x-4">
               <Button asChild size="sm" variant="ghost">
                 <Link
-                  className="text-purple-600 hover:text-purple-700"
+                  className="hover:text-blue-600 dark:hover:text-blue-400"
                   href="https://github.com/nkzw-tech/fbtee"
                   target="_blank"
                 >
