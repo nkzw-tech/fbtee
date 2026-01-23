@@ -116,9 +116,9 @@ export default function App() {
         <div className="container mx-auto flex items-center justify-between px-4 py-1">
           <div className="flex items-center space-x-2">
             <div className="relative">
-              <Globe className="h-6 w-6 text-gray-600 dark:text-gray-200" />
+              <Globe className="h-6 w-6 text-sky-500" />
             </div>
-            <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text text-xl font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
+            <span className="bg-linear-to-r from-sky-500 to-blue-500 bg-clip-text text-xl font-semibold text-transparent">
               fbtee
             </span>
           </div>
@@ -147,7 +147,7 @@ export default function App() {
             Far Better Translations, Extended Edition
           </Badge>
           <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl">
-            <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
+            <span className="bg-linear-to-r from-sky-500 to-blue-500 bg-clip-text font-semibold text-transparent">
               fbtee
             </span>
           </h1>
@@ -1289,9 +1289,9 @@ export default [
             <div>
               <div className="mb-4 flex items-center space-x-2">
                 <div className="relative">
-                  <Globe className="h-6 w-6 text-gray-600 dark:text-gray-200" />
+                  <Globe className="h-6 w-6 text-sky-500" />
                 </div>
-                <span className="bg-linear-to-r from-gray-500 to-gray-900 bg-clip-text text-xl font-semibold text-transparent dark:from-gray-200 dark:to-gray-400">
+                <span className="bg-linear-to-r from-sky-500 to-blue-500 bg-clip-text text-xl font-semibold text-transparent">
                   fbtee
                 </span>
               </div>
@@ -1302,7 +1302,7 @@ export default [
               </p>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold text-blue-600">
+              <h3 className="mb-4 font-semibold text-blue-500">
                 <fbt desc="Footer section title">Resources</fbt>
               </h3>
               <div className="space-y-2">
@@ -1323,7 +1323,7 @@ export default [
               </div>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold text-sky-600">
+              <h3 className="mb-4 font-semibold text-sky-500">
                 <fbt desc="Footer section title">Templates</fbt>
               </h3>
               <div className="space-y-2">
