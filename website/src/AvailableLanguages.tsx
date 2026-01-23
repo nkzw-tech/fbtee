@@ -7,4 +7,5 @@ export default new Map([
   ['it_IT', 'Italiano (Italian)'],
   ['ru_RU', 'Русский (Russian)'],
   ['fb_HX', 'Pirate (Hack)'],
+  ['de_AT', 'Dialekt (Austrian German)'],
 ]);
