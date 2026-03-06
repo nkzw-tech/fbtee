@@ -205,6 +205,10 @@ export default class TranslationBuilder {
         continue;
       }
 
+      if (transData.tokens == null) {
+        continue;
+      }
+
       for (const token of transData.tokens) {
         if (token === VIEWING_USER) {
           return true;
@@ -484,8 +488,9 @@ export default class TranslationBuilder {
     // corresponding translation
     transData.translations.forEach((translation) => {
       const constraints: Record<string, string | number> = {};
-      for (const idx of Object.keys(translation.variations)) {
-        const variation = translation.variations[idx];
+      const variations = translation.variations ?? {};
+      for (const idx of Object.keys(variations)) {
+        const variation = variations[idx];
         // We prune entries that contain non-default variations
         // for tokens we haven't specified.
         const token = transData.tokens[Number(idx)];

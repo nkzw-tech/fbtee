@@ -9,13 +9,13 @@ type Translation = {
   translation: string;
   // Allow variation enum values to be stored in string or number type,
   // and we will parse it into IntlVariationEnumValue in config.isDefaultVariation()
-  variations: {
+  variations?: {
     [index: string]: number | string;
   };
 };
 
 export type SerializedTranslationData = {
-  tokens: ReadonlyArray<string>;
+  tokens?: ReadonlyArray<string>;
   translations: ReadonlyArray<Translation>;
   types: ReadonlyArray<IntlFbtVariationTypeValue>;
 };
@@ -27,7 +27,7 @@ export default class TranslationData {
   _defaultTranslation: string | null | undefined;
 
   constructor(
-    tokens: ReadonlyArray<string>,
+    tokens: ReadonlyArray<string> = [],
     types: ReadonlyArray<IntlFbtVariationTypeValue>,
     translations: ReadonlyArray<Translation>,
   ) {
@@ -55,9 +55,10 @@ export default class TranslationData {
     if (this._defaultTranslation === undefined) {
       for (let i = 0; i < this.translations.length; ++i) {
         const trans = this.translations[i];
+        const variations = trans.variations ?? {};
         let isDefault = true;
-        for (const v of Object.keys(trans.variations)) {
-          if (!config.isDefaultVariation(trans.variations[v])) {
+        for (const v of Object.keys(variations)) {
+          if (!config.isDefaultVariation(variations[v])) {
             isDefault = false;
             break;
           }

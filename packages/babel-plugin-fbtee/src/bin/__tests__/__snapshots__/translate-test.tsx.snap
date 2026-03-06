@@ -43,6 +43,28 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 ]
 `;
 
+exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no tokens 1`] = `
+[
+  {
+    "fb-locale": "fb_HX",
+    "translatedPhrases": [
+      "Translation data for Your FBT Demo",
+    ],
+  },
+]
+`;
+
+exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no variants 1`] = `
+[
+  {
+    "fb-locale": "fb_HX",
+    "translatedPhrases": [
+      "Translation data for Your FBT Demo",
+    ],
+  },
+]
+`;
+
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no variation 1`] = `
 [
   {

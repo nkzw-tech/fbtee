@@ -76,6 +76,118 @@ function testTranslateNewPhrases(options: Options) {
     expect(console.error).toHaveBeenCalled();
   });
 
+  it('should translate string with no tokens', async () => {
+    const result = await processJSON(
+      {
+        phrases: [
+          {
+            filename: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                desc: 'title',
+                text: 'Your FBT Demo',
+              },
+            },
+            jsfbt: {
+              m: [],
+              t: {
+                desc: 'title',
+                text: 'Your FBT Demo',
+                tokenAliases: {},
+              },
+            },
+            loc: {
+              end: {
+                column: 49,
+                line: 130,
+              },
+              start: {
+                column: 12,
+                line: 130,
+              },
+            },
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                // tokens: [], <- no tokens field
+                translations: [
+                  {
+                    translation: 'Translation data for Your FBT Demo',
+                    variations: {},
+                  },
+                ],
+                types: [],
+              },
+            },
+          },
+        ],
+      },
+      options,
+    );
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should translate string with no variants', async () => {
+    const result = await processJSON(
+      {
+        phrases: [
+          {
+            filename: 'src/example/Example.react.js',
+            hashToLeaf: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                desc: 'title',
+                text: 'Your FBT Demo',
+              },
+            },
+            jsfbt: {
+              m: [],
+              t: {
+                desc: 'title',
+                text: 'Your FBT Demo',
+                tokenAliases: {},
+              },
+            },
+            loc: {
+              end: {
+                column: 49,
+                line: 130,
+              },
+              start: {
+                column: 12,
+                line: 130,
+              },
+            },
+            project: 'fbt-demo-project',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'fb_HX',
+            translations: {
+              '2dcba29d4a842c6be5d76fe996fcd9f4': {
+                tokens: [],
+                translations: [
+                  {
+                    translation: 'Translation data for Your FBT Demo',
+                    // variations: {}, // <- no variations field
+                  },
+                ],
+                types: [],
+              },
+            },
+          },
+        ],
+      },
+      options,
+    );
+    expect(result).toMatchSnapshot();
+  });
+
   it('should translate string with no variation', async () => {
     const result = await processJSON(
       {
