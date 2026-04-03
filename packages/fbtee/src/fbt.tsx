@@ -14,8 +14,10 @@ import GenderConst from './GenderConst.tsx';
 import getAllSubstitutions from './getAllSubstitutions.tsx';
 import Hooks, {
   FbtInputOpts,
+  FbtRuntimeCallInput,
   FbtRuntimeInput,
   FbtTableArgs,
+  FbtTranslatedInput,
   ResolverFn,
 } from './Hooks.tsx';
 import intlNumUtils from './intlNumUtils.tsx';
@@ -29,8 +31,11 @@ import type {
   BaseResult,
   FbtConjunction,
   FbtDelimiter,
+  FbtErrorContext,
+  IFbtErrorListener,
   NestedFbtContentItems,
 } from './Types.ts';
+import type IntlViewerContext from './ViewerContext.tsx';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,
@@ -82,11 +87,17 @@ export type Variations =
   | [variation: ParamVariationType['gender'], value: GenderConst];
 
 export function createRuntime<P, T extends BaseResult | string>({
+  getErrorListener = Hooks.getErrorListener,
   getResult,
+  getTranslatedInput = Hooks.getTranslatedInput,
+  getViewerContext = Hooks.getViewerContext,
   param,
   plural,
 }: {
+  getErrorListener?: (context: FbtErrorContext) => IFbtErrorListener | null;
   getResult: ResolverFn<T>;
+  getTranslatedInput?: (input: FbtRuntimeCallInput) => FbtTranslatedInput;
+  getViewerContext?: () => typeof IntlViewerContext;
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
 }) {
@@ -103,7 +114,7 @@ export function createRuntime<P, T extends BaseResult | string>({
         inputArgs?: FbtTableArgs | null,
         options?: FbtInputOpts | null,
       ): T => {
-        let { args, table } = Hooks.getTranslatedInput({
+        let { args, table } = getTranslatedInput({
           args: inputArgs || null,
           options: options || null,
           table: inputTable,
@@ -117,7 +128,7 @@ export function createRuntime<P, T extends BaseResult | string>({
           }
           args.unshift(
             FbtTableAccessor.getGenderResult(
-              getGenderVariations(Hooks.getViewerContext().GENDER),
+              getGenderVariations(getViewerContext().GENDER),
               null,
             ),
           );
@@ -153,7 +164,7 @@ export function createRuntime<P, T extends BaseResult | string>({
               ? [fbtContent]
               : (fbtContent as NestedFbtContentItems),
             options?.hk,
-            Hooks.getErrorListener({
+            getErrorListener({
               hash: options?.hk,
               translation: patternString,
             }),
@@ -219,46 +230,57 @@ export function createRuntime<P, T extends BaseResult | string>({
   );
 }
 
+export const fbtParam = (
+  label: string,
+  value: number | string,
+  variations?: Variations,
+) => {
+  const substitution = { [label]: value };
+  if (variations) {
+    if (variations[0] === ParamVariation.number) {
+      const number = variations.length > 1 ? variations[1] : value;
+      invariant(typeof number === 'number', 'fbt.param expected number');
+
+      const variation = getNumberVariations(number); // this will throw if `number` is invalid
+      if (typeof value === 'number') {
+        substitution[label] =
+          intlNumUtils.formatNumberWithThousandDelimiters(value);
+      }
+      return FbtTableAccessor.getNumberResult(variation, substitution);
+    } else if (variations[0] === ParamVariation.gender) {
+      const gender = variations[1];
+      invariant(gender != null, 'expected gender value');
+      return FbtTableAccessor.getGenderResult(
+        getGenderVariations(gender),
+        substitution,
+      );
+    } else {
+      invariant(false, 'Unknown invariant mask');
+    }
+  } else {
+    return FbtTableAccessor.getSubstitution(substitution);
+  }
+};
+
+export const fbtPlural = (
+  count: number,
+  label?: string | null,
+  value?: number | string,
+) =>
+  FbtTableAccessor.getNumberResult(
+    getNumberVariations(count),
+    label
+      ? {
+          [label]:
+            typeof value === 'number'
+              ? intlNumUtils.formatNumberWithThousandDelimiters(value)
+              : value || intlNumUtils.formatNumberWithThousandDelimiters(count),
+        }
+      : null,
+  );
+
 export default createRuntime<string | number, FbtResult>({
   getResult: Hooks.getFbtResult,
-  param: (label: string, value: number | string, variations?: Variations) => {
-    const substitution = { [label]: value };
-    if (variations) {
-      if (variations[0] === ParamVariation.number) {
-        const number = variations.length > 1 ? variations[1] : value;
-        invariant(typeof number === 'number', 'fbt.param expected number');
-
-        const variation = getNumberVariations(number); // this will throw if `number` is invalid
-        if (typeof value === 'number') {
-          substitution[label] =
-            intlNumUtils.formatNumberWithThousandDelimiters(value);
-        }
-        return FbtTableAccessor.getNumberResult(variation, substitution);
-      } else if (variations[0] === ParamVariation.gender) {
-        const gender = variations[1];
-        invariant(gender != null, 'expected gender value');
-        return FbtTableAccessor.getGenderResult(
-          getGenderVariations(gender),
-          substitution,
-        );
-      } else {
-        invariant(false, 'Unknown invariant mask');
-      }
-    } else {
-      return FbtTableAccessor.getSubstitution(substitution);
-    }
-  },
-  plural: (count: number, label?: string | null, value?: number | string) =>
-    FbtTableAccessor.getNumberResult(
-      getNumberVariations(count),
-      label
-        ? {
-            [label]:
-              typeof value === 'number'
-                ? intlNumUtils.formatNumberWithThousandDelimiters(value)
-                : value ||
-                  intlNumUtils.formatNumberWithThousandDelimiters(count),
-          }
-        : null,
-    ),
+  param: fbtParam,
+  plural: fbtPlural,
 });
