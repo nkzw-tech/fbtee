@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FixedLocaleContext: babel plugin locale override injection component detection (name starts with uppercase) should inject __fbtLocaleOverride in a function expression component 1`] = `
+import { fbt } from "fbtee";
+const MyComponent = function () {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+};
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection component detection (name starts with uppercase) should inject __fbtLocaleOverride in a named function component 1`] = `
+import { fbt } from "fbtee";
+function MyComponent() {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection component detection (name starts with uppercase) should inject __fbtLocaleOverride in an arrow function component 1`] = `
+import { fbt } from "fbtee";
+const MyComponent = () => {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+};
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection fbs support should inject __fbtLocaleOverride for fbs calls in a component 1`] = `
+import { fbs } from "fbtee";
+function MyComponent() {
+  const __fbtLocaleOverride = fbs.__locale?.() ?? null;
+  return fbs._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection fbs support should inject once for mixed fbt and fbs calls 1`] = `
+import { fbt, fbs } from "fbtee";
+function MyComponent() {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  const label = fbs._(
+    "label",
+    null,
+    {
+      hk: "OoWAh",
+    },
+    __fbtLocaleOverride
+  );
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection forwardRef and memo should inject in React.forwardRef callback 1`] = `
+import { fbt } from "fbtee";
+import React from "react";
+const MyComponent = /*#__PURE__*/ React.forwardRef(function (props, ref) {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+});
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection forwardRef and memo should inject in React.memo callback 1`] = `
+import { fbt } from "fbtee";
+import React from "react";
+const MyComponent = /*#__PURE__*/ React.memo(function () {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+});
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection fourth argument passing should pass __fbtLocaleOverride as 4th argument to fbt._ calls 1`] = `
+import { fbt } from "fbtee";
+function MyComponent() {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello World",
+    null,
+    {
+      hk: "RdrwZ",
+    },
+    __fbtLocaleOverride
+  );
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection fourth argument passing should pass __fbtLocaleOverride to all fbt._ calls in a component 1`] = `
+import { fbt } from "fbtee";
+function MyComponent() {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  const a = fbt._(
+    "First",
+    null,
+    {
+      hk: "1Ir5zc",
+    },
+    __fbtLocaleOverride
+  );
+  const b = fbt._(
+    "Second",
+    null,
+    {
+      hk: "3U4k6O",
+    },
+    __fbtLocaleOverride
+  );
+  return a + b;
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection hook detection (name starts with use) should inject __fbtLocaleOverride in a custom hook 1`] = `
+import { fbt } from "fbtee";
+function useGreeting() {
+  const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+  return fbt._(
+    "Hello",
+    null,
+    {
+      hk: "1d8blU",
+    },
+    __fbtLocaleOverride
+  );
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection no fbt calls should NOT inject when function has no fbt calls 1`] = `
+import { fbt } from "fbtee";
+function MyComponent() {
+  return "no fbt here";
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection non-component functions should NOT inject __fbtLocaleOverride in a regular function 1`] = `
+import { fbt } from "fbtee";
+function formatMessage() {
+  return fbt._("Hello", null, {
+    hk: "1d8blU",
+  });
+}
+
+`;
+
+exports[`FixedLocaleContext: babel plugin locale override injection non-component functions should NOT inject __fbtLocaleOverride in a top-level fbt call 1`] = `
+import { fbt } from "fbtee";
+const greeting = fbt._("Hello", null, {
+  hk: "1d8blU",
+});
+
+`;

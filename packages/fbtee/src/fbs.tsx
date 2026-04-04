@@ -43,4 +43,5 @@ export default createRuntime({
   getResult: Hooks.getFbsResult,
   param: fbsParam,
   plural: fbsPlural,
+  runtimeKey: 'fbs',
 });

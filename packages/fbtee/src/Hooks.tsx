@@ -94,6 +94,16 @@ export type Hooks = Partial<{
 
 const _registrations: Hooks = {};
 
+let _localeOverrideHook: (() => unknown) | null = null;
+
+export function getLocaleOverrideHook(): (() => unknown) | null {
+  return _localeOverrideHook;
+}
+
+export function setLocaleOverrideHook(hook: () => unknown): void {
+  _localeOverrideHook = hook;
+}
+
 export default {
   getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
     return _registrations.errorListener?.(context) || null;

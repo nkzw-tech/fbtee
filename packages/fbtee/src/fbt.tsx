@@ -18,6 +18,7 @@ import Hooks, {
   FbtRuntimeInput,
   FbtTableArgs,
   FbtTranslatedInput,
+  getLocaleOverrideHook,
   ResolverFn,
 } from './Hooks.tsx';
 import intlNumUtils from './intlNumUtils.tsx';
@@ -86,6 +87,23 @@ export type Variations =
   | [variation: ParamVariationType['number'], value?: number | null]
   | [variation: ParamVariationType['gender'], value: GenderConst];
 
+export type FbtLocaleOverride = {
+  fbs: {
+    _: (
+      input: FbtRuntimeInput,
+      args?: FbtTableArgs | null,
+      opts?: FbtInputOpts | null,
+    ) => unknown;
+  };
+  fbt: {
+    _: (
+      input: FbtRuntimeInput,
+      args?: FbtTableArgs | null,
+      opts?: FbtInputOpts | null,
+    ) => unknown;
+  };
+} | null;
+
 export function createRuntime<P, T extends BaseResult | string>({
   getErrorListener = Hooks.getErrorListener,
   getResult,
@@ -93,6 +111,7 @@ export function createRuntime<P, T extends BaseResult | string>({
   getViewerContext = Hooks.getViewerContext,
   param,
   plural,
+  runtimeKey = 'fbt',
 }: {
   getErrorListener?: (context: FbtErrorContext) => IFbtErrorListener | null;
   getResult: ResolverFn<T>;
@@ -100,6 +119,7 @@ export function createRuntime<P, T extends BaseResult | string>({
   getViewerContext?: () => typeof IntlViewerContext;
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
+  runtimeKey?: 'fbs' | 'fbt';
 }) {
   const cachedResults = new Map<PatternString, T>();
   return Object.assign(
@@ -113,7 +133,15 @@ export function createRuntime<P, T extends BaseResult | string>({
         inputTable: FbtRuntimeInput,
         inputArgs?: FbtTableArgs | null,
         options?: FbtInputOpts | null,
+        localeOverride?: FbtLocaleOverride,
       ): T => {
+        if (localeOverride) {
+          return localeOverride[runtimeKey]._(
+            inputTable,
+            inputArgs,
+            options,
+          ) as T;
+        }
         let { args, table } = getTranslatedInput({
           args: inputArgs || null,
           options: options || null,
@@ -175,6 +203,9 @@ export function createRuntime<P, T extends BaseResult | string>({
           return result;
         }
       },
+
+      __locale: (): FbtLocaleOverride =>
+        (getLocaleOverrideHook()?.() as FbtLocaleOverride) ?? null,
       _enum: (
         value: FbtTableKey,
         range: {
@@ -283,4 +314,5 @@ export default createRuntime<string | number, FbtResult>({
   getResult: Hooks.getFbtResult,
   param: fbtParam,
   plural: fbtPlural,
+  runtimeKey: 'fbt',
 });
