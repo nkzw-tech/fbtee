@@ -1,9 +1,11 @@
 /// <reference types="../../ReactTypes.d.ts" />
 
 import { describe, expect, it } from '@jest/globals';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
+import { Suspense } from 'react';
 import fbsInternal from '../fbs.tsx';
 import fbtInternal from '../fbt.tsx';
+import FbtTranslations from '../FbtTranslations.tsx';
 import FixedLocaleContext from '../FixedLocaleContext.tsx';
 import Hooks from '../Hooks.tsx';
 import { setupFbtee } from '../index.tsx';
@@ -103,6 +105,55 @@ describe('FixedLocaleContext', () => {
       </FixedLocaleContext>,
     );
     expect(Hooks.getViewerContext().locale).toBe('en_US');
+  });
+
+  it('should load translations on demand via registered loadLocale', async () => {
+    // Register a loadLocale hook
+    Hooks.register({
+      loadLocale: (locale) => {
+        if (locale === 'pt_PT') {
+          return Promise.resolve({ hash1: 'Olá Mundo' });
+        }
+        return Promise.resolve({});
+      },
+    });
+
+    // Verify pt_PT is not yet loaded
+    expect(
+      FbtTranslations.getRegisteredTranslations()['pt_PT'],
+    ).toBeUndefined();
+
+    function PtHelloWorld() {
+      const __fbtLocaleOverride = fbtInternal.__locale?.() ?? null;
+      return (
+        <span>
+          {fbtInternal
+            ._(
+              ['Hello World', 'hash1'],
+              null,
+              { hk: 'hash1' },
+              __fbtLocaleOverride,
+            )
+            .toString()}
+        </span>
+      );
+    }
+
+    const { container } = await act(() =>
+      render(
+        <Suspense fallback={<span>{'Loading...'}</span>}>
+          <FixedLocaleContext locale="pt_PT">
+            <PtHelloWorld />
+          </FixedLocaleContext>
+        </Suspense>,
+      ),
+    );
+
+    expect(container.textContent).toBe('Olá Mundo');
+    // Translations should now be merged into the global dictionary
+    expect(FbtTranslations.getRegisteredTranslations()['pt_PT']).toEqual({
+      hash1: 'Olá Mundo',
+    });
   });
 
   it('should work with fbs calls', () => {
