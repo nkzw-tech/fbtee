@@ -132,7 +132,7 @@ type FbtAPIT<Output, ParamInput, ParamOutput> = {
     options?: {
       author?: string;
       project?: string;
-      subject: IntlVariations;
+      subject?: IntlVariations;
     },
   ): Output;
   c: (text: string) => Output;
