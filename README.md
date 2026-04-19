@@ -699,7 +699,3 @@ _Note: Some legacy behavior and options were removed from `fbtee`. If you have a
 - `fbt` was originally created by [Facebook](https://github.com/facebook/fbt).
 - The auto-import plugin was created by [@alexandernanberg](https://github.com/alexandernanberg).
 - [Nakazawa Tech](https://nkzw.tech) rewrote `fbt` into `fbtee` and continues to maintain this project.
-
-## Support
-
-- Check out the [#fbtee channel on Reactiflux's Discord server](https://discord.gg/reactiflux).
