@@ -41,6 +41,7 @@ export async function generateManifest(
         ? globSync(resolve(cwd, src) + '/**/*' + extensions)
         : [src],
     )
+    .filter((filepath) => statSync(filepath).isFile())
     .filter((filepath) =>
       ModuleNameRegExp.test(fs.readFileSync(filepath, 'utf8')),
     )
