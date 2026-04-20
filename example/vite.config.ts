@@ -1,4 +1,5 @@
 import fbteePreset from '@nkzw/babel-preset-fbtee';
+import babel from '@rolldown/plugin-babel';
 import react from '@vitejs/plugin-react';
 import EnumManifest from './.enum_manifest.json' with { type: 'json' };
 import CommonStrings from './common_strings.json' with { type: 'json' };
@@ -10,18 +11,17 @@ export default {
     'process.env.NODE_ENV': `"development"`,
   },
   plugins: [
-    react({
-      babel: {
-        presets: [
-          [
-            fbteePreset,
-            {
-              fbtCommon: CommonStrings,
-              fbtEnumManifest: EnumManifest,
-            },
-          ],
+    react(),
+    babel({
+      presets: [
+        [
+          fbteePreset,
+          {
+            fbtCommon: CommonStrings,
+            fbtEnumManifest: EnumManifest,
+          },
         ],
-      },
+      ],
     }),
   ],
   root,

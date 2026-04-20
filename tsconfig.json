@@ -24,7 +24,8 @@
     "resolvePackageJsonExports": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "types": ["jest", "node"]
   },
   "exclude": ["packages/*/lib/", "packages/*/lib-tmp/", "node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]

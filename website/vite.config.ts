@@ -1,17 +1,15 @@
 import fbteePreset from '@nkzw/babel-preset-fbtee';
+import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
-import reactCompiler from 'babel-plugin-react-compiler';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    react({
-      babel: {
-        plugins: [reactCompiler],
-        presets: [fbteePreset],
-      },
+    react(),
+    babel({
+      presets: [fbteePreset, reactCompilerPreset()],
     }),
   ],
 });
