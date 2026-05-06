@@ -32,7 +32,7 @@ const shouldIgnoreParent = (node: TSESTree.Node) => {
 export default createRule<Options, 'unwrappedString'>({
   create(context, options) {
     const ignoredWords = new Set(
-      options[0].ignoredWords.map((value) => value.trim().toLowerCase()),
+      options[0].ignoredWords.map((value) => value.toLowerCase()),
     );
 
     const isIgnoredWord = (value: string) =>
