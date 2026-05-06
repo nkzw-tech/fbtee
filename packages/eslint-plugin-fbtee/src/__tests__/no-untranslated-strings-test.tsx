@@ -249,6 +249,26 @@ ruleTester.run('no-untranslated-strings', rule, {
     },
     {
       code: `
+        <input placeholder=" " />
+       `,
+      options: [
+        {
+          ignoredWords: [' '],
+        },
+      ],
+    },
+    {
+      code: `
+        <span>{' '}</span>
+       `,
+      options: [
+        {
+          ignoredWords: [' '],
+        },
+      ],
+    },
+    {
+      code: `
         <textarea rows={2}></textarea>
        `,
     },
