@@ -17,7 +17,7 @@
     "lint:format": "prettier --experimental-cli --cache --check .",
     "ship": "pnpm clean && pnpm build:all && pnpm test && pnpm publish -r --access public",
     "test": "npm-run-all --parallel lint jest tsc:check lint:format",
-    "tsc:check": "tsc"
+    "tsc:check": "tsgo"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
@@ -43,10 +43,11 @@
     "@types/jest": "^30.0.0",
     "@types/json-diff": "^1.0.3",
     "@types/node": "^25.6.0",
-    "@types/prettier-2": "npm:@types/prettier@^2.0.0",
+    "@types/prettier-2": "npm:@types/prettier@^2.7.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/yargs": "^17.0.35",
+    "@typescript/native-preview": "7.0.0-dev.20260505.1",
     "eslint": "^10.2.1",
     "eslint-plugin-workspaces": "^0.12.1",
     "invariant": "^2.2.4",
@@ -59,8 +60,7 @@
     "prettier-plugin-packagejson": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "react-dom": "^19.2.5",
-    "tsdown": "0.21.9",
-    "typescript": "^6.0.3"
+    "tsdown": "0.21.9"
   },
   "engines": {
     "node": ">=24.0.0",

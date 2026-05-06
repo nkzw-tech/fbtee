@@ -28,7 +28,7 @@ jobs:
       pages: write
     strategy:
       matrix:
-        node-version: [24]
+        node-version: [26]
 
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
         uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
-          version: 10.*
+          version: 11.*
           run_install: false
       - name: Get pnpm store directory
         id: pnpm-cache

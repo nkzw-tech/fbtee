@@ -7,6 +7,10 @@ packages:
   - packages/eslint-plugin-fbtee
   - website
 
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - esbuild
