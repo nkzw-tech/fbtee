@@ -451,7 +451,7 @@ After marking your strings for translation with `<fbt>`, run the following comma
 pnpm fbtee collect
 ```
 
-You can now upload the `source_strings.json` file to your translation provider, for example [Crowdin](https://crowdin.com/). If you'd like to manually edit the strings, you can use the `fbtee prepare-translations --locales de_DE` to generate a JSON file that can be edited directly.
+You can now upload the `source_strings.json` file to your translation provider, for example [Crowdin](https://crowdin.com/). If you'd like to manually edit the strings, you can use the `fbtee prepare-translations --locales de_DE` to generate a JSON file that can be edited directly. Pass `--sort-by-hash` to keep entries in a deterministic order for cleaner diffs when the file is committed.
 
 #### Generated File Structure
 
