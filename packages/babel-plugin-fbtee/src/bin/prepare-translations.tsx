@@ -1,11 +1,10 @@
 import { existsSync, globSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import yargs from 'yargs';
-import { SerializedTranslationData } from '../translate/TranslationData.tsx';
-import { PatternString } from '../Types.ts';
 import { CollectFbtOutput } from './collect.tsx';
 import { HashToLeaf } from './FbtCollector.tsx';
-import { loadJSON, TranslationGroup, Translations } from './translateUtils.tsx';
+import { updateTranslations } from './prepareTranslationsUtils.tsx';
+import { loadJSON, TranslationGroup } from './translateUtils.tsx';
 
 const root = process.cwd();
 
@@ -34,6 +33,12 @@ const argv = y
   )
   .array('locales')
   .alias('locales', 'locale')
+  .boolean('sort-by-hash')
+  .default('sort-by-hash', false)
+  .describe(
+    'sort-by-hash',
+    'Sort translation entries by hash key in output JSON. Applies to all entries (both existing and new).',
+  )
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .parseSync();
@@ -42,55 +47,6 @@ if (argv.help) {
   y.showHelp();
   process.exit(0);
 }
-
-type TranslationsWithMetadata = Partial<
-  Record<
-    PatternString,
-    | (SerializedTranslationData & { description?: string; status?: string })
-    | null
-  >
->;
-
-const updateTranslations = (
-  phrases: HashToLeaf,
-  translations: Translations,
-) => {
-  const hashes = new Set(Object.keys(phrases));
-  const translatedHashes = new Set(Object.keys(translations));
-  const newHashes = [...hashes].filter((hash) => !translatedHashes.has(hash));
-  const removedHashes = [...translatedHashes].filter(
-    (hash) => !hashes.has(hash),
-  );
-
-  const updatedTranslations: TranslationsWithMetadata = { ...translations };
-  for (const hash of newHashes) {
-    if (!updatedTranslations[hash]) {
-      const phrase = phrases[hash];
-      if (phrase) {
-        updatedTranslations[hash] = {
-          description: phrase.desc,
-          status: 'new',
-          tokens: [],
-          translations: [
-            {
-              translation: phrase.text,
-              variations: {},
-            },
-          ],
-          types: [],
-        };
-      }
-    }
-  }
-
-  for (const hash of removedHashes) {
-    if (updatedTranslations[hash]) {
-      delete updatedTranslations[hash];
-    }
-  }
-
-  return updatedTranslations;
-};
 
 const outputDirectory = join(root, argv['output-dir']);
 const files = globSync(join(outputDirectory, '*.json'));
@@ -122,7 +78,11 @@ for (const locale of locales) {
       {
         'fb-locale': locale,
         ...props,
-        translations: updateTranslations(phrases, translations),
+        translations: updateTranslations(
+          phrases,
+          translations,
+          argv['sort-by-hash'],
+        ),
       } satisfies TranslationGroup,
       null,
       2,
