@@ -1,6 +1,13 @@
 import { VStack } from '@nkzw/stack';
 import classNames from 'classnames';
-import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
+import {
+  fbs,
+  fbt,
+  FixedLocaleContext,
+  GenderConst,
+  IntlVariations,
+  setupFbtee,
+} from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
 import ar_AR from '../translatedFbts/ar_AR.json' with { type: 'json' };
 import de_DE from '../translatedFbts/de_DE.json' with { type: 'json' };
@@ -35,6 +42,12 @@ setupFbtee({
   },
   translations,
 });
+
+const previewLocales = ['de_DE', 'fr_FR', 'ja_JP', 'es_LA'] as const;
+
+function LocalePreviewItem() {
+  return <fbt desc="header">Sentence Examples</fbt>;
+}
 
 type SharedObj = keyof typeof ExampleEnum;
 
@@ -282,6 +295,32 @@ export default function Example() {
                 />?
               </fbt>
             </label>
+          </fieldset>
+          <fieldset style={{ marginLeft: '0.5em' }}>
+            <h2>
+              <fbt desc="fixed locale section header">Multi-Locale Preview</fbt>
+            </h2>
+            <div
+              style={{
+                display: 'grid',
+                gap: '4px 12px',
+                gridTemplateColumns: 'auto 1fr',
+              }}
+            >
+              {previewLocales.map((previewLocale) => (
+                <>
+                  <b key={`${previewLocale}-label`}>
+                    {Locales[previewLocale].displayName}
+                  </b>
+                  <FixedLocaleContext
+                    key={previewLocale}
+                    locale={previewLocale}
+                  >
+                    <LocalePreviewItem />
+                  </FixedLocaleContext>
+                </>
+              ))}
+            </div>
           </fieldset>
           <fieldset>
             <span className="example_row">

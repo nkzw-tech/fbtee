@@ -1,9 +1,23 @@
 import type { NodePath } from '@babel/core';
 import {
   CallExpression,
+  identifier,
   ImportDeclaration,
+  isArrowFunctionExpression,
+  isCallExpression,
+  isFunctionDeclaration,
+  isFunctionExpression,
+  isIdentifier,
+  isMemberExpression,
+  isVariableDeclarator,
   JSXElement,
+  logicalExpression,
   Node,
+  nullLiteral,
+  optionalCallExpression,
+  optionalMemberExpression,
+  variableDeclaration,
+  variableDeclarator,
 } from '@babel/types';
 import { parse as parseDocblock } from 'jest-docblock';
 import FbtCommonFunctionCallProcessor from './babel-processors/FbtCommonFunctionCallProcessor.tsx';
@@ -16,7 +30,11 @@ import { toPlainFbtNodeTree } from './fbt-nodes/FbtNodeUtil.tsx';
 import type { FbtCommonMap } from './FbtCommon.tsx';
 import { init } from './FbtCommon.tsx';
 import type { FbtCallSiteOptions, FbtOptionConfig } from './FbtConstants.tsx';
-import { ValidFbtOptions } from './FbtConstants.tsx';
+import {
+  FbsBindingName,
+  FbtBindingName,
+  ValidFbtOptions,
+} from './FbtConstants.tsx';
 import type { EnumManifest } from './FbtEnumRegistrar.tsx';
 import FbtEnumRegistrar from './FbtEnumRegistrar.tsx';
 import FbtNodeChecker from './FbtNodeChecker.tsx';
@@ -192,6 +210,206 @@ type Visitor = {
 
 const toVisitor = (visitor: unknown): visitor is Visitor => true;
 
+const LOCALE_OVERRIDE_VAR = '__fbtLocaleOverride';
+
+/**
+ * Check if a name looks like a React component (starts with uppercase)
+ * or a custom hook (starts with "use" followed by uppercase).
+ */
+function isComponentishName(name: string): boolean {
+  return /^[A-Z]/.test(name);
+}
+
+function isHookName(name: string): boolean {
+  return /^use[\dA-Z]/.test(name) || name === 'use';
+}
+
+/**
+ * Get the inferred name of a function from its declaration or assignment context.
+ */
+function getFunctionName(path: NodePath): string | null {
+  const node = path.node;
+  if (isFunctionDeclaration(node) && node.id) {
+    return node.id.name;
+  }
+  if (
+    (isFunctionExpression(node) || isArrowFunctionExpression(node)) &&
+    path.parentPath &&
+    isVariableDeclarator(path.parent) &&
+    isIdentifier(path.parent.id)
+  ) {
+    return path.parent.id.name;
+  }
+  return null;
+}
+
+/**
+ * Check if a function is a callback passed to React.forwardRef() or React.memo().
+ */
+function isForwardRefOrMemoCallback(path: NodePath): boolean {
+  const parent = path.parentPath;
+  if (!parent || !isCallExpression(parent.node)) {
+    return false;
+  }
+  const callee = parent.node.callee;
+  if (
+    isMemberExpression(callee) &&
+    isIdentifier(callee.object) &&
+    callee.object.name === 'React' &&
+    isIdentifier(callee.property) &&
+    (callee.property.name === 'forwardRef' || callee.property.name === 'memo')
+  ) {
+    return true;
+  }
+  if (
+    isIdentifier(callee) &&
+    (callee.name === 'forwardRef' || callee.name === 'memo')
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Determine if a function should receive the locale override injection.
+ */
+function shouldInjectLocaleOverride(path: NodePath): boolean {
+  const name = getFunctionName(path);
+  if (name && (isComponentishName(name) || isHookName(name))) {
+    return true;
+  }
+  return isForwardRefOrMemoCallback(path);
+}
+
+/**
+ * Check if a call expression is an fbt._() or fbs._() call.
+ */
+function isFbtRuntimeCall(node: Node): boolean {
+  return (
+    isCallExpression(node) &&
+    isMemberExpression(node.callee) &&
+    isIdentifier(node.callee.object) &&
+    (node.callee.object.name === FbtBindingName ||
+      node.callee.object.name === FbsBindingName) &&
+    isIdentifier(node.callee.property) &&
+    node.callee.property.name === '_'
+  );
+}
+
+/**
+ * Find which fbt/fbs module name is in scope for a function path.
+ */
+function getFbtModuleInScope(path: NodePath): string | null {
+  const scope = path.scope;
+  if (scope.getBinding(FbtBindingName)) {
+    return FbtBindingName;
+  }
+  if (scope.getBinding(FbsBindingName)) {
+    return FbsBindingName;
+  }
+  return null;
+}
+
+/**
+ * Inject locale override into qualifying functions in the Program.exit phase.
+ *
+ * For React components and hooks that contain fbt._() or fbs._() calls:
+ * 1. Inject `const __fbtLocaleOverride = fbt.__locale?.() ?? null;` at the top
+ * 2. Add `__fbtLocaleOverride` as the 4th argument to all fbt._() / fbs._() calls
+ */
+function injectLocaleOverrides(programPath: NodePath<Node>): void {
+  const functionPaths: Array<NodePath> = [];
+
+  // Collect all function paths that should receive injection
+  programPath.traverse({
+    ArrowFunctionExpression(path: NodePath) {
+      if (shouldInjectLocaleOverride(path)) {
+        functionPaths.push(path);
+      }
+    },
+    FunctionDeclaration(path: NodePath) {
+      if (shouldInjectLocaleOverride(path)) {
+        functionPaths.push(path);
+      }
+    },
+    FunctionExpression(path: NodePath) {
+      if (shouldInjectLocaleOverride(path)) {
+        functionPaths.push(path);
+      }
+    },
+  });
+
+  for (const fnPath of functionPaths) {
+    const fbtModule = getFbtModuleInScope(fnPath);
+    if (!fbtModule) {
+      continue;
+    }
+
+    // Find all fbt._() / fbs._() calls in this function (not nested functions)
+    const fbtCalls: Array<NodePath<CallExpression>> = [];
+
+    fnPath.traverse({
+      ArrowFunctionExpression(path: NodePath) {
+        path.skip(); // Don't descend into nested functions
+      },
+      CallExpression(path: NodePath<CallExpression>) {
+        if (isFbtRuntimeCall(path.node)) {
+          fbtCalls.push(path);
+        }
+      },
+      FunctionDeclaration(path: NodePath) {
+        path.skip();
+      },
+      FunctionExpression(path: NodePath) {
+        path.skip();
+      },
+    });
+
+    if (fbtCalls.length === 0) {
+      continue;
+    }
+
+    // 1. Inject: const __fbtLocaleOverride = fbt.__locale?.() ?? null;
+    // Generate: fbt.__locale?.() ?? null
+    const localeCallExpr = logicalExpression(
+      '??',
+      optionalCallExpression(
+        optionalMemberExpression(
+          identifier(fbtModule),
+          identifier('__locale'),
+          false,
+          false, // not optional at this level (fbt.__locale)
+        ),
+        [],
+        true, // optional call: ?.()
+      ),
+      nullLiteral(),
+    );
+
+    const declaration = variableDeclaration('const', [
+      variableDeclarator(identifier(LOCALE_OVERRIDE_VAR), localeCallExpr),
+    ]);
+
+    // Get the function body
+    const body = fnPath.get('body') as NodePath;
+    if (body.isBlockStatement()) {
+      (
+        body as NodePath<import('@babel/types').BlockStatement>
+      ).unshiftContainer('body', declaration);
+    }
+
+    // 2. Add __fbtLocaleOverride as 4th argument to all fbt._() calls
+    for (const callPath of fbtCalls) {
+      const args = callPath.node.arguments;
+      // Ensure we have at least 3 arguments (table, args, opts)
+      while (args.length < 3) {
+        args.push(nullLiteral());
+      }
+      args.push(identifier(LOCALE_OVERRIDE_VAR));
+    }
+  }
+}
+
 export default function transform() {
   return {
     name: 'fbtee',
@@ -305,6 +523,8 @@ export default function transform() {
               }
             },
           });
+
+          injectLocaleOverrides(path);
         },
       },
     },

@@ -123,6 +123,7 @@ export default function setupLocaleContext({
         GENDER: gender,
         locale: getLocale(),
       }),
+      loadLocale,
     },
     translations,
   });

@@ -84,15 +84,30 @@ export type FbtImpressionOptions = {
   tokens: Array<FbtTableKey>;
 };
 
+export type LoadLocaleFn = (
+  locale: string,
+) => Promise<{ [hashKey: string]: FbtRuntimeInput }>;
+
 export type Hooks = Partial<{
   errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
   getFbsResult: ResolverFn<PlainStringResult>;
   getFbtResult: ResolverFn<FbtResult>;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
+  loadLocale: LoadLocaleFn;
 }>;
 
 const _registrations: Hooks = {};
+
+let _localeOverrideHook: (() => unknown) | null = null;
+
+export function getLocaleOverrideHook(): (() => unknown) | null {
+  return _localeOverrideHook;
+}
+
+export function setLocaleOverrideHook(hook: () => unknown): void {
+  _localeOverrideHook = hook;
+}
 
 export default {
   getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
@@ -121,6 +136,10 @@ export default {
       throw new Error(`Hooks: 'getFbtResult' is not registered`);
     }
     return getFbtResult(contents, hashKey, errorListener);
+  },
+
+  getLoadLocale(): LoadLocaleFn | null {
+    return _registrations.loadLocale ?? null;
   },
 
   getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {

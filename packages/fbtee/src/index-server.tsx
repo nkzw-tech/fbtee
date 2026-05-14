@@ -2,6 +2,8 @@ import fbsInternal from './fbs.tsx';
 import fbtInternal from './fbt.tsx';
 import type { FbsAPI, FbtAPI } from './Types.ts';
 
+export { default as createFixedFbt } from './createFixedFbt.tsx';
+export { default as FixedLocaleContext } from './FixedLocaleContext.tsx';
 export { default as IntlVariations } from './IntlVariations.tsx';
 export { default as setupFbtee } from './setupFbtee.tsx';
 export { default as GenderConst } from './GenderConst.tsx';
