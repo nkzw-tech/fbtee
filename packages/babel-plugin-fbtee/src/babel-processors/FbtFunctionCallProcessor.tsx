@@ -164,7 +164,7 @@ export default class FbtFunctionCallProcessor {
     if (!this.nodeChecker.isJSModuleBound<typeof path.node>(path)) {
       throw errorAt(
         path.node,
-        `${moduleName} is not bound. Did you forget to import ${moduleName}?`,
+        `${moduleName} is not imported. Add 'import { ${moduleName} } from "fbtee";'.`,
       );
     }
     return this;
@@ -175,8 +175,8 @@ export default class FbtFunctionCallProcessor {
     if (node.arguments.length < 2) {
       throw errorAt(
         node,
-        `Expected ${moduleName} calls to have at least two arguments. ` +
-          `Only ${node.arguments.length} was given.`,
+        `${moduleName}(...) needs at least two arguments: text and description. ` +
+          `Received '${node.arguments.length}'.`,
       );
     }
     return this;
@@ -572,11 +572,11 @@ export default class FbtFunctionCallProcessor {
             if (parentName && isConcreteFbtNode(parentName)) {
               throw errorAt(
                 parentNode,
-                `'fbt' constructs should not be nested inside of other fbt constructs. Found '${nodeChecker.moduleName}.${nullthrows(
+                `${nodeChecker.moduleName} constructs cannot be nested directly. Found '${nodeChecker.moduleName}.${nullthrows(
                   childFbtConstructName,
                 )}' nested inside '${nodeChecker.moduleName}.${nullthrows(
                   parentName,
-                )}'.`,
+                )}'. Move the inner construct into an inner ${nodeChecker.moduleName} string or remove it.`,
               );
             }
             parentPath = parentPath.parentPath;
@@ -612,7 +612,7 @@ export default class FbtFunctionCallProcessor {
     if (elementNode == null) {
       throw errorAt(
         node,
-        `${moduleName}: unable to create FbtElementNode from given node`,
+        `${moduleName}(...) could not be parsed. Check that the first argument is valid fbtee text.`,
       );
     }
     return elementNode;

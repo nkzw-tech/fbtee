@@ -33,15 +33,15 @@ export default function getNamespacedArgs(
   return {
     enum(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
-        throw errorAt(node, `Expected ${moduleName}:enum to be self closing.`);
+        throw errorAt(node, `<${moduleName}:enum> must be self-closing.`);
       }
 
       const range = getAttributeByNameOrThrow(node, 'enum-range');
       if (range.value?.type !== 'JSXExpressionContainer') {
         throw errorAt(
           node,
-          'Expected JSX Expression for enum-range attribute but got ' +
-            range.value?.type,
+          `Attribute 'enum-range' on <${moduleName}:enum> must be a JSX expression. ` +
+            `Received '${range.value?.type ?? 'missing'}'.`,
         );
       }
 
@@ -54,13 +54,14 @@ export default function getNamespacedArgs(
 
       throw errorAt(
         node,
-        `Expected value attribute of <${moduleName}:enum> to be an expression but got ${value.value?.type}`,
+        `Attribute 'value' on <${moduleName}:enum> must be an expression or string. ` +
+          `Received '${value.value?.type ?? 'missing'}'.`,
       );
     },
 
     list(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
-        throw errorAt(node, `Expected ${moduleName}:list to be self closing.`);
+        throw errorAt(node, `<${moduleName}:list> must be self-closing.`);
       }
 
       const name = getAttributeByNameOrThrow(node, 'name').value;
@@ -69,7 +70,7 @@ export default function getNamespacedArgs(
       if (!isJSXExpressionContainer(items.value)) {
         throw errorAt(
           node,
-          `${moduleName}:param expects an array as "items" attribute.`,
+          `<${moduleName}:list> attribute 'items' must be a JSX expression.`,
         );
       }
 
@@ -102,7 +103,7 @@ export default function getNamespacedArgs(
       if (children.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:name expects text or an expression, and only one`,
+          `<${moduleName}:name> needs exactly one child: text or an expression.`,
         );
       }
 
@@ -155,7 +156,7 @@ export default function getNamespacedArgs(
       if (children.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:param expects an {expression} or JSX element, and only one`,
+          `<${moduleName}:param> needs exactly one child: an expression or JSX element.`,
         );
       }
 
@@ -195,7 +196,7 @@ export default function getNamespacedArgs(
       if (children.length !== 1) {
         throw errorAt(
           node,
-          `${moduleName}:plural expects text or an expression, and only one`,
+          `<${moduleName}:plural> needs exactly one child: text or an expression.`,
         );
       }
       const singularNode = children[0];
@@ -219,10 +220,7 @@ export default function getNamespacedArgs(
 
     pronoun(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
-        throw errorAt(
-          node,
-          `${moduleName}:pronoun must be a self-closing element`,
-        );
+        throw errorAt(node, `<${moduleName}:pronoun> must be self-closing.`);
       }
 
       const attributes = node.openingElement.attributes;
@@ -230,7 +228,7 @@ export default function getNamespacedArgs(
       if (typeAttribute?.type !== 'StringLiteral') {
         throw errorAt(
           node,
-          `${moduleName}:pronoun attribute "type" must have StringLiteral content`,
+          `<${moduleName}:pronoun> attribute 'type' must be a string literal.`,
         );
       }
       if (
@@ -241,9 +239,9 @@ export default function getNamespacedArgs(
       ) {
         throw errorAt(
           node,
-          `${moduleName}:pronoun attribute "type" must be one of [` +
-            Object.keys(ValidPronounUsages) +
-            ']',
+          `<${moduleName}:pronoun> attribute 'type' must be one of: ${Object.keys(
+            ValidPronounUsages,
+          ).join(', ')}. Received '${typeAttribute.value}'.`,
         );
       }
 
@@ -267,10 +265,7 @@ export default function getNamespacedArgs(
 
     sameParam(node: JSXElement) {
       if (!node.openingElement.selfClosing) {
-        throw errorAt(
-          node,
-          `Expected ${moduleName}:same-param to be selfClosing.`,
-        );
+        throw errorAt(node, `<${moduleName}:same-param> must be self-closing.`);
       }
 
       return [getAttributeByNameOrThrow(node, 'name').value];

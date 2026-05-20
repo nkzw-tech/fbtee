@@ -117,9 +117,8 @@ export default class FbtNodeChecker {
 
         throw errorAt(
           child,
-          `Don't put <${nestedJSXElementName}> directly within <${rootJSXElementName}>. ` +
-            `This is redundant. The text is already translated so you don't need ` +
-            `to translate it again`,
+          `Do not put <${nestedJSXElementName}> directly inside <${rootJSXElementName}>. ` +
+            `Remove the inner tag or wrap it in a normal JSX element.`,
         );
       } else {
         const otherChecker =
@@ -133,9 +132,8 @@ export default class FbtNodeChecker {
           const name = node.openingElement.name;
           throw errorAt(
             child,
-            `Don't mix <fbt> and <fbs> JSX namespaces. ` +
-              `Found a <${name.namespace.name}:${name.name.name}> ` +
-              `directly within a <${moduleName}>`,
+            `Do not mix <fbt> and <fbs> JSX namespaces. ` +
+              `Found '<${name.namespace.name}:${name.name.name}>' inside '<${moduleName}>'.`,
           );
         }
       }

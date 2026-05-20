@@ -53,7 +53,9 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
           </fbs>;
         `),
       ),
-    ).toThrow(`Don't put <fbs> directly within <fbs>.`);
+    ).toThrow(
+      `Do not put <fbs> directly inside <fbs>. Remove the inner tag or wrap it in a normal JSX element.`,
+    );
   });
   it('should reject an <fbt> child element', () => {
     expect(() =>
@@ -65,7 +67,9 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
           </fbs>;
         `),
       ),
-    ).toThrow(`Don't put <fbt> directly within <fbs>.`);
+    ).toThrow(
+      `Do not put <fbt> directly inside <fbs>. Remove the inner tag or wrap it in a normal JSX element.`,
+    );
   });
   it('should reject an <fbt:param> child element', () => {
     expect(() =>
@@ -77,7 +81,7 @@ describe('Test declarative (jsx) <fbs> syntax translation', () => {
           </fbs>;
         `),
       ),
-    ).toThrow(`Don't mix <fbt> and <fbs> JSX namespaces.`);
+    ).toThrow(`Do not mix <fbt> and <fbs> JSX namespaces.`);
   });
   it('should handle <fbs:enum>', () => {
     expect(
@@ -138,7 +142,7 @@ describe('Test functional fbs() syntax translation', () => {
           );
         `),
       ),
-    ).toThrow(`fbs: unsupported node: CallExpression`);
+    ).toThrow(`fbs text contains unsupported syntax 'CallExpression'.`);
   });
 
   it('should throw when using fbs() and the fbs variable is not bound', () => {
@@ -149,7 +153,7 @@ describe('Test functional fbs() syntax translation', () => {
           'str_description'
         );`,
       ),
-    ).toThrow(`fbs is not bound. Did you forget to import fbs?`);
+    ).toThrow(`fbs is not imported. Add 'import { fbs } from "fbtee";'.`);
   });
 
   it('should throw when using <fbs> and the fbs variable is not bound', () => {
@@ -157,7 +161,7 @@ describe('Test functional fbs() syntax translation', () => {
       snapshotTransform(
         `const fbsCall = <fbs desc="str_description">basic</fbs>;`,
       ),
-    ).toThrow(`fbs is not bound. Did you forget to import fbs?`);
+    ).toThrow(`fbs is not imported. Add 'import { fbs } from "fbtee";'.`);
   });
 
   it('should handle fbs.enum', () => {

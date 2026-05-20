@@ -112,9 +112,8 @@ export function setUniqueToken(
   if (cachedNode && cachedNode != node) {
     throw errorAt(
       node,
-      `There's already a token called "${name}" in this ${moduleName} call. ` +
-        `Use ${moduleName}.sameParam if you want to reuse the same token name or ` +
-        `give this token a different name`,
+      `Token '${name}' is already used in this ${moduleName} call. ` +
+        `Use ${moduleName}.sameParam('${name}') to reuse it, or choose a different name.`,
     );
   }
   paramSet[name] = node;
@@ -135,8 +134,8 @@ export function checkOption<K extends string>(
   if (!hasOwnProperty.call(validOptions, optionName) || validValues == null) {
     throw errorAt(
       isNode(value) ? value : null,
-      `Invalid option "${optionName}". ` +
-        `Only allowed: ${Object.keys(validOptions).join(', ')} `,
+      `Unknown option '${optionName}'. ` +
+        `Use one of: ${Object.keys(validOptions).join(', ')}.`,
     );
   } else if (validValues !== true) {
     let valueStr;
@@ -150,18 +149,16 @@ export function checkOption<K extends string>(
     } else {
       throw errorAt(
         isNode(value) ? value : null,
-        `Option "${optionName}" has an invalid value. ` +
-          `Expected a string literal but value is \`${varDump(
-            value,
-          )}\` (${typeof value})`,
+        `Option '${optionName}' must be a string literal. ` +
+          `Received '${varDump(value)}' (${typeof value}).`,
       );
     }
 
     if (!validValues[valueStr]) {
       throw errorAt(
         isNode(value) ? value : null,
-        `Option "${optionName}" has an invalid value: "${valueStr}". ` +
-          `Only allowed: ${Object.keys(validValues).join(', ')}`,
+        `Invalid value '${valueStr}' for option '${optionName}'. ` +
+          `Use one of: ${Object.keys(validValues).join(', ')}.`,
       );
     }
   }
@@ -302,8 +299,7 @@ export function collectOptions(
     if (!isObjectProperty(option)) {
       throw errorAt(
         option,
-        `options object must contain plain object properties. ` +
-          `No method definitions or spread operators.`,
+        `Options must be plain object properties. Remove methods and spread properties.`,
       );
     }
 
@@ -316,7 +312,7 @@ export function collectOptions(
     } else {
       throw errorAt(
         option,
-        `Expected property name to be an identifier or a string literal.`,
+        `Option names must be identifiers or string literals.`,
       );
     }
     optionName = checkOption(optionName, validOptions, option.value);
@@ -324,7 +320,7 @@ export function collectOptions(
     if (isArrowFunctionExpression(option.value)) {
       throw errorAt(
         option,
-        `${moduleName}(...) does not allow an arrow function as an option value`,
+        `${moduleName}(...) options cannot be arrow functions. Pass a value instead.`,
       );
     }
 
@@ -356,7 +352,7 @@ export function collectOptionsFromFbtConstruct(
   } else if (isJSXElement(callsiteNode)) {
     throw errorAt(
       callsiteNode,
-      'Collecting options from JSX element is not supported yet',
+      `Cannot collect options from a JSX element here. Use ${moduleName}(...) syntax.`,
     );
   }
 
@@ -390,7 +386,7 @@ export function getOptionsNodeFromCallExpression(
   if (!isObjectExpression(optionsNode)) {
     throw errorAt(
       optionsNode,
-      `${moduleName}(...) expects options as an ObjectExpression as its 3rd argument`,
+      `${moduleName}(...) options must be an object literal in the third argument.`,
     );
   }
   return optionsNode;
@@ -408,7 +404,7 @@ export function expandStringConcat(
     if (node.operator !== '+') {
       throw errorAt(
         node,
-        `Expected concatenation operator (+) but got ${node.operator}`,
+        `Only string concatenation with '+' is supported here. Received '${node.operator}'.`,
       );
     }
     return stringLiteral(
@@ -435,8 +431,8 @@ export function expandStringConcat(
         if (!isStringLiteral(expr)) {
           throw errorAt(
             node,
-            `${moduleName} template placeholders only accept params wrapped in ` +
-              `${moduleName}.param. Expected StringLiteral got ${expr.type}`,
+            `${moduleName} template placeholders must be ${moduleName}.param(...). ` +
+              `Received '${expr.type}'.`,
           );
         }
         string += expr.value;
@@ -448,8 +444,8 @@ export function expandStringConcat(
 
   throw errorAt(
     node,
-    `${moduleName} only accepts plain strings with params wrapped in ${moduleName}.param(...). ` +
-      `See https://fbtee.dev for more info. Expected StringLiteral, TemplateLiteral, or concatenation; received "${node.type}".`,
+    `${moduleName} text must be a string, template literal, or string concatenation. ` +
+      `Wrap values in ${moduleName}.param(...). Received '${node.type}'.`,
   );
 }
 
@@ -488,7 +484,7 @@ export function getOptionBooleanValue<K extends string>(
 
   throw errorAt(
     node,
-    `Value for option "${name}" must be Boolean literal 'true' or 'false'.`,
+    `Option '${name}' must be the boolean literal 'true' or 'false'.`,
   );
 }
 
@@ -510,14 +506,11 @@ export function getAttributeByNameOrThrow(
 ): JSXAttributeWithValue {
   const attribute = getAttributeByName(node, name);
   if (attribute == null) {
-    throw errorAt(node, `This node requires a '${name}' attribute.`);
+    throw errorAt(node, `Missing required attribute '${name}'.`);
   }
 
   if (!isJSXAttributeWithValue(attribute)) {
-    throw errorAt(
-      node,
-      `This '${name}' attribute of this node requires a value.`,
-    );
+    throw errorAt(node, `Attribute '${name}' needs a value.`);
   }
 
   return attribute;
@@ -540,7 +533,7 @@ export function getOpeningElementAttributes(
 ): ReadonlyArray<JSXAttribute> {
   return node.openingElement.attributes.map((attribute) => {
     if (isJSXSpreadAttribute(attribute)) {
-      throw errorAt(attribute, `Do no use the JSX spread attribute.`);
+      throw errorAt(attribute, `JSX spread attributes are not supported here.`);
     }
     return attribute;
   });
@@ -596,9 +589,8 @@ export function convertTemplateLiteralToArrayElements(
       } else {
         throw errorAt(
           expression,
-          `Unexpected node type: ${expression.type}. ${moduleName}() only supports ` +
-            `the following syntax within template literals:` +
-            `string literal, a construct like ${moduleName}.param() or a JSX element.`,
+          `${moduleName} template placeholders must be string literals, ` +
+            `${moduleName}.param(...), or JSX elements. Received '${expression.type}'.`,
         );
       }
     }
@@ -613,7 +605,10 @@ export function getBinaryExpressionOperands(
   switch (node.type) {
     case 'BinaryExpression':
       if (node.operator !== '+') {
-        throw errorAt(node, 'Expected to see a string concatenation');
+        throw errorAt(
+          node,
+          `Only string concatenation with '+' is supported here.`,
+        );
       }
       return [
         ...getBinaryExpressionOperands(moduleName, node.left),
@@ -626,9 +621,8 @@ export function getBinaryExpressionOperands(
     default:
       throw errorAt(
         node,
-        `Unexpected node type: ${node.type}. ` +
-          `The ${moduleName}() string concatenation pattern only supports ` +
-          ` string literals or constructs like ${moduleName}.param().`,
+        `${moduleName}() string concatenation only supports string literals ` +
+          `and constructs like ${moduleName}.param(...). Received '${node.type}'.`,
       );
   }
 }
@@ -661,9 +655,9 @@ export function convertToStringArrayNodeIfNeeded(
     default:
       throw errorAt(
         node,
-        `Unexpected node type: ${node.type}. ` +
-          `${moduleName}()'s first argument should be a string literal, ` +
-          `a construct like ${moduleName}.param() or an array of those.`,
+        `${moduleName}() text must be a string literal, ` +
+          `a construct like ${moduleName}.param(...), or an array of those. ` +
+          `Received '${node.type}'.`,
       );
   }
 
@@ -684,8 +678,8 @@ export function convertToStringArrayNodeIfNeeded(
         ) {
           throw errorAt(
             element,
-            `${moduleName}(array) only supports items that are string literals, ` +
-              `template literals without any expressions, or fbt constructs`,
+            `${moduleName}(array) items must be string literals, template literals without placeholders, ` +
+              `or ${moduleName} constructs.`,
           );
         }
         switch (element.type) {
@@ -757,8 +751,8 @@ export function enforceString(
 ): string {
   invariant(
     typeof value === 'string',
-    '%sExpected string value instead of %s (%s)',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be a string. Received %s (%s).',
+    valueDesc || 'Value',
     varDump(value),
     typeof value,
   );
@@ -771,8 +765,8 @@ export function enforceBoolean(
 ): boolean {
   invariant(
     typeof value === 'boolean',
-    '%sExpected boolean value instead of %s (%s)',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be a boolean. Received %s (%s).',
+    valueDesc || 'Value',
     varDump(value),
     typeof value,
   );
@@ -782,8 +776,8 @@ export function enforceBoolean(
 export function enforceNode(value: unknown, valueDesc?: string | null): Node {
   invariant(
     isNode(value),
-    '%sExpected Node value instead of %s (%s)',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be a Babel node. Received %s (%s).',
+    valueDesc || 'Value',
     varDump(value),
     typeof value,
   );
@@ -796,8 +790,8 @@ export function enforceNodeCallExpressionArg(
 ): CallExpressionArg {
   invariant(
     value && isNodeCallExpressionArg(value),
-    '%sExpected CallExpressionArg value instead of %s (%s)',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be a valid expression argument. Received %s (%s).',
+    valueDesc || 'Value',
     varDump(value),
     typeof value,
   );
@@ -811,8 +805,8 @@ export function enforceStringEnum<K extends string>(
 ): K {
   invariant(
     typeof value === 'string' && hasOwnProperty.call(keys, value),
-    '%sExpected value to be one of [%s] but we got %s (%s) instead',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be one of: %s. Received %s (%s).',
+    valueDesc || 'Value',
     Object.keys(keys).join(', '),
     varDump(value),
     typeof value,

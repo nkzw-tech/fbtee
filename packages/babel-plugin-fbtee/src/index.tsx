@@ -300,7 +300,7 @@ export default function transform() {
               ) {
                 throw errorAt(
                   path.node,
-                  `fbt constructs must be used within the scope of other fbt constructs.`,
+                  `fbtee constructs such as fbt.param(...) must be inside an fbt(...) or <fbt> string.`,
                 );
               }
             },
@@ -346,11 +346,11 @@ function getEnumManifest(opts: PluginOptions): EnumManifest | null {
     return fbtEnumManifest;
   } else if (fbtEnumPath != null) {
     throw new Error(
-      `'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
+      `Option 'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
     );
   } else if (fbtEnumToPath != null) {
     throw new Error(
-      `'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
+      `Option 'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
     );
   }
   return null;

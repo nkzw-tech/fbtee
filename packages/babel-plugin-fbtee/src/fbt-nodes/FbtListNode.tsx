@@ -69,11 +69,17 @@ export default class FbtListNode extends FbtNode<
     const [name, items, conjunction, delimiter] =
       this.getCallNodeArguments() || [];
     if (!items) {
-      throw errorAt(this.node, `'items' attribute for 'fbt:list' is missing.`);
+      throw errorAt(
+        this.node,
+        `Missing required attribute 'items' on <fbt:list>.`,
+      );
     }
 
     if (!name) {
-      throw errorAt(this.node, `'name' attribute for 'fbt:list' is missing.`);
+      throw errorAt(
+        this.node,
+        `Missing required attribute 'name' on <fbt:list>.`,
+      );
     }
 
     const args = [name, items];

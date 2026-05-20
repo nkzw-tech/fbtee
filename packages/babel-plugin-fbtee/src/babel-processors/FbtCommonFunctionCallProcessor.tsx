@@ -62,7 +62,7 @@ export default class FbtCommonFunctionCallProcessor {
     if (node.arguments.length !== 1) {
       throw errorAt(
         node,
-        `Expected ${moduleName}.c to have exactly 1 argument. ${node.arguments.length} was given.`,
+        `${moduleName}.c(...) needs exactly one text argument. Received '${node.arguments.length}'.`,
       );
     }
 

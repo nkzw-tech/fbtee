@@ -16,7 +16,7 @@ export function init(
   }
   if (opts.fbtCommonPath != null) {
     throw new Error(
-      `'fbtCommonPath' is no longer supported. Use 'fbtCommon' instead.`,
+      `Option 'fbtCommonPath' is no longer supported. Use 'fbtCommon' instead.`,
     );
   }
 }
@@ -29,5 +29,5 @@ export function getUnknownCommonStringErrorMessage(
   moduleName: BindingName,
   text: string,
 ): string {
-  return `Unknown string "${text}" for <${moduleName} common={true}>`;
+  return `Unknown common string '${text}'. Add it to 'fbtCommon' or use a 'desc' attribute.`;
 }

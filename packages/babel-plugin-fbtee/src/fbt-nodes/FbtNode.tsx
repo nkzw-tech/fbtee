@@ -398,14 +398,14 @@ export default abstract class FbtNode<
   throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(scope: Scope) {
     const argsToCheck =
       this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
+    const { moduleName } = this;
     for (const argumentName of Object.keys(argsToCheck)) {
       const argument = argsToCheck[argumentName];
       if (isCallExpression(argument) || isNewExpression(argument)) {
         throw errorAt(
           this.node,
-          `Expected string variation runtime argument "${argumentName}" ` +
-            `to not be a function call or class instantiation expression. ` +
-            `See https://fburl.com/i18n_js_fbt_extraction_limits`,
+          `Argument '${argumentName}' cannot be a function call or class instantiation. ` +
+            `Store the value in a variable before using it in ${moduleName}.`,
         );
       }
       scope.traverse(
@@ -414,9 +414,8 @@ export default abstract class FbtNode<
           'CallExpression|NewExpression'(path) {
             throw errorAt(
               path.node,
-              `Expected string variation runtime argument "${argumentName}" ` +
-                `to not contain a function call or class instantiation expression. ` +
-                `See https://fburl.com/i18n_js_fbt_extraction_limits`,
+              `Argument '${argumentName}' cannot contain a function call or class instantiation. ` +
+                `Store the value in a variable before using it in ${moduleName}.`,
             );
           },
         },

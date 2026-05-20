@@ -104,7 +104,7 @@ describe('Test jsx auto-wrapping of implicit parameters', () => {
           </fbt>`,
         ),
       ),
-    ).toThrow("There's already a token called `foo` in this fbt call.");
+    ).toThrow(`Token 'foo' is already used in this fbt call.`);
   });
 
   test('prevent token name collisions among fbt constructs across all nesting levels (v2)', () => {
@@ -134,7 +134,7 @@ describe('Test jsx auto-wrapping of implicit parameters', () => {
           </fbt>`,
         ),
       ),
-    ).toThrow("There's already a token called `foo` in this fbt call.");
+    ).toThrow(`Token 'foo' is already used in this fbt call.`);
   });
 
   test('should auto wrap a simple test with a nested level', () => {

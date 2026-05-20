@@ -264,9 +264,8 @@ export default class FbtImplicitParamNode
               if (element.type !== 'StringLiteral') {
                 throw errorAt(
                   child,
-                  `${moduleName}: only string literals (or concatenations of string literals) ` +
-                    `are supported inside JSX expressions, ` +
-                    `but we found the node type "${element.type}" instead.`,
+                  `${moduleName} JSX expressions may only contain string literals or string concatenation. ` +
+                    `Received '${element.type}'.`,
                 );
               }
               fbtChildren.push(
@@ -301,7 +300,7 @@ export default class FbtImplicitParamNode
         default:
           throw errorAt(
             child,
-            `${moduleName}: unsupported node: ${child.type}`,
+            `${moduleName} JSX contains unsupported syntax '${child.type}'. Use text, expressions, JSX, or ${moduleName} constructs.`,
           );
       }
     }

@@ -88,7 +88,7 @@ export default class FbtPronounNode extends FbtNode<
     const args = this.getCallNodeArguments();
     invariant(
       (args && (args.length === 2 || args.length === 3)) || !args,
-      "Expected '(usage, gender [, options])' arguments to %s.pronoun()",
+      `%s.pronoun(...) needs arguments '(usage, gender[, options])'.`,
       this.moduleName,
     );
   }
@@ -106,14 +106,14 @@ export default class FbtPronounNode extends FbtNode<
       const [usageArg, genderArg] = args;
       invariant(
         isStringLiteral(usageArg),
-        '`usage`, the first argument of %s.pronoun() must be a `StringLiteral` but we got `%s`',
+        `%s.pronoun(...) needs a string usage as the first argument. Received '%s'.`,
         moduleName,
         usageArg?.type || 'unknown',
       );
       const type = enforceStringEnum(
         usageArg.value,
         ValidPronounUsages,
-        `\`usage\`, the first argument of ${moduleName}.pronoun()`,
+        `First argument of ${moduleName}.pronoun(...)`,
       );
       const gender = enforceNodeCallExpressionArg(
         genderArg,
@@ -145,7 +145,7 @@ export default class FbtPronounNode extends FbtNode<
       );
       invariant(
         typeof word === 'string',
-        'Expected pronoun word to be a string but we got %s',
+        `Pronoun word must be a string. Received %s.`,
         varDump(word),
       );
 
@@ -231,7 +231,7 @@ function getPronounGenderKey(
         : GenderConst.UNKNOWN_PLURAL;
   }
 
-  invariant(false, 'Unknown GENDER_CONST value: %s', varDump(gender));
+  invariant(false, `Unknown gender value %s.`, varDump(gender));
 }
 
 // Prepare the list of genders actually used by the pronoun construct

@@ -51,8 +51,8 @@ function enforceExpression(
 ): Expression {
   invariant(
     value != null && typeof value !== 'string' && isExpression(value),
-    '%sExpected Expression value instead of %s (%s)',
-    valueDesc ? valueDesc + ' - ' : '',
+    '%s must be an expression. Received %s (%s).',
+    valueDesc || 'Value',
     varDump(value),
     typeof value,
   );
@@ -93,26 +93,26 @@ export default class FbtParamNode extends FbtNode<
 
       invariant(
         number !== false,
-        '`number` option must be an expression or `true`',
+        `Option 'number' must be an expression or 'true'.`,
       );
       invariant(
         !gender || !number,
-        'Gender and number options must not be set at the same time',
+        `Options 'gender' and 'number' cannot be used together.`,
       );
 
       let name = typeof rawOptions.name === 'string' ? rawOptions.name : null;
       if (name == null || name === '') {
         invariant(
           isStringLiteral(arg0),
-          'First function argument must be a string literal',
+          `${this.moduleName}.param(...) needs a string token name as the first argument.`,
         );
         name = arg0.value;
       }
-      invariant(name.length, 'Token name string must not be empty');
+      invariant(name.length, `Token name cannot be empty.`);
 
       const value = nullthrows(
         arg1,
-        'The second function argument must not be null',
+        `${this.moduleName}.param(...) needs a value as the second argument.`,
       );
 
       return {
@@ -148,7 +148,7 @@ export default class FbtParamNode extends FbtNode<
     const ret = [];
     invariant(
       !gender || !number,
-      'Gender and number options must not be set at the same time',
+      `Options 'gender' and 'number' cannot be used together.`,
     );
     if (gender) {
       ret.push(new GenderStringVariationArg(this, gender, [GENDER_ANY]));
@@ -172,7 +172,7 @@ export default class FbtParamNode extends FbtNode<
         const svArg = argsMap.get(this);
         invariant(
           svArg.constructor === expectedArg.constructor,
-          'Expected SVArgument instance of %s but got %s instead: %s',
+          `Internal error: expected variation '%s' but received '%s': %s.`,
           expectedArg.constructor.name || 'unknown',
           svArg.constructor.name || 'unknown',
           varDump(svArg),

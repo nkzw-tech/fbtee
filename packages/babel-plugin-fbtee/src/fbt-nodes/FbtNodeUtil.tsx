@@ -225,14 +225,14 @@ export function buildFbtNodeMapForSameParam(
       const existingFbtNode = tokenNameToFbtNode[tokenName];
       invariant(
         existingFbtNode == null || existingFbtNode === child,
-        "There's already a token called `%s` in this %s call. " +
-          'Use %s.sameParam if you want to reuse the same token name or ' +
-          'give this token a different name.\n' +
-          'Existing FbtNode=%s\n' +
-          'Redundant FbtNode=%s',
+        `Token '%s' is already used in this %s call. ` +
+          `Use %s.sameParam('%s') to reuse it, or choose a different name.\n` +
+          `Existing node: %s\n` +
+          `Duplicate node: %s`,
         tokenName,
         fbtNode.moduleName,
         fbtNode.moduleName,
+        tokenName,
         varDump(existingFbtNode),
         varDump(child),
       );
@@ -245,8 +245,9 @@ export function buildFbtNodeMapForSameParam(
     const realFbtNode = tokenNameToFbtNode[sameParamTokenName];
     invariant(
       realFbtNode != null,
-      'Expected fbt `sameParam` construct with name=`%s` to refer to a ' +
-        '`name` or `param` construct using the same token name',
+      `fbt.sameParam('%s') does not match a token in this string. ` +
+        `Add a fbt.param or fbt.name with name '%s', or remove the sameParam.`,
+      sameParamTokenName,
       sameParamTokenName,
     );
     sameParamTokenNameToRealFbtNode[sameParamTokenName] = realFbtNode;

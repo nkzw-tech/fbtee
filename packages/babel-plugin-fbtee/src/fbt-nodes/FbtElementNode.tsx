@@ -175,7 +175,7 @@ export default class FbtElementNode
       const extraOptionValue = rawOptions[optionName];
       invariant(
         typeof extraOptionValue === 'string',
-        'Expected extra option values to be strings but got `%s` (%s)',
+        `Extra option '${optionName}' must be a string. Received '%s' (%s).`,
         varDump(extraOptionValue),
         typeof extraOptionValue,
       );
@@ -335,16 +335,22 @@ export default class FbtElementNode
     if (!isArrayExpression(fbtContentsNode)) {
       throw errorAt(
         node,
-        `${moduleName}: expected callsite's first argument to be an array`,
+        `${moduleName}(...) text must be converted to an array before parsing.`,
       );
     }
 
     for (const elementChild of fbtContentsNode.elements || []) {
       if (elementChild == null) {
-        throw errorAt(node, `${moduleName}: elementChild must not be nullish`);
+        throw errorAt(
+          node,
+          `${moduleName}(...) text array cannot contain empty slots.`,
+        );
       }
       if (isSpreadElement(elementChild)) {
-        throw errorAt(elementChild, `Array spread syntax is not supported`);
+        throw errorAt(
+          elementChild,
+          `Array spread syntax is not supported in ${moduleName} text.`,
+        );
       }
       fbtElement.appendChild(this.createChildNode(moduleName, elementChild));
     }
@@ -372,7 +378,10 @@ export default class FbtElementNode
       return childNode;
     }
 
-    throw errorAt(node, `${moduleName}: unsupported node: ${node.type}`);
+    throw errorAt(
+      node,
+      `${moduleName} text contains unsupported syntax '${node.type}'. Use text, JSX, or ${moduleName} constructs.`,
+    );
   }
 
   getImplicitParamNodes(): ReadonlyArray<FbtImplicitParamNodeType> {

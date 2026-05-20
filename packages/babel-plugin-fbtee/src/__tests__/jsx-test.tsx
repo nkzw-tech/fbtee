@@ -52,7 +52,9 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
           </fbt>`,
         ),
       ),
-    ).toThrow(`fbt:param expects an {expression} or JSX element, and only one`);
+    ).toThrow(
+      `<fbt:param> needs exactly one child: an expression or JSX element.`,
+    );
   });
 
   test('fbt:param with multiple empty expression containers should be ok', () => {
@@ -491,7 +493,9 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
         withFbtImportStatement(`<fbt common={true} desc='d'>No</fbt>`),
         { fbtCommon: { No: 'The description for the common string "No"' } },
       ),
-    ).toThrow(`<fbt common> must not have "desc" attribute.`);
+    ).toThrow(
+      `<fbt common> cannot also have a 'desc' attribute. Remove one of them.`,
+    );
   });
 
   test('should throw for strings with `common` attribute equal to false', () => {
@@ -500,7 +504,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
         withFbtImportStatement(`<fbt common={false}>Yes</fbt>`),
         { fbtCommon: { Yes: 'The description for the common string "Yes"' } },
       ),
-    ).toThrow(`This node requires a 'desc' attribute.`);
+    ).toThrow(`Missing required attribute 'desc'.`);
   });
 
   test('should throw on invalid attributes in fbt:param', () => {
@@ -514,7 +518,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
           </fbt>`,
         ),
       ),
-    ).toThrow(`Invalid option "qux". Only allowed: gender, number, name`);
+    ).toThrow(`Unknown option 'qux'. Use one of: gender, number, name.`);
   });
 
   test('should throw on undefined common string', () => {
@@ -526,7 +530,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
         {},
       ),
     ).toThrow(
-      `Unknown string "Some undefined common string" for <fbt common={true}>`,
+      `Unknown common string 'Some undefined common string'. Add it to 'fbtCommon' or use a 'desc' attribute.`,
     );
   });
 

@@ -134,7 +134,7 @@ export default class FbtPluralNode extends FbtNode<
       default:
         invariant(
           false,
-          'Unsupported string variation value: %s',
+          `Unsupported plural variation value '%s'.`,
           varDump(svArgValue),
         );
     }
@@ -178,7 +178,7 @@ export default class FbtPluralNode extends FbtNode<
     const callArg0 = nullthrows((this.getCallNodeArguments() || [])[0]);
     invariant(
       isStringLiteral(callArg0),
-      'Expected a StringLiteral but got "%s" instead',
+      `Plural text must be a string literal. Received '%s'.`,
       callArg0.type,
     );
     return callArg0.value;
@@ -200,7 +200,7 @@ export default class FbtPluralNode extends FbtNode<
     if (showCount !== ShowCountKeys.no) {
       invariant(
         name != null,
-        'name must be defined when showCount=%s',
+        `Option 'name' must be set when 'showCount' is '%s'.`,
         showCount,
       );
       pluralArgs.push(stringLiteral(name));

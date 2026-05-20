@@ -85,7 +85,7 @@ export default class JSXFbtProcessor {
       if (attribute.type === 'JSXSpreadAttribute') {
         throw errorAt(
           node,
-          `<${this.moduleName}> does not support spreading attributes.`,
+          `<${this.moduleName}> does not support spread attributes. Pass each attribute explicitly.`,
         );
       }
     }
@@ -131,7 +131,7 @@ export default class JSXFbtProcessor {
           try {
             invariant(
               isStringLiteral(stringNode),
-              'Expected a StringLiteral but found `%s` instead',
+              `Common strings must contain only plain text. Received '%s'.`,
               stringNode?.type || 'unknown',
             );
             return stringNode.value;
@@ -152,7 +152,7 @@ export default class JSXFbtProcessor {
       if (getAttributeByName(this.node, 'desc')) {
         throw errorAt(
           node,
-          `<${moduleName} common> must not have "desc" attribute.`,
+          `<${moduleName} common> cannot also have a 'desc' attribute. Remove one of them.`,
         );
       }
       desc = stringLiteral(descValue);
@@ -187,9 +187,9 @@ export default class JSXFbtProcessor {
     ) {
       throw errorAt(
         this.node,
-        `<${this.moduleName}> must have at least one of these attributes: ${[
+        `<${this.moduleName}> needs one of these attributes: ${[
           ...RequiredFbtAttributes,
-        ].join(', ')}`,
+        ].join(', ')}.`,
       );
     }
   }
@@ -278,7 +278,7 @@ export default class JSXFbtProcessor {
               // preserve fbt construct's function calls intact
               invariant(
                 isCallExpression(expression),
-                'Expected CallExpression value but received `%s` (%s)',
+                `Expected an ${this.moduleName} construct call. Received '%s' (%s).`,
                 varDump(expression),
                 typeof expression,
               );
@@ -295,7 +295,7 @@ export default class JSXFbtProcessor {
           default:
             throw errorAt(
               node,
-              `Unsupported JSX element child type '${node.type}'`,
+              `Unsupported child in <${this.moduleName}>: '${node.type}'. Use text, JSX, or ${this.moduleName} constructs.`,
             );
         }
       } catch (error) {
@@ -309,7 +309,7 @@ export default class JSXFbtProcessor {
     const descAttr = getAttributeByNameOrThrow(this.node, 'desc');
     const { node } = this;
     if (!descAttr || descAttr.value == null) {
-      throw errorAt(node, `<${moduleName}> requires a "desc" attribute`);
+      throw errorAt(node, `<${moduleName}> needs a 'desc' attribute.`);
     }
     switch (descAttr.value.type) {
       case 'JSXExpressionContainer':
@@ -324,8 +324,7 @@ export default class JSXFbtProcessor {
     }
     throw errorAt(
       node,
-      `<${moduleName}> "desc" attribute must be a string literal ` +
-        `or a non-empty JSX expression`,
+      `<${moduleName}> 'desc' must be a string literal or a non-empty JSX expression.`,
     );
   }
 
@@ -351,7 +350,7 @@ export default class JSXFbtProcessor {
     }
 
     throw new Error(
-      `\`${CommonOption}\` attribute for <${this.moduleName}> requires boolean literal`,
+      `<${this.moduleName}> attribute '${CommonOption}' must be a boolean literal.`,
     );
   }
 

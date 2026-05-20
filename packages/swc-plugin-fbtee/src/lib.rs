@@ -28,13 +28,15 @@ struct PluginOptions {
 pub fn process_transform(program: Program, metadata: TransformPluginProgramMetadata) -> Program {
     let options = match metadata.get_transform_plugin_config() {
         Some(config) => serde_json::from_str::<PluginOptions>(&config).unwrap_or_else(|error| {
-            compile_error(&format!("Invalid fbtee SWC plugin config: {error}"))
+            compile_error(&format!(
+                "Invalid fbtee SWC plugin config. Received '{error}'."
+            ))
         }),
         None => PluginOptions::default(),
     };
     if options.collect_fbt {
         compile_error(
-            "collectFbt is not supported by the fbtee SWC runtime compiler; use the Babel collector to extract phrases",
+            "Option 'collectFbt' is not supported by the fbtee SWC runtime compiler. Use the Babel collector to extract phrases.",
         );
     }
 
@@ -464,7 +466,7 @@ impl FbteeTransform {
         if method.is_some() {
             if method.is_some_and(is_construct_method) {
                 compile_error(
-                    "fbt constructs must be used within the scope of other fbt constructs",
+                    "fbtee constructs such as fbt.param(...) must be inside an fbt(...) or <fbt> string.",
                 );
             }
             return None;
@@ -479,14 +481,17 @@ impl FbteeTransform {
             .first()
             .and_then(arg_as_string)
             .unwrap_or_else(|| {
-                compile_error("Expected common string call to have a string literal argument")
+                compile_error(&format!(
+                    "{}.c(...) needs exactly one text argument.",
+                    module.as_str()
+                ))
             });
         let desc = self
             .options
             .fbt_common
             .get(&label)
             .cloned()
-            .unwrap_or_else(|| compile_error(&format!("Unknown common string `{label}`")));
+            .unwrap_or_else(|| compile_error(&unknown_common_string_message(&label)));
 
         let phrase = Phrase {
             desc,
@@ -502,7 +507,12 @@ impl FbteeTransform {
             .args
             .first()
             .map(|arg| arg.expr.as_ref())
-            .unwrap_or_else(|| compile_error("Expected fbt calls to have at least two arguments"));
+            .unwrap_or_else(|| {
+                compile_error(&format!(
+                    "{}(...) needs at least two arguments: text and description.",
+                    module.as_str()
+                ))
+            });
         let options = call
             .args
             .get(2)
@@ -510,7 +520,10 @@ impl FbteeTransform {
             .unwrap_or_default();
         let desc = normalize_spaces(
             &call.args.get(1).and_then(arg_as_string).unwrap_or_else(|| {
-                compile_error("Expected fbt description to be a string literal")
+                compile_error(&format!(
+                    "{}(...) description must be a string literal.",
+                    module.as_str()
+                ))
             }),
             options.preserve_whitespace,
         );
@@ -571,11 +584,14 @@ impl FbteeTransform {
                 .fbt_common
                 .get(&text)
                 .cloned()
-                .unwrap_or_else(|| compile_error(&format!("Unknown common string `{text}`")))
+                .unwrap_or_else(|| compile_error(&unknown_common_string_message(&text)))
         } else if let Some(desc) = attrs.string("desc").or_else(|| attrs.string("common")) {
             normalize_spaces(&desc, options.preserve_whitespace)
         } else {
-            compile_error("Expected JSX fbt call to have a desc or common attribute")
+            compile_error(&format!(
+                "<{}> needs one of these attributes: desc, common.",
+                module.as_str()
+            ))
         };
 
         let parts = self
@@ -637,7 +653,7 @@ impl FbteeTransform {
             Expr::JSXElement(element) => {
                 if let Some((child_module, None)) = jsx_element_kind(&element.opening.name) {
                     return Err(format!(
-                        "Don't put <{}> directly within <{}>. This is redundant. The text is already translated so you don't need to translate it again",
+                        "Do not put <{}> directly inside <{}>. Remove the inner tag or wrap it in a normal JSX element.",
                         child_module.as_str(),
                         module.as_str()
                     ));
@@ -672,7 +688,12 @@ impl FbteeTransform {
                 }])
             }
             Expr::Paren(paren) => self.parse_expr_contents(&paren.expr, module, options),
-            _ => Err("Unsupported fbtee contents".to_string()),
+            _ => Err(format!(
+                "{} text contains unsupported syntax '{}'. Use text, JSX, or {} constructs.",
+                module.as_str(),
+                expr_type(expr),
+                module.as_str()
+            )),
         }
     }
 
@@ -683,18 +704,45 @@ impl FbteeTransform {
         _options: &CallOptions,
     ) -> Result<Vec<Part>, String> {
         let Some(method) = call_member_method(call) else {
-            return Err("Unsupported call in fbtee contents".to_string());
+            return Err(format!(
+                "{} text contains an unsupported function call. Wrap dynamic values in {}.param(...).",
+                module.as_str(),
+                module.as_str()
+            ));
         };
 
         if call_module_name(call) != Some(module) {
-            return Err("Mismatched fbtee construct".to_string());
+            return Err(format!(
+                "Do not mix fbt and fbs constructs. Found a different construct inside '{}'.",
+                module.as_str()
+            ));
         }
 
         match method {
             "param" => {
-                let name = arg_as_string(call.args.first().ok_or("Missing param name")?)
-                    .ok_or("Expected param name")?;
-                let mut value = call.args.get(1).ok_or("Missing param value")?.expr.clone();
+                let name = arg_as_string(call.args.first().ok_or_else(|| {
+                    format!(
+                        "{}.param(...) needs a token name as the first argument.",
+                        module.as_str()
+                    )
+                })?)
+                .ok_or_else(|| {
+                    format!(
+                        "{}.param(...) token name must be a string literal.",
+                        module.as_str()
+                    )
+                })?;
+                let mut value = call
+                    .args
+                    .get(1)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.param(...) needs a value as the second argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 value.visit_mut_with(self);
                 let options = call
                     .args
@@ -717,16 +765,51 @@ impl FbteeTransform {
                 }])
             }
             "sameParam" => {
-                let name = arg_as_string(call.args.first().ok_or("Missing sameParam name")?)
-                    .ok_or("Expected sameParam name")?;
+                let name = arg_as_string(call.args.first().ok_or_else(|| {
+                    format!("{}.sameParam(...) needs a token name.", module.as_str())
+                })?)
+                .ok_or_else(|| {
+                    format!(
+                        "{}.sameParam(...) token name must be a string literal.",
+                        module.as_str()
+                    )
+                })?;
                 Ok(vec![Part::SameParam { name }])
             }
             "name" => {
-                let name = arg_as_string(call.args.first().ok_or("Missing name label")?)
-                    .ok_or("Expected name label")?;
-                let mut value = call.args.get(1).ok_or("Missing name value")?.expr.clone();
+                let name =
+                    arg_as_string(call.args.first().ok_or_else(|| {
+                        format!("{}.name(...) needs a token name.", module.as_str())
+                    })?)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.name(...) token name must be a string literal.",
+                            module.as_str()
+                        )
+                    })?;
+                let mut value = call
+                    .args
+                    .get(1)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.name(...) needs a value as the second argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 value.visit_mut_with(self);
-                let gender = call.args.get(2).ok_or("Missing name gender")?.expr.clone();
+                let gender = call
+                    .args
+                    .get(2)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.name(...) needs a gender as the third argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 Ok(vec![Part::Name {
                     name,
                     value,
@@ -734,8 +817,28 @@ impl FbteeTransform {
                 }])
             }
             "enum" => {
-                let value = call.args.first().ok_or("Missing enum value")?.expr.clone();
-                let range_expr = call.args.get(1).ok_or("Missing enum range")?.expr.clone();
+                let value = call
+                    .args
+                    .first()
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.enum(...) needs a value as the first argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
+                let range_expr = call
+                    .args
+                    .get(1)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.enum(...) needs a range as the second argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 let range = self.enum_range_from_expr(&range_expr)?;
                 Ok(vec![Part::Enum {
                     value,
@@ -744,9 +847,26 @@ impl FbteeTransform {
                 }])
             }
             "plural" => {
-                let singular = arg_as_string(call.args.first().ok_or("Missing plural singular")?)
-                    .ok_or("Expected plural singular text")?;
-                let count = call.args.get(1).ok_or("Missing plural count")?.expr.clone();
+                let singular = arg_as_string(call.args.first().ok_or_else(|| {
+                    format!("{}.plural(...) needs singular text.", module.as_str())
+                })?)
+                .ok_or_else(|| {
+                    format!(
+                        "{}.plural(...) singular text must be a string literal.",
+                        module.as_str()
+                    )
+                })?;
+                let count = call
+                    .args
+                    .get(1)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.plural(...) needs a count as the second argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 let options = call
                     .args
                     .get(2)
@@ -778,12 +898,27 @@ impl FbteeTransform {
                 }])
             }
             "pronoun" => {
-                let usage = arg_as_string(call.args.first().ok_or("Missing pronoun usage")?)
-                    .ok_or("Expected pronoun usage")?;
+                let usage = arg_as_string(call.args.first().ok_or_else(|| {
+                    format!(
+                        "{}.pronoun(...) needs a usage as the first argument.",
+                        module.as_str()
+                    )
+                })?)
+                .ok_or_else(|| {
+                    format!(
+                        "{}.pronoun(...) usage must be a string literal.",
+                        module.as_str()
+                    )
+                })?;
                 let gender = call
                     .args
                     .get(1)
-                    .ok_or("Missing pronoun gender")?
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.pronoun(...) needs a gender as the second argument.",
+                            module.as_str()
+                        )
+                    })?
                     .expr
                     .clone();
                 let options = call
@@ -799,9 +934,27 @@ impl FbteeTransform {
                 }])
             }
             "list" => {
-                let name = arg_as_string(call.args.first().ok_or("Missing list label")?)
-                    .ok_or("Expected list label")?;
-                let mut items = call.args.get(1).ok_or("Missing list items")?.expr.clone();
+                let name =
+                    arg_as_string(call.args.first().ok_or_else(|| {
+                        format!("{}.list(...) needs a token name.", module.as_str())
+                    })?)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.list(...) token name must be a string literal.",
+                            module.as_str()
+                        )
+                    })?;
+                let mut items = call
+                    .args
+                    .get(1)
+                    .ok_or_else(|| {
+                        format!(
+                            "{}.list(...) needs items as the second argument.",
+                            module.as_str()
+                        )
+                    })?
+                    .expr
+                    .clone();
                 items.visit_mut_with(self);
                 let conjunction = call.args.get(2).and_then(arg_as_string);
                 let delimiter = call.args.get(3).and_then(arg_as_string);
@@ -812,7 +965,11 @@ impl FbteeTransform {
                     delimiter,
                 }])
             }
-            _ => Err(format!("Unsupported fbtee construct {method}")),
+            _ => Err(format!(
+                "Unsupported {} construct '{}'.",
+                module.as_str(),
+                method
+            )),
         }
     }
 
@@ -843,13 +1000,16 @@ impl FbteeTransform {
                     match jsx_element_kind(&element.opening.name) {
                         Some((child_module, Some(kind))) => {
                             if child_module != module {
-                                return Err("Mismatched fbtee JSX construct".to_string());
+                                return Err(format!(
+                                    "Do not mix fbt and fbs JSX namespaces. Found a different construct inside '<{}>'.",
+                                    module.as_str()
+                                ));
                             }
                             parts.extend(self.parse_jsx_construct(element, module, kind, options)?);
                         }
                         Some((child_module, None)) => {
                             return Err(format!(
-                                "Don't put <{}> directly within <{}>. This is redundant. The text is already translated so you don't need to translate it again",
+                                "Do not put <{}> directly inside <{}>. Remove the inner tag or wrap it in a normal JSX element.",
                                 child_module.as_str(),
                                 module.as_str()
                             ));
@@ -981,14 +1141,16 @@ impl FbteeTransform {
     fn parse_jsx_construct(
         &mut self,
         element: &JSXElement,
-        _module: ModuleName,
+        module: ModuleName,
         kind: String,
         options: &CallOptions,
     ) -> Result<Vec<Part>, String> {
         let attrs = JsxAttrs::new(&element.opening.attrs);
         match kind.as_str() {
             "param" => {
-                let name = attrs.string("name").ok_or("Missing JSX param name")?;
+                let name = attrs.string("name").ok_or_else(|| {
+                    format!("<{}:param> needs attribute 'name'.", module.as_str())
+                })?;
                 let value = self.jsx_param_value(&element.children).unwrap_or_else(|| {
                     Expr::Lit(Lit::Str(Str {
                         span: DUMMY_SP,
@@ -1012,11 +1174,15 @@ impl FbteeTransform {
                 }])
             }
             "same-param" | "sameParam" => {
-                let name = attrs.string("name").ok_or("Missing JSX sameParam name")?;
+                let name = attrs.string("name").ok_or_else(|| {
+                    format!("<{}:same-param> needs attribute 'name'.", module.as_str())
+                })?;
                 Ok(vec![Part::SameParam { name }])
             }
             "name" => {
-                let name = attrs.string("name").ok_or("Missing JSX name label")?;
+                let name = attrs
+                    .string("name")
+                    .ok_or_else(|| format!("<{}:name> needs attribute 'name'.", module.as_str()))?;
                 let value = self.jsx_param_value(&element.children).unwrap_or_else(|| {
                     Expr::Lit(Lit::Str(Str {
                         span: DUMMY_SP,
@@ -1024,7 +1190,9 @@ impl FbteeTransform {
                         raw: None,
                     }))
                 });
-                let gender = attrs.expr("gender").ok_or("Missing JSX name gender")?;
+                let gender = attrs.expr("gender").ok_or_else(|| {
+                    format!("<{}:name> needs attribute 'gender'.", module.as_str())
+                })?;
                 Ok(vec![Part::Name {
                     name,
                     value: Box::new(value),
@@ -1032,8 +1200,12 @@ impl FbteeTransform {
                 }])
             }
             "enum" => {
-                let value = attrs.expr("value").ok_or("Missing JSX enum value")?;
-                let range_expr = attrs.expr("enum-range").ok_or("Missing JSX enum range")?;
+                let value = attrs.expr("value").ok_or_else(|| {
+                    format!("<{}:enum> needs attribute 'value'.", module.as_str())
+                })?;
+                let range_expr = attrs.expr("enum-range").ok_or_else(|| {
+                    format!("<{}:enum> needs attribute 'enum-range'.", module.as_str())
+                })?;
                 let range = self.enum_range_from_expr(&range_expr)?;
                 Ok(vec![Part::Enum {
                     value,
@@ -1048,7 +1220,9 @@ impl FbteeTransform {
                 )
                 .trim()
                 .to_string();
-                let count = attrs.expr("count").ok_or("Missing JSX plural count")?;
+                let count = attrs.expr("count").ok_or_else(|| {
+                    format!("<{}:plural> needs attribute 'count'.", module.as_str())
+                })?;
                 let many = attrs
                     .string("many")
                     .unwrap_or_else(|| format!("{singular}s"));
@@ -1075,8 +1249,12 @@ impl FbteeTransform {
                 }])
             }
             "pronoun" => {
-                let usage = attrs.string("type").ok_or("Missing JSX pronoun type")?;
-                let gender = attrs.expr("gender").ok_or("Missing JSX pronoun gender")?;
+                let usage = attrs.string("type").ok_or_else(|| {
+                    format!("<{}:pronoun> needs attribute 'type'.", module.as_str())
+                })?;
+                let gender = attrs.expr("gender").ok_or_else(|| {
+                    format!("<{}:pronoun> needs attribute 'gender'.", module.as_str())
+                })?;
                 Ok(vec![Part::Pronoun {
                     usage,
                     gender,
@@ -1085,8 +1263,12 @@ impl FbteeTransform {
                 }])
             }
             "list" => {
-                let name = attrs.string("name").ok_or("Missing JSX list name")?;
-                let mut items = attrs.expr("items").ok_or("Missing JSX list items")?;
+                let name = attrs
+                    .string("name")
+                    .ok_or_else(|| format!("<{}:list> needs attribute 'name'.", module.as_str()))?;
+                let mut items = attrs.expr("items").ok_or_else(|| {
+                    format!("<{}:list> needs attribute 'items'.", module.as_str())
+                })?;
                 items.visit_mut_with(self);
                 Ok(vec![Part::List {
                     name,
@@ -1095,7 +1277,11 @@ impl FbteeTransform {
                     delimiter: attrs.string("delimiter"),
                 }])
             }
-            _ => Err(format!("Unsupported JSX fbtee construct {kind}")),
+            _ => Err(format!(
+                "Unsupported JSX {} construct '{}'.",
+                module.as_str(),
+                kind
+            )),
         }
     }
 
@@ -1203,14 +1389,14 @@ impl FbteeTransform {
                     PropOrSpread::Prop(prop) => match prop.as_ref() {
                         Prop::KeyValue(key_value) => {
                             let key = prop_name_to_string(&key_value.key)
-                                .ok_or("Unsupported enum object key")?;
+                                .ok_or("Enum object keys must be strings, numbers, or identifiers.")?;
                             let value = expr_as_string(&key_value.value)
-                                .ok_or("Unsupported enum object value")?;
+                                .ok_or("Enum object values must be string literals.")?;
                             Ok((key, value))
                         }
-                        _ => Err("Unsupported enum object property".to_string()),
+                        _ => Err("Enum entries must be plain object properties. Remove methods and spread properties.".to_string()),
                     },
-                    PropOrSpread::Spread(_) => Err("Unsupported enum spread".to_string()),
+                    PropOrSpread::Spread(_) => Err("Enum entries cannot use spread properties.".to_string()),
                 })
                 .collect(),
             Expr::Ident(ident) => self
@@ -1222,8 +1408,11 @@ impl FbteeTransform {
                         .map(|(key, value)| (key.clone(), value.clone()))
                         .collect()
                 })
-                .ok_or_else(|| format!("Unknown enum range {}", ident.sym)),
-            _ => Err("Unsupported enum range".to_string()),
+                .ok_or_else(|| format!("Enum '{}' is not registered. Import an '$FbtEnum' module or add it to the enum manifest.", ident.sym)),
+            _ => Err(format!(
+                "Enum range must be an array, object, or imported enum variable. Received '{}'.",
+                expr_type(expr)
+            )),
         }
     }
 
@@ -1975,6 +2164,36 @@ fn expr_as_string(expr: &Expr) -> Option<String> {
     }
 }
 
+fn expr_type(expr: &Expr) -> &'static str {
+    match expr {
+        Expr::Array(_) => "ArrayExpression",
+        Expr::Arrow(_) => "ArrowFunctionExpression",
+        Expr::Assign(_) => "AssignmentExpression",
+        Expr::Await(_) => "AwaitExpression",
+        Expr::Bin(_) => "BinaryExpression",
+        Expr::Call(_) => "CallExpression",
+        Expr::Class(_) => "ClassExpression",
+        Expr::Cond(_) => "ConditionalExpression",
+        Expr::Fn(_) => "FunctionExpression",
+        Expr::Ident(_) => "Identifier",
+        Expr::JSXElement(_) => "JSXElement",
+        Expr::JSXFragment(_) => "JSXFragment",
+        Expr::Lit(_) => "Literal",
+        Expr::Member(_) => "MemberExpression",
+        Expr::New(_) => "NewExpression",
+        Expr::Object(_) => "ObjectExpression",
+        Expr::Paren(_) => "ParenthesizedExpression",
+        Expr::Seq(_) => "SequenceExpression",
+        Expr::TaggedTpl(_) => "TaggedTemplateExpression",
+        Expr::This(_) => "ThisExpression",
+        Expr::Tpl(_) => "TemplateLiteral",
+        Expr::Unary(_) => "UnaryExpression",
+        Expr::Update(_) => "UpdateExpression",
+        Expr::Yield(_) => "YieldExpression",
+        _ => "Expression",
+    }
+}
+
 #[derive(Default)]
 struct ObjectOptions {
     strings: BTreeMap<String, String>,
@@ -2056,6 +2275,10 @@ fn parse_object(expr: &Expr) -> ObjectOptions {
 
 fn compile_error(message: &str) -> ! {
     panic!("fbtee SWC plugin error: {message}");
+}
+
+fn unknown_common_string_message(text: &str) -> String {
+    format!("Unknown common string '{text}'. Add it to 'fbtCommon' or use a 'desc' attribute.")
 }
 
 fn enum_manifest_key(source: &str) -> Option<String> {
@@ -2880,7 +3103,9 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Unsupported call in fbtee contents")]
+    #[should_panic(
+        expected = "fbt text contains an unsupported function call. Wrap dynamic values in fbt.param(...)."
+    )]
     fn unsupported_callsite_panics_instead_of_falling_through() {
         transform(
             "import { fbt } from 'fbtee'; const x = fbt(foo(), 'desc');",
@@ -3139,19 +3364,23 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Unknown common string `Missing`")]
+    #[should_panic(
+        expected = "Unknown common string 'Missing'. Add it to 'fbtCommon' or use a 'desc' attribute."
+    )]
     fn rejects_unknown_jsx_common_strings() {
         transform("const x = <fbt common>Missing</fbt>;", default_options());
     }
 
     #[test]
-    #[should_panic(expected = "Expected JSX fbt call to have a desc or common attribute")]
+    #[should_panic(expected = "<fbt> needs one of these attributes: desc, common.")]
     fn rejects_jsx_fbt_without_desc_or_common() {
         transform("const x = <fbt>Missing desc</fbt>;", default_options());
     }
 
     #[test]
-    #[should_panic(expected = "Don't put <fbt> directly within <fbt>")]
+    #[should_panic(
+        expected = "Do not put <fbt> directly inside <fbt>. Remove the inner tag or wrap it in a normal JSX element."
+    )]
     fn rejects_directly_nested_fbt_jsx_elements() {
         transform(
             "import { fbt } from 'fbtee'; const x = <fbt desc='outer'>A <fbt desc='inner'>B</fbt></fbt>;",
@@ -3160,7 +3389,9 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Don't put <fbs> directly within <fbs>")]
+    #[should_panic(
+        expected = "Do not put <fbs> directly inside <fbs>. Remove the inner tag or wrap it in a normal JSX element."
+    )]
     fn rejects_directly_nested_fbs_jsx_elements() {
         transform(
             "import { fbs } from 'fbtee'; const x = <fbs desc='outer'>A <fbs desc='inner'>B</fbs></fbs>;",

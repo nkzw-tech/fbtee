@@ -877,9 +877,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "count" ` +
-        `to not contain a function call or class instantiation expression.`,
+      throws: `Argument 'count' cannot contain a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:enum).':
@@ -904,9 +902,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "value" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'value' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:name).':
@@ -931,9 +927,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "gender" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'gender' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:param with gender).':
@@ -958,9 +952,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "gender" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'gender' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:param with number).':
@@ -985,9 +977,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "number" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'number' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:plural).':
@@ -1012,9 +1002,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "count" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'count' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and string variation arguments that have nested function calls (fbt:pronoun)':
@@ -1039,9 +1027,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "gender" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'gender' cannot be a function call or class instantiation.`,
     },
 
   'should throw for string with a nested JSX fragment and subject gender contains function calls':
@@ -1068,9 +1054,7 @@ with some other stuff.\`
         );`,
       ),
 
-      throws:
-        `Expected string variation runtime argument "subject" ` +
-        `to not be a function call or class instantiation expression.`,
+      throws: `Argument 'subject' cannot be a function call or class instantiation.`,
     },
 
   'should throw if the sameParam refers to a plural construct': {
@@ -1092,8 +1076,8 @@ with some other stuff.\`
     ),
 
     throws:
-      'Expected fbt `sameParam` construct with name=`tokenName` to refer to ' +
-      'a `name` or `param` construct using the same token name',
+      `fbt.sameParam('tokenName') does not match a token in this string. ` +
+      `Add a fbt.param or fbt.name with name 'tokenName', or remove the sameParam.`,
   },
 
   'should throw if the token name of a sameParam construct in a nested string is not defined':
@@ -1113,8 +1097,8 @@ with some other stuff.\`
       ),
 
       throws:
-        'Expected fbt `sameParam` construct with name=`name1` to refer to ' +
-        'a `name` or `param` construct using the same token name',
+        `fbt.sameParam('name1') does not match a token in this string. ` +
+        `Add a fbt.param or fbt.name with name 'name1', or remove the sameParam.`,
     },
 
   'should throw if the token name of a sameParam construct is not defined': {
@@ -1136,8 +1120,8 @@ with some other stuff.\`
     ),
 
     throws:
-      'Expected fbt `sameParam` construct with name=`name2` to refer to ' +
-      'a `name` or `param` construct using the same token name',
+      `fbt.sameParam('name2') does not match a token in this string. ` +
+      `Add a fbt.param or fbt.name with name 'name2', or remove the sameParam.`,
   },
 
   'should throw on bad showCount value': {
@@ -1157,7 +1141,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `Option "showCount" has an invalid value: "badkey". Only allowed: ifMany, no, yes`,
+    throws: `Invalid value 'badkey' for option 'showCount'. Use one of: ifMany, no, yes.`,
   },
 
   'should throw on pronoun usage invalid': {
@@ -1183,9 +1167,8 @@ with some other stuff.\`
       ),
 
     throws:
-      `\`usage\`, the first argument of fbt.pronoun() - ` +
-      `Expected value to be one of [object, possessive, reflexive, subject] ` +
-      `but we got 'POSSESSION' (string) instead`,
+      `First argument of fbt.pronoun(...) must be one of: object, possessive, reflexive, subject. ` +
+      `Received 'POSSESSION' (string).`,
   },
 
   'should throw on pronoun usage not StringLiteral': {
@@ -1212,8 +1195,7 @@ with some other stuff.\`
         );`,
       ),
 
-    throws:
-      '`usage`, the first argument of fbt.pronoun() must be a `StringLiteral` but we got `Identifier`',
+    throws: `fbt.pronoun(...) needs a string usage as the first argument. Received 'Identifier'.`,
   },
 
   'should throw on unknown options': {
@@ -1233,7 +1215,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `Invalid option "whatisthis". Only allowed: many, name, showCount, value, count`,
+    throws: `Unknown option 'whatisthis'. Use one of: many, name, showCount, value, count.`,
   },
 
   'should throw when a fbt.param is nested inside a fbt.name': {
@@ -1256,7 +1238,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `'fbt' constructs should not be nested inside of other fbt constructs. Found 'fbt.param' nested inside 'fbt.name'.`,
+    throws: `fbt constructs cannot be nested directly. Found 'fbt.param' nested inside 'fbt.name'.`,
   },
 
   'should throw when a fbt.param is nested inside another fbt.param': {
@@ -1279,13 +1261,13 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `'fbt' constructs should not be nested inside of other fbt constructs. Found 'fbt.param' nested inside 'fbt.param'.`,
+    throws: `fbt constructs cannot be nested directly. Found 'fbt.param' nested inside 'fbt.param'.`,
   },
 
   'should throw when a fbt.param is used outside of fbt': {
     input: withFbtImportStatement(`var z = fbt.param('name', val);`),
 
-    throws: `fbt constructs must be used within the scope of other fbt constructs.`,
+    throws: `fbtee constructs such as fbt.param(...) must be inside an fbt(...) or <fbt> string.`,
   },
 
   'should throw when concatenating an fbt construct to a string while using the array argument syntax':
@@ -1300,8 +1282,8 @@ with some other stuff.\`
       ),
 
       throws:
-        'fbt(array) only supports items that are string literals, ' +
-        'template literals without any expressions, or fbt constructs',
+        `fbt(array) items must be string literals, template literals without placeholders, ` +
+        `or fbt constructs.`,
     },
 
   'should throw when multiple tokens have the same names due to implicit params':
@@ -1318,7 +1300,7 @@ with some other stuff.\`
       );`,
       ),
 
-      throws: `There's already a token called "=world" in this fbt call`,
+      throws: `Token '=world' is already used in this fbt call.`,
     },
 
   'should throw when multiple tokens have the same names due to implicit params and an fbt.param':
@@ -1335,7 +1317,7 @@ with some other stuff.\`
       );`,
       ),
 
-      throws: `There's already a token called "=world" in this fbt call`,
+      throws: `Token '=world' is already used in this fbt call.`,
     },
 
   'should throw when multiple tokens have the same names due to implicit params and an fbt.plural':
@@ -1354,7 +1336,7 @@ with some other stuff.\`
       );`,
       ),
 
-      throws: `There's already a token called "=world" in this fbt call`,
+      throws: `Token '=world' is already used in this fbt call.`,
     },
 
   'should throw when multiple tokens have the same names due to implicit params and fbt.enum':
@@ -1373,7 +1355,7 @@ with some other stuff.\`
       );`,
       ),
 
-      throws: `There's already a token called "=world" in this fbt call`,
+      throws: `Token '=world' is already used in this fbt call.`,
     },
 
   'should throw when two arguments have the same names': {
@@ -1398,7 +1380,7 @@ with some other stuff.\`
       );`,
     ),
 
-    throws: `There's already a token called "name" in this fbt call`,
+    throws: `Token 'name' is already used in this fbt call.`,
   },
 };
 

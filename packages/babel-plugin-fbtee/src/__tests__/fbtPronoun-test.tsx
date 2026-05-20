@@ -34,7 +34,7 @@ describe('fbt pronoun support', () => {
       );`,
     );
     expect(() => transform(input)).toThrow(
-      "Expected boolean value instead of 'true' (string)",
+      "Value must be a boolean. Received 'true' (string).",
     );
   });
 
@@ -49,7 +49,7 @@ describe('fbt pronoun support', () => {
       );`,
     );
     expect(() => transform(input)).toThrow(
-      "Expected boolean value instead of 'true' (string)",
+      "Value must be a boolean. Received 'true' (string).",
     );
   });
 
@@ -64,8 +64,7 @@ describe('fbt pronoun support', () => {
       );`,
     );
     expect(() => transform(input)).toThrow(
-      '`usage`, the first argument of fbt.pronoun() - Expected value to be ' +
-        "one of [object, possessive, reflexive, subject] but we got 'possession' (string) instead",
+      "First argument of fbt.pronoun(...) must be one of: object, possessive, reflexive, subject. Received 'possession' (string).",
     );
   });
 

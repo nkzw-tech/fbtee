@@ -107,7 +107,9 @@ describe('Test Fbt Enum', () => {
           ),
           { fbtEnumManifest: TestFbtEnumManifest },
         ),
-      ).toThrow('Enum keys must be string literals instead of `');
+      ).toThrow(
+        `Enum keys must be strings or identifiers. Received 'Identifier'.`,
+      );
     });
 
     it('should throw the enum key is a variable (MemberExpression)', () => {
@@ -126,7 +128,9 @@ describe('Test Fbt Enum', () => {
           ),
           { fbtEnumManifest: TestFbtEnumManifest },
         ),
-      ).toThrow('Enum keys must be string literals instead of `');
+      ).toThrow(
+        `Enum keys must be strings or identifiers. Received 'MemberExpression'.`,
+      );
     });
   });
 
@@ -138,7 +142,9 @@ describe('Test Fbt Enum', () => {
           var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
         ),
       ),
-    ).toThrow('Fbt Enum `aEnum` not registered');
+    ).toThrow(
+      `Enum 'aEnum' is not registered. Import a '$FbtEnum' module or add it to the enum manifest.`,
+    );
   });
 
   it('should throw on destructured imports', () => {
@@ -149,6 +155,8 @@ describe('Test Fbt Enum', () => {
           var x = fbt('Click to see ' + fbt.enum(id, aEnum), 'enums!');`,
         ),
       ),
-    ).toThrow('Fbt Enum `aEnum` not registered');
+    ).toThrow(
+      `Enum 'aEnum' is not registered. Import a '$FbtEnum' module or add it to the enum manifest.`,
+    );
   });
 });

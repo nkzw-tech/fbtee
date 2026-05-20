@@ -50,7 +50,7 @@ export default class FbtSameParamNode extends FbtNode<
       const [name] = this.getCallNodeArguments() || [];
       invariant(
         isStringLiteral(name),
-        'Expected first argument of %s.sameParam to be a string literal, but got `%s`',
+        `%s.sameParam(...) needs a string token name as the first argument. Received '%s'.`,
         this.moduleName,
         (name && name.type) || 'unknown',
       );

@@ -49,17 +49,17 @@ export default class FbtNameNode extends FbtNode<
 
       invariant(
         isStringLiteral(node),
-        'Expected first argument of %s.name to be a string literal, but got %s',
+        `%s.name(...) needs a string token name as the first argument. Received '%s'.`,
         moduleName,
-        node && node.type,
+        node?.type || 'missing',
       );
       const value = enforceNodeCallExpressionArg(
         initialValue,
-        `Second argument of ${moduleName}.name`,
+        `Second argument of ${moduleName}.name(...)`,
       );
       const gender = enforceNodeCallExpressionArg(
         initialGender,
-        `Third argument of ${moduleName}.name`,
+        `Third argument of ${moduleName}.name(...)`,
       );
 
       return { gender, name: node.value, value };
