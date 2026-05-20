@@ -10,6 +10,7 @@
     "clean": "rm -rf packages/*/lib packages/fbtee/lib-tmp; cd example pnpm clean",
     "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "dev": "cd example && pnpm fbtee:all && pnpm dev",
+    "dev:website": "pnpm --dir website dev",
     "format": "prettier --experimental-cli --write .",
     "preinstall": "command -v git >/dev/null 2>&1 && git config core.hooksPath git-hooks || exit 0",
     "jest": "npm-run-all jest:babel jest:swc",

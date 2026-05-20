@@ -198,12 +198,13 @@ export default function App() {
           <div className="mb-8 text-center">
             <H2 className="mb-4 text-3xl">
               <fbt desc="Headline">
-                Why choose <span className="font-bold">fbtee</span>?
+                <span className="font-bold">fbtee</span> Features
               </fbt>
             </H2>
             <p className="mx-auto max-w-2xl">
               <fbt desc="Tagline">
-                Modern internationalization that scales with your application.
+                The core pieces you need to localize modern JavaScript and React
+                apps.
               </fbt>
             </p>
           </div>
@@ -220,9 +221,9 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Inline translations description">
-                    Embed translations directly into your code. No need to
-                    manage translation keys or wrap your code with t()
-                    functions.
+                    Write translatable text inline. No translation keys or t()
+                    wrappers; the compiler extracts strings for translation
+                    providers.
                   </fbt>
                 </p>
               </CardContent>
@@ -240,7 +241,8 @@ export default function App() {
                 <p className="text-sm">
                   <fbt desc="Proven in production description">
                     Built on Facebook&apos;s fbt, with over a decade of
-                    production usage, serving billions of users.
+                    production usage serving billions of users, plus years in
+                    production at Athena Crisis.
                   </fbt>
                 </p>
               </CardContent>
@@ -258,7 +260,8 @@ export default function App() {
                 <p className="text-sm">
                   <fbt desc="Optimized performance description">
                     Compiles translations into an Intermediate Representation
-                    (IR) for extracting strings, then optimizes runtime output.
+                    (IR) for extraction, then optimizes the runtime output for
+                    performance.
                   </fbt>
                 </p>
               </CardContent>
@@ -275,8 +278,7 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Easy setup description">
-                    Quick integration with tools like Babel and Vite means you
-                    can get started instantly.
+                    Quick integration with Babel, SWC, Vite, Next.js, and Expo.
                   </fbt>
                 </p>
               </CardContent>
@@ -321,8 +323,8 @@ export default function App() {
             </H2>
             <p className="">
               <fbt desc="Getting started description">
-                Choose your preferred way to start with{' '}
-                <span className="font-bold">fbtee</span>.
+                Use a template for a new app, or install the runtime in an
+                existing app.
               </fbt>
             </p>
           </div>
@@ -339,9 +341,8 @@ export default function App() {
               </div>
               <p className="mb-6">
                 <fbt desc="Quick start templates description">
-                  Skip the setup hassle! These templates come with{' '}
-                  <span className="font-bold">fbtee</span> pre-configured and
-                  ready to go:
+                  These templates come with{' '}
+                  <span className="font-bold">fbtee</span> configured:
                 </fbt>
               </p>
               <div className="grid gap-6 md:grid-cols-2">
@@ -355,7 +356,7 @@ export default function App() {
                     </div>
                     <CardDescription>
                       <fbt desc="Web app template description">
-                        Complete web application setup with Vite and React
+                        Vite and React app setup
                       </fbt>
                     </CardDescription>
                   </CardHeader>
@@ -388,7 +389,7 @@ export default function App() {
                     </div>
                     <CardDescription>
                       <fbt desc="Expo app template description">
-                        React Native with Expo setup for mobile apps
+                        React Native and Expo app setup
                       </fbt>
                     </CardDescription>
                   </CardHeader>
@@ -438,7 +439,11 @@ export default function App() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <code className="text-slate-200">$</code>
-                    <code>npm install -D @nkzw/babel-preset-fbtee</code>
+                    <code>
+                      {
+                        'npm install -D @nkzw/babel-preset-fbtee @rolldown/plugin-babel'
+                      }
+                    </code>
                   </div>
                   <div className="flex items-center space-x-2">
                     <code className="text-slate-200">$</code>
@@ -472,62 +477,61 @@ export default function App() {
                 <TabsContent className="space-y-4" value="vite">
                   <p className="">
                     <fbt desc="Vite setup instructions">
-                      Install the Vite React plugin and configure your
-                      vite.config.ts:
+                      Use the Rolldown Babel plugin with Vite and the React
+                      plugin:
                     </fbt>
                   </p>
                   <Code
                     code={`import fbteePreset from '@nkzw/babel-preset-fbtee';
+import babel from '@rolldown/plugin-babel';
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
-export default {
+export default defineConfig({
   plugins: [
-    react({
-      babel: {
-        presets: [fbteePreset],
-      },
+    babel({
+      presets: [fbteePreset],
     }),
+    react(),
   ],
-};`}
+});`}
                   />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="swc">
                   <p className="">
                     <fbt desc="SWC setup instructions">
-                      Use the SWC plugin for Turbopack or any build pipeline
-                      that compiles with SWC. Continue using fbtee collect for
-                      string extraction.
+                      Use the SWC plugin to compile app code. Use fbtee collect
+                      to extract phrases.
                     </fbt>
                   </p>
                   <Code
-                    code={`{
-  "jsc": {
-    "experimental": {
-      "plugins": [
-        [
-          "@nkzw/swc-plugin-fbtee",
-          {
-            "fbtCommon": {
-              "Accept": "Button/Link: Accept conditions"
-            },
-            "fbtEnumManifest": {}
-          }
-        ]
-      ]
-    },
-    "parser": {
-      "syntax": "typescript",
-      "tsx": true
-    }
-  }
-}`}
+                    code={`export default {
+  experimental: {
+    swcPlugins: [
+      [
+        '@nkzw/swc-plugin-fbtee',
+        {
+          fbtCommon: {
+            Accept: 'Button label for accepting terms',
+          },
+          fbtEnumManifest: {},
+        },
+      ],
+    ],
+  },
+};`}
                   />
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    <fbt desc="SWC collect note">
+                      Do not pass collectFbt: true to the SWC plugin.
+                    </fbt>
+                  </p>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="nextjs">
                   <p className="">
                     <fbt desc="Next.js setup instructions">
-                      For Babel-based Next.js builds, create a babel.config.js
-                      file in your project root:
+                      With Next.js and Babel, create a babel.config.js file in
+                      your project root:
                     </fbt>
                   </p>
                   <Code
@@ -554,21 +558,20 @@ export default {
                   <p className="text-sm text-slate-600 dark:text-slate-400">
                     <fbt desc="Next.js SWC plugin note">
                       For Turbopack, configure @nkzw/swc-plugin-fbtee through
-                      Next.js SWC plugins instead of using a Babel config.
+                      the Next.js SWC plugin list instead of using Babel.
                     </fbt>
                   </p>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="babel">
                   <p className="">
                     <fbt desc="Babel setup instructions">
-                      For custom Babel setups, add the preset to your .babelrc
-                      or babel.config.js:
+                      With a direct Babel setup, add the preset:
                     </fbt>
                   </p>
                   <Code
-                    code={`{
-  "presets": ["@nkzw/babel-preset-fbtee"]
-}`}
+                    code={`export default {
+  presets: ['@nkzw/babel-preset-fbtee'],
+};`}
                   />
                 </TabsContent>
               </Tabs>
@@ -584,8 +587,8 @@ export default {
             </H2>
             <p className="">
               <fbt desc="Usage guide description">
-                Everything you need to know to use{' '}
-                <span className="font-bold">fbtee</span> effectively.
+                The main patterns for writing and shipping translated strings
+                with <span className="font-bold">fbtee</span>.
               </fbt>
             </p>
           </div>
@@ -603,19 +606,16 @@ export default {
 
               <p className="mb-6">
                 <fbt desc="App setup description">
-                  Set up <span className="font-bold">fbtee</span>&apos;s runtime
-                  to manage locales in your app. First, add TypeScript support:
+                  React TypeScript projects should include the JSX declarations
+                  once in a global type file or app entry point:
                 </fbt>
               </p>
 
-              <Code
-                code={`// In your main index.tsx or types.d.ts file:
-/// <reference types="fbtee/ReactTypes.d.ts" />`}
-              />
+              <Code code={`/// <reference types="fbtee/ReactTypes.d.ts" />`} />
 
               <p className="mb-4">
                 <fbt desc="LocaleContext setup description">
-                  Then create a LocaleContext to manage translations:
+                  Most React apps should use createLocaleContext:
                 </fbt>
               </p>
 
@@ -625,34 +625,30 @@ export default {
 // Define available languages
 const availableLanguages = new Map([
   ['en_US', 'English'],
-  ['ja_JP', '日本語 (Japanese)'],
-  ['es_ES', 'Español'],
+  ['de_DE', 'Deutsch'],
+  ['ja_JP', '日本語'],
 ]);
 
-// Get client locales (Web)
-const clientLocales = [navigator.language, ...navigator.languages];
-
-// Load translations for a locale
 const loadLocale = async (locale: string) => {
-  if (locale === 'ja_JP') {
-    return (await import('./translations/ja_JP.json')).default.ja_JP;
+  switch (locale) {
+    case 'de_DE':
+      return (await import('./translations/de_DE.json')).default.de_DE;
+    case 'ja_JP':
+      return (await import('./translations/ja_JP.json')).default.ja_JP;
+    default:
+      return {};
   }
-  if (locale === 'es_ES') {
-    return (await import('./translations/es_ES.json')).default.es_ES;
-  }
-  return {}; // Default to empty for en_US
 };
 
 const LocaleContext = createLocaleContext({
   availableLanguages,
-  clientLocales,
+  clientLocales: [navigator.language, ...navigator.languages],
   loadLocale,
 });
 
-// Wrap your app
-const App = () => (
+export const Root = () => (
   <LocaleContext>
-    <YourAppContent />
+    <App />
   </LocaleContext>
 );`}
               />
@@ -665,15 +661,18 @@ const App = () => (
                   <CodeIcon className="h-4 w-4 text-white" />
                 </div>
                 <h3 className="text-2xl">
-                  <fbt desc="Headline">Usage</fbt>
+                  <fbt desc="Headline">Writing Strings</fbt>
                 </h3>
               </div>
 
               <p className="mb-4">
                 <fbt desc="Usage description">
-                  All translatable strings must be wrapped with{' '}
-                  <code className="bg-muted rounded px-1">&lt;fbt&gt;</code> or{' '}
-                  <code className="bg-muted rounded px-1">fbt()</code>:
+                  Every user-facing string should be wrapped in{' '}
+                  <code className="bg-muted rounded px-1">&lt;fbt&gt;</code>,{' '}
+                  <code className="bg-muted rounded px-1">fbt()</code>, or{' '}
+                  <code className="bg-muted rounded px-1">fbs()</code>.
+                  Descriptions are required because they are the
+                  translator&apos;s context.
                 </fbt>
               </p>
 
@@ -707,10 +706,8 @@ const App = () => (
               <div className="squircle mt-4 border border-sky-200 bg-sky-50 p-4 dark:bg-sky-900">
                 <p className="text-sm text-sky-800 dark:text-sky-50">
                   <fbt desc="Usage note">
-                    <strong>Note:</strong> The <code>desc</code> attribute is
-                    required and provides context for translators.{' '}
                     <code>&lt;fbt&gt;</code> is auto-imported by the fbtee
-                    compiler integration.
+                    compiler integration. Use fbt() outside JSX.
                   </fbt>
                 </p>
               </div>
@@ -734,7 +731,8 @@ const App = () => (
                   <code className="bg-muted rounded px-1">
                     &lt;fbt:param&gt;
                   </code>{' '}
-                  to insert variables and React components:
+                  for dynamic values. Token names should describe the value, not
+                  its current English position.
                 </fbt>
               </p>
 
@@ -762,8 +760,8 @@ const App = () => (
                 <TabsContent value="components">
                   <div className="mb-2">
                     <fbt desc="Components explanation">
-                      React components are automatically converted to{' '}
-                      <code>&lt;fbt:param&gt;</code>:
+                      React elements inside <code>&lt;fbt&gt;</code> are
+                      automatically turned into implicit params:
                     </fbt>
                   </div>
                   <Code
@@ -778,6 +776,14 @@ const App = () => (
                   />
                 </TabsContent>
               </Tabs>
+              <div className="squircle mt-4 border border-sky-200 bg-sky-50 p-4 dark:bg-sky-900">
+                <p className="text-sm text-sky-800 dark:text-sky-50">
+                  <fbt desc="Same param note">
+                    Use fbt.sameParam() or &lt;fbt:same-param&gt; when the same
+                    token appears more than once.
+                  </fbt>
+                </p>
+              </div>
               <Separator />
             </div>
 
@@ -787,7 +793,7 @@ const App = () => (
                   <Users className="h-4 w-4 text-white" />
                 </div>
                 <h3 className="text-2xl">
-                  <fbt desc="Headline">Lists & Conjunctions</fbt>
+                  <fbt desc="Headline">Lists</fbt>
                 </h3>
               </div>
 
@@ -796,30 +802,20 @@ const App = () => (
                   <code className="bg-muted rounded px-1">
                     &lt;fbt:list&gt;
                   </code>{' '}
-                  handles grammatical lists with proper conjunctions:
+                  builds locale-aware lists:
                 </fbt>
               </p>
 
               <Code
-                code={`<fbt desc="Players in game">
-  <fbt:list
-    items={['Alice', 'Bob', 'Charlie']}
-    conjunction="and"
-    delimiter="comma"
-    name="playerList"
-  /> joined the game.
+                code={`<fbt desc="People assigned to a task">
+  Assigned to <fbt:list items={assignees} name="assigneeList" />.
 </fbt>
-
-// Output: "Alice, Bob, and Charlie joined the game."
-
-// Available options:
-// conjunction: "and" | "or" | "none"
-// delimiter: "comma" | "semicolon" | "bullet"`}
+`}
               />
 
               <p className="mb-4">
                 <fbt desc="List function description">
-                  You can also use the list function outside React:
+                  The standalone list() helper is available for non-React code:
                 </fbt>
               </p>
 
@@ -838,59 +834,38 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   <Languages className="h-4 w-4 text-white" />
                 </div>
                 <h3 className="text-2xl">
-                  <fbt desc="Headline">Pluralization</fbt>
+                  <fbt desc="Headline">Plurals</fbt>
                 </h3>
               </div>
 
               <p className="mb-4">
                 <fbt desc="Pluralization description">
-                  Handle singular and plural forms with{' '}
+                  Use{' '}
                   <code className="bg-muted rounded px-1">
                     &lt;fbt:plural&gt;
                   </code>
-                  :
+                  when a count controls grammar. fbtee handles locale-specific
+                  plural rules.
                 </fbt>
               </p>
 
               <Code
-                code={`<fbt desc="Item count">
-  You have
+                code={`<fbt desc="Inbox unread count">
+  You have{' '}
   <fbt:plural
-    count={itemCount}
-    many="items"
-    name="itemCount"
-    showCount="ifMany"
+    count={count}
+    many="unread messages"
+    name="unreadCount"
+    showCount="yes"
   >
-    one item
+    an unread message
   </fbt:plural>
-  in your cart.
+  .
 </fbt>
 
-// count={1}: "You have 1 item in your cart."
-// count={5}: "You have 5 items in your cart."
-
-// showCount options:
-// "yes" - always show count
-// "no" - never show count  
-// "ifMany" - only show count for plural`}
+// showCount can be "yes", "ifMany", or "no".`}
               />
 
-              <Code
-                code={`<fbt desc="Bot game confirmation">
-  Do you want to play against
-  <fbt:plural
-    count={botCount}
-    many="bots"
-    name="numberOfBots"
-    showCount="ifMany"
-  >
-    a bot
-  </fbt:plural>?
-</fbt>
-
-// count={1}: "Do you want to play against a bot?"
-// count={3}: "Do you want to play against 3 bots?"`}
-              />
               <Separator />
             </div>
 
@@ -900,34 +875,64 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   <Users className="h-4 w-4 text-white" />
                 </div>
                 <h3 className="text-2xl">
-                  <fbt desc="Headline">Pronouns</fbt>
+                  <fbt desc="Headline">Enums</fbt>
+                </h3>
+              </div>
+
+              <p className="mb-4">
+                <fbt desc="Enums description">
+                  Use enums when runtime values map to a fixed set of
+                  translatable labels:
+                </fbt>
+              </p>
+
+              <Code
+                code={`const StatusLabels = {
+  done: 'done',
+  open: 'open',
+};
+
+<fbt desc="Task status label">
+  This task is <fbt:enum enum-range={StatusLabels} value={status} />.
+</fbt>;`}
+              />
+              <p className="mb-4">
+                <fbt desc="Enum module note">
+                  For shared enum modules, use the $FbtEnum suffix so the
+                  collector can resolve them.
+                </fbt>
+              </p>
+              <Separator />
+            </div>
+
+            <div>
+              <div className="mb-6 flex items-center space-x-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-blue-500">
+                  <Users className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-2xl">
+                  <fbt desc="Headline">Pronouns and Gender</fbt>
                 </h3>
               </div>
 
               <p className="mb-4">
                 <fbt desc="Pronouns description">
-                  Handle gendered pronouns with{' '}
+                  Use{' '}
                   <code className="bg-muted rounded px-1">
                     &lt;fbt:pronoun&gt;
                   </code>
-                  :
+                  when a phrase depends on a person&apos;s gender:
                 </fbt>
               </p>
 
               <Code
-                code={`<fbt desc="Photo sharing text">
+                code={`<fbt desc="Photo sharing notification">
   <fbt:param name="name">{user.name}</fbt:param>
-  shared
-  <fbt:pronoun
-    type="possessive"
-    gender={user.pronounGender}
-    human
-  />
-  photo with you.
+  shared{' '}
+  <fbt:pronoun gender={user.gender} human type="possessive" /> photo.
 </fbt>
 
-// Types: "subject" | "object" | "possessive" | "reflexive"
-// Gender: GENDER_MALE | GENDER_FEMALE | GENDER_UNKNOWN`}
+// Supported pronoun types are "subject", "object", "possessive", and "reflexive".`}
               />
               <Separator />
             </div>
@@ -938,14 +943,44 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   <FileText className="h-4 w-4 text-white" />
                 </div>
                 <h3 className="text-2xl">
-                  <fbt desc="Headline">Plain Text Usage</fbt>
+                  <fbt desc="Headline">Common Strings</fbt>
+                </h3>
+              </div>
+
+              <p className="mb-4">
+                <fbt desc="Common strings description">
+                  Common strings are reusable source strings with shared
+                  descriptions:
+                </fbt>
+              </p>
+
+              <Code
+                code={`<fbt common>Save</fbt>
+
+// Pass common strings to the compiler:
+{
+  fbtCommon: {
+    Save: 'Button label for saving changes',
+  },
+}`}
+              />
+              <Separator />
+            </div>
+
+            <div>
+              <div className="mb-6 flex items-center space-x-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-green-500">
+                  <FileText className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-2xl">
+                  <fbt desc="Headline">Plain Strings</fbt>
                 </h3>
               </div>
 
               <p className="mb-4">
                 <fbt desc="Plain text usage description">
-                  For non-JSX contexts like HTML attributes, use{' '}
-                  <code className="bg-muted rounded px-1">fbs()</code>:
+                  Use <code className="bg-muted rounded px-1">fbs()</code> when
+                  you need a plain string, such as in HTML attributes:
                 </fbt>
               </p>
 
@@ -992,8 +1027,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   </div>
                   <p className="mt-2">
                     <fbt desc="Extract strings explanation">
-                      Creates <code>source_strings.json</code> with all
-                      translatable strings
+                      This writes <code>source_strings.json</code>.
                     </fbt>
                   </p>
                 </div>
@@ -1001,37 +1035,72 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                 <div>
                   <h4 className="mb-2 font-semibold">
                     <fbt desc="Step number and description">
-                      2. Create Translation Files
+                      2. Prepare Editable Translation Files
                     </fbt>
                   </h4>
                   <p className="mb-2">
                     <fbt desc="Translation files instructions">
-                      Upload
-                      <code>source_strings.json</code> to your translation
-                      service, or create files manually:
+                      Prepare editable locale files from the current source
+                      strings:
                     </fbt>
                   </p>
                   <Code
-                    code={`echo '{"fb-locale": "ja_JP", "translations": {}}' > translations/ja_JP.json`}
+                    code={`pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de_DE fr_FR ja_JP`}
+                  />
+                  <p className="mt-2">
+                    <fbt desc="Prepare translations explanation">
+                      prepare-translations keeps existing translations, adds
+                      missing entries, and marks new work with{' '}
+                      <code>&quot;status&quot;: &quot;new&quot;</code>.
+                    </fbt>
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="mb-2 font-semibold">
+                    <fbt desc="Step number and description">
+                      3. Translating Strings with Coding Agents
+                    </fbt>
+                  </h4>
+                  <p className="mb-2">
+                    <fbt desc="Coding agent translation explanation">
+                      Coding agents work well on fbtee translation files because
+                      the app context, existing translations, and product
+                      vocabulary are in the repository.
+                    </fbt>
+                  </p>
+                  <h5 className="mb-2 font-semibold">
+                    <fbt desc="Coding agent prompt heading">
+                      Coding Agent prompt:
+                    </fbt>
+                  </h5>
+                  <Code
+                    code={`Run \`fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de_DE fr_FR ja_JP pl_PL ru_RU zh_CN es_ES it_IT ko_KR pt_BR uk_UA\` for all the translations the app supports.
+
+Look at all updated translation files. For every entry with \`"status": "new"\`, write a translation that matches the tone, voice, and language already used in the app and in the current locale.
+
+Remove \`"status": "new"\` from each completed translation entry.`}
                   />
                 </div>
 
                 <div>
                   <h4 className="mb-2 font-semibold">
                     <fbt desc="Step number and description">
-                      3. Compile Translations
+                      4. Compile Translations
                     </fbt>
                   </h4>
                   <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
                     <code>
                       <code className="text-slate-200">$</code> pnpm fbtee
-                      translate
+                      translate --source-strings source_strings.json
+                      --translations &apos;translations/*.json&apos;
+                      --output-dir src/translations
                     </code>
                   </div>
                   <p className="mt-2">
                     <fbt desc="Compile translations explanation">
-                      Generates optimized translation files in{' '}
-                      <code>src/translations/</code>
+                      This generates optimized runtime files in{' '}
+                      <code>src/translations/</code>.
                     </fbt>
                   </p>
                 </div>
@@ -1039,34 +1108,13 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                 <div>
                   <h4 className="mb-2 font-semibold">
                     <fbt desc="Step number and description">
-                      4. Add to .gitignore
+                      5. Ignore Generated Runtime Output
                     </fbt>
                   </h4>
                   <Code
                     code={`.enum_manifest.json
 source_strings.json
 src/translations/`}
-                  />
-                </div>
-
-                <div>
-                  <h4 className="mb-2 font-semibold">
-                    <fbt desc="Step number and description">
-                      5. Custom Scripts (Optional)
-                    </fbt>
-                  </h4>
-                  <p className="mb-2">
-                    <fbt desc="Custom scripts instructions">
-                      Add custom commands to package.json:
-                    </fbt>
-                  </p>
-                  <Code
-                    code={`{
-  "scripts": {
-    "fbtee:collect": "fbtee collect --src src",
-    "fbtee:translate": "fbtee translate --translations translations/*.json -o src/translations/"
-  }
-}`}
                   />
                 </div>
               </div>
@@ -1085,31 +1133,18 @@ src/translations/`}
 
               <p className="mb-4">
                 <fbt desc="Locale management description">
-                  Access and change locales in your components:
+                  Use <code>useLocaleContext</code> to read or change the
+                  locale:
                 </fbt>
               </p>
 
               <Code
                 code={`import { useLocaleContext } from 'fbtee';
 
-const LocaleSwitcher = () => {
-  const [, startTransition] = useTransition();
+const LanguageButton = () => {
   const { locale, setLocale } = useLocaleContext();
 
-  return (
-    <div>
-      <p>Current: {locale}</p>
-      {Array.from(AvailableLanguages.entries()).map(([code, name]) => (
-        <button
-          key={code}
-          onClick={() => startTransition(() => setLocale(code))}
-          className={locale === code ? 'active' : ''}
-        >
-          {name}
-        </button>
-      ))}
-    </div>
-  );
+  return <button onClick={() => setLocale('de_DE')}>{locale}</button>;
 };`}
               />
               <Separator />
@@ -1127,7 +1162,7 @@ const LocaleSwitcher = () => {
 
               <p className="mb-4">
                 <fbt desc="ESLint plugin description">
-                  Install the ESLint plugin to catch common mistakes:
+                  Install the optional ESLint plugin:
                 </fbt>
               </p>
 
@@ -1154,33 +1189,20 @@ const LocaleSwitcher = () => {
                   <Code
                     code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
 
-export default [
-  fbtee.configs.recommended,
-  {
-    plugins: {
-      '@nkzw/fbtee': fbtee,
-    },
-  },
-];`}
+export default [fbtee.configs.recommended];`}
                   />
                 </TabsContent>
                 <TabsContent value="strict">
                   <div className="mb-2">
                     <fbt desc="Strict configuration description">
-                      This configuration errors on every untranslated string.
+                      Use the strict config if you want every user-facing string
+                      to be wrapped.
                     </fbt>
                   </div>
                   <Code
                     code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
 
-export default [
-  fbtee.configs.strict,
-  {
-    plugins: {
-      '@nkzw/fbtee': fbtee,
-    },
-  },
-];`}
+export default [fbtee.configs.strict];`}
                   />
                 </TabsContent>
                 <TabsContent value="custom">
@@ -1217,11 +1239,12 @@ export default [
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8 text-center">
             <H2 className="mb-4">
-              <fbt desc="Headline">What&apos;s Better About fbtee?</fbt>
+              <fbt desc="Headline">Migration from fbt</fbt>
             </H2>
             <p className="">
               <fbt desc="Better about fbtee description">
-                Originally created by Facebook, rewritten from the ground up.
+                fbtee keeps the core fbt programming model and modernizes the
+                toolchain around it.
               </fbt>
             </p>
           </div>
@@ -1234,12 +1257,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-emerald-600">
-                    <fbt desc="Feature title">Easier Setup</fbt>
+                    <fbt desc="Feature title">Modern Compiler Packages</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Easier setup description">
-                      Works seamlessly with modern tools like Vite, Next.js, and
-                      Expo.
+                      Replace legacy fbt packages with fbtee and the matching
+                      Babel or SWC compiler package.
                     </fbt>
                   </p>
                 </div>
@@ -1250,12 +1273,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-indigo-600">
-                    <fbt desc="Feature title">Statically Typed</fbt>
+                    <fbt desc="Feature title">TypeScript and ESM</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Statically typed description">
-                      Full TypeScript support with compiler validation and
-                      ESLint plugin.
+                      Use TypeScript JSX declarations and modern ESM modules for
+                      app code, common strings, and enums.
                     </fbt>
                   </p>
                 </div>
@@ -1266,12 +1289,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-purple-600">
-                    <fbt desc="Feature title">Improved React Compatibility</fbt>
+                    <fbt desc="Feature title">Modern React Support</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="React compatibility description">
-                      Support for React fragments, Server Components, and modern
-                      patterns.
+                      Works with React 19, fragments, Server Components, and
+                      current JSX patterns.
                     </fbt>
                   </p>
                 </div>
@@ -1284,12 +1307,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-sky-600">
-                    <fbt desc="Feature title">Enhanced Features</fbt>
+                    <fbt desc="Feature title">Current CLI Workflow</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Enhanced features description">
-                      Fixed and exported intlList as functional &lt;fbt:list&gt;
-                      component.
+                      Use fbtee collect, fbtee prepare-translations, and fbtee
+                      translate for the full translation workflow.
                     </fbt>
                   </p>
                 </div>
@@ -1300,12 +1323,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-blue-600">
-                    <fbt desc="Feature title">Modernized Codebase</fbt>
+                    <fbt desc="Feature title">Runtime Setup</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Modernized codebase description">
-                      Rewritten in TypeScript with ESM and modern JavaScript
-                      standards.
+                      Replace legacy setup calls with setupFbtee,
+                      setupLocaleContext, or createLocaleContext.
                     </fbt>
                   </p>
                 </div>
@@ -1316,12 +1339,12 @@ export default [
                 </div>
                 <div>
                   <h4 className="font-semibold text-emerald-600">
-                    <fbt desc="Feature title">Updated Tooling</fbt>
+                    <fbt desc="Feature title">Clearer Errors</fbt>
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Updated tooling description">
-                      Uses pnpm, Vite, and esbuild for faster, more efficient
-                      development.
+                      Archived fbt options were removed, and compiler errors
+                      point to modern replacements when one exists.
                     </fbt>
                   </p>
                 </div>

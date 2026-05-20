@@ -6,10 +6,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
-    react(),
     babel({
       presets: [fbteePreset, reactCompilerPreset()],
     }),
+    tailwindcss(),
+    react(),
   ],
 });
