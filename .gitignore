@@ -1,5 +1,6 @@
 .DS_Store
 .eslintcache
+.swc
 .pnpm-debug.log
 **/node_modules
 example/.enum_manifest.json
@@ -9,9 +10,11 @@ node_modules
 packages/*/lib
 packages/*/LICENSE
 packages/*/README.md
+packages/swc-plugin-fbtee/swc_plugin_fbtee.wasm
 packages/fbtee/.enum_manifest.json
 packages/fbtee/lib-tmp
 packages/fbtee/Strings.json
+target
 tsconfig.tsbuildinfo
 website/.enum_manifest.json
 website/dist/

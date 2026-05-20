@@ -4,14 +4,17 @@ packages:
   - packages/babel-plugin-fbtee
   - packages/babel-preset-fbtee
   - packages/fbtee
+  - packages/swc-plugin-fbtee
   - packages/eslint-plugin-fbtee
   - website
 
 allowBuilds:
+  '@swc/core': true
   esbuild: true
   unrs-resolver: true
 
 onlyBuiltDependencies:
+  - '@swc/core'
   - '@tailwindcss/oxide'
   - esbuild
   - unrs-resolver

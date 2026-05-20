@@ -1,0 +1,39 @@
+{
+  "name": "@nkzw/swc-plugin-fbtee",
+  "version": "1.7.6",
+  "description": "Native SWC plugin for fbtee.",
+  "keywords": [
+    "fbt",
+    "fbtee",
+    "i18n",
+    "swc",
+    "turbopack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/swc-plugin-fbtee"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "swc_plugin_fbtee.wasm",
+  "files": [
+    "Cargo.toml",
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "src",
+    "swc_plugin_fbtee.wasm"
+  ],
+  "scripts": {
+    "build": "rustup target add wasm32-wasip1 && cargo build -p swc-plugin-fbtee --target wasm32-wasip1 --release && cp ../../target/wasm32-wasip1/release/swc_plugin_fbtee.wasm .",
+    "test": "cargo test -p swc-plugin-fbtee && pnpm run test:e2e",
+    "test:e2e": "pnpm run build && node test/e2e.mjs"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.33"
+  },
+  "peerDependencies": {
+    "@swc/core": "^1.15.0"
+  }
+}

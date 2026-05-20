@@ -38,7 +38,7 @@ describe('fbt', () => {
 
   it('should hint at the correct usage of fbt', () => {
     expect(() => fbtInternal('test')).toThrowErrorMatchingInlineSnapshot(
-      `"fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again."`,
+      `"fbt must be compiled with the fbtee compiler integration. Please configure the Babel preset or SWC plugin and try again."`,
     );
   });
 

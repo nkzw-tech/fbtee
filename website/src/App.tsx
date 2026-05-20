@@ -440,6 +440,10 @@ export default function App() {
                     <code className="text-slate-200">$</code>
                     <code>npm install -D @nkzw/babel-preset-fbtee</code>
                   </div>
+                  <div className="flex items-center space-x-2">
+                    <code className="text-slate-200">$</code>
+                    <code>npm install -D @nkzw/swc-plugin-fbtee</code>
+                  </div>
                 </div>
               </div>
             </div>
@@ -455,8 +459,11 @@ export default function App() {
               </div>
 
               <Tabs className="w-full" defaultValue="vite">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="vite">Vite</TabsTrigger>
+                  <TabsTrigger value="swc">
+                    <fbt desc="Framework setup tab">SWC</fbt>
+                  </TabsTrigger>
                   <TabsTrigger value="nextjs">Next.js</TabsTrigger>
                   <TabsTrigger value="babel">Babel</TabsTrigger>
                 </TabsList>
@@ -482,10 +489,43 @@ export default {
 };`}
                   />
                 </TabsContent>
+                <TabsContent className="space-y-4" value="swc">
+                  <p className="">
+                    <fbt desc="SWC setup instructions">
+                      Use the SWC plugin for Turbopack or any build pipeline
+                      that compiles with SWC. Continue using fbtee collect for
+                      string extraction.
+                    </fbt>
+                  </p>
+                  <Code
+                    code={`{
+  "jsc": {
+    "experimental": {
+      "plugins": [
+        [
+          "@nkzw/swc-plugin-fbtee",
+          {
+            "fbtCommon": {
+              "Accept": "Button/Link: Accept conditions"
+            },
+            "fbtEnumManifest": {}
+          }
+        ]
+      ]
+    },
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    }
+  }
+}`}
+                  />
+                </TabsContent>
                 <TabsContent className="space-y-4" value="nextjs">
                   <p className="">
                     <fbt desc="Next.js setup instructions">
-                      Create a babel.config.js file in your project root:
+                      For Babel-based Next.js builds, create a babel.config.js
+                      file in your project root:
                     </fbt>
                   </p>
                   <Code
@@ -509,6 +549,12 @@ export default {
                       </fbt>
                     </p>
                   </div>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    <fbt desc="Next.js SWC plugin note">
+                      For Turbopack, configure @nkzw/swc-plugin-fbtee through
+                      Next.js SWC plugins instead of using a Babel config.
+                    </fbt>
+                  </p>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="babel">
                   <p className="">
@@ -661,8 +707,8 @@ const App = () => (
                   <fbt desc="Usage note">
                     <strong>Note:</strong> The <code>desc</code> attribute is
                     required and provides context for translators.{' '}
-                    <code>&lt;fbt&gt;</code> is auto-imported by the Babel
-                    preset.
+                    <code>&lt;fbt&gt;</code> is auto-imported by the fbtee
+                    compiler integration.
                   </fbt>
                 </p>
               </div>

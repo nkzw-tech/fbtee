@@ -94,7 +94,7 @@ export function createRuntime<P, T extends BaseResult | string>({
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
-        `fbt must be used with its corresponding babel plugin. Please install the babel plugin and try again.`,
+        `fbt must be compiled with the fbtee compiler integration. Please configure the Babel preset or SWC plugin and try again.`,
       );
     },
     {

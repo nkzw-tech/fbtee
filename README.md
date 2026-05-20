@@ -43,13 +43,73 @@ Sometimes it's easiest to learn by example and copy-paste the setup from existin
 npm install fbtee
 ```
 
-In addition to `fbtee`, you need to install the Babel preset.
+In addition to `fbtee`, you need to install the compiler integration for your build tool. For Babel-based builds, install the Babel preset:
 
 ```bash
 npm install -D @nkzw/babel-preset-fbtee
 ```
 
+For SWC or Turbopack builds, install the SWC plugin as well. Keep `@nkzw/babel-preset-fbtee` installed if you use the `fbtee` CLI for collecting and translating strings.
+
+```bash
+npm install -D @nkzw/babel-preset-fbtee @nkzw/swc-plugin-fbtee
+```
+
 ### Tooling Setup
+
+#### Using **fbtee** with SWC or Turbopack
+
+Use the SWC plugin when your build pipeline runs through SWC instead of Babel, such as Turbopack. Phrase extraction still uses `fbtee collect`; the SWC plugin is the runtime compiler that lowers `fbt` and `<fbt>` callsites during application builds.
+
+For raw SWC configuration:
+
+```json
+{
+  "jsc": {
+    "experimental": {
+      "plugins": [
+        [
+          "@nkzw/swc-plugin-fbtee",
+          {
+            "fbtCommon": {
+              "Accept": "Button/Link: Accept conditions"
+            },
+            "fbtEnumManifest": {}
+          }
+        ]
+      ]
+    },
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    }
+  }
+}
+```
+
+For Next.js SWC plugins:
+
+```js
+export default {
+  experimental: {
+    swcPlugins: [
+      [
+        '@nkzw/swc-plugin-fbtee',
+        {
+          fbtCommon: {
+            Accept: 'Button/Link: Accept conditions',
+          },
+          fbtEnumManifest: {},
+        },
+      ],
+    ],
+  },
+};
+```
+
+Do not pass `collectFbt: true` to the SWC plugin. Use `fbtee collect` for extraction and the SWC plugin for compiling app code.
+
+#### Using **fbtee** with Vite
 
 If you are using Vite, install the React plugin for Vite:
 
@@ -94,7 +154,7 @@ export default defineConfig({
 });
 ```
 
-#### Using **fbtee** with Next.js
+#### Using **fbtee** with Next.js and Babel
 
 Create a `babel.config.js` file in the root of your Next.js project and add the **fbtee** preset:
 
@@ -338,7 +398,7 @@ const Greeting = () => (
 // Example Output: "Alice, Bob and Charlie won the game against 2 bots on the map Forest Battle."
 ```
 
-_Note: `<fbt>` is auto-imported for you by the `@nkzw/babel-preset-fbtee` plugin._
+_Note: `<fbt>` is auto-imported for you by the fbtee compiler integration._
 
 This example highlights several features of **fbtee**:
 
