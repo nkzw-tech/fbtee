@@ -1,4 +1,4 @@
-import { PatternHash } from '@nkzw/babel-plugin-fbtee';
+import type { PatternHash } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import FbtTranslations, { TranslationDictionary } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';

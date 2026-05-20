@@ -442,7 +442,9 @@ export default function App() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <code className="text-slate-200">$</code>
-                    <code>npm install -D @nkzw/swc-plugin-fbtee</code>
+                    <code>
+                      npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli
+                    </code>
                   </div>
                 </div>
               </div>

@@ -43,23 +43,23 @@ Sometimes it's easiest to learn by example and copy-paste the setup from existin
 npm install fbtee
 ```
 
-In addition to `fbtee`, you need to install the compiler integration for your build tool. For Babel-based builds, install the Babel preset:
+In addition to `fbtee`, you need to install the compiler integration for your build tool. For Babel-based builds, install the Babel preset. This keeps the existing `fbtee` CLI commands available through the Babel tooling package:
 
 ```bash
 npm install -D @nkzw/babel-preset-fbtee
 ```
 
-For SWC or Turbopack builds, install the SWC plugin as well. Keep `@nkzw/babel-preset-fbtee` installed if you use the `fbtee` CLI for collecting and translating strings.
+For SWC or Turbopack builds, install the SWC plugin and the standalone CLI package:
 
 ```bash
-npm install -D @nkzw/babel-preset-fbtee @nkzw/swc-plugin-fbtee
+npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli
 ```
 
 ### Tooling Setup
 
 #### Using **fbtee** with SWC or Turbopack
 
-Use the SWC plugin when your build pipeline runs through SWC instead of Babel, such as Turbopack. Phrase extraction still uses `fbtee collect`; the SWC plugin is the runtime compiler that lowers `fbt` and `<fbt>` callsites during application builds.
+Use the SWC plugin when your build pipeline runs through SWC instead of Babel, such as Turbopack. Phrase extraction still uses `fbtee collect`; install `@nkzw/fbtee-cli` for SWC-only projects that do not install the Babel preset. The SWC plugin is the runtime compiler that lowers `fbt` and `<fbt>` callsites during application builds.
 
 For raw SWC configuration:
 

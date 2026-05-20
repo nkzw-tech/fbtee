@@ -1,4 +1,4 @@
-import { PatternHash } from '@nkzw/babel-plugin-fbtee';
+import type { PatternHash } from './CompilerTypes.ts';
 import FbtPureStringResult from './FbtPureStringResult.tsx';
 import type { IFbtErrorListener, NestedFbtContentItems } from './Types.ts';
 

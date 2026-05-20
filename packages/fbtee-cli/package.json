@@ -1,0 +1,30 @@
+{
+  "name": "@nkzw/fbtee-cli",
+  "version": "1.7.6",
+  "description": "Command line tools for fbtee.",
+  "keywords": [
+    "fbt",
+    "fbtee",
+    "i18n",
+    "l10n",
+    "translation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/fbtee-cli"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "fbtee": "bin.mjs"
+  },
+  "files": [
+    "bin.mjs",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@nkzw/babel-plugin-fbtee": "workspace:^"
+  }
+}

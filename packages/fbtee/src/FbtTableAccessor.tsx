@@ -1,4 +1,4 @@
-import { FbtTableKey } from '@nkzw/babel-plugin-fbtee';
+import type { FbtTableKey } from './CompilerTypes.ts';
 import type { FbtSubstitution } from './FbtTable.tsx';
 
 export type FbtTableArg = [

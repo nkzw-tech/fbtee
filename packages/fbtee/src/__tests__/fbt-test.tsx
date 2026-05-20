@@ -1,10 +1,10 @@
 /// <reference types="../../ReactTypes.d.ts" />
 
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
-import { PatternHash } from '@nkzw/babel-plugin-fbtee';
 import { render } from '@testing-library/react';
 import { Children, Component } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
+import type { PatternHash } from '../CompilerTypes.ts';
 import fbsInternal from '../fbs.tsx';
 import fbtInternal from '../fbt.tsx';
 import FbtTranslations from '../FbtTranslations.tsx';

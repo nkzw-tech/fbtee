@@ -2,7 +2,7 @@ import type {
   FbtTableKey,
   PatternHash,
   PatternString,
-} from '@nkzw/babel-plugin-fbtee';
+} from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
 import type {

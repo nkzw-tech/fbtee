@@ -1,8 +1,8 @@
 /// <reference types="../ReactTypes.d.ts" />
 
-import type { FbtTableKey, PatternString } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';
 import type { ReactElement } from 'react';
+import type { FbtTableKey, PatternString } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type {
   ParamVariationType,

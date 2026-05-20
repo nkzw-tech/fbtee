@@ -1,5 +1,5 @@
-import type { FbtTableKey } from '@nkzw/babel-plugin-fbtee';
 import invariant from 'invariant';
+import type { FbtTableKey } from './CompilerTypes.ts';
 import type { FbtRuntimeInput, FbtTableArgs } from './Hooks.tsx';
 
 export type FbtSubstitution = {

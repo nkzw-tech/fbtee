@@ -54,5 +54,10 @@
   "peerDependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",
     "react": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@nkzw/babel-plugin-fbtee": {
+      "optional": true
+    }
   }
 }

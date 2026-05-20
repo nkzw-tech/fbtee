@@ -278,6 +278,12 @@ importers:
         specifier: ^19.1.1
         version: 19.2.5
 
+  packages/fbtee-cli:
+    dependencies:
+      '@nkzw/babel-plugin-fbtee':
+        specifier: workspace:^
+        version: link:../babel-plugin-fbtee
+
   packages/swc-plugin-fbtee:
     devDependencies:
       '@swc/core':
