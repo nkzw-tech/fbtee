@@ -247,6 +247,33 @@ exports[`Example.react renders the example 1`] = `
             Do you want to share a photo, a link or a video?
           </label>
         </fieldset>
+        <fieldset
+          style="margin-left: 0.5em;"
+        >
+          <h2>
+            Multi-Locale Preview
+          </h2>
+          <div
+            style="display: grid; gap: 4px 12px; grid-template-columns: auto 1fr;"
+          >
+            <b>
+              Deutsch
+            </b>
+            Beispielsätze
+            <b>
+              Français
+            </b>
+            Exemples de phrases
+            <b>
+              日本語
+            </b>
+            文例
+            <b>
+              Español
+            </b>
+            Ejemplos de oraciones
+          </div>
+        </fieldset>
         <fieldset>
           <span
             class="example_row"
