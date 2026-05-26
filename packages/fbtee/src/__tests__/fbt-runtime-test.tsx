@@ -67,6 +67,34 @@ describe('fbt', () => {
     ]);
   });
 
+  it('should handle empty string plural leaves', () => {
+    const table: FbtRuntimeInput = {
+      _1: {
+        _1: '',
+      },
+      '*': {
+        '*': 'Matches {number of matched contacts} contacts:',
+      },
+    };
+
+    expect(
+      fbtRuntime
+        ._(table, [
+          fbtRuntime._plural(1),
+          fbtRuntime._plural(1, 'number of matched contacts'),
+        ])
+        .toString(),
+    ).toBe('');
+    expect(
+      fbtRuntime
+        ._(table, [
+          fbtRuntime._plural(2),
+          fbtRuntime._plural(2, 'number of matched contacts'),
+        ])
+        .toString(),
+    ).toBe('Matches 2 contacts:');
+  });
+
   it('should access table with fallback logic', () => {
     let genderMock: IntlVariations;
     Hooks.register({

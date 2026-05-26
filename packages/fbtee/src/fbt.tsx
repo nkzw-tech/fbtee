@@ -134,7 +134,7 @@ export function createRuntime<P, T extends BaseResult | string>({
         if (args) {
           if (typeof table !== 'string') {
             const newPattern = FbtTable.access(table, args, 0, tokens);
-            if (newPattern) {
+            if (newPattern != null) {
               table = newPattern;
             }
           }
