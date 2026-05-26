@@ -22,8 +22,8 @@
   "exports": {
     ".": {
       "types": "./lib/index.d.mts",
-      "import": "./lib/index.mjs",
       "react-server": "./lib/index-server.mjs",
+      "import": "./lib/index.mjs",
       "default": "./lib/index.mjs"
     },
     "./ReactTypes": {
