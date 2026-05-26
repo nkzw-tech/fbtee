@@ -58,6 +58,27 @@ describe('fbt', () => {
     );
   });
 
+  it('should not reuse cached FbtResults with different hash keys', () => {
+    Hooks.register({
+      getFbtResult: (
+        contents: NestedFbtContentItems,
+        hashKey: PatternHash | null | undefined,
+        errorListener: IFbtErrorListener | null,
+      ) => new FbtResult(contents, errorListener, hashKey),
+    });
+
+    const first = fbtInternal._('same text with different hashes', null, {
+      hk: 'hash-a',
+    });
+    const second = fbtInternal._('same text with different hashes', null, {
+      hk: 'hash-b',
+    });
+
+    expect(first).not.toBe(second);
+    expect(first.key).toBe('hash-a');
+    expect(second.key).toBe('hash-b');
+  });
+
   it('should trivially handle tokenless strings', () => {
     expect(fbt('without tokens', 'test')).toEqual('without tokens');
   });

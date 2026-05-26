@@ -2,7 +2,11 @@
 
 import invariant from 'invariant';
 import type { ReactElement } from 'react';
-import type { FbtTableKey, PatternString } from './CompilerTypes.ts';
+import type {
+  FbtTableKey,
+  PatternHash,
+  PatternString,
+} from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type {
   ParamVariationType,
@@ -90,7 +94,10 @@ export function createRuntime<P, T extends BaseResult | string>({
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
 }) {
-  const cachedResults = new Map<PatternString, T>();
+  const cachedResults = new Map<
+    PatternString,
+    Map<PatternHash | undefined, T>
+  >();
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
@@ -143,7 +150,8 @@ export function createRuntime<P, T extends BaseResult | string>({
           );
         }
 
-        const cachedFbt = cachedResults.get(patternString);
+        const hashKey = options?.hk;
+        const cachedFbt = cachedResults.get(patternString)?.get(hashKey);
         if (cachedFbt && !substitutions) {
           return cachedFbt;
         } else {
@@ -152,14 +160,19 @@ export function createRuntime<P, T extends BaseResult | string>({
             typeof fbtContent === 'string'
               ? [fbtContent]
               : (fbtContent as NestedFbtContentItems),
-            options?.hk,
+            hashKey,
             Hooks.getErrorListener({
-              hash: options?.hk,
+              hash: hashKey,
               translation: patternString,
             }),
           );
           if (!substitutions) {
-            cachedResults.set(patternString, result);
+            let cachedResultsForPattern = cachedResults.get(patternString);
+            if (!cachedResultsForPattern) {
+              cachedResultsForPattern = new Map();
+              cachedResults.set(patternString, cachedResultsForPattern);
+            }
+            cachedResultsForPattern.set(hashKey, result);
           }
           return result;
         }
