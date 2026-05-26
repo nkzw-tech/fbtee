@@ -22,7 +22,6 @@ console.warn = jest.fn();
 describe('fbt', () => {
   it('should handle variated numbers', () => {
     Hooks.register({
-      // IntlCLDRNumberType31
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'br_FR' }),
     });
     const numToType = {
@@ -46,12 +45,34 @@ describe('fbt', () => {
     expect(console.warn).not.toHaveBeenCalled();
   });
 
+  it('should use Intl.PluralRules for number variations', () => {
+    Hooks.register({
+      getViewerContext: () => ({ ...IntlViewerContext, locale: 'fr_FR' }),
+    });
+
+    expect(fbtRuntime._param('num', 1_000_000, [0])[0]).toEqual([
+      IntlVariations.NUMBER_MANY,
+      '*',
+    ]);
+  });
+
+  it('should preserve plural fallbacks for locales Intl does not support', () => {
+    Hooks.register({
+      getViewerContext: () => ({ ...IntlViewerContext, locale: 'sz_PL' }),
+    });
+
+    expect(fbtRuntime._param('num', 2, [0])[0]).toEqual([
+      IntlVariations.NUMBER_FEW,
+      '*',
+    ]);
+  });
+
   it('should access table with fallback logic', () => {
     let genderMock: IntlVariations;
     Hooks.register({
       getViewerContext: jest.fn(() => ({
         GENDER: genderMock,
-        locale: 'ro_RO', // IntlCLDRNumberType19
+        locale: 'ro_RO',
       })),
     });
 

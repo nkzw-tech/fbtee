@@ -1,8 +1,5 @@
 import invariant from 'invariant';
-import type {
-  LangToNumberTypeValues,
-  LocaleToNumberTypeValues,
-} from './CLDR/IntlNumberType.tsx';
+import type { IntlNumberType as NumberType } from './CLDR/IntlNumberType.tsx';
 import IntlNumberType from './CLDR/IntlNumberType.tsx';
 import { forLocale, type IntlGenderType } from './gender/IntlGenderType.tsx';
 
@@ -11,13 +8,10 @@ import { forLocale, type IntlGenderType } from './gender/IntlGenderType.tsx';
  * i.e. which variations we should default to when unknown
  */
 export default class TranslationConfig {
-  readonly numberType: LangToNumberTypeValues | LocaleToNumberTypeValues;
+  readonly numberType: NumberType;
   readonly genderType: IntlGenderType;
 
-  constructor(
-    numberType: LangToNumberTypeValues | LocaleToNumberTypeValues,
-    genderType: IntlGenderType,
-  ) {
+  constructor(numberType: NumberType, genderType: IntlGenderType) {
     this.numberType = numberType;
     this.genderType = genderType;
   }
