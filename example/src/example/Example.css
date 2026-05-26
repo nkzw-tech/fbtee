@@ -207,7 +207,7 @@
 }
 
 .languages li {
-  margin-right: 1em;
+  margin-inline-end: 1em;
 }
 
 .languages a {
@@ -227,7 +227,7 @@
   color: #737373;
   font-size: 1rem;
   margin: 0 0 20px 0;
-  text-align: left;
+  text-align: start;
   width: 440px;
 }
 
@@ -238,21 +238,15 @@
 
 .neatoLink {
   font-weight: bold;
-  padding-left: 0.3em;
-  padding-right: 0.3em;
+  padding-inline: 0.3em;
 }
 
 .padRight {
-  padding-right: 0.3em;
-}
-
-.rtl .padRight {
-  padding-left: 0.3em;
+  padding-inline-end: 0.3em;
 }
 
 .pad {
-  padding-left: 0.3em;
-  padding-right: 0.3em;
+  padding-inline: 0.3em;
 }
 
 button.bottom {

@@ -25,7 +25,7 @@ import heIL from '../translatedFbts/he-IL.json' with { type: 'json' };
 import itIT from '../translatedFbts/it-IT.json' with { type: 'json' };
 import jaJP from '../translatedFbts/ja-JP.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
-import Locales, { Locale } from './Locales.tsx';
+import Locales, { Locale, updateDocumentLocale } from './Locales.tsx';
 
 const translations = {
   ar: ar.ar,
@@ -64,11 +64,7 @@ const Example = () => {
 
   useEffect(() => {
     if (locale && !localeChangeIsPending) {
-      const html = document.getElementsByTagName('html')[0]!;
-      html.lang = Locales[locale as LocaleKey].bcp47;
-      document.body.className = Locales[locale as LocaleKey].rtl
-        ? 'rtl'
-        : 'ltr';
+      updateDocumentLocale(locale as LocaleKey);
     }
   }, [locale, localeChangeIsPending]);
 

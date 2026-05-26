@@ -11,7 +11,7 @@ import heIL from '../translatedFbts/he-IL.json' with { type: 'json' };
 import itIT from '../translatedFbts/it-IT.json' with { type: 'json' };
 import jaJP from '../translatedFbts/ja-JP.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
-import Locales, { Locale } from './Locales.tsx';
+import Locales, { Locale, updateDocumentLocale } from './Locales.tsx';
 
 const translations = {
   ar: ar.ar,
@@ -53,11 +53,7 @@ export default function Example() {
       locale,
     };
     setLocale(locale);
-    const html = document.getElementsByTagName('html')[0];
-    if (html != null) {
-      html.lang = Locales[locale].bcp47;
-    }
-    document.body.className = Locales[locale].rtl ? 'rtl' : 'ltr';
+    updateDocumentLocale(locale);
   }, []);
 
   const onSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {

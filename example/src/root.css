@@ -96,7 +96,6 @@ html:lang(zh-Hant) {
 body {
   background: '#fff';
   color: '#1d2129';
-  direction: ltr;
   font-variant: common-ligatures;
   height: 100%;
   margin: 0;
@@ -104,10 +103,6 @@ body {
   padding: 0;
   text-rendering: optimizeLegibility;
   unicode-bidi: embed;
-}
-
-body.rtl {
-  direction: rtl;
 }
 
 #root {
