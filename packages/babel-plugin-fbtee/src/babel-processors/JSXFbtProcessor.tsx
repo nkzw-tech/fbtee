@@ -8,8 +8,10 @@ import {
   callExpression,
   Expression,
   identifier,
+  isBooleanLiteral,
   isCallExpression,
   isJSXElement,
+  isJSXExpressionContainer,
   isJSXFragment,
   isJSXNamespacedName,
   isStringLiteral,
@@ -42,6 +44,7 @@ import {
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   CallExpressionArg,
+  cleanJSXText,
   convertToStringArrayNodeIfNeeded,
   errorAt,
   expandStringConcat,
@@ -227,9 +230,31 @@ export default class JSXFbtProcessor {
     this.nodeChecker.assertNoNestedFbts(this.node);
   }
 
+  private shouldPreserveWhitespace(): boolean {
+    const attr = getAttributeByName(this.node, 'preserveWhitespace');
+    if (attr == null) {
+      return false;
+    }
+    if (attr.value == null) {
+      return true;
+    }
+    if (isStringLiteral(attr.value)) {
+      return attr.value.value === 'true';
+    }
+    if (
+      isJSXExpressionContainer(attr.value) &&
+      isBooleanLiteral(attr.value.expression)
+    ) {
+      return attr.value.expression.value;
+    }
+    return false;
+  }
+
   private transformChildrenForFbtCallSyntax(): Array<
     CallExpression | JSXElement | StringLiteral
   > {
+    const preserveWhitespace = this.shouldPreserveWhitespace();
+
     this.path.traverse({
       JSXElement: (path: NodePath) => {
         const { node } = path;
@@ -270,7 +295,11 @@ export default class JSXFbtProcessor {
             // This should already be a simple JSX element (non-fbt construct)
             return node;
           case 'JSXText':
-            return stringLiteral(normalizeSpaces(node.value));
+            return stringLiteral(
+              preserveWhitespace
+                ? cleanJSXText(node.value)
+                : normalizeSpaces(node.value),
+            );
           case 'JSXExpressionContainer': {
             const { expression } = node;
 
@@ -289,6 +318,7 @@ export default class JSXFbtProcessor {
             return stringLiteral(
               normalizeSpaces(
                 expandStringConcat(this.moduleName, node.expression).value,
+                { preserveWhitespace },
               ),
             );
           }

@@ -1,6 +1,38 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements and raw text 1`] = `
+exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._("one line", null, {
+  hk: "GzUkS",
+});
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._("one space", null, {
+  hk: "20Ivrq",
+});
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 1`] = `
+import { fbt } from "fbtee";
+var x = fbt._("two spaces", null, {
+  hk: "3yJQ6I",
+});
+
+`;
+
+exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 2`] = `
+import { fbt } from "fbtee";
+var x = fbt._("two lines", null, {
+  hk: "frweo",
+});
+
+`;
+
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements and raw text 1`] = `
 import { fbt } from "fbtee";
 var x = fbt._(
   "{=m0}{=m1}{=m2} Good {=m4} !",
@@ -53,7 +85,7 @@ var x = fbt._(
 
 `;
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements and string variation arguments nested inside jsx element 1`] = `
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements and string variation arguments nested inside jsx element 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 var x =
@@ -160,7 +192,7 @@ var x =
 
 `;
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text jsx elements with string variation arguments 1`] = `
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements with string variation arguments 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 var x =
@@ -214,7 +246,7 @@ var x =
 
 `;
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should not preserve whitespace around text in JSXExpression 1`] = `
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve expression text without adding implicit spaces around it 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 var x =
@@ -321,7 +353,7 @@ var x =
 
 `;
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should preserve voluntarily added spaces between NON-raw text 1`] = `
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve voluntarily added spaces between NON-raw text 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 var x =
@@ -445,7 +477,7 @@ var x =
 
 `;
 
-exports[`fbt preserveWhitespace argument should NOT preserve whitespaces that do not neighbor raw text should treat comments in JSXExpression like they are not here 1`] = `
+exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should treat comments in JSXExpression like they are not here 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 var x =
@@ -532,38 +564,6 @@ var x =
       hk: "4owcY6",
     }
   ));
-
-`;
-
-exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 1`] = `
-import { fbt } from "fbtee";
-var x = fbt._("one line", null, {
-  hk: "GzUkS",
-});
-
-`;
-
-exports[`fbt preserveWhitespace argument should coalesce whitespace in desc when not requested 2`] = `
-import { fbt } from "fbtee";
-var x = fbt._("one space", null, {
-  hk: "20Ivrq",
-});
-
-`;
-
-exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 1`] = `
-import { fbt } from "fbtee";
-var x = fbt._("two spaces", null, {
-  hk: "3yJQ6I",
-});
-
-`;
-
-exports[`fbt preserveWhitespace argument should coalesce whitespace in text when not requested 2`] = `
-import { fbt } from "fbtee";
-var x = fbt._("two lines", null, {
-  hk: "frweo",
-});
 
 `;
 

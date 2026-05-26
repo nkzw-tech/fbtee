@@ -84,6 +84,35 @@ export function normalizeSpaces(
   return value.replaceAll(/[^\S\u00A0]+/g, ' ');
 }
 
+export function cleanJSXText(value: string): string {
+  const lines = value.split(/\r\n|\n|\r/);
+  let lastNonEmptyLine = 0;
+  for (let index = 0; index < lines.length; index++) {
+    if (/[^\t ]/.test(lines[index])) {
+      lastNonEmptyLine = index;
+    }
+  }
+
+  let output = '';
+  for (let index = 0; index < lines.length; index++) {
+    const isFirstLine = index === 0;
+    const isLastLine = index === lines.length - 1;
+    const isLastNonEmptyLine = index === lastNonEmptyLine;
+    let line = lines[index].replaceAll('\t', ' ');
+
+    if (!isFirstLine) {
+      line = line.replace(/^ +/, '');
+    }
+    if (!isLastLine) {
+      line = line.replace(/ +$/, '');
+    }
+    if (line) {
+      output += isLastNonEmptyLine ? line : `${line} `;
+    }
+  }
+  return output;
+}
+
 function isNodeCallExpressionArg(value: Node): value is CallExpressionArg {
   return (
     isExpression(value) ||

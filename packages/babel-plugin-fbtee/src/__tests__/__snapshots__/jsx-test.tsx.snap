@@ -470,25 +470,6 @@ import { fbt } from "fbtee";
 
 `;
 
-exports[`Test fbt transforms without the jsx transform [legacy buggy behavior] <fbt:pronoun> should insert a space character between two fbt constructs that don't neighbor raw text 1`] = `
-import { fbt } from "fbtee";
-fbt._(
-  {
-    "*": {
-      "*": "You can add thesetags to anything.",
-    },
-    _1: {
-      _1: "You can add this tag to anything.",
-    },
-  },
-  [fbt._plural(count), fbt._plural(count)],
-  {
-    hk: "1kDgt0",
-  }
-);
-
-`;
-
 exports[`Test fbt transforms without the jsx transform nested in div 1`] = `
 import { fbt } from "fbtee";
 let x = (
@@ -531,10 +512,29 @@ let x = fbt._(
 
 `;
 
-exports[`Test fbt transforms without the jsx transform should fail to preserve whitespace in text when preserveWhitespace=true (known bug) 1`] = `
+exports[`Test fbt transforms without the jsx transform should match JSX and not insert implicit spaces between two fbt constructs 1`] = `
 import { fbt } from "fbtee";
-fbt._("Some text with 3 spaces in between.", null, {
-  hk: "3Uwc3D",
+fbt._(
+  {
+    "*": {
+      "*": "You can add thesetags to anything.",
+    },
+    _1: {
+      _1: "You can add this tag to anything.",
+    },
+  },
+  [fbt._plural(count), fbt._plural(count)],
+  {
+    hk: "1kDgt0",
+  }
+);
+
+`;
+
+exports[`Test fbt transforms without the jsx transform should preserve JSX text whitespace when preserveWhitespace=true 1`] = `
+import { fbt } from "fbtee";
+fbt._("Some text with 3   spaces in between.", null, {
+  hk: "1DOFY3",
 });
 
 `;

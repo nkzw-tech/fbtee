@@ -223,9 +223,6 @@ export default class FbtImplicitParamNode
     for (const child of node.children) {
       switch (child.type) {
         case 'JSXText':
-          // TODO: Fix space normalization.
-          // Here we voluntarily ignore white spaces that don't neighbor raw text
-          // for the sake of being consistent with the logic in PHP
           if (child.value.trim() === '') {
             if (
               // Do not skip leading and trailing whitespaces

@@ -984,8 +984,11 @@ impl FbteeTransform {
         for child in children {
             match child {
                 JSXElementChild::JSXText(text) => {
-                    let normalized =
-                        normalize_spaces(&text.value.to_string(), options.preserve_whitespace);
+                    let normalized = if options.preserve_whitespace {
+                        clean_jsx_text(&text.value.to_string())
+                    } else {
+                        normalize_spaces(&text.value.to_string(), false)
+                    };
                     if !normalized.trim().is_empty() {
                         parts.push(Part::Text(normalized));
                     }
@@ -2647,6 +2650,38 @@ fn normalize_spaces(value: &str, preserve_whitespace: bool) -> String {
             last_space = false;
         }
     }
+    output
+}
+
+fn clean_jsx_text(value: &str) -> String {
+    let value = value.replace("\r\n", "\n").replace('\r', "\n");
+    let lines: Vec<&str> = value.split('\n').collect();
+    let last_non_empty_line = lines
+        .iter()
+        .rposition(|line| line.chars().any(|ch| ch != ' ' && ch != '\t'))
+        .unwrap_or(0);
+    let mut output = String::new();
+
+    for (index, line) in lines.iter().enumerate() {
+        let is_first_line = index == 0;
+        let is_last_line = index == lines.len() - 1;
+        let is_last_non_empty_line = index == last_non_empty_line;
+        let mut line = line.replace('\t', " ");
+
+        if !is_first_line {
+            line = line.trim_start_matches(' ').to_string();
+        }
+        if !is_last_line {
+            line = line.trim_end_matches(' ').to_string();
+        }
+        if !line.is_empty() {
+            output.push_str(&line);
+            if !is_last_non_empty_line {
+                output.push(' ');
+            }
+        }
+    }
+
     output
 }
 

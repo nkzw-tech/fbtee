@@ -8,10 +8,7 @@ import {
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
 describe('fbt preserveWhitespace argument', () => {
-  // TODO: Fix space normalization.
-  // Here we are intentionally testing for the wrong behavior. We will come
-  // back and update the expected output after we fix space normalization.
-  describe('should NOT preserve whitespaces that do not neighbor raw text', () => {
+  describe('should preserve JSX whitespace that matches regular JSX behavior', () => {
     it('jsx elements and raw text', () => {
       expect(
         snapshotTransform(
@@ -76,7 +73,7 @@ describe('fbt preserveWhitespace argument', () => {
       ).toMatchSnapshot();
     });
 
-    it('should not preserve whitespace around text in JSXExpression', () => {
+    it('should preserve expression text without adding implicit spaces around it', () => {
       expect(
         snapshotTransform(
           withFbtImportStatement(`
