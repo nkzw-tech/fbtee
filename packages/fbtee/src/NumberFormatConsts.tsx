@@ -2,6 +2,7 @@ import type {
   NumberingSystemData,
   StandardDecimalPatternInfo,
 } from './intlNumUtils.tsx';
+import { getLocaleAliases } from './localeIdentifier.tsx';
 
 export type NumberConfig = {
   decimalSeparator: string;
@@ -21,7 +22,7 @@ const DEFAULT_CONFIG = {
     secondaryGroupSize: 3,
   },
 } as const;
-const DEFAULT_LOCALE = 'en_US';
+const DEFAULT_LOCALE = 'en-US';
 
 const configs = [
   {
@@ -369,7 +370,13 @@ const localeToIdx = {
 export default {
   get(localeTag?: string | null): NumberConfig {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
-    const idx = localeToIdx[key as unknown as keyof typeof localeToIdx];
-    return idx !== undefined ? configs[idx] : DEFAULT_CONFIG;
+    for (const localeAlias of getLocaleAliases(key)) {
+      const idx =
+        localeToIdx[localeAlias as unknown as keyof typeof localeToIdx];
+      if (idx !== undefined) {
+        return configs[idx];
+      }
+    }
+    return DEFAULT_CONFIG;
   },
 };

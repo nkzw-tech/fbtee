@@ -161,6 +161,28 @@ test('loading locales mutates the translations object', async () => {
   `);
 });
 
+test('locale context resolves BCP 47 aliases to existing legacy locales', async () => {
+  const translations = { en_US: {} };
+  const { getLocale, setLocale } = setupLocaleContext({
+    availableLanguages: new Map([
+      ['en_US', 'English'],
+      ['de_AT', 'German'],
+    ]),
+    clientLocales: ['en-US'],
+    loadLocale: jest.fn(async (locale: string): TranslationPromise => {
+      expect(locale).toBe('de_AT');
+      return {};
+    }),
+    translations,
+  });
+
+  expect(getLocale()).toBe('en_US');
+  await act(async () => {
+    await setLocale('de-AT');
+  });
+  expect(getLocale()).toBe('de_AT');
+});
+
 test('the gender can be changed', async () => {
   const loadLocale = jest.fn(async (locale: string) => ({}));
   const LocaleContext = createLocaleContext({

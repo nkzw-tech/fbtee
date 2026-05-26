@@ -1,3 +1,5 @@
+import { getLocaleAliases } from './localeIdentifier.tsx';
+
 type StringToStringMap = Readonly<{
   [key: string]: string;
 }>;
@@ -243,12 +245,15 @@ const GLOBAL_REWRITES: PhonologicalRewriteMap = {
   },
 };
 const EMPTY_REWRITES = { meta: {}, patterns: {} } as const;
-const DEFAULT_LOCALE = 'en_US';
+const DEFAULT_LOCALE = 'en-US';
 
 export default {
   get(localeTag?: string | null): PhonologicalRewriteMap {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
-    const rewrites = REWRITES[key] || EMPTY_REWRITES;
+    const rewrites =
+      getLocaleAliases(key)
+        .map((localeAlias) => REWRITES[localeAlias])
+        .find(Boolean) || EMPTY_REWRITES;
     return {
       meta: { ...rewrites.meta, ...GLOBAL_REWRITES.meta },
       patterns: { ...rewrites.patterns, ...GLOBAL_REWRITES.patterns },

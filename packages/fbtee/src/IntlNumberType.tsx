@@ -1,4 +1,3 @@
-import FBLocaleToLang from './FBLocaleToLang.tsx';
 import IntlCLDRNumberType01 from './FbtNumber/IntlCLDRNumberType01.tsx';
 import IntlCLDRNumberType02 from './FbtNumber/IntlCLDRNumberType02.tsx';
 import IntlCLDRNumberType03 from './FbtNumber/IntlCLDRNumberType03.tsx';
@@ -46,6 +45,7 @@ import IntlCLDRNumberType44 from './FbtNumber/IntlCLDRNumberType44.tsx';
 import IntlCLDRNumberType45 from './FbtNumber/IntlCLDRNumberType45.tsx';
 import IntlCLDRNumberType46 from './FbtNumber/IntlCLDRNumberType46.tsx';
 import IntlCLDRNumberType47 from './FbtNumber/IntlCLDRNumberType47.tsx';
+import { getLocaleAliases, getLocaleLanguage } from './localeIdentifier.tsx';
 
 const localeToNumberType = {
   pt_PT: IntlCLDRNumberType05,
@@ -301,10 +301,16 @@ function _getNumberModuleForLang(lang: string): LangToNumberTypeValues {
 function _getNumberModuleForLocale(
   locale: string,
 ): LocaleToNumberTypeValues | LangToNumberTypeValues {
-  return (
-    localeToNumberType[locale as unknown as keyof typeof localeToNumberType] ||
-    _getNumberModuleForLang(FBLocaleToLang.get(locale))
-  );
+  for (const localeAlias of getLocaleAliases(locale)) {
+    const numberType =
+      localeToNumberType[
+        localeAlias as unknown as keyof typeof localeToNumberType
+      ];
+    if (numberType) {
+      return numberType;
+    }
+  }
+  return _getNumberModuleForLang(getLocaleLanguage(locale));
 }
 
 function forLocale(

@@ -768,13 +768,43 @@ describe('translate-test.js', () => {
         });
 
         expect(result).toEqual({
-          es_LA: {
+          'es-419': {
             '35E3uI': 'Hola',
           },
-          fr_FR: {
+          'fr-FR': {
             '35E3uI': 'Bonjour',
           },
         });
+      });
+
+      it('should throw when aliasing translation input files both exist', async () => {
+        const sourceFile = join(testDir, 'source_strings.json');
+        const legacyFile = join(testDir, 'de_DE.json');
+        const bcp47File = join(testDir, 'de-DE.json');
+
+        writeFileSync(sourceFile, JSON.stringify(mockSourceStrings));
+        writeFileSync(
+          legacyFile,
+          JSON.stringify({
+            'fb-locale': 'de_DE',
+            translations: {},
+          }),
+        );
+        writeFileSync(
+          bcp47File,
+          JSON.stringify({
+            'fb-locale': 'de-DE',
+            translations: {},
+          }),
+        );
+
+        await expect(
+          processFiles(sourceFile, [legacyFile, bcp47File], {
+            hashModule: false,
+            jenkins: true,
+            strict: false,
+          }),
+        ).rejects.toThrow('Conflicting translation files for locale "de-DE"');
       });
     });
 
@@ -797,10 +827,10 @@ describe('translate-test.js', () => {
         });
 
         expect(result).toEqual({
-          es_LA: {
+          'es-419': {
             '35E3uI': 'Hola',
           },
-          fr_FR: {
+          'fr-FR': {
             '35E3uI': 'Bonjour',
           },
         });
@@ -831,7 +861,7 @@ describe('translate-test.js', () => {
 
         expect(resultFromProcessFiles).toEqual(resultFromProcessSingleFile);
         expect(resultFromProcessFiles).toEqual({
-          fr_FR: {
+          'fr-FR': {
             '35E3uI': 'Bonjour',
           },
         });
@@ -880,18 +910,37 @@ describe('translate-test.js', () => {
         const outputDir = join(testDir, 'translations');
         writeOutput(outputDir, mockData);
 
-        expect(existsSync(join(outputDir, 'fr_FR.json'))).toBe(true);
-        expect(existsSync(join(outputDir, 'ja_JP.json'))).toBe(true);
+        expect(existsSync(join(outputDir, 'fr-FR.json'))).toBe(true);
+        expect(existsSync(join(outputDir, 'ja-JP.json'))).toBe(true);
 
         const frContent = JSON.parse(
-          readFileSync(join(outputDir, 'fr_FR.json'), 'utf8'),
+          readFileSync(join(outputDir, 'fr-FR.json'), 'utf8'),
         );
-        expect(frContent).toEqual({ fr_FR: mockData.fr_FR });
+        expect(frContent).toEqual({ 'fr-FR': mockData.fr_FR });
 
         const jaContent = JSON.parse(
-          readFileSync(join(outputDir, 'ja_JP.json'), 'utf8'),
+          readFileSync(join(outputDir, 'ja-JP.json'), 'utf8'),
         );
-        expect(jaContent).toEqual({ ja_JP: mockData.ja_JP });
+        expect(jaContent).toEqual({ 'ja-JP': mockData.ja_JP });
+      });
+
+      it('should update an existing legacy output alias in place', async () => {
+        const mockData: LocaleToHashToTranslationResult = {
+          'de-DE': {
+            hash1: 'Hallo',
+          },
+        };
+        const outputDir = join(testDir, 'existing-translations');
+        mkdirSync(outputDir, { recursive: true });
+        writeFileSync(join(outputDir, 'de_DE.json'), '{}');
+
+        writeOutput(outputDir, mockData);
+
+        expect(existsSync(join(outputDir, 'de_DE.json'))).toBe(true);
+        expect(existsSync(join(outputDir, 'de-DE.json'))).toBe(false);
+        expect(
+          JSON.parse(readFileSync(join(outputDir, 'de_DE.json'), 'utf8')),
+        ).toEqual({ de_DE: mockData['de-DE'] });
       });
 
       it('should create nested directories for --output-file option', async () => {

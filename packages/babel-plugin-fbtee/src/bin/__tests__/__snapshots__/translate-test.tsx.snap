@@ -3,7 +3,7 @@
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should not throw on missing translations 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       "Your FBT Demo",
     ],
@@ -14,7 +14,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with enum 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       {
         "LINK": "translation is: {name} has a link to share",
@@ -31,7 +31,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with metadata entries that create no hidden variation. Note: this string was collected in RN mode. 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       {
         "*": "translation is: they shared a photo",
@@ -46,7 +46,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no tokens 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       "Translation data for Your FBT Demo",
     ],
@@ -57,7 +57,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no variants 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       "Translation data for Your FBT Demo",
     ],
@@ -68,7 +68,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with no variation 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       "Translation data for Your FBT Demo",
     ],
@@ -79,7 +79,7 @@ exports[`translate-test.js should translate new jsfbt payload with option={"hash
 exports[`translate-test.js should translate new jsfbt payload with option={"hashModule":false,"jenkins":false,"strict":false}: should translate string with variations and inner strings 1`] = `
 [
   {
-    "fb-locale": "fb_HX",
+    "fb-locale": "fb-HX",
     "translatedPhrases": [
       {
         "*": {

@@ -1,6 +1,12 @@
 import { existsSync, globSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import yargs from 'yargs';
+import {
+  formatLocaleForStyle,
+  getAvailableLocaleFile,
+  throwIfLocaleFileConflicts,
+} from '../localeIdentifier.tsx';
+import type { LocaleStyle } from '../localeIdentifier.tsx';
 import { CollectFbtOutput } from './collect.tsx';
 import { HashToLeaf } from './FbtCollector.tsx';
 import { updateTranslations } from './prepareTranslationsUtils.tsx';
@@ -39,6 +45,13 @@ const argv = y
     'sort-by-hash',
     'Sort translation entries by hash key in output JSON. Applies to all entries (both existing and new).',
   )
+  .choices('output-locale-style', ['bcp47', 'legacy', 'preserve'] as const)
+  .default('output-locale-style', 'bcp47')
+  .alias('output-locale-style', 'locale-style')
+  .describe(
+    'output-locale-style',
+    'Controls newly-created locale file names and fb-locale values. Existing locale files are updated in place.',
+  )
   .describe('h', 'Display usage message')
   .alias('h', 'help')
   .parseSync();
@@ -50,6 +63,8 @@ if (argv.help) {
 
 const outputDirectory = join(root, argv['output-dir']);
 const files = globSync(join(outputDirectory, '*.json'));
+throwIfLocaleFileConflicts(files);
+const outputLocaleStyle = argv['output-locale-style'] as LocaleStyle;
 
 const source = loadJSON<CollectFbtOutput>(join(root, argv['source-strings']));
 
@@ -66,8 +81,14 @@ for (const file of files) {
 }
 
 for (const locale of locales) {
-  console.log('Processing locale:', locale);
-  const filePath = join(outputDirectory, `${locale}.json`);
+  const existingFile = getAvailableLocaleFile(outputDirectory, locale);
+  const outputLocale =
+    existingFile == null
+      ? formatLocaleForStyle(locale, outputLocaleStyle)
+      : basename(existingFile, '.json');
+  console.log('Processing locale:', outputLocale);
+  const filePath =
+    existingFile || join(outputDirectory, `${outputLocale}.json`);
   const { translations, ...props } = existsSync(filePath)
     ? loadJSON<TranslationGroup>(filePath)
     : { translations: {} };
@@ -76,8 +97,8 @@ for (const locale of locales) {
     filePath,
     JSON.stringify(
       {
-        'fb-locale': locale,
         ...props,
+        'fb-locale': outputLocale,
         translations: updateTranslations(
           phrases,
           translations,

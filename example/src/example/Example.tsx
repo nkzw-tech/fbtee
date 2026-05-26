@@ -2,26 +2,26 @@ import { VStack } from '@nkzw/stack';
 import classNames from 'classnames';
 import { fbs, fbt, GenderConst, IntlVariations, setupFbtee } from 'fbtee';
 import { ChangeEvent, useCallback, useState } from 'react';
-import ar_AR from '../translatedFbts/ar_AR.json' with { type: 'json' };
-import de_DE from '../translatedFbts/de_DE.json' with { type: 'json' };
-import es_LA from '../translatedFbts/es_LA.json' with { type: 'json' };
-import fb_HX from '../translatedFbts/fb_HX.json' with { type: 'json' };
-import fr_FR from '../translatedFbts/fr_FR.json' with { type: 'json' };
-import he_IL from '../translatedFbts/he_IL.json' with { type: 'json' };
-import it_IT from '../translatedFbts/it_IT.json' with { type: 'json' };
-import ja_JP from '../translatedFbts/ja_JP.json' with { type: 'json' };
+import ar from '../translatedFbts/ar.json' with { type: 'json' };
+import deDE from '../translatedFbts/de-DE.json' with { type: 'json' };
+import es419 from '../translatedFbts/es-419.json' with { type: 'json' };
+import fbHX from '../translatedFbts/fb-HX.json' with { type: 'json' };
+import frFR from '../translatedFbts/fr-FR.json' with { type: 'json' };
+import heIL from '../translatedFbts/he-IL.json' with { type: 'json' };
+import itIT from '../translatedFbts/it-IT.json' with { type: 'json' };
+import jaJP from '../translatedFbts/ja-JP.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale } from './Locales.tsx';
 
 const translations = {
-  ar_AR: ar_AR.ar_AR,
-  de_DE: de_DE.de_DE,
-  es_LA: es_LA.es_LA,
-  fb_HX: fb_HX.fb_HX,
-  fr_FR: fr_FR.fr_FR,
-  he_IL: he_IL.he_IL,
-  it_IT: it_IT.it_IT,
-  ja_JP: ja_JP.ja_JP,
+  ar: ar.ar,
+  'de-DE': deDE['de-DE'],
+  'es-419': es419['es-419'],
+  'fb-HX': fbHX['fb-HX'],
+  'fr-FR': frFR['fr-FR'],
+  'he-IL': heIL['he-IL'],
+  'it-IT': itIT['it-IT'],
+  'ja-JP': jaJP['ja-JP'],
 };
 
 let viewerContext = {

@@ -1,4 +1,7 @@
-import FBLocaleToLang from '../FBLocaleToLang.tsx';
+import {
+  getLocaleAliases,
+  getLocaleLanguage,
+} from '../../localeIdentifier.tsx';
 import { Gender } from '../IntlVariations.tsx';
 import {
   getFallback as getFallbackA,
@@ -55,7 +58,10 @@ export function forLanguage(lang: string): IntlGenderType {
 }
 
 export function forLocale(locale: string): IntlGenderType {
-  return _mergedLocales[locale as keyof typeof _mergedLocales]
-    ? IntlMergedUnknownGenderType
-    : forLanguage(FBLocaleToLang.get(locale));
+  for (const localeAlias of getLocaleAliases(locale)) {
+    if (_mergedLocales[localeAlias as keyof typeof _mergedLocales]) {
+      return IntlMergedUnknownGenderType;
+    }
+  }
+  return forLanguage(getLocaleLanguage(locale));
 }

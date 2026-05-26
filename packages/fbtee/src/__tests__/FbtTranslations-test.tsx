@@ -1,5 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import FbtTranslations from '../FbtTranslations.tsx';
+import Hooks from '../Hooks.tsx';
 
 describe('FbtTranslations', () => {
   it('can register and get back translations', () => {
@@ -58,5 +59,26 @@ describe('FbtTranslations', () => {
       },
     }
   `);
+  });
+
+  it('looks up translations through locale aliases', () => {
+    FbtTranslations.registerTranslations({ de_DE: { c1: 'Hallo' } });
+    Hooks.register({
+      getViewerContext: () => ({
+        GENDER: 3,
+        locale: 'de-DE',
+      }),
+    });
+
+    expect(
+      FbtTranslations.getTranslatedInput({
+        args: null,
+        options: { hk: 'c1' },
+        table: 'Hello',
+      }),
+    ).toEqual({
+      args: null,
+      table: 'Hallo',
+    });
   });
 });

@@ -69,6 +69,7 @@
 import { globSync } from 'node:fs';
 import { join } from 'node:path';
 import yargs from 'yargs';
+import type { LocaleStyle } from '../localeIdentifier.tsx';
 import {
   processFiles,
   processJSON,
@@ -123,7 +124,7 @@ const argv = y
   .default('output-dir', 'src/translations/')
   .describe(
     'output-dir',
-    'By default, we split the output into separate JSON files per locale (en_US.json) ' +
+    'By default, we split the output into separate JSON files per locale (en-US.json) ' +
       'in the `src/translations/` folder. Use this parameter to change the output folder. ' +
       'This is useful when you want to lazy load translations per locale.',
   )
@@ -139,6 +140,13 @@ const argv = y
     'output-file',
     'Specify the file path where the combined translations should be written.',
   )
+  .choices('output-locale-style', ['bcp47', 'legacy', 'preserve'] as const)
+  .default('output-locale-style', 'bcp47')
+  .alias('output-locale-style', 'locale-style')
+  .describe(
+    'output-locale-style',
+    'Controls generated locale identifiers. Existing output files with an aliasing locale name are updated in place.',
+  )
   .parseSync();
 
 if (argv.help) {
@@ -146,9 +154,11 @@ if (argv.help) {
   process.exit(0);
 }
 
+const outputLocaleStyle = argv['output-locale-style'] as LocaleStyle;
 const translationOptions = {
   hashModule: argv['hash-module'],
   jenkins: argv['jenkins'],
+  outputLocaleStyle,
   strict: argv['strict'],
 } as const;
 
@@ -186,5 +196,6 @@ if (argv['stdin']) {
       argv['translations']?.map(String) || [],
       translationOptions,
     ),
+    outputLocaleStyle,
   );
 }

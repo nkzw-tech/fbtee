@@ -258,17 +258,17 @@ Most React apps should use `createLocaleContext`:
 import { createLocaleContext } from 'fbtee';
 
 const availableLanguages = new Map([
-  ['en_US', 'English'],
-  ['de_DE', 'Deutsch'],
-  ['ja_JP', '日本語'],
+  ['en-US', 'English'],
+  ['de-DE', 'Deutsch'],
+  ['ja-JP', '日本語'],
 ]);
 
 const loadLocale = async (locale: string) => {
   switch (locale) {
-    case 'de_DE':
-      return (await import('./translations/de_DE.json')).default.de_DE;
-    case 'ja_JP':
-      return (await import('./translations/ja_JP.json')).default.ja_JP;
+    case 'de-DE':
+      return (await import('./translations/de-DE.json')).default['de-DE'];
+    case 'ja-JP':
+      return (await import('./translations/ja-JP.json')).default['ja-JP'];
     default:
       return {};
   }
@@ -294,7 +294,7 @@ import { useLocaleContext } from 'fbtee';
 
 const LanguageButton = () => {
   const { locale, setLocale } = useLocaleContext();
-  return <button onClick={() => setLocale('de_DE')}>{locale}</button>;
+  return <button onClick={() => setLocale('de-DE')}>{locale}</button>;
 };
 ```
 
@@ -319,16 +319,27 @@ This writes `source_strings.json`.
 Prepare editable translation files:
 
 ```bash
-pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de_DE fr_FR ja_JP
+pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de-DE fr-FR ja-JP
 ```
 
-`prepare-translations` merges source strings into existing locale files, preserves translated entries, and marks new work with `"status": "new"`.
+`prepare-translations` merges source strings into existing locale files, preserves translated entries, and marks new work with `"status": "new"`. New files use BCP 47 locale identifiers by default, such as `de-DE.json` and `es-419.json`.
 
 Compile translations for the app:
 
 ```bash
 pnpm fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
 ```
+
+fbtee accepts both modern BCP 47 locale identifiers (`de-DE`, `es-419`) and legacy Facebook-style identifiers (`de_DE`, `es_LA`). If both aliasing files exist, for example `translations/de_DE.json` and `translations/de-DE.json`, fbtee throws and asks you to keep one. Existing legacy files are updated in place; new generated files default to BCP 47. To force a specific output style, pass `--output-locale-style=bcp47`, `--output-locale-style=legacy`, or `--output-locale-style=preserve`.
+
+To migrate editable translation files and generated runtime files to BCP 47 names:
+
+```bash
+pnpm fbtee migrate-locales --to bcp47 --dir translations --dir src/translations
+pnpm fbtee translate --output-locale-style=bcp47
+```
+
+Use `--dry-run` first to preview file renames.
 
 Commit the human-authored translation files. Ignore generated runtime output:
 
@@ -352,7 +363,7 @@ This works best when the app already has translated strings. The agent can infer
 ### Coding Agent prompt:
 
 ```md
-Run `fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de_DE fr_FR ja_JP pl_PL ru_RU zh_CN es_ES it_IT ko_KR pt_BR uk_UA` for all the translations the app supports.
+Run `fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de-DE fr-FR ja-JP pl-PL ru-RU zh-CN es-ES it-IT ko-KR pt-BR uk-UA` for all the translations the app supports.
 
 Look at all updated translation files. For every entry with `"status": "new"`, write a translation that matches the tone, voice, and language already used in the app and in the current locale.
 

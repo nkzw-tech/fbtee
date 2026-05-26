@@ -1,6 +1,7 @@
 import { FbtRuntimeInput, Hooks } from './Hooks.tsx';
 import { TranslationDictionary } from './index.tsx';
 import IntlVariations from './IntlVariations.tsx';
+import { getLocaleAliases } from './localeIdentifier.tsx';
 import setupFbtee from './setupFbtee.tsx';
 
 export type TranslationPromise = Promise<{
@@ -35,40 +36,51 @@ export type LocaleContextProps = Readonly<{
 export default function setupLocaleContext({
   availableLanguages,
   clientLocales,
-  fallbackLocale = 'en_US',
+  fallbackLocale = 'en-US',
   gender: initialGender = IntlVariations.GENDER_UNKNOWN,
   hooks,
   loadLocale,
-  translations = { [fallbackLocale]: {} },
+  translations,
 }: LocaleContextProps) {
   const availableLocales = new Map<string, string>();
+  const resolvedLocales = new Map<string, string | null>();
   let currentLocale: string | null;
   let gender = resolveGender(initialGender);
 
   for (const [locale] of availableLanguages) {
-    availableLocales.set(locale, locale);
-    availableLocales.set(locale.split('_')[0], locale);
+    for (const localeAlias of getLocaleAliases(locale)) {
+      availableLocales.set(localeAlias, locale);
+    }
   }
+
+  const resolveLocale = (locale: string): string | null => {
+    const directLocale = availableLocales.get(locale);
+    if (directLocale) {
+      return directLocale;
+    }
+
+    if (resolvedLocales.has(locale)) {
+      return resolvedLocales.get(locale) || null;
+    }
+
+    const resolvedLocale =
+      getLocaleAliases(locale)
+        .map((localeAlias) => availableLocales.get(localeAlias))
+        .find((locale): locale is string => !!locale) || null;
+    resolvedLocales.set(locale, resolvedLocale);
+    return resolvedLocale;
+  };
+
+  const resolvedFallbackLocale =
+    resolveLocale(fallbackLocale) || fallbackLocale;
+  translations = translations || { [resolvedFallbackLocale]: {} };
 
   const getLocales = (): ReadonlyArray<string> =>
     Array.from(
       new Set(
-        [...clientLocales, fallbackLocale]
-          .flatMap((locale) => {
-            if (!locale) {
-              return null;
-            }
-
-            const [first = '', second] = locale.toLowerCase().split(/-|_/);
-            if (!first?.length) {
-              return null;
-            }
-
-            return second?.length
-              ? [`${first}${second ? `_${second.toUpperCase()}` : ''}`, first]
-              : [first];
-          })
-          .filter((locale): locale is string => !!locale),
+        [...clientLocales, resolvedFallbackLocale].filter(
+          (locale): locale is string => !!locale,
+        ),
       ),
     );
 
@@ -78,35 +90,39 @@ export default function setupLocaleContext({
     }
 
     for (const locale of getLocales()) {
-      const localeName = availableLocales.get(locale);
+      const localeName = resolveLocale(locale);
       if (localeName) {
         currentLocale = localeName;
         return localeName;
       }
     }
 
-    currentLocale = fallbackLocale;
-    return fallbackLocale;
+    currentLocale = resolvedFallbackLocale;
+    return resolvedFallbackLocale;
   };
 
   const maybeLoadLocale = async (
     locale: string,
     loadLocale: LocaleLoaderFn,
   ) => {
+    const hasTranslations =
+      !!translations[locale] ||
+      getLocaleAliases(locale).some((localeAlias) => translations[localeAlias]);
     if (
       availableLocales.has(locale) &&
-      !translations[locale] &&
-      locale !== fallbackLocale
+      !hasTranslations &&
+      locale !== resolvedFallbackLocale
     ) {
       translations[locale] = await loadLocale(locale);
     }
   };
 
   const setLocale = async (locale: string) => {
-    if (availableLocales.has(locale)) {
-      await maybeLoadLocale(locale, loadLocale);
-      if (locale !== currentLocale) {
-        currentLocale = locale;
+    const localeName = resolveLocale(locale);
+    if (localeName) {
+      await maybeLoadLocale(localeName, loadLocale);
+      if (localeName !== currentLocale) {
+        currentLocale = localeName;
       }
     }
     return currentLocale || getLocale();

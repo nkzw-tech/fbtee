@@ -6,6 +6,8 @@ if (command === 'translate') {
   import('./bin/translate.tsx');
 } else if (command === 'prepare-translations') {
   import('./bin/prepare-translations.tsx');
+} else if (command === 'migrate-locales') {
+  import('./bin/migrate-locales.tsx');
 } else if (command === 'collect') {
   import('./bin/collect.tsx');
 }

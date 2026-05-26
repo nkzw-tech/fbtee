@@ -2,6 +2,13 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import FbtHashKey from '../fbtHashKey.tsx';
+import {
+  formatLocaleForStyle,
+  getAvailableLocaleFile,
+  getLocaleIdentity,
+  throwIfLocaleFileConflicts,
+} from '../localeIdentifier.tsx';
+import type { LocaleStyle } from '../localeIdentifier.tsx';
 import nullthrows from '../nullthrows.tsx';
 import { FbtSite } from '../translate/FbtSite.tsx';
 import type {
@@ -18,6 +25,7 @@ import type { CollectFbtOutput, CollectFbtOutputPhrase } from './collect.tsx';
 export type Options = Readonly<{
   hashModule: boolean | string;
   jenkins: boolean;
+  outputLocaleStyle?: LocaleStyle;
   strict: boolean;
 }>;
 
@@ -43,6 +51,30 @@ export type Translations = Partial<
   Record<PatternString, SerializedTranslationData | null>
 >;
 
+function throwIfLocaleConflicts(locales: ReadonlyArray<string>): void {
+  const identityToLocales = new Map<string, Array<string>>();
+  for (const locale of locales) {
+    const identity = getLocaleIdentity(locale);
+    const localeGroup = identityToLocales.get(identity) || [];
+    localeGroup.push(locale);
+    identityToLocales.set(identity, localeGroup);
+  }
+
+  const conflicts = Array.from(identityToLocales.entries()).filter(
+    ([, localeGroup]) => localeGroup.length > 1,
+  );
+  if (conflicts.length > 0) {
+    throw new Error(
+      conflicts
+        .map(
+          ([identity, localeGroup]) =>
+            `Conflicting translation groups for locale "${identity}": ${localeGroup.join(', ')}`,
+        )
+        .join('\n'),
+    );
+  }
+}
+
 /** Phrases and translation data in one JSON object */
 type InputJSONType = Readonly<{
   phrases: ReadonlyArray<CollectFbtOutputPhrase>;
@@ -65,6 +97,7 @@ export async function processFiles(
   translationFiles: ReadonlyArray<string>,
   options: Options,
 ): Promise<LocaleToHashToTranslationResult> {
+  throwIfLocaleFileConflicts(translationFiles);
   const { phrases } = loadJSON<CollectFbtOutput>(stringFile);
   const fbtSites = phrases.map(createFbtSiteFromJSON);
   return await processGroups(
@@ -103,6 +136,7 @@ async function processGroups(
   translatedGroups: TranslatedGroups,
   options: Options,
 ): Promise<LocaleToHashToTranslationResult> {
+  throwIfLocaleConflicts(translatedGroups.map((group) => group['fb-locale']));
   let fbtHash: typeof FbtHashKey | null = null;
   if (options.jenkins) {
     fbtHash = (await import('../fbtHashKey.tsx')).default;
@@ -157,9 +191,14 @@ function processTranslations(
   group: TranslationGroup,
   options: Options,
 ): TranslatedGroup {
-  const config = TranslationConfig.fromFBLocale(group['fb-locale']);
+  const inputLocale = group['fb-locale'];
+  const outputLocale = formatLocaleForStyle(
+    inputLocale,
+    options.outputLocaleStyle,
+  );
+  const config = TranslationConfig.fromFBLocale(inputLocale);
   const filteredTranslations = checkAndFilterTranslations(
-    group['fb-locale'],
+    inputLocale,
     group.translations,
     options,
   );
@@ -171,7 +210,7 @@ function processTranslations(
     new TranslationBuilder(translations, config, fbtsite, false).build(),
   );
   return {
-    'fb-locale': group['fb-locale'],
+    'fb-locale': outputLocale,
     translatedPhrases,
   };
 }
@@ -191,12 +230,19 @@ export const writeSingleOutput = (
 export const writeOutput = (
   outputDir: string,
   output: LocaleToHashToTranslationResult,
+  outputLocaleStyle: LocaleStyle = 'bcp47',
 ) => {
+  throwIfLocaleConflicts(Object.keys(output));
   mkdirSync(outputDir, { recursive: true });
   Object.keys(output).forEach((locale) => {
+    const existingFile = getAvailableLocaleFile(outputDir, locale);
+    const outputLocale =
+      existingFile == null
+        ? formatLocaleForStyle(locale, outputLocaleStyle)
+        : path.basename(existingFile, '.json');
     writeFileSync(
-      path.join(outputDir, `${locale}.json`),
-      JSON.stringify({ [locale]: output[locale] }, null, 2),
+      path.join(outputDir, `${outputLocale}.json`),
+      JSON.stringify({ [outputLocale]: output[locale] }, null, 2),
     );
   });
 };
