@@ -10,6 +10,7 @@ import frFR from '../translatedFbts/fr-FR.json' with { type: 'json' };
 import heIL from '../translatedFbts/he-IL.json' with { type: 'json' };
 import itIT from '../translatedFbts/it-IT.json' with { type: 'json' };
 import jaJP from '../translatedFbts/ja-JP.json' with { type: 'json' };
+import ruRU from '../translatedFbts/ru-RU.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale, updateDocumentLocale } from './Locales.tsx';
 
@@ -22,6 +23,7 @@ const translations = {
   'he-IL': heIL['he-IL'],
   'it-IT': itIT['it-IT'],
   'ja-JP': jaJP['ja-JP'],
+  'ru-RU': ruRU['ru-RU'],
 };
 
 let viewerContext = {
