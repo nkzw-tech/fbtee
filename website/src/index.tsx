@@ -1,4 +1,5 @@
 /// <reference types="fbtee/ReactTypes.d.ts" />
+/// <reference types="vite/client" />
 
 import App from './App.tsx';
 import './App.css';
@@ -9,34 +10,28 @@ import AvailableLanguages, {
   type AvailableLocale,
 } from './AvailableLanguages.tsx';
 
-type TranslationModule<Locale extends AvailableLocale> = {
-  default: Record<Locale, Record<string, FbtRuntimeInput>>;
+type TranslationModule = {
+  default: Partial<Record<AvailableLocale, Record<string, FbtRuntimeInput>>>;
 };
 
-type LocaleLoaders = {
-  [Locale in Exclude<AvailableLocale, 'en_US'>]: () => Promise<
-    TranslationModule<Locale>
-  >;
-};
-
-const localeLoaders: LocaleLoaders = {
-  ar_AR: () => import('./translations/ar_AR.json'),
-  de_AT: () => import('./translations/de_AT.json'),
-  de_DE: () => import('./translations/de_DE.json'),
-  es_LA: () => import('./translations/es_LA.json'),
-  fb_HX: () => import('./translations/fb_HX.json'),
-  fr_FR: () => import('./translations/fr_FR.json'),
-  he_IL: () => import('./translations/he_IL.json'),
-  it_IT: () => import('./translations/it_IT.json'),
-  ja_JP: () => import('./translations/ja_JP.json'),
-  ru_RU: () => import('./translations/ru_RU.json'),
-} satisfies LocaleLoaders;
+const translationModules = import.meta.glob<TranslationModule>(
+  './translations/*.json',
+);
 
 const loadAvailableLocale = async <
   Locale extends Exclude<AvailableLocale, 'en_US'>,
 >(
   locale: Locale,
-) => (await localeLoaders[locale]()).default[locale];
+) => {
+  const loadModule = translationModules[`./translations/${locale}.json`];
+  if (!loadModule) {
+    throw new Error(
+      `Missing generated translations for ${locale}. Run 'pnpm fbtee translate' in the website package.`,
+    );
+  }
+
+  return (await loadModule()).default[locale] ?? {};
+};
 
 const loadLocale = async (locale: string) => {
   if (
