@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "build:all": "pnpm -r build && pnpm install && pnpm link-bins && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && (cd example && pnpm fbtee:all) && (cd website && pnpm fbtee collect && pnpm fbtee translate)",
+    "build:all": "pnpm -r build && pnpm install && pnpm link-bins && pnpm --filter=fbtee build:fbtee-strings && pnpm copy-files && (cd example && pnpm fbtee:all) && (cd website && pnpm fbtee:all)",
     "clean": "rm -rf packages/*/lib packages/fbtee/lib-tmp; cd example pnpm clean",
     "copy-files": "find packages/* -type d -maxdepth 0 -exec cp README.md LICENSE {} \\;",
     "dev": "cd example && pnpm fbtee:all && pnpm dev",

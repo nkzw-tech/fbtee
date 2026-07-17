@@ -8,6 +8,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import AvailableLanguages, {
   type AvailableLocale,
+  LegacyLocaleAliases,
 } from './AvailableLanguages.tsx';
 
 type TranslationModule = {
@@ -19,7 +20,7 @@ const translationModules = import.meta.glob<TranslationModule>(
 );
 
 const loadAvailableLocale = async <
-  Locale extends Exclude<AvailableLocale, 'en_US'>,
+  Locale extends Exclude<AvailableLocale, 'en-US'>,
 >(
   locale: Locale,
 ) => {
@@ -35,16 +36,24 @@ const loadAvailableLocale = async <
 
 const loadLocale = async (locale: string) => {
   if (
-    locale === 'en_US' ||
+    locale === 'en-US' ||
     !AvailableLanguages.has(locale as AvailableLocale)
   ) {
     return {};
   }
 
-  return loadAvailableLocale(locale as Exclude<AvailableLocale, 'en_US'>);
+  return loadAvailableLocale(locale as Exclude<AvailableLocale, 'en-US'>);
 };
 
-const locale = localStorage.getItem('fbtee:locale');
+const storedLocale = localStorage.getItem('fbtee:locale');
+const locale = storedLocale
+  ? AvailableLanguages.has(storedLocale as AvailableLocale)
+    ? (storedLocale as AvailableLocale)
+    : LegacyLocaleAliases.get(storedLocale) || null
+  : null;
+if (locale && locale !== storedLocale) {
+  localStorage.setItem('fbtee:locale', locale);
+}
 const translations = locale
   ? {
       [locale]: await loadLocale(locale),

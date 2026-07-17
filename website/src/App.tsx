@@ -624,17 +624,17 @@ export default defineConfig({
 
 // Define available languages
 const availableLanguages = new Map([
-  ['en_US', 'English'],
-  ['de_DE', 'Deutsch'],
-  ['ja_JP', '日本語'],
+  ['en-US', 'English'],
+  ['de-DE', 'Deutsch'],
+  ['ja-JP', '日本語'],
 ]);
 
 const loadLocale = async (locale: string) => {
   switch (locale) {
-    case 'de_DE':
-      return (await import('./translations/de_DE.json')).default.de_DE;
-    case 'ja_JP':
-      return (await import('./translations/ja_JP.json')).default.ja_JP;
+    case 'de-DE':
+      return (await import('./translations/de-DE.json')).default['de-DE'];
+    case 'ja-JP':
+      return (await import('./translations/ja-JP.json')).default['ja-JP'];
     default:
       return {};
   }
@@ -1045,7 +1045,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                     </fbt>
                   </p>
                   <Code
-                    code={`pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de_DE fr_FR ja_JP`}
+                    code={`pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de-DE fr-FR ja-JP`}
                   />
                   <p className="mt-2">
                     <fbt desc="Prepare translations explanation">
@@ -1075,7 +1075,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                     </fbt>
                   </h5>
                   <Code
-                    code={`Run \`fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de_DE fr_FR ja_JP pl_PL ru_RU zh_CN es_ES it_IT ko_KR pt_BR uk_UA\` for all the translations the app supports.
+                    code={`Run \`fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de-DE fr-FR ja-JP pl-PL ru-RU zh-CN es-ES it-IT ko-KR pt-BR uk-UA\` for all the translations the app supports.
 
 Look at all updated translation files. For every entry with \`"status": "new"\`, write a translation that matches the tone, voice, and language already used in the app and in the current locale.
 
@@ -1144,7 +1144,7 @@ src/translations/`}
 const LanguageButton = () => {
   const { locale, setLocale } = useLocaleContext();
 
-  return <button onClick={() => setLocale('de_DE')}>{locale}</button>;
+  return <button onClick={() => setLocale('de-DE')}>{locale}</button>;
 };`}
               />
               <Separator />
