@@ -88,555 +88,543 @@ var x = fbt._(
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements and string variation arguments nested inside jsx element 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
-  fbt._(
-    {
-      "*": "{=m0} RawText {=m2}{=m3}",
-      _1: "{=m0} RawText {=m2}{=m3}",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m0",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx1",
-              _1: "OuterJsx1",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "3WznBY",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "{=m0} RawText {=m2}{=m3}",
+    _1: "{=m0} RawText {=m2}{=m3}",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    fbt._implicitParam(
+      "=m0",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx1",
+            _1: "OuterJsx1",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "3WznBY",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx2",
-              _1: "OuterJsx2",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "30JSgM",
-            }
-          )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx2",
+            _1: "OuterJsx2",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "30JSgM",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m3",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "{=m1}(plural)s{=m3}",
-              _1: "{=m1}(plural){=m3}",
-            },
-            [
-              fbt_sv_arg_0,
-              fbt._implicitParam(
-                "=m1",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx1",
-                      _1: "InnerJsx1",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "24btfK",
-                    }
-                  )
+      )
+    ),
+    fbt._implicitParam(
+      "=m3",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "{=m1}(plural)s{=m3}",
+            _1: "{=m1}(plural){=m3}",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt._implicitParam(
+              "=m1",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx1",
+                    _1: "InnerJsx1",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "24btfK",
+                  }
                 )
-              ),
-              fbt._implicitParam(
-                "=m3",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx2",
-                      _1: "InnerJsx2",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "13rpFP",
-                    }
-                  )
+              )
+            ),
+            fbt._implicitParam(
+              "=m3",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx2",
+                    _1: "InnerJsx2",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "13rpFP",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "1Nv3G4",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "1Nv3G4",
+          }
         )
-      ),
-    ],
-    {
-      hk: "2gHC6Z",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "2gHC6Z",
+  }
+);
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements with string variation arguments 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count, "number")),
-  fbt._(
-    {
-      "*": "{=m0}{=m1} !",
-      _1: "{=m0}{=m1} !",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m0",
-        /*#__PURE__*/ React.createElement(
-          "span",
-          null,
-          fbt._(
-            {
-              "*": "There should be",
-              _1: "There should be",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "9ccJh",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "{=m0}{=m1} !",
+    _1: "{=m0}{=m1} !",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count, "number")),
+    fbt._implicitParam(
+      "=m0",
+      /*#__PURE__*/ React.createElement(
+        "span",
+        null,
+        fbt._(
+          {
+            "*": "There should be",
+            _1: "There should be",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "9ccJh",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m1",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "{number} spaces",
-              _1: "a space",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "1tuYe0",
-            }
-          )
+      )
+    ),
+    fbt._implicitParam(
+      "=m1",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "{number} spaces",
+            _1: "a space",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "1tuYe0",
+          }
         )
-      ),
-    ],
-    {
-      hk: "15ZlDy",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "15ZlDy",
+  }
+);
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve expression text without adding implicit spaces around it 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
-  fbt._(
-    {
-      "*": "{=m0}textInJSXExpression{=m2}{=m3}",
-      _1: "{=m0}textInJSXExpression{=m2}{=m3}",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m0",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx1",
-              _1: "OuterJsx1",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "4i3hty",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "{=m0}textInJSXExpression{=m2}{=m3}",
+    _1: "{=m0}textInJSXExpression{=m2}{=m3}",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    fbt._implicitParam(
+      "=m0",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx1",
+            _1: "OuterJsx1",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "4i3hty",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx2",
-              _1: "OuterJsx2",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "gfvaj",
-            }
-          )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx2",
+            _1: "OuterJsx2",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "gfvaj",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m3",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "rawText textInJSXExpression{=m2}textInJSXExpression(plural)stextInJSXExpression{=m7}textInJSXExpression",
-              _1: "rawText textInJSXExpression{=m2}textInJSXExpression(plural)textInJSXExpression{=m7}textInJSXExpression",
-            },
-            [
-              fbt_sv_arg_0,
-              fbt._implicitParam(
-                "=m2",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx1",
-                      _1: "InnerJsx1",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "1x2Bnp",
-                    }
-                  )
+      )
+    ),
+    fbt._implicitParam(
+      "=m3",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "rawText textInJSXExpression{=m2}textInJSXExpression(plural)stextInJSXExpression{=m7}textInJSXExpression",
+            _1: "rawText textInJSXExpression{=m2}textInJSXExpression(plural)textInJSXExpression{=m7}textInJSXExpression",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt._implicitParam(
+              "=m2",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx1",
+                    _1: "InnerJsx1",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "1x2Bnp",
+                  }
                 )
-              ),
-              fbt._implicitParam(
-                "=m7",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx2",
-                      _1: "InnerJsx2",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "1xtOBl",
-                    }
-                  )
+              )
+            ),
+            fbt._implicitParam(
+              "=m7",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx2",
+                    _1: "InnerJsx2",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "1xtOBl",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "20dibT",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "20dibT",
+          }
         )
-      ),
-    ],
-    {
-      hk: "4f83iT",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "4f83iT",
+  }
+);
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve voluntarily added spaces between NON-raw text 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
-  fbt._(
-    {
-      "*": "{=m0} {=m2}{=m3}",
-      _1: "{=m0} {=m2}{=m3}",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m0",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx1",
-              _1: "OuterJsx1",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "2mmfyN",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "{=m0} {=m2}{=m3}",
+    _1: "{=m0} {=m2}{=m3}",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    fbt._implicitParam(
+      "=m0",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx1",
+            _1: "OuterJsx1",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "2mmfyN",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx2",
-              _1: "OuterJsx2",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "Hdu8h",
-            }
-          )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx2",
+            _1: "OuterJsx2",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "Hdu8h",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m3",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "{=m2} (plural)s {=m6} {=m8}",
-              _1: "{=m2} (plural) {=m6} {=m8}",
-            },
-            [
-              fbt_sv_arg_0,
-              fbt._implicitParam(
-                "=m2",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx1",
-                      _1: "InnerJsx1",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "4C7fcW",
-                    }
-                  )
+      )
+    ),
+    fbt._implicitParam(
+      "=m3",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "{=m2} (plural)s {=m6} {=m8}",
+            _1: "{=m2} (plural) {=m6} {=m8}",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt._implicitParam(
+              "=m2",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx1",
+                    _1: "InnerJsx1",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "4C7fcW",
+                  }
                 )
-              ),
-              fbt._implicitParam(
-                "=m6",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx2",
-                      _1: "InnerJsx2",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "3jKBRy",
-                    }
-                  )
+              )
+            ),
+            fbt._implicitParam(
+              "=m6",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx2",
+                    _1: "InnerJsx2",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "3jKBRy",
+                  }
                 )
-              ),
-              fbt._implicitParam(
-                "=m8",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx3",
-                      _1: "InnerJsx3",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "c0FbP",
-                    }
-                  )
+              )
+            ),
+            fbt._implicitParam(
+              "=m8",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx3",
+                    _1: "InnerJsx3",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "c0FbP",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "1LC9MD",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "1LC9MD",
+          }
         )
-      ),
-    ],
-    {
-      hk: "2mKrhF",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "2mKrhF",
+  }
+);
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should treat comments in JSXExpression like they are not here 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
-  fbt._(
-    {
-      "*": "{=m0}{=m1}{=m2}",
-      _1: "{=m0}{=m1}{=m2}",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m0",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx1",
-              _1: "OuterJsx1",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "1EWqrj",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "{=m0}{=m1}{=m2}",
+    _1: "{=m0}{=m1}{=m2}",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    fbt._implicitParam(
+      "=m0",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx1",
+            _1: "OuterJsx1",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "1EWqrj",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m1",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "OuterJsx2",
-              _1: "OuterJsx2",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "wXKn7",
-            }
-          )
+      )
+    ),
+    fbt._implicitParam(
+      "=m1",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "OuterJsx2",
+            _1: "OuterJsx2",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "wXKn7",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "{=m2}(plural)s rawText",
-              _1: "{=m2}(plural) rawText",
-            },
-            [
-              fbt_sv_arg_0,
-              fbt._implicitParam(
-                "=m2",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "InnerJsx1",
-                      _1: "InnerJsx1",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "qALb9",
-                    }
-                  )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "{=m2}(plural)s rawText",
+            _1: "{=m2}(plural) rawText",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt._implicitParam(
+              "=m2",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "InnerJsx1",
+                    _1: "InnerJsx1",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "qALb9",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "48kyWu",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "48kyWu",
+          }
         )
-      ),
-    ],
-    {
-      hk: "4owcY6",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "4owcY6",
+  }
+);
 
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace around text with inner text and string variation 1`] = `
 var fbt_sv_arg_0;
 import { fbt } from "fbtee";
-var x =
-  ((fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
-  fbt._(
-    {
-      "*": "outerText {=m1}{=m2}",
-      _1: "outerText {=m1}{=m2}",
-    },
-    [
-      fbt_sv_arg_0,
-      fbt._implicitParam(
-        "=m1",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": "outerJsx",
-              _1: "outerJsx",
-            },
-            [fbt_sv_arg_0],
-            {
-              hk: "1UvHDM",
-            }
-          )
+var x = fbt._(
+  {
+    "*": "outerText {=m1}{=m2}",
+    _1: "outerText {=m1}{=m2}",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    fbt._implicitParam(
+      "=m1",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": "outerJsx",
+            _1: "outerJsx",
+          },
+          [fbt_sv_arg_0],
+          {
+            hk: "1UvHDM",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": "{=m1} innerText (plural)s",
-              _1: "{=m1} innerText (plural)",
-            },
-            [
-              fbt_sv_arg_0,
-              fbt._implicitParam(
-                "=m1",
-                /*#__PURE__*/ React.createElement(
-                  "i",
-                  null,
-                  fbt._(
-                    {
-                      "*": "innerJsx",
-                      _1: "innerJsx",
-                    },
-                    [fbt_sv_arg_0],
-                    {
-                      hk: "3AsEj4",
-                    }
-                  )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": "{=m1} innerText (plural)s",
+            _1: "{=m1} innerText (plural)",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt._implicitParam(
+              "=m1",
+              /*#__PURE__*/ React.createElement(
+                "i",
+                null,
+                fbt._(
+                  {
+                    "*": "innerJsx",
+                    _1: "innerJsx",
+                  },
+                  [fbt_sv_arg_0],
+                  {
+                    hk: "3AsEj4",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "3aHsRR",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "3aHsRR",
+          }
         )
-      ),
-    ],
-    {
-      hk: "1K3ejM",
-    }
-  ));
+      )
+    ),
+  ],
+  {
+    hk: "1K3ejM",
+  }
+);
 
 `;
 

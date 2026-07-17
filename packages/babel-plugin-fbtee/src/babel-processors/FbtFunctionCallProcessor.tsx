@@ -10,7 +10,9 @@ import {
   Expression,
   Identifier,
   identifier,
+  isArrayExpression,
   isBlockStatement,
+  isIdentifier,
   isProgram,
   jsxExpressionContainer,
   memberExpression,
@@ -19,8 +21,6 @@ import {
   objectExpression,
   objectProperty,
   Program,
-  SequenceExpression,
-  sequenceExpression,
   SpreadElement,
   stringLiteral,
   valueToNode,
@@ -224,7 +224,7 @@ export default class FbtFunctionCallProcessor {
 
   _createRootFbtRuntimeCall(
     metaPhrases: ReadonlyArray<MetaPhrase>,
-  ): CallExpression | SequenceExpression {
+  ): CallExpression {
     const stringVariationRuntimeArgs =
       this._createRuntimeArgsFromStringVariantNodes(metaPhrases[0]);
     if (!this._hasStringVariationAndContainsInnerString(metaPhrases)) {
@@ -248,11 +248,12 @@ export default class FbtFunctionCallProcessor {
     this._injectVariableDeclarationsForStringVariationArguments(
       stringVariationRuntimeArgIdentifiers,
     );
-    return this._wrapFbtRuntimeCallInSequenceExpression(
+    this._assignStringVariationRuntimeArguments(
       stringVariationRuntimeArgs,
       fbtRuntimeCall,
       stringVariationRuntimeArgIdentifiers,
     );
+    return fbtRuntimeCall;
   }
 
   /**
@@ -309,22 +310,19 @@ export default class FbtFunctionCallProcessor {
   }
 
   /**
-   * Pre-assign those arguments that create string variations to local variables,
-   * and use references to these variables in fbt call. Note: Local variables
-   * will be auto-declared in sequenceExpression.
+   * Assign string variation arguments to local variables in the outer fbt
+   * runtime argument array. Array elements are evaluated from left to right, so
+   * nested implicit phrases can safely reference these variables later in the
+   * same array.
    *
    * E.g.
-   * Before:
-   *   fbt._()
-   *
-   * After:
-   *   (identifier_0 = runtimeArg1, identifier_1 = runtimeArg2, fbt._())
+   *   fbt._(table, [identifier_0 = runtimeArg1, identifier_1 = runtimeArg2])
    */
-  _wrapFbtRuntimeCallInSequenceExpression(
+  _assignStringVariationRuntimeArguments(
     runtimeArgs: ReadonlyArray<CallExpression>,
     fbtRuntimeCall: CallExpression,
     identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>,
-  ): SequenceExpression {
+  ) {
     invariant(
       runtimeArgs.length == identifiersForStringVariationRuntimeArgs.length,
       'Expect exactly one identifier for each string variation runtime argument. ' +
@@ -332,16 +330,29 @@ export default class FbtFunctionCallProcessor {
       identifiersForStringVariationRuntimeArgs.length,
       runtimeArgs.length,
     );
-    return sequenceExpression([
-      ...runtimeArgs.map((runtimeArg, i) =>
-        assignmentExpression(
-          '=',
-          identifiersForStringVariationRuntimeArgs[i],
-          runtimeArg,
-        ),
-      ),
-      fbtRuntimeCall,
-    ]);
+
+    const fbtRuntimeArguments = fbtRuntimeCall.arguments[1];
+    invariant(
+      isArrayExpression(fbtRuntimeArguments),
+      'Expected fbt runtime arguments to be an array when string variations and inner strings are present.',
+    );
+
+    runtimeArgs.forEach((runtimeArg, index) => {
+      const identifier = identifiersForStringVariationRuntimeArgs[index];
+      invariant(
+        isIdentifier(fbtRuntimeArguments.elements[index], {
+          name: identifier.name,
+        }),
+        'Expected string variation runtime argument %s to reference identifier %s.',
+        index,
+        identifier.name,
+      );
+      fbtRuntimeArguments.elements[index] = assignmentExpression(
+        '=',
+        identifier,
+        runtimeArg,
+      );
+    });
   }
 
   _hasStringVariationAndContainsInnerString(
@@ -503,13 +514,13 @@ export default class FbtFunctionCallProcessor {
 
   /**
    * Process current `fbt()` callsite (Node) to generate:
-   * - an `fbt._()` callsite or a sequencExpression that eventually returns an `fbt._()` callsite
+   * - an `fbt._()` callsite
    * - a list of meta-phrases describing the collected text strings from this fbt() callsite
    */
   convertToFbtRuntimeCall(): {
-    // Client-side fbt._() call(or the sequencExpression that contains it)
-    // usable in a web browser generated from the given fbt() callsite
-    callNode: CallExpression | SequenceExpression;
+    // Client-side fbt._() call usable in a web browser generated from the
+    // given fbt() callsite
+    callNode: CallExpression;
     // List of phrases collected from the fbt() callsite
     metaPhrases: ReadonlyArray<MetaPhrase>;
   } {

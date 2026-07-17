@@ -29,6 +29,44 @@ fbt._("{foo}", [fbt._param("foo", foo)], {
 
 `;
 
+exports[`Test declarative (jsx) fbt syntax translation places string variation assignments in runtime arguments when preserving JSX 1`] = `
+var fbt_sv_arg_0;
+import { fbt } from "fbtee";
+const charges = 2;
+const view = (
+  <span>
+    {fbt._(
+      {
+        "*": "{=m0} {number} charges",
+        _1: "{=m0} 1 charge",
+      },
+      [
+        (fbt_sv_arg_0 = fbt._plural(charges, "number")),
+        fbt._implicitParam(
+          "=m0",
+          <strong>
+            {fbt._(
+              {
+                "*": "Cost:",
+                _1: "Cost:",
+              },
+              [fbt_sv_arg_0],
+              {
+                hk: "IoMM6",
+              }
+            )}
+          </strong>
+        ),
+      ],
+      {
+        hk: "2fyOks",
+      }
+    )}
+  </span>
+);
+
+`;
+
 exports[`Test declarative (jsx) fbt syntax translation should be able to house arbitrary markup within fbt:param nodes 1`] = `
 import { fbt } from "fbtee";
 <div>

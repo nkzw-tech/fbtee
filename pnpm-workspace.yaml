@@ -14,6 +14,9 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 
+minimumReleaseAgeExclude:
+  - vite@8.1.5
+
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tailwindcss/oxide'

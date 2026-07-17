@@ -6436,14 +6436,14 @@ var fbt_sv_arg_2 = 2;
 function a(fbt_sv_arg_3) {
   var fbt_sv_arg_1, fbt_sv_arg_4;
   var fbt_sv_arg_0 = 1;
-  fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
-    className: "padRight"
-  }, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_4 = fbt._plural(this.state.ex1Count, "number"), fbt._({
+  fbt._({
     "*": {
       "*": "{name} has shared {=m2} with you",
       _1: "{name} has shared {=m2} with you"
     }
-  }, [fbt_sv_arg_1, fbt_sv_arg_4, fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
+  }, [fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+    className: "padRight"
+  }, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_4 = fbt._plural(this.state.ex1Count, "number"), fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
     className: "neatoLink",
     href: "#",
     tabindex: 123,
@@ -6511,14 +6511,7 @@ exports[`Functional FBT API using array arguments: Translation transform should 
 "var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3;
 import { fbt } from "fbtee";
 import React from 'react';
-fbt_sv_arg_0 = fbt._enum(enumVal, {
-  "today": "today",
-  "yesterday": "yesterday"
-}), fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
-  className: "padRight"
-}, viewerName), [1, viewerGender]), fbt_sv_arg_2 = fbt._plural(photoCount, "number"), fbt_sv_arg_3 = fbt._pronoun(0, otherGender, {
-  human: 1
-}), fbt._({
+fbt._({
   today: {
     "*": {
       "*": {
@@ -6547,7 +6540,14 @@ fbt_sv_arg_0 = fbt._enum(enumVal, {
       }
     }
   }
-}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2, fbt_sv_arg_3, fbt._implicitParam("=m0", /*#__PURE__*/React.createElement("b", {
+}, [fbt_sv_arg_0 = fbt._enum(enumVal, {
+  "today": "today",
+  "yesterday": "yesterday"
+}), fbt_sv_arg_1 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+  className: "padRight"
+}, viewerName), [1, viewerGender]), fbt_sv_arg_2 = fbt._plural(photoCount, "number"), fbt_sv_arg_3 = fbt._pronoun(0, otherGender, {
+  human: 1
+}), fbt._implicitParam("=m0", /*#__PURE__*/React.createElement("b", {
   className: "padRight"
 }, fbt._({
   today: {
@@ -6654,14 +6654,14 @@ exports[`Functional FBT API using array arguments: Translation transform should 
 "var fbt_sv_arg_0, fbt_sv_arg_1;
 import { fbt } from "fbtee";
 import React from 'react';
-fbt_sv_arg_0 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
-  className: "padRight"
-}, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_1 = fbt._plural(this.state.ex1Count, "number"), fbt._({
+fbt._({
   "*": {
     "*": "{name} has shared {=m2} with you",
     _1: "{name} has shared {=m2} with you"
   }
-}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
+}, [fbt_sv_arg_0 = fbt._param("name", /*#__PURE__*/React.createElement("b", {
+  className: "padRight"
+}, this.state.ex1Name), [1, this.state.ex1Gender]), fbt_sv_arg_1 = fbt._plural(this.state.ex1Count, "number"), fbt._implicitParam("=m2", /*#__PURE__*/React.createElement("a", {
   className: "neatoLink",
   href: "#",
   tabindex: 123,
@@ -6689,9 +6689,9 @@ exports[`Functional FBT API using array arguments: Translation transform should 
 "var fbt_sv_arg_0;
 import { fbt } from "fbtee";
 import React from 'react';
-var x = (fbt_sv_arg_0 = fbt._subject(subjectValue), fbt._({
+var x = fbt._({
   "*": "A1 {=m1} A2"
-}, [fbt_sv_arg_0, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
+}, [fbt_sv_arg_0 = fbt._subject(subjectValue), fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
   "*": "B1 {=m1} B2"
 }, [fbt_sv_arg_0, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("b", null, fbt._({
   "*": "C1 {paramName} C2"
@@ -6701,7 +6701,7 @@ var x = (fbt_sv_arg_0 = fbt._subject(subjectValue), fbt._({
   hk: "2jJ1x5"
 })))], {
   hk: "4Byrsa"
-}));"
+});"
 `;
 
 exports[`Functional FBT API using array arguments: Translation transform should handle duplicate enums 1`] = `
@@ -6945,12 +6945,12 @@ exports[`Functional FBT API using array arguments: Translation transform should 
 "var fbt_sv_arg_0, fbt_sv_arg_1;
 import { fbt } from "fbtee";
 import React from 'react';
-var x = (fbt_sv_arg_0 = fbt._param("count", someRandomFunction(), [0]), fbt_sv_arg_1 = fbt._plural(catCount, "cat_token", someValueFunction()), fbt._({
+var x = fbt._({
   "*": {
     "*": "A1 {=m1} A2",
     _1: "A1 {=m1} A2"
   }
-}, [fbt_sv_arg_0, fbt_sv_arg_1, fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
+}, [fbt_sv_arg_0 = fbt._param("count", someRandomFunction(), [0]), fbt_sv_arg_1 = fbt._plural(catCount, "cat_token", someValueFunction()), fbt._implicitParam("=m1", /*#__PURE__*/React.createElement("a", null, fbt._({
   "*": {
     "*": "B1 {=m1} B2",
     _1: "B1 {=m1} B2"
@@ -6966,7 +6966,7 @@ var x = (fbt_sv_arg_0 = fbt._param("count", someRandomFunction(), [0]), fbt_sv_a
   hk: "2snmgP"
 })))], {
   hk: "2DnOU6"
-}));"
+});"
 `;
 
 exports[`Functional FBT API using array arguments: Translation transform should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name 1`] = `

@@ -94,6 +94,26 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
     ).toMatchSnapshot();
   });
 
+  test('places string variation assignments in runtime arguments when preserving JSX', () => {
+    expect(
+      snapshotTransformKeepJsx(
+        withFbtImportStatement(
+          `const charges = 2;
+          const view = (
+            <span>
+              <fbt desc="charge count">
+                <strong>Cost:</strong>{' '}
+                <fbt:plural count={charges} showCount="yes">
+                  charge
+                </fbt:plural>
+              </fbt>
+            </span>
+          );`,
+        ),
+      ),
+    ).toMatchSnapshot();
+  });
+
   test('should be able to nest within React nodes', () => {
     expect(
       snapshotTransformKeepJsx(

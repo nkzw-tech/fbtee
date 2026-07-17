@@ -3,302 +3,294 @@
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1;
 import { fbt } from "fbtee";
-(fbt_sv_arg_0 = fbt._name("bar", bar, g)),
-  (fbt_sv_arg_1 = fbt._plural(num, "baz")),
-  fbt._(
-    {
-      "*": {
-        "*": "Level 1 {foo}{=m2}",
-        _1: "Level 1 {foo}{=m2}",
-      },
+fbt._(
+  {
+    "*": {
+      "*": "Level 1 {foo}{=m2}",
+      _1: "Level 1 {foo}{=m2}",
     },
-    [
-      fbt_sv_arg_0,
-      fbt_sv_arg_1,
-      fbt._param("foo", foo),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "a",
-          null,
-          fbt._(
-            {
-              "*": {
-                "*": "Level 2 {bar}{=m2}",
-                _1: "Level 2 {bar}{=m2}",
-              },
+  },
+  [
+    (fbt_sv_arg_0 = fbt._name("bar", bar, g)),
+    (fbt_sv_arg_1 = fbt._plural(num, "baz")),
+    fbt._param("foo", foo),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        null,
+        fbt._(
+          {
+            "*": {
+              "*": "Level 2 {bar}{=m2}",
+              _1: "Level 2 {bar}{=m2}",
             },
-            [
-              fbt_sv_arg_0,
-              fbt_sv_arg_1,
-              fbt._implicitParam(
-                "=m2",
-                /*#__PURE__*/ React.createElement(
-                  "b",
-                  null,
-                  fbt._(
-                    {
-                      "*": {
-                        "*": "Level 3 {baz} cats",
-                        _1: "Level 3 1 cat",
-                      },
+          },
+          [
+            fbt_sv_arg_0,
+            fbt_sv_arg_1,
+            fbt._implicitParam(
+              "=m2",
+              /*#__PURE__*/ React.createElement(
+                "b",
+                null,
+                fbt._(
+                  {
+                    "*": {
+                      "*": "Level 3 {baz} cats",
+                      _1: "Level 3 1 cat",
                     },
-                    [fbt_sv_arg_0, fbt_sv_arg_1],
-                    {
-                      hk: "3hoLPG",
-                    }
-                  )
+                  },
+                  [fbt_sv_arg_0, fbt_sv_arg_1],
+                  {
+                    hk: "3hoLPG",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "1TQlfE",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "1TQlfE",
+          }
         )
-      ),
-    ],
-    {
-      hk: "2Aoh3a",
-    }
-  );
+      )
+    ),
+  ],
+  {
+    hk: "2Aoh3a",
+  }
+);
 
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings and a subject gender 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
 import { fbt } from "fbtee";
-(fbt_sv_arg_0 = fbt._subject(g0)),
-  (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
-  (fbt_sv_arg_2 = fbt._plural(num, "foo")),
-  fbt._(
-    {
+fbt._(
+  {
+    "*": {
+      1: {
+        "*": "Level 1 {=m1}{=m2}",
+        _1: "Level 1 {=m1}{=m2}",
+      },
+      2: {
+        "*": "Level 1 {=m1}{=m2}",
+        _1: "Level 1 {=m1}{=m2}",
+      },
       "*": {
-        1: {
-          "*": "Level 1 {=m1}{=m2}",
-          _1: "Level 1 {=m1}{=m2}",
-        },
-        2: {
-          "*": "Level 1 {=m1}{=m2}",
-          _1: "Level 1 {=m1}{=m2}",
-        },
-        "*": {
-          "*": "Level 1 {=m1}{=m2}",
-          _1: "Level 1 {=m1}{=m2}",
-        },
+        "*": "Level 1 {=m1}{=m2}",
+        _1: "Level 1 {=m1}{=m2}",
       },
     },
-    [
-      fbt_sv_arg_0,
-      fbt_sv_arg_1,
-      fbt_sv_arg_2,
-      fbt._implicitParam(
-        "=m1",
-        /*#__PURE__*/ React.createElement(
-          "a",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._subject(g0)),
+    (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
+    (fbt_sv_arg_2 = fbt._plural(num, "foo")),
+    fbt._implicitParam(
+      "=m1",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        {
+          href: "#new",
+        },
+        fbt._(
           {
-            href: "#new",
+            "*": {
+              1: {
+                "*": "her some_pronoun",
+                _1: "her some_pronoun",
+              },
+              2: {
+                "*": "his some_pronoun",
+                _1: "his some_pronoun",
+              },
+              "*": {
+                "*": "their some_pronoun",
+                _1: "their some_pronoun",
+              },
+            },
           },
-          fbt._(
-            {
+          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          {
+            hk: "4sbfj7",
+          }
+        )
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": {
+              1: {
+                "*": "Level 2 {foo} cats",
+                _1: "Level 2 1 cat",
+              },
+              2: {
+                "*": "Level 2 {foo} cats",
+                _1: "Level 2 1 cat",
+              },
               "*": {
-                1: {
-                  "*": "her some_pronoun",
-                  _1: "her some_pronoun",
-                },
-                2: {
-                  "*": "his some_pronoun",
-                  _1: "his some_pronoun",
-                },
-                "*": {
-                  "*": "their some_pronoun",
-                  _1: "their some_pronoun",
-                },
+                "*": "Level 2 {foo} cats",
+                _1: "Level 2 1 cat",
               },
             },
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
-            {
-              hk: "4sbfj7",
-            }
-          )
+          },
+          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          {
+            hk: "2Eow7W",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
-              "*": {
-                1: {
-                  "*": "Level 2 {foo} cats",
-                  _1: "Level 2 1 cat",
-                },
-                2: {
-                  "*": "Level 2 {foo} cats",
-                  _1: "Level 2 1 cat",
-                },
-                "*": {
-                  "*": "Level 2 {foo} cats",
-                  _1: "Level 2 1 cat",
-                },
-              },
-            },
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
-            {
-              hk: "2Eow7W",
-            }
-          )
-        )
-      ),
-    ],
-    {
-      hk: "3S7xV4",
-    }
-  );
+      )
+    ),
+  ],
+  {
+    hk: "3S7xV4",
+  }
+);
 
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings with substrings that look identical 1`] = `
 var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
 import { fbt } from "fbtee";
-(fbt_sv_arg_0 = fbt._subject(g0)),
-  (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
-  (fbt_sv_arg_2 = fbt._pronoun(1, g2)),
-  fbt._(
-    {
+fbt._(
+  {
+    "*": {
+      1: {
+        1: "Level 1 {=m1}{=m2}",
+        2: "Level 1 {=m1}{=m2}",
+        "*": "Level 1 {=m1}{=m2}",
+      },
+      2: {
+        1: "Level 1 {=m1}{=m2}",
+        2: "Level 1 {=m1}{=m2}",
+        "*": "Level 1 {=m1}{=m2}",
+      },
       "*": {
-        1: {
-          1: "Level 1 {=m1}{=m2}",
-          2: "Level 1 {=m1}{=m2}",
-          "*": "Level 1 {=m1}{=m2}",
-        },
-        2: {
-          1: "Level 1 {=m1}{=m2}",
-          2: "Level 1 {=m1}{=m2}",
-          "*": "Level 1 {=m1}{=m2}",
-        },
-        "*": {
-          1: "Level 1 {=m1}{=m2}",
-          2: "Level 1 {=m1}{=m2}",
-          "*": "Level 1 {=m1}{=m2}",
-        },
+        1: "Level 1 {=m1}{=m2}",
+        2: "Level 1 {=m1}{=m2}",
+        "*": "Level 1 {=m1}{=m2}",
       },
     },
-    [
-      fbt_sv_arg_0,
-      fbt_sv_arg_1,
-      fbt_sv_arg_2,
-      fbt._implicitParam(
-        "=m1",
-        /*#__PURE__*/ React.createElement(
-          "a",
+  },
+  [
+    (fbt_sv_arg_0 = fbt._subject(g0)),
+    (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
+    (fbt_sv_arg_2 = fbt._pronoun(1, g2)),
+    fbt._implicitParam(
+      "=m1",
+      /*#__PURE__*/ React.createElement(
+        "a",
+        {
+          href: "#new",
+        },
+        fbt._(
           {
-            href: "#new",
+            "*": {
+              1: {
+                1: "her some_pronoun",
+                2: "her some_pronoun",
+                "*": "her some_pronoun",
+              },
+              2: {
+                1: "his some_pronoun",
+                2: "his some_pronoun",
+                "*": "his some_pronoun",
+              },
+              "*": {
+                1: "their some_pronoun",
+                2: "their some_pronoun",
+                "*": "their some_pronoun",
+              },
+            },
           },
-          fbt._(
-            {
-              "*": {
-                1: {
-                  1: "her some_pronoun",
-                  2: "her some_pronoun",
-                  "*": "her some_pronoun",
-                },
-                2: {
-                  1: "his some_pronoun",
-                  2: "his some_pronoun",
-                  "*": "his some_pronoun",
-                },
-                "*": {
-                  1: "their some_pronoun",
-                  2: "their some_pronoun",
-                  "*": "their some_pronoun",
-                },
-              },
-            },
-            [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
-            {
-              hk: "3VitZN",
-            }
-          )
+          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          {
+            hk: "3VitZN",
+          }
         )
-      ),
-      fbt._implicitParam(
-        "=m2",
-        /*#__PURE__*/ React.createElement(
-          "b",
-          null,
-          fbt._(
-            {
+      )
+    ),
+    fbt._implicitParam(
+      "=m2",
+      /*#__PURE__*/ React.createElement(
+        "b",
+        null,
+        fbt._(
+          {
+            "*": {
+              1: {
+                1: "Level 2 {=m1}",
+                2: "Level 2 {=m1}",
+                "*": "Level 2 {=m1}",
+              },
+              2: {
+                1: "Level 2 {=m1}",
+                2: "Level 2 {=m1}",
+                "*": "Level 2 {=m1}",
+              },
               "*": {
-                1: {
-                  1: "Level 2 {=m1}",
-                  2: "Level 2 {=m1}",
-                  "*": "Level 2 {=m1}",
-                },
-                2: {
-                  1: "Level 2 {=m1}",
-                  2: "Level 2 {=m1}",
-                  "*": "Level 2 {=m1}",
-                },
-                "*": {
-                  1: "Level 2 {=m1}",
-                  2: "Level 2 {=m1}",
-                  "*": "Level 2 {=m1}",
-                },
+                1: "Level 2 {=m1}",
+                2: "Level 2 {=m1}",
+                "*": "Level 2 {=m1}",
               },
             },
-            [
-              fbt_sv_arg_0,
-              fbt_sv_arg_1,
-              fbt_sv_arg_2,
-              fbt._implicitParam(
-                "=m1",
-                /*#__PURE__*/ React.createElement(
-                  "a",
+          },
+          [
+            fbt_sv_arg_0,
+            fbt_sv_arg_1,
+            fbt_sv_arg_2,
+            fbt._implicitParam(
+              "=m1",
+              /*#__PURE__*/ React.createElement(
+                "a",
+                {
+                  href: "#new",
+                },
+                fbt._(
                   {
-                    href: "#new",
-                  },
-                  fbt._(
-                    {
+                    "*": {
+                      1: {
+                        1: "her some_pronoun",
+                        2: "his some_pronoun",
+                        "*": "their some_pronoun",
+                      },
+                      2: {
+                        1: "her some_pronoun",
+                        2: "his some_pronoun",
+                        "*": "their some_pronoun",
+                      },
                       "*": {
-                        1: {
-                          1: "her some_pronoun",
-                          2: "his some_pronoun",
-                          "*": "their some_pronoun",
-                        },
-                        2: {
-                          1: "her some_pronoun",
-                          2: "his some_pronoun",
-                          "*": "their some_pronoun",
-                        },
-                        "*": {
-                          1: "her some_pronoun",
-                          2: "his some_pronoun",
-                          "*": "their some_pronoun",
-                        },
+                        1: "her some_pronoun",
+                        2: "his some_pronoun",
+                        "*": "their some_pronoun",
                       },
                     },
-                    [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
-                    {
-                      hk: "3LBN3N",
-                    }
-                  )
+                  },
+                  [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+                  {
+                    hk: "3LBN3N",
+                  }
                 )
-              ),
-            ],
-            {
-              hk: "2SjiyB",
-            }
-          )
+              )
+            ),
+          ],
+          {
+            hk: "2SjiyB",
+          }
         )
-      ),
-    ],
-    {
-      hk: "4anRqJ",
-    }
-  );
+      )
+    ),
+  ],
+  {
+    hk: "4anRqJ",
+  }
+);
 
 `;
 
