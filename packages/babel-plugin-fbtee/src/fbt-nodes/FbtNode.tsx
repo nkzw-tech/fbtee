@@ -1,10 +1,10 @@
-import type { Scope } from '@babel/traverse';
 import {
   CallExpression,
   isCallExpression,
   isNewExpression,
   JSXOpeningElement,
   Node,
+  traverseFast,
 } from '@babel/types';
 import type { BindingName, FbtOptionConfig } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
@@ -395,7 +395,7 @@ export default abstract class FbtNode<
    *  fbt:plural: the 'count' value. 'value' is okay
    *  fbt:pronoun: the 'gender' value
    */
-  throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(scope: Scope) {
+  throwIfAnyArgumentContainsFunctionCallOrClassInstantiation() {
     const argsToCheck =
       this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
     const { moduleName } = this;
@@ -408,19 +408,15 @@ export default abstract class FbtNode<
             `Store the value in a variable before using it in ${moduleName}.`,
         );
       }
-      scope.traverse(
-        argument,
-        {
-          'CallExpression|NewExpression'(path) {
-            throw errorAt(
-              path.node,
-              `Argument '${argumentName}' cannot contain a function call or class instantiation. ` +
-                `Store the value in a variable before using it in ${moduleName}.`,
-            );
-          },
-        },
-        scope,
-      );
+      traverseFast(argument, (node) => {
+        if (isCallExpression(node) || isNewExpression(node)) {
+          throw errorAt(
+            node,
+            `Argument '${argumentName}' cannot contain a function call or class instantiation. ` +
+              `Store the value in a variable before using it in ${moduleName}.`,
+          );
+        }
+      });
     }
   }
 

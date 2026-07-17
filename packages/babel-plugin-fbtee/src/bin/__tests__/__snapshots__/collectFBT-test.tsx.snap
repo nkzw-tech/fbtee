@@ -273,8 +273,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
               "attributes": [
                 Node {
                   "end": 120,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 36,
@@ -291,8 +289,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                   },
                   "name": Node {
                     "end": 108,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 24,
@@ -309,11 +305,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "className",
                     "start": 99,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 99,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 120,
@@ -321,8 +315,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 36,
@@ -338,15 +330,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       },
                     },
                     "start": 109,
-                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "neatoLink",
                   },
                 },
                 Node {
                   "end": 152,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 68,
@@ -363,8 +352,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                   },
                   "name": Node {
                     "end": 125,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 41,
@@ -381,11 +368,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "href",
                     "start": 121,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 121,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 152,
@@ -393,8 +378,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       "raw": ""https://somewhere.random"",
                       "rawValue": "https://somewhere.random",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 68,
@@ -410,15 +393,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       },
                     },
                     "start": 126,
-                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "https://somewhere.random",
                   },
                 },
                 Node {
                   "end": 167,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 83,
@@ -435,8 +415,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                   },
                   "name": Node {
                     "end": 161,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 77,
@@ -453,11 +431,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "tabindex",
                     "start": 153,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 153,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 167,
@@ -467,8 +443,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "innerComments": undefined,
-                      "leadingComments": undefined,
                       "loc": SourceLocation {
                         "end": Position {
                           "column": 82,
@@ -484,12 +458,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                         },
                       },
                       "start": 163,
-                      "trailingComments": undefined,
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 83,
@@ -505,14 +476,11 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       },
                     },
                     "start": 162,
-                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
                 Node {
                   "end": 179,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 95,
@@ -529,8 +497,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                   },
                   "name": Node {
                     "end": 170,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 86,
@@ -547,11 +513,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                     },
                     "name": "id",
                     "start": 168,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 168,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 179,
@@ -561,8 +525,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                         "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "innerComments": undefined,
-                      "leadingComments": undefined,
                       "loc": SourceLocation {
                         "end": Position {
                           "column": 94,
@@ -578,12 +540,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                         },
                       },
                       "start": 172,
-                      "trailingComments": undefined,
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 95,
@@ -599,14 +558,11 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                       },
                     },
                     "start": 171,
-                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
               ],
               "end": 180,
-              "innerComments": undefined,
-              "leadingComments": undefined,
               "loc": SourceLocation {
                 "end": Position {
                   "column": 96,
@@ -623,8 +579,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
               },
               "name": Node {
                 "end": 98,
-                "innerComments": undefined,
-                "leadingComments": undefined,
                 "loc": SourceLocation {
                   "end": Position {
                     "column": 14,
@@ -641,12 +595,10 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes when needed 1`]
                 },
                 "name": "a",
                 "start": 97,
-                "trailingComments": undefined,
                 "type": "JSXIdentifier",
               },
               "selfClosing": false,
               "start": 96,
-              "trailingComments": undefined,
               "type": "JSXOpeningElement",
             },
             "props": {
@@ -770,8 +722,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                 "node": Node {
                   "attributes": [],
                   "end": 321,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 20,
@@ -788,8 +738,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                   },
                   "name": Node {
                     "end": 320,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 19,
@@ -806,12 +754,10 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "strong",
                     "start": 314,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "selfClosing": false,
                   "start": 313,
-                  "trailingComments": undefined,
                   "type": "JSXOpeningElement",
                 },
                 "props": {},
@@ -829,8 +775,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
               "attributes": [
                 Node {
                   "end": 263,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 34,
@@ -847,8 +791,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                   },
                   "name": Node {
                     "end": 251,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 22,
@@ -865,11 +807,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "className",
                     "start": 242,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 242,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 263,
@@ -877,8 +817,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       "raw": ""neatoLink"",
                       "rawValue": "neatoLink",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 34,
@@ -894,15 +832,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       },
                     },
                     "start": 252,
-                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "neatoLink",
                   },
                 },
                 Node {
                   "end": 272,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 43,
@@ -919,8 +854,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                   },
                   "name": Node {
                     "end": 268,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 39,
@@ -937,11 +870,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "href",
                     "start": 264,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 264,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 272,
@@ -949,8 +880,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       "raw": ""#"",
                       "rawValue": "#",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 43,
@@ -966,15 +895,12 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       },
                     },
                     "start": 269,
-                    "trailingComments": undefined,
                     "type": "StringLiteral",
                     "value": "#",
                   },
                 },
                 Node {
                   "end": 287,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 58,
@@ -991,8 +917,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                   },
                   "name": Node {
                     "end": 281,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 52,
@@ -1009,11 +933,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "tabindex",
                     "start": 273,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 273,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 287,
@@ -1023,8 +945,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                         "raw": "123",
                         "rawValue": 123,
                       },
-                      "innerComments": undefined,
-                      "leadingComments": undefined,
                       "loc": SourceLocation {
                         "end": Position {
                           "column": 57,
@@ -1040,12 +960,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                         },
                       },
                       "start": 283,
-                      "trailingComments": undefined,
                       "type": "NumericLiteral",
                       "value": 123,
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 58,
@@ -1061,14 +978,11 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       },
                     },
                     "start": 282,
-                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
                 Node {
                   "end": 299,
-                  "innerComments": undefined,
-                  "leadingComments": undefined,
                   "loc": SourceLocation {
                     "end": Position {
                       "column": 70,
@@ -1085,8 +999,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                   },
                   "name": Node {
                     "end": 290,
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 61,
@@ -1103,11 +1015,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                     },
                     "name": "id",
                     "start": 288,
-                    "trailingComments": undefined,
                     "type": "JSXIdentifier",
                   },
                   "start": 288,
-                  "trailingComments": undefined,
                   "type": "JSXAttribute",
                   "value": Node {
                     "end": 299,
@@ -1117,8 +1027,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                         "raw": ""uniq"",
                         "rawValue": "uniq",
                       },
-                      "innerComments": undefined,
-                      "leadingComments": undefined,
                       "loc": SourceLocation {
                         "end": Position {
                           "column": 69,
@@ -1134,12 +1042,9 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                         },
                       },
                       "start": 292,
-                      "trailingComments": undefined,
                       "type": "StringLiteral",
                       "value": "uniq",
                     },
-                    "innerComments": undefined,
-                    "leadingComments": undefined,
                     "loc": SourceLocation {
                       "end": Position {
                         "column": 70,
@@ -1155,14 +1060,11 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                       },
                     },
                     "start": 291,
-                    "trailingComments": undefined,
                     "type": "JSXExpressionContainer",
                   },
                 },
               ],
               "end": 300,
-              "innerComments": undefined,
-              "leadingComments": undefined,
               "loc": SourceLocation {
                 "end": Position {
                   "column": 71,
@@ -1179,8 +1081,6 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
               },
               "name": Node {
                 "end": 241,
-                "innerComments": undefined,
-                "leadingComments": undefined,
                 "loc": SourceLocation {
                   "end": Position {
                     "column": 12,
@@ -1197,12 +1097,10 @@ exports[`collectFbt fbt nodes: should expose the FbtElementNodes where there are
                 },
                 "name": "a",
                 "start": 240,
-                "trailingComments": undefined,
                 "type": "JSXIdentifier",
               },
               "selfClosing": false,
               "start": 239,
-              "trailingComments": undefined,
               "type": "JSXOpeningElement",
             },
             "props": {
@@ -1638,8 +1536,6 @@ exports[`collectFbt should expose the subject option on top level and inner phra
       "project": "",
       "subject": Node {
         "end": 81,
-        "innerComments": undefined,
-        "leadingComments": undefined,
         "loc": SourceLocation {
           "end": Position {
             "column": 52,
@@ -1656,7 +1552,6 @@ exports[`collectFbt should expose the subject option on top level and inner phra
         },
         "name": "aSubject",
         "start": 73,
-        "trailingComments": undefined,
         "type": "Identifier",
       },
     },
@@ -1693,8 +1588,6 @@ exports[`collectFbt should expose the subject option on top level and inner phra
       "project": "",
       "subject": Node {
         "end": 81,
-        "innerComments": undefined,
-        "leadingComments": undefined,
         "loc": SourceLocation {
           "end": Position {
             "column": 52,
@@ -1711,7 +1604,6 @@ exports[`collectFbt should expose the subject option on top level and inner phra
         },
         "name": "aSubject",
         "start": 73,
-        "trailingComments": undefined,
         "type": "Identifier",
       },
     },

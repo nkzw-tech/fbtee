@@ -1,6 +1,5 @@
-import babel from '@babel/core';
-// eslint-disable-next-line import-x/no-unresolved
-import pluginSyntaxAttributes from '@babel/plugin-syntax-import-attributes';
+import { createHash } from 'node:crypto';
+import { transformSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
 import presetTypescript from '@babel/preset-typescript';
 import { transformSync as swcTransformSync } from '@swc/core';
@@ -20,6 +19,15 @@ const getFbteeOptions = (opts) => {
 };
 
 const createTransformer = (opts = {}) => ({
+  getCacheKey: (source, filename, { configString }) =>
+    createHash('sha256')
+      .update(source)
+      .update(filename)
+      .update(configString)
+      .update(JSON.stringify(opts))
+      .update(process.env.FBTEE_JEST_COMPILER || 'babel')
+      .update('babel-8')
+      .digest('hex'),
   process: (src, filename) => {
     const fbteeOptions = getFbteeOptions(opts);
     if (process.env.FBTEE_JEST_COMPILER === 'swc' && fbteeOptions) {
@@ -48,9 +56,8 @@ const createTransformer = (opts = {}) => ({
       });
     }
 
-    return babel.transform(src, {
+    return transformSync(src, {
       filename,
-      plugins: [pluginSyntaxAttributes],
       presets: [
         ...(opts?.presets || []),
         [
@@ -59,7 +66,7 @@ const createTransformer = (opts = {}) => ({
             runtime: 'automatic',
           },
         ],
-        presetTypescript,
+        [presetTypescript, { onlyRemoveTypeImports: false }],
       ],
       retainLines: true,
     });

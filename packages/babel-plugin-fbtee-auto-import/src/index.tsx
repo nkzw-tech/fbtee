@@ -1,4 +1,4 @@
-import { NodePath } from '@babel/core';
+import type { NodePath } from '@babel/core';
 import {
   identifier,
   importDeclaration,
@@ -20,7 +20,7 @@ export default function autoImport() {
         if (
           isJSXIdentifier(name) &&
           BindingNames.has(name.name) &&
-          !path.context.scope.getBinding(name.name)
+          !path.scope.getBinding(name.name)
         ) {
           const declaration = importDeclaration(
             [importSpecifier(identifier(name.name), identifier(name.name))],

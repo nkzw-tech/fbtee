@@ -23,7 +23,7 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.29.7",
+    "@babel/core": "^8.0.1",
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
     "@rolldown/plugin-babel": "^0.2.3",
     "@vitejs/plugin-react": "^6.0.3",

@@ -421,7 +421,7 @@ baz();
 
 exports[`Test declarative (jsx) fbt syntax translation should support html escapes 1`] = `
 import { fbt } from "fbtee";
-fbt._("\\xD7", null, {
+fbt._("×", null, {
   hk: "2jQoIS",
 });
 
@@ -439,7 +439,7 @@ exports[`Test declarative (jsx) fbt syntax translation should support unicode ch
 import { fbt } from "fbtee";
 // A backslash \\ in comments
 fbt._(
-  "A copyright sign \\xA9, a multi byte character \\uD83D\\uDCA9, and a backslash \\\\.",
+  "A copyright sign ©, a multi byte character 💩, and a backslash \\\\.",
   null,
   {
     hk: "4w0iJW",

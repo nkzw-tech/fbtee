@@ -27,6 +27,7 @@
     "build": "tsdown src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --dts"
   },
   "dependencies": {
+    "@babel/core": "^8.0.1",
     "@nkzw/babel-plugin-fbtee": "workspace:*",
     "@nkzw/babel-plugin-fbtee-auto-import": "workspace:*"
   }

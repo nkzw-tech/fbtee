@@ -60,7 +60,7 @@ export type PluginOptions = {
   // We will only accept them at the parsing phase and output them when rendering fbt._() callsites,
   // without doing any further processing on them.
   // We only accept plain string literals as option values at the moment.
-  extraOptions: FbtOptionConfig;
+  extraOptions?: FbtOptionConfig;
   fbtCommon?: FbtCommonMap | null;
   // Function that would return an fbt manifest object
   fbtEnumManifest?: EnumManifest | null;

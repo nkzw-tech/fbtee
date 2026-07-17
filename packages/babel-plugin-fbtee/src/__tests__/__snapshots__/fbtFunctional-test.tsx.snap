@@ -1022,8 +1022,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "project": "",
     "subject": Node {
       "end": 576,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
@@ -1040,7 +1038,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
       },
       "name": "subjectValue",
       "start": 564,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -1081,8 +1078,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "project": "",
     "subject": Node {
       "end": 576,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
@@ -1099,7 +1094,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
       },
       "name": "subjectValue",
       "start": 564,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },
@@ -1137,8 +1131,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
     "project": "",
     "subject": Node {
       "end": 576,
-      "innerComments": undefined,
-      "leadingComments": undefined,
       "loc": SourceLocation {
         "end": Position {
           "column": 31,
@@ -1155,7 +1147,6 @@ exports[`Functional FBT API using array arguments: Meta-data collection should c
       },
       "name": "subjectValue",
       "start": 564,
-      "trailingComments": undefined,
       "type": "Identifier",
     },
   },

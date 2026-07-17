@@ -9,7 +9,7 @@ const transform = (source: string) =>
   transformSync(source, {
     ast: false,
     plugins: [fbtAutoImport, fbtee],
-    presets: [presetReact],
+    presets: [[presetReact, { runtime: 'classic' }]],
     sourceType: 'module',
   })?.code || '';
 

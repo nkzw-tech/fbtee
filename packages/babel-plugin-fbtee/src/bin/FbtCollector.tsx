@@ -1,4 +1,4 @@
-import type { PluginItem } from '@babel/core';
+import type { PluginItem, PresetItem } from '@babel/core';
 import { transformSync } from '@babel/core';
 import babelPluginSyntaxDecorators from '@babel/plugin-syntax-decorators';
 import presetReact from '@babel/preset-react';
@@ -27,7 +27,7 @@ export type CollectorConfig = {
   fbtCommon?: FbtCommonMap | null;
   generateOuterTokenName?: boolean;
   plugins?: ReadonlyArray<PluginItem>;
-  presets?: ReadonlyArray<PluginItem>;
+  presets?: ReadonlyArray<PresetItem>;
   transform?: ExternalTransform | null;
 };
 type ParentPhraseIndex = number;
@@ -68,29 +68,29 @@ const transform = (
   code: string,
   options: { disableBabelConfig: boolean; filename: string | null },
   plugins: ReadonlyArray<PluginItem>,
-  presets: ReadonlyArray<PluginItem>,
+  presets: ReadonlyArray<PresetItem>,
 ) => {
   transformSync(code, {
     ast: false,
     code: false,
     configFile: !options.disableBabelConfig,
-    filename: options.filename,
+    filename: options.filename ?? undefined,
     plugins: [
       fbtAutoImport,
       [fbt, options],
       ...(options.disableBabelConfig
-        ? [[babelPluginSyntaxDecorators, { version: '2023-11' }]]
+        ? [[babelPluginSyntaxDecorators, { version: '2023-11' }] as PluginItem]
         : []),
       ...plugins,
     ],
     presets: [
-      presetTypescript,
+      presetTypescript as PresetItem,
       [
         presetReact,
         {
           runtime: 'automatic',
         },
-      ],
+      ] as PresetItem,
       ...presets,
     ],
     sourceType: 'unambiguous',

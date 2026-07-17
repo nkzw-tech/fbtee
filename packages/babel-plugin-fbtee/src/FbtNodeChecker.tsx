@@ -76,7 +76,7 @@ export default class FbtNodeChecker {
   }
 
   isJSModuleBound<T extends Node>(path: NodePath<T>): boolean {
-    const binding = path.context.scope.getBinding(this.moduleName);
+    const binding = path.scope.getBinding(this.moduleName);
     return !!(binding && binding.path.node);
   }
 

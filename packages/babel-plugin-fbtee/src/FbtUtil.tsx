@@ -292,8 +292,14 @@ export function errorAt(
   return error as ErrorWithNodeLocation;
 }
 
+type Generate = typeof generate;
+const generateCode =
+  typeof generate === 'function'
+    ? generate
+    : (generate as unknown as { default: Generate }).default;
+
 const generateFormattedCodeFromAST = (node: Node) =>
-  generate.default(node, { comments: true }, '').code.trim();
+  generateCode(node, { comments: true }, '').code.trim();
 
 function createErrorMessageAtNode(
   astNode?: Node | null,

@@ -266,9 +266,7 @@ export default class FbtFunctionCallProcessor {
     metaPhrases: ReadonlyArray<MetaPhrase>,
   ) {
     metaPhrases[0].compactStringVariations.array.map((svArg) =>
-      svArg.fbtNode.throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(
-        this.path.context.scope,
-      ),
+      svArg.fbtNode.throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(),
     );
   }
 
@@ -381,7 +379,7 @@ export default class FbtFunctionCallProcessor {
       identifierSuffix++
     ) {
       const name = `${STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX}_${identifierSuffix}`;
-      if (this.path.context.scope.getBinding(name) == null) {
+      if (this.path.scope.getBinding(name) == null) {
         identifiers.push(identifier(name));
         numIdentifierCreated++;
       }

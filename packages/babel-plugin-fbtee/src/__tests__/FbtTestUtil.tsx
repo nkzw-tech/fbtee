@@ -1,17 +1,17 @@
-import { PluginOptions, transformSync } from '@babel/core';
+import { transformSync } from '@babel/core';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
 import presetReact from '@babel/preset-react';
 import presetTypeScript from '@babel/preset-typescript';
 import prettier from 'prettier-2';
-import fbt from '../index.tsx';
+import fbt, { PluginOptions } from '../index.tsx';
 
 export function transform(source: string, pluginOptions?: PluginOptions) {
   return (
     transformSync(source, {
       ast: false,
       filename: 'source.js',
-      plugins: [[fbt, pluginOptions]],
-      presets: [presetTypeScript, presetReact],
+      plugins: [[fbt, pluginOptions ?? {}]],
+      presets: [presetTypeScript, [presetReact, { runtime: 'classic' }]],
       sourceType: 'module',
     })?.code || ''
   );
@@ -29,7 +29,7 @@ const transformKeepJsx = (source: string, pluginOptions?: PluginOptions) =>
     transformSync(source, {
       ast: false,
       filename: 'source.js',
-      plugins: [syntaxJSX, [fbt, pluginOptions]],
+      plugins: [syntaxJSX, [fbt, pluginOptions ?? {}]],
       presets: [presetTypeScript],
       sourceType: 'module',
     })?.code || '',
