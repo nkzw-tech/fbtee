@@ -88,8 +88,7 @@ type CompactStringVariations = {
 // will become identifiers(references to local variables) if there exist string variations
 // AND inner strings.
 type StringVariationRuntimeArgumentNodes =
-  | Array<Identifier>
-  | Array<CallExpression>;
+  Array<Identifier> | Array<CallExpression>;
 
 const emptyArgsCombinations: [[]] = [[]];
 const STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX = 'fbt_sv_arg';

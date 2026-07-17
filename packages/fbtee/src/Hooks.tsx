@@ -31,15 +31,11 @@ export type ResolverFn<T extends BaseResult | string> = (
  *  See the docblock for fbt._ for an example of the nested table and its behavior
  */
 export type FbtRuntimeInput =
-  | PatternString
-  | [PatternString, PatternHash]
-  | FbtInputTable;
+  PatternString | [PatternString, PatternHash] | FbtInputTable;
 
 type FbtInputBranch = {
   [K in FbtTableKey]:
-    | PatternString
-    | [PatternString, PatternHash]
-    | FbtInputBranch;
+    PatternString | [PatternString, PatternHash] | FbtInputBranch;
 };
 
 export type FbtInputTable = Record<

@@ -62,9 +62,7 @@ import nullthrows from './nullthrows.tsx';
 const { hasOwnProperty } = Object.prototype;
 
 export type CallExpressionArg =
-  | Expression
-  | SpreadElement
-  | ArgumentPlaceholder;
+  Expression | SpreadElement | ArgumentPlaceholder;
 export type CallExpressionArgument = CallExpression['arguments'][number];
 export type ParamSet = {
   [parameterName: string]: Node | null;

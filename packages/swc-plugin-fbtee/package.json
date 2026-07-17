@@ -31,7 +31,7 @@
     "test:e2e": "pnpm run build && node test/e2e.mjs"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.33"
+    "@swc/core": "^1.15.43"
   },
   "peerDependencies": {
     "@swc/core": "^1.15.0"

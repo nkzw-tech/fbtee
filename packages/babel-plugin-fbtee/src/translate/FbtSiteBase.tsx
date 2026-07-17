@@ -27,8 +27,7 @@ export type FbtSiteHashToText = Partial<Record<PatternHash, PatternString>>;
  * }
  */
 export type FbtSiteHashifiedTableJSFBTTree =
-  | PatternHash
-  | { [K in FbtTableKey]: FbtSiteHashifiedTableJSFBTTree };
+  PatternHash | { [K in FbtTableKey]: FbtSiteHashifiedTableJSFBTTree };
 
 /**
  * Represents a fbt() or <fbt /> source data from a callsite and all

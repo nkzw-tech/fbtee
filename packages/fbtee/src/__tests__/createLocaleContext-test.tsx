@@ -129,13 +129,12 @@ test('loading locales mutates the translations object', async () => {
       ['de_AT', 'German'],
     ]),
     clientLocales: ['en_US', 'de_AT'],
-    loadLocale: jest.fn(
-      async (locale: string): TranslationPromise =>
-        locale === 'de_AT'
-          ? {
-              Hey: 'Banane',
-            }
-          : {},
+    loadLocale: jest.fn(async (locale: string): TranslationPromise =>
+      locale === 'de_AT'
+        ? {
+            Hey: 'Banane',
+          }
+        : {},
     ),
     translations,
   });

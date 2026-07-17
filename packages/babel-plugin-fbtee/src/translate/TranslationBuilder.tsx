@@ -37,10 +37,7 @@ export type HashToTranslation = Partial<
  * a tuple of translation and hash if `inclHash` is true
  */
 type TranslationLeaf =
-  | string
-  | null
-  | undefined
-  | [string | null | undefined, PatternHash];
+  string | null | undefined | [string | null | undefined, PatternHash];
 
 type TranslationTree =
   | TranslationLeaf

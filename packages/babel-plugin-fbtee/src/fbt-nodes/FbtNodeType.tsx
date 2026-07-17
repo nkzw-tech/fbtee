@@ -1,17 +1,8 @@
 export type ConcreteFbtNodeType =
-  | 'enum'
-  | 'list'
-  | 'name'
-  | 'param'
-  | 'plural'
-  | 'pronoun'
-  | 'sameParam';
+  'enum' | 'list' | 'name' | 'param' | 'plural' | 'pronoun' | 'sameParam';
 
 export type FbtNodeType =
-  | ConcreteFbtNodeType
-  | 'element'
-  | 'implicitParam'
-  | 'text';
+  ConcreteFbtNodeType | 'element' | 'implicitParam' | 'text';
 
 export const isConcreteFbtNode = (node: string): node is ConcreteFbtNodeType =>
   node === 'enum' ||
