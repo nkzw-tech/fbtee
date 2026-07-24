@@ -29,7 +29,14 @@ export { default as replaceClearTokensWithTokenAliases } from './replaceClearTok
 export { mapLeaves } from './JSFbtUtil.tsx';
 export { ModuleName, BindingNames } from './FbtConstants.tsx';
 export type { FbtTableKey, PatternHash, PatternString };
-export type { TranslationGroup } from './bin/translateUtils.tsx';
+export { processJSON } from './bin/translateUtils.tsx';
+export type {
+  LocaleToHashToTranslationResult,
+  Options as TranslateOptions,
+  TranslatedGroups,
+  TranslationGroup,
+  Translations,
+} from './bin/translateUtils.tsx';
 
 const isRequireCall = (node: CallExpression) =>
   node.type === 'CallExpression' &&
