@@ -1,17 +1,31 @@
+use indexmap::IndexMap;
 use serde::Deserialize;
 use std::collections::{BTreeMap, BTreeSet};
 use swc_core::{
-    common::DUMMY_SP,
+    common::{comments::Comments, Span, Spanned, DUMMY_SP},
     ecma::{
         ast::*,
         atoms::Wtf8Atom,
-        visit::{noop_visit_mut_type, VisitMut, VisitMutWith},
+        utils::number::ToJsString,
+        visit::{noop_visit_mut_type, Visit, VisitMut, VisitMutWith, VisitWith},
     },
     plugin::{plugin_transform, proxies::TransformPluginProgramMetadata},
 };
 
 const GENDER: i32 = 1;
 const NUMBER: i32 = 0;
+const FBT_OPTIONS: &[&str] = &[
+    "author",
+    "common",
+    "doNotExtract",
+    "preserveWhitespace",
+    "project",
+    "subject",
+];
+const PARAM_OPTIONS: &[&str] = &["gender", "number", "name"];
+const PLURAL_OPTIONS: &[&str] = &["many", "name", "showCount", "value", "count"];
+const PRONOUN_OPTIONS: &[&str] = &["capitalize", "human"];
+const PRONOUN_USAGES: &[&str] = &["object", "possessive", "reflexive", "subject"];
 
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -21,12 +35,14 @@ struct PluginOptions {
     #[serde(default)]
     fbt_common: BTreeMap<String, String>,
     #[serde(default)]
-    fbt_enum_manifest: BTreeMap<String, BTreeMap<String, String>>,
+    fbt_enum_manifest: IndexMap<String, IndexMap<String, String>>,
+    #[serde(default)]
+    fbt_enum_manifest_entries: Vec<(String, Vec<(String, String)>)>,
 }
 
 #[plugin_transform]
 pub fn process_transform(program: Program, metadata: TransformPluginProgramMetadata) -> Program {
-    let options = match metadata.get_transform_plugin_config() {
+    let mut options = match metadata.get_transform_plugin_config() {
         Some(config) => serde_json::from_str::<PluginOptions>(&config).unwrap_or_else(|error| {
             compile_error(&format!(
                 "Invalid fbtee SWC plugin config. Received '{error}'."
@@ -34,20 +50,59 @@ pub fn process_transform(program: Program, metadata: TransformPluginProgramMetad
         }),
         None => PluginOptions::default(),
     };
+    if !options.fbt_enum_manifest_entries.is_empty() {
+        if !options.fbt_enum_manifest.is_empty() {
+            compile_error(
+                "Options 'fbtEnumManifest' and 'fbtEnumManifestEntries' cannot be combined.",
+            );
+        }
+        options.fbt_enum_manifest = std::mem::take(&mut options.fbt_enum_manifest_entries)
+            .into_iter()
+            .map(|(module, entries)| (module, entries.into_iter().collect()))
+            .collect();
+    } else if !options.fbt_enum_manifest.is_empty() {
+        compile_error(
+            "Option 'fbtEnumManifest' must be passed through createFbteePluginOptions from '@nkzw/swc-plugin-fbtee/index.js' so enum key order is preserved.",
+        );
+    }
     if options.collect_fbt {
         compile_error(
             "Option 'collectFbt' is not supported by the fbtee SWC runtime compiler. Use the Babel collector to extract phrases.",
         );
     }
 
+    let first_item_position = match &program {
+        Program::Module(module) => module
+            .body
+            .first()
+            .map_or_else(|| program.span().lo, |item| item.span().lo),
+        Program::Script(script) => script
+            .body
+            .first()
+            .map_or_else(|| program.span().lo, |statement| statement.span().lo),
+    };
+    let default_project = metadata
+        .comments
+        .as_ref()
+        .and_then(|comments| {
+            comments
+                .get_leading(program.span().lo)
+                .or_else(|| comments.get_leading(first_item_position))
+        })
+        .and_then(|comments| comments.first().cloned())
+        .map(|comment| parse_docblock_project(comment.text.as_ref()))
+        .transpose()
+        .unwrap_or_else(|error| compile_error(&error))
+        .flatten();
+
     let mut program = program;
-    program.visit_mut_with(&mut FbteeTransform::new(options));
+    program.visit_mut_with(&mut FbteeTransform::new(options, default_project));
     program
 }
 
 struct FbteeTransform {
     options: PluginOptions,
-    imported_enums: BTreeMap<String, BTreeMap<String, String>>,
+    imported_enums: BTreeMap<String, IndexMap<String, String>>,
     local_bindings: Vec<BTreeMap<String, LocalBinding>>,
     seen_fbs_import: bool,
     seen_fbt_import: bool,
@@ -55,6 +110,7 @@ struct FbteeTransform {
     fbt_ident: Option<Ident>,
     used_fbs: bool,
     used_fbt: bool,
+    default_project: Option<String>,
 }
 
 #[derive(Clone)]
@@ -64,7 +120,7 @@ enum LocalBinding {
 }
 
 impl FbteeTransform {
-    fn new(options: PluginOptions) -> Self {
+    fn new(options: PluginOptions, default_project: Option<String>) -> Self {
         Self {
             options,
             imported_enums: BTreeMap::new(),
@@ -75,6 +131,7 @@ impl FbteeTransform {
             fbt_ident: None,
             used_fbs: false,
             used_fbt: false,
+            default_project,
         }
     }
 
@@ -136,14 +193,14 @@ impl FbteeTransform {
         }
     }
 
-    fn mark_imported_binding(&mut self, ident: &Ident) {
+    fn mark_imported_binding(&mut self, ident: &Ident, runtime: bool) {
         match ident.sym.as_ref() {
             "fbt" => {
-                self.seen_fbt_import = true;
+                self.seen_fbt_import |= runtime;
                 self.fbt_ident = Some(ident.clone());
             }
             "fbs" => {
-                self.seen_fbs_import = true;
+                self.seen_fbs_import |= runtime;
                 self.fbs_ident = Some(ident.clone());
             }
             _ => {}
@@ -188,13 +245,16 @@ impl FbteeTransform {
                     for specifier in &import.specifiers {
                         match specifier {
                             ImportSpecifier::Default(default) => {
-                                self.mark_imported_binding(&default.local);
+                                self.mark_imported_binding(&default.local, !import.type_only);
                             }
                             ImportSpecifier::Named(named) => {
-                                self.mark_imported_binding(&named.local);
+                                self.mark_imported_binding(
+                                    &named.local,
+                                    !import.type_only && !named.is_type_only,
+                                );
                             }
                             ImportSpecifier::Namespace(namespace) => {
-                                self.mark_imported_binding(&namespace.local);
+                                self.mark_imported_binding(&namespace.local, !import.type_only);
                             }
                         }
                     }
@@ -261,7 +321,7 @@ impl FbteeTransform {
         }
     }
 
-    fn enum_manifest_from_require(&self, expr: Option<&Expr>) -> Option<BTreeMap<String, String>> {
+    fn enum_manifest_from_require(&self, expr: Option<&Expr>) -> Option<IndexMap<String, String>> {
         let source = require_source(expr)?;
         let module = enum_manifest_key(&source)?;
         self.options.fbt_enum_manifest.get(&module).cloned()
@@ -317,10 +377,13 @@ impl VisitMut for FbteeTransform {
         let source = wtf8_to_string(&import.src.value);
         for specifier in &import.specifiers {
             match specifier {
-                ImportSpecifier::Default(default) => self.mark_imported_binding(&default.local),
-                ImportSpecifier::Named(named) => self.mark_imported_binding(&named.local),
+                ImportSpecifier::Default(default) => {
+                    self.mark_imported_binding(&default.local, !import.type_only)
+                }
+                ImportSpecifier::Named(named) => self
+                    .mark_imported_binding(&named.local, !import.type_only && !named.is_type_only),
                 ImportSpecifier::Namespace(namespace) => {
-                    self.mark_imported_binding(&namespace.local)
+                    self.mark_imported_binding(&namespace.local, !import.type_only)
                 }
             };
         }
@@ -332,10 +395,7 @@ impl VisitMut for FbteeTransform {
                             self.imported_enums
                                 .insert(default.local.sym.to_string(), enum_map.clone());
                         }
-                        ImportSpecifier::Named(named) => {
-                            self.imported_enums
-                                .insert(named.local.sym.to_string(), enum_map.clone());
-                        }
+                        ImportSpecifier::Named(_) => {}
                         ImportSpecifier::Namespace(namespace) => {
                             self.imported_enums
                                 .insert(namespace.local.sym.to_string(), enum_map.clone());
@@ -433,7 +493,7 @@ impl VisitMut for FbteeTransform {
     fn visit_mut_jsx_expr_container(&mut self, container: &mut JSXExprContainer) {
         if let JSXExpr::Expr(expr) = &mut container.expr {
             if let Some(next) = self.transform_expr(expr) {
-                *expr = Box::new(next);
+                **expr = next;
                 return;
             }
         }
@@ -476,30 +536,41 @@ impl FbteeTransform {
     }
 
     fn transform_common_call(&mut self, call: &CallExpr, module: ModuleName) -> Option<Expr> {
-        let label = call
-            .args
-            .first()
-            .and_then(arg_as_string)
-            .unwrap_or_else(|| {
-                compile_error(&format!(
-                    "{}.c(...) needs exactly one text argument.",
-                    module.as_str()
-                ))
-            });
+        let label = normalize_spaces(
+            &call
+                .args
+                .first()
+                .and_then(arg_as_string)
+                .unwrap_or_else(|| {
+                    compile_error(&format!(
+                        "{}.c(...) needs exactly one text argument.",
+                        module.as_str()
+                    ))
+                }),
+            false,
+        )
+        .trim()
+        .to_string();
         let desc = self
             .options
             .fbt_common
             .get(&label)
             .cloned()
+            .map(|desc| normalize_spaces(&desc, false).trim().to_string())
             .unwrap_or_else(|| compile_error(&unknown_common_string_message(&label)));
 
         let phrase = Phrase {
             desc,
             module,
-            options: CallOptions::default(),
+            options: CallOptions {
+                project: self.default_project.clone(),
+                ..CallOptions::default()
+            },
             parts: vec![Part::Text(label)],
         };
-        Some(self.runtime_call(phrase))
+        let mut result = self.runtime_call(phrase);
+        set_expression_span(&mut result, call.span);
+        Some(result)
     }
 
     fn transform_fbt_call(&mut self, call: &CallExpr, module: ModuleName) -> Option<Expr> {
@@ -513,11 +584,22 @@ impl FbteeTransform {
                     module.as_str()
                 ))
             });
-        let options = call
+        let mut options = call
             .args
             .get(2)
-            .map(|arg| parse_call_options(&arg.expr))
+            .map(|arg| {
+                if arg.spread.is_some() {
+                    Err("fbtee options cannot be a spread argument".into())
+                } else {
+                    parse_call_options(&arg.expr)
+                }
+            })
+            .transpose()
+            .unwrap_or_else(|error| compile_error(&error))
             .unwrap_or_default();
+        if options.project.as_deref().is_none_or(str::is_empty) {
+            options.project = self.default_project.clone();
+        }
         let desc = normalize_spaces(
             &call.args.get(1).and_then(arg_as_string).unwrap_or_else(|| {
                 compile_error(&format!(
@@ -526,17 +608,21 @@ impl FbteeTransform {
                 ))
             }),
             options.preserve_whitespace,
-        );
+        )
+        .trim()
+        .to_string();
         let parts = self
             .parse_expr_contents(raw_contents, module, &options)
             .unwrap_or_else(|error| compile_error(&error));
 
-        Some(self.runtime_call(Phrase {
+        let mut result = self.runtime_call(Phrase {
             desc,
             module,
             options,
             parts,
-        }))
+        });
+        set_expression_span(&mut result, call.span);
+        Some(result)
     }
 
     fn transform_jsx_fragment(&mut self, fragment: &JSXFragment) -> Option<Expr> {
@@ -544,36 +630,71 @@ impl FbteeTransform {
         children.map(Expr::JSXFragment).or_else(|| {
             Some(Expr::JSXFragment(JSXFragment {
                 span: fragment.span,
-                opening: fragment.opening.clone(),
+                opening: fragment.opening,
                 children: vec![],
-                closing: fragment.closing.clone(),
+                closing: fragment.closing,
             }))
         })
     }
 
     fn transform_jsx_element(&mut self, element: &JSXElement) -> Option<Expr> {
         let (module, node) = jsx_element_kind(&element.opening.name)?;
+        if jsx_children_contain_spread(&element.children) {
+            compile_error(&format!(
+                "<{}> text cannot contain JSX spread children.",
+                module.as_str()
+            ));
+        }
         if let Some(kind) = node {
-            let options = CallOptions::default();
-            let parts = self
-                .parse_jsx_construct(element, module, kind, &options)
-                .unwrap_or_else(|error| compile_error(&error));
-            return Some(self.runtime_call(Phrase {
-                desc: String::new(),
-                module,
-                options,
-                parts,
-            }));
+            compile_error(&format!(
+                "<{}:{kind}> must be inside an <{}> string.",
+                module.as_str(),
+                module.as_str()
+            ));
         }
 
         let attrs = JsxAttrs::new(&element.opening.attrs);
+        attrs
+            .validate(&[
+                "desc",
+                "author",
+                "common",
+                "doNotExtract",
+                "preserveWhitespace",
+                "project",
+                "subject",
+            ])
+            .unwrap_or_else(|error| compile_error(&error));
+        let is_common = attrs
+            .bool_option("common")
+            .unwrap_or_else(|error| compile_error(&error))
+            .unwrap_or(false);
+        attrs
+            .bool_option("doNotExtract")
+            .unwrap_or_else(|error| compile_error(&error));
+        if is_common && attrs.attr("desc").is_some() {
+            compile_error(&format!(
+                "<{} common> cannot also have a 'desc' attribute. Remove one of them.",
+                module.as_str()
+            ));
+        }
+        attrs
+            .required_string("author")
+            .unwrap_or_else(|error| compile_error(&error));
         let options = CallOptions {
-            preserve_whitespace: attrs.boolish("preserveWhitespace").unwrap_or(false),
-            project: attrs.string("project"),
+            preserve_whitespace: attrs
+                .bool_option("preserveWhitespace")
+                .unwrap_or_else(|error| compile_error(&error))
+                .unwrap_or(false),
+            project: attrs
+                .required_string("project")
+                .unwrap_or_else(|error| compile_error(&error))
+                .filter(|project| !project.is_empty())
+                .or_else(|| self.default_project.clone()),
             subject: attrs.expr("subject"),
         };
 
-        let desc = if attrs.boolish("common").unwrap_or(false) {
+        let desc = if is_common {
             let text = normalize_spaces(
                 &jsx_text_content(&element.children),
                 options.preserve_whitespace,
@@ -585,8 +706,10 @@ impl FbteeTransform {
                 .get(&text)
                 .cloned()
                 .unwrap_or_else(|| compile_error(&unknown_common_string_message(&text)))
-        } else if let Some(desc) = attrs.string("desc").or_else(|| attrs.string("common")) {
+        } else if let Some(desc) = attrs.string("desc") {
             normalize_spaces(&desc, options.preserve_whitespace)
+                .trim()
+                .to_string()
         } else {
             compile_error(&format!(
                 "<{}> needs one of these attributes: desc, common.",
@@ -595,7 +718,13 @@ impl FbteeTransform {
         };
 
         let parts = self
-            .parse_jsx_children(&element.children, module, &options, &element.children)
+            .parse_jsx_children(
+                &element.children,
+                module,
+                &options,
+                &element.children,
+                false,
+            )
             .unwrap_or_else(|error| compile_error(&error));
 
         Some(self.runtime_call(Phrase {
@@ -612,6 +741,16 @@ impl FbteeTransform {
         module: ModuleName,
         options: &CallOptions,
     ) -> Result<Vec<Part>, String> {
+        self.parse_expr_contents_at(expr, module, options, 0)
+    }
+
+    fn parse_expr_contents_at(
+        &mut self,
+        expr: &Expr,
+        module: ModuleName,
+        options: &CallOptions,
+        implicit_index: usize,
+    ) -> Result<Vec<Part>, String> {
         match expr {
             Expr::Lit(Lit::Str(value)) => Ok(vec![Part::Text(normalize_spaces(
                 &wtf8_to_string(&value.value),
@@ -619,14 +758,44 @@ impl FbteeTransform {
             ))]),
             Expr::Array(array) => {
                 let mut parts = vec![];
-                for elem in array.elems.iter().flatten() {
-                    parts.extend(self.parse_expr_contents(&elem.expr, module, options)?);
+                for elem in &array.elems {
+                    let elem = elem.as_ref().ok_or_else(|| {
+                        format!(
+                            "{} text contains an unsupported array hole.",
+                            module.as_str()
+                        )
+                    })?;
+                    if elem.spread.is_some() {
+                        return Err(format!(
+                            "{} text contains unsupported array spread syntax.",
+                            module.as_str()
+                        ));
+                    }
+                    if !is_valid_fbt_array_item(&elem.expr) {
+                        return Err(format!(
+                            "{} array entries must be individual string literals, JSX elements, or {} constructs.",
+                            module.as_str(),
+                            module.as_str()
+                        ));
+                    }
+                    parts.extend(self.parse_expr_contents_at(
+                        &elem.expr,
+                        module,
+                        options,
+                        implicit_index + parts.len(),
+                    )?);
                 }
                 Ok(parts)
             }
             Expr::Bin(binary) if binary.op == BinaryOp::Add => {
-                let mut parts = self.parse_expr_contents(&binary.left, module, options)?;
-                parts.extend(self.parse_expr_contents(&binary.right, module, options)?);
+                let mut parts =
+                    self.parse_expr_contents_at(&binary.left, module, options, implicit_index)?;
+                parts.extend(self.parse_expr_contents_at(
+                    &binary.right,
+                    module,
+                    options,
+                    implicit_index + parts.len(),
+                )?);
                 Ok(parts)
             }
             Expr::Tpl(template) => {
@@ -644,7 +813,12 @@ impl FbteeTransform {
                         )));
                     }
                     if let Some(expr) = template.exprs.get(index) {
-                        parts.extend(self.parse_expr_contents(expr, module, options)?);
+                        parts.extend(self.parse_expr_contents_at(
+                            expr,
+                            module,
+                            options,
+                            implicit_index + parts.len(),
+                        )?);
                     }
                 }
                 Ok(parts)
@@ -658,36 +832,54 @@ impl FbteeTransform {
                         module.as_str()
                     ));
                 }
-                let token = format!(
-                    "={}",
-                    normalize_spaces(&jsx_text_content(&element.children), false)
-                );
-                let mut value = Expr::JSXElement(element.clone());
-                value.visit_mut_children_with(self);
+                let (value, nested_parts) = self.implicit_jsx_element_value(
+                    element,
+                    module,
+                    options,
+                    &element.children,
+                    "",
+                )?;
                 Ok(vec![Part::Param {
-                    name: token,
-                    hash_name: None,
-                    value: Box::new(value),
+                    name: implicit_param_alias(implicit_index),
+                    hash_name: Some(implicit_child_hash_name(
+                        &JSXElementChild::JSXElement(element.clone()),
+                        options,
+                    )),
+                    nested: (!nested_parts.is_empty()).then_some(NestedPhrase {
+                        target_id: element.span.lo.0,
+                    }),
+                    nested_parts,
+                    value: Box::new(Expr::JSXElement(Box::new(value))),
                     variation: ParamVariation::None,
                     runtime_kind: ParamRuntimeKind::Implicit,
                 }])
             }
             Expr::JSXFragment(fragment) => {
-                let token = format!(
-                    "={}",
-                    normalize_spaces(&jsx_fragment_text_content(fragment), false)
-                );
-                let mut value = Expr::JSXFragment(fragment.clone());
-                value.visit_mut_children_with(self);
+                let (value, nested_parts) = self.implicit_jsx_fragment_value(
+                    fragment,
+                    module,
+                    options,
+                    &fragment.children,
+                    "",
+                )?;
                 Ok(vec![Part::Param {
-                    name: token,
-                    hash_name: None,
-                    value: Box::new(value),
+                    name: implicit_param_alias(implicit_index),
+                    hash_name: Some(implicit_child_hash_name(
+                        &JSXElementChild::JSXFragment(fragment.clone()),
+                        options,
+                    )),
+                    nested: (!nested_parts.is_empty()).then_some(NestedPhrase {
+                        target_id: fragment.span.lo.0,
+                    }),
+                    nested_parts,
+                    value: Box::new(Expr::JSXFragment(value)),
                     variation: ParamVariation::None,
                     runtime_kind: ParamRuntimeKind::Implicit,
                 }])
             }
-            Expr::Paren(paren) => self.parse_expr_contents(&paren.expr, module, options),
+            Expr::Paren(paren) => {
+                self.parse_expr_contents_at(&paren.expr, module, options, implicit_index)
+            }
             _ => Err(format!(
                 "{} text contains unsupported syntax '{}'. Use text, JSX, or {} constructs.",
                 module.as_str(),
@@ -718,20 +910,37 @@ impl FbteeTransform {
             ));
         }
 
+        let construct_options = |allowed: &[&str]| -> Result<ObjectOptions, String> {
+            match call.args.get(2) {
+                Some(argument) if argument.spread.is_some() => {
+                    Err("fbtee construct options cannot be a spread argument".into())
+                }
+                Some(argument) => parse_object_options(&argument.expr, allowed),
+                None => Ok(ObjectOptions::default()),
+            }
+        };
+
         match method {
             "param" => {
-                let name = arg_as_string(call.args.first().ok_or_else(|| {
-                    format!(
-                        "{}.param(...) needs a token name as the first argument.",
-                        module.as_str()
-                    )
-                })?)
-                .ok_or_else(|| {
-                    format!(
-                        "{}.param(...) token name must be a string literal.",
-                        module.as_str()
-                    )
-                })?;
+                let options = construct_options(PARAM_OPTIONS)?;
+                let name = options.string("name").map_or_else(
+                    || {
+                        arg_as_string(call.args.first().ok_or_else(|| {
+                            format!(
+                                "{}.param(...) needs a token name as the first argument.",
+                                module.as_str()
+                            )
+                        })?)
+                        .ok_or_else(|| {
+                            format!(
+                                "{}.param(...) token name must be a string literal.",
+                                module.as_str()
+                            )
+                        })
+                    },
+                    Ok,
+                )?;
+                validate_param_name(&name, module)?;
                 let mut value = call
                     .args
                     .get(1)
@@ -744,14 +953,17 @@ impl FbteeTransform {
                     .expr
                     .clone();
                 value.visit_mut_with(self);
-                let options = call
-                    .args
-                    .get(2)
-                    .map(|arg| parse_object(&arg.expr))
-                    .unwrap_or_default();
-                let variation = if let Some(number) = options.number_expr() {
+                let number = options.number_expr()?;
+                let gender = options.expr("gender");
+                if number.is_some() && gender.is_some() {
+                    return Err(format!(
+                        "{}.param(...) cannot use both 'gender' and 'number' options.",
+                        module.as_str()
+                    ));
+                }
+                let variation = if let Some(number) = number {
                     ParamVariation::Number(number)
-                } else if let Some(gender) = options.expr("gender") {
+                } else if let Some(gender) = gender {
                     ParamVariation::Gender(gender)
                 } else {
                     ParamVariation::None
@@ -759,6 +971,8 @@ impl FbteeTransform {
                 Ok(vec![Part::Param {
                     name,
                     hash_name: None,
+                    nested: None,
+                    nested_parts: vec![],
                     value,
                     variation,
                     runtime_kind: ParamRuntimeKind::Param,
@@ -867,17 +1081,21 @@ impl FbteeTransform {
                     })?
                     .expr
                     .clone();
-                let options = call
-                    .args
-                    .get(2)
-                    .map(|arg| parse_object(&arg.expr))
-                    .unwrap_or_default();
-                let many = options
-                    .string("many")
-                    .unwrap_or_else(|| format!("{singular}s"));
+                let options = construct_options(PLURAL_OPTIONS)?;
+                let many = if !options.contains("many") {
+                    format!("{singular}s")
+                } else if let Some(many) = options.string("many") {
+                    many
+                } else if let Some(many) = options.expr("many") {
+                    expr_as_string(&many)
+                        .ok_or("`many` option must be a statically evaluable string.")?
+                } else {
+                    return Err("`many` option must be a string.".into());
+                };
                 let show_count = options
-                    .string("showCount")
+                    .required_string("showCount")?
                     .unwrap_or_else(|| "no".to_string());
+                validate_option_value("showCount", &show_count, &["ifMany", "no", "yes"])?;
                 let name = options.string("name").or_else(|| {
                     if show_count == "yes" || show_count == "ifMany" {
                         Some("number".to_string())
@@ -910,6 +1128,7 @@ impl FbteeTransform {
                         module.as_str()
                     )
                 })?;
+                validate_pronoun_usage(&usage, module)?;
                 let gender = call
                     .args
                     .get(1)
@@ -921,16 +1140,12 @@ impl FbteeTransform {
                     })?
                     .expr
                     .clone();
-                let options = call
-                    .args
-                    .get(2)
-                    .map(|arg| parse_object(&arg.expr))
-                    .unwrap_or_default();
+                let options = construct_options(PRONOUN_OPTIONS)?;
                 Ok(vec![Part::Pronoun {
                     usage,
                     gender,
-                    human: options.get_bool("human").unwrap_or(false),
-                    capitalize: options.get_bool("capitalize").unwrap_or(false),
+                    human: options.bool_option("human")?.unwrap_or(false),
+                    capitalize: options.bool_option("capitalize")?.unwrap_or(false),
                 }])
             }
             "list" => {
@@ -956,8 +1171,16 @@ impl FbteeTransform {
                     .expr
                     .clone();
                 items.visit_mut_with(self);
-                let conjunction = call.args.get(2).and_then(arg_as_string);
-                let delimiter = call.args.get(3).and_then(arg_as_string);
+                let conjunction = call
+                    .args
+                    .get(2)
+                    .filter(|argument| !matches!(argument.expr.as_ref(), Expr::Lit(Lit::Null(_))))
+                    .map(|argument| argument.expr.clone());
+                let delimiter = call
+                    .args
+                    .get(3)
+                    .filter(|argument| !matches!(argument.expr.as_ref(), Expr::Lit(Lit::Null(_))))
+                    .map(|argument| argument.expr.clone());
                 Ok(vec![Part::List {
                     name,
                     items,
@@ -979,15 +1202,40 @@ impl FbteeTransform {
         module: ModuleName,
         options: &CallOptions,
         description_children: &[JSXElementChild],
+        implicit_context: bool,
     ) -> Result<Vec<Part>, String> {
         let mut parts = vec![];
-        for child in children {
+        let mut implicit_child_index = 0;
+        let mut last_implicit_child_was_text = false;
+        let mut pending_implicit_whitespace = false;
+        for (child_index, child) in children.iter().enumerate() {
             match child {
                 JSXElementChild::JSXText(text) => {
+                    if implicit_context {
+                        let whitespace_only = text.value.trim().is_empty();
+                        if whitespace_only
+                            && child_index > 0
+                            && child_index + 1 < children.len()
+                            && !last_implicit_child_was_text
+                        {
+                            pending_implicit_whitespace = true;
+                        } else {
+                            if !whitespace_only && pending_implicit_whitespace {
+                                implicit_child_index += 1;
+                            }
+                            implicit_child_index += 1;
+                            last_implicit_child_was_text = true;
+                            pending_implicit_whitespace = false;
+                        }
+                    }
                     let normalized = if options.preserve_whitespace {
-                        clean_jsx_text(&text.value.to_string())
+                        if implicit_context {
+                            text.value.to_string()
+                        } else {
+                            clean_jsx_text(text.value.as_ref())
+                        }
                     } else {
-                        normalize_spaces(&text.value.to_string(), false)
+                        normalize_spaces(text.value.as_ref(), false)
                     };
                     if !normalized.trim().is_empty() {
                         parts.push(Part::Text(normalized));
@@ -995,7 +1243,13 @@ impl FbteeTransform {
                 }
                 JSXElementChild::JSXExprContainer(container) => match &container.expr {
                     JSXExpr::Expr(expr) => {
-                        parts.extend(self.parse_expr_contents(expr, module, options)?);
+                        let parsed = self.parse_expr_contents(expr, module, options)?;
+                        if implicit_context {
+                            implicit_child_index += parsed.len();
+                            last_implicit_child_was_text = false;
+                            pending_implicit_whitespace = false;
+                        }
+                        parts.extend(parsed);
                     }
                     JSXExpr::JSXEmptyExpr(_) => {}
                 },
@@ -1008,7 +1262,14 @@ impl FbteeTransform {
                                     module.as_str()
                                 ));
                             }
-                            parts.extend(self.parse_jsx_construct(element, module, kind, options)?);
+                            let parsed =
+                                self.parse_jsx_construct(element, module, kind, options)?;
+                            if implicit_context {
+                                implicit_child_index += parsed.len();
+                                last_implicit_child_was_text = false;
+                                pending_implicit_whitespace = false;
+                            }
+                            parts.extend(parsed);
                         }
                         Some((child_module, None)) => {
                             return Err(format!(
@@ -1018,13 +1279,17 @@ impl FbteeTransform {
                             ));
                         }
                         None => {
-                            let token = implicit_param_alias(parts.len());
+                            let token = implicit_param_alias(if implicit_context {
+                                implicit_child_index
+                            } else {
+                                parts.len()
+                            });
                             let description_text = jsx_description_text_for_target(
                                 description_children,
                                 element,
                                 options,
                             );
-                            let value = self.implicit_jsx_element_value(
+                            let (value, nested_parts) = self.implicit_jsx_element_value(
                                 element,
                                 module,
                                 options,
@@ -1037,16 +1302,29 @@ impl FbteeTransform {
                                     &JSXElementChild::JSXElement(element.clone()),
                                     options,
                                 )),
+                                nested: (!nested_parts.is_empty()).then_some(NestedPhrase {
+                                    target_id: element.span.lo.0,
+                                }),
+                                nested_parts,
                                 value: Box::new(Expr::JSXElement(Box::new(value))),
                                 variation: ParamVariation::None,
                                 runtime_kind: ParamRuntimeKind::Implicit,
                             });
+                            if implicit_context {
+                                implicit_child_index += 1;
+                                last_implicit_child_was_text = false;
+                                pending_implicit_whitespace = false;
+                            }
                         }
                     }
                 }
                 JSXElementChild::JSXFragment(fragment) => {
-                    let token = implicit_param_alias(parts.len());
-                    let value = self.implicit_jsx_fragment_value(
+                    let token = implicit_param_alias(if implicit_context {
+                        implicit_child_index
+                    } else {
+                        parts.len()
+                    });
+                    let (value, nested_parts) = self.implicit_jsx_fragment_value(
                         fragment,
                         module,
                         options,
@@ -1056,12 +1334,26 @@ impl FbteeTransform {
                     parts.push(Part::Param {
                         name: token,
                         hash_name: Some(implicit_child_hash_name(child, options)),
+                        nested: (!nested_parts.is_empty()).then_some(NestedPhrase {
+                            target_id: fragment.span.lo.0,
+                        }),
+                        nested_parts,
                         value: Box::new(Expr::JSXFragment(value)),
                         variation: ParamVariation::None,
                         runtime_kind: ParamRuntimeKind::Implicit,
                     });
+                    if implicit_context {
+                        implicit_child_index += 1;
+                        last_implicit_child_was_text = false;
+                        pending_implicit_whitespace = false;
+                    }
                 }
-                JSXElementChild::JSXSpreadChild(_) => {}
+                JSXElementChild::JSXSpreadChild(_) => {
+                    return Err(format!(
+                        "<{}> text cannot contain JSX spread children.",
+                        module.as_str()
+                    ));
+                }
             }
         }
         Ok(compact_text_parts(parts))
@@ -1072,26 +1364,19 @@ impl FbteeTransform {
         element: &JSXElement,
         module: ModuleName,
         options: &CallOptions,
-        description_children: &[JSXElementChild],
-        description_text: &str,
-    ) -> Result<JSXElement, String> {
-        let inner = self.implicit_children_runtime_expr(
-            &element.children,
-            module,
-            options,
-            description_children,
-            description_text,
-        )?;
+        _description_children: &[JSXElementChild],
+        _description_text: &str,
+    ) -> Result<(JSXElement, Vec<Part>), String> {
+        let nested_parts =
+            self.parse_jsx_children(&element.children, module, options, &element.children, true)?;
         let mut element = element.clone();
-        if let Some(inner) = inner {
-            element.children = vec![JSXElementChild::JSXExprContainer(JSXExprContainer {
-                span: DUMMY_SP,
-                expr: JSXExpr::Expr(Box::new(inner)),
-            })];
+        element.opening.visit_mut_children_with(self);
+        if nested_parts.is_empty() {
+            element.children.visit_mut_with(self);
         } else {
-            element.visit_mut_children_with(self);
+            element.children.clear();
         }
-        Ok(element)
+        Ok((element, nested_parts))
     }
 
     fn implicit_jsx_fragment_value(
@@ -1099,46 +1384,23 @@ impl FbteeTransform {
         fragment: &JSXFragment,
         module: ModuleName,
         options: &CallOptions,
-        description_children: &[JSXElementChild],
-        description_text: &str,
-    ) -> Result<JSXFragment, String> {
-        let inner = self.implicit_children_runtime_expr(
+        _description_children: &[JSXElementChild],
+        _description_text: &str,
+    ) -> Result<(JSXFragment, Vec<Part>), String> {
+        let nested_parts = self.parse_jsx_children(
             &fragment.children,
             module,
             options,
-            description_children,
-            description_text,
+            &fragment.children,
+            true,
         )?;
         let mut fragment = fragment.clone();
-        if let Some(inner) = inner {
-            fragment.children = vec![JSXElementChild::JSXExprContainer(JSXExprContainer {
-                span: DUMMY_SP,
-                expr: JSXExpr::Expr(Box::new(inner)),
-            })];
+        if nested_parts.is_empty() {
+            fragment.children.visit_mut_with(self);
         } else {
-            fragment.visit_mut_children_with(self);
+            fragment.children.clear();
         }
-        Ok(fragment)
-    }
-
-    fn implicit_children_runtime_expr(
-        &mut self,
-        children: &[JSXElementChild],
-        module: ModuleName,
-        options: &CallOptions,
-        description_children: &[JSXElementChild],
-        description_text: &str,
-    ) -> Result<Option<Expr>, String> {
-        let parts = self.parse_jsx_children(children, module, options, description_children)?;
-        if parts.is_empty() {
-            return Ok(None);
-        }
-        Ok(Some(self.runtime_call(Phrase {
-            desc: format!("In the phrase: \"{description_text}\""),
-            module,
-            options: options.clone(),
-            parts,
-        })))
+        Ok((fragment, nested_parts))
     }
 
     fn parse_jsx_construct(
@@ -1151,19 +1413,23 @@ impl FbteeTransform {
         let attrs = JsxAttrs::new(&element.opening.attrs);
         match kind.as_str() {
             "param" => {
-                let name = attrs.string("name").ok_or_else(|| {
+                attrs.validate(PARAM_OPTIONS)?;
+                let name = normalize_jsx_param_name(&attrs.string("name").ok_or_else(|| {
                     format!("<{}:param> needs attribute 'name'.", module.as_str())
-                })?;
-                let value = self.jsx_param_value(&element.children).unwrap_or_else(|| {
-                    Expr::Lit(Lit::Str(Str {
-                        span: DUMMY_SP,
-                        value: Wtf8Atom::new(""),
-                        raw: None,
-                    }))
-                });
-                let variation = if let Some(number) = attrs.number_expr("number") {
+                })?);
+                validate_param_name(&name, module)?;
+                let value = self.jsx_param_value(&element.children, module)?;
+                let number = attrs.number_expr("number")?;
+                let gender = attrs.expr("gender");
+                if number.is_some() && gender.is_some() {
+                    return Err(format!(
+                        "<{}:param> cannot use both 'gender' and 'number' attributes.",
+                        module.as_str()
+                    ));
+                }
+                let variation = if let Some(number) = number {
                     ParamVariation::Number(number)
-                } else if let Some(gender) = attrs.expr("gender") {
+                } else if let Some(gender) = gender {
                     ParamVariation::Gender(gender)
                 } else {
                     ParamVariation::None
@@ -1171,12 +1437,15 @@ impl FbteeTransform {
                 Ok(vec![Part::Param {
                     name,
                     hash_name: None,
+                    nested: None,
+                    nested_parts: vec![],
                     value: Box::new(value),
                     variation,
                     runtime_kind: ParamRuntimeKind::Param,
                 }])
             }
             "same-param" | "sameParam" => {
+                require_self_closing(element, module, "same-param")?;
                 let name = attrs.string("name").ok_or_else(|| {
                     format!("<{}:same-param> needs attribute 'name'.", module.as_str())
                 })?;
@@ -1186,13 +1455,7 @@ impl FbteeTransform {
                 let name = attrs
                     .string("name")
                     .ok_or_else(|| format!("<{}:name> needs attribute 'name'.", module.as_str()))?;
-                let value = self.jsx_param_value(&element.children).unwrap_or_else(|| {
-                    Expr::Lit(Lit::Str(Str {
-                        span: DUMMY_SP,
-                        value: Wtf8Atom::new(""),
-                        raw: None,
-                    }))
-                });
+                let value = self.jsx_name_value(&element.children, module)?;
                 let gender = attrs.expr("gender").ok_or_else(|| {
                     format!("<{}:name> needs attribute 'gender'.", module.as_str())
                 })?;
@@ -1203,6 +1466,7 @@ impl FbteeTransform {
                 }])
             }
             "enum" => {
+                require_self_closing(element, module, "enum")?;
                 let value = attrs.expr("value").ok_or_else(|| {
                     format!("<{}:enum> needs attribute 'value'.", module.as_str())
                 })?;
@@ -1217,11 +1481,12 @@ impl FbteeTransform {
                 }])
             }
             "plural" => {
+                attrs.validate(PLURAL_OPTIONS)?;
                 let singular = normalize_spaces(
-                    &jsx_text_content(&element.children),
+                    &jsx_plural_text(&element.children, module)?,
                     options.preserve_whitespace,
                 )
-                .trim()
+                .trim_end()
                 .to_string();
                 let count = attrs.expr("count").ok_or_else(|| {
                     format!("<{}:plural> needs attribute 'count'.", module.as_str())
@@ -1230,15 +1495,20 @@ impl FbteeTransform {
                     .string("many")
                     .unwrap_or_else(|| format!("{singular}s"));
                 let show_count = attrs
-                    .string("showCount")
+                    .required_string("showCount")?
                     .unwrap_or_else(|| "no".to_string());
-                let name = attrs.string("name").or_else(|| {
-                    if show_count == "yes" || show_count == "ifMany" {
-                        Some("number".to_string())
-                    } else {
-                        None
-                    }
-                });
+                validate_option_value("showCount", &show_count, &["ifMany", "no", "yes"])?;
+                let name = attrs
+                    .string("name")
+                    .filter(|name| !name.is_empty())
+                    .map(|name| normalize_jsx_param_name(&name))
+                    .or_else(|| {
+                        if show_count == "yes" || show_count == "ifMany" {
+                            Some("number".to_string())
+                        } else {
+                            None
+                        }
+                    });
                 Ok(vec![Part::Plural {
                     singular,
                     count,
@@ -1252,20 +1522,24 @@ impl FbteeTransform {
                 }])
             }
             "pronoun" => {
+                require_self_closing(element, module, "pronoun")?;
+                attrs.validate(&["type", "gender", "capitalize", "human"])?;
                 let usage = attrs.string("type").ok_or_else(|| {
                     format!("<{}:pronoun> needs attribute 'type'.", module.as_str())
                 })?;
+                validate_pronoun_usage(&usage, module)?;
                 let gender = attrs.expr("gender").ok_or_else(|| {
                     format!("<{}:pronoun> needs attribute 'gender'.", module.as_str())
                 })?;
                 Ok(vec![Part::Pronoun {
                     usage,
                     gender,
-                    human: attrs.boolish("human").unwrap_or(false),
-                    capitalize: attrs.boolish("capitalize").unwrap_or(false),
+                    human: attrs.bool_option("human")?.unwrap_or(false),
+                    capitalize: attrs.bool_option("capitalize")?.unwrap_or(false),
                 }])
             }
             "list" => {
+                require_self_closing(element, module, "list")?;
                 let name = attrs
                     .string("name")
                     .ok_or_else(|| format!("<{}:list> needs attribute 'name'.", module.as_str()))?;
@@ -1276,8 +1550,8 @@ impl FbteeTransform {
                 Ok(vec![Part::List {
                     name,
                     items,
-                    conjunction: attrs.string("conjunction"),
-                    delimiter: attrs.string("delimiter"),
+                    conjunction: attrs.expr("conjunction"),
+                    delimiter: attrs.expr("delimiter"),
                 }])
             }
             _ => Err(format!(
@@ -1296,7 +1570,7 @@ impl FbteeTransform {
                     if let JSXExpr::Expr(expr) = &container.expr {
                         let mut expr = expr.clone();
                         if let Some(next) = self.transform_expr(&expr) {
-                            expr = Box::new(next);
+                            *expr = next;
                         } else {
                             expr.visit_mut_children_with(self);
                         }
@@ -1338,7 +1612,54 @@ impl FbteeTransform {
         })
     }
 
-    fn jsx_param_value(&mut self, children: &[JSXElementChild]) -> Option<Expr> {
+    fn jsx_param_value(
+        &mut self,
+        children: &[JSXElementChild],
+        module: ModuleName,
+    ) -> Result<Expr, String> {
+        if let [JSXElementChild::JSXText(text)] = children {
+            if text.value == " " {
+                return Ok(string_expr(" ".to_string()));
+            }
+        }
+        let meaningful: Vec<&JSXElementChild> = children
+            .iter()
+            .filter(|child| match child {
+                JSXElementChild::JSXExprContainer(container) => {
+                    !matches!(container.expr, JSXExpr::JSXEmptyExpr(_))
+                }
+                JSXElementChild::JSXElement(_) | JSXElementChild::JSXFragment(_) => true,
+                _ => false,
+            })
+            .collect();
+        if meaningful.len() != 1 {
+            return Err(format!(
+                "<{}:param> needs exactly one child: an expression or JSX element.",
+                module.as_str()
+            ));
+        }
+        let mut expr = match meaningful[0] {
+            JSXElementChild::JSXExprContainer(container) => match &container.expr {
+                JSXExpr::Expr(expr) => *expr.clone(),
+                JSXExpr::JSXEmptyExpr(_) => unreachable!("validated JSX param expression"),
+            },
+            JSXElementChild::JSXElement(element) => Expr::JSXElement(element.clone()),
+            JSXElementChild::JSXFragment(fragment) => Expr::JSXFragment(fragment.clone()),
+            _ => unreachable!("validated JSX param child"),
+        };
+        if let Some(next) = self.transform_expr(&expr) {
+            expr = next;
+        } else {
+            expr.visit_mut_children_with(self);
+        }
+        Ok(expr)
+    }
+
+    fn jsx_name_value(
+        &mut self,
+        children: &[JSXElementChild],
+        module: ModuleName,
+    ) -> Result<Expr, String> {
         let meaningful: Vec<&JSXElementChild> = children
             .iter()
             .filter(|child| match child {
@@ -1348,148 +1669,177 @@ impl FbteeTransform {
                 JSXElementChild::JSXExprContainer(container) => {
                     !matches!(container.expr, JSXExpr::JSXEmptyExpr(_))
                 }
-                _ => true,
+                _ => false,
             })
             .collect();
-
-        if meaningful.len() == 1 {
-            match meaningful[0] {
-                JSXElementChild::JSXExprContainer(container) => {
-                    if let JSXExpr::Expr(expr) = &container.expr {
-                        let mut expr = expr.clone();
-                        if let Some(next) = self.transform_expr(&expr) {
-                            expr = Box::new(next);
-                        } else {
-                            expr.visit_mut_children_with(self);
-                        }
-                        return Some(*expr);
-                    }
-                }
-                JSXElementChild::JSXElement(element) => {
-                    if let Some(expr) = self.transform_jsx_element(element) {
-                        return Some(expr);
-                    }
-                }
-                _ => {}
-            }
+        if meaningful.len() != 1 {
+            return Err(format!(
+                "<{}:name> needs exactly one child: text or an expression.",
+                module.as_str()
+            ));
         }
-
-        self.jsx_children_to_expr(children).map(Expr::JSXFragment)
+        match meaningful[0] {
+            JSXElementChild::JSXText(text) => Ok(string_expr(normalize_spaces(&text.value, false))),
+            JSXElementChild::JSXExprContainer(container) => match &container.expr {
+                JSXExpr::Expr(expr) => {
+                    let mut expr = expr.clone();
+                    if let Some(next) = self.transform_expr(&expr) {
+                        *expr = next;
+                    } else {
+                        expr.visit_mut_children_with(self);
+                    }
+                    Ok(*expr)
+                }
+                JSXExpr::JSXEmptyExpr(_) => unreachable!("validated JSX name expression"),
+            },
+            _ => unreachable!("validated JSX name child"),
+        }
     }
 
-    fn enum_range_from_expr(&self, expr: &Box<Expr>) -> Result<Vec<(String, String)>, String> {
-        match expr.as_ref() {
-            Expr::Array(array) => Ok(array
-                .elems
-                .iter()
-                .flatten()
-                .filter_map(|elem| expr_as_string(&elem.expr).map(|value| (value.clone(), value)))
-                .collect()),
-            Expr::Object(object) => object
-                .props
-                .iter()
-                .map(|prop| match prop {
+    fn enum_range_from_expr(&self, expr: &Expr) -> Result<Vec<(String, String)>, String> {
+        let range = match unwrap_parens(expr) {
+            Expr::Array(array) => {
+                let mut range = IndexMap::new();
+                for element in &array.elems {
+                    let element = element
+                        .as_ref()
+                        .ok_or("Enum values must be string literals.")?;
+                    if element.spread.is_some() {
+                        return Err("Enum values must be string literals.".into());
+                    }
+                    let value = string_literal_value(&element.expr)
+                        .ok_or("Enum values must be string literals.")?;
+                    range.insert(value.clone(), value);
+                }
+                range
+            }
+            Expr::Object(object) => {
+                let mut range = IndexMap::new();
+                for prop in &object.props {
+                    let (key, value) = match prop {
                     PropOrSpread::Prop(prop) => match prop.as_ref() {
                         Prop::KeyValue(key_value) => {
                             let key = prop_name_to_string(&key_value.key)
                                 .ok_or("Enum object keys must be strings, numbers, or identifiers.")?;
-                            let value = expr_as_string(&key_value.value)
+                            let value = string_literal_value(&key_value.value)
                                 .ok_or("Enum object values must be string literals.")?;
-                            Ok((key, value))
+                            (key, value)
                         }
-                        _ => Err("Enum entries must be plain object properties. Remove methods and spread properties.".to_string()),
+                        _ => return Err("Enum entries must be plain object properties. Remove methods and spread properties.".to_string()),
                     },
-                    PropOrSpread::Spread(_) => Err("Enum entries cannot use spread properties.".to_string()),
-                })
-                .collect(),
+                    PropOrSpread::Spread(_) => return Err("Enum entries cannot use spread properties.".to_string()),
+                    };
+                    range.insert(key, value);
+                }
+                range
+            }
             Expr::Ident(ident) => self
                 .imported_enums
                 .get(&ident.sym.to_string())
-                .map(|range| {
-                    range
-                        .iter()
-                        .map(|(key, value)| (key.clone(), value.clone()))
-                        .collect()
-                })
-                .ok_or_else(|| format!("Enum '{}' is not registered. Import an '$FbtEnum' module or add it to the enum manifest.", ident.sym)),
+                .cloned()
+                .ok_or_else(|| format!("Enum '{}' is not registered. Import an '$FbtEnum' module or add it to the enum manifest.", ident.sym))?,
             _ => Err(format!(
                 "Enum range must be an array, object, or imported enum variable. Received '{}'.",
                 expr_type(expr)
-            )),
+            ))?,
+        };
+        if range.is_empty() {
+            return Err("Enum range cannot be empty.".into());
         }
+        Ok(js_property_order(range))
     }
 
     fn runtime_call(&mut self, phrase: Phrase) -> Expr {
+        self.runtime_call_impl(phrase, true)
+    }
+
+    fn runtime_call_impl(&mut self, phrase: Phrase, validate: bool) -> Expr {
+        if validate {
+            validate_phrase(&phrase).unwrap_or_else(|error| compile_error(&error));
+        }
         match phrase.module {
             ModuleName::Fbt => self.used_fbt = true,
             ModuleName::Fbs => self.used_fbs = true,
         }
         let module_ident = self.module_ident(phrase.module);
-        let mut builder = RuntimeBuilder::new(&phrase, module_ident.clone());
-        let table = builder.table();
-        let hash_tree = builder.hash_tree();
-        let hk = fbt_hash_key(&hash_tree);
-
-        let mut args = vec![
-            ExprOrSpread {
-                spread: None,
-                expr: Box::new(table.expr()),
-            },
-            ExprOrSpread {
-                spread: None,
-                expr: Box::new(if builder.runtime_args.is_empty() {
-                    null_expr()
-                } else {
-                    Expr::Array(ArrayLit {
-                        span: DUMMY_SP,
-                        elems: builder
-                            .runtime_args
-                            .into_iter()
-                            .map(|expr| {
-                                Some(ExprOrSpread {
-                                    spread: None,
-                                    expr: Box::new(expr),
-                                })
-                            })
-                            .collect(),
-                    })
-                }),
-            },
-        ];
-
-        let mut option_props = vec![PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
-            key: PropName::Ident(IdentName::new("hk".into(), DUMMY_SP)),
-            value: Box::new(string_expr(hk)),
-        })))];
-        if let Some(project) = phrase
-            .options
-            .project
-            .as_ref()
-            .filter(|project| !project.is_empty())
-        {
-            option_props.push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
-                key: PropName::Ident(IdentName::new("project".into(), DUMMY_SP)),
-                value: Box::new(string_expr(project.clone())),
-            }))));
+        let mut global_variations = Vec::new();
+        collect_variation_parts(&phrase.parts, &mut global_variations);
+        let mut shared_values = Vec::new();
+        if let Some(subject) = &phrase.options.subject {
+            shared_values.push(runtime_helper(
+                &module_ident,
+                "_subject",
+                vec![*subject.clone()],
+            ));
         }
+        shared_values.extend(
+            global_variations
+                .iter()
+                .filter_map(|part| runtime_arg_expr(&module_ident, part)),
+        );
 
-        args.push(ExprOrSpread {
-            spread: None,
-            expr: Box::new(Expr::Object(ObjectLit {
-                span: DUMMY_SP,
-                props: option_props,
-            })),
-        });
+        let needs_temporaries = !shared_values.is_empty() && contains_nested_phrase(&phrase.parts);
+        let shared_args = if needs_temporaries {
+            let used_identifiers = phrase_identifiers(&phrase);
+            let mut prefix = "__fbtee_shared".to_string();
+            while used_identifiers
+                .iter()
+                .any(|identifier| identifier.starts_with(&format!("{prefix}_")))
+            {
+                prefix.push('_');
+            }
+            (0..shared_values.len())
+                .map(|index| {
+                    Expr::Ident(Ident::new_no_ctxt(
+                        format!("{prefix}_{index}").into(),
+                        DUMMY_SP,
+                    ))
+                })
+                .collect::<Vec<_>>()
+        } else {
+            shared_values.clone()
+        };
+        let runtime = render_runtime_call(
+            &phrase,
+            &module_ident,
+            &global_variations,
+            &shared_args,
+            &phrase.parts,
+            None,
+        );
+        if !needs_temporaries {
+            return runtime;
+        }
 
         Expr::Call(CallExpr {
             span: DUMMY_SP,
             ctxt: Default::default(),
-            callee: Callee::Expr(Box::new(Expr::Member(MemberExpr {
+            callee: Callee::Expr(Box::new(Expr::Arrow(ArrowExpr {
                 span: DUMMY_SP,
-                obj: Box::new(Expr::Ident(module_ident.clone())),
-                prop: MemberProp::Ident(IdentName::new("_".into(), DUMMY_SP)),
+                ctxt: Default::default(),
+                params: shared_args
+                    .iter()
+                    .map(|expression| match expression {
+                        Expr::Ident(ident) => Pat::Ident(BindingIdent {
+                            id: ident.clone(),
+                            type_ann: None,
+                        }),
+                        _ => unreachable!("shared argument must be an identifier"),
+                    })
+                    .collect(),
+                body: Box::new(BlockStmtOrExpr::Expr(Box::new(runtime))),
+                is_async: false,
+                is_generator: false,
+                type_params: None,
+                return_type: None,
             }))),
-            args,
+            args: shared_values
+                .into_iter()
+                .map(|expr| ExprOrSpread {
+                    spread: None,
+                    expr: Box::new(expr),
+                })
+                .collect(),
             type_args: None,
         })
     }
@@ -1526,11 +1876,18 @@ struct CallOptions {
 }
 
 #[derive(Clone)]
+struct NestedPhrase {
+    target_id: u32,
+}
+
+#[derive(Clone)]
 enum Part {
     Text(String),
     Param {
         name: String,
         hash_name: Option<String>,
+        nested: Option<NestedPhrase>,
+        nested_parts: Vec<Part>,
         value: Box<Expr>,
         variation: ParamVariation,
         runtime_kind: ParamRuntimeKind,
@@ -1565,8 +1922,8 @@ enum Part {
     List {
         name: String,
         items: Box<Expr>,
-        conjunction: Option<String>,
-        delimiter: Option<String>,
+        conjunction: Option<Box<Expr>>,
+        delimiter: Option<Box<Expr>>,
     },
 }
 
@@ -1583,11 +1940,258 @@ enum ParamRuntimeKind {
     Implicit,
 }
 
-struct RuntimeBuilder<'a> {
+fn validate_phrase(phrase: &Phrase) -> Result<(), String> {
+    if let Some(subject) = &phrase.options.subject {
+        validate_variation_expression(subject, "subject")?;
+    }
+    validate_variation_parts(&phrase.parts)?;
+    validate_compatible_variation_groups(&phrase.parts, &mut BTreeMap::new())?;
+    let mut variations = Vec::new();
+    collect_variation_parts(&phrase.parts, &mut variations);
+    RuntimeBuilder::new(phrase, &variations, &phrase.parts, None).validate_dynamic_tokens()?;
+    validate_local_tokens(&phrase.parts, phrase.module)?;
+    let mut explicit_tokens = BTreeSet::new();
+    let mut same_param_targets = BTreeSet::new();
+    let mut same_params = vec![];
+    collect_overall_tokens(
+        &phrase.parts,
+        phrase.module,
+        &mut explicit_tokens,
+        &mut same_param_targets,
+        &mut same_params,
+    )?;
+    for name in same_params {
+        if !same_param_targets.contains(name) {
+            return Err(format!(
+                "{}.sameParam('{name}') does not match a token in this string. Add a {}.param or {}.name with name '{name}', or remove the sameParam.",
+                phrase.module.as_str(),
+                phrase.module.as_str(),
+                phrase.module.as_str()
+            ));
+        }
+    }
+    Ok(())
+}
+
+#[derive(Default)]
+struct ForbiddenVariationVisitor {
+    found: bool,
+}
+
+impl Visit for ForbiddenVariationVisitor {
+    fn visit_call_expr(&mut self, _: &CallExpr) {
+        self.found = true;
+    }
+
+    fn visit_new_expr(&mut self, _: &NewExpr) {
+        self.found = true;
+    }
+}
+
+fn validate_variation_expression(expression: &Expr, label: &str) -> Result<(), String> {
+    let mut visitor = ForbiddenVariationVisitor::default();
+    expression.visit_with(&mut visitor);
+    if visitor.found {
+        Err(format!(
+            "The {label} variation value cannot contain a function call or class instantiation."
+        ))
+    } else {
+        Ok(())
+    }
+}
+
+fn validate_variation_parts(parts: &[Part]) -> Result<(), String> {
+    for part in parts {
+        match part {
+            Part::Param {
+                value,
+                variation: ParamVariation::Number(number),
+                ..
+            } => validate_variation_expression(number.as_deref().unwrap_or(value), "number")?,
+            Part::Param {
+                variation: ParamVariation::Gender(gender),
+                ..
+            }
+            | Part::Name { gender, .. }
+            | Part::Pronoun { gender, .. } => validate_variation_expression(gender, "gender")?,
+            Part::Enum { value, .. } => validate_variation_expression(value, "enum")?,
+            Part::Plural { count, .. } => validate_variation_expression(count, "plural")?,
+            _ => {}
+        }
+        if let Part::Param { nested_parts, .. } = part {
+            validate_variation_parts(nested_parts)?;
+        }
+    }
+    Ok(())
+}
+
+fn validate_compatible_variation_groups(
+    parts: &[Part],
+    groups: &mut BTreeMap<String, Vec<String>>,
+) -> Result<(), String> {
+    for part in parts {
+        if let Part::Enum { range, .. } = part {
+            if let Some(group) = variation_group(part) {
+                let keys = range.iter().map(|(key, _)| key.clone()).collect::<Vec<_>>();
+                if let Some(previous) = groups.get(&group) {
+                    if previous != &keys {
+                        return Err(
+                            "Enum constructs sharing a value must use compatible ranges.".into(),
+                        );
+                    }
+                } else {
+                    groups.insert(group, keys);
+                }
+            }
+        }
+        if let Part::Param { nested_parts, .. } = part {
+            validate_compatible_variation_groups(nested_parts, groups)?;
+        }
+    }
+    Ok(())
+}
+
+fn validate_param_name(name: &str, module: ModuleName) -> Result<(), String> {
+    if name.is_empty() {
+        Err(format!(
+            "{}.param(...) token name must not be empty.",
+            module.as_str()
+        ))
+    } else {
+        Ok(())
+    }
+}
+
+fn require_self_closing(
+    element: &JSXElement,
+    module: ModuleName,
+    construct: &str,
+) -> Result<(), String> {
+    if element.closing.is_some() {
+        Err(format!(
+            "<{}:{construct}> must be self-closing.",
+            module.as_str()
+        ))
+    } else {
+        Ok(())
+    }
+}
+
+fn validate_local_tokens(parts: &[Part], module: ModuleName) -> Result<(), String> {
+    let mut local_explicit_tokens = BTreeSet::new();
+    let mut implicit_tokens = BTreeSet::new();
+    for part in parts {
+        let token = match part {
+            Part::Param {
+                name,
+                hash_name,
+                nested_parts,
+                runtime_kind: ParamRuntimeKind::Implicit,
+                ..
+            } => {
+                let token = hash_name.as_ref().unwrap_or(name);
+                if !implicit_tokens.insert(token.clone()) {
+                    return Err(format!(
+                        "Implicit token '{token}' is already used in this {} call. Change the text inside one of the JSX elements so each implicit token is unique.",
+                        module.as_str()
+                    ));
+                }
+                validate_local_tokens(nested_parts, module)?;
+                None
+            }
+            Part::Param {
+                name,
+                runtime_kind: ParamRuntimeKind::Param,
+                ..
+            }
+            | Part::Name { name, .. }
+            | Part::List { name, .. } => Some(name),
+            Part::Plural {
+                name: Some(name),
+                show_count,
+                ..
+            } if show_count != "no" => Some(name),
+            _ => None,
+        };
+        if let Some(token) = token {
+            local_explicit_tokens.insert(token.clone());
+        }
+    }
+    if let Some(token) = local_explicit_tokens
+        .iter()
+        .find(|token| implicit_tokens.contains(*token))
+    {
+        return Err(format!(
+            "Token '{token}' is already used in this {} call. Use {}.sameParam('{token}') to reuse it, or choose a different name.",
+            module.as_str(),
+            module.as_str()
+        ));
+    }
+    Ok(())
+}
+
+fn collect_overall_tokens<'a>(
+    parts: &'a [Part],
+    module: ModuleName,
+    explicit_tokens: &mut BTreeSet<String>,
+    same_param_targets: &mut BTreeSet<String>,
+    same_params: &mut Vec<&'a String>,
+) -> Result<(), String> {
+    for part in parts {
+        let (token, reusable) = match part {
+            Part::Param {
+                nested_parts,
+                runtime_kind: ParamRuntimeKind::Implicit,
+                ..
+            } => {
+                collect_overall_tokens(
+                    nested_parts,
+                    module,
+                    explicit_tokens,
+                    same_param_targets,
+                    same_params,
+                )?;
+                (None, false)
+            }
+            Part::Param {
+                name,
+                runtime_kind: ParamRuntimeKind::Param,
+                ..
+            }
+            | Part::Name { name, .. }
+            | Part::List { name, .. } => (Some(name), true),
+            Part::Plural {
+                name: Some(name),
+                show_count,
+                ..
+            } if show_count != "no" => (Some(name), false),
+            Part::SameParam { name } => {
+                same_params.push(name);
+                (None, false)
+            }
+            _ => (None, false),
+        };
+        if let Some(token) = token {
+            if !explicit_tokens.insert(token.clone()) {
+                return Err(format!(
+                    "Token '{token}' is already used in this {} call. Use {}.sameParam('{token}') to reuse it, or choose a different name.",
+                    module.as_str(),
+                    module.as_str()
+                ));
+            }
+            if reusable {
+                same_param_targets.insert(token.clone());
+            }
+        }
+    }
+    Ok(())
+}
+
+struct RuntimeBuilder<'a, 'v> {
     phrase: &'a Phrase,
-    module_ident: Ident,
-    runtime_args: Vec<Expr>,
-    runtime_tokens: BTreeSet<String>,
+    global_variations: &'v [&'v Part],
+    root_parts: &'v [Part],
+    description_target: Option<u32>,
 }
 
 #[derive(Clone)]
@@ -1595,26 +2199,6 @@ struct Variation {
     index: usize,
     keys: Vec<String>,
     group: Option<String>,
-}
-
-fn keys_for_depth(
-    variations: &[Variation],
-    depth: usize,
-    selected: &[(usize, String)],
-) -> Vec<String> {
-    let variation = &variations[depth];
-    variation
-        .group
-        .as_ref()
-        .and_then(|group| {
-            variations[..depth]
-                .iter()
-                .enumerate()
-                .find(|(_, previous)| previous.group.as_ref() == Some(group))
-                .and_then(|(index, _)| selected.get(index).map(|(_, key)| key.clone()))
-        })
-        .map(|key| vec![key])
-        .unwrap_or_else(|| variation.keys.clone())
 }
 
 fn variation_group(part: &Part) -> Option<String> {
@@ -1630,18 +2214,8 @@ fn variation_group(part: &Part) -> Option<String> {
         } => Some(format!("gender-param:{}", expr_group_key(gender))),
         Part::Name { gender, .. } => Some(format!("gender-param:{}", expr_group_key(gender))),
         Part::Enum { value, .. } => Some(format!("enum:{}", expr_group_key(value))),
-        Part::Plural { count, .. } => Some(format!("number-param:{}", expr_group_key(count))),
-        Part::Pronoun {
-            usage,
-            gender,
-            human,
-            ..
-        } => Some(format!(
-            "pronoun:{}:{}:{}",
-            usage,
-            human,
-            expr_group_key(gender)
-        )),
+        Part::Plural { count, .. } => Some(format!("plural:{}", expr_group_key(count))),
+        Part::Pronoun { gender, .. } => Some(format!("pronoun:{}", expr_group_key(gender))),
         _ => None,
     }
 }
@@ -1667,49 +2241,170 @@ fn expr_group_key(expr: &Expr) -> String {
     }
 }
 
-impl<'a> RuntimeBuilder<'a> {
-    fn new(phrase: &'a Phrase, module_ident: Ident) -> Self {
+fn is_variation_part(part: &Part) -> bool {
+    matches!(
+        part,
+        Part::Param {
+            variation: ParamVariation::Number(_) | ParamVariation::Gender(_),
+            ..
+        } | Part::Name { .. }
+            | Part::Enum { .. }
+            | Part::Plural { .. }
+            | Part::Pronoun { .. }
+    )
+}
+
+fn collect_variation_parts<'a>(parts: &'a [Part], output: &mut Vec<&'a Part>) {
+    let mut used_enums = BTreeSet::new();
+    collect_variation_parts_impl(parts, output, &mut used_enums);
+}
+
+fn collect_variation_parts_impl<'a>(
+    parts: &'a [Part],
+    output: &mut Vec<&'a Part>,
+    used_enums: &mut BTreeSet<String>,
+) {
+    for part in parts {
+        let repeated_enum = matches!(part, Part::Enum { .. })
+            && variation_group(part).is_some_and(|group| !used_enums.insert(group));
+        if is_variation_part(part) && !repeated_enum {
+            output.push(part);
+        }
+        if let Part::Param { nested_parts, .. } = part {
+            collect_variation_parts_impl(nested_parts, output, used_enums);
+        }
+    }
+}
+
+fn contains_nested_phrase(parts: &[Part]) -> bool {
+    parts.iter().any(|part| {
+        matches!(
+            part,
+            Part::Param {
+                nested: Some(_),
+                runtime_kind: ParamRuntimeKind::Implicit,
+                ..
+            }
+        )
+    })
+}
+
+#[derive(Default)]
+struct IdentifierCollector {
+    names: BTreeSet<String>,
+}
+
+impl Visit for IdentifierCollector {
+    fn visit_ident(&mut self, identifier: &Ident) {
+        self.names.insert(identifier.sym.to_string());
+    }
+}
+
+fn phrase_identifiers(phrase: &Phrase) -> BTreeSet<String> {
+    let mut collector = IdentifierCollector::default();
+    if let Some(subject) = &phrase.options.subject {
+        subject.visit_with(&mut collector);
+    }
+    collect_part_identifiers(&phrase.parts, &mut collector);
+    collector.names
+}
+
+fn collect_part_identifiers(parts: &[Part], collector: &mut IdentifierCollector) {
+    for part in parts {
+        match part {
+            Part::Param {
+                value,
+                variation,
+                nested_parts,
+                ..
+            } => {
+                value.visit_with(collector);
+                match variation {
+                    ParamVariation::Number(Some(number)) => number.visit_with(collector),
+                    ParamVariation::Gender(gender) => gender.visit_with(collector),
+                    ParamVariation::Number(None) | ParamVariation::None => {}
+                }
+                collect_part_identifiers(nested_parts, collector);
+            }
+            Part::Name { value, gender, .. } => {
+                value.visit_with(collector);
+                gender.visit_with(collector);
+            }
+            Part::Enum {
+                value, range_expr, ..
+            } => {
+                value.visit_with(collector);
+                range_expr.visit_with(collector);
+            }
+            Part::Plural { count, value, .. } => {
+                count.visit_with(collector);
+                if let Some(value) = value {
+                    value.visit_with(collector);
+                }
+            }
+            Part::Pronoun { gender, .. } => gender.visit_with(collector),
+            Part::List {
+                items,
+                conjunction,
+                delimiter,
+                ..
+            } => {
+                items.visit_with(collector);
+                if let Some(conjunction) = conjunction {
+                    conjunction.visit_with(collector);
+                }
+                if let Some(delimiter) = delimiter {
+                    delimiter.visit_with(collector);
+                }
+            }
+            Part::Text(_) | Part::SameParam { .. } => {}
+        }
+    }
+}
+
+fn nested_parts_contain_target(parts: &[Part], target: u32) -> bool {
+    parts.iter().any(|part| match part {
+        Part::Param {
+            nested: Some(nested),
+            nested_parts,
+            ..
+        } => nested.target_id == target || nested_parts_contain_target(nested_parts, target),
+        _ => false,
+    })
+}
+
+impl<'a, 'v> RuntimeBuilder<'a, 'v> {
+    fn new(
+        phrase: &'a Phrase,
+        global_variations: &'v [&'v Part],
+        root_parts: &'v [Part],
+        description_target: Option<u32>,
+    ) -> Self {
         Self {
             phrase,
-            module_ident,
-            runtime_args: vec![],
-            runtime_tokens: BTreeSet::new(),
+            global_variations,
+            root_parts,
+            description_target,
         }
     }
 
-    fn table(&mut self) -> RuntimeNode {
-        let variations = self.variation_parts();
-        if let Some(subject) = &self.phrase.options.subject {
-            self.runtime_args.push(runtime_helper(
-                &self.module_ident,
-                "_subject",
-                vec![*subject.clone()],
-            ));
-        }
-        for part in &self.phrase.parts {
-            self.collect_runtime_arg(part);
-        }
-
+    fn table(&self) -> RuntimeNode {
+        let variations = self.variations();
         if variations.is_empty() {
-            return RuntimeNode::String(self.pattern_for(&[], false));
+            return RuntimeNode::String(self.pattern(&[], false));
         }
-
         self.branch(&variations, 0, &mut vec![])
     }
 
     fn hash_tree(&self) -> HashNode {
-        let variations = self.variation_parts();
+        let variations = self.variations();
         if variations.is_empty() {
-            return HashNode::Leaf(HashLeaf {
-                desc: self.phrase.desc.clone(),
-                text: self.pattern_for(&[], true),
-                token_aliases: self.hash_token_aliases(),
-            });
+            return self.hash_leaf(&[]);
         }
         self.hash_branch(&variations, 0, &mut vec![])
     }
 
-    fn variation_parts(&self) -> Vec<Variation> {
+    fn variations(&self) -> Vec<Variation> {
         let mut variations = vec![];
         if self.phrase.options.subject.is_some() {
             variations.push(Variation {
@@ -1718,8 +2413,8 @@ impl<'a> RuntimeBuilder<'a> {
                 group: Some("subject".to_string()),
             });
         }
-        for (index, part) in self.phrase.parts.iter().enumerate() {
-            let keys = match part {
+        for (index, part) in self.global_variations.iter().enumerate() {
+            let keys = match *part {
                 Part::Param {
                     variation: ParamVariation::Number(_),
                     ..
@@ -1755,12 +2450,12 @@ impl<'a> RuntimeBuilder<'a> {
         selected: &mut Vec<(usize, String)>,
     ) -> RuntimeNode {
         if depth == variations.len() {
-            return RuntimeNode::String(self.pattern_for(selected, false));
+            return RuntimeNode::String(self.pattern(selected, false));
         }
 
         let variation = &variations[depth];
         let mut items = vec![];
-        let keys = keys_for_depth(variations, depth, selected);
+        let keys = Self::keys(variations, depth, selected);
         for key in keys {
             selected.push((variation.index, key.clone()));
             items.push((key.clone(), self.branch(variations, depth + 1, selected)));
@@ -1776,16 +2471,12 @@ impl<'a> RuntimeBuilder<'a> {
         selected: &mut Vec<(usize, String)>,
     ) -> HashNode {
         if depth == variations.len() {
-            return HashNode::Leaf(HashLeaf {
-                desc: self.phrase.desc.clone(),
-                text: self.pattern_for(selected, true),
-                token_aliases: self.hash_token_aliases(),
-            });
+            return self.hash_leaf(selected);
         }
 
         let variation = &variations[depth];
         let mut items = vec![];
-        let keys = keys_for_depth(variations, depth, selected);
+        let keys = Self::keys(variations, depth, selected);
         for key in keys {
             selected.push((variation.index, key.clone()));
             items.push((
@@ -1797,72 +2488,180 @@ impl<'a> RuntimeBuilder<'a> {
         HashNode::Object(items)
     }
 
-    fn pattern_for(&self, selected: &[(usize, String)], use_hash_tokens: bool) -> String {
+    fn keys(variations: &[Variation], depth: usize, selected: &[(usize, String)]) -> Vec<String> {
+        let variation = &variations[depth];
+        variation
+            .group
+            .as_ref()
+            .and_then(|group| {
+                variations[..depth]
+                    .iter()
+                    .enumerate()
+                    .find(|(_, previous)| previous.group.as_ref() == Some(group))
+                    .and_then(|(index, _)| selected.get(index).map(|(_, key)| key.clone()))
+            })
+            .map(|key| vec![key])
+            .unwrap_or_else(|| variation.keys.clone())
+    }
+
+    fn hash_leaf(&self, selected: &[(usize, String)]) -> HashNode {
+        HashNode::Leaf(HashLeaf {
+            desc: self.description_target.map_or_else(
+                || self.phrase.desc.clone(),
+                |target| {
+                    format!(
+                        "In the phrase: \"{}\"",
+                        self.description_pattern(self.root_parts, target, selected)
+                    )
+                },
+            ),
+            text: self.pattern(selected, true),
+            token_aliases: self.aliases(selected),
+        })
+    }
+
+    fn pattern(&self, selected: &[(usize, String)], use_hash_tokens: bool) -> String {
         let selected: BTreeMap<usize, String> = selected.iter().cloned().collect();
+        self.pattern_parts(&self.phrase.parts, &selected, use_hash_tokens)
+    }
+
+    fn pattern_parts(
+        &self,
+        parts: &[Part],
+        selected: &BTreeMap<usize, String>,
+        use_hash_tokens: bool,
+    ) -> String {
         let mut output = String::new();
-        for (index, part) in self.phrase.parts.iter().enumerate() {
-            match part {
-                Part::Text(text) => output.push_str(text),
+        for part in parts {
+            self.append_part_text(&mut output, part, selected, use_hash_tokens);
+        }
+        normalize_spaces(&output, self.phrase.options.preserve_whitespace)
+            .trim()
+            .to_string()
+    }
+
+    fn append_part_text(
+        &self,
+        output: &mut String,
+        part: &Part,
+        selected: &BTreeMap<usize, String>,
+        use_hash_tokens: bool,
+    ) {
+        match part {
+            Part::Text(text) => output.push_str(text),
+            Part::Param { name, .. } => {
+                let token = if use_hash_tokens {
+                    self.param_hash_name(part, selected)
+                } else {
+                    name.clone()
+                };
+                output.push_str(&format!("{{{token}}}"));
+            }
+            Part::SameParam { name } | Part::Name { name, .. } | Part::List { name, .. } => {
+                output.push_str(&format!("{{{name}}}"));
+            }
+            Part::Enum { range, .. } => {
+                let text = self
+                    .selected_key(part, selected)
+                    .and_then(|key| range.iter().find(|(range_key, _)| range_key == key))
+                    .map(|(_, text)| text.as_str())
+                    .unwrap_or_default();
+                output.push_str(text);
+            }
+            Part::Plural {
+                singular,
+                many,
+                show_count,
+                name,
+                ..
+            } => {
+                let is_singular = self
+                    .selected_key(part, selected)
+                    .is_some_and(|key| key == "_1");
+                if is_singular {
+                    if show_count == "yes" {
+                        output.push_str(&format!("1 {singular}"));
+                    } else {
+                        output.push_str(singular);
+                    }
+                } else if show_count == "yes" || show_count == "ifMany" {
+                    let token = name.as_deref().unwrap_or("number");
+                    output.push_str(&format!("{{{token}}} {many}"));
+                } else {
+                    output.push_str(many);
+                }
+            }
+            Part::Pronoun {
+                usage,
+                human,
+                capitalize,
+                ..
+            } => {
+                let key = self
+                    .selected_key(part, selected)
+                    .map(String::as_str)
+                    .unwrap_or("*");
+                let text = pronoun_candidates(usage, *human)
+                    .into_iter()
+                    .find(|(candidate, _)| candidate == key)
+                    .map(|(_, text)| text)
+                    .unwrap_or_else(|| "they".to_string());
+                if *capitalize {
+                    output.push_str(&capitalize_first(&text));
+                } else {
+                    output.push_str(&text);
+                }
+            }
+        }
+    }
+
+    fn selected_key<'s>(
+        &self,
+        part: &Part,
+        selected: &'s BTreeMap<usize, String>,
+    ) -> Option<&'s String> {
+        let group = variation_group(part)?;
+        self.global_variations
+            .iter()
+            .position(|candidate| variation_group(candidate).as_ref() == Some(&group))
+            .and_then(|index| selected.get(&index))
+    }
+
+    fn param_hash_name(&self, part: &Part, selected: &BTreeMap<usize, String>) -> String {
+        let Part::Param {
+            name,
+            hash_name,
+            nested,
+            nested_parts,
+            ..
+        } = part
+        else {
+            unreachable!("param hash name requested for non-param")
+        };
+        if nested.is_some() {
+            let text = self.token_name_text(nested_parts, selected);
+            format!("={}", text.trim().replace('{', "[").replace('}', "]"))
+        } else {
+            hash_name.clone().unwrap_or_else(|| name.clone())
+        }
+    }
+
+    fn token_name_text(&self, parts: &[Part], selected: &BTreeMap<usize, String>) -> String {
+        let mut output = String::new();
+        for part in parts {
+            if matches!(
+                part,
                 Part::Param {
-                    name, hash_name, ..
-                } => {
-                    let name = if use_hash_tokens {
-                        hash_name.as_ref().unwrap_or(name)
-                    } else {
-                        name
-                    };
-                    output.push_str(&format!("{{{name}}}"));
-                }
-                Part::SameParam { name } | Part::Name { name, .. } | Part::List { name, .. } => {
-                    output.push_str(&format!("{{{name}}}"));
-                }
-                Part::Enum { range, .. } => {
-                    let key = selected.get(&index);
-                    let text = key
-                        .and_then(|key| range.iter().find(|(range_key, _)| range_key == key))
-                        .map(|(_, text)| text.as_str())
-                        .unwrap_or_default();
-                    output.push_str(text);
-                }
-                Part::Plural {
-                    singular,
-                    many,
-                    show_count,
-                    name,
+                    nested: Some(_),
+                    runtime_kind: ParamRuntimeKind::Implicit,
                     ..
-                } => {
-                    let is_singular = selected.get(&index).map(|key| key == "_1").unwrap_or(false);
-                    if is_singular {
-                        if show_count == "yes" {
-                            output.push_str(&format!("1 {singular}"));
-                        } else {
-                            output.push_str(singular);
-                        }
-                    } else if show_count == "yes" || show_count == "ifMany" {
-                        let token = name.as_deref().unwrap_or("number");
-                        output.push_str(&format!("{{{token}}} {many}"));
-                    } else {
-                        output.push_str(many);
-                    }
                 }
-                Part::Pronoun {
-                    usage,
-                    human,
-                    capitalize,
-                    ..
-                } => {
-                    let key = selected.get(&index).map(String::as_str).unwrap_or("*");
-                    let text = pronoun_candidates(usage, *human)
-                        .into_iter()
-                        .find(|(candidate, _)| candidate == key)
-                        .map(|(_, text)| text)
-                        .unwrap_or_else(|| "they".to_string());
-                    if *capitalize {
-                        output.push_str(&capitalize_first(&text));
-                    } else {
-                        output.push_str(&text);
-                    }
+            ) {
+                if let Part::Param { nested_parts, .. } = part {
+                    output.push_str(&self.pattern_parts(nested_parts, selected, true));
                 }
+            } else {
+                self.append_part_text(&mut output, part, selected, false);
             }
         }
         normalize_spaces(&output, self.phrase.options.preserve_whitespace)
@@ -1870,20 +2669,47 @@ impl<'a> RuntimeBuilder<'a> {
             .to_string()
     }
 
-    fn collect_runtime_arg(&mut self, part: &Part) {
-        if let Part::Param { name, .. } = part {
-            if !self.runtime_tokens.insert(name.clone()) {
-                return;
-            }
-        }
-        if !matches!(part, Part::Text(_) | Part::SameParam { .. }) {
-            if let Some(expr) = runtime_arg_expr(&self.module_ident, part) {
-                self.runtime_args.push(expr);
-            }
-        }
+    fn description_pattern(
+        &self,
+        parts: &[Part],
+        target: u32,
+        selected: &[(usize, String)],
+    ) -> String {
+        let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
+        self.description_parts_text(parts, target, &selected)
     }
 
-    fn hash_token_aliases(&self) -> Option<BTreeMap<String, String>> {
+    fn description_parts_text(
+        &self,
+        parts: &[Part],
+        target: u32,
+        selected: &BTreeMap<usize, String>,
+    ) -> String {
+        let mut output = String::new();
+        for part in parts {
+            if let Part::Param {
+                nested: Some(nested),
+                nested_parts,
+                runtime_kind: ParamRuntimeKind::Implicit,
+                ..
+            } = part
+            {
+                if nested.target_id != target && nested_parts_contain_target(nested_parts, target) {
+                    output.push_str(&self.description_parts_text(nested_parts, target, selected));
+                } else {
+                    output.push_str(&format!("{{{}}}", self.param_hash_name(part, selected)));
+                }
+            } else {
+                self.append_part_text(&mut output, part, selected, false);
+            }
+        }
+        normalize_spaces(&output, self.phrase.options.preserve_whitespace)
+            .trim()
+            .to_string()
+    }
+
+    fn aliases(&self, selected: &[(usize, String)]) -> Option<IndexMap<String, String>> {
+        let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
         let aliases = self
             .phrase
             .parts
@@ -1891,18 +2717,241 @@ impl<'a> RuntimeBuilder<'a> {
             .filter_map(|part| match part {
                 Part::Param {
                     name,
-                    hash_name: Some(hash_name),
                     runtime_kind: ParamRuntimeKind::Implicit,
                     ..
-                } if hash_name != name => Some((hash_name.clone(), name.clone())),
+                } => {
+                    let hash_name = self.param_hash_name(part, &selected);
+                    (&hash_name != name).then(|| (hash_name, name.clone()))
+                }
                 _ => None,
             })
-            .collect::<BTreeMap<_, _>>();
+            .collect::<IndexMap<_, _>>();
         if aliases.is_empty() {
             None
         } else {
             Some(aliases)
         }
+    }
+
+    fn validate_dynamic_tokens(&self) -> Result<(), String> {
+        let variations = self.variations();
+        self.validate_dynamic_tokens_branch(&variations, 0, &mut Vec::new())
+    }
+
+    fn validate_dynamic_tokens_branch(
+        &self,
+        variations: &[Variation],
+        depth: usize,
+        selected: &mut Vec<(usize, String)>,
+    ) -> Result<(), String> {
+        if depth == variations.len() {
+            let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
+            return self.validate_dynamic_token_parts(&self.phrase.parts, &selected);
+        }
+        let variation = &variations[depth];
+        for key in Self::keys(variations, depth, selected) {
+            selected.push((variation.index, key));
+            self.validate_dynamic_tokens_branch(variations, depth + 1, selected)?;
+            selected.pop();
+        }
+        Ok(())
+    }
+
+    fn validate_dynamic_token_parts(
+        &self,
+        parts: &[Part],
+        selected: &BTreeMap<usize, String>,
+    ) -> Result<(), String> {
+        let explicit = parts
+            .iter()
+            .filter_map(|part| match part {
+                Part::Param {
+                    name,
+                    runtime_kind: ParamRuntimeKind::Param,
+                    ..
+                }
+                | Part::Name { name, .. }
+                | Part::List { name, .. } => Some(name.as_str()),
+                Part::Plural {
+                    name: Some(name),
+                    show_count,
+                    ..
+                } if show_count != "no" => Some(name.as_str()),
+                _ => None,
+            })
+            .collect::<BTreeSet<_>>();
+        let mut implicit = BTreeSet::new();
+        for part in parts {
+            if let Part::Param {
+                nested_parts,
+                runtime_kind: ParamRuntimeKind::Implicit,
+                ..
+            } = part
+            {
+                let token = self.param_hash_name(part, selected);
+                if !implicit.insert(token.clone()) {
+                    return Err(format!(
+                        "Implicit token '{token}' is already used in this {} call. Change the text inside one of the JSX elements so each implicit token is unique.",
+                        self.phrase.module.as_str()
+                    ));
+                }
+                if explicit.contains(token.as_str()) {
+                    return Err(format!(
+                        "Token '{token}' is already used in this {} call.",
+                        self.phrase.module.as_str()
+                    ));
+                }
+                self.validate_dynamic_token_parts(nested_parts, selected)?;
+            }
+        }
+        Ok(())
+    }
+}
+
+fn render_runtime_call(
+    phrase: &Phrase,
+    module_ident: &Ident,
+    global_variations: &[&Part],
+    shared_runtime_args: &[Expr],
+    root_parts: &[Part],
+    description_target: Option<u32>,
+) -> Expr {
+    let builder = RuntimeBuilder::new(phrase, global_variations, root_parts, description_target);
+    let table = builder.table();
+    let hk = fbt_hash_key(&builder.hash_tree());
+    let mut runtime_args = shared_runtime_args.to_vec();
+
+    // Babel evaluates variations first, explicit non-variation tokens second,
+    // and implicit JSX parameters last.
+    for implicit in [false, true] {
+        for part in &phrase.parts {
+            let is_implicit = matches!(
+                part,
+                Part::Param {
+                    runtime_kind: ParamRuntimeKind::Implicit,
+                    ..
+                }
+            );
+            if !is_variation_part(part) && is_implicit == implicit {
+                if let Some(argument) = runtime_arg_with_context(
+                    phrase,
+                    module_ident,
+                    part,
+                    global_variations,
+                    shared_runtime_args,
+                    root_parts,
+                ) {
+                    runtime_args.push(argument);
+                }
+            }
+        }
+    }
+
+    let runtime_args = if runtime_args.is_empty() {
+        null_expr()
+    } else {
+        Expr::Array(ArrayLit {
+            span: DUMMY_SP,
+            elems: runtime_args
+                .into_iter()
+                .map(|expr| {
+                    Some(ExprOrSpread {
+                        spread: None,
+                        expr: Box::new(expr),
+                    })
+                })
+                .collect(),
+        })
+    };
+    let mut option_props = vec![PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
+        key: PropName::Ident(IdentName::new("hk".into(), DUMMY_SP)),
+        value: Box::new(string_expr(hk)),
+    })))];
+    if let Some(project) = phrase
+        .options
+        .project
+        .as_ref()
+        .filter(|project| !project.is_empty())
+    {
+        option_props.push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
+            key: PropName::Ident(IdentName::new("project".into(), DUMMY_SP)),
+            value: Box::new(string_expr(project.clone())),
+        }))));
+    }
+    runtime_helper(
+        module_ident,
+        "_",
+        vec![
+            table.expr(),
+            runtime_args,
+            Expr::Object(ObjectLit {
+                span: DUMMY_SP,
+                props: option_props,
+            }),
+        ],
+    )
+}
+
+fn runtime_arg_with_context(
+    phrase: &Phrase,
+    module_ident: &Ident,
+    part: &Part,
+    global_variations: &[&Part],
+    shared_runtime_args: &[Expr],
+    root_parts: &[Part],
+) -> Option<Expr> {
+    if let Part::Param {
+        name,
+        nested: Some(nested),
+        nested_parts,
+        value,
+        runtime_kind: ParamRuntimeKind::Implicit,
+        ..
+    } = part
+    {
+        let nested_phrase = Phrase {
+            desc: String::new(),
+            module: phrase.module,
+            options: phrase.options.clone(),
+            parts: nested_parts.clone(),
+        };
+        let nested_runtime = render_runtime_call(
+            &nested_phrase,
+            module_ident,
+            global_variations,
+            shared_runtime_args,
+            root_parts,
+            Some(nested.target_id),
+        );
+        return Some(runtime_helper(
+            module_ident,
+            "_implicitParam",
+            vec![
+                string_expr(name.clone()),
+                inject_nested_runtime(value, nested_runtime),
+            ],
+        ));
+    }
+    runtime_arg_expr(module_ident, part)
+}
+
+fn inject_nested_runtime(value: &Expr, runtime: Expr) -> Expr {
+    let child = JSXElementChild::JSXExprContainer(JSXExprContainer {
+        span: DUMMY_SP,
+        expr: JSXExpr::Expr(Box::new(runtime)),
+    });
+    match value {
+        Expr::JSXElement(element) => {
+            let mut element = element.clone();
+            element.children = vec![child];
+            Expr::JSXElement(element)
+        }
+        Expr::JSXFragment(fragment) => {
+            let mut fragment = fragment.clone();
+            fragment.children = vec![child];
+            Expr::JSXFragment(fragment)
+        }
+        _ => value.clone(),
     }
 }
 
@@ -1965,17 +3014,14 @@ fn runtime_arg_expr(module_ident: &Ident, part: &Part) -> Option<Expr> {
             ..
         } => {
             let mut args = vec![*count.clone()];
-            if show_count == "yes" || show_count == "ifMany" || name.is_some() {
+            if show_count != "no" {
                 args.push(match name {
                     Some(name) => string_expr(name.clone()),
                     None => null_expr(),
                 });
-            }
-            if let Some(value) = value {
-                if args.len() == 1 {
-                    args.push(null_expr());
+                if let Some(value) = value {
+                    args.push(*value.clone());
                 }
-                args.push(*value.clone());
             }
             Some(runtime_helper(module_ident, "_plural", args))
         }
@@ -1985,7 +3031,7 @@ fn runtime_arg_expr(module_ident: &Ident, part: &Part) -> Option<Expr> {
             human,
             ..
         } => {
-            let mut args = vec![number_expr(pronoun_usage(usage)), *gender.clone()];
+            let mut args = vec![number_expr(pronoun_usage(usage)?), *gender.clone()];
             if *human {
                 args.push(Expr::Object(ObjectLit {
                     span: DUMMY_SP,
@@ -2008,12 +3054,12 @@ fn runtime_arg_expr(module_ident: &Ident, part: &Part) -> Option<Expr> {
                 args.push(
                     conjunction
                         .clone()
-                        .map(string_expr)
+                        .map(|expression| *expression)
                         .unwrap_or_else(null_expr),
                 );
             }
             if let Some(delimiter) = delimiter {
-                args.push(string_expr(delimiter.clone()));
+                args.push(*delimiter.clone());
             }
             Some(runtime_helper(module_ident, "_list", args))
         }
@@ -2056,18 +3102,18 @@ enum HashNode {
 struct HashLeaf {
     desc: String,
     text: String,
-    token_aliases: Option<BTreeMap<String, String>>,
+    token_aliases: Option<IndexMap<String, String>>,
 }
 
 fn call_module_name(call: &CallExpr) -> Option<ModuleName> {
     match &call.callee {
-        Callee::Expr(expr) => match expr.as_ref() {
+        Callee::Expr(expr) => match unwrap_parens(expr) {
             Expr::Ident(ident) => match ident.sym.as_ref() {
                 "fbt" => Some(ModuleName::Fbt),
                 "fbs" => Some(ModuleName::Fbs),
                 _ => None,
             },
-            Expr::Member(member) => match member.obj.as_ref() {
+            Expr::Member(member) => match unwrap_parens(&member.obj) {
                 Expr::Ident(ident) => match ident.sym.as_ref() {
                     "fbt" => Some(ModuleName::Fbt),
                     "fbs" => Some(ModuleName::Fbs),
@@ -2083,7 +3129,7 @@ fn call_module_name(call: &CallExpr) -> Option<ModuleName> {
 
 fn call_member_method(call: &CallExpr) -> Option<&str> {
     match &call.callee {
-        Callee::Expr(expr) => match expr.as_ref() {
+        Callee::Expr(expr) => match unwrap_parens(expr) {
             Expr::Member(member) => match &member.prop {
                 MemberProp::Ident(ident) => Some(ident.sym.as_ref()),
                 _ => None,
@@ -2092,6 +3138,13 @@ fn call_member_method(call: &CallExpr) -> Option<&str> {
         },
         _ => None,
     }
+}
+
+fn unwrap_parens(mut expr: &Expr) -> &Expr {
+    while let Expr::Paren(paren) = expr {
+        expr = &paren.expr;
+    }
+    expr
 }
 
 fn is_construct_method(method: &str) -> bool {
@@ -2167,6 +3220,58 @@ fn expr_as_string(expr: &Expr) -> Option<String> {
     }
 }
 
+fn option_string(expr: &Expr) -> Option<String> {
+    match expr {
+        Expr::Lit(Lit::Str(value)) => Some(wtf8_to_string(&value.value)),
+        Expr::Bin(binary) if binary.op == BinaryOp::Add => Some(format!(
+            "{}{}",
+            option_string(&binary.left)?,
+            option_string(&binary.right)?
+        )),
+        Expr::Paren(paren) => option_string(&paren.expr),
+        _ => None,
+    }
+}
+
+fn is_valid_fbt_array_item(expr: &Expr) -> bool {
+    match expr {
+        Expr::Lit(Lit::Str(_)) | Expr::Call(_) | Expr::JSXElement(_) | Expr::JSXFragment(_) => true,
+        Expr::Tpl(template) => template.exprs.is_empty(),
+        Expr::Paren(paren) => is_valid_fbt_array_item(&paren.expr),
+        _ => false,
+    }
+}
+
+fn string_literal_value(expr: &Expr) -> Option<String> {
+    match unwrap_parens(expr) {
+        Expr::Lit(Lit::Str(value)) => Some(wtf8_to_string(&value.value)),
+        _ => None,
+    }
+}
+
+fn js_array_index(key: &str) -> Option<u32> {
+    let value = key.parse::<u32>().ok()?;
+    (value != u32::MAX && value.to_string() == key).then_some(value)
+}
+
+fn js_property_order(range: IndexMap<String, String>) -> Vec<(String, String)> {
+    let mut indices = Vec::new();
+    let mut strings = Vec::new();
+    for (key, value) in range {
+        if let Some(index) = js_array_index(&key) {
+            indices.push((index, key, value));
+        } else {
+            strings.push((key, value));
+        }
+    }
+    indices.sort_by_key(|(index, _, _)| *index);
+    indices
+        .into_iter()
+        .map(|(_, key, value)| (key, value))
+        .chain(strings)
+        .collect()
+}
+
 fn expr_type(expr: &Expr) -> &'static str {
     match expr {
         Expr::Array(_) => "ArrayExpression",
@@ -2199,12 +3304,17 @@ fn expr_type(expr: &Expr) -> &'static str {
 
 #[derive(Default)]
 struct ObjectOptions {
+    present: BTreeSet<String>,
     strings: BTreeMap<String, String>,
     bools: BTreeMap<String, bool>,
     exprs: BTreeMap<String, Box<Expr>>,
 }
 
 impl ObjectOptions {
+    fn contains(&self, key: &str) -> bool {
+        self.present.contains(key)
+    }
+
     fn string(&self, key: &str) -> Option<String> {
         self.strings.get(key).cloned()
     }
@@ -2213,33 +3323,51 @@ impl ObjectOptions {
         self.bools.get(key).copied()
     }
 
+    fn bool_option(&self, key: &str) -> Result<Option<bool>, String> {
+        if !self.contains(key) {
+            return Ok(None);
+        }
+        self.get_bool(key).map(Some).ok_or_else(|| {
+            format!("Option '{key}' must be a boolean or 'true'/'false' string literal.")
+        })
+    }
+
+    fn required_string(&self, key: &str) -> Result<Option<String>, String> {
+        if !self.contains(key) {
+            return Ok(None);
+        }
+        self.string(key)
+            .map(Some)
+            .ok_or_else(|| format!("Option '{key}' must be a string literal."))
+    }
+
     fn expr(&self, key: &str) -> Option<Box<Expr>> {
         self.exprs.get(key).cloned()
     }
 
-    fn number_expr(&self) -> Option<Option<Box<Expr>>> {
-        if let Some(value) = self.bools.get("number") {
-            return (*value).then_some(None);
+    fn number_expr(&self) -> Result<Option<Option<Box<Expr>>>, String> {
+        if !self.contains("number") {
+            Ok(None)
+        } else if self.bools.get("number") == Some(&true) {
+            Ok(Some(None))
+        } else if let Some(value) = self.exprs.get("number") {
+            Ok(Some(Some(value.clone())))
+        } else {
+            Err("Option 'number' must be an expression or true.".into())
         }
-        if let Some(value) = self.strings.get("number") {
-            if value == "true" {
-                return Some(None);
-            }
-            if value == "false" {
-                return None;
-            }
-        }
-        self.exprs.get("number").cloned().map(Some)
     }
 }
 
-fn parse_call_options(expr: &Expr) -> CallOptions {
-    let object = parse_object(expr);
-    CallOptions {
-        preserve_whitespace: object.get_bool("preserveWhitespace").unwrap_or(false),
-        project: object.string("project"),
+fn parse_call_options(expr: &Expr) -> Result<CallOptions, String> {
+    let object = parse_object_options(expr, FBT_OPTIONS)?;
+    object.required_string("author")?;
+    object.bool_option("common")?;
+    object.bool_option("doNotExtract")?;
+    Ok(CallOptions {
+        preserve_whitespace: object.bool_option("preserveWhitespace")?.unwrap_or(false),
+        project: object.required_string("project")?,
         subject: object.expr("subject"),
-    }
+    })
 }
 
 fn parse_object(expr: &Expr) -> ObjectOptions {
@@ -2257,27 +3385,111 @@ fn parse_object(expr: &Expr) -> ObjectOptions {
         let Some(key) = prop_name_to_string(&key_value.key) else {
             continue;
         };
-        match key_value.value.as_ref() {
-            Expr::Lit(Lit::Str(value)) => {
-                let value = wtf8_to_string(&value.value);
-                if value == "true" || value == "false" {
-                    options.bools.insert(key.clone(), value == "true");
+        options.present.insert(key.clone());
+        if let Some(value) = option_string(&key_value.value) {
+            options.strings.insert(key, value);
+        } else {
+            match key_value.value.as_ref() {
+                Expr::Lit(Lit::Bool(value)) => {
+                    options.bools.insert(key, value.value);
                 }
-                options.strings.insert(key, value);
-            }
-            Expr::Lit(Lit::Bool(value)) => {
-                options.bools.insert(key, value.value);
-            }
-            _ => {
-                options.exprs.insert(key, key_value.value.clone());
+                _ => {
+                    options.exprs.insert(key, key_value.value.clone());
+                }
             }
         }
     }
     options
 }
 
+fn parse_object_options(expr: &Expr, allowed: &[&str]) -> Result<ObjectOptions, String> {
+    let Expr::Object(object) = expr else {
+        return Err("Options must be an object literal.".into());
+    };
+    for property in &object.props {
+        let PropOrSpread::Prop(property) = property else {
+            return Err(
+                "Options must be plain object properties. Remove methods and spread properties."
+                    .into(),
+            );
+        };
+        let Prop::KeyValue(property) = property.as_ref() else {
+            return Err(
+                "Options must be plain object properties. Remove methods and spread properties."
+                    .into(),
+            );
+        };
+        let key = prop_name_to_string(&property.key)
+            .ok_or("Option names must be identifiers or string literals.")?;
+        if key != "key" && !allowed.contains(&key.as_str()) {
+            return Err(format!(
+                "Unknown option '{key}'. Use one of: {}.",
+                allowed.join(", ")
+            ));
+        }
+    }
+    Ok(parse_object(expr))
+}
+
 fn compile_error(message: &str) -> ! {
     panic!("fbtee SWC plugin error: {message}");
+}
+
+fn parse_docblock_project(comment: &str) -> Result<Option<String>, String> {
+    let lines = comment.lines().collect::<Vec<_>>();
+    let Some((line_index, marker_index)) = lines.iter().enumerate().find_map(|(index, line)| {
+        let line = line.trim().trim_start_matches('*').trim_start();
+        line.strip_prefix("@fbt").and_then(|rest| {
+            (rest.is_empty() || rest.chars().next().is_some_and(char::is_whitespace))
+                .then_some((index, lines[index].find("@fbt").expect("pragma marker")))
+        })
+    }) else {
+        return Ok(None);
+    };
+
+    let mut json = lines[line_index][marker_index + "@fbt".len()..]
+        .trim()
+        .to_string();
+    for line in &lines[line_index + 1..] {
+        let line = line.trim().trim_start_matches('*').trim();
+        if line.starts_with('@') {
+            break;
+        }
+        if !line.is_empty() {
+            if !json.is_empty() {
+                json.push(' ');
+            }
+            json.push_str(line);
+        }
+    }
+    if json.is_empty() {
+        return Ok(None);
+    }
+
+    let value: serde_json::Value = serde_json::from_str(&json)
+        .map_err(|error| format!("Invalid @fbt docblock JSON: {error}"))?;
+    let object = value
+        .as_object()
+        .ok_or("@fbt docblock options must be a JSON object.")?;
+    for (key, value) in object {
+        if !FBT_OPTIONS.contains(&key.as_str()) {
+            return Err(format!("Unknown @fbt docblock option '{key}'."));
+        }
+        match key.as_str() {
+            "author" | "project" if !value.is_string() => {
+                return Err(format!("@fbt option '{key}' must be a string."));
+            }
+            "common" | "doNotExtract" | "preserveWhitespace" if !value.is_boolean() => {
+                return Err(format!("@fbt option '{key}' must be a boolean."));
+            }
+            _ => {}
+        }
+    }
+    Ok(object
+        .get("project")
+        .and_then(serde_json::Value::as_str)
+        .filter(|project| !project.is_empty())
+        .map(str::to_string))
 }
 
 fn unknown_common_string_message(text: &str) -> String {
@@ -2314,13 +3526,21 @@ fn prop_name_to_string(name: &PropName) -> Option<String> {
     match name {
         PropName::Ident(ident) => Some(ident.sym.to_string()),
         PropName::Str(value) => Some(wtf8_to_string(&value.value)),
-        PropName::Num(value) => Some(value.value.to_string()),
+        PropName::Num(value) => Some(value.value.to_js_string()),
         _ => None,
     }
 }
 
 fn implicit_param_alias(index: usize) -> String {
     format!("=m{index}")
+}
+
+fn normalize_jsx_param_name(value: &str) -> String {
+    if value.contains(['\n', '\r']) {
+        normalize_spaces(value, false)
+    } else {
+        value.to_string()
+    }
 }
 
 struct JsxAttrs<'a> {
@@ -2344,41 +3564,87 @@ impl<'a> JsxAttrs<'a> {
     }
 
     fn boolish(&self, key: &str) -> Option<bool> {
-        self.attr(key).map(|attr| match &attr.value {
-            None => true,
-            Some(JSXAttrValue::Str(value)) => value.value == "true",
+        self.attr(key).and_then(|attr| match &attr.value {
+            None => Some(true),
+            Some(JSXAttrValue::Str(value)) if value.value == "true" => Some(true),
+            Some(JSXAttrValue::Str(value)) if value.value == "false" => Some(false),
             Some(JSXAttrValue::JSXExprContainer(container)) => match &container.expr {
                 JSXExpr::Expr(expr) => match expr.as_ref() {
-                    Expr::Lit(Lit::Bool(value)) => value.value,
-                    Expr::Lit(Lit::Str(value)) => value.value == "true",
-                    _ => false,
-                },
-                _ => false,
-            },
-            _ => false,
-        })
-    }
-
-    fn number_expr(&self, key: &str) -> Option<Option<Box<Expr>>> {
-        let attr = self.attr(key)?;
-        match &attr.value {
-            None => Some(None),
-            Some(JSXAttrValue::Str(value)) => {
-                let value = wtf8_to_string(&value.value);
-                if value == "true" {
-                    Some(None)
-                } else {
-                    None
-                }
-            }
-            Some(JSXAttrValue::JSXExprContainer(container)) => match &container.expr {
-                JSXExpr::Expr(expr) => match expr.as_ref() {
-                    Expr::Lit(Lit::Bool(value)) => value.value.then_some(None),
-                    _ => Some(Some(expr.clone())),
+                    Expr::Lit(Lit::Bool(value)) => Some(value.value),
+                    Expr::Lit(Lit::Str(value)) if value.value == "true" => Some(true),
+                    Expr::Lit(Lit::Str(value)) if value.value == "false" => Some(false),
+                    _ => None,
                 },
                 _ => None,
             },
             _ => None,
+        })
+    }
+
+    fn bool_option(&self, key: &str) -> Result<Option<bool>, String> {
+        if self.attr(key).is_none() {
+            return Ok(None);
+        }
+        self.boolish(key).map(Some).ok_or_else(|| {
+            format!("Option '{key}' must be a boolean or 'true'/'false' string literal.")
+        })
+    }
+
+    fn required_string(&self, key: &str) -> Result<Option<String>, String> {
+        if self.attr(key).is_none() {
+            return Ok(None);
+        }
+        self.string(key)
+            .map(Some)
+            .ok_or_else(|| format!("Option '{key}' must be a string literal."))
+    }
+
+    fn validate(&self, allowed: &[&str]) -> Result<(), String> {
+        for attribute in self.attrs {
+            let JSXAttrOrSpread::JSXAttr(attribute) = attribute else {
+                return Err("fbtee JSX attributes cannot use spread syntax.".into());
+            };
+            let Some(name) = jsx_attr_name(&attribute.name) else {
+                continue;
+            };
+            if name.starts_with("__") {
+                continue;
+            }
+            if name != "key" && !allowed.contains(&name.as_str()) {
+                return Err(format!(
+                    "Unknown option '{name}'. Use one of: {}.",
+                    allowed.join(", ")
+                ));
+            }
+        }
+        Ok(())
+    }
+
+    fn number_expr(&self, key: &str) -> Result<Option<Option<Box<Expr>>>, String> {
+        let Some(attr) = self.attr(key) else {
+            return Ok(None);
+        };
+        match &attr.value {
+            None => Ok(Some(None)),
+            Some(JSXAttrValue::Str(value)) => {
+                let value = wtf8_to_string(&value.value);
+                if value == "true" {
+                    Ok(Some(None))
+                } else {
+                    Err(format!("Option '{key}' must be an expression or true."))
+                }
+            }
+            Some(JSXAttrValue::JSXExprContainer(container)) => match &container.expr {
+                JSXExpr::Expr(expr) => match expr.as_ref() {
+                    Expr::Lit(Lit::Bool(value)) if value.value => Ok(Some(None)),
+                    Expr::Lit(Lit::Bool(_)) => {
+                        Err(format!("Option '{key}' must be an expression or true."))
+                    }
+                    _ => Ok(Some(Some(expr.clone()))),
+                },
+                _ => Err(format!("Option '{key}' must be an expression or true.")),
+            },
+            _ => Err(format!("Option '{key}' must be an expression or true.")),
         }
     }
 
@@ -2444,6 +3710,43 @@ fn jsx_text_content(children: &[JSXElementChild]) -> String {
     output
 }
 
+fn jsx_plural_text(children: &[JSXElementChild], module: ModuleName) -> Result<String, String> {
+    let mut values = Vec::new();
+    for child in children {
+        match child {
+            JSXElementChild::JSXText(text) if !text.value.chars().all(char::is_whitespace) => {
+                values.push(text.value.to_string());
+            }
+            JSXElementChild::JSXExprContainer(container) => {
+                if let JSXExpr::Expr(expression) = &container.expr {
+                    values.push(expr_as_string(expression).ok_or_else(|| {
+                        format!(
+                            "<{}:plural> child must be static text or a string expression.",
+                            module.as_str()
+                        )
+                    })?);
+                }
+            }
+            JSXElementChild::JSXText(_) => {}
+            JSXElementChild::JSXElement(_)
+            | JSXElementChild::JSXFragment(_)
+            | JSXElementChild::JSXSpreadChild(_) => {
+                return Err(format!(
+                    "<{}:plural> needs exactly one child: text or an expression.",
+                    module.as_str()
+                ));
+            }
+        }
+    }
+    if values.len() != 1 {
+        return Err(format!(
+            "<{}:plural> needs exactly one child: text or an expression.",
+            module.as_str()
+        ));
+    }
+    Ok(values.pop().expect("one plural child"))
+}
+
 fn jsx_description_text(children: &[JSXElementChild], options: &CallOptions) -> String {
     jsx_description_text_with_target(children, None, options)
 }
@@ -2464,10 +3767,12 @@ fn jsx_description_text_with_target(
     let mut output = String::new();
     for child in children {
         match child {
-            JSXElementChild::JSXText(text) => output.push_str(&normalize_spaces(
-                &text.value.to_string(),
-                options.preserve_whitespace,
-            )),
+            JSXElementChild::JSXText(text) => {
+                let text = normalize_spaces(text.value.as_ref(), options.preserve_whitespace);
+                if !text.trim().is_empty() {
+                    output.push_str(&text);
+                }
+            }
             JSXElementChild::JSXExprContainer(container) => {
                 if let JSXExpr::Expr(expr) = &container.expr {
                     if let Some(text) = expr_description_text(expr, options) {
@@ -2538,18 +3843,61 @@ fn jsx_children_contain_element(children: &[JSXElementChild], target: &JSXElemen
     })
 }
 
+fn jsx_children_contain_spread(children: &[JSXElementChild]) -> bool {
+    children.iter().any(|child| match child {
+        JSXElementChild::JSXSpreadChild(_) => true,
+        JSXElementChild::JSXElement(element) => jsx_children_contain_spread(&element.children),
+        JSXElementChild::JSXFragment(fragment) => jsx_children_contain_spread(&fragment.children),
+        JSXElementChild::JSXText(_) | JSXElementChild::JSXExprContainer(_) => false,
+    })
+}
+
 fn implicit_child_hash_name(child: &JSXElementChild, options: &CallOptions) -> String {
     let text = match child {
-        JSXElementChild::JSXElement(element) => jsx_text_content(&element.children),
-        JSXElementChild::JSXFragment(fragment) => jsx_fragment_text_content(fragment),
+        JSXElementChild::JSXElement(element) => jsx_implicit_token_text(&element.children, options),
+        JSXElementChild::JSXFragment(fragment) => {
+            jsx_implicit_token_text(&fragment.children, options)
+        }
         _ => String::new(),
     };
-    format!(
-        "={}",
-        normalize_spaces(&text, options.preserve_whitespace)
-            .trim()
-            .to_string()
-    )
+    let text = normalize_spaces(&text, options.preserve_whitespace)
+        .trim()
+        .replace('{', "[")
+        .replace('}', "]");
+    format!("={text}")
+}
+
+fn jsx_implicit_token_text(children: &[JSXElementChild], options: &CallOptions) -> String {
+    let mut output = String::new();
+    for child in children {
+        match child {
+            JSXElementChild::JSXText(text) => output.push_str(&text.value),
+            JSXElementChild::JSXExprContainer(container) => {
+                if let JSXExpr::Expr(expr) = &container.expr {
+                    if let Some(text) = expr_description_text(expr, options) {
+                        output.push_str(&text);
+                    }
+                }
+            }
+            JSXElementChild::JSXElement(element) => {
+                if let Some((_, Some(kind))) = jsx_element_kind(&element.opening.name) {
+                    output.push_str(&format!(
+                        "{{{}}}",
+                        jsx_construct_token_text(element, &kind, options)
+                    ));
+                } else {
+                    output.push_str(&jsx_implicit_token_text(&element.children, options));
+                }
+            }
+            JSXElementChild::JSXFragment(fragment) => {
+                output.push_str(&jsx_implicit_token_text(&fragment.children, options));
+            }
+            JSXElementChild::JSXSpreadChild(_) => {}
+        }
+    }
+    normalize_spaces(&output, options.preserve_whitespace)
+        .trim()
+        .to_string()
 }
 
 fn expr_description_text(expr: &Expr, options: &CallOptions) -> Option<String> {
@@ -2705,6 +4053,15 @@ fn runtime_helper(module_ident: &Ident, method: &str, args: Vec<Expr>) -> Expr {
     })
 }
 
+fn set_expression_span(expression: &mut Expr, span: Span) {
+    match expression {
+        Expr::Call(call) => call.span = span,
+        Expr::JSXElement(element) => element.span = span,
+        Expr::JSXFragment(fragment) => fragment.span = span,
+        _ => {}
+    }
+}
+
 fn enum_range_object_expr(range: &[(String, String)]) -> Expr {
     Expr::Object(ObjectLit {
         span: DUMMY_SP,
@@ -2773,13 +4130,36 @@ fn is_valid_ident(value: &str) -> bool {
         && chars.all(|ch| ch == '_' || ch == '$' || ch.is_ascii_alphanumeric())
 }
 
-fn pronoun_usage(usage: &str) -> i32 {
+fn validate_option_value(name: &str, value: &str, allowed: &[&str]) -> Result<(), String> {
+    if allowed.contains(&value) {
+        Ok(())
+    } else {
+        Err(format!(
+            "Invalid value '{value}' for option '{name}'. Use one of: {}.",
+            allowed.join(", ")
+        ))
+    }
+}
+
+fn validate_pronoun_usage(usage: &str, module: ModuleName) -> Result<(), String> {
+    if PRONOUN_USAGES.contains(&usage) {
+        Ok(())
+    } else {
+        Err(format!(
+            "First argument of {}.pronoun(...) must be one of: {}. Received '{usage}' (string).",
+            module.as_str(),
+            PRONOUN_USAGES.join(", ")
+        ))
+    }
+}
+
+fn pronoun_usage(usage: &str) -> Option<i32> {
     match usage {
-        "object" => 0,
-        "possessive" => 1,
-        "reflexive" => 2,
-        "subject" => 3,
-        _ => 0,
+        "object" => Some(0),
+        "possessive" => Some(1),
+        "reflexive" => Some(2),
+        "subject" => Some(3),
+        _ => None,
     }
 }
 
@@ -2817,7 +4197,7 @@ fn pronoun_candidates(usage: &str, human: bool) -> Vec<(String, String)> {
             ("2".to_string(), "he".to_string()),
             ("*".to_string(), "they".to_string()),
         ],
-        _ => vec![("*".to_string(), String::new())],
+        _ => vec![],
     }
 }
 
@@ -2974,7 +4354,7 @@ mod tests {
         );
         let mut parser = Parser::new_from(lexer);
         let mut module = parser.parse_module().expect("failed to parse module");
-        module.visit_mut_with(&mut FbteeTransform::new(options));
+        module.visit_mut_with(&mut FbteeTransform::new(options, None));
 
         let mut output = Vec::new();
         {
@@ -2987,6 +4367,21 @@ mod tests {
             emitter.emit_module(&module).expect("failed to emit module");
         }
         String::from_utf8(output).expect("expected utf8")
+    }
+
+    fn transform_error(source: &str, options: PluginOptions) -> String {
+        let error =
+            std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| transform(source, options)))
+                .expect_err("expected transform to fail");
+        error
+            .downcast_ref::<String>()
+            .cloned()
+            .or_else(|| {
+                error
+                    .downcast_ref::<&str>()
+                    .map(|message| (*message).to_string())
+            })
+            .unwrap_or_else(|| "unknown transform error".to_string())
     }
 
     fn default_options() -> PluginOptions {
@@ -3039,7 +4434,9 @@ mod tests {
                 },
             ],
         };
-        let mut builder = RuntimeBuilder::new(&phrase, Ident::new_no_ctxt("fbt".into(), DUMMY_SP));
+        let mut variations = Vec::new();
+        collect_variation_parts(&phrase.parts, &mut variations);
+        let builder = RuntimeBuilder::new(&phrase, &variations, &phrase.parts, None);
         let table = builder.table();
         match table {
             RuntimeNode::Object(items) => {
@@ -3048,6 +4445,15 @@ mod tests {
             }
             RuntimeNode::String(_) => panic!("expected branch"),
         }
+    }
+
+    #[test]
+    fn allows_duplicate_plural_names_without_runtime_tokens() {
+        let output = transform(
+            "const x = <fbt desc='d'><fbt:plural count={won} name='number' showCount='no'>won game</fbt:plural>, <fbt:plural count={lost} name='number' showCount='no'>lost game</fbt:plural></fbt>;",
+            default_options(),
+        );
+        assert_eq!(output.matches("fbt._plural(").count(), 2, "{output}");
     }
 
     #[test]
@@ -3120,7 +4526,9 @@ mod tests {
                 },
             ],
         };
-        let mut builder = RuntimeBuilder::new(&phrase, Ident::new_no_ctxt("fbt".into(), DUMMY_SP));
+        let mut variations = Vec::new();
+        collect_variation_parts(&phrase.parts, &mut variations);
+        let builder = RuntimeBuilder::new(&phrase, &variations, &phrase.parts, None);
         let table = builder.table();
         let hash = fbt_hash_key(&builder.hash_tree());
         assert_eq!(hash, "41Uj4v");
@@ -3153,7 +4561,7 @@ mod tests {
         let mut options = default_options();
         options.fbt_enum_manifest.insert(
             "Example$FbtEnum".to_string(),
-            BTreeMap::from([
+            IndexMap::from([
                 ("id1".to_string(), "groups".to_string()),
                 ("id2".to_string(), "photos".to_string()),
             ]),
@@ -3223,7 +4631,7 @@ mod tests {
         let mut options = default_options();
         options.fbt_enum_manifest.insert(
             "Example$FbtEnum".to_string(),
-            BTreeMap::from([
+            IndexMap::from([
                 ("id1".to_string(), "groups".to_string()),
                 ("id2".to_string(), "photos".to_string()),
             ]),
@@ -3254,7 +4662,7 @@ mod tests {
             default_options(),
         );
         assert!(
-            output.contains("fbt._list(\"locations\", items, \"or\", \"bullet\")"),
+            output.contains("fbt._list(\"locations\", items, 'or', 'bullet')"),
             "{output}"
         );
     }
@@ -3285,16 +4693,12 @@ mod tests {
     }
 
     #[test]
-    fn string_boolean_options_match_babel_forms() {
-        let output = transform(
+    #[should_panic(expected = "Option 'number' must be an expression or true")]
+    fn rejects_string_boolean_options_in_functional_syntax() {
+        transform(
             "import { fbt } from 'fbtee'; const x = fbt('Count: ' + fbt.param('count', count, { number: 'true' }) + ' ' + fbt.pronoun('object', gender, { human: 'true' }), 'desc');",
             default_options(),
         );
-        assert!(
-            output.contains("fbt._param(\"count\", count, [\n        0\n    ])"),
-            "{output}"
-        );
-        assert!(output.contains("human: 1"), "{output}");
     }
 
     #[test]
@@ -3334,6 +4738,17 @@ mod tests {
     }
 
     #[test]
+    fn matches_babel_for_multiline_nested_implicit_aliases() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'>\n  <div href='#'>\n    <div href='#'>this is</div>\n    a doubly\n  </div>\n  nested test\n</fbt>;",
+            default_options(),
+        );
+        assert!(output.contains("\"{=m1} a doubly\""), "{output}");
+        assert!(output.contains("fbt._implicitParam(\"=m1\""), "{output}");
+        assert!(output.contains("hk: \"1OBj79\""), "{output}");
+    }
+
+    #[test]
     fn handles_jsx_same_param_constructs() {
         let output = transform(
             "import { fbt } from 'fbtee'; const x = <fbt desc='d'><fbt:param name='foo'>{foo}</fbt:param> and <fbt:same-param name='foo' /></fbt>;",
@@ -3357,16 +4772,51 @@ mod tests {
     }
 
     #[test]
-    fn keeps_pronoun_usages_in_separate_variation_groups() {
+    fn correlates_pronouns_that_share_a_gender() {
         let output = transform(
-            "import { fbt } from 'fbtee'; const x = fbt(fbt.pronoun('subject', gender) + ' saw ' + fbt.pronoun('reflexive', gender), 'desc');",
+            "import { fbt } from 'fbtee'; const x = fbt(fbt.pronoun('subject', gender, { capitalize: true, human: true }) + ' wished ' + fbt.pronoun('reflexive', gender, { human: true }) + ' a happy birthday.', 'subject+reflexive pronouns');",
             default_options(),
         );
-        assert!(output.contains("\"0\": \"they saw themself\""), "{output}");
         assert!(
-            output.contains("\"*\": \"they saw themselves\""),
+            output.contains("\"1\": \"She wished herself a happy birthday.\""),
             "{output}"
         );
+        assert!(!output.contains("She wished himself"), "{output}");
+        assert!(!output.contains("They wished herself"), "{output}");
+        assert!(output.contains("hk: \"2MyuU3\""), "{output}");
+    }
+
+    #[test]
+    fn preserves_singular_whitespace_between_jsx_constructs() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = <fbt desc=''>\n  You can add\n  <fbt:plural count={count} many='these'>\n    this\n  </fbt:plural>\n  <fbt:plural count={count} many='tags'>\n    tag\n  </fbt:plural>\n  to anything.\n</fbt>;",
+            default_options(),
+        );
+        assert!(
+            output.contains("You can add this tag to anything."),
+            "{output}"
+        );
+        assert!(
+            output.contains("You can add thesetags to anything."),
+            "{output}"
+        );
+        assert!(output.contains("hk: \"1kDgt0\""), "{output}");
+    }
+
+    #[test]
+    fn validates_tokens_across_nested_implicit_phrases() {
+        let error = transform_error(
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'><fbt:param name='foo'>{foo}</fbt:param> <b><fbt:name name='foo' gender={gender}>{person}</fbt:name></b></fbt>;",
+            default_options(),
+        );
+        assert!(error.contains("Token 'foo' is already used"), "{error}");
+
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'><fbt:param name='foo'>{foo}</fbt:param> <b><fbt:same-param name='foo' /></b></fbt>;",
+            default_options(),
+        );
+        assert!(output.contains("fbt._(\"{foo}\", null"), "{output}");
+        assert!(output.contains("hk: \"2eNYI0\""), "{output}");
     }
 
     #[test]
@@ -3455,5 +4905,61 @@ mod tests {
         );
         assert!(output.contains("fbt._(\"Inner\", null"), "{output}");
         assert!(!output.contains("fbt(\"Inner\""), "{output}");
+    }
+
+    #[test]
+    fn transforms_constructs_inside_functional_jsx() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = fbt(['A ', <b>{fbt.param('x', x)}</b>], 'd');",
+            default_options(),
+        );
+        assert!(output.contains("fbt._param(\"x\", x)"), "{output}");
+        assert!(!output.contains("fbt.param"), "{output}");
+    }
+
+    #[test]
+    fn propagates_variations_into_nested_implicit_phrases() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = <fbt desc='example 1'><fbt:param gender={gender} name='name'><b>{name}</b></fbt:param> has shared <a><fbt:plural count={count} many='photos' showCount='ifMany'>a photo</fbt:plural></a> with you</fbt>;",
+            default_options(),
+        );
+        assert!(output.contains("hk: \"46j2Ai\""), "{output}");
+        assert!(output.contains("hk: \"BNUvh\""), "{output}");
+    }
+
+    #[test]
+    fn avoids_capturing_user_identifiers_with_shared_variation_temporaries() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'><b><fbt:plural count={count}>cat</fbt:plural></b><fbt:param name='x'>{__fbtee_shared_0}</fbt:param></fbt>;",
+            default_options(),
+        );
+        assert!(output.contains("__fbtee_shared__0"), "{output}");
+        assert!(
+            output.contains("fbt._param(\"x\", __fbtee_shared_0)"),
+            "{output}"
+        );
+    }
+
+    #[test]
+    fn statically_evaluates_functional_text_options() {
+        let output = transform(
+            "import { fbt } from 'fbtee'; const x = fbt('A', 'd', {author: 'c' + 'd', project: 'a' + 'b'});",
+            default_options(),
+        );
+        assert!(output.contains("project: \"ab\""), "{output}");
+    }
+
+    #[test]
+    fn rejects_false_jsx_number_options() {
+        for source in [
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'><fbt:param name='x' number={false}>{value}</fbt:param></fbt>;",
+            "import { fbt } from 'fbtee'; const x = <fbt desc='d'><fbt:param name='x' number='false'>{value}</fbt:param></fbt>;",
+        ] {
+            let error = transform_error(source, default_options());
+            assert!(
+                error.contains("Option 'number' must be an expression or true"),
+                "{error}"
+            );
+        }
     }
 }

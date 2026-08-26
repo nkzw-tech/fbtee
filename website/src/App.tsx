@@ -278,7 +278,7 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Easy setup description">
-                    Quick integration with Babel, SWC, Vite, Next.js, and Expo.
+                    Quick integration with Vite, Babel, SWC, and Expo.
                   </fbt>
                 </p>
               </CardContent>
@@ -437,22 +437,14 @@ export default function App() {
                     <code className="text-slate-200">$</code>
                     <code>npm install fbtee</code>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <code className="text-slate-200">$</code>
-                    <code>
-                      {
-                        'npm install -D @nkzw/babel-preset-fbtee @rolldown/plugin-babel'
-                      }
-                    </code>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <code className="text-slate-200">$</code>
-                    <code>
-                      npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli
-                    </code>
-                  </div>
                 </div>
               </div>
+              <p>
+                <fbt desc="Compiler setup recommendation">
+                  Choose Vite for the recommended setup, or select Babel or SWC
+                  when your framework requires one of them.
+                </fbt>
+              </p>
             </div>
 
             <div>
@@ -468,33 +460,53 @@ export default function App() {
               <Tabs className="w-full" defaultValue="vite">
                 <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="vite">Vite</TabsTrigger>
+                  <TabsTrigger value="babel">Babel</TabsTrigger>
                   <TabsTrigger value="swc">
                     <fbt desc="Framework setup tab">SWC</fbt>
                   </TabsTrigger>
                   <TabsTrigger value="nextjs">Next.js</TabsTrigger>
-                  <TabsTrigger value="babel">Babel</TabsTrigger>
                 </TabsList>
                 <TabsContent className="space-y-4" value="vite">
                   <p className="">
                     <fbt desc="Vite setup instructions">
-                      Use the Rolldown Babel plugin with Vite and the React
-                      plugin:
+                      Use the native Vite plugin for the simplest setup. Add it
+                      before the React plugin:
                     </fbt>
                   </p>
                   <Code
-                    code={`import fbteePreset from '@nkzw/babel-preset-fbtee';
-import babel from '@rolldown/plugin-babel';
+                    code={`npm install -D @nkzw/vite-plugin-fbtee @nkzw/fbtee-cli`}
+                  />
+                  <Code
+                    code={`import fbtee from '@nkzw/vite-plugin-fbtee';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    babel({
-      presets: [fbteePreset],
+    fbtee({
+      fbtCommon: {
+        Accept: 'Button label for accepting terms',
+      },
+      fbtEnumManifest: {},
     }),
     react(),
   ],
 });`}
+                  />
+                </TabsContent>
+                <TabsContent className="space-y-4" value="babel">
+                  <p className="">
+                    <fbt desc="Babel setup instructions">
+                      If your build already uses Babel, add the fbtee preset:
+                    </fbt>
+                  </p>
+                  <Code
+                    code={`npm install -D @nkzw/babel-preset-fbtee @nkzw/fbtee-cli`}
+                  />
+                  <Code
+                    code={`export default {
+  presets: ['@nkzw/babel-preset-fbtee'],
+};`}
                   />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="swc">
@@ -505,17 +517,22 @@ export default defineConfig({
                     </fbt>
                   </p>
                   <Code
-                    code={`export default {
+                    code={`npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli`}
+                  />
+                  <Code
+                    code={`import { createFbteePluginOptions } from '@nkzw/swc-plugin-fbtee/index.js';
+
+export default {
   experimental: {
     swcPlugins: [
       [
         '@nkzw/swc-plugin-fbtee',
-        {
+        createFbteePluginOptions({
           fbtCommon: {
             Accept: 'Button label for accepting terms',
           },
           fbtEnumManifest: {},
-        },
+        }),
       ],
     ],
   },
@@ -561,18 +578,6 @@ export default defineConfig({
                       the Next.js SWC plugin list instead of using Babel.
                     </fbt>
                   </p>
-                </TabsContent>
-                <TabsContent className="space-y-4" value="babel">
-                  <p className="">
-                    <fbt desc="Babel setup instructions">
-                      With a direct Babel setup, add the preset:
-                    </fbt>
-                  </p>
-                  <Code
-                    code={`export default {
-  presets: ['@nkzw/babel-preset-fbtee'],
-};`}
-                  />
                 </TabsContent>
               </Tabs>
             </div>
@@ -1262,7 +1267,7 @@ export default [
                   <p className="text-sm">
                     <fbt desc="Easier setup description">
                       Replace legacy fbt packages with fbtee and the matching
-                      Babel or SWC compiler package.
+                      Vite, Babel, or SWC compiler package.
                     </fbt>
                   </p>
                 </div>

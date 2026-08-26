@@ -34,7 +34,8 @@
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",
-    "@nkzw/babel-preset-fbtee": "workspace:*",
+    "@nkzw/fbtee-cli": "workspace:*",
+    "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/vite": "^4.3.2",
     "@types/react": "^19.2.17",

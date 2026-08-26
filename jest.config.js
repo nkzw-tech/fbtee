@@ -36,6 +36,12 @@ export default {
       },
     },
     {
+      displayName: 'compiler-parity',
+      roots: ['<rootDir>/test'],
+      testMatch: ['<rootDir>/test/compiler-parity-test.mjs'],
+      transform: {},
+    },
+    {
       displayName: 'fbtee',
       modulePaths: ['<rootDir>/packages/fbtee/src'],
       roots: ['<rootDir>/packages/fbtee/src'],

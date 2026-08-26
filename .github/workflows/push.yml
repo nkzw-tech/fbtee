@@ -9,7 +9,109 @@ on:
       - main
 
 jobs:
+  native-bindings:
+    name: Oxc binding (${{ matrix.settings.target }})
+    runs-on: ${{ matrix.settings.host }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - host: macos-14
+            target: aarch64-apple-darwin
+            package: darwin-arm64
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-apple-darwin
+          - host: macos-15-intel
+            target: x86_64-apple-darwin
+            package: darwin-x64
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-apple-darwin
+          - host: windows-11-arm
+            target: aarch64-pc-windows-msvc
+            package: win32-arm64-msvc
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-pc-windows-msvc
+          - host: windows-2025
+            target: x86_64-pc-windows-msvc
+            package: win32-x64-msvc
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-pc-windows-msvc
+          - host: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            package: linux-arm64-gnu
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-unknown-linux-gnu --use-napi-cross
+          - host: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-musl
+            package: linux-arm64-musl
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-unknown-linux-musl -x
+          - host: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            package: linux-x64-gnu
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-unknown-linux-gnu --use-napi-cross
+          - host: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+            package: linux-x64-musl
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-unknown-linux-musl -x
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 26
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.*
+          run_install: false
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: '1.96'
+          targets: ${{ matrix.settings.target }}
+
+      - name: Install Zig
+        if: ${{ contains(matrix.settings.target, 'musl') }}
+        uses: mlugg/setup-zig@v2
+        with:
+          version: 0.15.2
+
+      - name: Install cargo-zigbuild
+        if: ${{ contains(matrix.settings.target, 'musl') }}
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-zigbuild
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build binding
+        run: ${{ matrix.settings.build }}
+        shell: bash
+
+      - name: Smoke test binding
+        run: |
+          node packages/oxc-transform-fbtee/scripts/prepare-native-smoke.mjs "${{ matrix.settings.package }}"
+          if [[ "${{ matrix.settings.target }}" == *-musl ]]; then
+            docker run --rm -v "$PWD:/workspace" -w /workspace node:26-alpine node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+          elif [[ "${{ matrix.settings.target }}" == *-linux-gnu ]]; then
+            # The binding is linked with napi-rs's glibc 2.17 toolchain. Load and
+            # execute it in Debian 11 (glibc 2.31), not on the Ubuntu 24.04 host.
+            docker run --rm -v "$PWD:/workspace" -w /workspace node:22-bullseye node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+          else
+            node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+          fi
+        shell: bash
+
+      - name: Upload binding
+        uses: actions/upload-artifact@v4
+        with:
+          name: oxc-binding-${{ matrix.settings.target }}
+          path: packages/oxc-transform-fbtee/oxc-transform-fbtee.*.node
+          if-no-files-found: error
+
   build:
+    needs: native-bindings
     runs-on: ubuntu-latest
     timeout-minutes: 20
     concurrency:
@@ -55,5 +157,16 @@ jobs:
       - name: Run tests
         run: pnpm test
 
+      - name: Download Oxc bindings
+        uses: actions/download-artifact@v4
+        with:
+          pattern: oxc-binding-*
+          merge-multiple: true
+          path: packages/oxc-transform-fbtee/artifacts
+
+      - name: Assemble Oxc platform packages
+        working-directory: packages/oxc-transform-fbtee
+        run: pnpm assemble:artifacts && pnpm verify:artifacts
+
       - name: Publish
-        run: pnpx pkg-pr-new publish './packages/*' --compact
+        run: pnpx pkg-pr-new publish './packages/*' './packages/oxc-transform-fbtee/npm/*' --compact

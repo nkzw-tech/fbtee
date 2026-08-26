@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import { transformSync } from '@swc/core';
-import swcFbteePlugin from '../index.js';
+import swcFbteePlugin, { createFbteePluginOptions } from '../index.js';
 
 const compile = (source, options = {}) =>
   transformSync(source, {
     filename: 'source.tsx',
     jsc: {
       experimental: {
-        plugins: [[swcFbteePlugin, options]],
+        plugins: [[swcFbteePlugin, createFbteePluginOptions(options)]],
       },
       parser: {
         syntax: 'typescript',

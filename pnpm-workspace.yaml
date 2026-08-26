@@ -5,7 +5,10 @@ packages:
   - packages/babel-preset-fbtee
   - packages/fbtee-cli
   - packages/fbtee
+  - packages/oxc-transform-fbtee
+  - packages/oxc-transform-fbtee/npm/*
   - packages/swc-plugin-fbtee
+  - packages/vite-plugin-fbtee
   - packages/eslint-plugin-fbtee
   - website
 

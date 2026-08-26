@@ -10,14 +10,14 @@ const Greeting = ({ name }) => (
 );
 ```
 
-_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Next.js, Babel & SWC.
+_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Babel, SWC, Next.js & Oxc.
 
 ## Features
 
 - **Inline translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
 - **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage serving billions of users, plus years in production at [Athena Crisis](https://athenacrisis.com).
 - **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, then optimizes the runtime output for performance.
-- **Easy Setup:** Quick integration with Babel, SWC, Vite, Next.js, and Expo.
+- **Easy Setup:** Quick integration with Vite, Babel, SWC, Oxc, Next.js, and Expo.
 
 ## Getting Started
 
@@ -34,33 +34,43 @@ npm install fbtee
 
 _fbtee_ requires Node 22+. React apps should use React 19+.
 
-### Babel, Vite and React
+### Vite
 
-Install the Babel preset and the Rolldown Babel plugin:
+Most projects should install the ready-to-use Vite plugin and the CLI:
 
 ```bash
-npm install -D @nkzw/babel-preset-fbtee @rolldown/plugin-babel
+npm install -D @nkzw/vite-plugin-fbtee @nkzw/fbtee-cli
 ```
 
-With Vite, `@rolldown/plugin-babel`, and `@vitejs/plugin-react`:
+Add the fbtee plugin before the React plugin:
 
-```ts
-import fbteePreset from '@nkzw/babel-preset-fbtee';
-import babel from '@rolldown/plugin-babel';
+```js
+import fbtee from '@nkzw/vite-plugin-fbtee';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    babel({
-      presets: [fbteePreset],
+    fbtee({
+      fbtCommon: {
+        Accept: 'Button label for accepting terms',
+      },
+      fbtEnumManifest: {},
     }),
     react(),
   ],
 });
 ```
 
-With a direct Babel setup:
+### Babel
+
+Install the Babel preset and the CLI:
+
+```bash
+npm install -D @nkzw/babel-preset-fbtee @nkzw/fbtee-cli
+```
+
+Add the preset to your Babel configuration:
 
 ```js
 export default {
@@ -68,15 +78,7 @@ export default {
 };
 ```
 
-With Next.js and Babel:
-
-```js
-export default {
-  presets: ['next/babel', '@nkzw/babel-preset-fbtee'],
-};
-```
-
-### SWC and Turbopack
+### SWC
 
 Install the SWC runtime compiler and the CLI:
 
@@ -87,24 +89,54 @@ npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli
 For Next.js SWC plugins:
 
 ```js
+import { createFbteePluginOptions } from '@nkzw/swc-plugin-fbtee/index.js';
+
 export default {
   experimental: {
     swcPlugins: [
       [
         '@nkzw/swc-plugin-fbtee',
-        {
+        createFbteePluginOptions({
           fbtCommon: {
             Accept: 'Button label for accepting terms',
           },
           fbtEnumManifest: {},
-        },
+        }),
       ],
     ],
   },
 };
 ```
 
-Use the SWC plugin to compile app code. Use `fbtee collect` to extract phrases. Do not pass `collectFbt: true` to the SWC plugin.
+### Low-level Oxc Transform
+
+For custom build-system integrations, install the native Oxc transform:
+
+```bash
+npm install -D @nkzw/oxc-transform-fbtee @nkzw/fbtee-cli oxc-transform
+```
+
+Apply the fbtee transform before the standard Oxc transform:
+
+```js
+import { transformSync as transformFbtee } from '@nkzw/oxc-transform-fbtee';
+import { transformSync as transformOxc } from 'oxc-transform';
+
+const fbteeResult = transformFbtee(filename, sourceText, {
+  fbtCommon: {
+    Accept: 'Button label for accepting terms',
+  },
+  fbtEnumManifest: {},
+});
+
+if (fbteeResult.errors.length > 0) {
+  throw new Error(fbteeResult.errors.map(({ message }) => message).join('\n'));
+}
+
+const result = transformOxc(filename, fbteeResult.code, {
+  jsx: { runtime: 'automatic' },
+});
+```
 
 ### TypeScript JSX Types
 

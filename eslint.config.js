@@ -43,6 +43,7 @@ export default [
             './example/vite.config.ts',
             './jest-preprocessor.js',
             './packages/fbtee/babel-build.config.js',
+            './test/**/*-test.mjs',
             './website/vite.config.ts',
             '**/__tests__/**/*.tsx',
             '**/eslint.config.js',

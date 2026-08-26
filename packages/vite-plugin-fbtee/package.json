@@ -1,0 +1,50 @@
+{
+  "name": "@nkzw/vite-plugin-fbtee",
+  "version": "3.0.1",
+  "description": "Vite plugin for fbtee powered by the native Oxc transform.",
+  "keywords": [
+    "fbt",
+    "fbtee",
+    "i18n",
+    "oxc",
+    "vite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/vite-plugin-fbtee"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "node test/e2e.mjs"
+  },
+  "dependencies": {
+    "@nkzw/oxc-transform-fbtee": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.1.5"
+  },
+  "peerDependencies": {
+    "vite": ">=6.3.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

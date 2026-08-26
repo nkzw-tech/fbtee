@@ -1,0 +1,80 @@
+{
+  "name": "@nkzw/oxc-transform-fbtee",
+  "version": "3.0.1",
+  "description": "Native Rust Oxc transform for fbtee.",
+  "keywords": [
+    "fbt",
+    "fbtee",
+    "i18n",
+    "oxc",
+    "transform"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/oxc-transform-fbtee"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "Cargo.toml",
+    "LICENSE",
+    "README.md",
+    "build.rs",
+    "index.d.ts",
+    "index.js",
+    "src"
+  ],
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "assemble:artifacts": "napi artifacts --output-dir artifacts",
+    "build": "napi build --esm --platform --release && pnpm run format-generated",
+    "build:debug": "napi build --esm --platform && pnpm run format-generated",
+    "download:artifacts": "node scripts/download-artifacts.mjs",
+    "format-generated": "prettier --write index.js index.d.ts",
+    "test": "cargo test -p oxc-transform-fbtee && pnpm run build && node scripts/prepare-native-smoke.mjs && node scripts/smoke-native-install.mjs .native-smoke && node test/e2e.mjs && node test/release.mjs",
+    "verify:artifacts": "node scripts/verify-artifacts.mjs"
+  },
+  "devDependencies": {
+    "@jridgewell/trace-mapping": "^0.3.31",
+    "@napi-rs/cli": "^3.8.6",
+    "oxc-transform": "^0.147.0"
+  },
+  "optionalDependencies": {
+    "@nkzw/oxc-transform-fbtee-binding-darwin-arm64": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-darwin-x64": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-arm64-gnu": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-arm64-musl": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-x64-gnu": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-x64-musl": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-win32-arm64-msvc": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-win32-x64-msvc": "workspace:*"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "napi": {
+    "binaryName": "oxc-transform-fbtee",
+    "packageName": "@nkzw/oxc-transform-fbtee-binding",
+    "targets": [
+      "aarch64-apple-darwin",
+      "aarch64-pc-windows-msvc",
+      "aarch64-unknown-linux-gnu",
+      "aarch64-unknown-linux-musl",
+      "x86_64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl"
+    ]
+  }
+}
