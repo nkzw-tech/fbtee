@@ -30,7 +30,7 @@ fbt._("{foo}", [fbt._param("foo", foo)], {
 `;
 
 exports[`Test declarative (jsx) fbt syntax translation places string variation assignments in runtime arguments when preserving JSX 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 const charges = 2;
 const view = (
@@ -41,7 +41,7 @@ const view = (
         _1: "{=m0} 1 charge",
       },
       [
-        (fbt_sv_arg_0 = fbt._plural(charges, "number")),
+        (_fbt_sv_arg = fbt._plural(charges, "number")),
         fbt._implicitParam(
           "=m0",
           <strong>
@@ -50,7 +50,7 @@ const view = (
                 "*": "Cost:",
                 _1: "Cost:",
               },
-              [fbt_sv_arg_0],
+              [_fbt_sv_arg],
               {
                 hk: "IoMM6",
               }

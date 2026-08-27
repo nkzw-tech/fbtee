@@ -86,7 +86,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements and string variation arguments nested inside jsx element 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -94,7 +94,7 @@ var x = fbt._(
     _1: "{=m0} RawText {=m2}{=m3}",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count)),
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
@@ -105,7 +105,7 @@ var x = fbt._(
             "*": "OuterJsx1",
             _1: "OuterJsx1",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "3WznBY",
           }
@@ -122,7 +122,7 @@ var x = fbt._(
             "*": "OuterJsx2",
             _1: "OuterJsx2",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "30JSgM",
           }
@@ -140,7 +140,7 @@ var x = fbt._(
             _1: "{=m1}(plural){=m3}",
           },
           [
-            fbt_sv_arg_0,
+            _fbt_sv_arg,
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
@@ -151,7 +151,7 @@ var x = fbt._(
                     "*": "InnerJsx1",
                     _1: "InnerJsx1",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "24btfK",
                   }
@@ -168,7 +168,7 @@ var x = fbt._(
                     "*": "InnerJsx2",
                     _1: "InnerJsx2",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "13rpFP",
                   }
@@ -191,7 +191,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior jsx elements with string variation arguments 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -199,7 +199,7 @@ var x = fbt._(
     _1: "{=m0}{=m1} !",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count, "number")),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count, "number")),
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
@@ -210,7 +210,7 @@ var x = fbt._(
             "*": "There should be",
             _1: "There should be",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "9ccJh",
           }
@@ -227,7 +227,7 @@ var x = fbt._(
             "*": "{number} spaces",
             _1: "a space",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "1tuYe0",
           }
@@ -243,7 +243,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve expression text without adding implicit spaces around it 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -251,7 +251,7 @@ var x = fbt._(
     _1: "{=m0}textInJSXExpression{=m2}{=m3}",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count)),
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
@@ -262,7 +262,7 @@ var x = fbt._(
             "*": "OuterJsx1",
             _1: "OuterJsx1",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "4i3hty",
           }
@@ -279,7 +279,7 @@ var x = fbt._(
             "*": "OuterJsx2",
             _1: "OuterJsx2",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "gfvaj",
           }
@@ -297,7 +297,7 @@ var x = fbt._(
             _1: "rawText textInJSXExpression{=m2}textInJSXExpression(plural)textInJSXExpression{=m7}textInJSXExpression",
           },
           [
-            fbt_sv_arg_0,
+            _fbt_sv_arg,
             fbt._implicitParam(
               "=m2",
               /*#__PURE__*/ React.createElement(
@@ -308,7 +308,7 @@ var x = fbt._(
                     "*": "InnerJsx1",
                     _1: "InnerJsx1",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "1x2Bnp",
                   }
@@ -325,7 +325,7 @@ var x = fbt._(
                     "*": "InnerJsx2",
                     _1: "InnerJsx2",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "1xtOBl",
                   }
@@ -348,7 +348,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should preserve voluntarily added spaces between NON-raw text 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -356,7 +356,7 @@ var x = fbt._(
     _1: "{=m0} {=m2}{=m3}",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count)),
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
@@ -367,7 +367,7 @@ var x = fbt._(
             "*": "OuterJsx1",
             _1: "OuterJsx1",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "2mmfyN",
           }
@@ -384,7 +384,7 @@ var x = fbt._(
             "*": "OuterJsx2",
             _1: "OuterJsx2",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "Hdu8h",
           }
@@ -402,7 +402,7 @@ var x = fbt._(
             _1: "{=m2} (plural) {=m6} {=m8}",
           },
           [
-            fbt_sv_arg_0,
+            _fbt_sv_arg,
             fbt._implicitParam(
               "=m2",
               /*#__PURE__*/ React.createElement(
@@ -413,7 +413,7 @@ var x = fbt._(
                     "*": "InnerJsx1",
                     _1: "InnerJsx1",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "4C7fcW",
                   }
@@ -430,7 +430,7 @@ var x = fbt._(
                     "*": "InnerJsx2",
                     _1: "InnerJsx2",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "3jKBRy",
                   }
@@ -447,7 +447,7 @@ var x = fbt._(
                     "*": "InnerJsx3",
                     _1: "InnerJsx3",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "c0FbP",
                   }
@@ -470,7 +470,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve JSX whitespace that matches regular JSX behavior should treat comments in JSXExpression like they are not here 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -478,7 +478,7 @@ var x = fbt._(
     _1: "{=m0}{=m1}{=m2}",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count)),
     fbt._implicitParam(
       "=m0",
       /*#__PURE__*/ React.createElement(
@@ -489,7 +489,7 @@ var x = fbt._(
             "*": "OuterJsx1",
             _1: "OuterJsx1",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "1EWqrj",
           }
@@ -506,7 +506,7 @@ var x = fbt._(
             "*": "OuterJsx2",
             _1: "OuterJsx2",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "wXKn7",
           }
@@ -524,7 +524,7 @@ var x = fbt._(
             _1: "{=m2}(plural) rawText",
           },
           [
-            fbt_sv_arg_0,
+            _fbt_sv_arg,
             fbt._implicitParam(
               "=m2",
               /*#__PURE__*/ React.createElement(
@@ -535,7 +535,7 @@ var x = fbt._(
                     "*": "InnerJsx1",
                     _1: "InnerJsx1",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "qALb9",
                   }
@@ -558,7 +558,7 @@ var x = fbt._(
 `;
 
 exports[`fbt preserveWhitespace argument should preserve whitespace around text with inner text and string variation 1`] = `
-var fbt_sv_arg_0;
+let _fbt_sv_arg;
 import { fbt } from "fbtee";
 var x = fbt._(
   {
@@ -566,7 +566,7 @@ var x = fbt._(
     _1: "outerText {=m1}{=m2}",
   },
   [
-    (fbt_sv_arg_0 = fbt._plural(this.state.ex1Count)),
+    (_fbt_sv_arg = fbt._plural(this.state.ex1Count)),
     fbt._implicitParam(
       "=m1",
       /*#__PURE__*/ React.createElement(
@@ -577,7 +577,7 @@ var x = fbt._(
             "*": "outerJsx",
             _1: "outerJsx",
           },
-          [fbt_sv_arg_0],
+          [_fbt_sv_arg],
           {
             hk: "1UvHDM",
           }
@@ -595,7 +595,7 @@ var x = fbt._(
             _1: "{=m1} innerText (plural)",
           },
           [
-            fbt_sv_arg_0,
+            _fbt_sv_arg,
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
@@ -606,7 +606,7 @@ var x = fbt._(
                     "*": "innerJsx",
                     _1: "innerJsx",
                   },
-                  [fbt_sv_arg_0],
+                  [_fbt_sv_arg],
                   {
                     hk: "3AsEj4",
                   }

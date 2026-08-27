@@ -284,6 +284,18 @@ const validFixtures = [
   },
   {
     check(outputs) {
+      assert.doesNotMatch(outputs.babel, /\bvar\s+\w*fbt_sv_arg/);
+      const assignments = [
+        ...outputs.babel.matchAll(/([\w$]*fbt_sv_arg[\w$]*)\s*=\s*fbt\._enum/g),
+      ].map((match) => match[1]);
+      assert.equal(assignments.length, 2, outputs.babel);
+      assert.equal(new Set(assignments).size, 2, outputs.babel);
+    },
+    name: 'conditional nested enums use unique React Compiler compatible temporaries',
+    source: `import { fbt } from 'fbtee'; function PlayerPosition({color, confirm}) { return confirm ? <fbt desc="pick"><span><fbt:enum enum-range={['blue position', 'red position']} value={color + ' position'} /></span></fbt> : <fbt desc="play"><span><fbt:enum enum-range={['blue position', 'red position']} value={color + ' position'} /></span></fbt>; }`,
+  },
+  {
+    check(outputs) {
       for (const [compiler, code] of Object.entries(outputs)) {
         assert.match(code, /fbt\._plural\(n\)/, compiler);
         assert.doesNotMatch(code, /fbt\._plural\(n,\s*["']n["']/, compiler);

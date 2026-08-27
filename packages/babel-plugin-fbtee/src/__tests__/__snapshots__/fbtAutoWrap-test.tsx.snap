@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings 1`] = `
-var fbt_sv_arg_0, fbt_sv_arg_1;
+let _fbt_sv_arg, _fbt_sv_arg2;
 import { fbt } from "fbtee";
 fbt._(
   {
@@ -11,8 +11,8 @@ fbt._(
     },
   },
   [
-    (fbt_sv_arg_0 = fbt._name("bar", bar, g)),
-    (fbt_sv_arg_1 = fbt._plural(num, "baz")),
+    (_fbt_sv_arg = fbt._name("bar", bar, g)),
+    (_fbt_sv_arg2 = fbt._plural(num, "baz")),
     fbt._param("foo", foo),
     fbt._implicitParam(
       "=m2",
@@ -27,8 +27,8 @@ fbt._(
             },
           },
           [
-            fbt_sv_arg_0,
-            fbt_sv_arg_1,
+            _fbt_sv_arg,
+            _fbt_sv_arg2,
             fbt._implicitParam(
               "=m2",
               /*#__PURE__*/ React.createElement(
@@ -41,7 +41,7 @@ fbt._(
                       _1: "Level 3 1 cat",
                     },
                   },
-                  [fbt_sv_arg_0, fbt_sv_arg_1],
+                  [_fbt_sv_arg, _fbt_sv_arg2],
                   {
                     hk: "3hoLPG",
                   }
@@ -64,7 +64,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings and a subject gender 1`] = `
-var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
+let _fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3;
 import { fbt } from "fbtee";
 fbt._(
   {
@@ -84,9 +84,9 @@ fbt._(
     },
   },
   [
-    (fbt_sv_arg_0 = fbt._subject(g0)),
-    (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
-    (fbt_sv_arg_2 = fbt._plural(num, "foo")),
+    (_fbt_sv_arg = fbt._subject(g0)),
+    (_fbt_sv_arg2 = fbt._pronoun(1, g1)),
+    (_fbt_sv_arg3 = fbt._plural(num, "foo")),
     fbt._implicitParam(
       "=m1",
       /*#__PURE__*/ React.createElement(
@@ -111,7 +111,7 @@ fbt._(
               },
             },
           },
-          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          [_fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3],
           {
             hk: "4sbfj7",
           }
@@ -140,7 +140,7 @@ fbt._(
               },
             },
           },
-          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          [_fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3],
           {
             hk: "2Eow7W",
           }
@@ -156,7 +156,7 @@ fbt._(
 `;
 
 exports[`Test jsx auto-wrapping of implicit parameters can handle multiple variations in nested strings with substrings that look identical 1`] = `
-var fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2;
+let _fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3;
 import { fbt } from "fbtee";
 fbt._(
   {
@@ -179,9 +179,9 @@ fbt._(
     },
   },
   [
-    (fbt_sv_arg_0 = fbt._subject(g0)),
-    (fbt_sv_arg_1 = fbt._pronoun(1, g1)),
-    (fbt_sv_arg_2 = fbt._pronoun(1, g2)),
+    (_fbt_sv_arg = fbt._subject(g0)),
+    (_fbt_sv_arg2 = fbt._pronoun(1, g1)),
+    (_fbt_sv_arg3 = fbt._pronoun(1, g2)),
     fbt._implicitParam(
       "=m1",
       /*#__PURE__*/ React.createElement(
@@ -209,7 +209,7 @@ fbt._(
               },
             },
           },
-          [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+          [_fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3],
           {
             hk: "3VitZN",
           }
@@ -242,9 +242,9 @@ fbt._(
             },
           },
           [
-            fbt_sv_arg_0,
-            fbt_sv_arg_1,
-            fbt_sv_arg_2,
+            _fbt_sv_arg,
+            _fbt_sv_arg2,
+            _fbt_sv_arg3,
             fbt._implicitParam(
               "=m1",
               /*#__PURE__*/ React.createElement(
@@ -272,7 +272,7 @@ fbt._(
                       },
                     },
                   },
-                  [fbt_sv_arg_0, fbt_sv_arg_1, fbt_sv_arg_2],
+                  [_fbt_sv_arg, _fbt_sv_arg2, _fbt_sv_arg3],
                   {
                     hk: "3LBN3N",
                   }

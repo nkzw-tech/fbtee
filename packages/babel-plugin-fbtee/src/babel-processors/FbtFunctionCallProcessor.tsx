@@ -292,8 +292,11 @@ export default class FbtFunctionCallProcessor {
 
     // Replace the blockStatement/program node with
     // a new blockStatement/program with injected declarations
+    // These values are assigned inside the runtime argument array, so they
+    // cannot be const. React Compiler does not support generated `var`
+    // declarations, while block-scoped `let` has the required semantics.
     const declarations = variableDeclaration(
-      'var',
+      'let',
       identifiersForStringVariationRuntimeArgs.map((identifier) =>
         variableDeclarator(identifier),
       ),
@@ -372,19 +375,11 @@ export default class FbtFunctionCallProcessor {
   }
 
   _generateUniqueIdentifiersForRuntimeArgs(count: number): Array<Identifier> {
-    const identifiers = [];
-    for (
-      let identifierSuffix = 0, numIdentifierCreated = 0;
-      numIdentifierCreated < count;
-      identifierSuffix++
-    ) {
-      const name = `${STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX}_${identifierSuffix}`;
-      if (this.path.scope.getBinding(name) == null) {
-        identifiers.push(identifier(name));
-        numIdentifierCreated++;
-      }
-    }
-    return identifiers;
+    return Array.from({ length: count }, () =>
+      this.path.scope.generateUidIdentifier(
+        STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX,
+      ),
+    );
   }
 
   /**
