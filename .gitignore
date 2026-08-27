@@ -1,7 +1,7 @@
 .DS_Store
 .eslintcache
-.swc
 .pnpm-debug.log
+.swc
 **/node_modules
 example/.enum_manifest.json
 example/source_strings.json
@@ -10,13 +10,14 @@ node_modules
 packages/*/lib
 packages/*/LICENSE
 packages/*/README.md
-packages/swc-plugin-fbtee/swc_plugin_fbtee.wasm
-packages/oxc-transform-fbtee/*.node
-packages/oxc-transform-fbtee/npm/**/*.node
-packages/oxc-transform-fbtee/.native-smoke/
 packages/fbtee/.enum_manifest.json
 packages/fbtee/lib-tmp
 packages/fbtee/Strings.json
+packages/oxc-transform-fbtee/.native-smoke/
+packages/oxc-transform-fbtee/*.node
+packages/oxc-transform-fbtee/artifacts/
+packages/oxc-transform-fbtee/npm/**/*.node
+packages/swc-plugin-fbtee/swc_plugin_fbtee.wasm
 target
 tsconfig.tsbuildinfo
 website/.enum_manifest.json
