@@ -43,16 +43,30 @@ const outputDirectory = join(packageDirectory, '.native-smoke');
 rmSync(outputDirectory, { force: true, recursive: true });
 mkdirSync(outputDirectory);
 
-const pnpm = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 for (const directory of [
   platformDirectory,
   packageDirectory,
   join(packageDirectory, '..', 'vite-plugin-fbtee'),
 ]) {
+  const args = [
+    '--dir',
+    directory,
+    'pack',
+    '--pack-destination',
+    outputDirectory,
+  ];
+  const isWindows = process.platform === 'win32';
   const result = spawnSync(
-    pnpm,
-    ['--dir', directory, 'pack', '--pack-destination', outputDirectory],
+    isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'pnpm',
+    isWindows ? ['/d', '/s', '/c', 'pnpm', ...args] : args,
     { encoding: 'utf8' },
   );
-  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(
+    result.status,
+    0,
+    result.error?.message ||
+      result.stderr ||
+      result.stdout ||
+      'pnpm pack failed without output.',
+  );
 }

@@ -21,13 +21,27 @@ assert.equal(
 
 const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));
 try {
-  const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  const args = [
+    'install',
+    '--ignore-scripts',
+    '--no-audit',
+    '--no-fund',
+    ...tarballs,
+  ];
+  const isWindows = process.platform === 'win32';
   const installed = spawnSync(
-    npm,
-    ['install', '--ignore-scripts', '--no-audit', '--no-fund', ...tarballs],
+    isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'npm',
+    isWindows ? ['/d', '/s', '/c', 'npm', ...args] : args,
     { cwd: consumer, encoding: 'utf8' },
   );
-  assert.equal(installed.status, 0, installed.stderr || installed.stdout);
+  assert.equal(
+    installed.status,
+    0,
+    installed.error?.message ||
+      installed.stderr ||
+      installed.stdout ||
+      'npm install failed without output.',
+  );
 
   const entry = join(
     consumer,
