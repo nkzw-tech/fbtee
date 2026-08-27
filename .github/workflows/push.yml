@@ -20,35 +20,35 @@ jobs:
           - host: macos-14
             target: aarch64-apple-darwin
             package: darwin-arm64
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-apple-darwin
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-apple-darwin
           - host: macos-15-intel
             target: x86_64-apple-darwin
             package: darwin-x64
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-apple-darwin
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-apple-darwin
           - host: windows-11-arm
             target: aarch64-pc-windows-msvc
             package: win32-arm64-msvc
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-pc-windows-msvc
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-pc-windows-msvc
           - host: windows-2025
             target: x86_64-pc-windows-msvc
             package: win32-x64-msvc
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-pc-windows-msvc
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-pc-windows-msvc
           - host: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
             package: linux-arm64-gnu
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-unknown-linux-gnu --use-napi-cross
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-24.04-arm
             target: aarch64-unknown-linux-musl
             package: linux-arm64-musl
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target aarch64-unknown-linux-musl -x
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-unknown-linux-musl -x
           - host: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             package: linux-x64-gnu
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-unknown-linux-gnu --use-napi-cross
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             package: linux-x64-musl
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --release --target x86_64-unknown-linux-musl -x
+            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-unknown-linux-musl -x
 
     steps:
       - uses: actions/checkout@v4
@@ -67,7 +67,10 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: '1.96'
+          # Keep this exact version aligned with rust-toolchain.toml. Otherwise
+          # rustup can install cross-target libraries for a newer patch release
+          # while Cargo uses the repository override.
+          toolchain: '1.96.0'
           targets: ${{ matrix.settings.target }}
 
       - name: Install Zig
