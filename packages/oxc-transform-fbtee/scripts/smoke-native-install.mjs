@@ -5,44 +5,7 @@ import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const packageDirectory = process.argv[2];
-assert.ok(packageDirectory, 'Missing packed package directory');
-const resolvedPackageDirectory = isAbsolute(packageDirectory)
-  ? packageDirectory
-  : resolve(packageDirectory);
-const tarballs = readdirSync(resolvedPackageDirectory)
-  .filter((file) => file.endsWith('.tgz'))
-  .map((file) => join(resolvedPackageDirectory, file));
-assert.equal(
-  tarballs.length,
-  3,
-  'Expected transform, Vite, and platform package tarballs',
-);
-
-const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));
-try {
-  const args = [
-    'install',
-    '--ignore-scripts',
-    '--no-audit',
-    '--no-fund',
-    ...tarballs,
-  ];
-  const isWindows = process.platform === 'win32';
-  const installed = spawnSync(
-    isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'npm',
-    isWindows ? ['/d', '/s', '/c', 'npm', ...args] : args,
-    { cwd: consumer, encoding: 'utf8' },
-  );
-  assert.equal(
-    installed.status,
-    0,
-    installed.error?.message ||
-      installed.stderr ||
-      installed.stdout ||
-      'npm install failed without output.',
-  );
-
+const smokeInstalledPackages = async (consumer) => {
   const entry = join(
     consumer,
     'node_modules',
@@ -82,6 +45,78 @@ try {
     ).code,
     /fbt\._\(/,
   );
-} finally {
-  rmSync(consumer, { force: true, recursive: true });
-}
+};
+
+const run = async () => {
+  if (process.argv[2] === '--smoke-installed') {
+    const consumer = process.argv[3];
+    assert.ok(consumer, 'Missing installed package directory');
+    await smokeInstalledPackages(consumer);
+    return;
+  }
+
+  const packageDirectory = process.argv[2];
+  assert.ok(packageDirectory, 'Missing packed package directory');
+  const resolvedPackageDirectory = isAbsolute(packageDirectory)
+    ? packageDirectory
+    : resolve(packageDirectory);
+  const tarballs = readdirSync(resolvedPackageDirectory)
+    .filter((file) => file.endsWith('.tgz'))
+    .map((file) => join(resolvedPackageDirectory, file));
+  assert.equal(
+    tarballs.length,
+    3,
+    'Expected transform, Vite, and platform package tarballs',
+  );
+
+  const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));
+  try {
+    const args = [
+      'install',
+      '--ignore-scripts',
+      '--no-audit',
+      '--no-fund',
+      ...tarballs,
+    ];
+    const isWindows = process.platform === 'win32';
+    const installed = spawnSync(
+      isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'npm',
+      isWindows ? ['/d', '/s', '/c', 'npm', ...args] : args,
+      { cwd: consumer, encoding: 'utf8' },
+    );
+    assert.equal(
+      installed.status,
+      0,
+      installed.error?.message ||
+        installed.stderr ||
+        installed.stdout ||
+        'npm install failed without output.',
+    );
+
+    // Native modules remain locked for the lifetime of a Node process on
+    // Windows. Load and exercise the binding in a child so it is released
+    // before the temporary installation is removed.
+    const smoked = spawnSync(
+      process.execPath,
+      [import.meta.filename, '--smoke-installed', consumer],
+      { encoding: 'utf8' },
+    );
+    assert.equal(
+      smoked.status,
+      0,
+      smoked.error?.message ||
+        smoked.stderr ||
+        smoked.stdout ||
+        'Native package smoke test failed without output.',
+    );
+  } finally {
+    rmSync(consumer, {
+      force: true,
+      maxRetries: 5,
+      recursive: true,
+      retryDelay: 100,
+    });
+  }
+};
+
+await run();
