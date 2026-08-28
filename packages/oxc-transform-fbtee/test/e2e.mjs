@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
 // Source-map tracing is needed only by this package's end-to-end test.
-// eslint-disable-next-line import-x/no-extraneous-dependencies
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 // The downstream compiler is needed only by this package's end-to-end test.
-// eslint-disable-next-line import-x/no-extraneous-dependencies
 import { transformSync as lowerSync } from 'oxc-transform';
 import {
   collectBatchSync,
@@ -22,6 +20,11 @@ const compile = (source, options = {}) => {
   });
   assert.deepEqual(result.errors, []);
   return result.code;
+};
+
+const fakeRequire = (name) => {
+  assert.equal(name, 'fbtee');
+  return { _: () => 'ok' };
 };
 
 {
@@ -72,10 +75,6 @@ const compile = (source, options = {}) => {
     target: 'es2022',
   });
   assert.deepEqual(lowered.errors, []);
-  const fakeRequire = (name) => {
-    assert.equal(name, 'fbtee');
-    return { _: () => 'ok' };
-  };
   Function(
     'require',
     'globalThis',

@@ -18,6 +18,7 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - vite@8.1.5
+  - '@nkzw/oxlint-config@2.0.0'
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'

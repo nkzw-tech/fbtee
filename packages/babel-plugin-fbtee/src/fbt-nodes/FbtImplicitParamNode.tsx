@@ -77,7 +77,7 @@ export default class FbtImplicitParamNode
       'Parent node must be defined',
     ).children.indexOf(this);
     invariant(
-      index != -1,
+      index !== -1,
       "Could not find current fbt node among the parent node's children",
     );
     return convertIndexInSiblingsArrayToOuterTokenAlias(index);

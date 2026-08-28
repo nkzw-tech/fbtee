@@ -136,7 +136,7 @@ export function setUniqueToken(
   paramSet: ParamSet,
 ) {
   const cachedNode = paramSet[name];
-  if (cachedNode && cachedNode != node) {
+  if (cachedNode && cachedNode !== node) {
     throw errorAt(
       node,
       `Token '${name}' is already used in this ${moduleName} call. ` +
@@ -608,7 +608,7 @@ export function convertTemplateLiteralToArrayElements(
   // quasis items are the text literal portion of the template literal
   for (const item of quasis) {
     const text = item.value.cooked || '';
-    if (text != '') {
+    if (text !== '') {
       nodes.push(stringLiteral(text));
     }
     if (index < expressions.length) {

@@ -158,6 +158,7 @@ export default class JSFbtBuilder {
         'Unsupported string variation argument: %s',
         varDump(svArg),
       );
+      return null;
     });
   }
 

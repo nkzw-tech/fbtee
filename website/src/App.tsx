@@ -69,6 +69,7 @@ const LocaleSwitcher = () => {
           className="flex cursor-pointer items-center space-x-2"
           popoverTarget="locale-switcher"
           popoverTargetAction="show"
+          type="button"
         >
           <Languages className="h-4 w-4" />
           <fbt desc="Locale switcher button">Change Language</fbt>

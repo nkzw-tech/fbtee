@@ -1,5 +1,4 @@
 .DS_Store
-.eslintcache
 .pnpm-debug.log
 **/node_modules
 packages/next-plugin-fbtee/test/fixture/.next*

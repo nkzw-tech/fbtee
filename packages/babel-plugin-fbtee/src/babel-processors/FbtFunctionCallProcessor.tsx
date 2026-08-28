@@ -209,7 +209,7 @@ export default class FbtFunctionCallProcessor {
         : nullLiteral(),
       objectExpression([
         objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
-        ...(project != null && project != ''
+        ...(project != null && project !== ''
           ? [objectProperty(identifier('project'), valueToNode(project))]
           : []),
       ]),
@@ -324,7 +324,7 @@ export default class FbtFunctionCallProcessor {
     identifiersForStringVariationRuntimeArgs: ReadonlyArray<Identifier>,
   ) {
     invariant(
-      runtimeArgs.length == identifiersForStringVariationRuntimeArgs.length,
+      runtimeArgs.length === identifiersForStringVariationRuntimeArgs.length,
       'Expect exactly one identifier for each string variation runtime argument. ' +
         'Instead we get %s identifiers and %s arguments.',
       identifiersForStringVariationRuntimeArgs.length,
@@ -685,7 +685,7 @@ export default class FbtFunctionCallProcessor {
       innerMetaPhraseIndex,
       innerMetaPhrase,
     ] of metaPhrases.entries()) {
-      if (innerMetaPhrase.parentIndex != metaPhraseIndex) {
+      if (innerMetaPhrase.parentIndex !== metaPhraseIndex) {
         continue;
       }
       const innerMetaPhraseFbtNode = innerMetaPhrase.fbtNode;

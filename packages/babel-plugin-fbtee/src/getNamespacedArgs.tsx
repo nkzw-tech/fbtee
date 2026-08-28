@@ -231,12 +231,7 @@ export default function getNamespacedArgs(
           `<${moduleName}:pronoun> attribute 'type' must be a string literal.`,
         );
       }
-      if (
-        !Object.prototype.hasOwnProperty.call(
-          ValidPronounUsages,
-          typeAttribute.value,
-        )
-      ) {
+      if (!Object.hasOwn(ValidPronounUsages, typeAttribute.value)) {
         throw errorAt(
           node,
           `<${moduleName}:pronoun> attribute 'type' must be one of: ${Object.keys(

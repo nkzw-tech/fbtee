@@ -4,7 +4,7 @@ import escapeRegex from '../escapeRegex.tsx';
 describe('escapeRegex', () => {
   it('escapes individual special characters', () => {
     expect(escapeRegex('.')).toBe(String.raw`\.`);
-    expect(escapeRegex('\\')).toBe('\\\\');
+    expect(escapeRegex('\\')).toBe(String.raw`\\`);
     expect(escapeRegex('[')).toBe(String.raw`\[`);
     expect(escapeRegex(']')).toBe(String.raw`\]`);
     expect(escapeRegex('(')).toBe(String.raw`\(`);

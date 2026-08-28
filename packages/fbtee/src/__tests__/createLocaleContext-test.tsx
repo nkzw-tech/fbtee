@@ -28,7 +28,10 @@ const Button = () => {
   const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
   return (
-    <button onClick={() => startTransition(() => setLocale('de_AT'))}>
+    <button
+      onClick={() => startTransition(() => setLocale('de_AT'))}
+      type="button"
+    >
       {locale}
     </button>
   );
@@ -36,14 +39,21 @@ const Button = () => {
 
 const GenderButton = () => {
   const { gender, setGender } = useLocaleContext();
-  return <button onClick={() => setGender('female')}>{gender}</button>;
+  return (
+    <button onClick={() => setGender('female')} type="button">
+      {gender}
+    </button>
+  );
 };
 
 const InvalidLocaleButton = () => {
   const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
   return (
-    <button onClick={() => startTransition(() => setLocale('pirate'))}>
+    <button
+      onClick={() => startTransition(() => setLocale('pirate'))}
+      type="button"
+    >
       {locale}
     </button>
   );
@@ -66,12 +76,14 @@ test('locale context allows setting up a full fbtee context', async () => {
   );
 
   expect(asFragment()).toMatchInlineSnapshot(`
-   <DocumentFragment>
-     <button>
-       en_US
-     </button>
-   </DocumentFragment>
-  `);
+<DocumentFragment>
+  <button
+    type="button"
+  >
+    en_US
+  </button>
+</DocumentFragment>
+`);
 
   await act(async () => {
     fireEvent.click(screen.getByRole('button'));
@@ -81,12 +93,14 @@ test('locale context allows setting up a full fbtee context', async () => {
   );
 
   expect(asFragment()).toMatchInlineSnapshot(`
-   <DocumentFragment>
-     <button>
-       de_AT
-     </button>
-   </DocumentFragment>
-  `);
+<DocumentFragment>
+  <button
+    type="button"
+  >
+    de_AT
+  </button>
+</DocumentFragment>
+`);
 });
 
 test('locale context does not allow setting invalid locales', async () => {
@@ -113,12 +127,14 @@ test('locale context does not allow setting invalid locales', async () => {
   );
 
   expect(asFragment()).toMatchInlineSnapshot(`
-   <DocumentFragment>
-     <button>
-       en_US
-     </button>
-   </DocumentFragment>
-  `);
+<DocumentFragment>
+  <button
+    type="button"
+  >
+    en_US
+  </button>
+</DocumentFragment>
+`);
 });
 
 test('loading locales mutates the translations object', async () => {
@@ -200,7 +216,9 @@ test('the gender can be changed', async () => {
 
   expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
-  <button>
+  <button
+    type="button"
+  >
     3
   </button>
 </DocumentFragment>
@@ -213,7 +231,9 @@ test('the gender can be changed', async () => {
 
   expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
-  <button>
+  <button
+    type="button"
+  >
     2
   </button>
 </DocumentFragment>

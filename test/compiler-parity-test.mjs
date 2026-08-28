@@ -302,7 +302,7 @@ const validFixtures = [
   },
   {
     check(outputs) {
-      for (const [compiler, code] of Object.entries(outputs)) {
+      for (const code of Object.values(outputs)) {
         assert.doesNotMatch(code, /fbt\._subject/);
       }
     },
