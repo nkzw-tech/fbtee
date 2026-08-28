@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/oxc-transform-fbtee-binding-win32-x64-msvc",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Native Rust Oxc transform for fbtee.",
   "keywords": [
     "fbt",
