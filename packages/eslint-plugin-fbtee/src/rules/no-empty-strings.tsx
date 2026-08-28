@@ -1,10 +1,5 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import {
-  createRule,
-  elementType,
-  isFbtNode,
-  resolveNodeValue,
-} from '../utils.tsx';
+import { createRule, elementType, isFbtNode, resolveNodeValue } from '../utils.tsx';
 
 export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   create(context) {
@@ -51,10 +46,8 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
       description: 'Disallow empty strings in fbt elements or function calls.',
     },
     messages: {
-      emptyString:
-        'Empty strings are not allowed in fbt() and fbs() function arguments.',
-      jsxEmptyString:
-        'Empty strings are not allowed as children of `<fbt>` and `<fbs>` tags.',
+      emptyString: 'Empty strings are not allowed in fbt() and fbs() function arguments.',
+      jsxEmptyString: 'Empty strings are not allowed as children of `<fbt>` and `<fbs>` tags.',
     },
     schema: [],
     type: 'problem',
@@ -62,9 +55,7 @@ export default createRule<[], 'emptyString' | 'jsxEmptyString'>({
   name: 'no-empty-strings',
 });
 
-function validateChildren(
-  node: TSESTree.JSXElement | TSESTree.JSXFragment,
-): boolean {
+function validateChildren(node: TSESTree.JSXElement | TSESTree.JSXFragment): boolean {
   let hasTextContent = false;
 
   for (const child of node.children) {
@@ -78,10 +69,7 @@ function validateChildren(
       }
 
       // Ignore when a variable is used <fbt desc="Greeting">{dynamicValue}</fbt>
-      if (
-        child.expression.type === 'Identifier' &&
-        child.expression.name !== 'undefined'
-      ) {
+      if (child.expression.type === 'Identifier' && child.expression.name !== 'undefined') {
         hasTextContent = true;
         continue;
       }

@@ -1,9 +1,5 @@
 import FbtResultBase from './FbtResultBase.tsx';
-import type {
-  BaseResult,
-  IFbtErrorListener,
-  NestedFbtContentItems,
-} from './Types.ts';
+import type { BaseResult, IFbtErrorListener, NestedFbtContentItems } from './Types.ts';
 
 type Props = Readonly<{
   content: NestedFbtContentItems;

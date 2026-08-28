@@ -4,10 +4,7 @@ import cx from '../lib/cx.tsx';
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
-      className={cx(
-        'bg-card text-card-foreground squircle border shadow-sm',
-        className,
-      )}
+      className={cx('bg-card text-card-foreground squircle border shadow-sm', className)}
       ref={ref}
       {...props}
     />
@@ -17,11 +14,7 @@ Card.displayName = 'Card';
 
 const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      className={cx('flex flex-col space-y-1.5 p-4', className)}
-      ref={ref}
-      {...props}
-    />
+    <div className={cx('flex flex-col space-y-1.5 p-4', className)} ref={ref} {...props} />
   ),
 );
 CardHeader.displayName = 'CardHeader';
@@ -29,10 +22,7 @@ CardHeader.displayName = 'CardHeader';
 const CardTitle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
-      className={cx(
-        'text-2xl leading-none font-semibold tracking-tight',
-        className,
-      )}
+      className={cx('text-2xl leading-none font-semibold tracking-tight', className)}
       ref={ref}
       {...props}
     />
@@ -40,16 +30,11 @@ const CardTitle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 );
 CardTitle.displayName = 'CardTitle';
 
-const CardDescription = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    className={cx('text-muted-foreground text-sm', className)}
-    ref={ref}
-    {...props}
-  />
-));
+const CardDescription = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div className={cx('text-muted-foreground text-sm', className)} ref={ref} {...props} />
+  ),
+);
 CardDescription.displayName = 'CardDescription';
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -61,20 +46,9 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      className={cx('flex items-center p-4 pt-0', className)}
-      ref={ref}
-      {...props}
-    />
+    <div className={cx('flex items-center p-4 pt-0', className)} ref={ref} {...props} />
   ),
 );
 CardFooter.displayName = 'CardFooter';
 
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardContent,
-};
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };

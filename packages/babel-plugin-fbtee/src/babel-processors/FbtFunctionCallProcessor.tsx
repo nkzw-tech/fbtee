@@ -34,11 +34,7 @@ import FbtElementNode from '../fbt-nodes/FbtElementNode.tsx';
 import FbtImplicitParamNode from '../fbt-nodes/FbtImplicitParamNode.tsx';
 import type { AnyFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { isConcreteFbtNode } from '../fbt-nodes/FbtNodeType.tsx';
-import type {
-  BindingName,
-  FbtCallSiteOptions,
-  FbtOptionConfig,
-} from '../FbtConstants.tsx';
+import type { BindingName, FbtCallSiteOptions, FbtOptionConfig } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import {
   convertToStringArrayNodeIfNeeded,
@@ -87,8 +83,7 @@ type CompactStringVariations = {
 // In the final fbt runtime call, runtime arguments that create string variation
 // will become identifiers(references to local variables) if there exist string variations
 // AND inner strings.
-type StringVariationRuntimeArgumentNodes =
-  Array<Identifier> | Array<CallExpression>;
+type StringVariationRuntimeArgumentNodes = Array<Identifier> | Array<CallExpression>;
 
 const emptyArgsCombinations: [[]] = [[]];
 const STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX = 'fbt_sv_arg';
@@ -204,9 +199,7 @@ export default class FbtFunctionCallProcessor {
     );
 
     args.push(
-      fbtRuntimeArgs.length > 0
-        ? arrayExpression(fbtRuntimeArgs)
-        : nullLiteral(),
+      fbtRuntimeArgs.length > 0 ? arrayExpression(fbtRuntimeArgs) : nullLiteral(),
       objectExpression([
         objectProperty(identifier('hk'), stringLiteral(fbtHashKey(jsfbt.t))),
         ...(project != null && project !== ''
@@ -215,30 +208,21 @@ export default class FbtFunctionCallProcessor {
       ]),
     );
 
-    return callExpression(
-      memberExpression(identifier(this.moduleName), identifier('_')),
-      args,
-    );
+    return callExpression(memberExpression(identifier(this.moduleName), identifier('_')), args);
   }
 
-  _createRootFbtRuntimeCall(
-    metaPhrases: ReadonlyArray<MetaPhrase>,
-  ): CallExpression {
-    const stringVariationRuntimeArgs =
-      this._createRuntimeArgsFromStringVariantNodes(metaPhrases[0]);
+  _createRootFbtRuntimeCall(metaPhrases: ReadonlyArray<MetaPhrase>): CallExpression {
+    const stringVariationRuntimeArgs = this._createRuntimeArgsFromStringVariantNodes(
+      metaPhrases[0],
+    );
     if (!this._hasStringVariationAndContainsInnerString(metaPhrases)) {
-      return this._createFbtRuntimeCallForMetaPhrase(
-        metaPhrases,
-        0,
-        stringVariationRuntimeArgs,
-      );
+      return this._createFbtRuntimeCallForMetaPhrase(metaPhrases, 0, stringVariationRuntimeArgs);
     }
     this._throwIfStringVariationArgsMayCauseSideEffects(metaPhrases);
 
-    const stringVariationRuntimeArgIdentifiers =
-      this._generateUniqueIdentifiersForRuntimeArgs(
-        stringVariationRuntimeArgs.length,
-      );
+    const stringVariationRuntimeArgIdentifiers = this._generateUniqueIdentifiersForRuntimeArgs(
+      stringVariationRuntimeArgs.length,
+    );
     const fbtRuntimeCall = this._createFbtRuntimeCallForMetaPhrase(
       metaPhrases,
       0,
@@ -262,9 +246,7 @@ export default class FbtFunctionCallProcessor {
    * FbtNode#throwIfAnyArgumentContainsFunctionCallOrClassInstantiation for
    * examples.
    */
-  _throwIfStringVariationArgsMayCauseSideEffects(
-    metaPhrases: ReadonlyArray<MetaPhrase>,
-  ) {
+  _throwIfStringVariationArgsMayCauseSideEffects(metaPhrases: ReadonlyArray<MetaPhrase>) {
     metaPhrases[0].compactStringVariations.array.map((svArg) =>
       svArg.fbtNode.throwIfAnyArgumentContainsFunctionCallOrClassInstantiation(),
     );
@@ -297,14 +279,9 @@ export default class FbtFunctionCallProcessor {
     // declarations, while block-scoped `let` has the required semantics.
     const declarations = variableDeclaration(
       'let',
-      identifiersForStringVariationRuntimeArgs.map((identifier) =>
-        variableDeclarator(identifier),
-      ),
+      identifiersForStringVariationRuntimeArgs.map((identifier) => variableDeclarator(identifier)),
     );
-    const cloned = cloneNode<BlockStatement | Program>(
-      blockOrProgramNode,
-      false,
-    );
+    const cloned = cloneNode<BlockStatement | Program>(blockOrProgramNode, false);
     cloned.body = [declarations, ...cloned.body];
     blockOrProgramPath.replaceWith(cloned);
   }
@@ -347,17 +324,11 @@ export default class FbtFunctionCallProcessor {
         index,
         identifier.name,
       );
-      fbtRuntimeArguments.elements[index] = assignmentExpression(
-        '=',
-        identifier,
-        runtimeArg,
-      );
+      fbtRuntimeArguments.elements[index] = assignmentExpression('=', identifier, runtimeArg);
     });
   }
 
-  _hasStringVariationAndContainsInnerString(
-    metaPhrases: ReadonlyArray<MetaPhrase>,
-  ): boolean {
+  _hasStringVariationAndContainsInnerString(metaPhrases: ReadonlyArray<MetaPhrase>): boolean {
     const fbtElement = metaPhrases[0].fbtNode;
     invariant(
       fbtElement instanceof FbtElementNode,
@@ -376,9 +347,7 @@ export default class FbtFunctionCallProcessor {
 
   _generateUniqueIdentifiersForRuntimeArgs(count: number): Array<Identifier> {
     return Array.from({ length: count }, () =>
-      this.path.scope.generateUidIdentifier(
-        STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX,
-      ),
+      this.path.scope.generateUidIdentifier(STRING_VARIATION_RUNTIME_ARGUMENT_IDENTIFIER_PREFIX),
     );
   }
 
@@ -390,9 +359,7 @@ export default class FbtFunctionCallProcessor {
    *
    * Other types of variation arguments are accepted as-is.
    */
-  _compactStringVariationArgs(
-    args: ReadonlyArray<AnyStringVariationArg>,
-  ): CompactStringVariations {
+  _compactStringVariationArgs(args: ReadonlyArray<AnyStringVariationArg>): CompactStringVariations {
     const indexMap: Array<number> = [];
     const array = args.filter((arg, i) => {
       if (arg.isCollapsible) {
@@ -408,19 +375,12 @@ export default class FbtFunctionCallProcessor {
     };
   }
 
-  _getPhraseParentIndex(
-    fbtNode: AnyFbtNode,
-    list: ReadonlyArray<AnyFbtNode>,
-  ): number | null {
+  _getPhraseParentIndex(fbtNode: AnyFbtNode, list: ReadonlyArray<AnyFbtNode>): number | null {
     if (fbtNode.parent == null) {
       return null;
     }
     const parentIndex = list.indexOf(fbtNode.parent);
-    invariant(
-      parentIndex > -1,
-      'Unable to find parent fbt node: node=%s',
-      varDump(fbtNode),
-    );
+    invariant(parentIndex > -1, 'Unable to find parent fbt node: node=%s', varDump(fbtNode));
     return parentIndex;
   }
 
@@ -431,32 +391,25 @@ export default class FbtFunctionCallProcessor {
     const stringVariationArgs = fbtElement.getArgsForStringVariationCalc();
     const jsfbtBuilder = new JSFbtBuilder(this.fileSource, stringVariationArgs);
     const argsCombinations = jsfbtBuilder.getStringVariationCombinations();
-    const compactStringVariations = this._compactStringVariationArgs(
-      argsCombinations[0] || [],
-    );
-    const jsfbtMetadata = jsfbtBuilder.buildMetadata(
-      compactStringVariations.array,
-    );
+    const compactStringVariations = this._compactStringVariationArgs(argsCombinations[0] || []);
+    const jsfbtMetadata = jsfbtBuilder.buildMetadata(compactStringVariations.array);
     const sharedPhraseOptions = this._getSharedPhraseOptions(fbtElement);
-    return [fbtElement, ...fbtElement.getImplicitParamNodes()].map(
-      (fbtNode, _index, list) => {
-        try {
-          const phrase = {
-            ...sharedPhraseOptions,
-            jsfbt: {
-              m: jsfbtMetadata,
-              t: {},
-            },
-          };
-          const svArgsMapList: Array<StringVariationArgsMap> = [];
+    return [fbtElement, ...fbtElement.getImplicitParamNodes()].map((fbtNode, _index, list) => {
+      try {
+        const phrase = {
+          ...sharedPhraseOptions,
+          jsfbt: {
+            m: jsfbtMetadata,
+            t: {},
+          },
+        };
+        const svArgsMapList: Array<StringVariationArgsMap> = [];
 
-          (argsCombinations.length
-            ? argsCombinations
-            : emptyArgsCombinations
-          ).forEach((argsCombination) => {
+        (argsCombinations.length ? argsCombinations : emptyArgsCombinations).forEach(
+          (argsCombination) => {
             const svArgsMap = new StringVariationArgsMap(argsCombination);
-            const argValues = compactStringVariations.indexMap.map(
-              (originIndex) => nullthrows(argsCombination[originIndex]?.value),
+            const argValues = compactStringVariations.indexMap.map((originIndex) =>
+              nullthrows(argsCombination[originIndex]?.value),
             );
             const leaf = {
               desc: fbtNode.getDescription(svArgsMap),
@@ -476,32 +429,28 @@ export default class FbtFunctionCallProcessor {
             }
 
             if (argValues.length) {
-              addLeafToTree<TableJSFBTTreeLeaf, TableJSFBTTree>(
-                phrase.jsfbt.t,
-                argValues,
-                leaf,
-              );
+              addLeafToTree<TableJSFBTTreeLeaf, TableJSFBTTree>(phrase.jsfbt.t, argValues, leaf);
             } else {
               // jsfbt only contains one leaf
               phrase.jsfbt.t = leaf;
             }
-          });
+          },
+        );
 
-          if (fbtNode instanceof FbtElementNode) {
-            fbtNode.assertNoOverallTokenNameCollision(svArgsMapList);
-          }
-
-          return {
-            compactStringVariations,
-            fbtNode,
-            parentIndex: this._getPhraseParentIndex(fbtNode, list),
-            phrase,
-          };
-        } catch (error) {
-          throw errorAt(this.node, error);
+        if (fbtNode instanceof FbtElementNode) {
+          fbtNode.assertNoOverallTokenNameCollision(svArgsMapList);
         }
-      },
-    );
+
+        return {
+          compactStringVariations,
+          fbtNode,
+          parentIndex: this._getPhraseParentIndex(fbtNode, list),
+          phrase,
+        };
+      } catch (error) {
+        throw errorAt(this.node, error);
+      }
+    });
   }
 
   /**
@@ -553,10 +502,7 @@ export default class FbtFunctionCallProcessor {
         CallExpression(path: CallExpressionPath) {
           const nodeChecker = this.nodeChecker as FbtNodeChecker;
           const childFbtConstructName = nodeChecker.getFbtNodeType(path.node);
-          if (
-            !childFbtConstructName ||
-            !isConcreteFbtNode(childFbtConstructName)
-          ) {
+          if (!childFbtConstructName || !isConcreteFbtNode(childFbtConstructName)) {
             return;
           }
 
@@ -601,17 +547,10 @@ export default class FbtFunctionCallProcessor {
 
     const { moduleName, node } = this;
     const { arguments: fbtCallArgs } = node;
-    const fbtContentsNode = convertToStringArrayNodeIfNeeded(
-      moduleName,
-      fbtCallArgs[0],
-    );
+    const fbtContentsNode = convertToStringArrayNodeIfNeeded(moduleName, fbtCallArgs[0]);
     fbtCallArgs[0] = fbtContentsNode;
 
-    const elementNode = FbtElementNode.fromNode(
-      moduleName,
-      node,
-      this.validFbtExtraOptions,
-    );
+    const elementNode = FbtElementNode.fromNode(moduleName, node, this.validFbtExtraOptions);
     if (elementNode == null) {
       throw errorAt(
         node,
@@ -644,9 +583,7 @@ export default class FbtFunctionCallProcessor {
     ];
   }
 
-  _createRuntimeArgsFromStringVariantNodes(
-    metaPhrase: MetaPhrase,
-  ): Array<CallExpression> {
+  _createRuntimeArgsFromStringVariantNodes(metaPhrase: MetaPhrase): Array<CallExpression> {
     const fbtRuntimeArgs = [];
     const { compactStringVariations } = metaPhrase;
     for (const stringVariation of compactStringVariations.array) {
@@ -665,9 +602,7 @@ export default class FbtFunctionCallProcessor {
     for (const child of fbtNode.children) {
       if (
         child.type === 'list' ||
-        (child.type === 'param' &&
-          child.options.gender == null &&
-          child.options.number == null)
+        (child.type === 'param' && child.options.gender == null && child.options.number == null)
       ) {
         fbtRuntimeArgs.push(child.getFbtRuntimeArg());
       }
@@ -681,10 +616,7 @@ export default class FbtFunctionCallProcessor {
     runtimeArgsFromStringVariationNodes: StringVariationRuntimeArgumentNodes,
   ): Array<CallExpression> {
     const fbtRuntimeArgs = [];
-    for (const [
-      innerMetaPhraseIndex,
-      innerMetaPhrase,
-    ] of metaPhrases.entries()) {
+    for (const [innerMetaPhraseIndex, innerMetaPhrase] of metaPhrases.entries()) {
       if (innerMetaPhrase.parentIndex !== metaPhraseIndex) {
         continue;
       }
@@ -704,10 +636,10 @@ export default class FbtFunctionCallProcessor {
           ),
         ),
       ];
-      const fbtParamRuntimeArg = createRuntimeCallExpression(
-        innerMetaPhraseFbtNode,
-        [stringLiteral(innerMetaPhraseFbtNode.getOuterTokenAlias()), node],
-      );
+      const fbtParamRuntimeArg = createRuntimeCallExpression(innerMetaPhraseFbtNode, [
+        stringLiteral(innerMetaPhraseFbtNode.getOuterTokenAlias()),
+        node,
+      ]);
       fbtRuntimeArgs.push(fbtParamRuntimeArg);
     }
     return fbtRuntimeArgs;
@@ -721,28 +653,21 @@ export default class FbtFunctionCallProcessor {
   _getSharedPhraseOptions({ options: fbtElementOptions }: FbtElementNode) {
     const { defaultFbtOptions } = this;
 
-    const author =
-      fbtElementOptions.author ??
-      enforceString.orNull(defaultFbtOptions.author);
-    const common =
-      fbtElementOptions.common ??
-      enforceBoolean.orNull(defaultFbtOptions.common);
+    const author = fbtElementOptions.author ?? enforceString.orNull(defaultFbtOptions.author);
+    const common = fbtElementOptions.common ?? enforceBoolean.orNull(defaultFbtOptions.common);
     const doNotExtract =
-      fbtElementOptions.doNotExtract ??
-      enforceBoolean.orNull(defaultFbtOptions.doNotExtract);
+      fbtElementOptions.doNotExtract ?? enforceBoolean.orNull(defaultFbtOptions.doNotExtract);
     const preserveWhitespace =
       fbtElementOptions.preserveWhitespace ??
       enforceBoolean.orNull(defaultFbtOptions.preserveWhitespace);
-    const project =
-      fbtElementOptions.project || enforceString(defaultFbtOptions.project);
+    const project = fbtElementOptions.project || enforceString(defaultFbtOptions.project);
     const subject = fbtElementOptions.subject;
 
     return {
       ...(author != null && { author }),
       ...(common != null && common !== false && { common }),
       ...(doNotExtract != null && doNotExtract !== false && { doNotExtract }),
-      ...(preserveWhitespace != null &&
-        preserveWhitespace !== false && { preserveWhitespace }),
+      ...(preserveWhitespace != null && preserveWhitespace !== false && { preserveWhitespace }),
       ...(subject != null && { subject }),
       project,
     } as const;

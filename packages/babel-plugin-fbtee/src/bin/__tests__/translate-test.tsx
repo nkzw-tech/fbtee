@@ -1,10 +1,4 @@
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, it, jest } from '@jest/globals';
 import { jsCodeNonASCIICharSerializer } from '../../__tests__/FbtTestUtil.tsx';
@@ -411,20 +405,17 @@ function testTranslateNewPhrases(options: Options) {
                 translations: [
                   {
                     id: 108_537_963,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
+                    translation: 'translation is: {name} has shared {=a photo}. View a photo',
                     variations: { '0': 2 },
                   },
                   {
                     id: 108_537_953,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
+                    translation: 'translation is: {name} has shared {=a photo}. View a photo',
                     variations: { '0': 1 },
                   },
                   {
                     id: 108_537_972,
-                    translation:
-                      'translation is: {name} has shared {=a photo}. View a photo',
+                    translation: 'translation is: {name} has shared {=a photo}. View a photo',
                     variations: { '0': 3 },
                   },
                 ],
@@ -668,9 +659,7 @@ function testTranslateNewPhrases(options: Options) {
 
 describe('translate-test.js', () => {
   describe('should translate new jsfbt payload', () => {
-    for (const options of [
-      { hashModule: false, jenkins: false, strict: false } as const,
-    ]) {
+    for (const options of [{ hashModule: false, jenkins: false, strict: false } as const]) {
       describe(`with option=${JSON.stringify(options)}:`, () => {
         testTranslateNewPhrases(options);
       });
@@ -843,21 +832,17 @@ describe('translate-test.js', () => {
         writeFileSync(sourceFile, JSON.stringify(mockSourceStrings));
         writeFileSync(frFile, JSON.stringify(mockTranslations.fr_FR));
 
-        const resultFromProcessFiles = await processFiles(
-          sourceFile,
-          [frFile],
-          {
-            hashModule: false,
-            jenkins: true,
-            strict: false,
-          },
-        );
+        const resultFromProcessFiles = await processFiles(sourceFile, [frFile], {
+          hashModule: false,
+          jenkins: true,
+          strict: false,
+        });
 
-        const resultFromProcessSingleFile = await processSingleFile(
-          sourceFile,
-          [frFile],
-          { hashModule: false, jenkins: true, strict: false },
-        );
+        const resultFromProcessSingleFile = await processSingleFile(sourceFile, [frFile], {
+          hashModule: false,
+          jenkins: true,
+          strict: false,
+        });
 
         expect(resultFromProcessFiles).toEqual(resultFromProcessSingleFile);
         expect(resultFromProcessFiles).toEqual({
@@ -913,14 +898,10 @@ describe('translate-test.js', () => {
         expect(existsSync(join(outputDir, 'fr-FR.json'))).toBe(true);
         expect(existsSync(join(outputDir, 'ja-JP.json'))).toBe(true);
 
-        const frContent = JSON.parse(
-          readFileSync(join(outputDir, 'fr-FR.json'), 'utf8'),
-        );
+        const frContent = JSON.parse(readFileSync(join(outputDir, 'fr-FR.json'), 'utf8'));
         expect(frContent).toEqual({ 'fr-FR': mockData.fr_FR });
 
-        const jaContent = JSON.parse(
-          readFileSync(join(outputDir, 'ja-JP.json'), 'utf8'),
-        );
+        const jaContent = JSON.parse(readFileSync(join(outputDir, 'ja-JP.json'), 'utf8'));
         expect(jaContent).toEqual({ 'ja-JP': mockData.ja_JP });
       });
 
@@ -938,9 +919,9 @@ describe('translate-test.js', () => {
 
         expect(existsSync(join(outputDir, 'de_DE.json'))).toBe(true);
         expect(existsSync(join(outputDir, 'de-DE.json'))).toBe(false);
-        expect(
-          JSON.parse(readFileSync(join(outputDir, 'de_DE.json'), 'utf8')),
-        ).toEqual({ de_DE: mockData['de-DE'] });
+        expect(JSON.parse(readFileSync(join(outputDir, 'de_DE.json'), 'utf8'))).toEqual({
+          de_DE: mockData['de-DE'],
+        });
       });
 
       it('should create nested directories for --output-file option', async () => {
@@ -948,13 +929,7 @@ describe('translate-test.js', () => {
           en_US: { test: 'Hello' },
         };
 
-        const nestedPath = join(
-          testDir,
-          'deeply',
-          'nested',
-          'path',
-          'output.json',
-        );
+        const nestedPath = join(testDir, 'deeply', 'nested', 'path', 'output.json');
 
         writeSingleOutput(nestedPath, mockData);
 
@@ -985,9 +960,7 @@ describe('translate-test.js', () => {
         const outputFilePath = join(testDir, 'formatted.json');
         writeSingleOutput(outputFilePath, mockData);
 
-        expect(() =>
-          JSON.parse(readFileSync(outputFilePath, 'utf8')),
-        ).not.toThrow();
+        expect(() => JSON.parse(readFileSync(outputFilePath, 'utf8'))).not.toThrow();
       });
     });
   });

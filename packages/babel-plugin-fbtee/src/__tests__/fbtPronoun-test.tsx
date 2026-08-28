@@ -33,9 +33,7 @@ describe('fbt pronoun support', () => {
         'Expect error exception',
       );`,
     );
-    expect(() => transform(input)).toThrow(
-      "Value must be a boolean. Received 'true' (string).",
-    );
+    expect(() => transform(input)).toThrow("Value must be a boolean. Received 'true' (string).");
   });
 
   it('Should throw when using non-Boolean option value in a template', () => {
@@ -48,9 +46,7 @@ describe('fbt pronoun support', () => {
         'Expect error exception',
       );`,
     );
-    expect(() => transform(input)).toThrow(
-      "Value must be a boolean. Received 'true' (string).",
-    );
+    expect(() => transform(input)).toThrow("Value must be a boolean. Received 'true' (string).");
   });
 
   it('Should throw when using unknown "usage" value', () => {

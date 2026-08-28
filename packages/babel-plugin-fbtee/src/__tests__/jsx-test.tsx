@@ -52,9 +52,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
           </fbt>`,
         ),
       ),
-    ).toThrow(
-      `<fbt:param> needs exactly one child: an expression or JSX element.`,
-    );
+    ).toThrow(`<fbt:param> needs exactly one child: an expression or JSX element.`);
   });
 
   test('fbt:param with multiple empty expression containers should be ok', () => {
@@ -131,9 +129,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
   test('should convert simple strings', () => {
     expect(
       snapshotTransformKeepJsx(
-        withFbtImportStatement(
-          `var x = <fbt desc="It's simple">A simple string</fbt>;`,
-        ),
+        withFbtImportStatement(`var x = <fbt desc="It's simple">A simple string</fbt>;`),
       ),
     ).toMatchSnapshot();
   });
@@ -169,10 +165,9 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
 
   test('should handle common string', () => {
     expect(
-      snapshotTransformKeepJsx(
-        withFbtImportStatement(`<fbt common={true}>Done</fbt>`),
-        { fbtCommon: { Done: 'The description for the common string "Done"' } },
-      ),
+      snapshotTransformKeepJsx(withFbtImportStatement(`<fbt common={true}>Done</fbt>`), {
+        fbtCommon: { Done: 'The description for the common string "Done"' },
+      }),
     ).toMatchSnapshot();
   });
 
@@ -266,10 +261,9 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
 
   test('should handle fbt common attribute without value', () => {
     expect(
-      snapshotTransformKeepJsx(
-        withFbtImportStatement(`<fbt common>Okay</fbt>`),
-        { fbtCommon: { Okay: 'The description for the common string "Okay"' } },
-      ),
+      snapshotTransformKeepJsx(withFbtImportStatement(`<fbt common>Okay</fbt>`), {
+        fbtCommon: { Okay: 'The description for the common string "Okay"' },
+      }),
     ).toMatchSnapshot();
   });
 
@@ -509,21 +503,17 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
 
   test('should throw for fbt that has description and common attribute (without value)', () => {
     expect(() =>
-      snapshotTransformKeepJsx(
-        withFbtImportStatement(`<fbt common={true} desc='d'>No</fbt>`),
-        { fbtCommon: { No: 'The description for the common string "No"' } },
-      ),
-    ).toThrow(
-      `<fbt common> cannot also have a 'desc' attribute. Remove one of them.`,
-    );
+      snapshotTransformKeepJsx(withFbtImportStatement(`<fbt common={true} desc='d'>No</fbt>`), {
+        fbtCommon: { No: 'The description for the common string "No"' },
+      }),
+    ).toThrow(`<fbt common> cannot also have a 'desc' attribute. Remove one of them.`);
   });
 
   test('should throw for strings with `common` attribute equal to false', () => {
     expect(() =>
-      snapshotTransformKeepJsx(
-        withFbtImportStatement(`<fbt common={false}>Yes</fbt>`),
-        { fbtCommon: { Yes: 'The description for the common string "Yes"' } },
-      ),
+      snapshotTransformKeepJsx(withFbtImportStatement(`<fbt common={false}>Yes</fbt>`), {
+        fbtCommon: { Yes: 'The description for the common string "Yes"' },
+      }),
     ).toThrow(`Missing required attribute 'desc'.`);
   });
 
@@ -544,9 +534,7 @@ describe('Test declarative (jsx) fbt syntax translation', () => {
   test('should throw on undefined common string', () => {
     expect(() =>
       snapshotTransformKeepJsx(
-        withFbtImportStatement(
-          `<fbt common={true}>Some undefined common string</fbt>`,
-        ),
+        withFbtImportStatement(`<fbt common={true}>Some undefined common string</fbt>`),
         {},
       ),
     ).toThrow(

@@ -111,9 +111,7 @@ export default function Example() {
 
           <fieldset>
             <span className={classNames('example_row', 'example_row--multi')}>
-              <span
-                className={classNames('example_input', 'example_input--40')}
-              >
+              <span className={classNames('example_input', 'example_input--40')}>
                 <input
                   name="name"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -123,9 +121,7 @@ export default function Example() {
                   type="text"
                 />
               </span>
-              <span
-                className={classNames('example_input', 'example_input--30')}
-              >
+              <span className={classNames('example_input', 'example_input--30')}>
                 <input
                   name="count"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -177,9 +173,7 @@ export default function Example() {
           </fieldset>
           <fieldset>
             <span className={classNames('example_row', 'example_row--multi')}>
-              <span
-                className={classNames('example_input', 'example_input--40')}
-              >
+              <span className={classNames('example_input', 'example_input--40')}>
                 <input
                   name="ex2Name"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -189,15 +183,11 @@ export default function Example() {
                   type="text"
                 />
               </span>
-              <span
-                className={classNames('example_input', 'example_input--20')}
-              >
+              <span className={classNames('example_input', 'example_input--20')}>
                 <select
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                    setEx2Object(
-                      event.target.value as keyof typeof ExampleEnum,
-                    );
+                    setEx2Object(event.target.value as keyof typeof ExampleEnum);
                   }}
                 >
                   {Object.keys(ExampleEnum).map((k) => (
@@ -250,11 +240,7 @@ export default function Example() {
                 <b className="pad">
                   <a href="#">View</a>
                 </b>{' '}
-                <fbt:pronoun
-                  gender={ex2Pronoun}
-                  human={false}
-                  type="possessive"
-                />{' '}
+                <fbt:pronoun gender={ex2Pronoun} human={false} type="possessive" />{' '}
                 <fbt:enum enum-range={ExampleEnum} value={ex2Object} />.
               </fbt>
             </span>
@@ -277,7 +263,8 @@ export default function Example() {
                     </fbt>,
                   ]}
                   name="list"
-                />?
+                />
+                {'?'}
               </fbt>
             </label>
           </fieldset>

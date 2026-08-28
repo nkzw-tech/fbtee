@@ -9,11 +9,7 @@ import {
   Node,
 } from '@babel/types';
 import { FbtNodeType, getNodeType } from './fbt-nodes/FbtNodeType.tsx';
-import {
-  FbsBindingName,
-  FbtBindingName,
-  type BindingName,
-} from './FbtConstants.tsx';
+import { FbsBindingName, FbtBindingName, type BindingName } from './FbtConstants.tsx';
 import { errorAt } from './FbtUtil.tsx';
 
 export default class FbtNodeChecker {
@@ -30,9 +26,7 @@ export default class FbtNodeChecker {
       return false;
     }
     const nameNode = node.openingElement.name;
-    return (
-      nameNode.type === 'JSXIdentifier' && this.isNameOfModule(nameNode.name)
-    );
+    return nameNode.type === 'JSXIdentifier' && this.isNameOfModule(nameNode.name);
   }
 
   isJSXNamespacedElement(node: Node): boolean {
@@ -40,18 +34,13 @@ export default class FbtNodeChecker {
       return false;
     }
     const nameNode = node.openingElement.name;
-    return (
-      isJSXNamespacedName(nameNode) &&
-      this.isNameOfModule(nameNode.namespace.name)
-    );
+    return isJSXNamespacedName(nameNode) && this.isNameOfModule(nameNode.namespace.name);
   }
 
   // Detects this pattern: `fbt(...)`
   isModuleCall(node: Node): boolean {
     return (
-      isCallExpression(node) &&
-      isIdentifier(node.callee) &&
-      this.isNameOfModule(node.callee.name)
+      isCallExpression(node) && isIdentifier(node.callee) && this.isNameOfModule(node.callee.name)
     );
   }
 
@@ -69,9 +58,7 @@ export default class FbtNodeChecker {
 
   isMemberExpression(node: Node): boolean {
     return (
-      isMemberExpression(node) &&
-      isIdentifier(node.object) &&
-      this.isNameOfModule(node.object.name)
+      isMemberExpression(node) && isIdentifier(node.object) && this.isNameOfModule(node.object.name)
     );
   }
 
@@ -111,9 +98,7 @@ export default class FbtNodeChecker {
             ? child.openingElement.name.name
             : null;
         const rootJSXElementName =
-          node.openingElement.name.type === 'JSXIdentifier'
-            ? node.openingElement.name.name
-            : null;
+          node.openingElement.name.type === 'JSXIdentifier' ? node.openingElement.name.name : null;
 
         throw errorAt(
           child,
@@ -121,8 +106,7 @@ export default class FbtNodeChecker {
             `Remove the inner tag or wrap it in a normal JSX element.`,
         );
       } else {
-        const otherChecker =
-          moduleName === FbsBindingName ? fbtChecker : fbsChecker;
+        const otherChecker = moduleName === FbsBindingName ? fbtChecker : fbsChecker;
         const node = isJSXElement(child) ? child : null;
         if (
           node &&

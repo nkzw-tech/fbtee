@@ -3,9 +3,7 @@
  */
 
 import { jest } from '@jest/globals';
-import createLocaleContext, {
-  useLocaleContext,
-} from '../createLocaleContext.tsx';
+import createLocaleContext, { useLocaleContext } from '../createLocaleContext.tsx';
 import fbtInternal from '../fbt.tsx';
 import FbtResult from '../FbtResult.tsx';
 

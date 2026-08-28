@@ -31,12 +31,8 @@ describe('escapeRegex', () => {
   });
 
   it('escapes multiple special characters', () => {
-    expect(escapeRegex('hello? good-bye...')).toBe(
-      String.raw`hello\? good\-bye\.\.\.`,
-    );
-    expect(escapeRegex('1 + 1 * 3 - 2 = 2')).toBe(
-      String.raw`1 \+ 1 \* 3 \- 2 = 2`,
-    );
+    expect(escapeRegex('hello? good-bye...')).toBe(String.raw`hello\? good\-bye\.\.\.`);
+    expect(escapeRegex('1 + 1 * 3 - 2 = 2')).toBe(String.raw`1 \+ 1 \* 3 \- 2 = 2`);
     expect(escapeRegex('[]{}()')).toBe(String.raw`\[\]\{\}\(\)`);
   });
 

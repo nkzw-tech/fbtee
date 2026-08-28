@@ -75,12 +75,8 @@ describe('updateTranslations', () => {
 
       expect(Object.keys(result)).toEqual(['keep1', 'keep2', 'new1', 'new2']);
       expect(result.remove1).toBeUndefined();
-      expect(result.keep1?.translations[0].translation).toBe(
-        'keep1 translated',
-      );
-      expect(result.keep2?.translations[0].translation).toBe(
-        'keep2 translated',
-      );
+      expect(result.keep1?.translations[0].translation).toBe('keep1 translated');
+      expect(result.keep2?.translations[0].translation).toBe('keep2 translated');
       expect(result.new1?.status).toBe('new');
       expect(result.new1?.translations[0].translation).toBe('new1 text');
       expect(result.new2?.status).toBe('new');

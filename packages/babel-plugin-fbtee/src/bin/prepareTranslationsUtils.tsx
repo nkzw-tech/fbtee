@@ -6,8 +6,7 @@ import type { Translations } from './translateUtils.tsx';
 export type TranslationsWithMetadata = Partial<
   Record<
     PatternString,
-    | (SerializedTranslationData & { description?: string; status?: string })
-    | null
+    (SerializedTranslationData & { description?: string; status?: string }) | null
   >
 >;
 
@@ -19,9 +18,7 @@ export const updateTranslations = (
   const hashes = new Set(Object.keys(phrases));
   const translatedHashes = new Set(Object.keys(translations));
   const newHashes = [...hashes].filter((hash) => !translatedHashes.has(hash));
-  const removedHashes = [...translatedHashes].filter(
-    (hash) => !hashes.has(hash),
-  );
+  const removedHashes = [...translatedHashes].filter((hash) => !hashes.has(hash));
 
   const updatedTranslations: TranslationsWithMetadata = { ...translations };
   for (const hash of newHashes) {

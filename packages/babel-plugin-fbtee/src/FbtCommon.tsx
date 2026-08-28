@@ -15,9 +15,7 @@ export function init(
     Object.assign(textToDesc, opts.fbtCommon);
   }
   if (opts.fbtCommonPath != null) {
-    throw new Error(
-      `Option 'fbtCommonPath' is no longer supported. Use 'fbtCommon' instead.`,
-    );
+    throw new Error(`Option 'fbtCommonPath' is no longer supported. Use 'fbtCommon' instead.`);
   }
 }
 
@@ -25,9 +23,6 @@ export function getCommonDescription(text: string): string | null {
   return textToDesc[text];
 }
 
-export function getUnknownCommonStringErrorMessage(
-  moduleName: BindingName,
-  text: string,
-): string {
+export function getUnknownCommonStringErrorMessage(moduleName: BindingName, text: string): string {
   return `Unknown common string '${text}'. Add it to 'fbtCommon' or use a 'desc' attribute.`;
 }

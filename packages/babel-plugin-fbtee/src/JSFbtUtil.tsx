@@ -28,17 +28,11 @@ function _runOnNormalizedJSFBTLeaves(
   }
 
   for (const key of Object.keys(value)) {
-    _runOnNormalizedJSFBTLeaves(
-      nullthrows((value as TableJSFBTTreeBranch)[key]),
-      callback,
-    );
+    _runOnNormalizedJSFBTLeaves(nullthrows((value as TableJSFBTTreeBranch)[key]), callback);
   }
 }
 
-export function onEachLeaf(
-  phrase: ObjectWithJSFBT,
-  callback: (leaf: TableJSFBTTreeLeaf) => void,
-) {
+export function onEachLeaf(phrase: ObjectWithJSFBT, callback: (leaf: TableJSFBTTreeLeaf) => void) {
   _runOnNormalizedJSFBTLeaves(phrase.jsfbt.t, callback);
 }
 
@@ -56,10 +50,7 @@ export function mapLeaves<NewLeaf>(
 
   const newFbtTree: Record<FbtTableKey, NewLeaf> = {};
   for (const tableKey of Object.keys(tree)) {
-    newFbtTree[tableKey] = mapLeaves(
-      (tree as TableJSFBTTreeBranch)[tableKey]!,
-      convertLeaf,
-    );
+    newFbtTree[tableKey] = mapLeaves((tree as TableJSFBTTreeBranch)[tableKey]!, convertLeaf);
   }
   return newFbtTree as NewLeaf;
 }

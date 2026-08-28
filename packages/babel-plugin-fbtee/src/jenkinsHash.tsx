@@ -15,9 +15,7 @@ function toUtf8(str: string) {
       );
     } else {
       i++;
-      charcode =
-        0x1_00_00 +
-        (((charcode & 0x3_ff) << 10) | (str.charCodeAt(i) & 0x3_ff));
+      charcode = 0x1_00_00 + (((charcode & 0x3_ff) << 10) | (str.charCodeAt(i) & 0x3_ff));
       result.push(
         0xf0 | (charcode >> 18),
         0x80 | ((charcode >> 12) & 0x3f),

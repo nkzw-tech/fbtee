@@ -2,39 +2,19 @@
 
 import invariant from 'invariant';
 import type { ReactElement } from 'react';
-import type {
-  FbtTableKey,
-  PatternHash,
-  PatternString,
-} from './CompilerTypes.ts';
+import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
-import type {
-  ParamVariationType,
-  ValidPronounUsagesType,
-} from './FbtRuntimeTypes.tsx';
+import type { ParamVariationType, ValidPronounUsagesType } from './FbtRuntimeTypes.tsx';
 import FbtTable from './FbtTable.tsx';
 import FbtTableAccessor, { FbtTableArg } from './FbtTableAccessor.tsx';
 import GenderConst from './GenderConst.tsx';
 import getAllSubstitutions from './getAllSubstitutions.tsx';
-import Hooks, {
-  FbtInputOpts,
-  FbtRuntimeInput,
-  FbtTableArgs,
-  ResolverFn,
-} from './Hooks.tsx';
+import Hooks, { FbtInputOpts, FbtRuntimeInput, FbtTableArgs, ResolverFn } from './Hooks.tsx';
 import intlNumUtils from './intlNumUtils.tsx';
-import {
-  getGenderVariations,
-  getNumberVariations,
-} from './IntlVariationResolver.tsx';
+import { getGenderVariations, getNumberVariations } from './IntlVariationResolver.tsx';
 import list from './list.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
-import type {
-  BaseResult,
-  FbtConjunction,
-  FbtDelimiter,
-  NestedFbtContentItems,
-} from './Types.ts';
+import type { BaseResult, FbtConjunction, FbtDelimiter, NestedFbtContentItems } from './Types.ts';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,
@@ -48,20 +28,15 @@ const ValidPronounUsages: ValidPronounUsagesType = {
   subject: 3,
 };
 
-type ValidPronounUsages =
-  (typeof ValidPronounUsages)[keyof typeof ValidPronounUsages];
+type ValidPronounUsages = (typeof ValidPronounUsages)[keyof typeof ValidPronounUsages];
 
 /**
  * Must match implementation from babel-plugin-fbt/src/fbt-nodes/FbtPronounNode.js
  */
-const getPronounGenderKey = (
-  usage: ValidPronounUsages,
-  gender: GenderConst,
-) => {
+const getPronounGenderKey = (usage: ValidPronounUsages, gender: GenderConst) => {
   switch (gender) {
     case GenderConst.NOT_A_PERSON:
-      return usage === ValidPronounUsages.object ||
-        usage === ValidPronounUsages.reflexive
+      return usage === ValidPronounUsages.object || usage === ValidPronounUsages.reflexive
         ? GenderConst.NOT_A_PERSON
         : GenderConst.UNKNOWN_PLURAL;
 
@@ -94,10 +69,7 @@ export function createRuntime<P, T extends BaseResult | string>({
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
 }) {
-  const cachedResults = new Map<
-    PatternString,
-    Map<PatternHash | undefined, T>
-  >();
+  const cachedResults = new Map<PatternString, Map<PatternHash | undefined, T>>();
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
@@ -157,9 +129,7 @@ export function createRuntime<P, T extends BaseResult | string>({
         } else {
           const fbtContent = substituteTokens(patternString, substitutions);
           const result = getResult(
-            typeof fbtContent === 'string'
-              ? [fbtContent]
-              : (fbtContent as NestedFbtContentItems),
+            typeof fbtContent === 'string' ? [fbtContent] : (fbtContent as NestedFbtContentItems),
             hashKey,
             Hooks.getErrorListener({
               hash: hashKey,
@@ -221,9 +191,7 @@ export function createRuntime<P, T extends BaseResult | string>({
           gender !== GenderConst.NOT_A_PERSON || !options || !options.human,
           'Gender cannot be GenderConst.NOT_A_PERSON if you set "human" to true',
         );
-        return FbtTableAccessor.getPronounResult(
-          getPronounGenderKey(usage, gender),
-        );
+        return FbtTableAccessor.getPronounResult(getPronounGenderKey(usage, gender));
       },
 
       _subject: (value: GenderConst) =>
@@ -243,17 +211,13 @@ export default createRuntime<string | number, FbtResult>({
 
         const variation = getNumberVariations(number); // this will throw if `number` is invalid
         if (typeof value === 'number') {
-          substitution[label] =
-            intlNumUtils.formatNumberWithThousandDelimiters(value);
+          substitution[label] = intlNumUtils.formatNumberWithThousandDelimiters(value);
         }
         return FbtTableAccessor.getNumberResult(variation, substitution);
       } else if (variations[0] === ParamVariation.gender) {
         const gender = variations[1];
         invariant(gender != null, 'expected gender value');
-        return FbtTableAccessor.getGenderResult(
-          getGenderVariations(gender),
-          substitution,
-        );
+        return FbtTableAccessor.getGenderResult(getGenderVariations(gender), substitution);
       } else {
         invariant(false, 'Unknown invariant mask');
       }
@@ -269,8 +233,7 @@ export default createRuntime<string | number, FbtResult>({
             [label]:
               typeof value === 'number'
                 ? intlNumUtils.formatNumberWithThousandDelimiters(value)
-                : value ||
-                  intlNumUtils.formatNumberWithThousandDelimiters(count),
+                : value || intlNumUtils.formatNumberWithThousandDelimiters(count),
           }
         : null,
     ),

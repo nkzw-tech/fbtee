@@ -17,12 +17,7 @@ type Options = {
   name: string | null;
 };
 
-export default class FbtListNode extends FbtNode<
-  never,
-  CallExpression,
-  null,
-  Options
-> {
+export default class FbtListNode extends FbtNode<never, CallExpression, null, Options> {
   static readonly type = 'list';
   readonly type = 'list';
 
@@ -31,8 +26,7 @@ export default class FbtListNode extends FbtNode<
       return null;
     }
 
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'list'
       ? new FbtListNode({
           moduleName,
@@ -66,20 +60,13 @@ export default class FbtListNode extends FbtNode<
   }
 
   override getFbtRuntimeArg(): CallExpression {
-    const [name, items, conjunction, delimiter] =
-      this.getCallNodeArguments() || [];
+    const [name, items, conjunction, delimiter] = this.getCallNodeArguments() || [];
     if (!items) {
-      throw errorAt(
-        this.node,
-        `Missing required attribute 'items' on <fbt:list>.`,
-      );
+      throw errorAt(this.node, `Missing required attribute 'items' on <fbt:list>.`);
     }
 
     if (!name) {
-      throw errorAt(
-        this.node,
-        `Missing required attribute 'name' on <fbt:list>.`,
-      );
+      throw errorAt(this.node, `Missing required attribute 'name' on <fbt:list>.`);
     }
 
     const args = [name, items];

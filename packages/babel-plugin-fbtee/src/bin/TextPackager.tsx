@@ -2,10 +2,7 @@ import { onEachLeaf } from '../JSFbtUtil.tsx';
 import type { PatternHash, PatternString } from '../Types.ts';
 import type { HashToLeaf, PackagerPhrase } from './FbtCollector.tsx';
 
-export type HashFunction = (
-  text: PatternString,
-  description: string,
-) => PatternHash;
+export type HashFunction = (text: PatternString, description: string) => PatternHash;
 
 /**
  * TextPackager massages the data to handle multiple texts in fbt payloads (like

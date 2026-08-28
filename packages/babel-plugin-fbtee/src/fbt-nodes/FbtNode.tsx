@@ -11,10 +11,7 @@ import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg, CallExpressionArgument } from '../FbtUtil.tsx';
 import { compactNodeProps, errorAt } from '../FbtUtil.tsx';
 import type { TokenAliases } from '../index.tsx';
-import type {
-  AnyStringVariationArg,
-  StringVariationArgsMap,
-} from './FbtArguments.tsx';
+import type { AnyStringVariationArg, StringVariationArgsMap } from './FbtArguments.tsx';
 import type FbtEnumNode from './FbtEnumNode.tsx';
 import type FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
 import FbtListNode from './FbtListNode.tsx';
@@ -230,10 +227,7 @@ export default abstract class FbtNode<
    * just after constructing this class instance.
    */
   getOptions(_validExtraOptions?: Readonly<FbtOptionConfig>): Options {
-    throw errorAt(
-      this.node,
-      'This method must be implemented in a child class',
-    );
+    throw errorAt(this.node, 'This method must be implemented in a child class');
   }
 
   setParent(parent: AnyFbtNode | null): this {
@@ -344,11 +338,7 @@ export default abstract class FbtNode<
   /**
    * Returns the first parent FbtNode that is an instance of the given class.
    */
-  getFirstAncestorOfType<
-    N extends Node,
-    ChildNode extends MaybeChildNode | null,
-    Class,
-  >(
+  getFirstAncestorOfType<N extends Node, ChildNode extends MaybeChildNode | null, Class>(
     AncestorConstructor: new (x: {
       children?: ReadonlyArray<ChildNode>;
       moduleName: BindingName;
@@ -377,10 +367,7 @@ export default abstract class FbtNode<
    * This method is responsible to generate <<runtimeFbtArg>>
    */
   getFbtRuntimeArg(): CallExpression | null {
-    throw errorAt(
-      this.node,
-      `'getFbtRuntimeArg' must be implemented in a child class.`,
-    );
+    throw errorAt(this.node, `'getFbtRuntimeArg' must be implemented in a child class.`);
   }
 
   /**
@@ -396,8 +383,7 @@ export default abstract class FbtNode<
    *  fbt:pronoun: the 'gender' value
    */
   throwIfAnyArgumentContainsFunctionCallOrClassInstantiation() {
-    const argsToCheck =
-      this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
+    const argsToCheck = this.getArgsThatShouldNotContainFunctionCallOrClassInstantiation();
     const { moduleName } = this;
     for (const argumentName of Object.keys(argsToCheck)) {
       const argument = argsToCheck[argumentName];

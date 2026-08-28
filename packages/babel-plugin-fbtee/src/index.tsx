@@ -1,10 +1,5 @@
 import type { NodePath } from '@babel/core';
-import {
-  CallExpression,
-  ImportDeclaration,
-  JSXElement,
-  Node,
-} from '@babel/types';
+import { CallExpression, ImportDeclaration, JSXElement, Node } from '@babel/types';
 import { parse as parseDocblock } from 'jest-docblock';
 import FbtCommonFunctionCallProcessor from './babel-processors/FbtCommonFunctionCallProcessor.tsx';
 import type { MetaPhrase } from './babel-processors/FbtFunctionCallProcessor.tsx';
@@ -302,9 +297,7 @@ export default function transform() {
         exit(path: NodePath<Node>) {
           path.traverse({
             CallExpression(path: NodePath<CallExpression>) {
-              if (
-                FbtNodeChecker.getFbtNodeTypeFromFunctionCall(path.node) != null
-              ) {
+              if (FbtNodeChecker.getFbtNodeTypeFromFunctionCall(path.node) != null) {
                 throw errorAt(
                   path.node,
                   `fbtee constructs such as fbt.param(...) must be inside an fbt(...) or <fbt> string.`,
@@ -352,9 +345,7 @@ function getEnumManifest(opts: PluginOptions): EnumManifest | null {
   if (fbtEnumManifest != null) {
     return fbtEnumManifest;
   } else if (fbtEnumPath != null) {
-    throw new Error(
-      `Option 'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
-    );
+    throw new Error(`Option 'fbtEnumPath' is no longer supported. Use 'fbtEnumManifest' instead.`);
   } else if (fbtEnumToPath != null) {
     throw new Error(
       `Option 'fbtEnumToPath' is no longer supported. Use 'fbtEnumManifest' instead.`,
@@ -378,9 +369,7 @@ export function getFbtElementNodes(): Array<PlainFbtNode> {
 
   return allMetaPhrases
     .map(({ fbtNode }) =>
-      fbtNode instanceof FbtElementNode
-        ? toPlainFbtNodeTree(fbtNode, phraseToIndexMap)
-        : null,
+      fbtNode instanceof FbtElementNode ? toPlainFbtNodeTree(fbtNode, phraseToIndexMap) : null,
     )
     .filter((node): node is PlainFbtNode => node != null);
 }

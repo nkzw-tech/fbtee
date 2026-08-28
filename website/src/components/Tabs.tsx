@@ -4,19 +4,18 @@ import cx from '../lib/cx.tsx';
 
 const Tabs = Root;
 
-const TabsList = forwardRef<
-  ComponentRef<typeof List>,
-  ComponentPropsWithoutRef<typeof List>
->(({ className, ...props }, ref) => (
-  <List
-    className={cx(
-      'bg-muted text-muted-foreground squircle inline-flex h-10 items-center justify-center p-1',
-      className,
-    )}
-    ref={ref}
-    {...props}
-  />
-));
+const TabsList = forwardRef<ComponentRef<typeof List>, ComponentPropsWithoutRef<typeof List>>(
+  ({ className, ...props }, ref) => (
+    <List
+      className={cx(
+        'bg-muted text-muted-foreground squircle inline-flex h-10 items-center justify-center p-1',
+        className,
+      )}
+      ref={ref}
+      {...props}
+    />
+  ),
+);
 TabsList.displayName = List.displayName;
 
 const TabsTrigger = forwardRef<

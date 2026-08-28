@@ -154,10 +154,7 @@ Use `fbt()` outside JSX:
 ```tsx
 import { fbt } from 'fbtee';
 
-const title = fbt(
-  'No tasks yet',
-  'Empty state title when a project has no tasks',
-);
+const title = fbt('No tasks yet', 'Empty state title when a project has no tasks');
 ```
 
 Use `fbs()` when you need a plain string:
@@ -165,9 +162,7 @@ Use `fbs()` when you need a plain string:
 ```tsx
 import { fbs } from 'fbtee';
 
-<input
-  placeholder={fbs('Search projects', 'Project search input placeholder')}
-/>;
+<input placeholder={fbs('Search projects', 'Project search input placeholder')} />;
 ```
 
 ## Dynamic Content
@@ -197,12 +192,7 @@ Use `<fbt:plural>` when a count controls grammar. _fbtee_ handles locale-specifi
 ```tsx
 <fbt desc="Inbox unread count">
   You have{' '}
-  <fbt:plural
-    count={count}
-    many="unread messages"
-    name="unreadCount"
-    showCount="yes"
-  >
+  <fbt:plural count={count} many="unread messages" name="unreadCount" showCount="yes">
     an unread message
   </fbt:plural>
   .

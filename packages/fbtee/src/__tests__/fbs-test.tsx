@@ -18,25 +18,20 @@ describe('fbs', () => {
       it('fbs() should work', () => {
         expect(typeof fbs('Hello world', 'some desc')).toBe('string');
 
-        expect(
-          fbs('Hello world', 'some desc').toString(),
-        ).toMatchInlineSnapshot(`"Hello world"`);
+        expect(fbs('Hello world', 'some desc').toString()).toMatchInlineSnapshot(`"Hello world"`);
       });
 
       it('<fbs> should work', () => {
-        expect(
-          (<fbs desc="some desc">Hello world</fbs>).toString(),
-        ).toMatchInlineSnapshot(`"Hello world"`);
+        expect((<fbs desc="some desc">Hello world</fbs>).toString()).toMatchInlineSnapshot(
+          `"Hello world"`,
+        );
       });
     });
 
     describe('with fbs:param', () => {
       it('fbs() should work', () => {
         expect(
-          fbs(
-            ['Hello ', fbs.param('name', fbs('world', 'param text'))],
-            'some desc',
-          ).toString(),
+          fbs(['Hello ', fbs.param('name', fbs('world', 'param text'))], 'some desc').toString(),
         ).toMatchInlineSnapshot(`"Hello world"`);
       });
 
@@ -179,12 +174,7 @@ describe('fbs', () => {
         expect(() => (
           <fbs desc="desc">
             I have{' '}
-            <fbs:plural
-              count={count}
-              many="dreams"
-              showCount="yes"
-              value={<strong>three</strong>}
-            >
+            <fbs:plural count={count} many="dreams" showCount="yes" value={<strong>three</strong>}>
               a dream
             </fbs:plural>
             {'.'}

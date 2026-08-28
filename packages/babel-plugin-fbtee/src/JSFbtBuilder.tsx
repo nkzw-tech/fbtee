@@ -61,10 +61,7 @@ export default class JSFbtBuilder {
    */
   readonly stringVariationArgs: ReadonlyArray<AnyStringVariationArg>;
 
-  constructor(
-    fileSource: string,
-    stringVariationArgs: ReadonlyArray<AnyStringVariationArg>,
-  ) {
+  constructor(fileSource: string, stringVariationArgs: ReadonlyArray<AnyStringVariationArg>) {
     this.fileSource = fileSource;
     this.stringVariationArgs = stringVariationArgs;
     this.usedEnums = {};
@@ -94,10 +91,7 @@ export default class JSFbtBuilder {
           : null;
       }
 
-      if (
-        fbtNode instanceof FbtElementNode ||
-        fbtNode instanceof FbtImplicitParamNode
-      ) {
+      if (fbtNode instanceof FbtElementNode || fbtNode instanceof FbtImplicitParamNode) {
         return {
           token: SUBJECT,
           type: FbtVariationType.GENDER,
@@ -133,10 +127,7 @@ export default class JSFbtBuilder {
         return null;
       }
 
-      if (
-        svArg instanceof GenderStringVariationArg ||
-        svArg instanceof NumberStringVariationArg
-      ) {
+      if (svArg instanceof GenderStringVariationArg || svArg instanceof NumberStringVariationArg) {
         invariant(
           fbtNode instanceof FbtNameNode || fbtNode instanceof FbtParamNode,
           'Expected fbtNode to be an instance of FbtNameNode or FbtParamNode but got `%s` instead',
@@ -153,11 +144,7 @@ export default class JSFbtBuilder {
             };
       }
 
-      invariant(
-        false,
-        'Unsupported string variation argument: %s',
-        varDump(svArg),
-      );
+      invariant(false, 'Unsupported string variation argument: %s', varDump(svArg));
       return null;
     });
   }
@@ -192,9 +179,7 @@ export default class JSFbtBuilder {
    *       - else, "multiplex" new variation value
    *       Do this for plural, gender, enum
    */
-  getStringVariationCombinations(): ReadonlyArray<
-    ReadonlyArray<AnyStringVariationArg>
-  > {
+  getStringVariationCombinations(): ReadonlyArray<ReadonlyArray<AnyStringVariationArg>> {
     return this._getStringVariationCombinations();
   }
 
@@ -274,10 +259,7 @@ export default class JSFbtBuilder {
         return combos;
       }
 
-      recurse(
-        curArg.candidateValues,
-        (value) => (usedPlurals[argCode] = value),
-      );
+      recurse(curArg.candidateValues, (value) => (usedPlurals[argCode] = value));
       delete usedPlurals[argCode];
     } else if (fbtNode instanceof FbtPronounNode) {
       invariant(
@@ -292,10 +274,7 @@ export default class JSFbtBuilder {
         return combos;
       }
 
-      recurse(
-        curArg.candidateValues,
-        (value) => (usedPronouns[argCode] = value),
-      );
+      recurse(curArg.candidateValues, (value) => (usedPronouns[argCode] = value));
       delete usedPronouns[argCode];
     } else if (
       curArg instanceof NumberStringVariationArg ||
@@ -305,15 +284,10 @@ export default class JSFbtBuilder {
         // @ts-expect-error
         curArg.candidateValues,
         undefined,
-        curArg instanceof GenderStringVariationArg &&
-          fbtNode instanceof FbtImplicitParamNode,
+        curArg instanceof GenderStringVariationArg && fbtNode instanceof FbtImplicitParamNode,
       );
     } else {
-      invariant(
-        false,
-        'Unsupported string variation argument: %s',
-        varDump(curArg),
-      );
+      invariant(false, 'Unsupported string variation argument: %s', varDump(curArg));
     }
     return combos;
   }

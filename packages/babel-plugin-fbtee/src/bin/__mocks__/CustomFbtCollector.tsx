@@ -1,11 +1,7 @@
 import { JSXOpeningElement } from '@babel/types';
 import type { PlainFbtNode } from '../../fbt-nodes/FbtNode.tsx';
 import type { EnumManifest } from '../../FbtEnumRegistrar.tsx';
-import type {
-  ChildParentMappings,
-  IFbtCollector,
-  PackagerPhrase,
-} from '../FbtCollector.tsx';
+import type { ChildParentMappings, IFbtCollector, PackagerPhrase } from '../FbtCollector.tsx';
 
 export default class CustomFbtCollector implements IFbtCollector {
   async collectFromOneFile(

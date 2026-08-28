@@ -68,10 +68,7 @@ export default function getNamespacedArgs(
       const items = getAttributeByNameOrThrow(node, 'items');
 
       if (!isJSXExpressionContainer(items.value)) {
-        throw errorAt(
-          node,
-          `<${moduleName}:list> attribute 'items' must be a JSX expression.`,
-        );
+        throw errorAt(node, `<${moduleName}:list> attribute 'items' must be a JSX expression.`);
       }
 
       const conjunction = getAttributeByName(node, 'conjunction');
@@ -97,20 +94,14 @@ export default function getNamespacedArgs(
       const genderAttribute = getAttributeByNameOrThrow(node, 'gender').value;
 
       const children = filterEmptyNodes(node.children).filter(
-        (child) =>
-          child.type === 'JSXText' || child.type === 'JSXExpressionContainer',
+        (child) => child.type === 'JSXText' || child.type === 'JSXExpressionContainer',
       );
       if (children.length !== 1) {
-        throw errorAt(
-          node,
-          `<${moduleName}:name> needs exactly one child: text or an expression.`,
-        );
+        throw errorAt(node, `<${moduleName}:name> needs exactly one child: text or an expression.`);
       }
 
       let singularArg =
-        (children[0].type === 'JSXExpressionContainer' &&
-          children[0].expression) ||
-        children[0];
+        (children[0].type === 'JSXExpressionContainer' && children[0].expression) || children[0];
       if (singularArg.type === 'JSXText') {
         singularArg = stringLiteral(normalizeSpaces(singularArg.value));
       }
@@ -127,11 +118,7 @@ export default function getNamespacedArgs(
     param(node: JSXElement) {
       const attributes = node.openingElement.attributes;
       const name = getAttributeByNameOrThrow(node, 'name').value;
-      const options = getOptionsFromAttributes(
-        attributes,
-        ValidParamOptions,
-        RequiredParamOptions,
-      );
+      const options = getOptionsFromAttributes(attributes, ValidParamOptions, RequiredParamOptions);
 
       let children = filterEmptyNodes(node.children).filter((child) => {
         return (
@@ -148,9 +135,7 @@ export default function getNamespacedArgs(
         node.children[0].type === 'JSXText' &&
         node.children[0].value === ' '
       ) {
-        children = [
-          jsxExpressionContainer(stringLiteral(node.children[0].value)),
-        ];
+        children = [jsxExpressionContainer(stringLiteral(node.children[0].value))];
       }
 
       if (children.length !== 1) {
@@ -160,18 +145,12 @@ export default function getNamespacedArgs(
         );
       }
 
-      if (
-        name?.type === 'StringLiteral' &&
-        name.loc &&
-        name.loc.end.line > name.loc.start.line
-      ) {
+      if (name?.type === 'StringLiteral' && name.loc && name.loc.end.line > name.loc.start.line) {
         name.value = normalizeSpaces(name.value);
       }
       const paramArgs = [
         name,
-        (children[0].type === 'JSXExpressionContainer' &&
-          children[0].expression) ||
-          children[0],
+        (children[0].type === 'JSXExpressionContainer' && children[0].expression) || children[0],
       ];
 
       if (options.properties.length > 0) {
@@ -183,15 +162,10 @@ export default function getNamespacedArgs(
 
     plural(node: JSXElement) {
       const attributes = node.openingElement.attributes;
-      const options = getOptionsFromAttributes(
-        attributes,
-        PluralOptions,
-        PluralRequiredAttributes,
-      );
+      const options = getOptionsFromAttributes(attributes, PluralOptions, PluralRequiredAttributes);
       const count = getAttributeByNameOrThrow(node, 'count').value;
       const children = filterEmptyNodes(node.children).filter(
-        (child) =>
-          child.type === 'JSXText' || child.type === 'JSXExpressionContainer',
+        (child) => child.type === 'JSXText' || child.type === 'JSXExpressionContainer',
       );
       if (children.length !== 1) {
         throw errorAt(
@@ -202,18 +176,12 @@ export default function getNamespacedArgs(
       const singularNode = children[0];
       const singularText = expandStringConcat(
         moduleName,
-        (singularNode.type === 'JSXExpressionContainer' &&
-          singularNode.expression) ||
-          singularNode,
+        (singularNode.type === 'JSXExpressionContainer' && singularNode.expression) || singularNode,
       );
-      const singularArg = stringLiteral(
-        normalizeSpaces(singularText.value).trimEnd(),
-      );
+      const singularArg = stringLiteral(normalizeSpaces(singularText.value).trimEnd());
       return [
         singularArg,
-        count?.type === 'JSXExpressionContainer'
-          ? count.expression
-          : nullLiteral(),
+        count?.type === 'JSXExpressionContainer' ? count.expression : nullLiteral(),
         options,
       ];
     },
@@ -226,10 +194,7 @@ export default function getNamespacedArgs(
       const attributes = node.openingElement.attributes;
       const typeAttribute = getAttributeByNameOrThrow(node, 'type').value;
       if (typeAttribute?.type !== 'StringLiteral') {
-        throw errorAt(
-          node,
-          `<${moduleName}:pronoun> attribute 'type' must be a string literal.`,
-        );
+        throw errorAt(node, `<${moduleName}:pronoun> attribute 'type' must be a string literal.`);
       }
       if (!Object.hasOwn(ValidPronounUsages, typeAttribute.value)) {
         throw errorAt(

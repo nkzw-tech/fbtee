@@ -119,9 +119,7 @@ export function getLocaleIdentity(locale: string): string {
       return canonicalizeBCP47(special);
     }
     const specialLanguage =
-      specialLocaleToLanguage[
-        legacyAlias as keyof typeof specialLocaleToLanguage
-      ];
+      specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage];
     if (specialLanguage) {
       const [, region] = legacyAlias.split('_');
       return canonicalizeBCP47(`${specialLanguage}-${region}`);
@@ -133,23 +131,15 @@ export function getLocaleIdentity(locale: string): string {
 
 export function getLocaleLanguage(locale: string): string {
   const legacyAlias = getLegacyAlias(locale);
-  if (
-    legacyAlias &&
-    specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage]
-  ) {
-    return specialLocaleToLanguage[
-      legacyAlias as keyof typeof specialLocaleToLanguage
-    ];
+  if (legacyAlias && specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage]) {
+    return specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage];
   }
 
   const identity = getLocaleIdentity(locale);
   return getIdentityLanguage(identity);
 }
 
-export function formatLocaleForStyle(
-  locale: string,
-  style: LocaleStyle = 'bcp47',
-): string {
+export function formatLocaleForStyle(locale: string, style: LocaleStyle = 'bcp47'): string {
   if (style === 'preserve') {
     return locale;
   }
@@ -214,9 +204,7 @@ export function getConflictingLocaleFiles(
     localeFiles.push(file);
     identityToFiles.set(identity, localeFiles);
   }
-  return Array.from(identityToFiles.values()).filter(
-    (localeFiles) => localeFiles.length > 1,
-  );
+  return Array.from(identityToFiles.values()).filter((localeFiles) => localeFiles.length > 1);
 }
 
 export function throwIfLocaleFileConflicts(files: ReadonlyArray<string>): void {
@@ -227,9 +215,7 @@ export function throwIfLocaleFileConflicts(files: ReadonlyArray<string>): void {
 
   const message = conflicts
     .map((localeFiles) => {
-      const identity = getLocaleIdentity(
-        path.basename(localeFiles[0], '.json'),
-      );
+      const identity = getLocaleIdentity(path.basename(localeFiles[0], '.json'));
       return [
         `Conflicting translation files for locale "${identity}":`,
         ...localeFiles.map((file) => `- ${file}`),
@@ -240,10 +226,7 @@ export function throwIfLocaleFileConflicts(files: ReadonlyArray<string>): void {
   throw new Error(message);
 }
 
-export function getAvailableLocaleFile(
-  directory: string,
-  locale: string,
-): string | null {
+export function getAvailableLocaleFile(directory: string, locale: string): string | null {
   if (!existsSync(directory)) {
     return null;
   }
@@ -252,9 +235,7 @@ export function getAvailableLocaleFile(
     .filter((file) => file.endsWith('.json'))
     .map((file) => path.join(directory, file));
   const aliases = new Set(getLocaleFileAliases(locale));
-  const matches = files.filter((file) =>
-    aliases.has(path.basename(file, '.json')),
-  );
+  const matches = files.filter((file) => aliases.has(path.basename(file, '.json')));
   if (matches.length > 1) {
     throwIfLocaleFileConflicts(matches);
   }

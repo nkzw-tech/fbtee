@@ -37,14 +37,10 @@ export async function generateManifest(
 
   const files = paths
     .flatMap((src: string) =>
-      statSync(src).isDirectory()
-        ? globSync(resolve(cwd, src) + '/**/*' + extensions)
-        : [src],
+      statSync(src).isDirectory() ? globSync(resolve(cwd, src) + '/**/*' + extensions) : [src],
     )
     .filter((filepath) => statSync(filepath).isFile())
-    .filter((filepath) =>
-      ModuleNameRegExp.test(fs.readFileSync(filepath, 'utf8')),
-    )
+    .filter((filepath) => ModuleNameRegExp.test(fs.readFileSync(filepath, 'utf8')))
     .map((filepath) => relative(cwd, filepath));
 
   return {

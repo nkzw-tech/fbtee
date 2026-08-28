@@ -4,11 +4,7 @@ import invariant from 'invariant';
 import type { FbtOptionConfig } from '../FbtConstants.tsx';
 import type { CollectFbtOutput } from './collect.tsx';
 import packagerTypes from './collectFbtConstants.tsx';
-import type {
-  CollectorConfig,
-  IFbtCollector,
-  PackagerPhrase,
-} from './FbtCollector.tsx';
+import type { CollectorConfig, IFbtCollector, PackagerPhrase } from './FbtCollector.tsx';
 import FbtCollector from './FbtCollector.tsx';
 import md5 from './md5.tsx';
 import PhrasePackager from './PhrasePackager.tsx';
@@ -29,9 +25,7 @@ export function buildCollectFbtOutput(
   },
 ): CollectFbtOutput {
   return {
-    childParentMappings: Object.fromEntries(
-      fbtCollector.getChildParentMappings(),
-    ),
+    childParentMappings: Object.fromEntries(fbtCollector.getChildParentMappings()),
     fbtElementNodes: options.genFbtNodes
       ? fbtCollector.getFbtElementNodes()
       : // using `undefined` so that the field is not outputted by JSON.stringify
@@ -43,9 +37,7 @@ export function buildCollectFbtOutput(
   };
 }
 
-async function getTextPackager(
-  hashModulePath: string | null,
-): Promise<TextPackager> {
+async function getTextPackager(hashModulePath: string | null): Promise<TextPackager> {
   const hashingModule = hashModulePath
     ? ((await import(pathToFileURL(hashModulePath).href)).default as
         | HashFunction
@@ -56,16 +48,13 @@ async function getTextPackager(
 
   invariant(
     typeof hashingModule === 'function' ||
-      (typeof hashingModule === 'object' &&
-        typeof hashingModule.getFbtHash === 'function'),
+      (typeof hashingModule === 'object' && typeof hashingModule.getFbtHash === 'function'),
     'Expected hashing module to expose a default value that is a function, ' +
       'or an object with a getFbtHash() function property. Hashing module location: `%s`',
     hashModulePath,
   );
   return new TextPackager(
-    typeof hashingModule === 'function'
-      ? hashingModule
-      : hashingModule.getFbtHash,
+    typeof hashingModule === 'function' ? hashingModule : hashingModule.getFbtHash,
   );
 }
 

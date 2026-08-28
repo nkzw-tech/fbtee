@@ -13,11 +13,7 @@ import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput } from '../Hooks.tsx';
 import { fbt, FbtResult } from '../index.tsx';
 import IntlVariations from '../IntlVariations.tsx';
 import setupFbtee from '../setupFbtee.tsx';
-import type {
-  BaseResult,
-  IFbtErrorListener,
-  NestedFbtContentItems,
-} from '../Types.ts';
+import type { BaseResult, IFbtErrorListener, NestedFbtContentItems } from '../Types.ts';
 
 setupFbtee({
   translations: { en_US: {} },
@@ -53,9 +49,7 @@ describe('fbt', () => {
 
     expect(fbtInternal._('sample string') instanceof FbtResult).toBe(true);
     expect(fbtInternal._('sample string')).toBe(fbtInternal._('sample string'));
-    expect(fbtInternal._('sample string')).not.toBe(
-      fbsInternal._('sample string'),
-    );
+    expect(fbtInternal._('sample string')).not.toBe(fbsInternal._('sample string'));
   });
 
   it('should not reuse cached FbtResults with different hash keys', () => {
@@ -84,44 +78,32 @@ describe('fbt', () => {
   });
 
   it('should handle common strings', () => {
-    expect(fbt.c('Accept')).toEqual(
-      fbt('Accept', 'Button/Link: Accept conditions'),
-    );
+    expect(fbt.c('Accept')).toEqual(fbt('Accept', 'Button/Link: Accept conditions'));
   });
 
   it('should replace tokens with named values', () => {
-    expect(
-      fbt('with token ' + fbt.param('token', 'A') + ' here', 'test'),
-    ).toEqual('with token A here');
+    expect(fbt('with token ' + fbt.param('token', 'A') + ' here', 'test')).toEqual(
+      'with token A here',
+    );
     expect(
       fbt(
-        'with tokens ' +
-          fbt.param('tokenA', 'A') +
-          ' and ' +
-          fbt.param('tokenB', 'B') +
-          '',
+        'with tokens ' + fbt.param('tokenA', 'A') + ' and ' + fbt.param('tokenB', 'B') + '',
         'test',
       ),
     ).toEqual('with tokens A and B');
   });
 
   it('should remove punctuation when a value ends with it', () => {
-    expect(fbt('Play ' + fbt.param('game', 'Chess!') + '!', 'test')).toEqual(
-      'Play Chess!',
+    expect(fbt('Play ' + fbt.param('game', 'Chess!') + '!', 'test')).toEqual('Play Chess!');
+    expect(fbt("What's on your mind " + fbt.param('name', 'T.J.') + '?', 'test')).toEqual(
+      "What's on your mind T.J.?",
     );
-    expect(
-      fbt("What's on your mind " + fbt.param('name', 'T.J.') + '?', 'test'),
-    ).toEqual("What's on your mind T.J.?");
   });
 
   it('should allow values that look like token patterns', () => {
     expect(
       fbt(
-        'with tokens ' +
-          fbt.param('tokenA', '{tokenB}') +
-          ' and ' +
-          fbt.param('tokenB', 'B') +
-          '',
+        'with tokens ' + fbt.param('tokenA', '{tokenB}') + ' and ' + fbt.param('tokenB', 'B') + '',
         'test',
       ),
     ).toEqual('with tokens {tokenB} and B');
@@ -131,10 +113,7 @@ describe('fbt', () => {
     // We expect that this returns an opaque React fragment instead of an array.
     // We use this to preserve identity of nested React elements.
     const argument = <div key="test" />;
-    const fragment = fbt(
-      'with token ' + fbt.param('token', argument) + ' here',
-      'test',
-    );
+    const fragment = fbt('with token ' + fbt.param('token', argument) + ' here', 'test');
     const items: Array<string | BaseResult> = [];
     Children.forEach(fragment, (item) => {
       items.push(item);
@@ -147,9 +126,7 @@ describe('fbt', () => {
   });
 
   it('should render input params for undefined values', () => {
-    expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual(
-      '{undefined_value}',
-    );
+    expect(fbt(fbt.param('undefined_value', undefined), 'test')).toEqual('{undefined_value}');
   });
 
   // React/fbt integration tests
@@ -159,11 +136,7 @@ describe('fbt', () => {
     value: string;
   }>;
 
-  function _render(
-    value: string,
-    childA: React.ReactNode,
-    childB: React.ReactNode,
-  ) {
+  function _render(value: string, childA: React.ReactNode, childB: React.ReactNode) {
     // In theory, different enum values can result in different sentence
     // structures. If that happens, the React components should retain
     // their state even though they change order. We mock out a fake
@@ -193,43 +166,30 @@ describe('fbt', () => {
 
   it('should use wildcard defaults', () => {
     expect(
-      fbt(
-        'with something like ' +
-          fbt.param('count', 42, { number: true }) +
-          ' wildcards',
-        'test',
-      ),
+      fbt('with something like ' + fbt.param('count', 42, { number: true }) + ' wildcards', 'test'),
     ).toEqual('with something like 42 wildcards');
   });
 
   it('should format numeric value', () => {
     expect(
-      fbt(
-        'A total amount is ' + fbt.param('count', 10_000, { number: true }),
-        'Test string',
-      ),
+      fbt('A total amount is ' + fbt.param('count', 10_000, { number: true }), 'Test string'),
     ).toEqual('A total amount is 10,000');
   });
 
   it('should keep literal value as is', () => {
-    expect(
-      fbt('A total amount is ' + fbt.param('count', 10_000), 'Test string'),
-    ).toEqual('A total amount is 10000');
+    expect(fbt('A total amount is ' + fbt.param('count', 10_000), 'Test string')).toEqual(
+      'A total amount is 10000',
+    );
   });
 
   it('should not warn when unkeyed React components are params', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    const { container } = render(
-      <TestComponent childA={<div />} childB={<div />} value="A" />,
-    );
+    const { container } = render(<TestComponent childA={<div />} childB={<div />} value="A" />);
     expect(container.children[0].getElementsByTagName('div').length).toBe(2);
     expect(warn.mock.calls.length).toBe(0);
   });
 
-  function expectChildSetsToRetainIdentity(
-    setA: React.ReactElement,
-    setB: React.ReactElement,
-  ) {
+  function expectChildSetsToRetainIdentity(setA: React.ReactElement, setB: React.ReactElement) {
     const { container: containerA } = render(
       <TestComponent childA={setA} childB={setB} value="A" />,
     );
@@ -267,11 +227,7 @@ describe('fbt', () => {
       expect(() =>
         fbtInternal._('Just a {tokenName}', [
           fbtInternal._param('tokenName', 'substitute'),
-          fbtInternal._name(
-            'tokenName',
-            'person name',
-            GenderConst.UNKNOWN_SINGULAR,
-          ),
+          fbtInternal._name('tokenName', 'person name', GenderConst.UNKNOWN_SINGULAR),
         ]),
       ).toThrowErrorMatchingInlineSnapshot(
         `"Cannot register a substitution with token=\`tokenName\` more than once"`,
@@ -288,18 +244,14 @@ describe('fbt', () => {
   });
 
   it('should leave non-QuickTranslation strings alone', () => {
-    expect(
-      fbtInternal._(["This isn't", '8b0c31a270a324f26d2417a358106612']),
-    ).toEqual("This isn't");
+    expect(fbtInternal._(["This isn't", '8b0c31a270a324f26d2417a358106612'])).toEqual("This isn't");
   });
 
   it('should access table with multiple tokens containing subject', () => {
     expect(
-      fbt(
-        'Invited by ' + fbt.plural('friend', 1, { showCount: 'yes' }) + '.',
-        'Test Description',
-        { subject: IntlVariations.GENDER_UNKNOWN },
-      ),
+      fbt('Invited by ' + fbt.plural('friend', 1, { showCount: 'yes' }) + '.', 'Test Description', {
+        subject: IntlVariations.GENDER_UNKNOWN,
+      }),
     ).toEqual('Invited by 1 friend.');
   });
 
@@ -326,10 +278,7 @@ describe('fbt', () => {
       ).toEqual(fbtParams.join(''));
 
       expect(
-        fbt(
-          fbt.param('hello', fbtParams[0]) + fbt.param('world', fbtParams[1]),
-          'desc',
-        ),
+        fbt(fbt.param('hello', fbtParams[0]) + fbt.param('world', fbtParams[1]), 'desc'),
       ).toEqual(fbtParams.join(''));
     });
   });

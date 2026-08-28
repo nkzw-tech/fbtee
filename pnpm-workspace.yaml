@@ -33,5 +33,5 @@ overrides:
 updateConfig:
   ignoreDependencies:
     - '@babel/standalone'
-    - '@types/prettier-2'
-    - prettier-2
+    - '@types/prettier'
+    - prettier

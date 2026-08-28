@@ -1,7 +1,4 @@
-import {
-  getLocaleAliases,
-  getLocaleLanguage,
-} from '../../localeIdentifier.tsx';
+import { getLocaleAliases, getLocaleLanguage } from '../../localeIdentifier.tsx';
 import { Gender } from '../IntlVariations.tsx';
 import {
   getFallback as getFallbackA,

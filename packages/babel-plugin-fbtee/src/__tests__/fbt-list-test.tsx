@@ -7,8 +7,7 @@ import {
 
 expect.addSnapshotSerializer(jsCodeFbtCallSerializer);
 
-const transform = (input: string) =>
-  snapshotTransform(withFbtImportStatement(input));
+const transform = (input: string) => snapshotTransform(withFbtImportStatement(input));
 
 test('fbt.list()', () => {
   expect(

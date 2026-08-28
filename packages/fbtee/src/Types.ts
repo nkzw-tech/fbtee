@@ -65,9 +65,7 @@ export type FbtContentItem =
   | string
   | void;
 
-export type NestedFbtContentItems = ReadonlyArray<
-  FbtContentItem | NestedFbtContentItems
->;
+export type NestedFbtContentItems = ReadonlyArray<FbtContentItem | NestedFbtContentItems>;
 
 export type FbtErrorContext = {
   hash?: string | null;
@@ -182,24 +180,12 @@ type StringBasedFbtFunctionAPI<Output, ParamInput, ParamOutput> = FbtAPIT<
   ParamOutput
 >;
 
-type ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<
-  Output,
-  ParamInput,
-  FbtParamOutput
->;
+type ArrayBasedFbtFunctionAPI<Output, ParamInput> = FbtAPIT<Output, ParamInput, FbtParamOutput>;
 
 export type TranslatedString = string & { __fbt_do_not_access: true };
 
-export type FbtAPI = StringBasedFbtFunctionAPI<
-  TranslatedString,
-  FbtParamInput,
-  string
-> &
+export type FbtAPI = StringBasedFbtFunctionAPI<TranslatedString, FbtParamInput, string> &
   ArrayBasedFbtFunctionAPI<TranslatedString, FbtParamInput>;
 
-export type FbsAPI = StringBasedFbtFunctionAPI<
-  TranslatedString,
-  FbsParamInput,
-  FbtParamOutput
-> &
+export type FbsAPI = StringBasedFbtFunctionAPI<TranslatedString, FbsParamInput, FbtParamOutput> &
   ArrayBasedFbtFunctionAPI<TranslatedString, FbsParamInput>;

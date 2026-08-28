@@ -1,13 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import {
-  mkdirSync,
-  mkdtempSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,18 +11,14 @@ const sourceDirectory = join(temporaryDirectory, 'source');
 const outputDirectory = join(temporaryDirectory, 'output');
 
 const download = (source) =>
-  spawnSync(
-    process.execPath,
-    [join(packageDirectory, 'scripts/download-artifacts.mjs')],
-    {
-      encoding: 'utf8',
-      env: {
-        ...process.env,
-        FBTEE_NATIVE_ARTIFACTS_DIRECTORY: source,
-        FBTEE_NATIVE_ARTIFACTS_OUTPUT_DIRECTORY: outputDirectory,
-      },
+  spawnSync(process.execPath, [join(packageDirectory, 'scripts/download-artifacts.mjs')], {
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      FBTEE_NATIVE_ARTIFACTS_DIRECTORY: source,
+      FBTEE_NATIVE_ARTIFACTS_OUTPUT_DIRECTORY: outputDirectory,
     },
-  );
+  });
 
 try {
   mkdirSync(sourceDirectory);
@@ -38,12 +27,7 @@ try {
   })
     .filter((entry) => entry.isDirectory())
     .map((entry) =>
-      JSON.parse(
-        readFileSync(
-          join(packageDirectory, 'npm', entry.name, 'package.json'),
-          'utf8',
-        ),
-      ),
+      JSON.parse(readFileSync(join(packageDirectory, 'npm', entry.name, 'package.json'), 'utf8')),
     )
     .map((packageJson) => packageJson.main)
     .sort();
@@ -56,18 +40,12 @@ try {
   assert.deepEqual(readdirSync(outputDirectory).sort(), expected);
 
   const preservedBinding = expected[0];
-  const preservedContents = readFileSync(
-    join(outputDirectory, preservedBinding),
-    'utf8',
-  );
+  const preservedContents = readFileSync(join(outputDirectory, preservedBinding), 'utf8');
   rmSync(join(sourceDirectory, preservedBinding));
   const incompleteResult = download(sourceDirectory);
   assert.notEqual(incompleteResult.status, 0);
   assert.match(incompleteResult.stderr, /Downloaded artifacts are incomplete/);
-  assert.equal(
-    readFileSync(join(outputDirectory, preservedBinding), 'utf8'),
-    preservedContents,
-  );
+  assert.equal(readFileSync(join(outputDirectory, preservedBinding), 'utf8'), preservedContents);
 } finally {
   rmSync(temporaryDirectory, { force: true, recursive: true });
 }

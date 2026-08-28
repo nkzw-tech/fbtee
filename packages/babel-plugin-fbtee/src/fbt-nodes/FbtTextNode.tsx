@@ -1,10 +1,4 @@
-import {
-  isJSXText,
-  isStringLiteral,
-  JSXText,
-  Node,
-  StringLiteral,
-} from '@babel/types';
+import { isJSXText, isStringLiteral, JSXText, Node, StringLiteral } from '@babel/types';
 import { BindingName } from '../FbtConstants.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
@@ -19,12 +13,7 @@ import FbtNode from './FbtNode.tsx';
  *    'description',
  *  )
  */
-export default class FbtTextNode extends FbtNode<
-  never,
-  StringLiteral | JSXText,
-  null,
-  null
-> {
+export default class FbtTextNode extends FbtNode<never, StringLiteral | JSXText, null, null> {
   readonly type = 'text';
 
   /**

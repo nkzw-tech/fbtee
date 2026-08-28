@@ -17,15 +17,10 @@ const root = process.cwd();
 const y = yargs(process.argv.slice(2));
 const argv = y
   .scriptName('fbtee')
-  .usage(
-    'Prepare translation files by merging phrases with existing translations:\n$0 [options]',
-  )
+  .usage('Prepare translation files by merging phrases with existing translations:\n$0 [options]')
   .string('source-strings')
   .default('source-strings', 'source_strings.json')
-  .describe(
-    'source-strings',
-    'The file containing source strings, as collected by collectFbt.js',
-  )
+  .describe('source-strings', 'The file containing source strings, as collected by collectFbt.js')
   .string('output-dir')
   .alias('output-dir', 'o')
   .default('output-dir', 'translations/')
@@ -87,8 +82,7 @@ for (const locale of locales) {
       ? formatLocaleForStyle(locale, outputLocaleStyle)
       : basename(existingFile, '.json');
   console.log('Processing locale:', outputLocale);
-  const filePath =
-    existingFile || join(outputDirectory, `${outputLocale}.json`);
+  const filePath = existingFile || join(outputDirectory, `${outputLocale}.json`);
   const { translations, ...props } = existsSync(filePath)
     ? loadJSON<TranslationGroup>(filePath)
     : { translations: {} };
@@ -99,11 +93,7 @@ for (const locale of locales) {
       {
         ...props,
         'fb-locale': outputLocale,
-        translations: updateTranslations(
-          phrases,
-          translations,
-          argv['sort-by-hash'],
-        ),
+        translations: updateTranslations(phrases, translations, argv['sort-by-hash']),
       } satisfies TranslationGroup,
       null,
       2,

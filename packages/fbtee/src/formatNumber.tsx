@@ -10,10 +10,7 @@ function formatNumber(value: number, decimals?: number | null): string {
   return intlNumUtils.formatNumber(value, decimals);
 }
 
-function getAtLeastString(
-  maxNumber: number,
-  decimals?: number | null,
-): ReactElement {
+function getAtLeastString(maxNumber: number, decimals?: number | null): ReactElement {
   // after we start using CLDR data, it will not be fbt anymore.
   return (
     <fbs desc="Label with meaning 'at least number'" project="locale_data">
@@ -25,10 +22,7 @@ function getAtLeastString(
   );
 }
 
-function getLessThanString(
-  minNumber: number,
-  decimals?: number | null,
-): ReactElement {
+function getLessThanString(minNumber: number, decimals?: number | null): ReactElement {
   // after we start using CLDR data, it will not be fbt anymore.
   return (
     <fbs desc="Label with meaning 'less than number'" project="locale_data">
@@ -60,8 +54,7 @@ function formatNumberWithMinLimit(
     : intlNumUtils.formatNumberWithThousandDelimiters(value, decimals);
 }
 
-formatNumber.withThousandDelimiters =
-  intlNumUtils.formatNumberWithThousandDelimiters;
+formatNumber.withThousandDelimiters = intlNumUtils.formatNumberWithThousandDelimiters;
 formatNumber.withMaxLimit = formatNumberWithMaxLimit;
 formatNumber.withMinLimit = formatNumberWithMinLimit;
 

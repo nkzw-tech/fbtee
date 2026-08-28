@@ -9,11 +9,7 @@ import invariant from 'invariant';
 import { BindingName } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg } from '../FbtUtil.tsx';
-import {
-  createRuntimeCallExpression,
-  enforceNodeCallExpressionArg,
-  errorAt,
-} from '../FbtUtil.tsx';
+import { createRuntimeCallExpression, enforceNodeCallExpressionArg, errorAt } from '../FbtUtil.tsx';
 import { GENDER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
 import { GenderStringVariationArg } from './FbtArguments.tsx';
@@ -44,8 +40,7 @@ export default class FbtNameNode extends FbtNode<
   override getOptions(): Options {
     try {
       const { moduleName } = this;
-      const [node, initialValue, initialGender] =
-        this.getCallNodeArguments() || [];
+      const [node, initialValue, initialGender] = this.getCallNodeArguments() || [];
 
       invariant(
         isStringLiteral(node),
@@ -73,8 +68,7 @@ export default class FbtNameNode extends FbtNode<
       return null;
     }
 
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'name'
       ? new FbtNameNode({
           moduleName,
@@ -84,9 +78,7 @@ export default class FbtNameNode extends FbtNode<
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<GenderStringVariationArg> {
-    return [
-      new GenderStringVariationArg(this, this.options.gender, [GENDER_ANY]),
-    ];
+    return [new GenderStringVariationArg(this, this.options.gender, [GENDER_ANY])];
   }
 
   override getTokenName(_argsMap: StringVariationArgsMap): string {
@@ -104,10 +96,7 @@ export default class FbtNameNode extends FbtNode<
 
   override getFbtRuntimeArg(): CallExpression {
     const { gender, name, value } = this.options;
-    return createRuntimeCallExpression(
-      this,
-      [stringLiteral(name), value, gender].filter(Boolean),
-    );
+    return createRuntimeCallExpression(this, [stringLiteral(name), value, gender].filter(Boolean));
   }
 
   override getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): Readonly<{

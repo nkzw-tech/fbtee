@@ -25,29 +25,21 @@ describe('intlNumUtils:', () => {
   it('formats with locale grouping', () => {
     setLocale('en_US');
 
-    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.5655, 2)).toBe(
-      '1,234.57',
-    );
-    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.1, 5)).toBe(
-      '1,234.10000',
-    );
+    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.5655, 2)).toBe('1,234.57');
+    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.1, 5)).toBe('1,234.10000');
   });
 
   it('uses Intl locale data for decimal and grouping separators', () => {
     setLocale('pt_BR');
 
     expect(intlNumUtils.formatNumber(1234.56, 2)).toBe('1234,56');
-    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.56, 2)).toBe(
-      '1.234,56',
-    );
+    expect(intlNumUtils.formatNumberWithThousandDelimiters(1234.56, 2)).toBe('1.234,56');
   });
 
   it('uses Intl locale data for grouped numbering systems', () => {
     setLocale('hi_IN');
 
-    expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.89)).toBe(
-      '12,34,567.89',
-    );
+    expect(intlNumUtils.formatNumberWithThousandDelimiters(1_234_567.89)).toBe('12,34,567.89');
   });
 
   it('uses Intl locale data for native digits', () => {

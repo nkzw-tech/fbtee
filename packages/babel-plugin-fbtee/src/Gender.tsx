@@ -86,9 +86,6 @@ const data: Partial<Record<GenderConst, GenderConfig>> = {
   },
 } as const;
 
-export function getData(
-  gender: GenderConst,
-  usage: keyof GenderConfig,
-): boolean | string {
+export function getData(gender: GenderConst, usage: keyof GenderConfig): boolean | string {
   return (data[gender] || NotAPerson)[usage];
 }

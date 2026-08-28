@@ -107,9 +107,7 @@ describe('Test Fbt Enum', () => {
           ),
           { fbtEnumManifest: TestFbtEnumManifest },
         ),
-      ).toThrow(
-        `Enum keys must be strings or identifiers. Received 'Identifier'.`,
-      );
+      ).toThrow(`Enum keys must be strings or identifiers. Received 'Identifier'.`);
     });
 
     it('should throw the enum key is a variable (MemberExpression)', () => {
@@ -128,9 +126,7 @@ describe('Test Fbt Enum', () => {
           ),
           { fbtEnumManifest: TestFbtEnumManifest },
         ),
-      ).toThrow(
-        `Enum keys must be strings or identifiers. Received 'MemberExpression'.`,
-      );
+      ).toThrow(`Enum keys must be strings or identifiers. Received 'MemberExpression'.`);
     });
   });
 

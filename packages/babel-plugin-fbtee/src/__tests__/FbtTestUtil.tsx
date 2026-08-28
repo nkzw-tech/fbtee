@@ -2,7 +2,7 @@ import { transformSync } from '@babel/core';
 import syntaxJSX from '@babel/plugin-syntax-jsx';
 import presetReact from '@babel/preset-react';
 import presetTypeScript from '@babel/preset-typescript';
-import prettier from 'prettier-2';
+import prettier from 'prettier';
 import fbt, { PluginOptions } from '../index.tsx';
 
 export function transform(source: string, pluginOptions?: PluginOptions) {
@@ -17,10 +17,7 @@ export function transform(source: string, pluginOptions?: PluginOptions) {
   );
 }
 
-export function snapshotTransform(
-  source: string,
-  pluginOptions?: PluginOptions,
-): string {
+export function snapshotTransform(source: string, pluginOptions?: PluginOptions): string {
   return transform(source, pluginOptions);
 }
 
@@ -36,10 +33,8 @@ const transformKeepJsx = (source: string, pluginOptions?: PluginOptions) =>
     { parser: 'babel' },
   );
 
-export const snapshotTransformKeepJsx = (
-  source: string,
-  pluginOptions?: PluginOptions,
-) => transformKeepJsx(source, pluginOptions);
+export const snapshotTransformKeepJsx = (source: string, pluginOptions?: PluginOptions) =>
+  transformKeepJsx(source, pluginOptions);
 
 export function withFbtImportStatement(code: string): string {
   return `import { fbt } from "fbtee";
@@ -47,8 +42,7 @@ export function withFbtImportStatement(code: string): string {
 }
 
 export const jsCodeFbtCallSerializer = {
-  serialize: (rawValue: string) =>
-    prettier.format(rawValue, { parser: 'babel' }),
+  serialize: (rawValue: string) => prettier.format(rawValue, { parser: 'babel' }),
   test: (rawValue: unknown) => typeof rawValue === 'string',
 } as const;
 
@@ -62,8 +56,7 @@ export const jsCodeNonASCIICharSerializer = {
   serialize(rawValue: unknown) {
     return JSON.stringify(rawValue).replaceAll(
       nonASCIICharRegex,
-      (char) =>
-        String.raw`\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`,
+      (char) => String.raw`\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`,
     );
   },
 

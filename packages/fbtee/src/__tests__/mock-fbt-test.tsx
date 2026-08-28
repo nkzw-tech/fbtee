@@ -34,9 +34,7 @@ describe('mock fbt (no typechecks)', () => {
   });
 
   it('should munge together fbt.param calls', () => {
-    expect(fbt('Hello ' + fbt.param('name', 'bubba'), 'description')).toEqual(
-      'Hello bubba',
-    );
+    expect(fbt('Hello ' + fbt.param('name', 'bubba'), 'description')).toEqual('Hello bubba');
   });
 
   it('should work with enums', () => {

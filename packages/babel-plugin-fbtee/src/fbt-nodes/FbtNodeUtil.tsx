@@ -50,10 +50,7 @@ export function getClosestElementOrImplicitParamNodeAncestor(
   return ret;
 }
 
-export function runOnNestedChildren(
-  node: AnyFbtNode,
-  callback: (node: AnyFbtNode) => void,
-) {
+export function runOnNestedChildren(node: AnyFbtNode, callback: (node: AnyFbtNode) => void) {
   for (const child of node.children) {
     if (child) {
       callback(child);
@@ -71,9 +68,7 @@ export function toPlainFbtNodeTree(
   const node = { ...fbtNode.toPlainFbtNode() };
   const phraseIndex = phraseToIndexMap.get(fbtNode);
   const children = fbtNode.children
-    .map((child) =>
-      child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null,
-    )
+    .map((child) => (child != null ? toPlainFbtNodeTree(child, phraseToIndexMap) : null))
     .filter((child): child is PlainFbtNode => child != null);
 
   if (children?.length) {
@@ -113,9 +108,7 @@ export function tokenNameToTextPattern(tokenName: string): string {
  * @example For string <fbt> hello <a>world</a></fbt>,
  *          the outer token alias of <a>world</a> will be '=m1'.
  */
-export function convertIndexInSiblingsArrayToOuterTokenAlias(
-  index: number,
-): string {
+export function convertIndexInSiblingsArrayToOuterTokenAlias(index: number): string {
   return convertToTokenName(`m${index}`);
 }
 
@@ -129,10 +122,7 @@ export function getTextFromFbtNodeTree(
   argsMap: StringVariationArgsMap,
   subject: Node | null | undefined,
   preserveWhitespace: boolean,
-  getChildNodeText: (
-    argsMap: StringVariationArgsMap,
-    child: FbtChildNode,
-  ) => string,
+  getChildNodeText: (argsMap: StringVariationArgsMap, child: FbtChildNode) => string,
 ): string {
   try {
     if (subject) {
@@ -145,10 +135,7 @@ export function getTextFromFbtNodeTree(
   }
 }
 
-export function getChildNodeText(
-  argsMap: StringVariationArgsMap,
-  child: FbtChildNode,
-): string {
+export function getChildNodeText(argsMap: StringVariationArgsMap, child: FbtChildNode): string {
   return child instanceof FbtImplicitParamNode
     ? tokenNameToTextPattern(child.getTokenName(argsMap))
     : child.getText(argsMap);

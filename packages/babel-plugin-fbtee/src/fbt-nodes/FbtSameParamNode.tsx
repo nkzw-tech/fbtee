@@ -1,9 +1,4 @@
-import {
-  CallExpression,
-  isCallExpression,
-  isStringLiteral,
-  Node,
-} from '@babel/types';
+import { CallExpression, isCallExpression, isStringLiteral, Node } from '@babel/types';
 import invariant from 'invariant';
 import { BindingName } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
@@ -19,24 +14,15 @@ type Options = {
  * Represents an <fbt:sameParam> or fbt.sameParam() construct.
  * @see docs/params.md
  */
-export default class FbtSameParamNode extends FbtNode<
-  never,
-  CallExpression,
-  null,
-  Options
-> {
+export default class FbtSameParamNode extends FbtNode<never, CallExpression, null, Options> {
   static readonly type = 'sameParam';
   readonly type = 'sameParam';
 
-  static fromNode(
-    moduleName: BindingName,
-    node: Node,
-  ): FbtSameParamNode | null {
+  static fromNode(moduleName: BindingName, node: Node): FbtSameParamNode | null {
     if (!isCallExpression(node)) {
       return null;
     }
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'sameParam'
       ? new FbtSameParamNode({
           moduleName,

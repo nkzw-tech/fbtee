@@ -71,16 +71,13 @@ export default function setupLocaleContext({
     return resolvedLocale;
   };
 
-  const resolvedFallbackLocale =
-    resolveLocale(fallbackLocale) || fallbackLocale;
+  const resolvedFallbackLocale = resolveLocale(fallbackLocale) || fallbackLocale;
   translations = translations || { [resolvedFallbackLocale]: {} };
 
   const getLocales = (): ReadonlyArray<string> =>
     Array.from(
       new Set(
-        [...clientLocales, resolvedFallbackLocale].filter(
-          (locale): locale is string => !!locale,
-        ),
+        [...clientLocales, resolvedFallbackLocale].filter((locale): locale is string => !!locale),
       ),
     );
 
@@ -101,18 +98,11 @@ export default function setupLocaleContext({
     return resolvedFallbackLocale;
   };
 
-  const maybeLoadLocale = async (
-    locale: string,
-    loadLocale: LocaleLoaderFn,
-  ) => {
+  const maybeLoadLocale = async (locale: string, loadLocale: LocaleLoaderFn) => {
     const hasTranslations =
       !!translations[locale] ||
       getLocaleAliases(locale).some((localeAlias) => translations[localeAlias]);
-    if (
-      availableLocales.has(locale) &&
-      !hasTranslations &&
-      locale !== resolvedFallbackLocale
-    ) {
+    if (availableLocales.has(locale) && !hasTranslations && locale !== resolvedFallbackLocale) {
       translations[locale] = await loadLocale(locale);
     }
   };

@@ -6,13 +6,7 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const smokeInstalledPackages = async (consumer) => {
-  const entry = join(
-    consumer,
-    'node_modules',
-    '@nkzw',
-    'oxc-transform-fbtee',
-    'index.js',
-  );
+  const entry = join(consumer, 'node_modules', '@nkzw', 'oxc-transform-fbtee', 'index.js');
   const {
     collectSync,
     migrateLocaleJsonSync,
@@ -73,9 +67,7 @@ const smokeInstalledPackages = async (consumer) => {
 
   const prepared = prepareTranslationsSync(
     JSON.stringify({
-      phrases: [
-        { hashToLeaf: { hash: { desc: 'description', text: 'Source' } } },
-      ],
+      phrases: [{ hashToLeaf: { hash: { desc: 'description', text: 'Source' } } }],
     }),
     null,
     'de-DE',
@@ -90,36 +82,16 @@ const smokeInstalledPackages = async (consumer) => {
   assert.equal(JSON.parse(migrated)['fb-locale'], 'de-DE');
   assert.deepEqual(JSON.parse(migrated)['de-DE'], { hash: 'Text' });
 
-  const viteEntry = join(
-    consumer,
-    'node_modules',
-    '@nkzw',
-    'vite-plugin-fbtee',
-    'index.js',
-  );
-  const { default: createFbteeVitePlugin } = await import(
-    pathToFileURL(viteEntry)
-  );
+  const viteEntry = join(consumer, 'node_modules', '@nkzw', 'vite-plugin-fbtee', 'index.js');
+  const { default: createFbteeVitePlugin } = await import(pathToFileURL(viteEntry));
   const plugin = createFbteeVitePlugin();
-  assert.equal(
-    plugin.transform.handler(`const value = 'plain';`, 'plain.ts'),
-    null,
-  );
+  assert.equal(plugin.transform.handler(`const value = 'plain';`, 'plain.ts'), null);
   assert.match(
-    plugin.transform.handler(
-      `<fbt desc="native Vite smoke">Hello</fbt>;`,
-      'native-smoke.tsx',
-    ).code,
+    plugin.transform.handler(`<fbt desc="native Vite smoke">Hello</fbt>;`, 'native-smoke.tsx').code,
     /fbt\._\(/,
   );
 
-  const nextEntry = join(
-    consumer,
-    'node_modules',
-    '@nkzw',
-    'next-plugin-fbtee',
-    'index.js',
-  );
+  const nextEntry = join(consumer, 'node_modules', '@nkzw', 'next-plugin-fbtee', 'index.js');
   const { default: withFbtee } = await import(pathToFileURL(nextEntry));
   const nextConfig = withFbtee()({});
   const nextRule = nextConfig.turbopack.rules['*.tsx'];

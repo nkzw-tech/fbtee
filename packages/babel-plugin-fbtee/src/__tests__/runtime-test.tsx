@@ -72,9 +72,7 @@ describe('Test enum hash keys generation', () => {
   it('should generate single hash key for fbt with enum under regular mode', () => {
     expect(
       transform(
-        withFbtImportStatement(
-          `fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`,
-        ),
+        withFbtImportStatement(`fbt('Foo ' + fbt.enum('a', {a: 'A', b: 'B', c: 'C'}), 'Bar');`),
       ),
     ).toMatchSnapshot();
   });

@@ -60,8 +60,7 @@ export default class FbtPluralNode extends FbtNode<
       return null;
     }
 
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'plural'
       ? new FbtPluralNode({
           moduleName,
@@ -79,10 +78,7 @@ export default class FbtPluralNode extends FbtNode<
 
     try {
       const [, countArg] = this.getCallNodeArguments() || [];
-      const count = enforceNodeCallExpressionArg(
-        countArg,
-        '`count`, the second function argument',
-      );
+      const count = enforceNodeCallExpressionArg(countArg, '`count`, the second function argument');
       const showCount =
         (typeof rawOptions.showCount === 'string' &&
           enforceStringEnum.orNull(
@@ -103,10 +99,7 @@ export default class FbtPluralNode extends FbtNode<
           rawOptions.value != null &&
           typeof rawOptions.value !== 'string' &&
           typeof rawOptions.value !== 'boolean'
-            ? enforceNodeCallExpressionArg.orNull(
-                rawOptions.value,
-                '`value` option',
-              )
+            ? enforceNodeCallExpressionArg.orNull(rawOptions.value, '`value` option')
             : null,
       };
     } catch (error) {
@@ -132,11 +125,7 @@ export default class FbtPluralNode extends FbtNode<
         return scenario.anyNumber();
       }
       default:
-        invariant(
-          false,
-          `Unsupported plural variation value '%s'.`,
-          varDump(svArgValue),
-        );
+        invariant(false, `Unsupported plural variation value '%s'.`, varDump(svArgValue));
     }
   }
 
@@ -147,9 +136,7 @@ export default class FbtPluralNode extends FbtNode<
   override getTokenName(argsMap: StringVariationArgsMap): string | null {
     return this._branchByNumberVariation(argsMap, {
       anyNumber: () => {
-        return this.options.showCount !== ShowCountKeys.no
-          ? this._getStaticTokenName()
-          : null;
+        return this.options.showCount !== ShowCountKeys.no ? this._getStaticTokenName() : null;
       },
       exactlyOne: () => null,
     });
@@ -165,9 +152,7 @@ export default class FbtPluralNode extends FbtNode<
             ? tokenNameToTextPattern(this._getStaticTokenName()) + ' ' + many
             : many;
         },
-        exactlyOne: () =>
-          (showCount === ShowCountKeys.yes ? '1 ' : '') +
-          this._getSingularText(),
+        exactlyOne: () => (showCount === ShowCountKeys.yes ? '1 ' : '') + this._getSingularText(),
       });
     } catch (error) {
       throw errorAt(this.node, error);
@@ -185,12 +170,7 @@ export default class FbtPluralNode extends FbtNode<
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<NumberStringVariationArg> {
-    return [
-      new NumberStringVariationArg(this, this.options.count, [
-        NUMBER_ANY,
-        EXACTLY_ONE,
-      ]),
-    ];
+    return [new NumberStringVariationArg(this, this.options.count, [NUMBER_ANY, EXACTLY_ONE])];
   }
 
   override getFbtRuntimeArg(): CallExpression {
@@ -198,11 +178,7 @@ export default class FbtPluralNode extends FbtNode<
 
     const pluralArgs = [count];
     if (showCount !== ShowCountKeys.no) {
-      invariant(
-        name != null,
-        `Option 'name' must be set when 'showCount' is '%s'.`,
-        showCount,
-      );
+      invariant(name != null, `Option 'name' must be set when 'showCount' is '%s'.`, showCount);
       pluralArgs.push(stringLiteral(name));
       if (value) {
         pluralArgs.push(value);

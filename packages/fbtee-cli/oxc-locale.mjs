@@ -187,9 +187,7 @@ export function getConflictingLocaleFiles(files) {
     localeFiles.push(file);
     identityToFiles.set(identity, localeFiles);
   }
-  return [...identityToFiles.values()].filter(
-    (localeFiles) => localeFiles.length > 1,
-  );
+  return [...identityToFiles.values()].filter((localeFiles) => localeFiles.length > 1);
 }
 
 export function throwIfLocaleFileConflicts(files) {
@@ -200,9 +198,7 @@ export function throwIfLocaleFileConflicts(files) {
   throw new Error(
     conflicts
       .map((localeFiles) => {
-        const identity = getLocaleIdentity(
-          path.basename(localeFiles[0], '.json'),
-        );
+        const identity = getLocaleIdentity(path.basename(localeFiles[0], '.json'));
         return [
           `Conflicting translation files for locale "${identity}":`,
           ...localeFiles.map((file) => `- ${file}`),
@@ -221,9 +217,7 @@ export function getAvailableLocaleFile(directory, locale) {
     .filter((file) => file.endsWith('.json'))
     .map((file) => path.join(directory, file));
   const aliases = new Set(getLocaleFileAliases(locale));
-  const matches = files.filter((file) =>
-    aliases.has(path.basename(file, '.json')),
-  );
+  const matches = files.filter((file) => aliases.has(path.basename(file, '.json')));
   if (matches.length > 1) {
     throwIfLocaleFileConflicts(matches);
   }

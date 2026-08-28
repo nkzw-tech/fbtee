@@ -105,9 +105,7 @@ describe('Test functional fbs() syntax translation', () => {
   it('should convert a simple string', () => {
     expect(
       snapshotTransform(
-        withFbsImportStatement(
-          `const fbsCall = fbs('a simple string', 'str_description');`,
-        ),
+        withFbsImportStatement(`const fbsCall = fbs('a simple string', 'str_description');`),
       ),
     ).toMatchSnapshot();
   });
@@ -126,9 +124,7 @@ describe('Test functional fbs() syntax translation', () => {
   });
   it('should convert a common string', () => {
     expect(
-      snapshotTransform(
-        withFbsImportStatement(`const fbsCommonCall = fbs.c('Post');`),
-      ),
+      snapshotTransform(withFbsImportStatement(`const fbsCommonCall = fbs.c('Post');`)),
     ).toMatchSnapshot();
   });
 
@@ -158,9 +154,7 @@ describe('Test functional fbs() syntax translation', () => {
 
   it('should throw when using <fbs> and the fbs variable is not bound', () => {
     expect(() =>
-      snapshotTransform(
-        `const fbsCall = <fbs desc="str_description">basic</fbs>;`,
-      ),
+      snapshotTransform(`const fbsCall = <fbs desc="str_description">basic</fbs>;`),
     ).toThrow(`fbs is not imported. Add 'import { fbs } from "fbtee";'.`);
   });
 

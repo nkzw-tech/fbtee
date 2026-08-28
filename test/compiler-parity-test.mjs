@@ -33,10 +33,7 @@ const compileBabel = (source, options = {}, autoImport = false) =>
       plugins: ['jsx', 'typescript'],
       sourceType: 'module',
     },
-    plugins: [
-      ...(autoImport ? [babelFbteeAutoImportPlugin] : []),
-      [babelFbteePlugin, options],
-    ],
+    plugins: [...(autoImport ? [babelFbteeAutoImportPlugin] : []), [babelFbteePlugin, options]],
   }).code;
 
 const compileOxc = (source, options = {}) => {
@@ -103,22 +100,13 @@ const collectOxc = (source, options = {}) => {
 const hashes = (code) =>
   [...code.matchAll(/\bhk\s*:\s*["']([^"']+)["']/g)].map((match) => match[1]);
 
-const exampleFile = new URL(
-  '../example/src/example/Example.tsx',
-  import.meta.url,
-);
+const exampleFile = new URL('../example/src/example/Example.tsx', import.meta.url);
 const exampleOptions = {
   fbtCommon: JSON.parse(
-    readFileSync(
-      new URL('../example/common_strings.json', import.meta.url),
-      'utf8',
-    ),
+    readFileSync(new URL('../example/common_strings.json', import.meta.url), 'utf8'),
   ),
   fbtEnumManifest: JSON.parse(
-    readFileSync(
-      new URL('../example/.enum_manifest.json', import.meta.url),
-      'utf8',
-    ),
+    readFileSync(new URL('../example/.enum_manifest.json', import.meta.url), 'utf8'),
   ),
 };
 
@@ -284,11 +272,7 @@ const validFixtures = [
   {
     check(outputs) {
       for (const [compiler, code] of Object.entries(outputs)) {
-        assert.match(
-          code,
-          /fbt\._param\(["']two lines["'],\s*value\)/,
-          compiler,
-        );
+        assert.match(code, /fbt\._param\(["']two lines["'],\s*value\)/, compiler);
       }
     },
     name: 'normalized multiline parameter token name',
@@ -430,10 +414,7 @@ const validFixtures = [
       for (const [compiler, code] of Object.entries(outputs)) {
         const actualHashes = hashes(code);
         for (const hash of ['46j2Ai', 'BNUvh', 'qcSj6', '26triK', '283TK8']) {
-          assert.ok(
-            actualHashes.includes(hash),
-            `${compiler} is missing ${hash}`,
-          );
+          assert.ok(actualHashes.includes(hash), `${compiler} is missing ${hash}`);
         }
       }
     },
@@ -640,11 +621,7 @@ const validFixtures = [
   {
     check(outputs) {
       for (const code of Object.values(outputs)) {
-        assert.ok(
-          code.indexOf('_param("explicit", c())') <
-            code.indexOf('_implicitParam'),
-          code,
-        );
+        assert.ok(code.indexOf('_param("explicit", c())') < code.indexOf('_implicitParam'), code);
       }
     },
     name: 'explicit parameter evaluation before implicit JSX',
@@ -670,10 +647,7 @@ const validFixtures = [
   {
     check(outputs) {
       for (const code of Object.values(outputs)) {
-        assert.match(
-          code,
-          /_list\(["']x["'], items, getConjunction\(\), getDelimiter\(\)\)/,
-        );
+        assert.match(code, /_list\(["']x["'], items, getConjunction\(\), getDelimiter\(\)\)/);
       }
     },
     name: 'dynamic list formatting arguments',
@@ -707,12 +681,9 @@ describe('valid inputs produce compatible compiler output', () => {
           name === 'babel' && fixture.babelAutoImport,
         );
       } catch (error) {
-        throw new Error(
-          `${name.toUpperCase()} failed to compile the fixture.`,
-          {
-            cause: error,
-          },
-        );
+        throw new Error(`${name.toUpperCase()} failed to compile the fixture.`, {
+          cause: error,
+        });
       }
     }
 
@@ -758,8 +729,7 @@ const invalidFixtures = [
   },
   {
     name: 'template literal functional text option',
-    source:
-      "import { fbt } from 'fbtee'; const x = fbt('A', 'd', {project: `ab`});",
+    source: "import { fbt } from 'fbtee'; const x = fbt('A', 'd', {project: `ab`});",
   },
   ...[
     ['trailing fbt docblock content', `{"project":"p"} trailing`],
@@ -865,14 +835,8 @@ const invalidFixtures = [
     source: `import { fbt } from 'fbtee'; const x = fbt('A', 'd', {preserveWhitespace: 'sometimes'});`,
   },
   ...[
-    [
-      'functional preserveWhitespace string boolean',
-      `fbt('A', 'd', {preserveWhitespace: 'true'})`,
-    ],
-    [
-      'functional number string boolean',
-      `fbt(fbt.param('x', value, {number: 'true'}), 'd')`,
-    ],
+    ['functional preserveWhitespace string boolean', `fbt('A', 'd', {preserveWhitespace: 'true'})`],
+    ['functional number string boolean', `fbt(fbt.param('x', value, {number: 'true'}), 'd')`],
     [
       'functional human string boolean',
       `fbt(fbt.pronoun('subject', gender, {human: 'true'}), 'd')`,
@@ -920,18 +884,12 @@ const invalidFixtures = [
 ];
 
 describe('collector parity', () => {
-  test.each(validFixtures)(
-    'collects $name',
-    ({ babelAutoImport, options, source }) => {
-      if (babelAutoImport) {
-        return;
-      }
-      assert.deepEqual(
-        collectOxc(source, options),
-        collectBabel(source, options),
-      );
-    },
-  );
+  test.each(validFixtures)('collects $name', ({ babelAutoImport, options, source }) => {
+    if (babelAutoImport) {
+      return;
+    }
+    assert.deepEqual(collectOxc(source, options), collectBabel(source, options));
+  });
 
   test.each(invalidFixtures)('rejects $name', ({ options, source }) => {
     for (const [compiler, collect] of [
@@ -961,31 +919,20 @@ describe('collector parity', () => {
       source: `import { fbt } from 'fbtee'; const value = fbt.c('Required');`,
     },
   ])('$name', ({ options, source }) => {
-    assert.deepEqual(
-      collectOxc(source, options),
-      collectBabel(source, options),
-    );
+    assert.deepEqual(collectOxc(source, options), collectBabel(source, options));
   });
 
   test('collect CLI matches across a multi-file application', () => {
     const directory = mkdtempSync(join(tmpdir(), 'fbtee-collector-parity-'));
     try {
-      cpSync(
-        new URL('../example/src', import.meta.url),
-        join(directory, 'src'),
-        {
-          recursive: true,
-        },
-      );
+      cpSync(new URL('../example/src', import.meta.url), join(directory, 'src'), {
+        recursive: true,
+      });
       writeFileSync(
         join(directory, 'common.json'),
-        readFileSync(
-          new URL('../example/common_strings.json', import.meta.url),
-        ),
+        readFileSync(new URL('../example/common_strings.json', import.meta.url)),
       );
-      const cli = fileURLToPath(
-        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-      );
+      const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
       for (const compiler of ['babel', 'oxc']) {
         const result = spawnSync(
           process.execPath,
@@ -1007,11 +954,7 @@ describe('collector parity', () => {
           ],
           { cwd: directory, encoding: 'utf8' },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
       assert.equal(
         readFileSync(join(directory, 'oxc.json'), 'utf8'),
@@ -1042,9 +985,7 @@ describe('collector parity', () => {
           join(directory, 'hash.mjs'),
           `export default (text, desc) => text + '::' + desc;`,
         );
-        const cli = fileURLToPath(
-          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-        );
+        const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
         for (const compiler of ['babel', 'oxc']) {
           const result = spawnSync(
             process.execPath,
@@ -1068,11 +1009,7 @@ describe('collector parity', () => {
             ],
             { cwd: directory, encoding: 'utf8' },
           );
-          assert.equal(
-            result.status,
-            0,
-            `${compiler}: ${result.stderr || result.stdout}`,
-          );
+          assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
         }
         assert.equal(
           readFileSync(join(directory, 'oxc.json'), 'utf8'),
@@ -1093,9 +1030,7 @@ describe('collector parity', () => {
           join(directory, 'source.jsx'),
           `import { fbt } from 'fbtee'; export const value = <fbt desc="d">A <b>B</b></fbt>;`,
         );
-        const cli = fileURLToPath(
-          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-        );
+        const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
         for (const compiler of ['babel', 'oxc']) {
           const result = spawnSync(
             process.execPath,
@@ -1116,11 +1051,7 @@ describe('collector parity', () => {
             ],
             { cwd: directory, encoding: 'utf8' },
           );
-          assert.equal(
-            result.status,
-            0,
-            `${compiler}: ${result.stderr || result.stdout}`,
-          );
+          assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
         }
         assert.equal(
           readFileSync(join(directory, 'oxc.json'), 'utf8'),
@@ -1138,9 +1069,7 @@ describe('native CLI parity', () => {
     { arguments: [], name: 'root help' },
     { arguments: ['unknown-command'], name: 'unknown command' },
   ])('matches $name behavior', ({ arguments: cliArguments }) => {
-    const cli = fileURLToPath(
-      new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-    );
+    const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
     const babel = spawnSync(process.execPath, [cli, ...cliArguments], {
       encoding: 'utf8',
     });
@@ -1152,25 +1081,21 @@ describe('native CLI parity', () => {
     assert.equal(oxc.stderr, babel.stderr);
   });
 
-  test.each([
-    'collect',
-    'translate',
-    'prepare-translations',
-    'migrate-locales',
-  ])('%s help is byte-identical', (command) => {
-    const cli = fileURLToPath(
-      new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-    );
-    const babel = spawnSync(process.execPath, [cli, command, '--help'], {
-      encoding: 'utf8',
-    });
-    const oxc = spawnSync(process.execPath, [cli, command, '--oxc', '--help'], {
-      encoding: 'utf8',
-    });
-    assert.equal(oxc.status, babel.status);
-    assert.equal(oxc.stdout, babel.stdout);
-    assert.equal(oxc.stderr, babel.stderr);
-  });
+  test.each(['collect', 'translate', 'prepare-translations', 'migrate-locales'])(
+    '%s help is byte-identical',
+    (command) => {
+      const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
+      const babel = spawnSync(process.execPath, [cli, command, '--help'], {
+        encoding: 'utf8',
+      });
+      const oxc = spawnSync(process.execPath, [cli, command, '--oxc', '--help'], {
+        encoding: 'utf8',
+      });
+      assert.equal(oxc.status, babel.status);
+      assert.equal(oxc.stdout, babel.stdout);
+      assert.equal(oxc.stderr, babel.stderr);
+    },
+  );
 
   test.each([
     ['--custom-collector', './collector.mjs'],
@@ -1180,9 +1105,7 @@ describe('native CLI parity', () => {
     const result = spawnSync(
       process.execPath,
       [
-        fileURLToPath(
-          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-        ),
+        fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
         'collect',
         '--oxc',
         ...extensionArguments,
@@ -1219,19 +1142,10 @@ describe('native CLI parity', () => {
         join(directory, 'src', 'nested', 'source.jsx'),
         `import { fbt } from 'fbtee'; export const value = fbt('Before', 'd');`,
       );
-      const cli = fileURLToPath(
-        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-      );
+      const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
       const native = spawnSync(
         process.execPath,
-        [
-          cli,
-          'collect',
-          '--oxc',
-          '--src',
-          'src',
-          '--no-include-default-strings',
-        ],
+        [cli, 'collect', '--oxc', '--src', 'src', '--no-include-default-strings'],
         { cwd: directory, encoding: 'utf8' },
       );
       assert.notEqual(native.status, 0);
@@ -1260,13 +1174,11 @@ describe('native CLI parity', () => {
         assert.equal(result.status, 0, result.stderr || result.stdout);
       }
       assert.equal(
-        JSON.parse(readFileSync(join(directory, 'babel.json'))).phrases[0].jsfbt
-          .t.text,
+        JSON.parse(readFileSync(join(directory, 'babel.json'))).phrases[0].jsfbt.t.text,
         'After',
       );
       assert.equal(
-        JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases[0].jsfbt.t
-          .text,
+        JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases[0].jsfbt.t.text,
         'Before',
       );
     } finally {
@@ -1282,19 +1194,10 @@ describe('native CLI parity', () => {
         join(directory, 'source.jsx'),
         `import { fbt } from 'fbtee'; export const value = fbt('Ignored', 'd');`,
       );
-      const cli = fileURLToPath(
-        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-      );
+      const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
       const guarded = spawnSync(
         process.execPath,
-        [
-          cli,
-          'collect',
-          '--oxc',
-          '--src',
-          'source.jsx',
-          '--no-include-default-strings',
-        ],
+        [cli, 'collect', '--oxc', '--src', 'source.jsx', '--no-include-default-strings'],
         { cwd: directory, encoding: 'utf8' },
       );
       assert.notEqual(guarded.status, 0);
@@ -1318,10 +1221,7 @@ describe('native CLI parity', () => {
         { cwd: directory, encoding: 'utf8' },
       );
       assert.equal(bypassed.status, 0, bypassed.stderr || bypassed.stdout);
-      assert.equal(
-        JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases.length,
-        1,
-      );
+      assert.equal(JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases.length, 1);
     } finally {
       rmSync(directory, { force: true, recursive: true });
     }
@@ -1366,9 +1266,7 @@ describe('native CLI parity', () => {
         const result = spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'translate',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--stdin',
@@ -1376,11 +1274,7 @@ describe('native CLI parity', () => {
           ],
           { cwd: directory, encoding: 'utf8', input },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
         outputs.push(result.stdout);
       }
       assert.equal(outputs[1], outputs[0]);
@@ -1414,9 +1308,7 @@ describe('native CLI parity', () => {
       const result = spawnSync(
         process.execPath,
         [
-          fileURLToPath(
-            new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-          ),
+          fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
           'translate',
           ...(compiler === 'oxc' ? ['--oxc'] : []),
           '--stdin',
@@ -1442,17 +1334,13 @@ describe('native CLI parity', () => {
             project: '',
           },
         ],
-        translationGroups: [
-          { 'fb-locale': 'de_DE', translations: { hash: null } },
-        ],
+        translationGroups: [{ 'fb-locale': 'de_DE', translations: { hash: null } }],
       });
       const results = ['babel', 'oxc'].map((compiler) =>
         spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'translate',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--stdin',
@@ -1476,22 +1364,16 @@ describe('native CLI parity', () => {
     try {
       writeFileSync(
         join(directory, 'source_strings.json'),
-        readFileSync(
-          new URL('../example/source_strings.json', import.meta.url),
-        ),
+        readFileSync(new URL('../example/source_strings.json', import.meta.url)),
       );
-      cpSync(
-        new URL('../example/translations', import.meta.url),
-        join(directory, 'translations'),
-        { recursive: true },
-      );
+      cpSync(new URL('../example/translations', import.meta.url), join(directory, 'translations'), {
+        recursive: true,
+      });
       for (const compiler of ['babel', 'oxc']) {
         const result = spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'translate',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--source-strings',
@@ -1505,17 +1387,10 @@ describe('native CLI parity', () => {
           ],
           { cwd: directory, encoding: 'utf8' },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
       const files = globSyncForTest(join(directory, 'babel'));
-      assert.equal(
-        files.join(','),
-        globSyncForTest(join(directory, 'oxc')).join(','),
-      );
+      assert.equal(files.join(','), globSyncForTest(join(directory, 'oxc')).join(','));
       for (const file of files) {
         assert.equal(
           readFileSync(join(directory, 'oxc', file), 'utf8'),
@@ -1532,97 +1407,79 @@ describe('native CLI parity', () => {
     ['bcp47', 'es-419.json'],
     ['legacy', 'es_LA.json'],
     ['preserve', 'es_LA.json'],
-  ])(
-    'translate matches new %s output locale files',
-    (localeStyle, expectedFile) => {
-      const directory = mkdtempSync(join(tmpdir(), 'fbtee-translate-locale-'));
-      try {
-        writeFileSync(
-          join(directory, 'source_strings.json'),
-          JSON.stringify({
-            phrases: [
-              {
-                hashToLeaf: { hash: { desc: 'd', text: 'A' } },
-                jsfbt: { m: [], t: { desc: 'd', text: 'A' } },
-                project: '',
-              },
-            ],
-          }),
-        );
-        writeFileSync(
-          join(directory, 'translation.json'),
-          JSON.stringify({
-            'fb-locale': 'es_LA',
-            translations: {
-              hash: {
-                tokens: [],
-                translations: [{ translation: 'Un A', variations: {} }],
-                types: [],
-              },
+  ])('translate matches new %s output locale files', (localeStyle, expectedFile) => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-translate-locale-'));
+    try {
+      writeFileSync(
+        join(directory, 'source_strings.json'),
+        JSON.stringify({
+          phrases: [
+            {
+              hashToLeaf: { hash: { desc: 'd', text: 'A' } },
+              jsfbt: { m: [], t: { desc: 'd', text: 'A' } },
+              project: '',
             },
-          }),
+          ],
+        }),
+      );
+      writeFileSync(
+        join(directory, 'translation.json'),
+        JSON.stringify({
+          'fb-locale': 'es_LA',
+          translations: {
+            hash: {
+              tokens: [],
+              translations: [{ translation: 'Un A', variations: {} }],
+              types: [],
+            },
+          },
+        }),
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
+            'translate',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--source-strings',
+            'source_strings.json',
+            '--translations',
+            'translation.json',
+            '--output-dir',
+            compiler,
+            '--output-locale-style',
+            localeStyle,
+          ],
+          { cwd: directory, encoding: 'utf8' },
         );
-        for (const compiler of ['babel', 'oxc']) {
-          const result = spawnSync(
-            process.execPath,
-            [
-              fileURLToPath(
-                new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-              ),
-              'translate',
-              ...(compiler === 'oxc' ? ['--oxc'] : []),
-              '--source-strings',
-              'source_strings.json',
-              '--translations',
-              'translation.json',
-              '--output-dir',
-              compiler,
-              '--output-locale-style',
-              localeStyle,
-            ],
-            { cwd: directory, encoding: 'utf8' },
-          );
-          assert.equal(
-            result.status,
-            0,
-            `${compiler}: ${result.stderr || result.stdout}`,
-          );
-        }
-        assert.equal(
-          globSyncForTest(join(directory, 'babel')).join(','),
-          expectedFile,
-        );
-        assert.equal(
-          readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
-          readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
-        );
-      } finally {
-        rmSync(directory, { force: true, recursive: true });
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
-    },
-  );
+      assert.equal(globSyncForTest(join(directory, 'babel')).join(','), expectedFile);
+      assert.equal(
+        readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
+        readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
 
   test('prepare-translations matches existing locale files', () => {
     const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-parity-'));
     try {
       writeFileSync(
         join(directory, 'source_strings.json'),
-        readFileSync(
-          new URL('../example/source_strings.json', import.meta.url),
-        ),
+        readFileSync(new URL('../example/source_strings.json', import.meta.url)),
       );
       for (const compiler of ['babel', 'oxc']) {
-        cpSync(
-          new URL('../example/translations', import.meta.url),
-          join(directory, compiler),
-          { recursive: true },
-        );
+        cpSync(new URL('../example/translations', import.meta.url), join(directory, compiler), {
+          recursive: true,
+        });
         const result = spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'prepare-translations',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--source-strings',
@@ -1633,11 +1490,7 @@ describe('native CLI parity', () => {
           ],
           { cwd: directory, encoding: 'utf8' },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
       const files = globSyncForTest(join(directory, 'babel'));
       assert.deepEqual(files, globSyncForTest(join(directory, 'oxc')));
@@ -1657,61 +1510,49 @@ describe('native CLI parity', () => {
     ['bcp47', 'es-419.json'],
     ['legacy', 'es_LA.json'],
     ['preserve', 'es_LA.json'],
-  ])(
-    'prepare-translations matches new %s locale files',
-    (localeStyle, expectedFile) => {
-      const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-new-'));
-      try {
-        writeFileSync(
-          join(directory, 'source_strings.json'),
-          JSON.stringify({
-            phrases: [
-              {
-                hashToLeaf: { hash: { desc: 'Description', text: 'Text' } },
-              },
-            ],
-          }),
+  ])('prepare-translations matches new %s locale files', (localeStyle, expectedFile) => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-new-'));
+    try {
+      writeFileSync(
+        join(directory, 'source_strings.json'),
+        JSON.stringify({
+          phrases: [
+            {
+              hashToLeaf: { hash: { desc: 'Description', text: 'Text' } },
+            },
+          ],
+        }),
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        mkdirSync(join(directory, compiler));
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
+            'prepare-translations',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--source-strings',
+            'source_strings.json',
+            '--output-dir',
+            compiler,
+            '--locales',
+            'es_LA',
+            '--output-locale-style',
+            localeStyle,
+          ],
+          { cwd: directory, encoding: 'utf8' },
         );
-        for (const compiler of ['babel', 'oxc']) {
-          mkdirSync(join(directory, compiler));
-          const result = spawnSync(
-            process.execPath,
-            [
-              fileURLToPath(
-                new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-              ),
-              'prepare-translations',
-              ...(compiler === 'oxc' ? ['--oxc'] : []),
-              '--source-strings',
-              'source_strings.json',
-              '--output-dir',
-              compiler,
-              '--locales',
-              'es_LA',
-              '--output-locale-style',
-              localeStyle,
-            ],
-            { cwd: directory, encoding: 'utf8' },
-          );
-          assert.equal(
-            result.status,
-            0,
-            `${compiler}: ${result.stderr || result.stdout}`,
-          );
-        }
-        assert.equal(
-          globSyncForTest(join(directory, 'babel')).join(','),
-          expectedFile,
-        );
-        assert.equal(
-          readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
-          readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
-        );
-      } finally {
-        rmSync(directory, { force: true, recursive: true });
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
-    },
-  );
+      assert.equal(globSyncForTest(join(directory, 'babel')).join(','), expectedFile);
+      assert.equal(
+        readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
+        readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
 
   test('prepare-translations preserves falsy existing entries', () => {
     const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-falsy-'));
@@ -1745,9 +1586,7 @@ describe('native CLI parity', () => {
         const result = spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'prepare-translations',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--source-strings',
@@ -1757,11 +1596,7 @@ describe('native CLI parity', () => {
           ],
           { cwd: directory, encoding: 'utf8' },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
       assert.equal(
         readFileSync(join(directory, 'oxc', 'en-US.json'), 'utf8'),
@@ -1788,9 +1623,7 @@ describe('native CLI parity', () => {
               {
                 'fb-locale': locale,
                 [locale]: { hash: text },
-                ...(locale === 'de_DE'
-                  ? { de: { hash: 'Base language text' } }
-                  : {}),
+                ...(locale === 'de_DE' ? { de: { hash: 'Base language text' } } : {}),
                 metadata: true,
               },
               null,
@@ -1801,9 +1634,7 @@ describe('native CLI parity', () => {
         const result = spawnSync(
           process.execPath,
           [
-            fileURLToPath(
-              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
-            ),
+            fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url)),
             'migrate-locales',
             ...(compiler === 'oxc' ? ['--oxc'] : []),
             '--dir',
@@ -1813,18 +1644,11 @@ describe('native CLI parity', () => {
           ],
           { cwd: directory, encoding: 'utf8' },
         );
-        assert.equal(
-          result.status,
-          0,
-          `${compiler}: ${result.stderr || result.stdout}`,
-        );
+        assert.equal(result.status, 0, `${compiler}: ${result.stderr || result.stdout}`);
       }
       const files = globSyncForTest(join(directory, 'babel'));
       assert.equal(files.join(','), 'de-DE.json,es-419.json');
-      assert.equal(
-        files.join(','),
-        globSyncForTest(join(directory, 'oxc')).join(','),
-      );
+      assert.equal(files.join(','), globSyncForTest(join(directory, 'oxc')).join(','));
       for (const file of files) {
         assert.equal(
           readFileSync(join(directory, 'oxc', file), 'utf8'),
@@ -1832,9 +1656,7 @@ describe('native CLI parity', () => {
           file,
         );
       }
-      const migratedGerman = JSON.parse(
-        readFileSync(join(directory, 'oxc', 'de-DE.json'), 'utf8'),
-      );
+      const migratedGerman = JSON.parse(readFileSync(join(directory, 'oxc', 'de-DE.json'), 'utf8'));
       assert.deepEqual(migratedGerman.de, { hash: 'Base language text' });
       assert.deepEqual(migratedGerman['de-DE'], { hash: 'Text' });
     } finally {

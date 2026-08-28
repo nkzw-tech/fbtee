@@ -5,10 +5,7 @@ import {
   resolveNodeValue,
 } from '../utils.tsx';
 
-export default createRule<
-  [],
-  'emptyDesc' | 'jsxEmptyDesc' | 'duplicateDesc' | 'shortDesc'
->({
+export default createRule<[], 'emptyDesc' | 'jsxEmptyDesc' | 'duplicateDesc' | 'shortDesc'>({
   create(context) {
     return {
       CallExpression(node) {
@@ -19,9 +16,7 @@ export default createRule<
         const [textArg, descArg] = node.arguments;
 
         const desc =
-          descArg && descArg.type !== 'SpreadElement'
-            ? resolveNodeValue(descArg)?.trim()
-            : null;
+          descArg && descArg.type !== 'SpreadElement' ? resolveNodeValue(descArg)?.trim() : null;
 
         if (!desc) {
           context.report({
@@ -40,9 +35,7 @@ export default createRule<
         }
 
         const text =
-          textArg && textArg.type !== 'SpreadElement'
-            ? resolveNodeValue(textArg)?.trim()
-            : null;
+          textArg && textArg.type !== 'SpreadElement' ? resolveNodeValue(textArg)?.trim() : null;
 
         if (desc.toLowerCase() === text?.toLowerCase()) {
           context.report({

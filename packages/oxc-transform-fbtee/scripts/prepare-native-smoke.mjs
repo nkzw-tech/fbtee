@@ -1,12 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import {
-  copyFileSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-} from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -33,10 +27,7 @@ assert.ok(existsSync(packageJsonPath), `Unknown platform package: ${platform}`);
 
 const { main } = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const sourceBinding = join(packageDirectory, main);
-assert.ok(
-  existsSync(sourceBinding),
-  `Built binding is missing: ${sourceBinding}`,
-);
+assert.ok(existsSync(sourceBinding), `Built binding is missing: ${sourceBinding}`);
 copyFileSync(sourceBinding, join(platformDirectory, main));
 
 const outputDirectory = join(packageDirectory, '.native-smoke');
@@ -49,13 +40,7 @@ for (const directory of [
   join(packageDirectory, '..', 'next-plugin-fbtee'),
   join(packageDirectory, '..', 'vite-plugin-fbtee'),
 ]) {
-  const args = [
-    '--dir',
-    directory,
-    'pack',
-    '--pack-destination',
-    outputDirectory,
-  ];
+  const args = ['--dir', directory, 'pack', '--pack-destination', outputDirectory];
   const isWindows = process.platform === 'win32';
   const result = spawnSync(
     isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'pnpm',
@@ -65,9 +50,6 @@ for (const directory of [
   assert.equal(
     result.status,
     0,
-    result.error?.message ||
-      result.stderr ||
-      result.stdout ||
-      'pnpm pack failed without output.',
+    result.error?.message || result.stderr || result.stdout || 'pnpm pack failed without output.',
   );
 }

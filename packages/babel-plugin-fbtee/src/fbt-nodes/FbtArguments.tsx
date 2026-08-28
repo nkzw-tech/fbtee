@@ -3,15 +3,13 @@ import invariant from 'invariant';
 import type { EnumKey } from '../FbtEnumRegistrar.tsx';
 import { compactNodeProps, getRawSource, varDump } from '../FbtUtil.tsx';
 import type { GenderConst } from '../Gender.tsx';
-import {
-  EXACTLY_ONE,
-  GENDER_ANY,
-  NUMBER_ANY,
-} from '../translate/IntlVariations.tsx';
+import { EXACTLY_ONE, GENDER_ANY, NUMBER_ANY } from '../translate/IntlVariations.tsx';
 import type { AnyFbtNode } from './FbtNode.tsx';
 
 export type AnyStringVariationArg =
-  EnumStringVariationArg | GenderStringVariationArg | NumberStringVariationArg;
+  | EnumStringVariationArg
+  | GenderStringVariationArg
+  | NumberStringVariationArg;
 export type AnyFbtArgument = GenericArg | AnyStringVariationArg;
 
 /**
@@ -153,15 +151,13 @@ export abstract class StringVariationArg<
   }
 
   cloneWithValue(value: Value, isCollapsible: boolean): this {
-    return new (
-      this.constructor as new (
-        fbtNode: AnyFbtNode,
-        node: B,
-        candidateValues: ReadonlyArray<Value>,
-        value?: Value | null,
-        isCollapsible?: boolean,
-      ) => this
-    )(this.fbtNode, this.node, this.candidateValues, value, isCollapsible);
+    return new (this.constructor as new (
+      fbtNode: AnyFbtNode,
+      node: B,
+      candidateValues: ReadonlyArray<Value>,
+      value?: Value | null,
+      isCollapsible?: boolean,
+    ) => this)(this.fbtNode, this.node, this.candidateValues, value, isCollapsible);
   }
 
   override toJSON() {
@@ -175,9 +171,7 @@ export abstract class StringVariationArg<
 
 export class EnumStringVariationArg extends StringVariationArg<EnumKey> {}
 
-export class GenderStringVariationArg extends StringVariationArg<
-  GenderConst | typeof GENDER_ANY
-> {}
+export class GenderStringVariationArg extends StringVariationArg<GenderConst | typeof GENDER_ANY> {}
 
 export class NumberStringVariationArg extends StringVariationArg<
   typeof NUMBER_ANY | typeof EXACTLY_ONE,
@@ -200,11 +194,7 @@ export class StringVariationArgsMap {
 
   get(fbtNode: AnyFbtNode) {
     const ret = this._map.get(fbtNode);
-    invariant(
-      ret != null,
-      'Unable to find entry for FbtNode: %s',
-      varDump(fbtNode),
-    );
+    invariant(ret != null, 'Unable to find entry for FbtNode: %s', varDump(fbtNode));
     return ret;
   }
 }

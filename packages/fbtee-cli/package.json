@@ -9,13 +9,12 @@
     "l10n",
     "translation"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/fbtee-cli"
   },
-  "license": "MIT",
-  "type": "module",
   "bin": {
     "fbtee": "bin.mjs"
   },
@@ -29,6 +28,7 @@
     "LICENSE",
     "README.md"
   ],
+  "type": "module",
   "dependencies": {
     "@nkzw/babel-plugin-fbtee": "workspace:^",
     "@nkzw/oxc-transform-fbtee": "workspace:^",

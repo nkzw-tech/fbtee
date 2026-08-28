@@ -1,9 +1,6 @@
 import type { HashToLeaf } from '../bin/FbtCollector.tsx';
 import type { FbtTableKey, PatternHash, PatternString } from '../Types.ts';
-import type {
-  IntlFbtVariationTypeValue,
-  IntlVariationMaskValue,
-} from './IntlVariations.tsx';
+import type { IntlFbtVariationTypeValue, IntlVariationMaskValue } from './IntlVariations.tsx';
 import { FbtVariationType, Mask } from './IntlVariations.tsx';
 
 export type FbtSiteHashToLeaf = FbtSiteHashToTextAndDesc | FbtSiteHashToText;
@@ -27,7 +24,8 @@ export type FbtSiteHashToText = Partial<Record<PatternHash, PatternString>>;
  * }
  */
 export type FbtSiteHashifiedTableJSFBTTree =
-  PatternHash | { [K in FbtTableKey]: FbtSiteHashifiedTableJSFBTTree };
+  | PatternHash
+  | { [K in FbtTableKey]: FbtSiteHashifiedTableJSFBTTree };
 
 /**
  * Represents a fbt() or <fbt /> source data from a callsite and all

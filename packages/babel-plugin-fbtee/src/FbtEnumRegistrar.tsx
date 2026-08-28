@@ -55,9 +55,7 @@ export default new (class FbtEnumRegistrar {
    */
   getEnum(variableName: string): EnumModule | null {
     const moduleName = this.getModuleName(variableName);
-    return enumManifest != null &&
-      moduleName != null &&
-      enumManifest[moduleName]
+    return enumManifest != null && moduleName != null && enumManifest[moduleName]
       ? enumManifest[moduleName]
       : null;
   }
@@ -75,8 +73,7 @@ export default new (class FbtEnumRegistrar {
     const modulePath = firstArgument.value;
     const parentNode = path.parentPath.node;
     const alias =
-      parentNode.type === 'VariableDeclarator' &&
-      parentNode.id.type === 'Identifier'
+      parentNode.type === 'VariableDeclarator' && parentNode.id.type === 'Identifier'
         ? parentNode.id.name
         : null;
     if (alias) {
@@ -102,10 +99,7 @@ export default new (class FbtEnumRegistrar {
     }
 
     const specifier = node.specifiers[0];
-    if (
-      isImportDefaultSpecifier(specifier) ||
-      isImportNamespaceSpecifier(specifier)
-    ) {
+    if (isImportDefaultSpecifier(specifier) || isImportNamespaceSpecifier(specifier)) {
       const alias = specifier.local.name;
       const modulePath = node.source.value;
       this.setModuleAlias(alias, modulePath);

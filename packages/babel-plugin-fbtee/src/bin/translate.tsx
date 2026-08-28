@@ -107,10 +107,7 @@ const argv = y
   )
   .string('source-strings')
   .default('source-strings', 'source_strings.json')
-  .describe(
-    'source-strings',
-    'The file containing source strings, as collected by collectFbt.js',
-  )
+  .describe('source-strings', 'The file containing source strings, as collected by collectFbt.js')
   .array('translations')
   .default('translations', globSync('translations/*.json', { cwd: root }))
   .describe(
@@ -172,11 +169,7 @@ if (argv['stdin']) {
     })
     .on('end', async () => {
       process.stdout.write(
-        JSON.stringify(
-          await processJSON(JSON.parse(source), translationOptions),
-          null,
-          2,
-        ),
+        JSON.stringify(await processJSON(JSON.parse(source), translationOptions), null, 2),
       );
     });
 } else if (argv['output-file']) {

@@ -9,10 +9,7 @@ describe('Test FbtEnumRegistrar', () => {
     FbtEnumRegistrar.setModuleAlias('foo', './abc$FbtEnum');
     expect(FbtEnumRegistrar.getModuleName('foo')).toBe('abc$FbtEnum');
 
-    FbtEnumRegistrar.setModuleAlias(
-      'bar',
-      '../some/../redundant/../path/xyz$FbtEnum',
-    );
+    FbtEnumRegistrar.setModuleAlias('bar', '../some/../redundant/../path/xyz$FbtEnum');
     expect(FbtEnumRegistrar.getModuleName('bar')).toBe('xyz$FbtEnum');
   });
 

@@ -1,8 +1,4 @@
-import {
-  FbtConjunction,
-  FbtDelimiter,
-  FbtWithoutString,
-} from './lib/index.d.mts';
+import { FbtConjunction, FbtDelimiter, FbtWithoutString } from './lib/index.d.mts';
 
 enum IntlVariations {
   GENDER_MALE = 1,

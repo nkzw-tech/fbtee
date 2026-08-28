@@ -1,11 +1,4 @@
-import {
-  existsSync,
-  globSync,
-  mkdirSync,
-  readFileSync,
-  renameSync,
-  writeFileSync,
-} from 'node:fs';
+import { existsSync, globSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import yargs from 'yargs';
 import {
@@ -77,11 +70,7 @@ for (const directory of argv.dir.map(String)) {
     const targetLocale = formatLocaleForStyle(locale, argv.to as LocaleStyle);
     const targetFile = join(dirname(file), `${targetLocale}.json`);
     const json = JSON.parse(readFileSync(file, 'utf8'));
-    const updatedJSON = JSON.stringify(
-      updateLocaleKeys(json, targetLocale),
-      null,
-      2,
-    );
+    const updatedJSON = JSON.stringify(updateLocaleKeys(json, targetLocale), null, 2);
 
     if (file === targetFile) {
       if (argv['dry-run']) {

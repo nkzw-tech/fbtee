@@ -3,17 +3,17 @@
   "version": "3.2.0",
   "description": "",
   "keywords": [],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/eslint-plugin-fbtee"
   },
-  "license": "MIT",
   "type": "module",
+  "main": "lib/index.mjs",
   "exports": {
     "import": "./lib/index.mjs"
   },
-  "main": "lib/index.mjs",
   "scripts": {
     "build": "tsdown src/index.tsx -d lib --target=node22 --format=esm --clean --dts"
   },

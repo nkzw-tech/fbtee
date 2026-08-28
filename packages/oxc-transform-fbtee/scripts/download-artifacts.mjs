@@ -1,33 +1,18 @@
 import { execFileSync } from 'node:child_process';
-import {
-  copyFileSync,
-  mkdirSync,
-  mkdtempSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-} from 'node:fs';
+import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const packageDirectory = fileURLToPath(new URL('../', import.meta.url));
-const repositoryDirectory = fileURLToPath(
-  new URL('../../../', import.meta.url),
-);
+const repositoryDirectory = fileURLToPath(new URL('../../../', import.meta.url));
 const outputDirectory =
-  process.env.FBTEE_NATIVE_ARTIFACTS_OUTPUT_DIRECTORY ||
-  join(packageDirectory, 'artifacts');
+  process.env.FBTEE_NATIVE_ARTIFACTS_OUTPUT_DIRECTORY || join(packageDirectory, 'artifacts');
 const expectedBindings = new Set(
   readdirSync(join(packageDirectory, 'npm'), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) =>
-      JSON.parse(
-        readFileSync(
-          join(packageDirectory, 'npm', entry.name, 'package.json'),
-          'utf8',
-        ),
-      ),
+      JSON.parse(readFileSync(join(packageDirectory, 'npm', entry.name, 'package.json'), 'utf8')),
     )
     .map((packageJson) => packageJson.main),
 );
@@ -51,9 +36,7 @@ const collectBindings = (directory, bindings = new Map()) => {
   return bindings;
 };
 
-const downloadDirectory = mkdtempSync(
-  join(tmpdir(), 'fbtee-native-artifacts-'),
-);
+const downloadDirectory = mkdtempSync(join(tmpdir(), 'fbtee-native-artifacts-'));
 try {
   const suppliedDirectory = process.env.FBTEE_NATIVE_ARTIFACTS_DIRECTORY;
   if (suppliedDirectory) {
@@ -63,15 +46,9 @@ try {
   } else {
     let commit;
     let runId;
-    const changes = run('git', [
-      'status',
-      '--porcelain',
-      '--untracked-files=no',
-    ]);
+    const changes = run('git', ['status', '--porcelain', '--untracked-files=no']);
     if (changes) {
-      throw new Error(
-        'Commit all tracked changes before downloading release artifacts.',
-      );
+      throw new Error('Commit all tracked changes before downloading release artifacts.');
     }
     try {
       commit = run('git', ['rev-parse', 'HEAD']);
@@ -117,9 +94,7 @@ try {
   const bindings = collectBindings(downloadDirectory);
   const missing = [...expectedBindings].filter((name) => !bindings.has(name));
   if (missing.length > 0) {
-    throw new Error(
-      `Downloaded artifacts are incomplete:\n${missing.join('\n')}`,
-    );
+    throw new Error(`Downloaded artifacts are incomplete:\n${missing.join('\n')}`);
   }
 
   rmSync(outputDirectory, { force: true, recursive: true });

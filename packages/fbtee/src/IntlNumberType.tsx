@@ -20,9 +20,7 @@ const fallbackNumberTypes: Readonly<Record<string, IntlNumberType>> = {
   ay: { getVariation: () => IntlVariations.NUMBER_OTHER },
   bh: {
     getVariation: (n) =>
-      n >= 0 && n <= 1
-        ? IntlVariations.NUMBER_ONE
-        : IntlVariations.NUMBER_OTHER,
+      n >= 0 && n <= 1 ? IntlVariations.NUMBER_ONE : IntlVariations.NUMBER_OTHER,
   },
   co: { getVariation: (n) => getOneOtherVariation(n) },
   fb: { getVariation: (n) => getOneOtherVariation(n) },
@@ -36,9 +34,7 @@ const fallbackNumberTypes: Readonly<Record<string, IntlNumberType>> = {
   mi: { getVariation: (n) => getZeroOrOneVariation(n) },
   qu: {
     getVariation: (n) =>
-      n % 10 === 1 && n % 100 !== 11
-        ? IntlVariations.NUMBER_ONE
-        : IntlVariations.NUMBER_OTHER,
+      n % 10 === 1 && n % 100 !== 11 ? IntlVariations.NUMBER_ONE : IntlVariations.NUMBER_OTHER,
   },
   quc: { getVariation: (n) => getOneOtherVariation(n) },
   rn: { getVariation: (n) => getOneOtherVariation(n) },
@@ -98,9 +94,7 @@ function getOneTwoOtherVariation(n: number): IntlVariations {
 }
 
 function getZeroOrOneVariation(n: number): IntlVariations {
-  return n === 0 || n === 1
-    ? IntlVariations.NUMBER_ONE
-    : IntlVariations.NUMBER_OTHER;
+  return n === 0 || n === 1 ? IntlVariations.NUMBER_ONE : IntlVariations.NUMBER_OTHER;
 }
 
 function getPluralRules(locale: string): Intl.PluralRules | null {
@@ -140,8 +134,7 @@ function getNumberTypeForLocale(locale: string): IntlNumberType {
   const supportedLocale = getSupportedLocale(locale);
   const numberType =
     supportedLocale == null
-      ? fallbackNumberTypes[getLocaleLanguage(locale)] ||
-        fallbackNumberTypes.root
+      ? fallbackNumberTypes[getLocaleLanguage(locale)] || fallbackNumberTypes.root
       : {
           getVariation: (n: number): IntlVariations =>
             categoryToVariation[getPluralRules(supportedLocale)!.select(n)],

@@ -116,9 +116,7 @@ export function getLocaleIdentity(locale: string): string {
       return canonicalizeBCP47(special);
     }
     const specialLanguage =
-      specialLocaleToLanguage[
-        legacyAlias as keyof typeof specialLocaleToLanguage
-      ];
+      specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage];
     if (specialLanguage) {
       const [, region] = legacyAlias.split('_');
       return canonicalizeBCP47(`${specialLanguage}-${region}`);
@@ -130,23 +128,15 @@ export function getLocaleIdentity(locale: string): string {
 
 export function getLocaleLanguage(locale: string): string {
   const legacyAlias = getLegacyAlias(locale);
-  if (
-    legacyAlias &&
-    specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage]
-  ) {
-    return specialLocaleToLanguage[
-      legacyAlias as keyof typeof specialLocaleToLanguage
-    ];
+  if (legacyAlias && specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage]) {
+    return specialLocaleToLanguage[legacyAlias as keyof typeof specialLocaleToLanguage];
   }
 
   const identity = getLocaleIdentity(locale);
   return getIdentityLanguage(identity);
 }
 
-export function formatLocaleForStyle(
-  locale: string,
-  style: LocaleStyle = 'bcp47',
-): string {
+export function formatLocaleForStyle(locale: string, style: LocaleStyle = 'bcp47'): string {
   if (style === 'preserve') {
     return locale;
   }

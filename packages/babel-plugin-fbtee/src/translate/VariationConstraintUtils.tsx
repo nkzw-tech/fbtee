@@ -10,8 +10,6 @@ export type ConstraintKey = string;
  * Build the aggregate key with which we access the constraint map.  The
  * constraint map maps the given constraints to the appropriate translation
  */
-export function buildConstraintKey(
-  constraintKeys: TokenConstraintPairs,
-): ConstraintKey {
+export function buildConstraintKey(constraintKeys: TokenConstraintPairs): ConstraintKey {
   return constraintKeys.map((kv) => kv[0] + '%' + kv[1]).join(':');
 }

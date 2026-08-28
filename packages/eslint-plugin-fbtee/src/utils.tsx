@@ -17,9 +17,7 @@ function resolveMemberExpressions(
   return `${object.name}.${property.name}`;
 }
 
-export function elementType(
-  node: TSESTree.JSXElement | TSESTree.JSXFragment,
-): string {
+export function elementType(node: TSESTree.JSXElement | TSESTree.JSXFragment): string {
   if (node.type === 'JSXFragment') {
     return '<>';
   }
@@ -65,9 +63,7 @@ export function resolveJsxElementTextContent(
     .trim();
 }
 
-export function resolveBinaryExpression(
-  node: TSESTree.BinaryExpression,
-): string | null {
+export function resolveBinaryExpression(node: TSESTree.BinaryExpression): string | null {
   if (node.operator !== '+') {
     return null;
   }

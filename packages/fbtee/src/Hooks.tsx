@@ -1,8 +1,4 @@
-import type {
-  FbtTableKey,
-  PatternHash,
-  PatternString,
-} from './CompilerTypes.ts';
+import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
 import type {
@@ -30,12 +26,10 @@ export type ResolverFn<T extends BaseResult | string> = (
  *
  *  See the docblock for fbt._ for an example of the nested table and its behavior
  */
-export type FbtRuntimeInput =
-  PatternString | [PatternString, PatternHash] | FbtInputTable;
+export type FbtRuntimeInput = PatternString | [PatternString, PatternHash] | FbtInputTable;
 
 type FbtInputBranch = {
-  [K in FbtTableKey]:
-    PatternString | [PatternString, PatternHash] | FbtInputBranch;
+  [K in FbtTableKey]: PatternString | [PatternString, PatternHash] | FbtInputBranch;
 };
 
 export type FbtInputTable = Record<

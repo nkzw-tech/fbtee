@@ -12,15 +12,10 @@ const root = process.cwd();
 const y = yargs(process.argv.slice(2));
 const argv = y
   .scriptName('fbtee')
-  .usage(
-    'Prepare translation files by merging phrases with existing translations:\n$0 [options]',
-  )
+  .usage('Prepare translation files by merging phrases with existing translations:\n$0 [options]')
   .string('source-strings')
   .default('source-strings', 'source_strings.json')
-  .describe(
-    'source-strings',
-    'The file containing source strings, as collected by collectFbt.js',
-  )
+  .describe('source-strings', 'The file containing source strings, as collected by collectFbt.js')
   .string('output-dir')
   .alias('output-dir', 'o')
   .default('output-dir', 'translations/')
@@ -71,12 +66,9 @@ for (const locale of locales) {
     ? basename(existingFile, '.json')
     : formatLocaleForStyle(locale, argv['output-locale-style']);
   process.stdout.write(`Processing locale: ${outputLocale}\n`);
-  const filePath =
-    existingFile || join(outputDirectory, `${outputLocale}.json`);
+  const filePath = existingFile || join(outputDirectory, `${outputLocale}.json`);
   pending.push({
-    existingJson: existsSync(filePath)
-      ? readFileSync(filePath, 'utf8')
-      : undefined,
+    existingJson: existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined,
     filePath,
     locale: outputLocale,
   });

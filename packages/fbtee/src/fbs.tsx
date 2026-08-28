@@ -5,11 +5,7 @@ import Hooks from './Hooks.tsx';
 
 export default createRuntime({
   getResult: Hooks.getFbsResult,
-  param: (
-    label,
-    value?: string | FbtPureStringResult,
-    variations?: Variations,
-  ) => {
+  param: (label, value?: string | FbtPureStringResult, variations?: Variations) => {
     if (value instanceof FbtPureStringResult) {
       value = String(value);
     }

@@ -1,19 +1,9 @@
 import { expect, jest } from '@jest/globals';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useTransition } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
-import createLocaleContext, {
-  useLocaleContext,
-} from '../createLocaleContext.tsx';
-import setupLocaleContext, {
-  TranslationPromise,
-} from '../setupLocaleContext.tsx';
+import createLocaleContext, { useLocaleContext } from '../createLocaleContext.tsx';
+import setupLocaleContext, { TranslationPromise } from '../setupLocaleContext.tsx';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],
@@ -28,10 +18,7 @@ const Button = () => {
   const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
   return (
-    <button
-      onClick={() => startTransition(() => setLocale('de_AT'))}
-      type="button"
-    >
+    <button onClick={() => startTransition(() => setLocale('de_AT'))} type="button">
       {locale}
     </button>
   );
@@ -50,10 +37,7 @@ const InvalidLocaleButton = () => {
   const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
   return (
-    <button
-      onClick={() => startTransition(() => setLocale('pirate'))}
-      type="button"
-    >
+    <button onClick={() => startTransition(() => setLocale('pirate'))} type="button">
       {locale}
     </button>
   );
@@ -88,9 +72,7 @@ test('locale context allows setting up a full fbtee context', async () => {
   await act(async () => {
     fireEvent.click(screen.getByRole('button'));
   });
-  await waitFor(() =>
-    expect(screen.getByRole('button').textContent).toBe('de_AT'),
-  );
+  await waitFor(() => expect(screen.getByRole('button').textContent).toBe('de_AT'));
 
   expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
@@ -122,9 +104,7 @@ test('locale context does not allow setting invalid locales', async () => {
   await act(async () => {
     fireEvent.click(screen.getByRole('button'));
   });
-  await waitFor(() =>
-    expect(screen.getByRole('button').textContent).toBe('en_US'),
-  );
+  await waitFor(() => expect(screen.getByRole('button').textContent).toBe('en_US'));
 
   expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>

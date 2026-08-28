@@ -33,21 +33,17 @@ const createTransformer = (opts = {}) => ({
     if (process.env.FBTEE_JEST_COMPILER === 'oxc' && fbteeOptions) {
       const fbteeResult = oxcFbteeTransformSync(filename, src, {
         ...fbteeOptions,
-        lang:
-          filename.endsWith('.tsx') || filename.endsWith('.jsx') ? 'tsx' : 'ts',
+        lang: filename.endsWith('.tsx') || filename.endsWith('.jsx') ? 'tsx' : 'ts',
         sourceType: 'module',
       });
       if (fbteeResult.errors.length > 0) {
-        throw new Error(
-          fbteeResult.errors.map((error) => error.message).join('\n'),
-        );
+        throw new Error(fbteeResult.errors.map((error) => error.message).join('\n'));
       }
       const result = oxcTransformSync(filename, fbteeResult.code, {
         jsx: {
           runtime: 'automatic',
         },
-        lang:
-          filename.endsWith('.tsx') || filename.endsWith('.jsx') ? 'tsx' : 'ts',
+        lang: filename.endsWith('.tsx') || filename.endsWith('.jsx') ? 'tsx' : 'ts',
         sourceType: 'module',
         target: 'es2022',
       });

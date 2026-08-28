@@ -1,11 +1,4 @@
-import {
-  existsSync,
-  globSync,
-  mkdirSync,
-  readFileSync,
-  renameSync,
-  writeFileSync,
-} from 'node:fs';
+import { existsSync, globSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { migrateLocaleJsonSync } from '@nkzw/oxc-transform-fbtee';
 import yargs from 'yargs';
@@ -78,9 +71,7 @@ for (const directory of argv.dir.map(String)) {
       }
     } else {
       if (existsSync(targetFile)) {
-        throw new Error(
-          `Cannot rename ${file} to ${targetFile}: target exists.`,
-        );
+        throw new Error(`Cannot rename ${file} to ${targetFile}: target exists.`);
       }
       if (argv['dry-run']) {
         process.stdout.write(`Rename ${file} -> ${targetFile}\n`);

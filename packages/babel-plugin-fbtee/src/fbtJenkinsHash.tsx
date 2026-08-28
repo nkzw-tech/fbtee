@@ -3,9 +3,7 @@ import type { TableJSFBTTree, TableJSFBTTreeLeaf } from './index.tsx';
 import jenkinsHash from './jenkinsHash.tsx';
 import { mapLeaves, onEachLeaf } from './JSFbtUtil.tsx';
 
-export default function fbtJenkinsHash(
-  jsfbt: Readonly<TableJSFBTTree>,
-): number {
+export default function fbtJenkinsHash(jsfbt: Readonly<TableJSFBTTree>): number {
   let desc: string | null = null;
   let leavesHaveSameDesc = true;
   onEachLeaf({ jsfbt: { m: [], t: jsfbt } }, (leaf: TableJSFBTTreeLeaf) => {
@@ -17,14 +15,11 @@ export default function fbtJenkinsHash(
   });
 
   if (leavesHaveSameDesc) {
-    const hashInputTree = mapLeaves(
-      jsfbt,
-      (leaf: Readonly<TableJSFBTTreeLeaf>) => {
-        return leaf.tokenAliases != null
-          ? { text: leaf.text, tokenAliases: leaf.tokenAliases }
-          : leaf.text;
-      },
-    );
+    const hashInputTree = mapLeaves(jsfbt, (leaf: Readonly<TableJSFBTTreeLeaf>) => {
+      return leaf.tokenAliases != null
+        ? { text: leaf.text, tokenAliases: leaf.tokenAliases }
+        : leaf.text;
+    });
     invariant(
       desc != null,
       'Expect `desc` to be nonnull as `TableJSFBTTree` should contain at least one leaf.',
@@ -33,14 +28,9 @@ export default function fbtJenkinsHash(
     return jenkinsHash(key);
   }
 
-  const hashInputTree = mapLeaves(
-    jsfbt,
-    (leaf: Readonly<TableJSFBTTreeLeaf>) => {
-      const newLeaf = { desc: leaf.desc, text: leaf.text } as const;
-      return leaf.tokenAliases != null
-        ? { ...newLeaf, tokenAliases: leaf.tokenAliases }
-        : newLeaf;
-    },
-  );
+  const hashInputTree = mapLeaves(jsfbt, (leaf: Readonly<TableJSFBTTreeLeaf>) => {
+    const newLeaf = { desc: leaf.desc, text: leaf.text } as const;
+    return leaf.tokenAliases != null ? { ...newLeaf, tokenAliases: leaf.tokenAliases } : newLeaf;
+  });
   return jenkinsHash(JSON.stringify(hashInputTree));
 }

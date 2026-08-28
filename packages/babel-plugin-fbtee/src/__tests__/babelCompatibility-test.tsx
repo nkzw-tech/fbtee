@@ -22,11 +22,7 @@ const babelVersions = [
   ['Babel 8', transformSyncBabel8 as unknown as Transform],
 ] as const;
 
-const transform = (
-  transformSync: Transform,
-  plugins: Array<unknown>,
-  source: string,
-) =>
+const transform = (transformSync: Transform, plugins: Array<unknown>, source: string) =>
   transformSync(source, {
     babelrc: false,
     configFile: false,
@@ -36,11 +32,7 @@ const transform = (
 
 describe.each(babelVersions)('%s compatibility', (_, transformSync) => {
   it('transforms JSX and auto-imports fbtee', () => {
-    const code = transform(
-      transformSync,
-      plugins,
-      `<fbt desc="A greeting">Hello, world!</fbt>;`,
-    );
+    const code = transform(transformSync, plugins, `<fbt desc="A greeting">Hello, world!</fbt>;`);
 
     expect(code).toContain('import { fbt } from "fbtee";');
     expect(code).toContain('fbt._("Hello, world!"');
@@ -73,8 +65,6 @@ describe.each(babelVersions)('%s compatibility', (_, transformSync) => {
           'A count',
         );`,
       ),
-    ).toThrow(
-      `Argument 'count' cannot contain a function call or class instantiation.`,
-    );
+    ).toThrow(`Argument 'count' cannot contain a function call or class instantiation.`);
   });
 });

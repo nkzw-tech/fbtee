@@ -15,8 +15,7 @@ export const IntlNumberVariations = {
   ZERO: 16, // 0b11000
 } as const;
 
-export type IntlVariations =
-  (typeof IntlNumberVariations)[keyof typeof IntlNumberVariations];
+export type IntlVariations = (typeof IntlNumberVariations)[keyof typeof IntlNumberVariations];
 
 // Must match with `IntlVariations.js`
 export const Gender = {
@@ -43,8 +42,7 @@ export const FbtVariationType = {
   PRONOUN: 3,
 } as const;
 
-export type IntlFbtVariationTypeValue =
-  (typeof FbtVariationType)[keyof typeof FbtVariationType];
+export type IntlFbtVariationTypeValue = (typeof FbtVariationType)[keyof typeof FbtVariationType];
 
 export const VIEWING_USER = '__viewing_user__';
 export const SUBJECT = '__subject__';

@@ -14,12 +14,7 @@ Run "fbtee <command> --help" for command-specific options.
 `);
 }
 
-if (
-  command == null ||
-  command === 'help' ||
-  command === '--help' ||
-  command === '-h'
-) {
+if (command == null || command === 'help' || command === '--help' || command === '-h') {
   showHelp();
 } else if (command === 'translate') {
   process.argv.splice(2, 1);

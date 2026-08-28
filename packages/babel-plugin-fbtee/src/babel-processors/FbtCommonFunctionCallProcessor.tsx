@@ -8,10 +8,7 @@ import {
   objectProperty,
   stringLiteral,
 } from '@babel/types';
-import {
-  getCommonDescription,
-  getUnknownCommonStringErrorMessage,
-} from '../FbtCommon.tsx';
+import { getCommonDescription, getUnknownCommonStringErrorMessage } from '../FbtCommon.tsx';
 import type { BindingName } from '../FbtConstants.tsx';
 import { CommonOption } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
@@ -28,23 +25,13 @@ export default class FbtCommonFunctionCallProcessor {
   node: NodePath['node'];
   path: NodePath;
 
-  constructor({
-    moduleName,
-    path,
-  }: {
-    moduleName: BindingName;
-    path: NodePath;
-  }) {
+  constructor({ moduleName, path }: { moduleName: BindingName; path: NodePath }) {
     this.moduleName = moduleName;
     this.node = path.node;
     this.path = path;
   }
 
-  static create({
-    path,
-  }: {
-    path: NodePath;
-  }): FbtCommonFunctionCallProcessor | null {
+  static create({ path }: { path: NodePath }): FbtCommonFunctionCallProcessor | null {
     const nodeChecker = FbtNodeChecker.forFbtCommonFunctionCall(path.node);
     return nodeChecker != null
       ? new FbtCommonFunctionCallProcessor({
@@ -66,9 +53,7 @@ export default class FbtCommonFunctionCallProcessor {
       );
     }
 
-    const text = normalizeSpaces(
-      expandStringConcat(moduleName, node.arguments[0]).value,
-    ).trim();
+    const text = normalizeSpaces(expandStringConcat(moduleName, node.arguments[0]).value).trim();
 
     const desc = getCommonDescription(text);
     if (desc == null || desc === '') {
@@ -78,9 +63,7 @@ export default class FbtCommonFunctionCallProcessor {
     const callNode = callExpression(identifier(moduleName), [
       stringLiteral(text),
       stringLiteral(desc),
-      objectExpression([
-        objectProperty(identifier(CommonOption), booleanLiteral(true)),
-      ]),
+      objectExpression([objectProperty(identifier(CommonOption), booleanLiteral(true))]),
     ]);
 
     callNode.loc = node.loc;

@@ -9,28 +9,16 @@ import type {
 import { isTableJSFBTTreeLeaf, onEachLeaf } from '../JSFbtUtil.tsx';
 import nullthrows from '../nullthrows.tsx';
 import type { PatternHash, PatternString } from '../Types.ts';
-import type {
-  FbtSiteHashifiedTableJSFBTTree,
-  FbtSiteHashToTextAndDesc,
-} from './FbtSiteBase.tsx';
-import {
-  FbtSiteBase,
-  FbtSiteMetaEntryBase,
-  getVariationMaskFromType,
-} from './FbtSiteBase.tsx';
-import type {
-  IntlFbtVariationTypeValue,
-  IntlVariationMaskValue,
-} from './IntlVariations.tsx';
+import type { FbtSiteHashifiedTableJSFBTTree, FbtSiteHashToTextAndDesc } from './FbtSiteBase.tsx';
+import { FbtSiteBase, FbtSiteMetaEntryBase, getVariationMaskFromType } from './FbtSiteBase.tsx';
+import type { IntlFbtVariationTypeValue, IntlVariationMaskValue } from './IntlVariations.tsx';
 import { FbtVariationType } from './IntlVariations.tsx';
 
 type TextAndDescConcatenation = string;
 
 type TextAndDescToHash = Partial<Record<TextAndDescConcatenation, PatternHash>>;
 
-type FbtSiteHashToTokenAliases = Partial<
-  Record<PatternHash, TokenAliases | null | undefined>
->;
+type FbtSiteHashToTokenAliases = Partial<Record<PatternHash, TokenAliases | null | undefined>>;
 
 /**
  * Represents an <fbt>'s data source in the format of `SourceDataJSON`.
@@ -54,10 +42,7 @@ type FbtSiteHashToTokenAliases = Partial<
  *  }
  * }
  */
-export class FbtSite extends FbtSiteBase<
-  FbtSiteMetaEntry,
-  FbtSiteHashToTextAndDesc
-> {
+export class FbtSite extends FbtSiteBase<FbtSiteMetaEntry, FbtSiteHashToTextAndDesc> {
   readonly _hashToTokenAliases: FbtSiteHashToTokenAliases;
 
   constructor(
@@ -69,12 +54,7 @@ export class FbtSite extends FbtSiteBase<
     project: string,
     hashToTokenAliases: FbtSiteHashToTokenAliases,
   ) {
-    super(
-      hashToTextAndDesc,
-      tableData.t,
-      FbtSiteMetadata.wrap(tableData.m),
-      project,
-    );
+    super(hashToTextAndDesc, tableData.t, FbtSiteMetadata.wrap(tableData.m), project);
     this._hashToTokenAliases = hashToTokenAliases;
   }
 
@@ -102,8 +82,7 @@ export class FbtSite extends FbtSiteBase<
     } as const;
     const hashToTokenAliases: FbtSiteHashToTokenAliases = {};
     onEachLeaf({ jsfbt }, (leaf) => {
-      const hash =
-        textAndDescToHash[this._serializeTextAndDesc(leaf.text, leaf.desc)];
+      const hash = textAndDescToHash[this._serializeTextAndDesc(leaf.text, leaf.desc)];
       if (hash && leaf.tokenAliases != null) {
         hashToTokenAliases[hash] = leaf.tokenAliases;
       }
@@ -145,10 +124,7 @@ export class FbtSite extends FbtSiteBase<
    * {text: 'a photo', desc: 'In the phrase: He has shared {a photo}.'}
    * ....
    */
-  static _serializeTextAndDesc(
-    text: PatternString,
-    desc: string,
-  ): TextAndDescConcatenation {
+  static _serializeTextAndDesc(text: PatternString, desc: string): TextAndDescConcatenation {
     return JSON.stringify({ desc, text });
   }
 }
@@ -170,10 +146,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
   }
 
   override getVariationMask(): IntlVariationMaskValue {
-    invariant(
-      this.hasVariationMask(),
-      'check hasVariationMask to avoid this invariant',
-    );
+    invariant(this.hasVariationMask(), 'check hasVariationMask to avoid this invariant');
     return nullthrows(getVariationMaskFromType(this.type));
   }
 
@@ -197,10 +170,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
     }
 
     if (type === FbtVariationType.GENDER) {
-      invariant(
-        token != null,
-        'token should be specified for gender variation',
-      );
+      invariant(token != null, 'token should be specified for gender variation');
       return { token, type: FbtVariationType.GENDER };
     }
 
@@ -208,10 +178,7 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
       return { type: FbtVariationType.PRONOUN };
     }
 
-    invariant(
-      this._range != null,
-      'range should be specified for enum variation',
-    );
+    invariant(this._range != null, 'range should be specified for enum variation');
     return { range: this._range };
   }
 
@@ -226,15 +193,9 @@ export class FbtSiteMetaEntry extends FbtSiteMetaEntryBase {
       );
     } else {
       if (type === FbtVariationType.GENDER) {
-        invariant(
-          token !== null,
-          'token should be specified for gender variation',
-        );
+        invariant(token !== null, 'token should be specified for gender variation');
       } else if (type === FbtVariationType.PRONOUN) {
-        invariant(
-          token === null,
-          'token should not be specified for pronoun variation',
-        );
+        invariant(token === null, 'token should not be specified for pronoun variation');
       }
     }
   }

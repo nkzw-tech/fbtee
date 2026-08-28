@@ -44,8 +44,7 @@ type Options = {
   type: ValidPronounUsagesKey;
 };
 
-const candidatePronounGenders: ReadonlyArray<GenderConst> =
-  consolidatedPronounGenders();
+const candidatePronounGenders: ReadonlyArray<GenderConst> = consolidatedPronounGenders();
 
 const HUMAN_OPTION = 'human';
 
@@ -66,8 +65,7 @@ export default class FbtPronounNode extends FbtNode<
     if (!isCallExpression(node)) {
       return null;
     }
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'pronoun'
       ? new FbtPronounNode({
           moduleName,
@@ -76,13 +74,7 @@ export default class FbtPronounNode extends FbtNode<
       : null;
   }
 
-  constructor({
-    moduleName,
-    node,
-  }: {
-    moduleName: BindingName;
-    node: CallExpression;
-  }) {
+  constructor({ moduleName, node }: { moduleName: BindingName; node: CallExpression }) {
     super({ moduleName, node });
 
     const args = this.getCallNodeArguments();
@@ -95,11 +87,7 @@ export default class FbtPronounNode extends FbtNode<
 
   override getOptions(): Options {
     const { moduleName } = this;
-    const rawOptions = collectOptionsFromFbtConstruct(
-      moduleName,
-      this.node,
-      ValidPronounOptions,
-    );
+    const rawOptions = collectOptionsFromFbtConstruct(moduleName, this.node, ValidPronounOptions);
 
     try {
       const args = this.getCallNodeArguments() || [];
@@ -115,10 +103,7 @@ export default class FbtPronounNode extends FbtNode<
         ValidPronounUsages,
         `First argument of ${moduleName}.pronoun(...)`,
       );
-      const gender = enforceNodeCallExpressionArg(
-        genderArg,
-        '`gender`, the second argument',
-      );
+      const gender = enforceNodeCallExpressionArg(genderArg, '`gender`, the second argument');
       const mergedOptions = nullthrows(rawOptions);
       return {
         capitalize: enforceBoolean.orNull(mergedOptions.capitalize),
@@ -138,9 +123,7 @@ export default class FbtPronounNode extends FbtNode<
       const { options } = this;
 
       const word = getData(
-        svArgValue === GENDER_ANY
-          ? GenderConst.UNKNOWN_PLURAL
-          : (svArgValue as GenderConst),
+        svArgValue === GENDER_ANY ? GenderConst.UNKNOWN_PLURAL : (svArgValue as GenderConst),
         options.type,
       );
       invariant(
@@ -149,9 +132,7 @@ export default class FbtPronounNode extends FbtNode<
         varDump(word),
       );
 
-      return options.capitalize
-        ? word.charAt(0).toUpperCase() + word.slice(1)
-        : word;
+      return options.capitalize ? word.charAt(0).toUpperCase() + word.slice(1) : word;
     } catch (error) {
       throw errorAt(this.node, error);
     }
@@ -166,20 +147,10 @@ export default class FbtPronounNode extends FbtNode<
         continue;
       }
       const resolvedGender = getPronounGenderKey(options.type, gender);
-      candidates.add(
-        resolvedGender === GenderConst.UNKNOWN_PLURAL
-          ? GENDER_ANY
-          : resolvedGender,
-      );
+      candidates.add(resolvedGender === GenderConst.UNKNOWN_PLURAL ? GENDER_ANY : resolvedGender);
     }
 
-    return [
-      new GenderStringVariationArg(
-        this,
-        options.gender,
-        Array.from(candidates),
-      ),
-    ];
+    return [new GenderStringVariationArg(this, options.gender, Array.from(candidates))];
   }
 
   override getFbtRuntimeArg(): CallExpression {
@@ -189,9 +160,7 @@ export default class FbtPronounNode extends FbtNode<
     const pronounArgs = [numericUsageExpr, gender];
     if (human) {
       pronounArgs.push(
-        objectExpression([
-          objectProperty(identifier(HUMAN_OPTION), numericLiteral(1)),
-        ]),
+        objectExpression([objectProperty(identifier(HUMAN_OPTION), numericLiteral(1))]),
       );
     }
 
@@ -205,14 +174,10 @@ export default class FbtPronounNode extends FbtNode<
   }
 }
 
-function getPronounGenderKey(
-  usage: ValidPronounUsagesKey,
-  gender: GenderConst,
-): GenderConst {
+function getPronounGenderKey(usage: ValidPronounUsagesKey, gender: GenderConst): GenderConst {
   switch (gender) {
     case GenderConst.NOT_A_PERSON:
-      return usage === ValidPronounUsagesKeys.object ||
-        usage === ValidPronounUsagesKeys.reflexive
+      return usage === ValidPronounUsagesKeys.object || usage === ValidPronounUsagesKeys.reflexive
         ? GenderConst.NOT_A_PERSON
         : GenderConst.UNKNOWN_PLURAL;
 
@@ -242,9 +207,7 @@ function consolidatedPronounGenders(): ReadonlyArray<GenderConst> {
     for (const usageKey of Object.keys(ValidPronounUsagesKeys)) {
       set.add(
         getPronounGenderKey(
-          ValidPronounUsagesKeys[
-            usageKey as keyof typeof ValidPronounUsagesKeys
-          ],
+          ValidPronounUsagesKeys[usageKey as keyof typeof ValidPronounUsagesKeys],
           gender,
         ),
       );

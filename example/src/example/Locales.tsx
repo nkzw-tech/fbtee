@@ -63,19 +63,7 @@ type IntlLocaleWithTextInfo = Intl.Locale & {
   textInfo?: LocaleTextInfo;
 };
 
-const RTL_LANGUAGES = new Set([
-  'ar',
-  'dv',
-  'fa',
-  'he',
-  'ks',
-  'ku',
-  'ps',
-  'sd',
-  'ug',
-  'ur',
-  'yi',
-]);
+const RTL_LANGUAGES = new Set(['ar', 'dv', 'fa', 'he', 'ks', 'ku', 'ps', 'sd', 'ug', 'ur', 'yi']);
 
 export function getLocaleDirection(locale: string): TextDirection {
   try {

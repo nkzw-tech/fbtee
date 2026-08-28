@@ -26,14 +26,8 @@ import {
   stringLiteral,
 } from '@babel/types';
 import invariant from 'invariant';
-import {
-  ConcreteFbtNodeType,
-  isConcreteFbtNode,
-} from '../fbt-nodes/FbtNodeType.tsx';
-import {
-  getCommonDescription,
-  getUnknownCommonStringErrorMessage,
-} from '../FbtCommon.tsx';
+import { ConcreteFbtNodeType, isConcreteFbtNode } from '../fbt-nodes/FbtNodeType.tsx';
+import { getCommonDescription, getUnknownCommonStringErrorMessage } from '../FbtCommon.tsx';
 import type { BindingName, FbtOptionConfig } from '../FbtConstants.tsx';
 import {
   CommonOption,
@@ -111,13 +105,8 @@ export default class JSXFbtProcessor {
       : null;
   }
 
-  _getText(
-    childNodes: Array<CallExpression | JSXElement | StringLiteral>,
-  ): ArrayExpression {
-    return convertToStringArrayNodeIfNeeded(
-      this.moduleName,
-      arrayExpression(childNodes),
-    );
+  _getText(childNodes: Array<CallExpression | JSXElement | StringLiteral>): ArrayExpression {
+    return convertToStringArrayNodeIfNeeded(this.moduleName, arrayExpression(childNodes));
   }
 
   /**
@@ -147,10 +136,7 @@ export default class JSXFbtProcessor {
       const textValue = normalizeSpaces(rawTextValue).trim();
       const descValue = getCommonDescription(textValue);
       if (descValue == null || descValue === '') {
-        throw errorAt(
-          node,
-          getUnknownCommonStringErrorMessage(moduleName, textValue),
-        );
+        throw errorAt(node, getUnknownCommonStringErrorMessage(moduleName, textValue));
       }
       if (getAttributeByName(this.node, 'desc')) {
         throw errorAt(
@@ -190,9 +176,9 @@ export default class JSXFbtProcessor {
     ) {
       throw errorAt(
         this.node,
-        `<${this.moduleName}> needs one of these attributes: ${[
-          ...RequiredFbtAttributes,
-        ].join(', ')}.`,
+        `<${this.moduleName}> needs one of these attributes: ${[...RequiredFbtAttributes].join(
+          ', ',
+        )}.`,
       );
     }
   }
@@ -241,18 +227,13 @@ export default class JSXFbtProcessor {
     if (isStringLiteral(attr.value)) {
       return attr.value.value === 'true';
     }
-    if (
-      isJSXExpressionContainer(attr.value) &&
-      isBooleanLiteral(attr.value.expression)
-    ) {
+    if (isJSXExpressionContainer(attr.value) && isBooleanLiteral(attr.value.expression)) {
       return attr.value.expression.value;
     }
     return false;
   }
 
-  private transformChildrenForFbtCallSyntax(): Array<
-    CallExpression | JSXElement | StringLiteral
-  > {
+  private transformChildrenForFbtCallSyntax(): Array<CallExpression | JSXElement | StringLiteral> {
     const preserveWhitespace = this.shouldPreserveWhitespace();
 
     this.path.traverse({
@@ -262,19 +243,12 @@ export default class JSXFbtProcessor {
           return;
         }
 
-        const name = validateNamespacedFbtElement(
-          this.moduleName,
-          node.openingElement.name,
-        );
+        const name = validateNamespacedFbtElement(this.moduleName, node.openingElement.name);
         if (name) {
           const namespace = getNamespacedArgs(this.moduleName);
           const args = namespace[name as keyof typeof namespace](node);
           const fbtConstructCall = callExpression(
-            memberExpression(
-              identifier(this.moduleName),
-              identifier(name),
-              false,
-            ),
+            memberExpression(identifier(this.moduleName), identifier(name), false),
             args as Array<CallExpressionArg>,
           );
           path.replaceWith(
@@ -286,9 +260,7 @@ export default class JSXFbtProcessor {
       },
     });
 
-    return (
-      filterEmptyNodes(this.node.children) as ReadonlyArray<JSXElementChild>
-    ).map((node) => {
+    return (filterEmptyNodes(this.node.children) as ReadonlyArray<JSXElementChild>).map((node) => {
       try {
         switch (node.type) {
           case 'JSXElement':
@@ -296,9 +268,7 @@ export default class JSXFbtProcessor {
             return node;
           case 'JSXText':
             return stringLiteral(
-              preserveWhitespace
-                ? cleanJSXText(node.value)
-                : normalizeSpaces(node.value),
+              preserveWhitespace ? cleanJSXText(node.value) : normalizeSpaces(node.value),
             );
           case 'JSXExpressionContainer': {
             const { expression } = node;
@@ -316,10 +286,9 @@ export default class JSXFbtProcessor {
 
             // otherwise, assume that we have textual nodes to return
             return stringLiteral(
-              normalizeSpaces(
-                expandStringConcat(this.moduleName, node.expression).value,
-                { preserveWhitespace },
-              ),
+              normalizeSpaces(expandStringConcat(this.moduleName, node.expression).value, {
+                preserveWhitespace,
+              }),
             );
           }
           default:
@@ -344,10 +313,7 @@ export default class JSXFbtProcessor {
     switch (descAttr.value.type) {
       case 'JSXExpressionContainer':
         // @babel/parser should not allow this scenario normally
-        invariant(
-          descAttr.value.expression.type !== 'JSXEmptyExpression',
-          'unexpected',
-        );
+        invariant(descAttr.value.expression.type !== 'JSXEmptyExpression', 'unexpected');
         return descAttr.value.expression;
       case 'StringLiteral':
         return descAttr.value;
@@ -379,9 +345,7 @@ export default class JSXFbtProcessor {
       }
     }
 
-    throw new Error(
-      `<${this.moduleName}> attribute '${CommonOption}' must be a boolean literal.`,
-    );
+    throw new Error(`<${this.moduleName}> attribute '${CommonOption}' must be a boolean literal.`);
   }
 
   /**
@@ -408,7 +372,5 @@ const validateNamespacedFbtElement = (
   node: JSXNamespacedName,
 ): ConcreteFbtNodeType | null => {
   const name = node.name.name === 'same-param' ? 'sameParam' : node.name.name;
-  return name && node.namespace.name === moduleName && isConcreteFbtNode(name)
-    ? name
-    : null;
+  return name && node.namespace.name === moduleName && isConcreteFbtNode(name) ? name : null;
 };

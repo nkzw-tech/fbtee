@@ -15,11 +15,7 @@ import {
 } from '@babel/types';
 import invariant from 'invariant';
 import type { BindingName, FbtOptionConfig } from '../FbtConstants.tsx';
-import {
-  FbtBooleanOptions,
-  ValidFbtOptions,
-  ValidPronounUsagesKeys,
-} from '../FbtConstants.tsx';
+import { FbtBooleanOptions, ValidFbtOptions, ValidPronounUsagesKeys } from '../FbtConstants.tsx';
 import FbtNodeChecker from '../FbtNodeChecker.tsx';
 import type { CallExpressionArg, ParamSet } from '../FbtUtil.tsx';
 import {
@@ -37,10 +33,7 @@ import {
 } from '../FbtUtil.tsx';
 import type { TokenAliases } from '../index.tsx';
 import { GENDER_ANY } from '../translate/IntlVariations.tsx';
-import type {
-  AnyStringVariationArg,
-  StringVariationArgsMap,
-} from './FbtArguments.tsx';
+import type { AnyStringVariationArg, StringVariationArgsMap } from './FbtArguments.tsx';
 import { GenderStringVariationArg } from './FbtArguments.tsx';
 import FbtEnumNode from './FbtEnumNode.tsx';
 import FbtImplicitParamNode from './FbtImplicitParamNode.tsx';
@@ -114,9 +107,7 @@ const childNodeClasses = new Map(
     FbtListNode,
     FbtPronounNode,
     FbtSameParamNode,
-  ].map(
-    (Constructor) => [Constructor.type as FbtNodeType, Constructor] as const,
-  ),
+  ].map((Constructor) => [Constructor.type as FbtNodeType, Constructor] as const),
 );
 
 /**
@@ -188,8 +179,7 @@ export default class FbtElementNode
         common: enforceBoolean.orNull(rawOptions.common) || false,
         doNotExtract: enforceBoolean.orNull(rawOptions.doNotExtract),
         extraOptions,
-        preserveWhitespace:
-          enforceBoolean.orNull(rawOptions.preserveWhitespace) || false,
+        preserveWhitespace: enforceBoolean.orNull(rawOptions.preserveWhitespace) || false,
         project: enforceString(rawOptions.project || ''),
         subject:
           typeof rawOptions.subject !== 'string' &&
@@ -205,12 +195,8 @@ export default class FbtElementNode
 
   getExtraOptionsNode(): ObjectExpression | null {
     const { extraOptions } = this.options;
-    const extraOptionsObjectProperties = Object.keys(extraOptions).map(
-      (optionName) =>
-        objectProperty(
-          identifier(optionName),
-          stringLiteral(extraOptions[optionName]),
-        ),
+    const extraOptionsObjectProperties = Object.keys(extraOptions).map((optionName) =>
+      objectProperty(identifier(optionName), stringLiteral(extraOptions[optionName])),
     );
     return extraOptionsObjectProperties.length
       ? objectExpression(extraOptionsObjectProperties)
@@ -222,18 +208,13 @@ export default class FbtElementNode
     subject?: Node | null,
   ): ReadonlyArray<AnyStringVariationArg> {
     return [
-      ...(isNode(subject)
-        ? [new GenderStringVariationArg(instance, subject, [GENDER_ANY])]
-        : []),
+      ...(isNode(subject) ? [new GenderStringVariationArg(instance, subject, [GENDER_ANY])] : []),
       ...instance.children.flatMap((c) => c.getArgsForStringVariationCalc()),
     ];
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<AnyStringVariationArg> {
-    return FbtElementNode.getArgsForStringVariationCalcForFbtElement(
-      this,
-      this.options.subject,
-    );
+    return FbtElementNode.getArgsForStringVariationCalcForFbtElement(this, this.options.subject);
   }
 
   /**
@@ -294,20 +275,14 @@ export default class FbtElementNode
    */
   getDescription(_args: StringVariationArgsMap): string {
     const [, descriptionNode] = this.getCallNodeArguments() || [];
-    invariant(
-      descriptionNode != null,
-      'fbt description argument cannot be found',
-    );
+    invariant(descriptionNode != null, 'fbt description argument cannot be found');
 
-    return normalizeSpaces(
-      expandStringConcat(this.moduleName, descriptionNode).value,
-      { preserveWhitespace: !!this.options.preserveWhitespace },
-    ).trim();
+    return normalizeSpaces(expandStringConcat(this.moduleName, descriptionNode).value, {
+      preserveWhitespace: !!this.options.preserveWhitespace,
+    }).trim();
   }
 
-  override getTokenAliases(
-    argsMap: StringVariationArgsMap,
-  ): TokenAliases | null {
+  override getTokenAliases(argsMap: StringVariationArgsMap): TokenAliases | null {
     return getTokenAliasesFromFbtNodeTree(this, argsMap);
   }
 
@@ -333,24 +308,15 @@ export default class FbtElementNode
     } = node;
 
     if (!isArrayExpression(fbtContentsNode)) {
-      throw errorAt(
-        node,
-        `${moduleName}(...) text must be converted to an array before parsing.`,
-      );
+      throw errorAt(node, `${moduleName}(...) text must be converted to an array before parsing.`);
     }
 
     for (const elementChild of fbtContentsNode.elements || []) {
       if (elementChild == null) {
-        throw errorAt(
-          node,
-          `${moduleName}(...) text array cannot contain empty slots.`,
-        );
+        throw errorAt(node, `${moduleName}(...) text array cannot contain empty slots.`);
       }
       if (isSpreadElement(elementChild)) {
-        throw errorAt(
-          elementChild,
-          `Array spread syntax is not supported in ${moduleName} text.`,
-        );
+        throw errorAt(elementChild, `Array spread syntax is not supported in ${moduleName} text.`);
       }
       fbtElement.appendChild(this.createChildNode(moduleName, elementChild));
     }
@@ -364,8 +330,7 @@ export default class FbtElementNode
     const nodeType = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     const Constructor = nodeType ? childNodeClasses.get(nodeType) : null;
     let childNode: FbtChildNode | null =
-      Constructor?.fromNode(moduleName, node) ||
-      FbtTextNode.fromNode(moduleName, node);
+      Constructor?.fromNode(moduleName, node) || FbtTextNode.fromNode(moduleName, node);
 
     // Try to convert to FbtImplicitParamNode as a last resort
     if (childNode == null && isJSXElement(node)) {
@@ -398,11 +363,7 @@ export default class FbtElementNode
     const { subject } = this.options;
     return subject == null
       ? null
-      : createRuntimeCallExpression(
-          this,
-          [subject],
-          ValidPronounUsagesKeys.subject,
-        );
+      : createRuntimeCallExpression(this, [subject], ValidPronounUsagesKeys.subject);
   }
 
   override getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): Readonly<{
@@ -423,10 +384,7 @@ export default class FbtElementNode
     obj: Record<string, unknown> & { _tokenSet?: Record<string, unknown> },
   ): unknown {
     invariant(
-      obj &&
-        typeof obj === 'object' &&
-        typeof obj._tokenSet === 'object' &&
-        obj._tokenSet,
+      obj && typeof obj === 'object' && typeof obj._tokenSet === 'object' && obj._tokenSet,
       'Expected _tokenSet property to be defined',
     );
     obj._tokenSet = compactNodeProps(obj._tokenSet, false);
@@ -438,9 +396,7 @@ export default class FbtElementNode
     return FbtElementNode.__compactTokenSet(ret as Record<string, unknown>);
   }
 
-  assertNoOverallTokenNameCollision(
-    argsMapList: ReadonlyArray<StringVariationArgsMap>,
-  ) {
+  assertNoOverallTokenNameCollision(argsMapList: ReadonlyArray<StringVariationArgsMap>) {
     argsMapList.forEach((argsMap) => {
       buildFbtNodeMapForSameParam(this, argsMap);
     });

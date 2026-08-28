@@ -9,14 +9,22 @@
     "oxc",
     "vite"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/vite-plugin-fbtee"
   },
-  "license": "MIT",
-  "sideEffects": false,
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "index.js"
+  ],
   "type": "module",
+  "sideEffects": false,
+  "main": "index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": {
       "types": "./index.d.ts",
@@ -24,14 +32,6 @@
       "default": "./index.js"
     }
   },
-  "main": "index.js",
-  "types": "index.d.ts",
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.d.ts",
-    "index.js"
-  ],
   "scripts": {
     "test": "node test/e2e.mjs"
   },

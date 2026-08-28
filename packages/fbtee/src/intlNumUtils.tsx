@@ -31,10 +31,7 @@ function getOptionsKey({ decimals, useGrouping }: FormatterOptions): string {
   return `${useGrouping ? 'group' : 'plain'}:${decimals ?? 'default'}`;
 }
 
-function getFormatter(
-  locale: string,
-  options: FormatterOptions,
-): Intl.NumberFormat {
+function getFormatter(locale: string, options: FormatterOptions): Intl.NumberFormat {
   const normalizedLocale = normalizeLocale(locale);
   let formatterCacheForLocale = numberFormatCache.get(normalizedLocale);
   if (!formatterCacheForLocale) {

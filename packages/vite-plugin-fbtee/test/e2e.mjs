@@ -7,22 +7,10 @@ assert.equal(fbtee, namedFbtee);
 const plugin = fbtee();
 assert.equal(plugin.name, 'vite-plugin-fbtee');
 assert.equal(plugin.enforce, 'pre');
-assert.equal(
-  plugin.transform.filter.code.test(`const value = fbt('A', 'd');`),
-  true,
-);
-assert.equal(
-  plugin.transform.filter.code.test(`// fbs can be used here`),
-  true,
-);
-assert.equal(
-  plugin.transform.filter.code.test(`const value = 'plain';`),
-  false,
-);
-assert.equal(
-  plugin.transform.handler(`const value = 'plain';`, 'source.ts'),
-  null,
-);
+assert.equal(plugin.transform.filter.code.test(`const value = fbt('A', 'd');`), true);
+assert.equal(plugin.transform.filter.code.test(`// fbs can be used here`), true);
+assert.equal(plugin.transform.filter.code.test(`const value = 'plain';`), false);
+assert.equal(plugin.transform.handler(`const value = 'plain';`, 'source.ts'), null);
 
 const transformed = plugin.transform.handler(
   `const value = <fbt desc="vite test">Hello</fbt>;`,

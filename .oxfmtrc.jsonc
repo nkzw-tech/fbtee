@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "experimentalSortImports": {
+    "newlinesBetween": false,
+  },
+  "experimentalSortPackageJson": {
+    "sortScripts": true,
+  },
+  "ignorePatterns": [
+    "example/.enum_manifest.json",
+    "example/source_strings.json",
+    "example/src/translatedFbts",
+    "example/translations/",
+    "packages/*/lib/",
+    "packages/fbtee/lib-tmp/",
+    "packages/next-plugin-fbtee/test/fixture/next-env.d.ts",
+    "pnpm-lock.yaml",
+    "target/",
+    "website/.enum_manifest.json",
+    "website/dist/",
+    "website/source_strings.json",
+    "website/translations/",
+  ],
+}

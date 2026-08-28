@@ -8,14 +8,7 @@ import {
   IntlVariations,
   useLocaleContext,
 } from 'fbtee';
-import {
-  ChangeEvent,
-  StrictMode,
-  useCallback,
-  useEffect,
-  useState,
-  useTransition,
-} from 'react';
+import { ChangeEvent, StrictMode, useCallback, useEffect, useState, useTransition } from 'react';
 import ar from '../translatedFbts/ar.json' with { type: 'json' };
 import deDE from '../translatedFbts/de-DE.json' with { type: 'json' };
 import es419 from '../translatedFbts/es-419.json' with { type: 'json' };
@@ -96,9 +89,7 @@ const Example = () => {
         <VStack action="" as="form" gap method="get" onSubmit={onSubmit}>
           <fieldset>
             <span className={classNames('example_row', 'example_row--multi')}>
-              <span
-                className={classNames('example_input', 'example_input--40')}
-              >
+              <span className={classNames('example_input', 'example_input--40')}>
                 <input
                   name="name"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -108,9 +99,7 @@ const Example = () => {
                   type="text"
                 />
               </span>
-              <span
-                className={classNames('example_input', 'example_input--30')}
-              >
+              <span className={classNames('example_input', 'example_input--30')}>
                 <input
                   name="count"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -162,9 +151,7 @@ const Example = () => {
           </fieldset>
           <fieldset>
             <span className={classNames('example_row', 'example_row--multi')}>
-              <span
-                className={classNames('example_input', 'example_input--40')}
-              >
+              <span className={classNames('example_input', 'example_input--40')}>
                 <input
                   name="ex2Name"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -174,15 +161,11 @@ const Example = () => {
                   type="text"
                 />
               </span>
-              <span
-                className={classNames('example_input', 'example_input--20')}
-              >
+              <span className={classNames('example_input', 'example_input--20')}>
                 <select
                   className="neatoSelect"
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                    setEx2Object(
-                      event.target.value as keyof typeof ExampleEnum,
-                    );
+                    setEx2Object(event.target.value as keyof typeof ExampleEnum);
                   }}
                 >
                   {Object.keys(ExampleEnum).map((k) => (
@@ -235,11 +218,7 @@ const Example = () => {
                 <b className="pad">
                   <a href="#">View</a>
                 </b>{' '}
-                <fbt:pronoun
-                  gender={ex2Pronoun}
-                  human={false}
-                  type="possessive"
-                />{' '}
+                <fbt:pronoun gender={ex2Pronoun} human={false} type="possessive" />{' '}
                 <fbt:enum enum-range={ExampleEnum} value={ex2Object} />.
               </fbt>
             </span>
@@ -262,7 +241,8 @@ const Example = () => {
                     </fbt>,
                   ]}
                   name="list"
-                />?
+                />
+                ?
               </fbt>
             </label>
           </fieldset>

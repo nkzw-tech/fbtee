@@ -11,10 +11,7 @@ export default class FbtResultBase implements BaseResult {
   _isSerializing: boolean;
   _errorListener: IFbtErrorListener | null;
 
-  constructor(
-    contents: NestedFbtContentItems,
-    errorListener?: IFbtErrorListener | null,
-  ) {
+  constructor(contents: NestedFbtContentItems, errorListener?: IFbtErrorListener | null) {
     this._contents = contents;
     this._errorListener = errorListener || null;
     this._isSerializing = false;
@@ -63,9 +60,7 @@ export default class FbtResultBase implements BaseResult {
     return this.toString();
   }
 
-  static flattenToArray(
-    contents: NestedFbtContentItems,
-  ): ReadonlyArray<FbtContentItem> {
+  static flattenToArray(contents: NestedFbtContentItems): ReadonlyArray<FbtContentItem> {
     if (contents.length === 1 && typeof contents[0] === 'string') {
       return contents as ReadonlyArray<FbtContentItem>;
     }

@@ -1,10 +1,4 @@
-import {
-  existsSync,
-  globSync,
-  readFileSync,
-  statSync,
-  writeFileSync,
-} from 'node:fs';
+import { existsSync, globSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, parse, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -44,12 +38,7 @@ Run "fbtee <command> --help" for command-specific options.
 `);
 }
 
-if (
-  command == null ||
-  command === 'help' ||
-  command === '--help' ||
-  command === '-h'
-) {
+if (command == null || command === 'help' || command === '--help' || command === '-h') {
   showHelp();
 } else if (command === 'prepare-translations') {
   process.argv.splice(2, 1);
@@ -108,15 +97,11 @@ if (
     )
     .string('transform')
     .default('transform', null)
-    .describe(
-      'transform',
-      'A custom transform to call into rather than the default provided.',
-    )
+    .describe('transform', 'A custom transform to call into rather than the default provided.')
     .string('options')
     .describe(
       'options',
-      'additional options that fbt(..., {can: "take"}).  ' +
-        `i.e. --options "locale,qux,id"`,
+      'additional options that fbt(..., {can: "take"}).  ' + `i.e. --options "locale,qux,id"`,
     )
     .string('custom-collector')
     .describe(
@@ -194,13 +179,10 @@ if (
 
   const enumManifest = {};
   for (const src of argv.src) {
-    const enumFiles = globSync(
-      resolve(root, String(src)) + '/**/*$FbtEnum' + extensions,
-    );
+    const enumFiles = globSync(resolve(root, String(src)) + '/**/*$FbtEnum' + extensions);
     for (const filepath of enumFiles) {
       const name = parse(filepath).name;
-      const imported = (await import(pathToFileURL(resolve(filepath)).href))
-        .default;
+      const imported = (await import(pathToFileURL(resolve(filepath)).href)).default;
       const value = imported?.__esModule ? imported.default : imported;
       if (value == null) {
         throw new Error(
@@ -231,20 +213,14 @@ if (
   const output = { childParentMappings: {}, phrases: [] };
   let customHash = null;
   if (argv['hash-module']) {
-    const hashModule = await import(
-      pathToFileURL(resolve(root, argv['hash-module'])).href
-    );
+    const hashModule = await import(pathToFileURL(resolve(root, argv['hash-module'])).href);
     customHash = hashModule.default;
-    if (
-      typeof customHash !== 'function' &&
-      typeof customHash?.getFbtHash !== 'function'
-    ) {
+    if (typeof customHash !== 'function' && typeof customHash?.getFbtHash !== 'function') {
       throw new Error(
         'Expected hashing module to expose a default function or an object with getFbtHash().',
       );
     }
-    customHash =
-      typeof customHash === 'function' ? customHash : customHash.getFbtHash;
+    customHash = typeof customHash === 'function' ? customHash : customHash.getFbtHash;
   }
   const result = collectBatchSync(
     files.map(({ filename, source }) => ({ filename, sourceText: source })),
@@ -349,9 +325,7 @@ function findBabelConfig(root, sources) {
     if (!existsSync(absolute)) {
       continue;
     }
-    let directory = statSync(absolute).isDirectory()
-      ? absolute
-      : dirname(absolute);
+    let directory = statSync(absolute).isDirectory() ? absolute : dirname(absolute);
     while (directory === root || !relative(root, directory).startsWith('..')) {
       directories.add(directory);
       if (directory === root) {

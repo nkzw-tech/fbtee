@@ -9,23 +9,12 @@
     "oxc",
     "transform"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/oxc-transform-fbtee"
   },
-  "license": "MIT",
-  "sideEffects": false,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "default": "./index.js"
-    }
-  },
-  "main": "index.js",
-  "types": "index.d.ts",
   "files": [
     "Cargo.toml",
     "LICENSE",
@@ -35,13 +24,24 @@
     "index.js",
     "src"
   ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
   "scripts": {
     "artifacts": "napi artifacts",
     "assemble:artifacts": "napi artifacts --output-dir artifacts",
     "build": "napi build --esm --platform --release && pnpm run format-generated",
     "build:debug": "napi build --esm --platform && pnpm run format-generated",
     "download:artifacts": "node scripts/download-artifacts.mjs",
-    "format-generated": "prettier --write index.js index.d.ts",
+    "format-generated": "oxfmt --write index.js index.d.ts",
     "test": "cargo test -p oxc-transform-fbtee && pnpm run build && node scripts/prepare-native-smoke.mjs && node scripts/smoke-native-install.mjs .native-smoke && node test/e2e.mjs && node test/release.mjs",
     "verify:artifacts": "node scripts/verify-artifacts.mjs"
   },
@@ -60,9 +60,6 @@
     "@nkzw/oxc-transform-fbtee-binding-win32-arm64-msvc": "workspace:*",
     "@nkzw/oxc-transform-fbtee-binding-win32-x64-msvc": "workspace:*"
   },
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "napi": {
     "binaryName": "oxc-transform-fbtee",
     "packageName": "@nkzw/oxc-transform-fbtee-binding",
@@ -76,5 +73,8 @@
       "x86_64-unknown-linux-gnu",
       "x86_64-unknown-linux-musl"
     ]
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

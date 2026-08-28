@@ -12,17 +12,17 @@
     "react",
     "translation"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/babel-plugin-fbtee"
   },
-  "license": "MIT",
-  "type": "module",
-  "main": "lib/index.mjs",
   "bin": {
     "fbtee": "lib/bin.mjs"
   },
+  "type": "module",
+  "main": "lib/index.mjs",
   "scripts": {
     "build": "tsdown src/index.tsx src/bin.tsx -d lib --target=node22 --format=esm --clean --dts"
   },

@@ -1,11 +1,5 @@
 import { TSESTree } from '@typescript-eslint/utils';
-import {
-  createRule,
-  getPropName,
-  hasFbtParent,
-  isFbtNode,
-  resolveNodeValue,
-} from '../utils.tsx';
+import { createRule, getPropName, hasFbtParent, isFbtNode, resolveNodeValue } from '../utils.tsx';
 
 type Options = [{ ignoredWords: Array<string> }];
 
@@ -20,8 +14,7 @@ const attributes = new Set([
 
 const shouldIgnoreParent = (node: TSESTree.Node) => {
   const { parent } = node;
-  const openingElement =
-    parent?.type === 'JSXElement' ? parent?.openingElement : null;
+  const openingElement = parent?.type === 'JSXElement' ? parent?.openingElement : null;
   return (
     openingElement?.type === 'JSXOpeningElement' &&
     openingElement.name.type === 'JSXIdentifier' &&
@@ -31,9 +24,7 @@ const shouldIgnoreParent = (node: TSESTree.Node) => {
 
 export default createRule<Options, 'unwrappedString'>({
   create(context, options) {
-    const ignoredWords = new Set(
-      options[0].ignoredWords.map((value) => value.toLowerCase()),
-    );
+    const ignoredWords = new Set(options[0].ignoredWords.map((value) => value.toLowerCase()));
 
     const isIgnoredWord = (value: string) =>
       ignoredWords.has(value.replaceAll(/\s+/g, ' ').toLowerCase());
@@ -56,10 +47,7 @@ export default createRule<Options, 'unwrappedString'>({
           return;
         }
 
-        if (
-          node.value?.type === 'JSXExpressionContainer' &&
-          isFbtNode(node.value.expression)
-        ) {
+        if (node.value?.type === 'JSXExpressionContainer' && isFbtNode(node.value.expression)) {
           return;
         }
 
@@ -131,12 +119,10 @@ export default createRule<Options, 'unwrappedString'>({
 
   meta: {
     docs: {
-      description:
-        'Enforce text content to be wrapped with `<fbt>`, `fbt()` or `fbs()`',
+      description: 'Enforce text content to be wrapped with `<fbt>`, `fbt()` or `fbs()`',
     },
     messages: {
-      unwrappedString:
-        'Text content must be wrapped in `<fbt>`, `fbt()` or `fbs()`',
+      unwrappedString: 'Text content must be wrapped in `<fbt>`, `fbt()` or `fbs()`',
     },
     schema: [
       {

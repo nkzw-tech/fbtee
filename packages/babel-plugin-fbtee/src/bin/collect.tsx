@@ -7,16 +7,8 @@ import type { PlainFbtNode } from '../fbt-nodes/FbtNode.tsx';
 import { FbtOptionConfig } from '../FbtConstants.tsx';
 import type { TableJSFBT } from '../index.tsx';
 import packagerTypes from './collectFbtConstants.tsx';
-import {
-  buildCollectFbtOutput,
-  getFbtCollector,
-  getPackagers,
-} from './collectFbtUtils.tsx';
-import type {
-  IFbtCollector,
-  PackagerPhrase,
-  RawChildParentMappings,
-} from './FbtCollector.tsx';
+import { buildCollectFbtOutput, getFbtCollector, getPackagers } from './collectFbtUtils.tsx';
+import type { IFbtCollector, PackagerPhrase, RawChildParentMappings } from './FbtCollector.tsx';
 import { generateManifest } from './manifestUtils.tsx';
 
 /**
@@ -105,15 +97,13 @@ const argv = y
   .default('common', '')
   .describe(
     'common',
-    'Optional path to the common strings module. ' +
-      'This is a map from {[text]: [description]}.',
+    'Optional path to the common strings module. ' + 'This is a map from {[text]: [description]}.',
   )
   .string('enum-manifest')
   .default('enum-manifest', join(root, '.enum_manifest.json'))
   .describe(
     'enum-manifest',
-    'The path or filename to write the enum manfiest (accessed when ' +
-      'processing shared enums)',
+    'The path or filename to write the enum manfiest (accessed when ' + 'processing shared enums)',
   )
   .boolean('generate-fbt-nodes')
   .default('generate-fbt-nodes', false)
@@ -123,15 +113,11 @@ const argv = y
   )
   .string('transform')
   .default('transform', null)
-  .describe(
-    'transform',
-    'A custom transform to call into rather than the default provided.',
-  )
+  .describe('transform', 'A custom transform to call into rather than the default provided.')
   .string('options')
   .describe(
     'options',
-    'additional options that fbt(..., {can: "take"}).  ' +
-      `i.e. --options "locale,qux,id"`,
+    'additional options that fbt(..., {can: "take"}).  ' + `i.e. --options "locale,qux,id"`,
   )
   .string('custom-collector')
   .describe(
@@ -184,10 +170,7 @@ if (cliExtraOptions) {
 }
 
 async function writeOutput(collector: IFbtCollector) {
-  const packagers = await getPackagers(
-    argv['packager'] || 'text',
-    argv['hash-module'] || null,
-  );
+  const packagers = await getPackagers(argv['packager'] || 'text', argv['hash-module'] || null);
   const output = buildCollectFbtOutput(collector, packagers, {
     genFbtNodes: argv['generate-fbt-nodes'],
   });
@@ -254,13 +237,9 @@ if (argv.help) {
 }
 
 const transformPath = argv['transform'];
-const transform = transformPath
-  ? (await import(pathToFileURL(transformPath).href)).default
-  : null;
+const transform = transformPath ? (await import(pathToFileURL(transformPath).href)).default : null;
 
-const commonFile = argv['common']?.length
-  ? resolve(root, argv['common'])
-  : null;
+const commonFile = argv['common']?.length ? resolve(root, argv['common']) : null;
 const fbtCommon = commonFile?.length
   ? (commonFile.endsWith('.json')
       ? await import(pathToFileURL(commonFile).href, {

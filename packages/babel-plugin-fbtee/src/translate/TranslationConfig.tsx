@@ -34,16 +34,10 @@ export default class TranslationConfig {
     if (Number.isNaN(value)) {
       return false;
     }
-    return (
-      value === this.numberType.getFallback() ||
-      value === this.genderType.getFallback()
-    );
+    return value === this.numberType.getFallback() || value === this.genderType.getFallback();
   }
 
   static fromFBLocale(locale: string): TranslationConfig {
-    return new TranslationConfig(
-      IntlNumberType.forLocale(locale),
-      forLocale(locale),
-    );
+    return new TranslationConfig(IntlNumberType.forLocale(locale), forLocale(locale));
   }
 }

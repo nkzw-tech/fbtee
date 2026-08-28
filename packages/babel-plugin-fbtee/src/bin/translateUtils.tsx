@@ -11,10 +11,7 @@ import {
 import type { LocaleStyle } from '../localeIdentifier.tsx';
 import nullthrows from '../nullthrows.tsx';
 import { FbtSite } from '../translate/FbtSite.tsx';
-import type {
-  HashToTranslation,
-  TranslationResult,
-} from '../translate/TranslationBuilder.tsx';
+import type { HashToTranslation, TranslationResult } from '../translate/TranslationBuilder.tsx';
 import TranslationBuilder from '../translate/TranslationBuilder.tsx';
 import TranslationConfig from '../translate/TranslationConfig.tsx';
 import type { SerializedTranslationData } from '../translate/TranslationData.tsx';
@@ -47,9 +44,7 @@ export type TranslationGroup = Readonly<{
   translations: Translations;
 }>;
 
-export type Translations = Partial<
-  Record<PatternString, SerializedTranslationData | null>
->;
+export type Translations = Partial<Record<PatternString, SerializedTranslationData | null>>;
 
 function throwIfLocaleConflicts(locales: ReadonlyArray<string>): void {
   const identityToLocales = new Map<string, Array<string>>();
@@ -124,9 +119,7 @@ export async function processJSON(
   const fbtSites = json.phrases.map(createFbtSiteFromJSON);
   return await processGroups(
     json.phrases,
-    json.translationGroups.map((group) =>
-      processTranslations(fbtSites, group, options),
-    ),
+    json.translationGroups.map((group) => processTranslations(fbtSites, group, options)),
     options,
   );
 }
@@ -150,8 +143,9 @@ async function processGroups(
 
   const localeToHashToFbt: LocaleToHashToTranslationResult = {};
   for (const group of translatedGroups) {
-    const hashToFbt: Partial<Record<string, TranslationResult>> =
-      (localeToHashToFbt[group['fb-locale']] = {});
+    const hashToFbt: Partial<Record<string, TranslationResult>> = (localeToHashToFbt[
+      group['fb-locale']
+    ] = {});
     phrases.forEach((phrase, idx) => {
       const translatedFbt = group.translatedPhrases[idx];
       const jsfbt = nullthrows(
@@ -192,16 +186,9 @@ function processTranslations(
   options: Options,
 ): TranslatedGroup {
   const inputLocale = group['fb-locale'];
-  const outputLocale = formatLocaleForStyle(
-    inputLocale,
-    options.outputLocaleStyle,
-  );
+  const outputLocale = formatLocaleForStyle(inputLocale, options.outputLocaleStyle);
   const config = TranslationConfig.fromFBLocale(inputLocale);
-  const filteredTranslations = checkAndFilterTranslations(
-    inputLocale,
-    group.translations,
-    options,
-  );
+  const filteredTranslations = checkAndFilterTranslations(inputLocale, group.translations, options);
   const translations: HashToTranslation = {};
   for (const t of Object.keys(filteredTranslations)) {
     translations[t] = TranslationData.fromJSON(filteredTranslations[t]);

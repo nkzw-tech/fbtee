@@ -1,7 +1,4 @@
-export default function nullthrows<T>(
-  x: T | null | undefined,
-  message?: string,
-): T {
+export default function nullthrows<T>(x: T | null | undefined, message?: string): T {
   if (x != null) {
     return x;
   }

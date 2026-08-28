@@ -16,9 +16,7 @@ const addWebpackLoader = (configuration, options) => {
 };
 
 const prependTurbopackRule = (existingRule, rule) =>
-  existingRule
-    ? [rule, ...(Array.isArray(existingRule) ? existingRule : [existingRule])]
-    : rule;
+  existingRule ? [rule, ...(Array.isArray(existingRule) ? existingRule : [existingRule])] : rule;
 
 const createTurbopackRules = (rules, options) => {
   const nextRules = { ...rules };
@@ -46,12 +44,9 @@ export const withFbtee =
         rules: createTurbopackRules(nextConfig.turbopack?.rules, options),
       },
       webpack(configuration, context) {
-        const configured =
-          userWebpack?.(configuration, context) ?? configuration;
+        const configured = userWebpack?.(configuration, context) ?? configuration;
         return configured && typeof configured.then === 'function'
-          ? configured.then((value) =>
-              addWebpackLoader(value ?? configuration, options),
-            )
+          ? configured.then((value) => addWebpackLoader(value ?? configuration, options))
           : addWebpackLoader(configured, options);
       },
     };

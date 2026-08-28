@@ -12,12 +12,12 @@
     "react",
     "translation"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/babel-plugin-fbtee-auto-import"
   },
-  "license": "MIT",
   "type": "module",
   "main": "lib/index.mjs",
   "scripts": {

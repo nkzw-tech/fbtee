@@ -22,10 +22,7 @@ import {
 import nullthrows from '../nullthrows.tsx';
 import { GENDER_ANY, NUMBER_ANY } from '../translate/IntlVariations.tsx';
 import type { StringVariationArgsMap } from './FbtArguments.tsx';
-import {
-  GenderStringVariationArg,
-  NumberStringVariationArg,
-} from './FbtArguments.tsx';
+import { GenderStringVariationArg, NumberStringVariationArg } from './FbtArguments.tsx';
 import FbtNode from './FbtNode.tsx';
 import { tokenNameToTextPattern } from './FbtNodeUtil.tsx';
 
@@ -45,10 +42,7 @@ const ParamVariation = {
   number: 0,
 } as const;
 
-function enforceExpression(
-  value: Node | string | null,
-  valueDesc?: string | null,
-): Expression {
+function enforceExpression(value: Node | string | null, valueDesc?: string | null): Expression {
   invariant(
     value != null && typeof value !== 'string' && isExpression(value),
     '%s must be an expression. Received %s (%s).',
@@ -91,14 +85,8 @@ export default class FbtParamNode extends FbtNode<
             ? enforceExpression(rawOptions.number)
             : null;
 
-      invariant(
-        number !== false,
-        `Option 'number' must be an expression or 'true'.`,
-      );
-      invariant(
-        !gender || !number,
-        `Options 'gender' and 'number' cannot be used together.`,
-      );
+      invariant(number !== false, `Option 'number' must be an expression or 'true'.`);
+      invariant(!gender || !number, `Options 'gender' and 'number' cannot be used together.`);
 
       let name = typeof rawOptions.name === 'string' ? rawOptions.name : null;
       if (name == null || name === '') {
@@ -131,8 +119,7 @@ export default class FbtParamNode extends FbtNode<
       return null;
     }
 
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'param'
       ? new FbtParamNode({
           moduleName,
@@ -146,18 +133,11 @@ export default class FbtParamNode extends FbtNode<
   > {
     const { gender, number } = this.options;
     const ret = [];
-    invariant(
-      !gender || !number,
-      `Options 'gender' and 'number' cannot be used together.`,
-    );
+    invariant(!gender || !number, `Options 'gender' and 'number' cannot be used together.`);
     if (gender) {
       ret.push(new GenderStringVariationArg(this, gender, [GENDER_ANY]));
     } else if (number) {
-      ret.push(
-        new NumberStringVariationArg(this, number === true ? null : number, [
-          NUMBER_ANY,
-        ]),
-      );
+      ret.push(new NumberStringVariationArg(this, number === true ? null : number, [NUMBER_ANY]));
     }
     return ret;
   }
@@ -189,9 +169,7 @@ export default class FbtParamNode extends FbtNode<
     let variationValues: Array<Expression> | null = null;
 
     if (number != null) {
-      variationValues = [
-        numericLiteral(ParamVariation.number),
-      ] as Array<Expression>;
+      variationValues = [numericLiteral(ParamVariation.number)] as Array<Expression>;
       if (number !== true) {
         // For number="true" we don't pass additional value.
         variationValues.push(number);
@@ -216,8 +194,6 @@ export default class FbtParamNode extends FbtNode<
     if (gender != null) {
       return { gender };
     }
-    return typeof number !== 'boolean' && isExpression(number)
-      ? { number }
-      : {};
+    return typeof number !== 'boolean' && isExpression(number) ? { number } : {};
   }
 }

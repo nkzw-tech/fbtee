@@ -55,8 +55,7 @@ export default class FbtEnumNode extends FbtNode<
       return null;
     }
 
-    const constructName =
-      FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
+    const constructName = FbtNodeChecker.forModule(moduleName).getFbtNodeType(node);
     return constructName === 'enum'
       ? new FbtEnumNode({
           moduleName,
@@ -73,15 +72,9 @@ export default class FbtEnumNode extends FbtNode<
       let range: EnumModule = {};
       rangeNode = enforceNode(rangeNode, '`range`');
       if (isArrayExpression(rangeNode)) {
-        invariant(
-          rangeNode.elements && rangeNode.elements.length,
-          `Enum range cannot be empty.`,
-        );
+        invariant(rangeNode.elements && rangeNode.elements.length, `Enum range cannot be empty.`);
         rangeNode.elements.forEach((item) => {
-          invariant(
-            isStringLiteral(item),
-            `Enum values must be string literals.`,
-          );
+          invariant(isStringLiteral(item), `Enum values must be string literals.`);
           range[item.value] = item.value;
         });
       } else if (isObjectExpression(rangeNode)) {
@@ -92,10 +85,7 @@ export default class FbtEnumNode extends FbtNode<
           );
           const valueNode = prop.value;
           const keyNode = prop.key;
-          invariant(
-            isStringLiteral(valueNode),
-            `Enum values must be string literals.`,
-          );
+          invariant(isStringLiteral(valueNode), `Enum values must be string literals.`);
           if (isStringLiteral(keyNode) || isNumericLiteral(keyNode)) {
             range[keyNode.value.toString()] = valueNode.value;
           } else {
@@ -144,13 +134,7 @@ export default class FbtEnumNode extends FbtNode<
   }
 
   override getArgsForStringVariationCalc(): ReadonlyArray<EnumStringVariationArg> {
-    return [
-      new EnumStringVariationArg(
-        this,
-        this.options.value,
-        Object.keys(this.options.range),
-      ),
-    ];
+    return [new EnumStringVariationArg(this, this.options.value, Object.keys(this.options.range))];
   }
 
   override getFbtRuntimeArg(): CallExpression {
@@ -168,10 +152,7 @@ export default class FbtEnumNode extends FbtNode<
       );
     }
 
-    return createRuntimeCallExpression(this, [
-      this.options.value,
-      runtimeRange,
-    ]);
+    return createRuntimeCallExpression(this, [this.options.value, runtimeRange]);
   }
 
   override getArgsThatShouldNotContainFunctionCallOrClassInstantiation(): Readonly<{

@@ -57,9 +57,7 @@ const fakeRequire = (name) => {
   const inputs = [{ locale: 'de-DE' }, { locale: 'ja-JP' }];
   assert.deepEqual(
     prepareTranslationsBatchSync(source, inputs),
-    inputs.map(({ locale }) =>
-      prepareTranslationsSync(source, undefined, locale),
-    ),
+    inputs.map(({ locale }) => prepareTranslationsSync(source, undefined, locale)),
   );
 }
 
@@ -75,11 +73,7 @@ const fakeRequire = (name) => {
     target: 'es2022',
   });
   assert.deepEqual(lowered.errors, []);
-  Function(
-    'require',
-    'globalThis',
-    `${lowered.code};`,
-  )(fakeRequire, globalThis);
+  Function('require', 'globalThis', `${lowered.code};`)(fakeRequire, globalThis);
   assert.equal(globalThis.__fbteeResult, 'ok');
   delete globalThis.__fbteeResult;
 }
@@ -174,10 +168,7 @@ for (const source of [
 {
   const source = `const x = fbt('Async', 'description');`;
   const result = await transform('source.tsx', source, { lang: 'tsx' });
-  assert.deepEqual(
-    result,
-    transformSync('source.tsx', source, { lang: 'tsx' }),
-  );
+  assert.deepEqual(result, transformSync('source.tsx', source, { lang: 'tsx' }));
   assert.match(result.code, /import { fbt } from "fbtee"/);
   assert.doesNotMatch(result.code, /require\("fbtee"\)/);
 }
@@ -274,18 +265,14 @@ for (const source of [
     ['_plural(value)', 3],
     ['_param("plain", value)', 2],
   ]) {
-    const generatedIndex =
-      result.code.indexOf(generatedText) + generatedText.lastIndexOf('value');
+    const generatedIndex = result.code.indexOf(generatedText) + generatedText.lastIndexOf('value');
     const generatedPrefix = result.code.slice(0, generatedIndex).split('\n');
     const original = originalPositionFor(new TraceMap(result.map), {
       column: generatedPrefix.at(-1).length,
       line: generatedPrefix.length,
     });
     assert.equal(original.line, line);
-    assert.equal(
-      original.column,
-      source.split('\n')[line - 1].indexOf('value'),
-    );
+    assert.equal(original.column, source.split('\n')[line - 1].indexOf('value'));
   }
 }
 
@@ -313,11 +300,10 @@ for (const source of [
 }
 
 for (const sourceType of ['script', 'commonjs']) {
-  const result = transformSync(
-    'source.tsx',
-    `const translated = fbt('Mapped', 'description');`,
-    { lang: 'tsx', sourceType },
-  );
+  const result = transformSync('source.tsx', `const translated = fbt('Mapped', 'description');`, {
+    lang: 'tsx',
+    sourceType,
+  });
   assert.deepEqual(result.errors, []);
   assert.doesNotMatch(result.code, /\bimport\b/);
   assert.match(result.code, /const { fbt } = require\("fbtee"\)/);
@@ -339,10 +325,7 @@ for (const sourceType of ['script', 'commonjs']) {
       sourceType: 'module',
     });
     assert.deepEqual(result.errors, []);
-    assert.match(
-      result.code,
-      /import { fbt(?:, type FbtRuntimeCallInput)? } from "fbtee"/,
-    );
+    assert.match(result.code, /import { fbt(?:, type FbtRuntimeCallInput)? } from "fbtee"/);
     assert.doesNotMatch(result.code, /import type { fbt/);
     const lowered = lowerSync('source.tsx', result.code, {
       lang: 'tsx',

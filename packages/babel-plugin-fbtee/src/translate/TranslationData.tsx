@@ -36,9 +36,7 @@ export default class TranslationData {
     this.translations = translations;
   }
 
-  static fromJSON: (
-    json?: SerializedTranslationData | null,
-  ) => TranslationData | null = (json) => {
+  static fromJSON: (json?: SerializedTranslationData | null) => TranslationData | null = (json) => {
     if (json == null) {
       // Hash key is logged to stderr in `processTranslations`
       return null;

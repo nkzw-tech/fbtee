@@ -5,10 +5,7 @@ import replaceClearTokensWithTokenAliases from '../replaceClearTokensWithTokenAl
 import type { FbtTableKey, PatternHash } from '../Types.ts';
 import { FbtSite, FbtSiteMetaEntry } from './FbtSite.tsx';
 import type { FbtSiteHashifiedTableJSFBTTree } from './FbtSiteBase.tsx';
-import type {
-  IntlVariationMaskValue,
-  IntlVariations,
-} from './IntlVariations.tsx';
+import type { IntlVariationMaskValue, IntlVariations } from './IntlVariations.tsx';
 import {
   EXACTLY_ONE,
   FbtVariationType,
@@ -28,16 +25,13 @@ import { buildConstraintKey } from './VariationConstraintUtils.tsx';
  * Map from a string's hash to its translation payload.
  * If the translation is string type, it implies it was machine generated.
  */
-export type HashToTranslation = Partial<
-  Record<PatternHash, TranslationData | string | null>
->;
+export type HashToTranslation = Partial<Record<PatternHash, TranslationData | string | null>>;
 
 /**
  * Leaf can be either a string translation or
  * a tuple of translation and hash if `inclHash` is true
  */
-type TranslationLeaf =
-  string | null | undefined | [string | null | undefined, PatternHash];
+type TranslationLeaf = string | null | undefined | [string | null | undefined, PatternHash];
 
 type TranslationTree =
   | TranslationLeaf
@@ -47,10 +41,7 @@ type TranslationTree =
         FbtTableKey,
         | TranslationLeaf
         | Partial<
-            Record<
-              FbtTableKey,
-              TranslationLeaf | Partial<Record<FbtTableKey, TranslationLeaf>>
-            >
+            Record<FbtTableKey, TranslationLeaf | Partial<Record<FbtTableKey, TranslationLeaf>>>
           >
       >
     >;
@@ -69,9 +60,7 @@ export type TranslationResult =
 type MetadataToken = string;
 
 /** e.g. {'name' => IntlGenderVariations.MALE} */
-type TokenToConstraint = Partial<
-  Record<MetadataToken, IntlVariations | Gender>
->;
+type TokenToConstraint = Partial<Record<MetadataToken, IntlVariations | Gender>>;
 
 /** e.g. {'name' => IntlVariationMask.GENDER} */
 type TokenToMask = Partial<Record<MetadataToken, IntlVariationMaskValue>>;
@@ -82,9 +71,7 @@ type TokenToMask = Partial<Record<MetadataToken, IntlVariationMaskValue>>;
  * However, because a TranslationData's `variation` property might be in string
  * format, let's allow a constraint to be string type for now.
  */
-export type TokenConstraintPairs = ReadonlyArray<
-  [MetadataToken, number | string]
->;
+export type TokenConstraintPairs = ReadonlyArray<[MetadataToken, number | string]>;
 
 type MutableTokenConstraintPairs = Array<[MetadataToken, number | string]>;
 
@@ -251,11 +238,7 @@ export default class TranslationBuilder {
       // buildRecursive call above, as its corresponding token constraint is
       // defaulted to '*'.  See _getConstraintMap for more details
       const metadata = this._metadata[levelIdx];
-      if (
-        metadata != null &&
-        metadata.hasVariationMask() &&
-        key !== EXACTLY_ONE
-      ) {
+      if (metadata != null && metadata.hasVariationMask() && key !== EXACTLY_ONE) {
         const mask = nullthrows(
           metadata.getVariationMask(),
           'Expect mask not to be null because metadata.hasVariationMask() returns true.',
@@ -279,11 +262,7 @@ export default class TranslationBuilder {
         const variationCandidates = _getTypesFromMask(mask);
         variationCandidates.forEach((variationKey) => {
           tokenConstraints[token] = variationKey;
-          translation = this._buildRecursive(
-            branchOrLeaf,
-            tokenConstraints,
-            levelIdx + 1,
-          );
+          translation = this._buildRecursive(branchOrLeaf, tokenConstraints, levelIdx + 1);
           if (_shouldStore(translation)) {
             table[String(variationKey)] = translation as TranslationLeaf;
           }
@@ -299,8 +278,7 @@ export default class TranslationBuilder {
     tokenConstraints: TokenToConstraint = {},
   ): TranslationLeaf {
     let translation;
-    const transData: TranslationData | null | undefined | string =
-      this._translations[hash];
+    const transData: TranslationData | null | undefined | string = this._translations[hash];
     if (typeof transData === 'string') {
       // Fake translations are just simple strings.  There's no such thing as
       // variation support for these locales.  So if token constraints were
@@ -312,12 +290,10 @@ export default class TranslationBuilder {
       } else {
         // Real translations are TranslationData objects, so we call the
         // getDefaultTranslation() method to get the translation (we hope)
-        const defaultTranslation =
-          transData && transData.getDefaultTranslation(this._config);
+        const defaultTranslation = transData && transData.getDefaultTranslation(this._config);
 
         // If no translation available, use the English source text
-        translation =
-          defaultTranslation ?? this._fbtSite.getHashToLeaf()[hash]?.text;
+        translation = defaultTranslation ?? this._fbtSite.getHashToLeaf()[hash]?.text;
       }
     }
 
@@ -341,10 +317,7 @@ export default class TranslationBuilder {
    * not to add the translation to the map, because it's already in
    * the map via its fallback ('*') keys.
    */
-  getConstrainedTranslation(
-    hash: PatternHash,
-    tokenConstraints: TokenToConstraint,
-  ): string | null {
+  getConstrainedTranslation(hash: PatternHash, tokenConstraints: TokenToConstraint): string | null {
     const constraintKeys: MutableTokenConstraintPairs = [];
     for (const token of Object.keys(this._tokenToMask)) {
       constraintKeys.push([token, tokenConstraints[token] || '*']);
@@ -400,12 +373,7 @@ export default class TranslationBuilder {
       const [token, val] = constraintKeys[ii];
       if (val !== '*' && this._config.isDefaultVariation(val)) {
         constraintKeys[ii] = [token, '*'];
-        this._insertConstraint(
-          constraintKeys,
-          constraintMap,
-          translation,
-          ii + 1,
-        );
+        this._insertConstraint(constraintKeys, constraintMap, translation, ii + 1);
         constraintKeys[ii] = [token, val]; // return the value back
       }
     }
@@ -465,9 +433,7 @@ export default class TranslationBuilder {
    *  }
    */
   private _mem = new Map<string, ConstraintKeyToTranslation>();
-  private getConstraintMapWithMemoization = (
-    hash: PatternHash,
-  ): ConstraintKeyToTranslation => {
+  private getConstraintMapWithMemoization = (hash: PatternHash): ConstraintKeyToTranslation => {
     const cache = this._mem.get(hash);
     if (cache != null) {
       return cache;
@@ -515,12 +481,7 @@ export default class TranslationBuilder {
       for (const k of Object.keys(this._tokenToMask)) {
         constraintKeys.push([k, constraints[k] || '*']);
       }
-      this._insertConstraint(
-        constraintKeys,
-        constraintMap,
-        translation.translation,
-        0,
-      );
+      this._insertConstraint(constraintKeys, constraintMap, translation.translation, 0);
     });
     this._mem.set(hash, constraintMap);
     return constraintMap;
@@ -539,7 +500,5 @@ function _shouldStore(branch: TranslationTree): boolean {
 
 const genders = [Gender.MALE, Gender.FEMALE, Gender.UNKNOWN];
 function _getTypesFromMask(mask: IntlVariationMaskValue) {
-  return getType(mask) === Mask.NUMBER
-    ? Object.values(IntlNumberVariations)
-    : genders;
+  return getType(mask) === Mask.NUMBER ? Object.values(IntlNumberVariations) : genders;
 }

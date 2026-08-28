@@ -123,9 +123,7 @@ export default function list(
       }
     default: {
       conjunction satisfies never;
-      throw new Error(
-        `Invalid conjunction ${conjunction} provided to '<fbt:list>'.`,
-      );
+      throw new Error(`Invalid conjunction ${conjunction} provided to '<fbt:list>'.`);
     }
   }
 }

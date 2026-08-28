@@ -14,15 +14,12 @@ export default function replaceClearTokensWithTokenAliases(
     return textOrTranslation;
   }
 
-  return Object.keys(tokenAliases).reduce(
-    (mangledText: string, clearToken: string) => {
-      const clearTokenName = tokenNameToTextPattern(clearToken);
-      const mangledTokenName = tokenNameToTextPattern(tokenAliases[clearToken]);
-      // Since a string is not allowed to have implicit params with duplicated
-      // token names, replacing the first and therefore the only occurence of
-      // `clearTokenName` is sufficient.
-      return mangledText.replace(clearTokenName, mangledTokenName);
-    },
-    textOrTranslation,
-  );
+  return Object.keys(tokenAliases).reduce((mangledText: string, clearToken: string) => {
+    const clearTokenName = tokenNameToTextPattern(clearToken);
+    const mangledTokenName = tokenNameToTextPattern(tokenAliases[clearToken]);
+    // Since a string is not allowed to have implicit params with duplicated
+    // token names, replacing the first and therefore the only occurence of
+    // `clearTokenName` is sufficient.
+    return mangledText.replace(clearTokenName, mangledTokenName);
+  }, textOrTranslation);
 }

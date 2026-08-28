@@ -12,13 +12,16 @@
     "react",
     "translation"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/fbtee"
   },
-  "license": "MIT",
   "type": "module",
+  "main": "lib/index.mjs",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.mts",
   "exports": {
     ".": {
       "types": "./lib/index.d.mts",
@@ -39,9 +42,6 @@
     },
     "./Strings.json": "./Strings.json"
   },
-  "main": "lib/index.mjs",
-  "module": "lib/index.mjs",
-  "types": "lib/index.d.mts",
   "scripts": {
     "build": "pnpm build:babel && pnpm build:prepend && tsdown lib-tmp/index.tsx -d lib --target=node22 --format=esm --clean --dts && tsdown lib-tmp/index-server.tsx -d lib --target=node22 --format=esm --no-clean --dts",
     "build:babel": "babel --delete-dir-on-start --copy-files --config-file ./babel-build.config.js --out-dir=lib-tmp --extensions=.tsx --keep-file-extension --ignore='src/**/__tests__/*.tsx' src",

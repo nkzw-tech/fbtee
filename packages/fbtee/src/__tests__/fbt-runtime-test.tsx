@@ -33,9 +33,7 @@ describe('fbt', () => {
     } as const;
     for (const n of Object.keys(numToType)) {
       const type = numToType[n as unknown as keyof typeof numToType];
-      const displayNumber = intlNumUtils.formatNumberWithThousandDelimiters(
-        Number.parseFloat(n),
-      );
+      const displayNumber = intlNumUtils.formatNumberWithThousandDelimiters(Number.parseFloat(n));
       expect(fbtRuntime._param('num', Number.parseInt(n, 10), [0])).toEqual([
         [type, '*'],
         { num: displayNumber },
@@ -50,10 +48,7 @@ describe('fbt', () => {
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'fr_FR' }),
     });
 
-    expect(fbtRuntime._param('num', 1_000_000, [0])[0]).toEqual([
-      IntlVariations.NUMBER_MANY,
-      '*',
-    ]);
+    expect(fbtRuntime._param('num', 1_000_000, [0])[0]).toEqual([IntlVariations.NUMBER_MANY, '*']);
   });
 
   it('should preserve plural fallbacks for locales Intl does not support', () => {
@@ -61,10 +56,7 @@ describe('fbt', () => {
       getViewerContext: () => ({ ...IntlViewerContext, locale: 'sz_PL' }),
     });
 
-    expect(fbtRuntime._param('num', 2, [0])[0]).toEqual([
-      IntlVariations.NUMBER_FEW,
-      '*',
-    ]);
+    expect(fbtRuntime._param('num', 2, [0])[0]).toEqual([IntlVariations.NUMBER_FEW, '*']);
   });
 
   it('should handle empty string plural leaves', () => {
@@ -79,18 +71,12 @@ describe('fbt', () => {
 
     expect(
       fbtRuntime
-        ._(table, [
-          fbtRuntime._plural(1),
-          fbtRuntime._plural(1, 'number of matched contacts'),
-        ])
+        ._(table, [fbtRuntime._plural(1), fbtRuntime._plural(1, 'number of matched contacts')])
         .toString(),
     ).toBe('');
     expect(
       fbtRuntime
-        ._(table, [
-          fbtRuntime._plural(2),
-          fbtRuntime._plural(2, 'number of matched contacts'),
-        ])
+        ._(table, [fbtRuntime._plural(2), fbtRuntime._plural(2, 'number of matched contacts')])
         .toString(),
     ).toBe('Matches 2 contacts:');
   });
@@ -149,10 +135,7 @@ describe('fbt', () => {
       { arg: [B, one, name], expected: 'B,UNKNOWN,ONE Bob has 1' },
       { arg: [B, other, name], expected: 'B,UNKNOWN,OTHER Bob has 20' },
     ];
-    const runTest = function (test: {
-      arg: Array<FbtTableArg>;
-      expected: string;
-    }) {
+    const runTest = function (test: { arg: Array<FbtTableArg>; expected: string }) {
       try {
         expect(fbtRuntime._(table, test.arg).toString()).toBe(test.expected);
       } catch (error) {
@@ -186,8 +169,6 @@ describe('fbt', () => {
     ];
     tests.forEach(runTest);
 
-    expect(console.warn).toHaveBeenCalledWith(
-      'Translations have not been provided.',
-    );
+    expect(console.warn).toHaveBeenCalledWith('Translations have not been provided.');
   });
 });

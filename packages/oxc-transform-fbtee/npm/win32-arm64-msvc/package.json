@@ -9,26 +9,26 @@
     "oxc",
     "transform"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/oxc-transform-fbtee"
   },
-  "license": "MIT",
-  "main": "oxc-transform-fbtee.win32-arm64-msvc.node",
   "files": [
     "oxc-transform-fbtee.win32-arm64-msvc.node"
   ],
-  "scripts": {
-    "prepack": "node -e \"const{existsSync}=require('node:fs');const{main}=require('./package.json');if(!existsSync(main))throw new Error('Missing native binding: '+main)\""
-  },
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "os": [
     "win32"
   ],
   "cpu": [
     "arm64"
-  ]
+  ],
+  "main": "oxc-transform-fbtee.win32-arm64-msvc.node",
+  "scripts": {
+    "prepack": "node -e \"const{existsSync}=require('node:fs');const{main}=require('./package.json');if(!existsSync(main))throw new Error('Missing native binding: '+main)\""
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
 }

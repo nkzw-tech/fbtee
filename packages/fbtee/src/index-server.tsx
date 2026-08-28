@@ -12,16 +12,8 @@ export { default as list, List } from './list.tsx';
 export const fbt = fbtInternal as unknown as FbtAPI;
 export const fbs = fbsInternal as unknown as FbsAPI;
 
-export type {
-  FbtRuntimeInput,
-  FbtRuntimeInput as TranslationTable,
-} from './Hooks.tsx';
-export type {
-  FbtConjunction,
-  FbtDelimiter,
-  FbtWithoutString,
-  TranslatedString,
-} from './Types.ts';
+export type { FbtRuntimeInput, FbtRuntimeInput as TranslationTable } from './Hooks.tsx';
+export type { FbtConjunction, FbtDelimiter, FbtWithoutString, TranslatedString } from './Types.ts';
 export type { TranslationDictionary } from './FbtTranslations.tsx';
 
 export {

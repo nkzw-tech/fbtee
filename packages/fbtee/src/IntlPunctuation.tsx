@@ -40,8 +40,7 @@ function _getRules(locale?: string | null): Rules {
   const rewrites = IntlPhonologicalRewrites.get(locale);
 
   for (let pattern of Object.keys(rewrites.patterns)) {
-    let replacement: string | ((match: string) => string) =
-      rewrites.patterns[pattern];
+    let replacement: string | ((match: string) => string) = rewrites.patterns[pattern];
     // "Metaclasses" are shorthand for larger character classes. For example,
     // _C may refer to consonants and _V to vowels for a locale.
     for (const metaclass of Object.keys(rewrites.meta)) {
@@ -89,9 +88,7 @@ export function applyPhonologicalRules(text: string): string {
 const _normalizedStops = new Map<string, string>();
 for (const norm of Object.keys(IntlRedundantStops.equivalencies)) {
   for (const eq of [norm].concat(
-    IntlRedundantStops.equivalencies[
-      norm as keyof typeof IntlRedundantStops.equivalencies
-    ],
+    IntlRedundantStops.equivalencies[norm as keyof typeof IntlRedundantStops.equivalencies],
   )) {
     _normalizedStops.set(eq, norm);
   }
@@ -102,9 +99,7 @@ for (const prefix of Object.keys(IntlRedundantStops.redundancies)) {
   _redundancies.set(
     prefix,
     new Set(
-      IntlRedundantStops.redundancies[
-        prefix as keyof typeof IntlRedundantStops.redundancies
-      ],
+      IntlRedundantStops.redundancies[prefix as keyof typeof IntlRedundantStops.redundancies],
     ),
   );
 }

@@ -19,8 +19,7 @@ const getFbtResult = (
   }
 
   const resolvedContents = result.getContents();
-  return (resolvedContents?.length === 1 &&
-  typeof resolvedContents[0] === 'string'
+  return (resolvedContents?.length === 1 && typeof resolvedContents[0] === 'string'
     ? resolvedContents[0]
     : resolvedContents) as unknown as FbtResult;
 };

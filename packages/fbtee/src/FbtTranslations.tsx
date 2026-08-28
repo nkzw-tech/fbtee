@@ -1,8 +1,4 @@
-import Hooks, {
-  FbtRuntimeCallInput,
-  FbtRuntimeInput,
-  FbtTranslatedInput,
-} from './Hooks.tsx';
+import Hooks, { FbtRuntimeCallInput, FbtRuntimeInput, FbtTranslatedInput } from './Hooks.tsx';
 import { getLocaleAliases } from './localeIdentifier.tsx';
 
 export type TranslationDictionary = {
@@ -20,10 +16,7 @@ export default {
     return currentTranslations;
   },
 
-  getTranslatedInput({
-    args,
-    options,
-  }: FbtRuntimeCallInput): FbtTranslatedInput | null {
+  getTranslatedInput({ args, options }: FbtRuntimeCallInput): FbtTranslatedInput | null {
     const hashKey = options?.hk;
     const { locale } = Hooks.getViewerContext();
     const table = getLocaleAliases(locale)

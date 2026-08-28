@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { readdirSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import withFbtee, { withFbtee as namedWithFbtee } from '../index.js';
@@ -27,10 +27,7 @@ const configured = withFbtee(options)({
 assert.equal(configured.existing, undefined);
 assert.ok(Array.isArray(configured.turbopack.rules['*.tsx']));
 assert.equal(configured.turbopack.rules['*.tsx'][1], existingTurbopackRule);
-assert.deepEqual(
-  configured.turbopack.rules['*.tsx'][0].loaders[0].options,
-  options,
-);
+assert.deepEqual(configured.turbopack.rules['*.tsx'][0].loaders[0].options, options);
 const webpackConfiguration = configured.webpack({ module: { rules: [] } }, {});
 assert.equal(userWebpackCalled, true);
 assert.equal(webpackConfiguration.existing, true);
@@ -40,14 +37,12 @@ const asyncConfigured = withFbtee()({
   async webpack() {},
 });
 assert.equal(
-  (await asyncConfigured.webpack({ module: { rules: [] } }, {})).module.rules[0]
-    .enforce,
+  (await asyncConfigured.webpack({ module: { rules: [] } }, {})).module.rules[0].enforce,
   'pre',
 );
 
-const createLoaderCallback =
-  (resolve, reject, getCacheable) => (error, code, map) =>
-    error ? reject(error) : resolve({ cacheable: getCacheable(), code, map });
+const createLoaderCallback = (resolve, reject, getCacheable) => (error, code, map) =>
+  error ? reject(error) : resolve({ cacheable: getCacheable(), code, map });
 
 const runLoader = (source, resourcePath, loaderOptions = {}) =>
   new Promise((resolve, reject) => {
@@ -80,15 +75,10 @@ const transformed = await runLoader(
 );
 assert.match(transformed.code, /fbt\._\("Hello"/);
 assert.equal(transformed.map.version, 3);
-assert.deepEqual(transformed.map.sources, [
-  join(fixtureDirectory, 'source.tsx'),
-]);
+assert.deepEqual(transformed.map.sources, [join(fixtureDirectory, 'source.tsx')]);
 
 await assert.rejects(
-  runLoader(
-    `export const value = fbt.param('name', value);`,
-    join(fixtureDirectory, 'invalid.ts'),
-  ),
+  runLoader(`export const value = fbt.param('name', value);`, join(fixtureDirectory, 'invalid.ts')),
   /must be inside an fbt/,
 );
 
@@ -117,20 +107,10 @@ const fixtureSources = [
   join(fixtureDirectory, 'pages', 'legacy.tsx'),
 ];
 const expectedHashes = (
-  await Promise.all(
-    fixtureSources.map(async (file) =>
-      runLoader(readFileSync(file, 'utf8'), file),
-    ),
-  )
-).flatMap(({ code }) =>
-  Array.from(code.matchAll(/hk:\s*"([^"]+)"/g), (match) => match[1]),
-);
+  await Promise.all(fixtureSources.map(async (file) => runLoader(readFileSync(file, 'utf8'), file)))
+).flatMap(({ code }) => Array.from(code.matchAll(/hk:\s*"([^"]+)"/g), (match) => match[1]));
 assert.equal(expectedHashes.length, 3);
-const bundledPhrases = [
-  'App Router server phrase',
-  'Client clicks:',
-  'Pages Router phrase',
-];
+const bundledPhrases = ['App Router server phrase', 'Client clicks:', 'Pages Router phrase'];
 
 for (const mode of ['turbopack', 'webpack']) {
   const distDirectory = '.next';
@@ -138,25 +118,17 @@ for (const mode of ['turbopack', 'webpack']) {
   if (mode === 'webpack') {
     args.push('--webpack');
   }
-  const result = spawnSync(
-    process.execPath,
-    [require.resolve('next/dist/bin/next'), ...args],
-    {
-      cwd: packageDirectory,
-      encoding: 'utf8',
-      env: {
-        ...process.env,
-        CI: '1',
-        NEXT_TELEMETRY_DISABLED: '1',
-      },
-      maxBuffer: 20 * 1024 * 1024,
+  const result = spawnSync(process.execPath, [require.resolve('next/dist/bin/next'), ...args], {
+    cwd: packageDirectory,
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      CI: '1',
+      NEXT_TELEMETRY_DISABLED: '1',
     },
-  );
-  assert.equal(
-    result.status,
-    0,
-    result.error?.message || `${result.stdout}\n${result.stderr}`,
-  );
+    maxBuffer: 20 * 1024 * 1024,
+  });
+  assert.equal(result.status, 0, result.error?.message || `${result.stdout}\n${result.stderr}`);
 
   const buildDirectory = join(fixtureDirectory, distDirectory);
   const output = readBuildOutput(buildDirectory);

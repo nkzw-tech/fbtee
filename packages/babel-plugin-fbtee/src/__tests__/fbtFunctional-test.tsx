@@ -28,9 +28,7 @@ const testSection = (
       if (testInfo.throws === true) {
         expect(() => transform(testInfo.input, testInfo.options)).toThrow();
       } else if (typeof testInfo.throws === 'string') {
-        expect(() => transform(testInfo.input, testInfo.options)).toThrow(
-          testInfo.throws,
-        );
+        expect(() => transform(testInfo.input, testInfo.options)).toThrow(testInfo.throws);
       } else {
         expect(transform(testInfo.input, testInfo.options)).toMatchSnapshot();
       }
@@ -106,9 +104,7 @@ const testCases: TestCases = {
   },
 
   'should convert simple strings': {
-    input: withFbtImportStatement(
-      `var x = fbt('A simple string', "It's simple");`,
-    ),
+    input: withFbtImportStatement(`var x = fbt('A simple string', "It's simple");`),
 
     inputWithArraySyntax: withFbtImportStatement(
       `var x = fbt(
@@ -161,10 +157,9 @@ const testCases: TestCases = {
     ),
   },
 
-  'should deduplicate branches when fbt.enum() calls share the same key in string templates':
-    {
-      input: withFbtImportStatement(
-        `var x = fbt(
+  'should deduplicate branches when fbt.enum() calls share the same key in string templates': {
+    input: withFbtImportStatement(
+      `var x = fbt(
           \`Look!  \${fbt.enum('groups', {
             groups: 'Groups',
             photos: 'Photos',
@@ -176,19 +171,15 @@ const testCases: TestCases = {
           })}!\`,
           'enums!',
         );`,
-      ),
-    },
+    ),
+  },
 
   'should get project from docblock': {
     input: `/** @fbt {"project": "dev"}*/
-      ${withFbtImportStatement(
-        `var x = fbt('Also simple string', "It's simple");`,
-      )}`,
+      ${withFbtImportStatement(`var x = fbt('Also simple string', "It's simple");`)}`,
 
     inputWithArraySyntax: `/** @fbt {"project": "dev"}*/
-      ${withFbtImportStatement(
-        `var x = fbt(['Also simple string'], "It's simple");`,
-      )}`,
+      ${withFbtImportStatement(`var x = fbt(['Also simple string'], "It's simple");`)}`,
   },
 
   'should handle JSX fbt with multiple levels of nested strings': {
@@ -778,11 +769,10 @@ with some other stuff.\`
     ),
   },
 
-  'should not throw for string with a nested JSX fragment and string variation arguments':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `import React from 'react';
+  'should not throw for string with a nested JSX fragment and string variation arguments': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -800,13 +790,12 @@ with some other stuff.\`
           ],
           'string with nested JSX fragments',
         );`,
-      ),
-    },
+    ),
+  },
 
-  'should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name':
-    {
-      input: withFbtImportStatement(
-        `var z = fbt(
+  'should not throw when a fbt.param is nested inside a fbt which is nested inside a fbt.name': {
+    input: withFbtImportStatement(
+      `var z = fbt(
         'a ' +
         fbt.name(
           'name',
@@ -819,10 +808,10 @@ with some other stuff.\`
         ' b',
         'desc',
       );`,
-      ),
+    ),
 
-      inputWithArraySyntax: withFbtImportStatement(
-        `var z = fbt(
+    inputWithArraySyntax: withFbtImportStatement(
+      `var z = fbt(
         [
           'a ',
           fbt.name(
@@ -836,8 +825,8 @@ with some other stuff.\`
           ' b',
         ], 'desc',
       );`,
-      ),
-    },
+    ),
+  },
 
   'should respect the doNotExtract option': {
     input: withFbtImportStatement(
@@ -1030,11 +1019,10 @@ with some other stuff.\`
       throws: `Argument 'gender' cannot be a function call or class instantiation.`,
     },
 
-  'should throw for string with a nested JSX fragment and subject gender contains function calls':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `import React from 'react';
+  'should throw for string with a nested JSX fragment and subject gender contains function calls': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `import React from 'react';
         var x = fbt(
           [
             'A1 ',
@@ -1052,10 +1040,10 @@ with some other stuff.\`
             subject: subjectValue(),
           }
         );`,
-      ),
+    ),
 
-      throws: `Argument 'subject' cannot be a function call or class instantiation.`,
-    },
+    throws: `Argument 'subject' cannot be a function call or class instantiation.`,
+  },
 
   'should throw if the sameParam refers to a plural construct': {
     input: withFbtImportStatement(
@@ -1080,11 +1068,10 @@ with some other stuff.\`
       `Add a fbt.param or fbt.name with name 'tokenName', or remove the sameParam.`,
   },
 
-  'should throw if the token name of a sameParam construct in a nested string is not defined':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `var z = fbt(
+  'should throw if the token name of a sameParam construct in a nested string is not defined': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `var z = fbt(
         [
           fbt.param('name', val1),
           ' and ',
@@ -1094,12 +1081,12 @@ with some other stuff.\`
           </b>,
         ], 'd',
       );`,
-      ),
+    ),
 
-      throws:
-        `fbt.sameParam('name1') does not match a token in this string. ` +
-        `Add a fbt.param or fbt.name with name 'name1', or remove the sameParam.`,
-    },
+    throws:
+      `fbt.sameParam('name1') does not match a token in this string. ` +
+      `Add a fbt.param or fbt.name with name 'name1', or remove the sameParam.`,
+  },
 
   'should throw if the token name of a sameParam construct is not defined': {
     input: withFbtImportStatement(
@@ -1286,11 +1273,10 @@ with some other stuff.\`
         `or fbt constructs.`,
     },
 
-  'should throw when multiple tokens have the same names due to implicit params':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `var z = fbt(
+  'should throw when multiple tokens have the same names due to implicit params': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `var z = fbt(
         [
           'Hello ',
           <a>world</a>,
@@ -1298,16 +1284,15 @@ with some other stuff.\`
           <a>world</a>,
         ], 'token name collision due to autoparam',
       );`,
-      ),
+    ),
 
-      throws: `Token '=world' is already used in this fbt call.`,
-    },
+    throws: `Token '=world' is already used in this fbt call.`,
+  },
 
-  'should throw when multiple tokens have the same names due to implicit params and an fbt.param':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `var z = fbt(
+  'should throw when multiple tokens have the same names due to implicit params and an fbt.param': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `var z = fbt(
         [
           'Hello ',
           <a>world</a>,
@@ -1315,10 +1300,10 @@ with some other stuff.\`
           fbt.param('=world', value),
         ], 'token name collision due to autoparam',
       );`,
-      ),
+    ),
 
-      throws: `Token '=world' is already used in this fbt call.`,
-    },
+    throws: `Token '=world' is already used in this fbt call.`,
+  },
 
   'should throw when multiple tokens have the same names due to implicit params and an fbt.plural':
     {
@@ -1339,11 +1324,10 @@ with some other stuff.\`
       throws: `Token '=world' is already used in this fbt call.`,
     },
 
-  'should throw when multiple tokens have the same names due to implicit params and fbt.enum':
-    {
-      input: '',
-      inputWithArraySyntax: withFbtImportStatement(
-        `var z = fbt(
+  'should throw when multiple tokens have the same names due to implicit params and fbt.enum': {
+    input: '',
+    inputWithArraySyntax: withFbtImportStatement(
+      `var z = fbt(
         [
           'Hello ',
           <a>world</a>,
@@ -1353,10 +1337,10 @@ with some other stuff.\`
           }</a>,
         ], 'token name collision due to autoparam',
       );`,
-      ),
+    ),
 
-      throws: `Token '=world' is already used in this fbt call.`,
-    },
+    throws: `Token '=world' is already used in this fbt call.`,
+  },
 
   'should throw when two arguments have the same names': {
     input: withFbtImportStatement(
@@ -1384,10 +1368,7 @@ with some other stuff.\`
   },
 };
 
-const filterTestCasesByType = (
-  testCases: TestCases,
-  type: 'input' | 'inputWithArraySyntax',
-) => {
+const filterTestCasesByType = (testCases: TestCases, type: 'input' | 'inputWithArraySyntax') => {
   const filteredTestCases: Record<string, TestCase> = {};
   for (const title of Object.keys(testCases)) {
     const testCase = testCases[title];
@@ -1424,11 +1405,7 @@ const describeTestScenarios = (testCases: TestCases) => {
   });
 
   function forEachTestScenario(
-    callback: (
-      title: string,
-      testCase: TestCase,
-      options?: PluginOptions,
-    ) => void,
+    callback: (title: string, testCase: TestCase, options?: PluginOptions) => void,
   ) {
     for (const title of Object.keys(testCases)) {
       callback(title, testCases[title]);
@@ -1458,10 +1435,7 @@ const describeTestScenarios = (testCases: TestCases) => {
         test(
           `for scenario "${title}"`,
           withThrowExpectation(testCase.throws, () => {
-            const spy = jest.spyOn(
-              FbtFunctionCallProcessor.prototype,
-              '_convertToFbtNode',
-            );
+            const spy = jest.spyOn(FbtFunctionCallProcessor.prototype, '_convertToFbtNode');
             spy.mockClear();
 
             const pluginOptions = {
@@ -1490,8 +1464,6 @@ describe('Functional FBT API', () => {
   });
 
   describe('using array arguments:', () => {
-    describeTestScenarios(
-      filterTestCasesByType(testCases, 'inputWithArraySyntax'),
-    );
+    describeTestScenarios(filterTestCasesByType(testCases, 'inputWithArraySyntax'));
   });
 });

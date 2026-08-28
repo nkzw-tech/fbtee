@@ -63,12 +63,7 @@ export const useLocaleContext = (() =>
       })();
 
 export default function createLocaleContext(props: LocaleContextProps) {
-  const {
-    gender: initialGender,
-    getLocale,
-    setGender,
-    setLocale,
-  } = setupLocaleContext(props);
+  const { gender: initialGender, getLocale, setGender, setLocale } = setupLocaleContext(props);
 
   return function LocaleContext({ children }: { children: ReactNode }) {
     const [locale, _setLocale, localeChangeIsPending] = useActionState(

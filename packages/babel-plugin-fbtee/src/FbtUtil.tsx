@@ -61,8 +61,7 @@ import nullthrows from './nullthrows.tsx';
 
 const { hasOwnProperty } = Object.prototype;
 
-export type CallExpressionArg =
-  Expression | SpreadElement | ArgumentPlaceholder;
+export type CallExpressionArg = Expression | SpreadElement | ArgumentPlaceholder;
 export type CallExpressionArgument = CallExpression['arguments'][number];
 export type ParamSet = {
   [parameterName: string]: Node | null;
@@ -129,12 +128,7 @@ function isTextualNode(node: Node): boolean {
   return false;
 }
 
-export function setUniqueToken(
-  node: Node,
-  moduleName: string,
-  name: string,
-  paramSet: ParamSet,
-) {
+export function setUniqueToken(node: Node, moduleName: string, name: string, paramSet: ParamSet) {
   const cachedNode = paramSet[name];
   if (cachedNode && cachedNode !== node) {
     throw errorAt(
@@ -161,17 +155,13 @@ export function checkOption<K extends string>(
   if (!hasOwnProperty.call(validOptions, optionName) || validValues == null) {
     throw errorAt(
       isNode(value) ? value : null,
-      `Unknown option '${optionName}'. ` +
-        `Use one of: ${Object.keys(validOptions).join(', ')}.`,
+      `Unknown option '${optionName}'. ` + `Use one of: ${Object.keys(validOptions).join(', ')}.`,
     );
   } else if (validValues !== true) {
     let valueStr;
     if (typeof value === 'string' || typeof value === 'boolean') {
       valueStr = value.toString();
-    } else if (
-      isNode(value) &&
-      (isStringLiteral(value) || isBooleanLiteral(value))
-    ) {
+    } else if (isNode(value) && (isStringLiteral(value) || isBooleanLiteral(value))) {
       valueStr = value && value.value.toString();
     } else {
       throw errorAt(
@@ -192,12 +182,7 @@ export function checkOption<K extends string>(
   return optionName;
 }
 
-const boolCandidates = new Set<string>([
-  'common',
-  'doNotExtract',
-  'number',
-  'preserveWhitespace',
-]);
+const boolCandidates = new Set<string>(['common', 'doNotExtract', 'number', 'preserveWhitespace']);
 
 /**
  * Build options list form corresponding attributes.
@@ -228,28 +213,18 @@ export function getOptionsFromAttributes(
       continue;
     }
 
-    let value: Expression | JSXExpressionContainer | null | undefined =
-      node.value;
+    let value: Expression | JSXExpressionContainer | null | undefined = node.value;
     if (value === null && boolCandidates.has(name)) {
       value = booleanLiteral(true);
-    } else if (
-      isJSXExpressionContainer(value) &&
-      !isJSXEmptyExpression(value.expression)
-    ) {
+    } else if (isJSXExpressionContainer(value) && !isJSXEmptyExpression(value.expression)) {
       value = value.expression;
-    } else if (
-      isStringLiteral(value) &&
-      (value.value === 'true' || value.value === 'false')
-    ) {
+    } else if (isStringLiteral(value) && (value.value === 'true' || value.value === 'false')) {
       value = booleanLiteral(value.value === 'true');
     }
 
     if (value) {
       options.push(
-        objectProperty(
-          stringLiteral(checkOption(name, validOptions, value)),
-          value as Expression,
-        ),
+        objectProperty(stringLiteral(checkOption(name, validOptions, value)), value as Expression),
       );
     }
   }
@@ -261,9 +236,7 @@ type ErrorWithNodeLocation = Error & {
   _hasNodeLocation?: boolean;
 };
 
-const isErrorWithNodeLocation = (
-  error: unknown,
-): error is ErrorWithNodeLocation =>
+const isErrorWithNodeLocation = (error: unknown): error is ErrorWithNodeLocation =>
   error instanceof Error && '_hasNodeLocation' in error;
 /**
  * Prepend node debug info (location, source code) to an Error message.
@@ -272,10 +245,7 @@ const isErrorWithNodeLocation = (
  * to its message (only once).
  * If it's a string, we'll create a new Error object ourselves.
  */
-export function errorAt(
-  astNode?: Node | null,
-  msgOrError: unknown = '',
-): ErrorWithNodeLocation {
+export function errorAt(astNode?: Node | null, msgOrError: unknown = ''): ErrorWithNodeLocation {
   let error;
 
   if (typeof msgOrError === 'string') {
@@ -301,19 +271,12 @@ const generateCode =
 const generateFormattedCodeFromAST = (node: Node) =>
   generateCode(node, { comments: true }, '').code.trim();
 
-function createErrorMessageAtNode(
-  astNode?: Node | null,
-  msg: string = '',
-): string {
+function createErrorMessageAtNode(astNode?: Node | null, msg: string = ''): string {
   const location = astNode && astNode.loc;
   return (
-    (location != null
-      ? `Line ${location.start.line} Column ${location.start.column + 1}: `
-      : '') +
+    (location != null ? `Line ${location.start.line} Column ${location.start.column + 1}: ` : '') +
     msg +
-    (astNode != null
-      ? `\n---\n${generateFormattedCodeFromAST(astNode)}\n---`
-      : '')
+    (astNode != null ? `\n---\n${generateFormattedCodeFromAST(astNode)}\n---` : '')
   );
 }
 
@@ -343,10 +306,7 @@ export function collectOptions(
     } else if (isStringLiteral(key)) {
       optionName = key.value;
     } else {
-      throw errorAt(
-        option,
-        `Option names must be identifiers or string literals.`,
-      );
+      throw errorAt(option, `Option names must be identifiers or string literals.`);
     }
     optionName = checkOption(optionName, validOptions, option.value);
 
@@ -357,8 +317,7 @@ export function collectOptions(
       );
     }
 
-    const value =
-      ('expression' in option.value && option.value.expression) || option.value;
+    const value = ('expression' in option.value && option.value.expression) || option.value;
 
     // Append only default valid options excluding "extraOptions",
     // which are used only by specific runtimes.
@@ -391,11 +350,7 @@ export function collectOptionsFromFbtConstruct(
 
   Object.keys(options).forEach((key) => {
     if (booleanOptions && hasOwnProperty.call(booleanOptions, key)) {
-      options[key] = getOptionBooleanValue(
-        options,
-        key,
-        optionsNode || callsiteNode,
-      );
+      options[key] = getOptionBooleanValue(options, key, optionsNode || callsiteNode);
     } else if (
       options[key] &&
       options[key] !== true &&
@@ -429,10 +384,7 @@ export function getOptionsNodeFromCallExpression(
  * Given a node that could be a recursive binary operation over string literals
  * (i.e. string concatenation), expand it into a string literal.
  */
-export function expandStringConcat(
-  moduleName: string,
-  node: Node,
-): StringLiteral | JSXText {
+export function expandStringConcat(moduleName: string, node: Node): StringLiteral | JSXText {
   if (isBinaryExpression(node)) {
     if (node.operator !== '+') {
       throw errorAt(
@@ -482,15 +434,10 @@ export function expandStringConcat(
   );
 }
 
-export function expandStringArray(
-  moduleName: string,
-  node: ArrayExpression,
-): StringLiteral {
+export function expandStringArray(moduleName: string, node: ArrayExpression): StringLiteral {
   return stringLiteral(
     nullthrows(node.elements)
-      .map(
-        (element) => expandStringConcat(moduleName, nullthrows(element)).value,
-      )
+      .map((element) => expandStringConcat(moduleName, nullthrows(element)).value)
       .join(''),
   );
 }
@@ -506,19 +453,11 @@ export function getOptionBooleanValue<K extends string>(
     return false;
   }
   const value = options[name];
-  if (
-    value &&
-    typeof value !== 'string' &&
-    typeof value !== 'boolean' &&
-    isBooleanLiteral(value)
-  ) {
+  if (value && typeof value !== 'string' && typeof value !== 'boolean' && isBooleanLiteral(value)) {
     return value.value;
   }
 
-  throw errorAt(
-    node,
-    `Option '${name}' must be the boolean literal 'true' or 'false'.`,
-  );
+  throw errorAt(node, `Option '${name}' must be the boolean literal 'true' or 'false'.`);
 }
 
 /**
@@ -529,14 +468,10 @@ type JSXAttributeWithValue = Omit<JSXAttribute, 'value'> &
     value: JSXElement | JSXFragment | StringLiteral | JSXExpressionContainer;
   }>;
 
-const isJSXAttributeWithValue = (
-  node: JSXAttribute,
-): node is JSXAttributeWithValue => node.value != null;
+const isJSXAttributeWithValue = (node: JSXAttribute): node is JSXAttributeWithValue =>
+  node.value != null;
 
-export function getAttributeByNameOrThrow(
-  node: JSXElement,
-  name: string,
-): JSXAttributeWithValue {
+export function getAttributeByNameOrThrow(node: JSXElement, name: string): JSXAttributeWithValue {
   const attribute = getAttributeByName(node, name);
   if (attribute == null) {
     throw errorAt(node, `Missing required attribute '${name}'.`);
@@ -549,10 +484,7 @@ export function getAttributeByNameOrThrow(
   return attribute;
 }
 
-export function getAttributeByName(
-  node: JSXElement,
-  name: string,
-): JSXAttribute | null {
+export function getAttributeByName(node: JSXElement, name: string): JSXAttribute | null {
   for (const attribute of node.openingElement.attributes) {
     if (isJSXAttribute(attribute) && attribute.name.name === name) {
       return attribute;
@@ -561,9 +493,7 @@ export function getAttributeByName(
   return null;
 }
 
-export function getOpeningElementAttributes(
-  node: JSXElement,
-): ReadonlyArray<JSXAttribute> {
+export function getOpeningElementAttributes(node: JSXElement): ReadonlyArray<JSXAttribute> {
   return node.openingElement.attributes.map((attribute) => {
     if (isJSXSpreadAttribute(attribute)) {
       throw errorAt(attribute, `JSX spread attributes are not supported here.`);
@@ -573,17 +503,13 @@ export function getOpeningElementAttributes(
 }
 
 export function getRawSource(src: string, node: Node): string {
-  return node.start != null && node.end != null
-    ? src.slice(node.start, node.end)
-    : '';
+  return node.start != null && node.end != null ? src.slice(node.start, node.end) : '';
 }
 
 /**
  * Filter whitespace-only nodes from a list of nodes.
  */
-export function filterEmptyNodes<B extends Node>(
-  nodes: ReadonlyArray<B>,
-): ReadonlyArray<B> {
+export function filterEmptyNodes<B extends Node>(nodes: ReadonlyArray<B>): ReadonlyArray<B> {
   return nodes.filter((node) => {
     // Filter whitespace and comment block
     return !(
@@ -638,10 +564,7 @@ export function getBinaryExpressionOperands(
   switch (node.type) {
     case 'BinaryExpression':
       if (node.operator !== '+') {
-        throw errorAt(
-          node,
-          `Only string concatenation with '+' is supported here.`,
-        );
+        throw errorAt(node, `Only string concatenation with '+' is supported here.`);
       }
       return [
         ...getBinaryExpressionOperands(moduleName, node.left),
@@ -721,9 +644,7 @@ export function convertToStringArrayNodeIfNeeded(
             break;
           }
           case 'TemplateLiteral': {
-            elements.push(
-              ...convertTemplateLiteralToArrayElements(moduleName, element),
-            );
+            elements.push(...convertTemplateLiteralToArrayElements(moduleName, element));
             break;
           }
           default:
@@ -778,10 +699,7 @@ export function varDump(value: unknown, depth: number = 1): string {
   );
 }
 
-export function enforceString(
-  value: unknown,
-  valueDesc?: string | null,
-): string {
+export function enforceString(value: unknown, valueDesc?: string | null): string {
   invariant(
     typeof value === 'string',
     '%s must be a string. Received %s (%s).',
@@ -792,10 +710,7 @@ export function enforceString(
   return value;
 }
 
-export function enforceBoolean(
-  value: unknown,
-  valueDesc?: string | null,
-): boolean {
+export function enforceBoolean(value: unknown, valueDesc?: string | null): boolean {
   invariant(
     typeof value === 'boolean',
     '%s must be a boolean. Received %s (%s).',
@@ -848,12 +763,7 @@ export function enforceStringEnum<K extends string>(
 }
 
 // Given a type enforcer function, make it also accept a nullable value
-function nullableTypeCheckerFactory<
-  ArgVal,
-  Args extends ReadonlyArray<ArgVal>,
-  Ret,
-  Val,
->(
+function nullableTypeCheckerFactory<ArgVal, Args extends ReadonlyArray<ArgVal>, Ret, Val>(
   checker: (arg1: Val, ...args: Args) => Ret,
 ): (arg1: Val, ...args: Args) => Ret | null {
   return (value, ...args) => {
@@ -861,26 +771,18 @@ function nullableTypeCheckerFactory<
   };
 }
 
-const enforceNodeOrNull: (
-  value: unknown,
-  valueDesc?: string | null,
-) => Node | null = nullableTypeCheckerFactory(enforceNode);
+const enforceNodeOrNull: (value: unknown, valueDesc?: string | null) => Node | null =
+  nullableTypeCheckerFactory(enforceNode);
 enforceNode.orNull = enforceNodeOrNull;
 
-enforceNodeCallExpressionArg.orNull = nullableTypeCheckerFactory(
-  enforceNodeCallExpressionArg,
-);
+enforceNodeCallExpressionArg.orNull = nullableTypeCheckerFactory(enforceNodeCallExpressionArg);
 
-const enforceBooleanOrNull: (
-  value: unknown,
-  valueDesc?: string | null,
-) => boolean | null = nullableTypeCheckerFactory(enforceBoolean);
+const enforceBooleanOrNull: (value: unknown, valueDesc?: string | null) => boolean | null =
+  nullableTypeCheckerFactory(enforceBoolean);
 enforceBoolean.orNull = enforceBooleanOrNull;
 
-const enforceStringOrNull: (
-  value: unknown,
-  valueDesc?: string | null,
-) => string | null = nullableTypeCheckerFactory(enforceString);
+const enforceStringOrNull: (value: unknown, valueDesc?: string | null) => string | null =
+  nullableTypeCheckerFactory(enforceString);
 enforceString.orNull = enforceStringOrNull;
 
 enforceStringEnum.orNull = nullableTypeCheckerFactory(enforceStringEnum);

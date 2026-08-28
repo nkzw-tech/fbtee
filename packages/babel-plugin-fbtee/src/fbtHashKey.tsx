@@ -1,8 +1,7 @@
 import fbtJenkinsHash from './fbtJenkinsHash.tsx';
 import type { TableJSFBTTree } from './index.tsx';
 
-const BaseNSymbols =
-  '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const BaseNSymbols = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // Compute the baseN string for a given unsigned integer.
 function uintToBaseN(numberArg: number, base: number) {

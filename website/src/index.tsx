@@ -1,11 +1,11 @@
 /// <reference types="fbtee/ReactTypes.d.ts" />
 /// <reference types="vite/client" />
 
-import App from './App.tsx';
-import './App.css';
 import { createLocaleContext, type FbtRuntimeInput } from 'fbtee';
+import './App.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
 import AvailableLanguages, {
   type AvailableLocale,
   LegacyLocaleAliases,
@@ -20,9 +20,7 @@ const translationModules = import.meta.glob('./translations/*.json') as Record<
   () => Promise<TranslationModule>
 >;
 
-const loadAvailableLocale = async <
-  Locale extends Exclude<AvailableLocale, 'en-US'>,
->(
+const loadAvailableLocale = async <Locale extends Exclude<AvailableLocale, 'en-US'>>(
   locale: Locale,
 ) => {
   const loadModule = translationModules[`./translations/${locale}.json`];
@@ -36,10 +34,7 @@ const loadAvailableLocale = async <
 };
 
 const loadLocale = async (locale: string) => {
-  if (
-    locale === 'en-US' ||
-    !AvailableLanguages.has(locale as AvailableLocale)
-  ) {
+  if (locale === 'en-US' || !AvailableLanguages.has(locale as AvailableLocale)) {
     return {};
   }
 

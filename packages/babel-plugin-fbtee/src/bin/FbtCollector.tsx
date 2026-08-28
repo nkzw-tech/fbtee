@@ -50,10 +50,7 @@ export type PackagerPhrase = Phrase & {
 };
 
 export interface IFbtCollector {
-  collectFromFiles(
-    files: Array<[string, string]>,
-    fbtEnumManifest?: EnumManifest,
-  ): Promise<void>;
+  collectFromFiles(files: Array<[string, string]>, fbtEnumManifest?: EnumManifest): Promise<void>;
   collectFromOneFile(
     source: string,
     filename: string,
@@ -129,12 +126,7 @@ export default class FbtCollector implements IFbtCollector {
     if (externalTransform) {
       externalTransform(source, options, filename);
     } else {
-      transform(
-        source,
-        options,
-        this.config.plugins || [],
-        this.config.presets || [],
-      );
+      transform(source, options, this.config.plugins || [], this.config.presets || []);
     }
 
     const newPhrases = getExtractedStrings();
@@ -148,14 +140,9 @@ export default class FbtCollector implements IFbtCollector {
     this._phrases.push(...(newPhrases as Array<PackagerPhrase>));
   }
 
-  async collectFromFiles(
-    files: Array<[string, string]>,
-    fbtEnumManifest?: EnumManifest,
-  ) {
+  async collectFromFiles(files: Array<[string, string]>, fbtEnumManifest?: EnumManifest) {
     await Promise.all(
-      files.map(([file, source]) =>
-        this.collectFromOneFile(source, file, fbtEnumManifest),
-      ),
+      files.map(([file, source]) => this.collectFromOneFile(source, file, fbtEnumManifest)),
     );
   }
 

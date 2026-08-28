@@ -16,7 +16,6 @@ const globalConfig = {
 const root = process.cwd();
 
 export default {
-  prettierPath: null,
   projects: [
     {
       displayName: '@nkzw/babel-plugin-fbtee',
@@ -25,12 +24,7 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            presets: [
-              [
-                './packages/babel-preset-fbtee',
-                { fbtCommon: { Accept: '...' } },
-              ],
-            ],
+            presets: [['./packages/babel-preset-fbtee', { fbtCommon: { Accept: '...' } }]],
           },
         ],
       },
@@ -50,12 +44,7 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            presets: [
-              [
-                './packages/babel-preset-fbtee',
-                { fbtCommon: { Accept: '...' } },
-              ],
-            ],
+            presets: [['./packages/babel-preset-fbtee', { fbtCommon: { Accept: '...' } }]],
           },
         ],
       },

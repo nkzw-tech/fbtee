@@ -8,9 +8,7 @@ import IntlVariations from './IntlVariations.tsx';
 export const EXACTLY_ONE = '_1';
 
 export function getNumberVariations(number: number): Array<FbtTableKey> {
-  const numType = IntlNumberType.get(
-    Hooks.getViewerContext().locale,
-  ).getVariation(number);
+  const numType = IntlNumberType.get(Hooks.getViewerContext().locale).getVariation(number);
   invariant(
     numType & IntlVariations.BITMASK_NUMBER,
     'Invalid number provided: %s (%s)',

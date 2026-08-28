@@ -1,10 +1,6 @@
 import path from 'node:path';
 import packagerTypes from '../collectFbtConstants.tsx';
-import {
-  buildCollectFbtOutput,
-  getFbtCollector,
-  getPackagers,
-} from '../collectFbtUtils.tsx';
+import { buildCollectFbtOutput, getFbtCollector, getPackagers } from '../collectFbtUtils.tsx';
 import fbtCommon from './FbtCommonForTests.json' with { type: 'json' };
 
 async function collect(
@@ -21,16 +17,9 @@ async function collect(
     presets: [],
     transform: null,
   };
-  const fbtCollector = await getFbtCollector(
-    opts,
-    {},
-    options?.customCollector,
-  );
+  const fbtCollector = await getFbtCollector(opts, {}, options?.customCollector);
   const packager = options.packagerType ?? packagerTypes.NONE;
-  const packagers = await getPackagers(
-    packager,
-    path.join(import.meta.dirname, '../md5.tsx'),
-  );
+  const packagers = await getPackagers(packager, path.join(import.meta.dirname, '../md5.tsx'));
 
   await (Array.isArray(source)
     ? fbtCollector.collectFromFiles(source)
@@ -43,16 +32,12 @@ async function collect(
 
 describe('collectFbt', () => {
   it('should extract fbt strings', async () => {
-    const res = await collect(
-      'import { fbt } from \'fbt\';<fbt desc="foo">bar</fbt>',
-    );
+    const res = await collect('import { fbt } from \'fbt\';<fbt desc="foo">bar</fbt>');
     expect(res).toMatchSnapshot();
   });
 
   it('should extract fbs strings', async () => {
-    const res = await collect(
-      'import { fbs } from \'fbs\';<fbs desc="foo">bar</fbs>',
-    );
+    const res = await collect('import { fbs } from \'fbs\';<fbs desc="foo">bar</fbs>');
     expect(res).toMatchSnapshot();
   });
 
@@ -104,10 +89,7 @@ describe('collectFbt', () => {
 
   it('should still extract strings if in-line doNotExtract is set to false', async () => {
     const res = await collect(
-      [
-        "import { fbt } from 'fbtee';",
-        '<fbt desc="foo" doNotExtract="false">bar</fbt>',
-      ].join('\n'),
+      ["import { fbt } from 'fbtee';", '<fbt desc="foo" doNotExtract="false">bar</fbt>'].join('\n'),
     );
 
     expect(res).toMatchSnapshot();
@@ -115,10 +97,7 @@ describe('collectFbt', () => {
 
   it('should not extract strings if in-line doNotExtract is set to true', async () => {
     const res = await collect(
-      [
-        "import { fbt } from 'fbtee';",
-        '<fbt desc="foo" doNotExtract="true">bar</fbt>',
-      ].join('\n'),
+      ["import { fbt } from 'fbtee';", '<fbt desc="foo" doNotExtract="true">bar</fbt>'].join('\n'),
     );
 
     expect(res.phrases.length).toEqual(0);
@@ -126,10 +105,7 @@ describe('collectFbt', () => {
 
   it('should still extract strings if fbt call param doNotExtract is set to false', async () => {
     const res = await collect(
-      [
-        "import { fbt } from 'fbtee';",
-        'fbt("bar", "foo", {doNotExtract: false});',
-      ].join('\n'),
+      ["import { fbt } from 'fbtee';", 'fbt("bar", "foo", {doNotExtract: false});'].join('\n'),
     );
 
     expect(res).toMatchSnapshot();
@@ -137,10 +113,7 @@ describe('collectFbt', () => {
 
   it('should not extract strings if fbt call param doNotExtract is set to true', async () => {
     const res = await collect(
-      [
-        "import { fbt } from 'fbtee';",
-        'fbt("bar", "foo", {doNotExtract: true});',
-      ].join('\n'),
+      ["import { fbt } from 'fbtee';", 'fbt("bar", "foo", {doNotExtract: true});'].join('\n'),
     );
 
     expect(res.phrases.length).toEqual(0);
@@ -185,11 +158,7 @@ describe('collectFbt', () => {
   describe('When using string templates', () => {
     it('should extract correctly with just string contents', async () => {
       const res = await collect(
-        [
-          "import { fbt } from 'fbtee';",
-          'const uh = 0;',
-          'fbt(`simple`, "ok");',
-        ].join('\n'),
+        ["import { fbt } from 'fbtee';", 'const uh = 0;', 'fbt(`simple`, "ok");'].join('\n'),
       );
 
       expect(res).toMatchSnapshot();
@@ -271,10 +240,7 @@ describe('collectFbt', () => {
   it('should extract strings from a custom collector', async () => {
     expect(
       await collect('nothing in JS code', {
-        customCollector: path.resolve(
-          import.meta.dirname,
-          '../__mocks__/CustomFbtCollector.tsx',
-        ),
+        customCollector: path.resolve(import.meta.dirname, '../__mocks__/CustomFbtCollector.tsx'),
       }),
     ).toMatchSnapshot();
   });

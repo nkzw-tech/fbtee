@@ -40,10 +40,7 @@ const argv = y
   )
   .string('source-strings')
   .default('source-strings', 'source_strings.json')
-  .describe(
-    'source-strings',
-    'The file containing source strings, as collected by collectFbt.js',
-  )
+  .describe('source-strings', 'The file containing source strings, as collected by collectFbt.js')
   .array('translations')
   .default('translations', globSync('translations/*.json', { cwd: root }))
   .describe(
@@ -110,10 +107,7 @@ function checkTranslations(group) {
     )
       ? 12
       : 24,
-    '__output-locale': formatLocaleForStyle(
-      group['fb-locale'],
-      outputLocaleStyle,
-    ),
+    '__output-locale': formatLocaleForStyle(group['fb-locale'], outputLocaleStyle),
     translations,
   };
 }
@@ -130,17 +124,7 @@ function genderFallback(locale) {
     'sq_AL',
     'ti_ET',
   ]);
-  const mergedLanguages = new Set([
-    'ar',
-    'dsb',
-    'kab',
-    'ks',
-    'lv',
-    'ps',
-    'sq',
-    'ti',
-    'vec',
-  ]);
+  const mergedLanguages = new Set(['ar', 'dsb', 'kab', 'ks', 'lv', 'ps', 'sq', 'ti', 'vec']);
   return getLocaleAliases(locale).some((alias) => mergedLocales.has(alias)) ||
     mergedLanguages.has(getLocaleLanguage(locale))
     ? 1
@@ -150,15 +134,11 @@ function genderFallback(locale) {
 async function processInput(input) {
   const groups = input.translationGroups.map(checkTranslations);
   const nativeInput = { phrases: input.phrases, translationGroups: groups };
-  const translated = JSON.parse(
-    translateSync(JSON.stringify(nativeInput), argv.jenkins),
-  );
+  const translated = JSON.parse(translateSync(JSON.stringify(nativeInput), argv.jenkins));
   if (argv.jenkins || !argv['hash-module']) {
     return translated;
   }
-  const hashModule = await import(
-    pathToFileURL(resolve(root, argv['hash-module'])).href
-  );
+  const hashModule = await import(pathToFileURL(resolve(root, argv['hash-module'])).href);
   const hash = hashModule.default;
   const output = {};
   for (const group of translated) {
@@ -196,12 +176,8 @@ async function processFiles() {
   const files = argv.translations?.map(String) || [];
   throwIfLocaleFileConflicts(files);
   const input = {
-    phrases: JSON.parse(
-      readFileSync(join(root, argv['source-strings']), 'utf8'),
-    ).phrases,
-    translationGroups: files.map((file) =>
-      JSON.parse(readFileSync(resolve(root, file), 'utf8')),
-    ),
+    phrases: JSON.parse(readFileSync(join(root, argv['source-strings']), 'utf8')).phrases,
+    translationGroups: files.map((file) => JSON.parse(readFileSync(resolve(root, file), 'utf8'))),
   };
   checkLocaleGroups(input.translationGroups);
   return processInput(input);
@@ -213,9 +189,7 @@ function writeSingleOutput(filepath, output) {
 }
 
 function writeOutput(directory, output) {
-  checkLocaleGroups(
-    Object.keys(output).map((locale) => ({ 'fb-locale': locale })),
-  );
+  checkLocaleGroups(Object.keys(output).map((locale) => ({ 'fb-locale': locale })));
   mkdirSync(directory, { recursive: true });
   for (const locale of Object.keys(output)) {
     const existingFile = getAvailableLocaleFile(directory, locale);
