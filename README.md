@@ -340,6 +340,19 @@ See the [Next.js fbtee example](https://github.com/cpojer/nextjs-fbtee-example) 
 
 ## Translation Workflow
 
+Every CLI command can use the native Oxc/Rust pipeline by adding `--oxc`:
+
+```bash
+pnpm fbtee collect --oxc
+pnpm fbtee prepare-translations --oxc --source-strings source_strings.json --output-dir translations
+pnpm fbtee translate --oxc --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
+pnpm fbtee migrate-locales --oxc --to bcp47 --dir translations --dir src/translations
+```
+
+The Babel pipeline remains the default during the parity rollout, so removing `--oxc` makes it easy to compare both implementations. Successful native outputs are tested byte-for-byte against Babel. The native collector intentionally cannot execute Babel-specific JavaScript extensions: `--custom-collector`, `--transform`, and `--generate-fbt-nodes` are unavailable with `--oxc`.
+
+The Oxc collector also cannot run plugins or presets from a Babel configuration file or apply `.babelignore`. If it detects Babel configuration or ignore rules, it stops instead of silently collecting different source. Use the Babel collector when that preprocessing is required, or pass `--disable-babel-config` to explicitly collect the unmodified source with Oxc. All other documented options are supported.
+
 Extract source strings:
 
 ```bash

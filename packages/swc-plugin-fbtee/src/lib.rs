@@ -3427,6 +3427,9 @@ fn parse_object_options(expr: &Expr, allowed: &[&str]) -> Result<ObjectOptions, 
                 allowed.join(", ")
             ));
         }
+        if matches!(property.value.as_ref(), Expr::Arrow(_)) {
+            return Err("fbt(...) options cannot be arrow functions. Pass a value instead.".into());
+        }
     }
     Ok(parse_object(expr))
 }

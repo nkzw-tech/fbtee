@@ -1,13 +1,29 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import {
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { transformSync as babelTransform } from '@babel/core';
 import { beforeAll, describe, test } from '@jest/globals';
 import { transformSync as swcTransform } from '@swc/core';
 import babelFbteeAutoImportPlugin from '../packages/babel-plugin-fbtee-auto-import/lib/index.mjs';
-import babelFbteePlugin from '../packages/babel-plugin-fbtee/lib/index.mjs';
-import { transformSync as oxcTransform } from '../packages/oxc-transform-fbtee/index.js';
+import babelFbteePlugin, {
+  getChildToParentRelationships,
+  getExtractedStrings,
+} from '../packages/babel-plugin-fbtee/lib/index.mjs';
+import {
+  collectSync as oxcCollect,
+  transformSync as oxcTransform,
+} from '../packages/oxc-transform-fbtee/index.js';
 import swcFbteePlugin, {
   createFbteePluginOptions,
 } from '../packages/swc-plugin-fbtee/index.js';
@@ -63,6 +79,50 @@ const compilers = {
   swc: compileSwc,
 };
 
+const collectBabel = (source, options = {}) => {
+  babelTransform(source, {
+    ast: false,
+    babelrc: false,
+    code: false,
+    configFile: false,
+    filename: 'fixture.tsx',
+    parserOpts: {
+      plugins: ['jsx', 'typescript'],
+      sourceType: 'module',
+    },
+    plugins: [
+      [
+        babelFbteePlugin,
+        {
+          collectFbt: true,
+          filename: 'fixture.tsx',
+          ...options,
+        },
+      ],
+    ],
+  });
+  // JSON serialization intentionally drops Babel AST fields whose values are undefined.
+  // eslint-disable-next-line unicorn/prefer-structured-clone
+  return JSON.parse(
+    JSON.stringify({
+      childParentMappings: Object.fromEntries(getChildToParentRelationships()),
+      phrases: getExtractedStrings(),
+    }),
+  );
+};
+
+const collectOxc = (source, options = {}) => {
+  const result = oxcCollect('fixture.tsx', source, {
+    lang: 'tsx',
+    sourceType: 'module',
+    ...options,
+  });
+  if (result.errors.length > 0) {
+    throw new Error(result.errors.map(({ message }) => message).join('\n'));
+  }
+  return JSON.parse(result.output);
+};
+
 const hashes = (code) =>
   [...code.matchAll(/\bhk\s*:\s*["']([^"']+)["']/g)].map((match) => match[1]);
 
@@ -89,6 +149,42 @@ const validFixtures = [
   {
     name: 'simple call',
     source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description');`,
+  },
+  {
+    name: 'collected member-expression subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: viewer.gender});`,
+  },
+  {
+    name: 'UTF-16 collector locations',
+    source: `import { fbt } from 'fbtee'; const emoji = '😀'; const x = fbt('Hello', 'description', {subject: viewer.gender});`,
+  },
+  {
+    name: 'collected optional-call subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: viewer?.getGender()});`,
+  },
+  {
+    name: 'collected optional-member-chain subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: viewer?.gender.value});`,
+  },
+  {
+    name: 'collected regular-expression subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: /human/gi});`,
+  },
+  {
+    name: 'collected parenthesized object subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: ({gender: viewer.gender})});`,
+  },
+  {
+    name: 'collected template subject metadata',
+    source: `import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {subject: \`gender-\${viewer.gender}\`});`,
+  },
+  {
+    name: 'file-level doNotExtract collector default',
+    source: `/** @fbt {"doNotExtract":true} */ import { fbt } from 'fbtee'; const x = fbt('Hello', 'description');`,
+  },
+  {
+    name: 'callsite doNotExtract overrides the file default',
+    source: `/** @fbt {"doNotExtract":true} */ import { fbt } from 'fbtee'; const x = fbt('Hello', 'description', {doNotExtract: false});`,
   },
   {
     name: 'trimmed functional description',
@@ -657,6 +753,10 @@ describe('valid inputs produce compatible compiler output', () => {
 
 const invalidFixtures = [
   {
+    name: 'arrow-function call option',
+    source: `import { fbt } from 'fbtee'; const x = fbt('A', 'd', {subject: () => 1});`,
+  },
+  {
     name: 'functional param with gender and number',
     source: `import { fbt } from 'fbtee'; const x = fbt(fbt.param('x', value, {gender, number: true}), 'd');`,
   },
@@ -841,6 +941,935 @@ const invalidFixtures = [
     source: `import { fbt } from 'fbtee'; const x = <fbt desc="d"><fbt:name name="foo" gender={gender}><b>{person}</b></fbt:name></fbt>;`,
   },
 ];
+
+describe('collector parity', () => {
+  test.each(validFixtures)(
+    'collects $name',
+    ({ babelAutoImport, options, source }) => {
+      if (babelAutoImport) {
+        return;
+      }
+      assert.deepEqual(
+        collectOxc(source, options),
+        collectBabel(source, options),
+      );
+    },
+  );
+
+  test.each(invalidFixtures)('rejects $name', ({ options, source }) => {
+    for (const [compiler, collect] of [
+      ['babel', collectBabel],
+      ['oxc', collectOxc],
+    ]) {
+      assert.throws(() => collect(source, options), undefined, compiler);
+    }
+  });
+
+  test.each([
+    {
+      name: 'simple functional phrase',
+      source: `import { fbt } from 'fbtee'; const value = fbt('Hello', 'greeting');`,
+    },
+    {
+      name: 'nested JSX phrase',
+      source: `import { fbt } from 'fbtee'; const value = <fbt desc="greeting">Hello <b>world</b></fbt>;`,
+    },
+    {
+      name: 'number, plural, enum, and gender variations',
+      source: `import { fbt } from 'fbtee'; const value = fbt([fbt.param('count', count, {number: true}), ' ', fbt.plural('item', count), ' ', fbt.enum(kind, {a: 'Alpha', b: 'Beta'}), ' ', fbt.name('person', person, gender)], 'inventory');`,
+    },
+    {
+      name: 'common phrase',
+      options: { fbtCommon: { Required: 'Form field requirement' } },
+      source: `import { fbt } from 'fbtee'; const value = fbt.c('Required');`,
+    },
+  ])('$name', ({ options, source }) => {
+    assert.deepEqual(
+      collectOxc(source, options),
+      collectBabel(source, options),
+    );
+  });
+
+  test('collect CLI matches across a multi-file application', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-collector-parity-'));
+    try {
+      cpSync(
+        new URL('../example/src', import.meta.url),
+        join(directory, 'src'),
+        {
+          recursive: true,
+        },
+      );
+      writeFileSync(
+        join(directory, 'common.json'),
+        readFileSync(
+          new URL('../example/common_strings.json', import.meta.url),
+        ),
+      );
+      const cli = fileURLToPath(
+        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        const result = spawnSync(
+          process.execPath,
+          [
+            cli,
+            'collect',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--common',
+            './common.json',
+            '--src',
+            'src',
+            '--out',
+            `${compiler}.json`,
+            '--enum-manifest',
+            `${compiler}-enum.json`,
+            '--packager',
+            'both',
+            '--no-include-default-strings',
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+      }
+      assert.equal(
+        readFileSync(join(directory, 'oxc.json'), 'utf8'),
+        readFileSync(join(directory, 'babel.json'), 'utf8'),
+      );
+      assert.equal(
+        readFileSync(join(directory, 'oxc-enum.json'), 'utf8'),
+        readFileSync(join(directory, 'babel-enum.json'), 'utf8'),
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test.each(['text', 'phrase', 'both', 'none'])(
+    'collect CLI matches custom hash, extra options, and the %s packager',
+    (packager) => {
+      const directory = mkdtempSync(join(tmpdir(), 'fbtee-collector-options-'));
+      try {
+        writeFileSync(
+          join(directory, 'source.jsx'),
+          `import { fbt } from 'fbtee';
+         export const value = fbt('A', 'd', {locale: 'en'});
+         export const whitespace = <fbt desc="w" preserveWhitespace>A  B</fbt>;
+         export const varied = fbt('S', 'subject', {subject});`,
+        );
+        writeFileSync(
+          join(directory, 'hash.mjs'),
+          `export default (text, desc) => text + '::' + desc;`,
+        );
+        const cli = fileURLToPath(
+          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+        );
+        for (const compiler of ['babel', 'oxc']) {
+          const result = spawnSync(
+            process.execPath,
+            [
+              cli,
+              'collect',
+              ...(compiler === 'oxc' ? ['--oxc'] : []),
+              '--src',
+              'source.jsx',
+              '--out',
+              `${compiler}.json`,
+              '--enum-manifest',
+              `${compiler}-enum.json`,
+              '--hash-module',
+              './hash.mjs',
+              '--packager',
+              packager,
+              '--options',
+              'locale',
+              '--no-include-default-strings',
+            ],
+            { cwd: directory, encoding: 'utf8' },
+          );
+          assert.equal(
+            result.status,
+            0,
+            `${compiler}: ${result.stderr || result.stdout}`,
+          );
+        }
+        assert.equal(
+          readFileSync(join(directory, 'oxc.json'), 'utf8'),
+          readFileSync(join(directory, 'babel.json'), 'utf8'),
+        );
+      } finally {
+        rmSync(directory, { force: true, recursive: true });
+      }
+    },
+  );
+
+  test.each(['text', 'phrase', 'both', 'none'])(
+    'collect CLI matches the %s packager and legacy format',
+    (packager) => {
+      const directory = mkdtempSync(join(tmpdir(), 'fbtee-packager-parity-'));
+      try {
+        writeFileSync(
+          join(directory, 'source.jsx'),
+          `import { fbt } from 'fbtee'; export const value = <fbt desc="d">A <b>B</b></fbt>;`,
+        );
+        const cli = fileURLToPath(
+          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+        );
+        for (const compiler of ['babel', 'oxc']) {
+          const result = spawnSync(
+            process.execPath,
+            [
+              cli,
+              'collect',
+              ...(compiler === 'oxc' ? ['--oxc'] : []),
+              '--src',
+              'source.jsx',
+              '--out',
+              `${compiler}.json`,
+              '--enum-manifest',
+              `${compiler}-enum.json`,
+              '--packager',
+              packager,
+              '--legacy-format',
+              '--no-include-default-strings',
+            ],
+            { cwd: directory, encoding: 'utf8' },
+          );
+          assert.equal(
+            result.status,
+            0,
+            `${compiler}: ${result.stderr || result.stdout}`,
+          );
+        }
+        assert.equal(
+          readFileSync(join(directory, 'oxc.json'), 'utf8'),
+          readFileSync(join(directory, 'babel.json'), 'utf8'),
+        );
+      } finally {
+        rmSync(directory, { force: true, recursive: true });
+      }
+    },
+  );
+});
+
+describe('native CLI parity', () => {
+  test.each([
+    { arguments: [], name: 'root help' },
+    { arguments: ['unknown-command'], name: 'unknown command' },
+  ])('matches $name behavior', ({ arguments: cliArguments }) => {
+    const cli = fileURLToPath(
+      new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+    );
+    const babel = spawnSync(process.execPath, [cli, ...cliArguments], {
+      encoding: 'utf8',
+    });
+    const oxc = spawnSync(process.execPath, [cli, ...cliArguments, '--oxc'], {
+      encoding: 'utf8',
+    });
+    assert.equal(oxc.status, babel.status);
+    assert.equal(oxc.stdout, babel.stdout);
+    assert.equal(oxc.stderr, babel.stderr);
+  });
+
+  test.each([
+    'collect',
+    'translate',
+    'prepare-translations',
+    'migrate-locales',
+  ])('%s help is byte-identical', (command) => {
+    const cli = fileURLToPath(
+      new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+    );
+    const babel = spawnSync(process.execPath, [cli, command, '--help'], {
+      encoding: 'utf8',
+    });
+    const oxc = spawnSync(process.execPath, [cli, command, '--oxc', '--help'], {
+      encoding: 'utf8',
+    });
+    assert.equal(oxc.status, babel.status);
+    assert.equal(oxc.stdout, babel.stdout);
+    assert.equal(oxc.stderr, babel.stderr);
+  });
+
+  test.each([
+    ['--custom-collector', './collector.mjs'],
+    ['--transform', './transform.mjs'],
+    ['--generate-fbt-nodes'],
+  ])('collect rejects Babel-specific extension %s', (...extensionArguments) => {
+    const result = spawnSync(
+      process.execPath,
+      [
+        fileURLToPath(
+          new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+        ),
+        'collect',
+        '--oxc',
+        ...extensionArguments,
+      ],
+      { encoding: 'utf8' },
+    );
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, new RegExp(extensionArguments[0]));
+  });
+
+  test('collect refuses to silently ignore Babel configuration', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-babel-config-'));
+    try {
+      mkdirSync(join(directory, 'src', 'nested'), { recursive: true });
+      writeFileSync(
+        join(directory, 'src', 'nested', '.babelrc.cjs'),
+        `module.exports = {
+          plugins: [() => ({
+            visitor: {
+              Program(path) {
+                path.traverse({
+                  StringLiteral(stringPath) {
+                    if (stringPath.node.value === 'Before') {
+                      stringPath.node.value = 'After';
+                    }
+                  },
+                });
+              },
+            },
+          })],
+        };`,
+      );
+      writeFileSync(
+        join(directory, 'src', 'nested', 'source.jsx'),
+        `import { fbt } from 'fbtee'; export const value = fbt('Before', 'd');`,
+      );
+      const cli = fileURLToPath(
+        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+      );
+      const native = spawnSync(
+        process.execPath,
+        [
+          cli,
+          'collect',
+          '--oxc',
+          '--src',
+          'src',
+          '--no-include-default-strings',
+        ],
+        { cwd: directory, encoding: 'utf8' },
+      );
+      assert.notEqual(native.status, 0);
+      assert.match(native.stderr, /cannot execute Babel configuration/);
+
+      for (const [compiler, extraArguments] of [
+        ['babel', []],
+        ['oxc', ['--oxc', '--disable-babel-config']],
+      ]) {
+        const result = spawnSync(
+          process.execPath,
+          [
+            cli,
+            'collect',
+            ...extraArguments,
+            '--src',
+            'src',
+            '--out',
+            `${compiler}.json`,
+            '--enum-manifest',
+            `${compiler}-enum.json`,
+            '--no-include-default-strings',
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(result.status, 0, result.stderr || result.stdout);
+      }
+      assert.equal(
+        JSON.parse(readFileSync(join(directory, 'babel.json'))).phrases[0].jsfbt
+          .t.text,
+        'After',
+      );
+      assert.equal(
+        JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases[0].jsfbt.t
+          .text,
+        'Before',
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test('collect refuses to silently ignore .babelignore', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-babel-ignore-'));
+    try {
+      writeFileSync(join(directory, '.babelignore'), 'source.jsx\n');
+      writeFileSync(
+        join(directory, 'source.jsx'),
+        `import { fbt } from 'fbtee'; export const value = fbt('Ignored', 'd');`,
+      );
+      const cli = fileURLToPath(
+        new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+      );
+      const guarded = spawnSync(
+        process.execPath,
+        [
+          cli,
+          'collect',
+          '--oxc',
+          '--src',
+          'source.jsx',
+          '--no-include-default-strings',
+        ],
+        { cwd: directory, encoding: 'utf8' },
+      );
+      assert.notEqual(guarded.status, 0);
+      assert.match(guarded.stderr, /\.babelignore/);
+
+      const bypassed = spawnSync(
+        process.execPath,
+        [
+          cli,
+          'collect',
+          '--oxc',
+          '--disable-babel-config',
+          '--src',
+          'source.jsx',
+          '--out',
+          'oxc.json',
+          '--enum-manifest',
+          'oxc-enum.json',
+          '--no-include-default-strings',
+        ],
+        { cwd: directory, encoding: 'utf8' },
+      );
+      assert.equal(bypassed.status, 0, bypassed.stderr || bypassed.stdout);
+      assert.equal(
+        JSON.parse(readFileSync(join(directory, 'oxc.json'))).phrases.length,
+        1,
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test.each([
+    { arguments: ['--no-jenkins'], name: 'indexed stdin output' },
+    {
+      arguments: ['--no-jenkins', '--hash-module', './hash.mjs'],
+      name: 'custom-hashed stdin output',
+    },
+  ])('translate matches $name', ({ arguments: extraArguments }) => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-translate-stdin-'));
+    try {
+      writeFileSync(
+        join(directory, 'hash.mjs'),
+        `export default (table) => 'custom-' + table.text;`,
+      );
+      const input = JSON.stringify({
+        phrases: [
+          {
+            hashToLeaf: { hash: { desc: 'd', text: 'A' } },
+            jsfbt: { m: [], t: { desc: 'd', text: 'A' } },
+            project: '',
+          },
+        ],
+        translationGroups: [
+          {
+            'fb-locale': 'de_DE',
+            translations: {
+              hash: {
+                tokens: [],
+                translations: [{ translation: 'Ein A', variations: [] }],
+                types: [],
+              },
+            },
+          },
+        ],
+      });
+      const outputs = [];
+      for (const compiler of ['babel', 'oxc']) {
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'translate',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--stdin',
+            ...extraArguments,
+          ],
+          { cwd: directory, encoding: 'utf8', input },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+        outputs.push(result.stdout);
+      }
+      assert.equal(outputs[1], outputs[0]);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test.each([
+    ['string entry', 'Generated'],
+    ['empty object', {}],
+    ['missing translations', { tokens: [], types: [] }],
+    ['incorrect collection types', { tokens: {}, translations: {}, types: {} }],
+  ])('translate rejects malformed %s', (_name, malformedTranslation) => {
+    const input = JSON.stringify({
+      phrases: [
+        {
+          hashToLeaf: { hash: { desc: 'd', text: 'Source' } },
+          jsfbt: { m: [], t: { desc: 'd', text: 'Source' } },
+          project: '',
+        },
+      ],
+      translationGroups: [
+        {
+          'fb-locale': 'fb_HX',
+          translations: { hash: malformedTranslation },
+        },
+      ],
+    });
+    for (const compiler of ['babel', 'oxc']) {
+      const result = spawnSync(
+        process.execPath,
+        [
+          fileURLToPath(
+            new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+          ),
+          'translate',
+          ...(compiler === 'oxc' ? ['--oxc'] : []),
+          '--stdin',
+          '--no-jenkins',
+        ],
+        { encoding: 'utf8', input },
+      );
+      assert.notEqual(result.status, 0, compiler);
+    }
+  });
+
+  test.each([
+    { arguments: [], succeeds: true },
+    { arguments: ['--strict'], succeeds: false },
+  ])(
+    'translate matches missing-translation handling ($arguments)',
+    ({ arguments: extraArguments, succeeds }) => {
+      const input = JSON.stringify({
+        phrases: [
+          {
+            hashToLeaf: { hash: { desc: 'd', text: 'Source' } },
+            jsfbt: { m: [], t: { desc: 'd', text: 'Source' } },
+            project: '',
+          },
+        ],
+        translationGroups: [
+          { 'fb-locale': 'de_DE', translations: { hash: null } },
+        ],
+      });
+      const results = ['babel', 'oxc'].map((compiler) =>
+        spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'translate',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--stdin',
+            ...extraArguments,
+          ],
+          { encoding: 'utf8', input },
+        ),
+      );
+      for (const result of results) {
+        assert.equal(result.status === 0, succeeds, result.stderr);
+      }
+      if (succeeds) {
+        assert.equal(results[1].stdout, results[0].stdout);
+        assert.equal(results[1].stderr, results[0].stderr);
+      }
+    },
+  );
+
+  test('translate matches every example locale', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-translate-parity-'));
+    try {
+      writeFileSync(
+        join(directory, 'source_strings.json'),
+        readFileSync(
+          new URL('../example/source_strings.json', import.meta.url),
+        ),
+      );
+      cpSync(
+        new URL('../example/translations', import.meta.url),
+        join(directory, 'translations'),
+        { recursive: true },
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'translate',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--source-strings',
+            'source_strings.json',
+            '--translations',
+            ...readdirSync(join(directory, 'translations')).map((file) =>
+              join('translations', file),
+            ),
+            '--output-dir',
+            compiler,
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+      }
+      const files = globSyncForTest(join(directory, 'babel'));
+      assert.equal(
+        files.join(','),
+        globSyncForTest(join(directory, 'oxc')).join(','),
+      );
+      for (const file of files) {
+        assert.equal(
+          readFileSync(join(directory, 'oxc', file), 'utf8'),
+          readFileSync(join(directory, 'babel', file), 'utf8'),
+          file,
+        );
+      }
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test.each([
+    ['bcp47', 'es-419.json'],
+    ['legacy', 'es_LA.json'],
+    ['preserve', 'es_LA.json'],
+  ])(
+    'translate matches new %s output locale files',
+    (localeStyle, expectedFile) => {
+      const directory = mkdtempSync(join(tmpdir(), 'fbtee-translate-locale-'));
+      try {
+        writeFileSync(
+          join(directory, 'source_strings.json'),
+          JSON.stringify({
+            phrases: [
+              {
+                hashToLeaf: { hash: { desc: 'd', text: 'A' } },
+                jsfbt: { m: [], t: { desc: 'd', text: 'A' } },
+                project: '',
+              },
+            ],
+          }),
+        );
+        writeFileSync(
+          join(directory, 'translation.json'),
+          JSON.stringify({
+            'fb-locale': 'es_LA',
+            translations: {
+              hash: {
+                tokens: [],
+                translations: [{ translation: 'Un A', variations: {} }],
+                types: [],
+              },
+            },
+          }),
+        );
+        for (const compiler of ['babel', 'oxc']) {
+          const result = spawnSync(
+            process.execPath,
+            [
+              fileURLToPath(
+                new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+              ),
+              'translate',
+              ...(compiler === 'oxc' ? ['--oxc'] : []),
+              '--source-strings',
+              'source_strings.json',
+              '--translations',
+              'translation.json',
+              '--output-dir',
+              compiler,
+              '--output-locale-style',
+              localeStyle,
+            ],
+            { cwd: directory, encoding: 'utf8' },
+          );
+          assert.equal(
+            result.status,
+            0,
+            `${compiler}: ${result.stderr || result.stdout}`,
+          );
+        }
+        assert.equal(
+          globSyncForTest(join(directory, 'babel')).join(','),
+          expectedFile,
+        );
+        assert.equal(
+          readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
+          readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
+        );
+      } finally {
+        rmSync(directory, { force: true, recursive: true });
+      }
+    },
+  );
+
+  test('prepare-translations matches existing locale files', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-parity-'));
+    try {
+      writeFileSync(
+        join(directory, 'source_strings.json'),
+        readFileSync(
+          new URL('../example/source_strings.json', import.meta.url),
+        ),
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        cpSync(
+          new URL('../example/translations', import.meta.url),
+          join(directory, compiler),
+          { recursive: true },
+        );
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'prepare-translations',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--source-strings',
+            'source_strings.json',
+            '--output-dir',
+            compiler,
+            '--sort-by-hash',
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+      }
+      const files = globSyncForTest(join(directory, 'babel'));
+      assert.deepEqual(files, globSyncForTest(join(directory, 'oxc')));
+      for (const file of files) {
+        assert.equal(
+          readFileSync(join(directory, 'oxc', file), 'utf8'),
+          readFileSync(join(directory, 'babel', file), 'utf8'),
+          file,
+        );
+      }
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test.each([
+    ['bcp47', 'es-419.json'],
+    ['legacy', 'es_LA.json'],
+    ['preserve', 'es_LA.json'],
+  ])(
+    'prepare-translations matches new %s locale files',
+    (localeStyle, expectedFile) => {
+      const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-new-'));
+      try {
+        writeFileSync(
+          join(directory, 'source_strings.json'),
+          JSON.stringify({
+            phrases: [
+              {
+                hashToLeaf: { hash: { desc: 'Description', text: 'Text' } },
+              },
+            ],
+          }),
+        );
+        for (const compiler of ['babel', 'oxc']) {
+          mkdirSync(join(directory, compiler));
+          const result = spawnSync(
+            process.execPath,
+            [
+              fileURLToPath(
+                new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+              ),
+              'prepare-translations',
+              ...(compiler === 'oxc' ? ['--oxc'] : []),
+              '--source-strings',
+              'source_strings.json',
+              '--output-dir',
+              compiler,
+              '--locales',
+              'es_LA',
+              '--output-locale-style',
+              localeStyle,
+            ],
+            { cwd: directory, encoding: 'utf8' },
+          );
+          assert.equal(
+            result.status,
+            0,
+            `${compiler}: ${result.stderr || result.stdout}`,
+          );
+        }
+        assert.equal(
+          globSyncForTest(join(directory, 'babel')).join(','),
+          expectedFile,
+        );
+        assert.equal(
+          readFileSync(join(directory, 'oxc', expectedFile), 'utf8'),
+          readFileSync(join(directory, 'babel', expectedFile), 'utf8'),
+        );
+      } finally {
+        rmSync(directory, { force: true, recursive: true });
+      }
+    },
+  );
+
+  test('prepare-translations preserves falsy existing entries', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-prepare-falsy-'));
+    try {
+      writeFileSync(
+        join(directory, 'source_strings.json'),
+        JSON.stringify({
+          phrases: [
+            {
+              hashToLeaf: {
+                existing: { desc: 'Description', text: 'Text' },
+              },
+            },
+          ],
+        }),
+      );
+      for (const compiler of ['babel', 'oxc']) {
+        const outputDirectory = join(directory, compiler);
+        mkdirSync(outputDirectory);
+        writeFileSync(
+          join(outputDirectory, 'en-US.json'),
+          JSON.stringify({
+            'fb-locale': 'en-US',
+            translations: {
+              existing: null,
+              removed: null,
+              removedTruthy: { status: 'done' },
+            },
+          }),
+        );
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'prepare-translations',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--source-strings',
+            'source_strings.json',
+            '--output-dir',
+            compiler,
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+      }
+      assert.equal(
+        readFileSync(join(directory, 'oxc', 'en-US.json'), 'utf8'),
+        readFileSync(join(directory, 'babel', 'en-US.json'), 'utf8'),
+      );
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  test('migrate-locales matches locale filenames and JSON', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-migrate-parity-'));
+    try {
+      for (const compiler of ['babel', 'oxc']) {
+        const outputDirectory = join(directory, compiler);
+        mkdirSync(outputDirectory);
+        for (const [locale, text] of [
+          ['de_DE', 'Text'],
+          ['es_LA', 'Texto'],
+        ]) {
+          writeFileSync(
+            join(outputDirectory, `${locale}.json`),
+            JSON.stringify(
+              {
+                'fb-locale': locale,
+                [locale]: { hash: text },
+                ...(locale === 'de_DE'
+                  ? { de: { hash: 'Base language text' } }
+                  : {}),
+                metadata: true,
+              },
+              null,
+              2,
+            ),
+          );
+        }
+        const result = spawnSync(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL('../packages/fbtee-cli/bin.mjs', import.meta.url),
+            ),
+            'migrate-locales',
+            ...(compiler === 'oxc' ? ['--oxc'] : []),
+            '--dir',
+            compiler,
+            '--to',
+            'bcp47',
+          ],
+          { cwd: directory, encoding: 'utf8' },
+        );
+        assert.equal(
+          result.status,
+          0,
+          `${compiler}: ${result.stderr || result.stdout}`,
+        );
+      }
+      const files = globSyncForTest(join(directory, 'babel'));
+      assert.equal(files.join(','), 'de-DE.json,es-419.json');
+      assert.equal(
+        files.join(','),
+        globSyncForTest(join(directory, 'oxc')).join(','),
+      );
+      for (const file of files) {
+        assert.equal(
+          readFileSync(join(directory, 'oxc', file), 'utf8'),
+          readFileSync(join(directory, 'babel', file), 'utf8'),
+          file,
+        );
+      }
+      const migratedGerman = JSON.parse(
+        readFileSync(join(directory, 'oxc', 'de-DE.json'), 'utf8'),
+      );
+      assert.deepEqual(migratedGerman.de, { hash: 'Base language text' });
+      assert.deepEqual(migratedGerman['de-DE'], { hash: 'Text' });
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+});
+
+const globSyncForTest = (directory) =>
+  readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .sort();
 
 // SWC plugins report diagnostics by panicking inside WASM. JavaScript catches
 // those exceptions, but Rust's panic hook writes every expected diagnostic to

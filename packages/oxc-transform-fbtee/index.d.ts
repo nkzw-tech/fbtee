@@ -36,6 +36,30 @@ export interface SourceMap {
   version: number;
   x_google_ignoreList?: Array<number>;
 }
+export interface CollectResult {
+  output?: string;
+  errors: Array<OxcError>;
+}
+
+export declare function collectSync(
+  filename: string,
+  sourceText: string,
+  options?: TransformOptions | undefined | null,
+): CollectResult;
+
+export declare function migrateLocaleJsonSync(
+  json: string,
+  targetLocale: string,
+  equivalentLocales: Array<string>,
+): string;
+
+export declare function prepareTranslationsSync(
+  sourceJson: string,
+  existingJson: string | undefined | null,
+  locale: string,
+  sortByHash?: boolean | undefined | null,
+): string;
+
 export declare function transform(
   filename: string,
   sourceText: string,
@@ -47,6 +71,8 @@ export interface TransformOptions {
   sourceType?: 'script' | 'module' | 'commonjs' | 'unambiguous';
   sourcemap?: boolean;
   collectFbt?: boolean;
+  collectPackager?: string;
+  extraOptions?: Array<string>;
   fbtCommon?: Record<string, string>;
   fbtEnumManifest?: Record<string, Record<string, string>>;
 }
@@ -62,3 +88,8 @@ export declare function transformSync(
   sourceText: string,
   options?: TransformOptions | undefined | null,
 ): TransformResult;
+
+export declare function translateSync(
+  inputJson: string,
+  jenkins?: boolean | undefined | null,
+): string;

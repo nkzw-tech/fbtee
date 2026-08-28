@@ -271,6 +271,12 @@ importers:
       '@nkzw/babel-plugin-fbtee':
         specifier: workspace:^
         version: link:../babel-plugin-fbtee
+      '@nkzw/oxc-transform-fbtee':
+        specifier: workspace:^
+        version: link:../oxc-transform-fbtee
+      yargs:
+        specifier: ^18.0.0
+        version: 18.0.0
 
   packages/oxc-transform-fbtee:
     devDependencies:

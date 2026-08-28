@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/fbtee-cli",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Command line tools for fbtee.",
   "keywords": [
     "fbt",
@@ -21,10 +21,17 @@
   },
   "files": [
     "bin.mjs",
+    "oxc-cli.mjs",
+    "oxc-locale.mjs",
+    "oxc-migrate-locales.mjs",
+    "oxc-prepare-translations.mjs",
+    "oxc-translate.mjs",
     "LICENSE",
     "README.md"
   ],
   "dependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:^"
+    "@nkzw/babel-plugin-fbtee": "workspace:^",
+    "@nkzw/oxc-transform-fbtee": "workspace:^",
+    "yargs": "^18.0.0"
   }
 }

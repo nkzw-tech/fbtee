@@ -39,8 +39,47 @@ const JSX_NAMED_ENTITIES: &str = "quot amp apos lt gt nbsp iexcl cent pound curr
 #[derive(Clone, Debug, Default)]
 pub struct FbteeOptions {
     pub collect_fbt: bool,
+    pub collect_packager: String,
+    pub extra_options: Vec<String>,
     pub fbt_common: BTreeMap<String, String>,
     pub fbt_enum_manifest: IndexMap<String, IndexMap<String, String>>,
+}
+
+pub struct CollectedFileOutput {
+    pub child_parent_mappings: Vec<(usize, usize)>,
+    pub phrases: Vec<serde_json::Value>,
+}
+
+pub fn collect_program<'a>(
+    allocator: &'a Allocator,
+    program: &mut Program<'a>,
+    scoping: Scoping,
+    mut options: FbteeOptions,
+    filename: &str,
+) -> Result<CollectedFileOutput, String> {
+    options.collect_fbt = true;
+    let default_call_options = parse_fbt_docblock(program.source_text)?;
+    let mut collector = BindingCollector::new(&options);
+    collector.visit_program(program);
+    let mut tx = FbteeTransform::new(
+        allocator,
+        program.source_text,
+        program.source_type,
+        scoping,
+        options.clone(),
+        default_call_options,
+        collector,
+    );
+    tx.visit_program(program);
+    if let Some(error) = &tx.error {
+        return Err(format!("fbtee Oxc collector error: {error}"));
+    }
+    Ok(build_collected_file_output(
+        filename,
+        program.source_text,
+        &tx.collected_phrases,
+        &tx.options.collect_packager,
+    ))
 }
 
 pub fn transform_program<'a>(
@@ -466,6 +505,7 @@ struct FbteeTransform<'a> {
     scopes: Vec<Option<ScopeId>>,
     needs_fbt_binding: bool,
     needs_fbs_binding: bool,
+    collected_phrases: Vec<Phrase>,
     replacement_captures: Vec<Vec<(Span, String)>>,
     next_span_marker: u32,
     error: Option<String>,
@@ -494,6 +534,7 @@ impl<'a> FbteeTransform<'a> {
             scopes: vec![],
             needs_fbt_binding: false,
             needs_fbs_binding: false,
+            collected_phrases: vec![],
             replacement_captures: vec![],
             next_span_marker: 0,
             error: None,
@@ -664,8 +705,12 @@ impl<'a> FbteeTransform<'a> {
         self.runtime_call(Phrase {
             desc,
             module,
-            options: self.default_call_options.clone(),
+            options: CallOptions {
+                common: true,
+                ..self.default_call_options.clone()
+            },
             parts: vec![Part::Text(label)],
+            span: call.span,
         })
     }
     fn transform_fbt_call(
@@ -692,7 +737,12 @@ impl<'a> FbteeTransform<'a> {
                 let Some(expression) = argument_expr(argument) else {
                     return self.fail("fbtee options cannot be a spread argument");
                 };
-                match parse_call_options(expression, &self.default_call_options) {
+                match parse_call_options(
+                    expression,
+                    &self.default_call_options,
+                    &self.options.extra_options,
+                    self.source_text,
+                ) {
                     Ok(options) => options,
                     Err(error) => return self.fail(error),
                 }
@@ -710,6 +760,7 @@ impl<'a> FbteeTransform<'a> {
             module,
             options,
             parts,
+            span: call.span,
         })
     }
     fn parse_contents(
@@ -1182,7 +1233,7 @@ impl<'a> FbteeTransform<'a> {
             ));
         }
         let attrs = JsxAttrs::new(&element.opening_element.attributes);
-        if let Err(error) = attrs.validate(&[
+        let mut allowed_attributes = vec![
             "desc",
             "author",
             "common",
@@ -1190,16 +1241,30 @@ impl<'a> FbteeTransform<'a> {
             "preserveWhitespace",
             "project",
             "subject",
-        ]) {
+        ];
+        allowed_attributes.extend(self.options.extra_options.iter().map(String::as_str));
+        if let Err(error) = attrs.validate(&allowed_attributes) {
             return self.fail(error);
+        }
+        for option in &self.options.extra_options {
+            if attrs.attr(option).is_some() {
+                match attrs.required_string(option) {
+                    Ok(Some(_)) => {}
+                    Ok(None) => unreachable!("attribute presence was checked"),
+                    Err(_) => {
+                        return self.fail(format!("Extra option '{option}' must be a string."));
+                    }
+                }
+            }
         }
         let is_common = match attrs.boolean_option("common") {
             Ok(value) => value.unwrap_or(false),
             Err(error) => return self.fail(error),
         };
-        if let Err(error) = attrs.boolean_option("doNotExtract") {
-            return self.fail(error);
-        }
+        let do_not_extract = match attrs.boolean_option("doNotExtract") {
+            Ok(value) => value.unwrap_or(self.default_call_options.do_not_extract),
+            Err(error) => return self.fail(error),
+        };
         if is_common && attrs.attr("desc").is_some() {
             return self.fail(format!(
                 "<{} common> cannot also have a 'desc' attribute. Remove one of them.",
@@ -1210,9 +1275,10 @@ impl<'a> FbteeTransform<'a> {
             Ok(value) => value.unwrap_or(self.default_call_options.preserve_whitespace),
             Err(error) => return self.fail(error),
         };
-        if let Err(error) = attrs.required_string("author") {
-            return self.fail(error);
-        }
+        let author = match attrs.required_string("author") {
+            Ok(author) => author.or_else(|| self.default_call_options.author.clone()),
+            Err(error) => return self.fail(error),
+        };
         let project = match attrs.required_string("project") {
             Ok(project) => project
                 .filter(|project| !project.is_empty())
@@ -1220,14 +1286,19 @@ impl<'a> FbteeTransform<'a> {
             Err(error) => return self.fail(error),
         };
         let mut options = CallOptions {
+            author,
+            common: is_common,
+            do_not_extract,
             preserve_whitespace,
             project,
             subject: self.default_call_options.subject.clone(),
             subject_constraint: self.default_call_options.subject_constraint.clone(),
+            subject_json: self.default_call_options.subject_json.clone(),
         };
         if let Some(subject) = attrs.expression("subject") {
             options.subject = Some(self.transformed_code(subject));
             options.subject_constraint = variation_constraint("subject", subject);
+            options.subject_json = babel_subject_json(subject, self.source_text);
         }
         let desc = if is_common {
             let text = normalize_spaces(
@@ -1265,6 +1336,7 @@ impl<'a> FbteeTransform<'a> {
             module,
             options,
             parts,
+            span: element.span,
         })
     }
     fn jsx_binding_is_fbtee(&self, module: ModuleName) -> bool {
@@ -1520,6 +1592,7 @@ impl<'a> FbteeTransform<'a> {
             String::new(),
             Some(NestedPhrase {
                 prefix: format!("{}{{", self.transformed_opening_code(element)),
+                span: element.span,
                 suffix: format!(
                     "}}{}",
                     &self.source_text[close_start..element.span.end as usize]
@@ -1544,6 +1617,7 @@ impl<'a> FbteeTransform<'a> {
             String::new(),
             Some(NestedPhrase {
                 prefix: "<>{".into(),
+                span: fragment.span,
                 suffix: "}</>".into(),
                 target_id: fragment.span.start,
             }),
@@ -1842,6 +1916,9 @@ impl<'a> FbteeTransform<'a> {
         if let Err(error) = validate_phrase(&phrase) {
             return self.fail(error);
         }
+        if self.options.collect_fbt && !phrase.options.do_not_extract {
+            self.collected_phrases.push(phrase.clone());
+        }
         let mut variations = vec![];
         collect_variation_parts(&phrase.parts, &mut variations);
         let mut shared_values = vec![];
@@ -1952,13 +2029,18 @@ struct Phrase {
     module: ModuleName,
     options: CallOptions,
     parts: Vec<Part>,
+    span: Span,
 }
 #[derive(Clone, Default)]
 struct CallOptions {
+    author: Option<String>,
+    common: bool,
+    do_not_extract: bool,
     preserve_whitespace: bool,
     project: Option<String>,
     subject: Option<String>,
     subject_constraint: Option<VariationConstraint>,
+    subject_json: Option<serde_json::Value>,
 }
 
 #[derive(Clone)]
@@ -2025,6 +2107,10 @@ fn parse_fbt_docblock(source_text: &str) -> Result<CallOptions, String> {
             return Err(format!("@fbt docblock option '{key}' must be a boolean."));
         }
     }
+    let author = object
+        .get("author")
+        .and_then(serde_json::Value::as_str)
+        .map(str::to_string);
     let project = object
         .get("project")
         .map(|value| {
@@ -2037,15 +2123,26 @@ fn parse_fbt_docblock(source_text: &str) -> Result<CallOptions, String> {
     Ok(CallOptions {
         // Babel's callsite options initialize these fields before docblock
         // defaults are merged, so today only `project` is inherited.
+        author,
+        common: object
+            .get("common")
+            .and_then(serde_json::Value::as_bool)
+            .unwrap_or(false),
+        do_not_extract: object
+            .get("doNotExtract")
+            .and_then(serde_json::Value::as_bool)
+            .unwrap_or(false),
         preserve_whitespace: false,
         project,
         subject: None,
         subject_constraint: None,
+        subject_json: None,
     })
 }
 #[derive(Clone)]
 struct NestedPhrase {
     prefix: String,
+    span: Span,
     suffix: String,
     target_id: u32,
 }
@@ -2807,6 +2904,477 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
     }
 }
 
+fn build_collected_file_output(
+    filename: &str,
+    source_text: &str,
+    phrases: &[Phrase],
+    packager: &str,
+) -> CollectedFileOutput {
+    let mut output = CollectedFileOutput {
+        child_parent_mappings: vec![],
+        phrases: vec![],
+    };
+    let mut phrases = phrases.iter().collect::<Vec<_>>();
+    phrases.sort_by_key(|phrase| (phrase.span.start, std::cmp::Reverse(phrase.span.end)));
+    for phrase in phrases {
+        let mut variations = vec![];
+        collect_variation_parts(&phrase.parts, &mut variations);
+        append_collected_phrase(
+            &mut output,
+            filename,
+            source_text,
+            phrase,
+            &variations,
+            &phrase.parts,
+            None,
+            None,
+            packager,
+        );
+    }
+    output
+}
+
+#[expect(clippy::too_many_arguments)]
+fn append_collected_phrase(
+    output: &mut CollectedFileOutput,
+    filename: &str,
+    source_text: &str,
+    phrase: &Phrase,
+    global_variations: &[&Part],
+    root_parts: &[Part],
+    description_target: Option<u32>,
+    parent: Option<usize>,
+    packager: &str,
+) {
+    let index = output.phrases.len();
+    if let Some(parent) = parent {
+        output.child_parent_mappings.push((index, parent));
+    }
+    let builder = RuntimeBuilder::new(phrase, global_variations, root_parts, description_target);
+    output.phrases.push(collected_phrase_json(
+        filename,
+        source_text,
+        phrase,
+        global_variations,
+        &builder,
+        packager,
+    ));
+
+    append_collected_children(
+        output,
+        filename,
+        source_text,
+        phrase,
+        global_variations,
+        root_parts,
+        &phrase.parts,
+        index,
+        packager,
+    );
+}
+
+#[expect(clippy::too_many_arguments)]
+fn append_collected_children(
+    output: &mut CollectedFileOutput,
+    filename: &str,
+    source_text: &str,
+    phrase: &Phrase,
+    global_variations: &[&Part],
+    root_parts: &[Part],
+    parts: &[Part],
+    parent: usize,
+    packager: &str,
+) {
+    for part in parts {
+        let Part::Param {
+            nested: Some(nested),
+            nested_parts,
+            runtime_kind: ParamRuntimeKind::Implicit,
+            ..
+        } = part
+        else {
+            continue;
+        };
+        let nested_phrase = Phrase {
+            desc: String::new(),
+            module: phrase.module,
+            options: phrase.options.clone(),
+            parts: nested_parts.clone(),
+            span: nested.span,
+        };
+        append_collected_phrase(
+            output,
+            filename,
+            source_text,
+            &nested_phrase,
+            global_variations,
+            root_parts,
+            Some(nested.target_id),
+            Some(parent),
+            packager,
+        );
+    }
+}
+
+fn collected_phrase_json(
+    filename: &str,
+    source_text: &str,
+    phrase: &Phrase,
+    global_variations: &[&Part],
+    builder: &RuntimeBuilder<'_, '_>,
+    packager: &str,
+) -> serde_json::Value {
+    let mut object = serde_json::Map::new();
+    let hash_tree = builder.hash_tree();
+    if matches!(packager, "phrase" | "both") {
+        object.insert("hash_code".into(), fbt_hash(&hash_tree).into());
+        object.insert("hash_key".into(), fbt_hash_key(&hash_tree).into());
+    }
+    if matches!(packager, "text" | "both") {
+        object.insert("hashToLeaf".into(), hash_to_leaf_json(&hash_tree));
+    }
+    object.insert("filename".into(), filename.into());
+    object.insert("loc".into(), span_location_json(source_text, phrase.span));
+    object.insert(
+        "project".into(),
+        phrase.options.project.clone().unwrap_or_default().into(),
+    );
+    if phrase.options.preserve_whitespace {
+        object.insert("preserveWhitespace".into(), true.into());
+    }
+    if let Some(subject) = &phrase.options.subject_json {
+        object.insert("subject".into(), subject.clone());
+    }
+    if let Some(author) = &phrase.options.author {
+        object.insert("author".into(), author.clone().into());
+    }
+    if phrase.options.common {
+        object.insert("common".into(), true.into());
+    }
+
+    let mut jsfbt = serde_json::Map::new();
+    jsfbt.insert(
+        "m".into(),
+        serde_json::Value::Array(collection_metadata(phrase, global_variations)),
+    );
+    jsfbt.insert("t".into(), hash_node_json(hash_tree));
+    object.insert("jsfbt".into(), serde_json::Value::Object(jsfbt));
+    serde_json::Value::Object(object)
+}
+
+fn hash_to_leaf_json(node: &HashNode) -> serde_json::Value {
+    use base64::Engine;
+    use md5::{Digest, Md5};
+
+    let mut object = serde_json::Map::new();
+    for (_, leaf) in hash_leaves(node) {
+        let mut hasher = Md5::new();
+        hasher.update(leaf.text.as_bytes());
+        hasher.update(leaf.desc.as_bytes());
+        let hash = base64::engine::general_purpose::STANDARD.encode(hasher.finalize());
+        object.insert(
+            hash,
+            serde_json::json!({"desc": leaf.desc, "text": leaf.text}),
+        );
+    }
+    serde_json::Value::Object(object)
+}
+
+fn collection_metadata(phrase: &Phrase, global_variations: &[&Part]) -> Vec<serde_json::Value> {
+    let mut metadata = vec![];
+    if phrase.options.subject.is_some() {
+        metadata.push(serde_json::json!({"token": "__subject__", "type": 1}));
+    }
+    metadata.extend(global_variations.iter().map(|part| match part {
+        Part::Param {
+            name,
+            variation: ParamVariation::Number(_),
+            ..
+        } => serde_json::json!({"token": name, "type": 2}),
+        Part::Param {
+            name,
+            variation: ParamVariation::Gender(_),
+            ..
+        }
+        | Part::Name { name, .. } => serde_json::json!({"token": name, "type": 1}),
+        Part::Plural {
+            name, show_count, ..
+        } if show_count != "no" => serde_json::json!({
+            "singular": true,
+            "token": name.as_deref().unwrap_or("number"),
+            "type": 2,
+        }),
+        Part::Enum { .. } | Part::Plural { .. } | Part::Pronoun { .. } => serde_json::Value::Null,
+        _ => serde_json::Value::Null,
+    }));
+    metadata
+}
+
+fn hash_node_json(node: HashNode) -> serde_json::Value {
+    match node {
+        HashNode::Leaf(leaf) => {
+            let mut object = serde_json::Map::new();
+            object.insert("desc".into(), leaf.desc.into());
+            object.insert("text".into(), leaf.text.into());
+            if let Some(aliases) = leaf.token_aliases {
+                object.insert(
+                    "tokenAliases".into(),
+                    serde_json::Value::Object(
+                        aliases
+                            .into_iter()
+                            .map(|(key, value)| (key, value.into()))
+                            .collect(),
+                    ),
+                );
+            }
+            serde_json::Value::Object(object)
+        }
+        HashNode::Object(entries) => serde_json::Value::Object(
+            entries
+                .into_iter()
+                .map(|(key, value)| (key, hash_node_json(value)))
+                .collect(),
+        ),
+    }
+}
+
+fn span_location_json(source_text: &str, span: Span) -> serde_json::Value {
+    serde_json::json!({
+        "start": source_position_json(source_text, span.start as usize),
+        "end": source_position_json(source_text, span.end as usize),
+    })
+}
+
+fn babel_subject_json(expression: &Expression<'_>, source_text: &str) -> Option<serde_json::Value> {
+    let original_span = expression.span();
+    let expression = unwrap_transparent_expression(expression);
+    let expression_span = expression.span();
+    use oxc_estree::{CompactSerializer, ESTree};
+    let mut serializer = CompactSerializer::new(false, false);
+    expression.serialize(&mut serializer);
+    let mut value = serde_json::from_str(&serializer.into_string()).ok()?;
+    normalize_babel_expression(&mut value, source_text, false);
+    if original_span.start < expression_span.start
+        && source_text.as_bytes().get(original_span.start as usize) == Some(&b'(')
+    {
+        if let serde_json::Value::Object(object) = &mut value {
+            let paren_start = source_position_json(source_text, original_span.start as usize)
+                .get("index")
+                .cloned()
+                .unwrap_or_default();
+            object.insert(
+                "extra".into(),
+                serde_json::json!({"parenthesized": true, "parenStart": paren_start}),
+            );
+        }
+    }
+    Some(value)
+}
+
+fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, in_chain: bool) {
+    let serde_json::Value::Object(object) = value else {
+        if let serde_json::Value::Array(values) = value {
+            for value in values {
+                normalize_babel_expression(value, source_text, false);
+            }
+        }
+        return;
+    };
+    if object.get("type").and_then(serde_json::Value::as_str) == Some("ChainExpression") {
+        let Some(mut expression) = object.shift_remove("expression") else {
+            return;
+        };
+        normalize_babel_expression(&mut expression, source_text, true);
+        *value = expression;
+        return;
+    }
+
+    let node_type = object
+        .get("type")
+        .and_then(serde_json::Value::as_str)
+        .unwrap_or_default()
+        .to_owned();
+    for (key, value) in object.iter_mut() {
+        let child_in_chain = in_chain
+            && matches!(
+                (node_type.as_str(), key.as_str()),
+                ("MemberExpression", "object") | ("CallExpression", "callee")
+            );
+        normalize_babel_expression(value, source_text, child_in_chain);
+    }
+
+    let mut object = std::mem::take(object);
+    let (Some(start), Some(end)) = (
+        object.get("start").and_then(serde_json::Value::as_u64),
+        object.get("end").and_then(serde_json::Value::as_u64),
+    ) else {
+        *value = serde_json::Value::Object(object);
+        return;
+    };
+    let start_position = source_position_json(source_text, start as usize);
+    let end_position = source_position_json(source_text, end as usize);
+    let start_index = start_position.get("index").cloned().unwrap_or_default();
+    let end_index = end_position.get("index").cloned().unwrap_or_default();
+    let mut location = serde_json::Map::new();
+    location.insert("start".into(), start_position);
+    location.insert("end".into(), end_position);
+    if object.get("type").and_then(serde_json::Value::as_str) == Some("Identifier") {
+        if let Some(name) = object.get("name").cloned() {
+            location.insert("identifierName".into(), name);
+        }
+    }
+
+    let mut node_type = object
+        .shift_remove("type")
+        .and_then(|value| value.as_str().map(str::to_owned))
+        .unwrap_or_default();
+    object.shift_remove("start");
+    object.shift_remove("end");
+    object.shift_remove("loc");
+    let mut fields = serde_json::Map::new();
+
+    if node_type == "Literal" {
+        let literal_value = object.shift_remove("value").unwrap_or_default();
+        let raw = object.shift_remove("raw");
+        if let Some(serde_json::Value::Object(mut regex)) = object.shift_remove("regex") {
+            node_type = "RegExpLiteral".into();
+            if let Some(raw) = raw {
+                fields.insert("extra".into(), serde_json::json!({"raw": raw}));
+            }
+            for key in ["pattern", "flags"] {
+                if let Some(value) = regex.shift_remove(key) {
+                    fields.insert(key.into(), value);
+                }
+            }
+        } else {
+            match &literal_value {
+                serde_json::Value::Null => node_type = "NullLiteral".into(),
+                serde_json::Value::Bool(_) => {
+                    node_type = "BooleanLiteral".into();
+                    fields.insert("value".into(), literal_value);
+                }
+                serde_json::Value::Number(_) => {
+                    node_type = "NumericLiteral".into();
+                    if let Some(raw) = raw {
+                        fields.insert(
+                            "extra".into(),
+                            serde_json::json!({"rawValue": literal_value.clone(), "raw": raw}),
+                        );
+                    }
+                    fields.insert("value".into(), literal_value);
+                }
+                serde_json::Value::String(_) => {
+                    node_type = "StringLiteral".into();
+                    if let Some(raw) = raw {
+                        fields.insert(
+                            "extra".into(),
+                            serde_json::json!({"rawValue": literal_value.clone(), "raw": raw}),
+                        );
+                    }
+                    fields.insert("value".into(), literal_value);
+                }
+                _ => {
+                    fields.insert("value".into(), literal_value);
+                }
+            }
+        }
+    } else if node_type == "Property" {
+        let kind = object
+            .shift_remove("kind")
+            .and_then(|value| value.as_str().map(str::to_owned))
+            .unwrap_or_else(|| "init".into());
+        let method = object
+            .shift_remove("method")
+            .and_then(|value| value.as_bool())
+            .unwrap_or(false);
+        if kind == "init" && !method {
+            node_type = "ObjectProperty".into();
+            fields.insert("method".into(), false.into());
+            for key in ["key", "computed", "shorthand", "value"] {
+                if let Some(value) = object.shift_remove(key) {
+                    fields.insert(key.into(), value);
+                }
+            }
+        } else {
+            // Object methods are not meaningful gender values, but preserve their ESTree
+            // fields if one reaches collection rather than corrupting adjacent metadata.
+            fields.insert("kind".into(), kind.into());
+            fields.insert("method".into(), method.into());
+        }
+    } else if node_type == "TemplateLiteral" {
+        for key in ["expressions", "quasis"] {
+            if let Some(value) = object.shift_remove(key) {
+                fields.insert(key.into(), value);
+            }
+        }
+    } else if node_type == "MemberExpression" {
+        let optional = object
+            .shift_remove("optional")
+            .and_then(|value| value.as_bool())
+            .unwrap_or(false);
+        if in_chain || optional {
+            node_type = "OptionalMemberExpression".into();
+        }
+        for key in ["object", "computed", "property"] {
+            if let Some(value) = object.shift_remove(key) {
+                fields.insert(key.into(), value);
+            }
+        }
+        if node_type == "OptionalMemberExpression" {
+            fields.insert("optional".into(), optional.into());
+        }
+    } else if node_type == "CallExpression" {
+        let optional = object
+            .shift_remove("optional")
+            .and_then(|value| value.as_bool())
+            .unwrap_or(false);
+        if in_chain || optional {
+            node_type = "OptionalCallExpression".into();
+        }
+        if let Some(callee) = object.shift_remove("callee") {
+            fields.insert("callee".into(), callee);
+        }
+        if node_type == "OptionalCallExpression" {
+            fields.insert("optional".into(), optional.into());
+        }
+        if let Some(arguments) = object.shift_remove("arguments") {
+            fields.insert("arguments".into(), arguments);
+        }
+    } else if node_type == "UnaryExpression" {
+        for key in ["operator", "prefix", "argument"] {
+            if let Some(value) = object.shift_remove(key) {
+                fields.insert(key.into(), value);
+            }
+        }
+    }
+    fields.extend(object);
+
+    let mut normalized = serde_json::Map::new();
+    normalized.insert("type".into(), node_type.into());
+    normalized.insert("start".into(), start_index);
+    normalized.insert("end".into(), end_index);
+    normalized.insert("loc".into(), serde_json::Value::Object(location));
+    normalized.extend(fields);
+    *value = serde_json::Value::Object(normalized);
+}
+
+fn source_position_json(source_text: &str, byte_offset: usize) -> serde_json::Value {
+    let prefix = &source_text[..byte_offset];
+    let mut line = 1usize;
+    let mut line_start = 0usize;
+    for (index, character) in prefix.char_indices() {
+        if character == '\n' {
+            line += 1;
+            line_start = index + 1;
+        }
+    }
+    serde_json::json!({
+        "line": line,
+        "column": prefix[line_start..].encode_utf16().count(),
+        "index": prefix.encode_utf16().count(),
+    })
+}
+
 fn is_variation_part(part: &Part) -> bool {
     matches!(
         part,
@@ -2952,6 +3520,7 @@ fn runtime_arg_with_context(
             module: phrase.module,
             options: phrase.options.clone(),
             parts: nested_parts.clone(),
+            span: nested.span,
         };
         let nested_runtime = render_runtime_call(
             &nested_phrase,
@@ -3456,16 +4025,39 @@ fn parse_object_options<'b, 'a>(
                 allowed.join(", ")
             ));
         }
+        if matches!(property.value, Expression::ArrowFunctionExpression(_)) {
+            return Err("fbt(...) options cannot be arrow functions. Pass a value instead.".into());
+        }
     }
     Ok(parse_object(expression))
 }
-fn parse_call_options(x: &Expression<'_>, defaults: &CallOptions) -> Result<CallOptions, String> {
-    let x = parse_object_options(x, FBT_OPTIONS)?;
-    x.required_string("author")?;
-    x.boolean_option("common")?;
-    x.boolean_option("doNotExtract")?;
+fn parse_call_options(
+    x: &Expression<'_>,
+    defaults: &CallOptions,
+    extra_options: &[String],
+    source_text: &str,
+) -> Result<CallOptions, String> {
+    let mut allowed = FBT_OPTIONS.to_vec();
+    allowed.extend(extra_options.iter().map(String::as_str));
+    let x = parse_object_options(x, &allowed)?;
+    for option in extra_options {
+        if x.contains(option) {
+            x.required_string(option)?
+                .ok_or_else(|| format!("Extra option '{option}' must be a string."))?;
+        }
+    }
+    let author = x
+        .required_string("author")?
+        .or_else(|| defaults.author.clone());
+    let common = x.boolean_option("common")?.unwrap_or(defaults.common);
+    let do_not_extract = x
+        .boolean_option("doNotExtract")?
+        .unwrap_or(defaults.do_not_extract);
     let subject = x.expression("subject");
     Ok(CallOptions {
+        author,
+        common,
+        do_not_extract,
         preserve_whitespace: x
             .boolean_option("preserveWhitespace")?
             .unwrap_or(defaults.preserve_whitespace),
@@ -3479,6 +4071,9 @@ fn parse_call_options(x: &Expression<'_>, defaults: &CallOptions) -> Result<Call
         subject_constraint: subject
             .and_then(|subject| variation_constraint("subject", subject))
             .or_else(|| defaults.subject_constraint.clone()),
+        subject_json: subject
+            .and_then(|subject| babel_subject_json(subject, source_text))
+            .or_else(|| defaults.subject_json.clone()),
     })
 }
 fn property_key_string(x: &PropertyKey<'_>) -> Option<String> {

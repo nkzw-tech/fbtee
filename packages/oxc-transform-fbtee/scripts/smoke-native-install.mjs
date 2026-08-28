@@ -13,7 +13,22 @@ const smokeInstalledPackages = async (consumer) => {
     'oxc-transform-fbtee',
     'index.js',
   );
-  const { transformSync } = await import(pathToFileURL(entry));
+  const {
+    collectSync,
+    migrateLocaleJsonSync,
+    prepareTranslationsSync,
+    transformSync,
+    translateSync,
+  } = await import(pathToFileURL(entry));
+  for (const nativeFunction of [
+    collectSync,
+    migrateLocaleJsonSync,
+    prepareTranslationsSync,
+    transformSync,
+    translateSync,
+  ]) {
+    assert.equal(typeof nativeFunction, 'function');
+  }
   const result = transformSync(
     'native-smoke.tsx',
     `const message = <fbt desc="native smoke">Hello <b>world</b></fbt>;`,
@@ -22,6 +37,58 @@ const smokeInstalledPackages = async (consumer) => {
   assert.deepEqual(result.errors, []);
   assert.match(result.code, /fbt\._\(/);
   assert.match(result.code, /fbt\._implicitParam\(/);
+
+  const collected = collectSync(
+    'native-smoke.tsx',
+    `const message = <fbt desc="native collector smoke">Hello</fbt>;`,
+    { collectPackager: 'text', lang: 'tsx', sourceType: 'module' },
+  );
+  assert.deepEqual(collected.errors, []);
+  assert.equal(JSON.parse(collected.output).phrases.length, 1);
+
+  const translated = translateSync(
+    JSON.stringify({
+      phrases: [
+        {
+          hashToLeaf: { hash: { desc: 'd', text: 'A' } },
+          jsfbt: { m: [], t: { desc: 'd', text: 'A' } },
+        },
+      ],
+      translationGroups: [
+        {
+          'fb-locale': 'de_DE',
+          translations: {
+            hash: {
+              tokens: [],
+              translations: [{ translation: 'Ein A', variations: {} }],
+              types: [],
+            },
+          },
+        },
+      ],
+    }),
+    false,
+  );
+  assert.equal(JSON.parse(translated)[0].translatedPhrases[0], 'Ein A');
+
+  const prepared = prepareTranslationsSync(
+    JSON.stringify({
+      phrases: [
+        { hashToLeaf: { hash: { desc: 'description', text: 'Source' } } },
+      ],
+    }),
+    null,
+    'de-DE',
+    false,
+  );
+  assert.equal(JSON.parse(prepared)['fb-locale'], 'de-DE');
+  const migrated = migrateLocaleJsonSync(
+    JSON.stringify({ de_DE: { hash: 'Text' }, 'fb-locale': 'de_DE' }),
+    'de-DE',
+    ['de_DE', 'de-DE'],
+  );
+  assert.equal(JSON.parse(migrated)['fb-locale'], 'de-DE');
+  assert.deepEqual(JSON.parse(migrated)['de-DE'], { hash: 'Text' });
 
   const viteEntry = join(
     consumer,
