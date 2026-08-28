@@ -13,8 +13,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { transformSync as babelTransform } from '@babel/core';
-import { beforeAll, describe, test } from '@jest/globals';
-import { transformSync as swcTransform } from '@swc/core';
+import { describe, test } from '@jest/globals';
 import babelFbteeAutoImportPlugin from '../packages/babel-plugin-fbtee-auto-import/lib/index.mjs';
 import babelFbteePlugin, {
   getChildToParentRelationships,
@@ -24,9 +23,6 @@ import {
   collectSync as oxcCollect,
   transformSync as oxcTransform,
 } from '../packages/oxc-transform-fbtee/index.js';
-import swcFbteePlugin, {
-  createFbteePluginOptions,
-} from '../packages/swc-plugin-fbtee/index.js';
 
 const compileBabel = (source, options = {}, autoImport = false) =>
   babelTransform(source, {
@@ -41,24 +37,6 @@ const compileBabel = (source, options = {}, autoImport = false) =>
       ...(autoImport ? [babelFbteeAutoImportPlugin] : []),
       [babelFbteePlugin, options],
     ],
-  }).code;
-
-const compileSwc = (source, options = {}) =>
-  swcTransform(source, {
-    filename: 'fixture.tsx',
-    jsc: {
-      experimental: {
-        plugins: [[swcFbteePlugin, createFbteePluginOptions(options)]],
-      },
-      parser: {
-        syntax: 'typescript',
-        tsx: true,
-      },
-      target: 'es2022',
-    },
-    module: {
-      type: 'es6',
-    },
   }).code;
 
 const compileOxc = (source, options = {}) => {
@@ -76,7 +54,6 @@ const compileOxc = (source, options = {}) => {
 const compilers = {
   babel: compileBabel,
   oxc: compileOxc,
-  swc: compileSwc,
 };
 
 const collectBabel = (source, options = {}) => {
@@ -1871,54 +1848,13 @@ const globSyncForTest = (directory) =>
     .filter((file) => file.endsWith('.json'))
     .sort();
 
-// SWC plugins report diagnostics by panicking inside WASM. JavaScript catches
-// those exceptions, but Rust's panic hook writes every expected diagnostic to
-// stderr first. Run the negative SWC cases in a subprocess so their stderr is
-// captured without hiding worker crashes or unexpectedly accepted fixtures.
 describe('invalid compiler input', () => {
-  let swcAcceptedFixtures;
-
-  beforeAll(() => {
-    const result = spawnSync(
-      process.execPath,
-      [
-        fileURLToPath(
-          new URL('./compiler-parity-swc-invalid.mjs', import.meta.url),
-        ),
-      ],
-      {
-        encoding: 'utf8',
-        input: JSON.stringify(invalidFixtures),
-        maxBuffer: 10 * 1024 * 1024,
-      },
-    );
-
-    if (result.error || result.status !== 0) {
-      throw new Error(
-        `SWC invalid-fixture worker failed: ${result.error ?? result.stderr}`,
-      );
-    }
-
-    try {
-      swcAcceptedFixtures = new Set(JSON.parse(result.stdout));
-    } catch (error) {
-      throw new Error('SWC invalid-fixture worker returned invalid output.', {
-        cause: error,
-      });
-    }
-  });
-
   test.each(invalidFixtures)('$name', (fixture) => {
-    for (const compiler of ['babel', 'oxc']) {
+    for (const compiler of Object.keys(compilers)) {
       assert.throws(
         () => compilers[compiler](fixture.source, fixture.options),
         `${compiler.toUpperCase()} must reject this fixture`,
       );
     }
-    assert.equal(
-      swcAcceptedFixtures.has(fixture.name),
-      false,
-      'SWC must reject this fixture',
-    );
   });
 });

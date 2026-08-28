@@ -1,7 +1,6 @@
 .DS_Store
 .eslintcache
 .pnpm-debug.log
-.swc
 **/node_modules
 packages/next-plugin-fbtee/test/fixture/.next*
 example/.enum_manifest.json
@@ -18,7 +17,6 @@ packages/oxc-transform-fbtee/.native-smoke/
 packages/oxc-transform-fbtee/*.node
 packages/oxc-transform-fbtee/artifacts/
 packages/oxc-transform-fbtee/npm/**/*.node
-packages/swc-plugin-fbtee/swc_plugin_fbtee.wasm
 target
 tsconfig.tsbuildinfo
 website/.enum_manifest.json

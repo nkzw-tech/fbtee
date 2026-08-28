@@ -8,13 +8,11 @@ packages:
   - packages/next-plugin-fbtee
   - packages/oxc-transform-fbtee
   - packages/oxc-transform-fbtee/npm/*
-  - packages/swc-plugin-fbtee
   - packages/vite-plugin-fbtee
   - packages/eslint-plugin-fbtee
   - website
 
 allowBuilds:
-  '@swc/core': true
   esbuild: true
   unrs-resolver: true
 
@@ -22,7 +20,6 @@ minimumReleaseAgeExclude:
   - vite@8.1.5
 
 onlyBuiltDependencies:
-  - '@swc/core'
   - '@tailwindcss/oxide'
   - esbuild
   - unrs-resolver
