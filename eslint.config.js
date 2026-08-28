@@ -11,6 +11,7 @@ export default [
       'packages/*/lib',
       'packages/fbtee/lib-tmp/',
       'packages/next-plugin-fbtee/test/fixture/.next*/',
+      'packages/next-plugin-fbtee/test/fixture/next-env.d.ts',
       'target/',
       'website/dist/',
       'website/vite.config.ts.timestamp-*',
