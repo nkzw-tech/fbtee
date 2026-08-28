@@ -9,6 +9,12 @@ const packageDirectory = fileURLToPath(new URL('../', import.meta.url));
 const temporaryDirectory = mkdtempSync(join(tmpdir(), 'fbtee-release-test-'));
 const sourceDirectory = join(temporaryDirectory, 'source');
 const outputDirectory = join(temporaryDirectory, 'output');
+const packageJson = JSON.parse(readFileSync(join(packageDirectory, 'package.json'), 'utf8'));
+const loader = readFileSync(join(packageDirectory, 'index.js'), 'utf8');
+
+assert.match(loader, /const packageVersion = require\('\.\/package\.json'\)\.version/);
+assert.equal(loader.includes(`bindingPackageVersion !== '${packageJson.version}'`), false);
+assert.equal(loader.includes(`expected ${packageJson.version} but got`), false);
 
 const download = (source) =>
   spawnSync(process.execPath, [join(packageDirectory, 'scripts/download-artifacts.mjs')], {

@@ -41,7 +41,7 @@
     "build": "napi build --esm --platform --release && pnpm run format-generated",
     "build:debug": "napi build --esm --platform && pnpm run format-generated",
     "download:artifacts": "node scripts/download-artifacts.mjs",
-    "format-generated": "oxfmt --write index.js index.d.ts",
+    "format-generated": "node scripts/normalize-generated-loader.mjs && oxfmt --write index.js index.d.ts",
     "test": "cargo test -p oxc-transform-fbtee && pnpm run build && node scripts/prepare-native-smoke.mjs && node scripts/smoke-native-install.mjs .native-smoke && node test/e2e.mjs && node test/release.mjs",
     "verify:artifacts": "node scripts/verify-artifacts.mjs"
   },
