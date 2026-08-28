@@ -1,6 +1,6 @@
 import { existsSync, globSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { prepareTranslationsSync } from '@nkzw/oxc-transform-fbtee';
+import { prepareTranslationsBatchSync } from '@nkzw/oxc-transform-fbtee';
 import yargs from 'yargs';
 import {
   formatLocaleForStyle,
@@ -64,6 +64,7 @@ for (const file of files) {
   locales.add(basename(file, '.json'));
 }
 const source = readFileSync(join(root, argv['source-strings']), 'utf8');
+const pending = [];
 for (const locale of locales) {
   const existingFile = getAvailableLocaleFile(outputDirectory, locale);
   const outputLocale = existingFile
@@ -72,11 +73,21 @@ for (const locale of locales) {
   process.stdout.write(`Processing locale: ${outputLocale}\n`);
   const filePath =
     existingFile || join(outputDirectory, `${outputLocale}.json`);
-  const output = prepareTranslationsSync(
-    source,
-    existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined,
-    outputLocale,
-    argv['sort-by-hash'],
-  );
+  pending.push({
+    existingJson: existsSync(filePath)
+      ? readFileSync(filePath, 'utf8')
+      : undefined,
+    filePath,
+    locale: outputLocale,
+  });
+}
+const outputs = prepareTranslationsBatchSync(
+  source,
+  pending.map(({ existingJson, locale }) => ({ existingJson, locale })),
+  argv['sort-by-hash'],
+);
+for (let index = 0; index < pending.length; index++) {
+  const { filePath } = pending[index];
+  const output = outputs[index];
   writeFileSync(filePath, JSON.stringify(JSON.parse(output), null, 2));
 }

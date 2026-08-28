@@ -19,10 +19,10 @@ use oxc::{
 use oxc_napi::{get_source_type, OxcError};
 use oxc_sourcemap::napi::SourceMap;
 
-use crate::transform::{collect_program, transform_program, FbteeOptions};
+use crate::transform::{collect_program, transform_program, CollectedFileOutput, FbteeOptions};
 
 #[napi(object)]
-#[derive(Default, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct TransformOptions {
     #[napi(ts_type = "'js' | 'jsx' | 'ts' | 'tsx' | 'dts'")]
     pub lang: Option<String>,
@@ -69,6 +69,18 @@ pub struct TransformResult {
 pub struct CollectResult {
     pub output: Option<String>,
     pub errors: Vec<OxcError>,
+}
+
+#[napi(object)]
+pub struct CollectInput {
+    pub filename: String,
+    pub source_text: String,
+}
+
+#[napi(object)]
+pub struct PrepareTranslationsInput {
+    pub existing_json: Option<String>,
+    pub locale: String,
 }
 
 fn transform_impl(
@@ -144,28 +156,44 @@ pub fn collect_sync(
     options: Option<TransformOptions>,
 ) -> CollectResult {
     let options = options.unwrap_or_default();
+    match collect_impl(&filename, &source_text, &options) {
+        Ok(output) => serialize_collected_output(output),
+        Err(errors) => CollectResult {
+            errors,
+            ..CollectResult::default()
+        },
+    }
+}
+
+fn collect_impl(
+    filename: &str,
+    source_text: &str,
+    options: &TransformOptions,
+) -> Result<CollectedFileOutput, Vec<OxcError>> {
     let source_type = get_source_type(
-        &filename,
+        filename,
         options.lang.as_deref(),
         Some(options.source_type.as_deref().unwrap_or("unambiguous")),
     );
     let allocator = Allocator::default();
-    let parser_return = Parser::new(&allocator, &source_text, source_type).parse();
+    let parser_return = Parser::new(&allocator, source_text, source_type).parse();
     let mut diagnostics = parser_return.diagnostics;
     let mut program = parser_return.program;
     if diagnostics.has_errors() {
-        return CollectResult {
-            errors: OxcError::from_diagnostics(&filename, &source_text, diagnostics),
-            ..CollectResult::default()
-        };
+        return Err(OxcError::from_diagnostics(
+            filename,
+            source_text,
+            diagnostics,
+        ));
     }
     let semantic_return = SemanticBuilder::new().build(&program);
     if semantic_return.diagnostics.has_errors() {
         diagnostics.extend(semantic_return.diagnostics);
-        return CollectResult {
-            errors: OxcError::from_diagnostics(&filename, &source_text, diagnostics),
-            ..CollectResult::default()
-        };
+        return Err(OxcError::from_diagnostics(
+            filename,
+            source_text,
+            diagnostics,
+        ));
     }
     let scoping = semantic_return.semantic.into_scoping();
     match collect_program(
@@ -173,35 +201,91 @@ pub fn collect_sync(
         &mut program,
         scoping,
         options.fbtee_options(),
-        &filename,
+        filename,
     ) {
-        Ok(output) => {
-            let child_parent_mappings = output
+        Ok(output) => Ok(output),
+        Err(error) => Err(vec![OxcError::from_diagnostics(
+            filename,
+            source_text,
+            [OxcDiagnostic::error(error)],
+        )
+        .remove(0)]),
+    }
+}
+
+fn serialize_collected_output(output: CollectedFileOutput) -> CollectResult {
+    let child_parent_mappings = output
+        .child_parent_mappings
+        .into_iter()
+        .map(|(child, parent)| (child.to_string(), parent.into()))
+        .collect::<serde_json::Map<_, _>>();
+    CollectResult {
+        output: Some(
+            serde_json::to_string(&serde_json::json!({
+                "childParentMappings": child_parent_mappings,
+                "phrases": output.phrases,
+            }))
+            .expect("collector output must serialize"),
+        ),
+        errors: vec![],
+    }
+}
+
+#[napi]
+pub fn collect_batch_sync(
+    files: Vec<CollectInput>,
+    options: Option<TransformOptions>,
+) -> CollectResult {
+    let options = options.unwrap_or_default();
+    let worker_count = std::thread::available_parallelism()
+        .map(usize::from)
+        .unwrap_or(1)
+        .min(files.len().max(1));
+    let chunk_size = files.len().max(1).div_ceil(worker_count);
+    let collected = std::thread::scope(|scope| {
+        files
+            .chunks(chunk_size)
+            .map(|chunk| {
+                scope.spawn(|| {
+                    chunk
+                        .iter()
+                        .map(|file| collect_impl(&file.filename, &file.source_text, &options))
+                        .collect::<Vec<_>>()
+                })
+            })
+            .collect::<Vec<_>>()
+            .into_iter()
+            .flat_map(|worker| {
+                worker
+                    .join()
+                    .expect("fbtee collector worker must not panic")
+            })
+            .collect::<Vec<_>>()
+    });
+    let mut merged = CollectedFileOutput {
+        child_parent_mappings: vec![],
+        phrases: vec![],
+    };
+    for result in collected {
+        let output = match result {
+            Ok(output) => output,
+            Err(errors) => {
+                return CollectResult {
+                    errors,
+                    ..CollectResult::default()
+                };
+            }
+        };
+        let offset = merged.phrases.len();
+        merged.child_parent_mappings.extend(
+            output
                 .child_parent_mappings
                 .into_iter()
-                .map(|(child, parent)| (child.to_string(), parent.into()))
-                .collect::<serde_json::Map<_, _>>();
-            CollectResult {
-                output: Some(
-                    serde_json::to_string(&serde_json::json!({
-                        "childParentMappings": child_parent_mappings,
-                        "phrases": output.phrases,
-                    }))
-                    .expect("collector output must serialize"),
-                ),
-                errors: vec![],
-            }
-        }
-        Err(error) => CollectResult {
-            errors: vec![OxcError::from_diagnostics(
-                &filename,
-                &source_text,
-                [OxcDiagnostic::error(error)],
-            )
-            .remove(0)],
-            ..CollectResult::default()
-        },
+                .map(|(child, parent)| (child + offset, parent + offset)),
+        );
+        merged.phrases.extend(output.phrases);
     }
+    serialize_collected_output(merged)
 }
 
 #[napi]
@@ -218,6 +302,28 @@ pub fn prepare_translations_sync(
         sort_by_hash.unwrap_or(false),
     )
     .map_err(napi::Error::from_reason)
+}
+
+#[napi]
+pub fn prepare_translations_batch_sync(
+    source_json: String,
+    inputs: Vec<PrepareTranslationsInput>,
+    sort_by_hash: Option<bool>,
+) -> napi::Result<Vec<String>> {
+    let phrases = cli::source_phrases(&source_json).map_err(napi::Error::from_reason)?;
+    let sort_by_hash = sort_by_hash.unwrap_or(false);
+    inputs
+        .iter()
+        .map(|input| {
+            cli::prepare_translations_with_phrases(
+                &phrases,
+                input.existing_json.as_deref(),
+                &input.locale,
+                sort_by_hash,
+            )
+            .map_err(napi::Error::from_reason)
+        })
+        .collect()
 }
 
 #[napi]

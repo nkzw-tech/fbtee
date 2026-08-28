@@ -1,5 +1,8 @@
 use serde_json::{Map, Value};
-use std::collections::HashMap;
+use std::{
+    cell::{Ref, RefCell},
+    collections::HashMap,
+};
 
 const VIEWING_USER: &str = "__viewing_user__";
 const EXACTLY_ONE: &str = "_1";
@@ -28,8 +31,9 @@ struct Site {
 
 struct Builder<'a> {
     site: &'a Site,
-    translations: &'a Map<String, Value>,
+    translations: &'a HashMap<String, TranslationData>,
     token_to_mask: Vec<(String, u8)>,
+    constraint_maps: RefCell<HashMap<String, HashMap<String, String>>>,
     number_fallback: i64,
     gender_fallback: i64,
 }
@@ -70,6 +74,17 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
         {
             return Err("Translation entries must be objects.".into());
         }
+        let mut parsed_translations = HashMap::new();
+        for site in &sites {
+            for hash in site.hash_to_leaf.keys() {
+                if parsed_translations.contains_key(hash) {
+                    continue;
+                }
+                if let Some(value) = translations.get(hash) {
+                    parsed_translations.insert(hash.clone(), parse_translation_data(value)?);
+                }
+            }
+        }
         let number_fallback = group
             .get("__number-fallback")
             .and_then(Value::as_i64)
@@ -80,8 +95,10 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
             .unwrap_or_else(|| gender_fallback(locale));
         let mut translated_phrases = Vec::with_capacity(sites.len());
         for site in &sites {
-            translated_phrases
-                .push(Builder::new(site, translations, number_fallback, gender_fallback).build()?);
+            translated_phrases.push(
+                Builder::new(site, &parsed_translations, number_fallback, gender_fallback)
+                    .build()?,
+            );
         }
         translated_groups.push((output_locale.to_string(), translated_phrases));
     }
@@ -127,8 +144,19 @@ impl Site {
             .and_then(Value::as_object)
             .ok_or("Expected jsfbt to be defined.")?;
         let raw_table = jsfbt.get("t").ok_or("Expected jsfbt.t to be defined.")?;
+        let mut leaf_to_hash = HashMap::new();
+        for (hash, leaf) in &hash_to_leaf {
+            if let (Some(text), Some(desc)) = (
+                leaf.get("text").and_then(Value::as_str),
+                leaf.get("desc").and_then(Value::as_str),
+            ) {
+                leaf_to_hash
+                    .entry((text.to_string(), desc.to_string()))
+                    .or_insert_with(|| hash.clone());
+            }
+        }
         let mut hash_to_aliases = HashMap::new();
-        let table = hashify_tree(raw_table, &hash_to_leaf, &mut hash_to_aliases)?;
+        let table = hashify_tree(raw_table, &leaf_to_hash, &mut hash_to_aliases)?;
         let metadata = jsfbt
             .get("m")
             .and_then(Value::as_array)
@@ -165,7 +193,7 @@ impl Site {
 impl<'a> Builder<'a> {
     fn new(
         site: &'a Site,
-        translations: &'a Map<String, Value>,
+        translations: &'a HashMap<String, TranslationData>,
         number_fallback: i64,
         gender_fallback: i64,
     ) -> Self {
@@ -181,6 +209,7 @@ impl<'a> Builder<'a> {
             site,
             translations,
             token_to_mask,
+            constraint_maps: RefCell::new(HashMap::new()),
             number_fallback,
             gender_fallback,
         }
@@ -190,7 +219,7 @@ impl<'a> Builder<'a> {
         let mut has_viewer_gender = false;
         for hash in self.site.hash_to_leaf.keys() {
             if self
-                .translation_data(hash)?
+                .translation_data(hash)
                 .is_some_and(|data| data.tokens.iter().any(|token| token == VIEWING_USER))
             {
                 has_viewer_gender = true;
@@ -301,7 +330,7 @@ impl<'a> Builder<'a> {
     }
 
     fn default_translation(&self, hash: &str) -> Result<Option<String>, String> {
-        let Some(data) = self.translation_data(hash)? else {
+        let Some(data) = self.translation_data(hash) else {
             return Ok(None);
         };
         Ok(data.translations.iter().find_map(|translation| {
@@ -355,8 +384,21 @@ impl<'a> Builder<'a> {
         Ok(Some(translation.clone()))
     }
 
-    fn constraint_map(&self, hash: &str) -> Result<HashMap<String, String>, String> {
-        let Some(data) = self.translation_data(hash)? else {
+    fn constraint_map(&self, hash: &str) -> Result<Ref<'_, HashMap<String, String>>, String> {
+        if !self.constraint_maps.borrow().contains_key(hash) {
+            let output = self.build_constraint_map(hash)?;
+            self.constraint_maps
+                .borrow_mut()
+                .insert(hash.to_string(), output);
+        }
+        Ok(Ref::map(self.constraint_maps.borrow(), |maps| {
+            maps.get(hash)
+                .expect("constraint map was populated before borrowing")
+        }))
+    }
+
+    fn build_constraint_map(&self, hash: &str) -> Result<HashMap<String, String>, String> {
+        let Some(data) = self.translation_data(hash) else {
             return Ok(HashMap::new());
         };
         let mut output = HashMap::new();
@@ -441,11 +483,8 @@ impl<'a> Builder<'a> {
         Ok(())
     }
 
-    fn translation_data(&self, hash: &str) -> Result<Option<TranslationData>, String> {
-        self.translations
-            .get(hash)
-            .map(parse_translation_data)
-            .transpose()
+    fn translation_data(&self, hash: &str) -> Option<&TranslationData> {
+        self.translations.get(hash)
     }
 
     fn is_default_variation(&self, value: &Value) -> bool {
@@ -458,20 +497,15 @@ impl<'a> Builder<'a> {
 
 fn hashify_tree(
     value: &Value,
-    hash_to_leaf: &Map<String, Value>,
+    leaf_to_hash: &HashMap<(String, String), String>,
     hash_to_aliases: &mut HashMap<String, Map<String, Value>>,
 ) -> Result<Value, String> {
     if is_leaf(value) {
         let object = value.as_object().expect("leaf is an object");
         let text = object.get("text").and_then(Value::as_str).unwrap();
         let desc = object.get("desc").and_then(Value::as_str).unwrap();
-        let hash = hash_to_leaf
-            .iter()
-            .find_map(|(hash, leaf)| {
-                (leaf.get("text").and_then(Value::as_str) == Some(text)
-                    && leaf.get("desc").and_then(Value::as_str) == Some(desc))
-                .then_some(hash)
-            })
+        let hash = leaf_to_hash
+            .get(&(text.to_string(), desc.to_string()))
             .ok_or("A jsfbt leaf did not have a corresponding hashToLeaf entry.")?;
         if let Some(aliases) = object.get("tokenAliases").and_then(Value::as_object) {
             hash_to_aliases.insert(hash.clone(), aliases.clone());
@@ -487,7 +521,7 @@ fn hashify_tree(
             .map(|(key, value)| {
                 Ok((
                     key.clone(),
-                    hashify_tree(value, hash_to_leaf, hash_to_aliases)?,
+                    hashify_tree(value, leaf_to_hash, hash_to_aliases)?,
                 ))
             })
             .collect::<Result<Map<_, _>, String>>()?,

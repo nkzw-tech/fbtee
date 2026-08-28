@@ -1,4 +1,7 @@
-use std::collections::{BTreeMap, BTreeSet};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    sync::OnceLock,
+};
 
 use indexmap::IndexMap;
 use oxc::{
@@ -76,7 +79,7 @@ pub fn collect_program<'a>(
     }
     Ok(build_collected_file_output(
         filename,
-        program.source_text,
+        tx.source_locator(),
         &tx.collected_phrases,
         &tx.options.collect_packager,
     ))
@@ -494,6 +497,7 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
 struct FbteeTransform<'a> {
     allocator: &'a Allocator,
     source_text: &'a str,
+    source_locator: OnceLock<SourceLocator>,
     source_type: SourceType,
     scoping: Scoping,
     options: FbteeOptions,
@@ -523,6 +527,7 @@ impl<'a> FbteeTransform<'a> {
         Self {
             allocator,
             source_text,
+            source_locator: OnceLock::new(),
             source_type,
             scoping,
             options,
@@ -545,6 +550,10 @@ impl<'a> FbteeTransform<'a> {
             self.error = Some(message.into());
         }
         None
+    }
+    fn source_locator(&self) -> &SourceLocator {
+        self.source_locator
+            .get_or_init(|| SourceLocator::new(self.source_text))
     }
     fn code(expr: &Expression<'_>) -> String {
         let mut output = Codegen::new();
@@ -742,6 +751,7 @@ impl<'a> FbteeTransform<'a> {
                     &self.default_call_options,
                     &self.options.extra_options,
                     self.source_text,
+                    self.source_locator(),
                 ) {
                     Ok(options) => options,
                     Err(error) => return self.fail(error),
@@ -1298,7 +1308,8 @@ impl<'a> FbteeTransform<'a> {
         if let Some(subject) = attrs.expression("subject") {
             options.subject = Some(self.transformed_code(subject));
             options.subject_constraint = variation_constraint("subject", subject);
-            options.subject_json = babel_subject_json(subject, self.source_text);
+            options.subject_json =
+                babel_subject_json(subject, self.source_text, self.source_locator());
         }
         let desc = if is_common {
             let text = normalize_spaces(
@@ -2906,7 +2917,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
 
 fn build_collected_file_output(
     filename: &str,
-    source_text: &str,
+    source_locator: &SourceLocator,
     phrases: &[Phrase],
     packager: &str,
 ) -> CollectedFileOutput {
@@ -2922,7 +2933,7 @@ fn build_collected_file_output(
         append_collected_phrase(
             &mut output,
             filename,
-            source_text,
+            source_locator,
             phrase,
             &variations,
             &phrase.parts,
@@ -2938,7 +2949,7 @@ fn build_collected_file_output(
 fn append_collected_phrase(
     output: &mut CollectedFileOutput,
     filename: &str,
-    source_text: &str,
+    source_locator: &SourceLocator,
     phrase: &Phrase,
     global_variations: &[&Part],
     root_parts: &[Part],
@@ -2953,7 +2964,7 @@ fn append_collected_phrase(
     let builder = RuntimeBuilder::new(phrase, global_variations, root_parts, description_target);
     output.phrases.push(collected_phrase_json(
         filename,
-        source_text,
+        source_locator,
         phrase,
         global_variations,
         &builder,
@@ -2963,7 +2974,7 @@ fn append_collected_phrase(
     append_collected_children(
         output,
         filename,
-        source_text,
+        source_locator,
         phrase,
         global_variations,
         root_parts,
@@ -2977,7 +2988,7 @@ fn append_collected_phrase(
 fn append_collected_children(
     output: &mut CollectedFileOutput,
     filename: &str,
-    source_text: &str,
+    source_locator: &SourceLocator,
     phrase: &Phrase,
     global_variations: &[&Part],
     root_parts: &[Part],
@@ -3005,7 +3016,7 @@ fn append_collected_children(
         append_collected_phrase(
             output,
             filename,
-            source_text,
+            source_locator,
             &nested_phrase,
             global_variations,
             root_parts,
@@ -3018,7 +3029,7 @@ fn append_collected_children(
 
 fn collected_phrase_json(
     filename: &str,
-    source_text: &str,
+    source_locator: &SourceLocator,
     phrase: &Phrase,
     global_variations: &[&Part],
     builder: &RuntimeBuilder<'_, '_>,
@@ -3034,7 +3045,10 @@ fn collected_phrase_json(
         object.insert("hashToLeaf".into(), hash_to_leaf_json(&hash_tree));
     }
     object.insert("filename".into(), filename.into());
-    object.insert("loc".into(), span_location_json(source_text, phrase.span));
+    object.insert(
+        "loc".into(),
+        span_location_json(source_locator, phrase.span),
+    );
     object.insert(
         "project".into(),
         phrase.options.project.clone().unwrap_or_default().into(),
@@ -3138,14 +3152,18 @@ fn hash_node_json(node: HashNode) -> serde_json::Value {
     }
 }
 
-fn span_location_json(source_text: &str, span: Span) -> serde_json::Value {
+fn span_location_json(source_locator: &SourceLocator, span: Span) -> serde_json::Value {
     serde_json::json!({
-        "start": source_position_json(source_text, span.start as usize),
-        "end": source_position_json(source_text, span.end as usize),
+        "start": source_locator.position_json(span.start as usize),
+        "end": source_locator.position_json(span.end as usize),
     })
 }
 
-fn babel_subject_json(expression: &Expression<'_>, source_text: &str) -> Option<serde_json::Value> {
+fn babel_subject_json(
+    expression: &Expression<'_>,
+    source_text: &str,
+    source_locator: &SourceLocator,
+) -> Option<serde_json::Value> {
     let original_span = expression.span();
     let expression = unwrap_transparent_expression(expression);
     let expression_span = expression.span();
@@ -3153,12 +3171,13 @@ fn babel_subject_json(expression: &Expression<'_>, source_text: &str) -> Option<
     let mut serializer = CompactSerializer::new(false, false);
     expression.serialize(&mut serializer);
     let mut value = serde_json::from_str(&serializer.into_string()).ok()?;
-    normalize_babel_expression(&mut value, source_text, false);
+    normalize_babel_expression(&mut value, source_locator, false);
     if original_span.start < expression_span.start
         && source_text.as_bytes().get(original_span.start as usize) == Some(&b'(')
     {
         if let serde_json::Value::Object(object) = &mut value {
-            let paren_start = source_position_json(source_text, original_span.start as usize)
+            let paren_start = source_locator
+                .position_json(original_span.start as usize)
                 .get("index")
                 .cloned()
                 .unwrap_or_default();
@@ -3171,11 +3190,15 @@ fn babel_subject_json(expression: &Expression<'_>, source_text: &str) -> Option<
     Some(value)
 }
 
-fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, in_chain: bool) {
+fn normalize_babel_expression(
+    value: &mut serde_json::Value,
+    source_locator: &SourceLocator,
+    in_chain: bool,
+) {
     let serde_json::Value::Object(object) = value else {
         if let serde_json::Value::Array(values) = value {
             for value in values {
-                normalize_babel_expression(value, source_text, false);
+                normalize_babel_expression(value, source_locator, false);
             }
         }
         return;
@@ -3184,7 +3207,7 @@ fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, 
         let Some(mut expression) = object.shift_remove("expression") else {
             return;
         };
-        normalize_babel_expression(&mut expression, source_text, true);
+        normalize_babel_expression(&mut expression, source_locator, true);
         *value = expression;
         return;
     }
@@ -3200,7 +3223,7 @@ fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, 
                 (node_type.as_str(), key.as_str()),
                 ("MemberExpression", "object") | ("CallExpression", "callee")
             );
-        normalize_babel_expression(value, source_text, child_in_chain);
+        normalize_babel_expression(value, source_locator, child_in_chain);
     }
 
     let mut object = std::mem::take(object);
@@ -3211,8 +3234,8 @@ fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, 
         *value = serde_json::Value::Object(object);
         return;
     };
-    let start_position = source_position_json(source_text, start as usize);
-    let end_position = source_position_json(source_text, end as usize);
+    let start_position = source_locator.position_json(start as usize);
+    let end_position = source_locator.position_json(end as usize);
     let start_index = start_position.get("index").cloned().unwrap_or_default();
     let end_index = end_position.get("index").cloned().unwrap_or_default();
     let mut location = serde_json::Map::new();
@@ -3358,21 +3381,44 @@ fn normalize_babel_expression(value: &mut serde_json::Value, source_text: &str, 
     *value = serde_json::Value::Object(normalized);
 }
 
-fn source_position_json(source_text: &str, byte_offset: usize) -> serde_json::Value {
-    let prefix = &source_text[..byte_offset];
-    let mut line = 1usize;
-    let mut line_start = 0usize;
-    for (index, character) in prefix.char_indices() {
-        if character == '\n' {
-            line += 1;
-            line_start = index + 1;
+struct SourceLocator {
+    line_starts: Vec<u32>,
+    utf16_offsets: Vec<u32>,
+}
+
+impl SourceLocator {
+    fn new(source_text: &str) -> Self {
+        let mut line_starts = vec![0];
+        let mut utf16_offsets = vec![0; source_text.len() + 1];
+        let mut utf16_offset = 0u32;
+        for (start, character) in source_text.char_indices() {
+            let end = start + character.len_utf8();
+            utf16_offsets[start..end].fill(utf16_offset);
+            utf16_offset += character.len_utf16() as u32;
+            utf16_offsets[end] = utf16_offset;
+            if character == '\n' {
+                line_starts.push(end as u32);
+            }
+        }
+        Self {
+            line_starts,
+            utf16_offsets,
         }
     }
-    serde_json::json!({
-        "line": line,
-        "column": prefix[line_start..].encode_utf16().count(),
-        "index": prefix.encode_utf16().count(),
-    })
+
+    fn position_json(&self, byte_offset: usize) -> serde_json::Value {
+        let byte_offset = byte_offset.min(self.utf16_offsets.len() - 1);
+        let line_index = self
+            .line_starts
+            .partition_point(|start| *start as usize <= byte_offset)
+            - 1;
+        let line_start = self.line_starts[line_index] as usize;
+        serde_json::json!({
+            "line": line_index + 1,
+            "column": self.utf16_offsets[byte_offset] - self.utf16_offsets[line_start],
+            "index": self.utf16_offsets[byte_offset],
+        })
+    }
 }
 
 fn is_variation_part(part: &Part) -> bool {
@@ -4036,6 +4082,7 @@ fn parse_call_options(
     defaults: &CallOptions,
     extra_options: &[String],
     source_text: &str,
+    source_locator: &SourceLocator,
 ) -> Result<CallOptions, String> {
     let mut allowed = FBT_OPTIONS.to_vec();
     allowed.extend(extra_options.iter().map(String::as_str));
@@ -4072,7 +4119,7 @@ fn parse_call_options(
             .and_then(|subject| variation_constraint("subject", subject))
             .or_else(|| defaults.subject_constraint.clone()),
         subject_json: subject
-            .and_then(|subject| babel_subject_json(subject, source_text))
+            .and_then(|subject| babel_subject_json(subject, source_text, source_locator))
             .or_else(|| defaults.subject_json.clone()),
     })
 }

@@ -5,7 +5,14 @@ import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 // The downstream compiler is needed only by this package's end-to-end test.
 // eslint-disable-next-line import-x/no-extraneous-dependencies
 import { transformSync as lowerSync } from 'oxc-transform';
-import { transform, transformSync } from '../index.js';
+import {
+  collectBatchSync,
+  collectSync,
+  prepareTranslationsBatchSync,
+  prepareTranslationsSync,
+  transform,
+  transformSync,
+} from '../index.js';
 
 const compile = (source, options = {}) => {
   const result = transformSync('source.tsx', source, {
@@ -16,6 +23,42 @@ const compile = (source, options = {}) => {
   assert.deepEqual(result.errors, []);
   return result.code;
 };
+
+{
+  const options = { collectPackager: 'both', lang: 'tsx' };
+  const files = [
+    { filename: 'first.tsx', sourceText: `fbt('First', 'd');` },
+    { filename: 'second.tsx', sourceText: `fbt('Second', 'd');` },
+  ];
+  const batched = collectBatchSync(files, options);
+  assert.deepEqual(batched.errors, []);
+  const output = JSON.parse(batched.output);
+  assert.deepEqual(
+    output.phrases.map(({ filename }) => filename),
+    ['first.tsx', 'second.tsx'],
+  );
+  assert.deepEqual(
+    output.phrases,
+    files.flatMap(({ filename, sourceText }) => {
+      const result = collectSync(filename, sourceText, options);
+      assert.deepEqual(result.errors, []);
+      return JSON.parse(result.output).phrases;
+    }),
+  );
+}
+
+{
+  const source = JSON.stringify({
+    phrases: [{ hashToLeaf: { hash: { desc: 'd', text: 'Text' } } }],
+  });
+  const inputs = [{ locale: 'de-DE' }, { locale: 'ja-JP' }];
+  assert.deepEqual(
+    prepareTranslationsBatchSync(source, inputs),
+    inputs.map(({ locale }) =>
+      prepareTranslationsSync(source, undefined, locale),
+    ),
+  );
+}
 
 {
   const code = compile(`

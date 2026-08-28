@@ -36,6 +36,16 @@ export interface SourceMap {
   version: number;
   x_google_ignoreList?: Array<number>;
 }
+export declare function collectBatchSync(
+  files: Array<CollectInput>,
+  options?: TransformOptions | undefined | null,
+): CollectResult;
+
+export interface CollectInput {
+  filename: string;
+  sourceText: string;
+}
+
 export interface CollectResult {
   output?: string;
   errors: Array<OxcError>;
@@ -52,6 +62,17 @@ export declare function migrateLocaleJsonSync(
   targetLocale: string,
   equivalentLocales: Array<string>,
 ): string;
+
+export declare function prepareTranslationsBatchSync(
+  sourceJson: string,
+  inputs: Array<PrepareTranslationsInput>,
+  sortByHash?: boolean | undefined | null,
+): Array<string>;
+
+export interface PrepareTranslationsInput {
+  existingJson?: string;
+  locale: string;
+}
 
 export declare function prepareTranslationsSync(
   sourceJson: string,

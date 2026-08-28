@@ -8,7 +8,7 @@ import {
 import { createRequire } from 'node:module';
 import { dirname, join, parse, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { collectSync } from '@nkzw/oxc-transform-fbtee';
+import { collectBatchSync } from '@nkzw/oxc-transform-fbtee';
 import yargs from 'yargs';
 
 const command = process.argv[2];
@@ -246,8 +246,9 @@ if (
     customHash =
       typeof customHash === 'function' ? customHash : customHash.getFbtHash;
   }
-  for (const { filename, source } of files) {
-    const result = collectSync(filename, source, {
+  const result = collectBatchSync(
+    files.map(({ filename, source }) => ({ filename, sourceText: source })),
+    {
       collectPackager:
         customHash && argv.packager === 'text'
           ? 'none'
@@ -258,38 +259,33 @@ if (
       fbtCommon,
       fbtEnumManifest: enumManifest,
       sourceType: 'unambiguous',
-    });
-    if (result.errors.length > 0) {
-      throw new Error(result.errors.map(({ message }) => message).join('\n'));
-    }
-    const collected = JSON.parse(result.output);
-    if (customHash && ['text', 'both'].includes(argv.packager)) {
-      for (const [index, phrase] of collected.phrases.entries()) {
-        const hashToLeaf = {};
-        visitLeaves(phrase.jsfbt.t, ({ desc, text }) => {
-          hashToLeaf[customHash(text, desc)] = { desc, text };
-        });
-        if (argv.packager === 'both') {
-          const { hash_code, hash_key, ...rest } = phrase;
-          collected.phrases[index] = {
-            hash_code,
-            hash_key,
-            hashToLeaf,
-            ...rest,
-          };
-        } else {
-          collected.phrases[index] = { hashToLeaf, ...phrase };
-        }
+    },
+  );
+  if (result.errors.length > 0) {
+    throw new Error(result.errors.map(({ message }) => message).join('\n'));
+  }
+  const collected = JSON.parse(result.output);
+  if (customHash && ['text', 'both'].includes(argv.packager)) {
+    for (const [index, phrase] of collected.phrases.entries()) {
+      const hashToLeaf = {};
+      visitLeaves(phrase.jsfbt.t, ({ desc, text }) => {
+        hashToLeaf[customHash(text, desc)] = { desc, text };
+      });
+      if (argv.packager === 'both') {
+        const { hash_code, hash_key, ...rest } = phrase;
+        collected.phrases[index] = {
+          hash_code,
+          hash_key,
+          hashToLeaf,
+          ...rest,
+        };
+      } else {
+        collected.phrases[index] = { hashToLeaf, ...phrase };
       }
     }
-    const offset = output.phrases.length;
-    for (const [child, parent] of Object.entries(
-      collected.childParentMappings,
-    )) {
-      output.childParentMappings[Number(child) + offset] = parent + offset;
-    }
-    output.phrases.push(...collected.phrases);
   }
+  output.childParentMappings = collected.childParentMappings;
+  output.phrases = collected.phrases;
 
   if (argv['include-default-strings']) {
     const require = createRequire(root);

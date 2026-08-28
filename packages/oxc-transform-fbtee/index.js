@@ -936,16 +936,20 @@ if (!nativeBinding) {
 
 const {
   Severity,
+  collectBatchSync,
   collectSync,
   migrateLocaleJsonSync,
+  prepareTranslationsBatchSync,
   prepareTranslationsSync,
   transform,
   transformSync,
   translateSync,
 } = nativeBinding;
 export { Severity };
+export { collectBatchSync };
 export { collectSync };
 export { migrateLocaleJsonSync };
+export { prepareTranslationsBatchSync };
 export { prepareTranslationsSync };
 export { transform };
 export { transformSync };

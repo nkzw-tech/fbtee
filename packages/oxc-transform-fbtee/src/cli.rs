@@ -6,6 +6,11 @@ pub fn prepare_translations(
     locale: &str,
     sort_by_hash: bool,
 ) -> Result<String, String> {
+    let phrases = source_phrases(source_json)?;
+    prepare_translations_with_phrases(&phrases, existing_json, locale, sort_by_hash)
+}
+
+pub fn source_phrases(source_json: &str) -> Result<Map<String, Value>, String> {
     let source: Value = serde_json::from_str(source_json)
         .map_err(|error| format!("Invalid source strings JSON: {error}"))?;
     let mut phrases = Map::new();
@@ -21,6 +26,15 @@ pub fn prepare_translations(
         }
     }
 
+    Ok(phrases)
+}
+
+pub fn prepare_translations_with_phrases(
+    phrases: &Map<String, Value>,
+    existing_json: Option<&str>,
+    locale: &str,
+    sort_by_hash: bool,
+) -> Result<String, String> {
     let mut group = match existing_json {
         Some(json) => serde_json::from_str::<Value>(json)
             .map_err(|error| format!("Invalid translation JSON: {error}"))?
@@ -42,7 +56,7 @@ pub fn prepare_translations(
 
     translations.retain(|hash, value| phrases.contains_key(hash) || !json_truthy(value));
     for (hash, phrase) in phrases {
-        if !translations.contains_key(&hash) {
+        if !translations.contains_key(hash) {
             let Some(phrase) = phrase.as_object() else {
                 continue;
             };
@@ -53,7 +67,7 @@ pub fn prepare_translations(
                 continue;
             };
             translations.insert(
-                hash,
+                hash.clone(),
                 serde_json::json!({
                     "description": desc,
                     "status": "new",
