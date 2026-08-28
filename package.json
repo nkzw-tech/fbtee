@@ -15,7 +15,7 @@
     "preinstall": "command -v git >/dev/null 2>&1 && git config core.hooksPath git-hooks || exit 0",
     "jest": "npm-run-all jest:babel jest:swc jest:oxc jest:parity",
     "jest:babel": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects @nkzw/babel-plugin-fbtee fbtee example @nkzw/eslint-plugin-fbtee",
-    "jest:oxc": "pnpm --filter @nkzw/oxc-transform-fbtee test && pnpm --filter @nkzw/vite-plugin-fbtee test && FBTEE_JEST_COMPILER=oxc NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects fbtee example --runInBand --no-cache",
+    "jest:oxc": "pnpm --filter @nkzw/oxc-transform-fbtee test && pnpm --filter @nkzw/vite-plugin-fbtee test && pnpm --filter @nkzw/next-plugin-fbtee test && FBTEE_JEST_COMPILER=oxc NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects fbtee example --runInBand --no-cache",
     "jest:parity": "pnpm --filter @nkzw/babel-plugin-fbtee build && pnpm --filter @nkzw/babel-plugin-fbtee-auto-import build && pnpm --filter @nkzw/swc-plugin-fbtee build && pnpm --filter @nkzw/oxc-transform-fbtee build && NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects compiler-parity --runInBand --no-cache",
     "jest:swc": "pnpm --filter @nkzw/swc-plugin-fbtee build && FBTEE_JEST_COMPILER=swc NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects fbtee example --runInBand --no-cache",
     "link-bins": "pnpm --dir packages/fbtee rebuild && pnpm --dir example rebuild && pnpm --dir website rebuild",

@@ -3,6 +3,7 @@
 .pnpm-debug.log
 .swc
 **/node_modules
+packages/next-plugin-fbtee/test/fixture/.next*
 example/.enum_manifest.json
 example/source_strings.json
 example/src/translatedFbts

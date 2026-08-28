@@ -101,7 +101,7 @@ export function createRuntime<P, T extends BaseResult | string>({
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
-        `fbt must be compiled with the fbtee compiler integration. Please configure the Babel preset, SWC plugin, or Oxc transform and try again.`,
+        `fbt must be compiled with the fbtee compiler integration. Please configure the Vite plugin, Next.js plugin, Babel preset, or Oxc transform and try again.`,
       );
     },
     {

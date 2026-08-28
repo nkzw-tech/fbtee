@@ -4,6 +4,7 @@ example/src/translatedFbts
 example/translations/
 packages/*/lib/
 packages/fbtee/lib-tmp/
+packages/next-plugin-fbtee/test/fixture/next-env.d.ts
 pnpm-lock.yaml
 website/.enum_manifest.json
 website/dist/

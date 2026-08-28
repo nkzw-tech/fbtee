@@ -15,9 +15,10 @@ type TranslationModule = {
   default: Partial<Record<AvailableLocale, Record<string, FbtRuntimeInput>>>;
 };
 
-const translationModules = import.meta.glob<TranslationModule>(
-  './translations/*.json',
-);
+const translationModules = import.meta.glob('./translations/*.json') as Record<
+  string,
+  () => Promise<TranslationModule>
+>;
 
 const loadAvailableLocale = async <
   Locale extends Exclude<AvailableLocale, 'en-US'>,

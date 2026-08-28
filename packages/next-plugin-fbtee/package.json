@@ -1,0 +1,56 @@
+{
+  "name": "@nkzw/next-plugin-fbtee",
+  "version": "3.2.0",
+  "description": "Next.js plugin for fbtee powered by the native Oxc transform.",
+  "keywords": [
+    "fbt",
+    "fbtee",
+    "i18n",
+    "next.js",
+    "oxc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkzw-tech/fbtee.git",
+    "directory": "packages/next-plugin-fbtee"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./loader": "./loader.cjs"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "loader.cjs"
+  ],
+  "scripts": {
+    "test": "node test/e2e.mjs"
+  },
+  "dependencies": {
+    "@nkzw/oxc-transform-fbtee": "workspace:*"
+  },
+  "devDependencies": {
+    "fbtee": "workspace:*",
+    "next": "^16.3.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "next": ">=16.0.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

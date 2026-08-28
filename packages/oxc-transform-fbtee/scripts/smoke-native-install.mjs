@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -112,6 +112,20 @@ const smokeInstalledPackages = async (consumer) => {
     ).code,
     /fbt\._\(/,
   );
+
+  const nextEntry = join(
+    consumer,
+    'node_modules',
+    '@nkzw',
+    'next-plugin-fbtee',
+    'index.js',
+  );
+  const { default: withFbtee } = await import(pathToFileURL(nextEntry));
+  const nextConfig = withFbtee()({});
+  const nextRule = nextConfig.turbopack.rules['*.tsx'];
+  assert.ok(existsSync(nextRule.loaders[0].loader));
+  const webpackConfig = nextConfig.webpack({ module: { rules: [] } }, {});
+  assert.ok(existsSync(webpackConfig.module.rules[0].use[0].loader));
 };
 
 const run = async () => {
@@ -132,8 +146,8 @@ const run = async () => {
     .map((file) => join(resolvedPackageDirectory, file));
   assert.equal(
     tarballs.length,
-    3,
-    'Expected transform, Vite, and platform package tarballs',
+    4,
+    'Expected transform, Next.js, Vite, and platform package tarballs',
   );
 
   const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));
@@ -141,6 +155,7 @@ const run = async () => {
     const args = [
       'install',
       '--ignore-scripts',
+      '--legacy-peer-deps',
       '--no-audit',
       '--no-fund',
       ...tarballs,

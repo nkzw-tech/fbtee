@@ -10,14 +10,14 @@ const Greeting = ({ name }) => (
 );
 ```
 
-_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Babel, SWC, Next.js & Oxc.
+_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Next.js, Babel & Oxc.
 
 ## Features
 
 - **Inline translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
 - **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage serving billions of users, plus years in production at [Athena Crisis](https://athenacrisis.com).
 - **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, then optimizes the runtime output for performance.
-- **Easy Setup:** Quick integration with Vite, Babel, SWC, Oxc, Next.js, and Expo.
+- **Easy Setup:** Quick integration with Vite, Next.js, Babel, Oxc, and Expo.
 
 ## Getting Started
 
@@ -62,6 +62,31 @@ export default defineConfig({
 });
 ```
 
+### Next.js
+
+Next.js projects should use the native Oxc plugin and the CLI:
+
+```bash
+npm install -D @nkzw/next-plugin-fbtee @nkzw/fbtee-cli
+```
+
+Wrap your Next configuration:
+
+```js
+import withFbtee from '@nkzw/next-plugin-fbtee';
+
+export default withFbtee({
+  fbtCommon: {
+    Accept: 'Button label for accepting terms',
+  },
+  fbtEnumManifest: {},
+})({
+  // Your Next.js configuration.
+});
+```
+
+The plugin runs the native Oxc transform before Next.js compilation. It works with the default Turbopack compiler and with `next build --webpack`, so it does not require Babel or custom compiler configuration.
+
 ### Babel
 
 Install the Babel preset and the CLI:
@@ -75,36 +100,6 @@ Add the preset to your Babel configuration:
 ```js
 export default {
   presets: ['@nkzw/babel-preset-fbtee'],
-};
-```
-
-### SWC
-
-Install the SWC runtime compiler and the CLI:
-
-```bash
-npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli
-```
-
-For Next.js SWC plugins:
-
-```js
-import { createFbteePluginOptions } from '@nkzw/swc-plugin-fbtee/index.js';
-
-export default {
-  experimental: {
-    swcPlugins: [
-      [
-        '@nkzw/swc-plugin-fbtee',
-        createFbteePluginOptions({
-          fbtCommon: {
-            Accept: 'Button label for accepting terms',
-          },
-          fbtEnumManifest: {},
-        }),
-      ],
-    ],
-  },
 };
 ```
 

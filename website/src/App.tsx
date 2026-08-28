@@ -278,7 +278,7 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Easy setup description">
-                    Quick integration with Vite, Babel, SWC, and Expo.
+                    Quick integration with Vite, Next.js, Babel, and Expo.
                   </fbt>
                 </p>
               </CardContent>
@@ -441,8 +441,8 @@ export default function App() {
               </div>
               <p>
                 <fbt desc="Compiler setup recommendation">
-                  Choose Vite for the recommended setup, or select Babel or SWC
-                  when your framework requires one of them.
+                  Choose the native Vite or Next.js plugin for the recommended
+                  setup, or select Babel when your framework requires it.
                 </fbt>
               </p>
             </div>
@@ -458,13 +458,10 @@ export default function App() {
               </div>
 
               <Tabs className="w-full" defaultValue="vite">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="vite">Vite</TabsTrigger>
-                  <TabsTrigger value="babel">Babel</TabsTrigger>
-                  <TabsTrigger value="swc">
-                    <fbt desc="Framework setup tab">SWC</fbt>
-                  </TabsTrigger>
                   <TabsTrigger value="nextjs">Next.js</TabsTrigger>
+                  <TabsTrigger value="babel">Babel</TabsTrigger>
                 </TabsList>
                 <TabsContent className="space-y-4" value="vite">
                   <p className="">
@@ -494,6 +491,29 @@ export default defineConfig({
 });`}
                   />
                 </TabsContent>
+                <TabsContent className="space-y-4" value="nextjs">
+                  <p className="">
+                    <fbt desc="Next.js setup instructions">
+                      Use the native Oxc plugin with either Turbopack or
+                      webpack:
+                    </fbt>
+                  </p>
+                  <Code
+                    code={`npm install -D @nkzw/next-plugin-fbtee @nkzw/fbtee-cli`}
+                  />
+                  <Code
+                    code={`import withFbtee from '@nkzw/next-plugin-fbtee';
+
+export default withFbtee({
+  fbtCommon: {
+    Accept: 'Button label for accepting terms',
+  },
+  fbtEnumManifest: {},
+})({
+  // Your Next.js configuration.
+});`}
+                  />
+                </TabsContent>
                 <TabsContent className="space-y-4" value="babel">
                   <p className="">
                     <fbt desc="Babel setup instructions">
@@ -508,76 +528,6 @@ export default defineConfig({
   presets: ['@nkzw/babel-preset-fbtee'],
 };`}
                   />
-                </TabsContent>
-                <TabsContent className="space-y-4" value="swc">
-                  <p className="">
-                    <fbt desc="SWC setup instructions">
-                      Use the SWC plugin to compile app code. Use fbtee collect
-                      to extract phrases.
-                    </fbt>
-                  </p>
-                  <Code
-                    code={`npm install -D @nkzw/swc-plugin-fbtee @nkzw/fbtee-cli`}
-                  />
-                  <Code
-                    code={`import { createFbteePluginOptions } from '@nkzw/swc-plugin-fbtee/index.js';
-
-export default {
-  experimental: {
-    swcPlugins: [
-      [
-        '@nkzw/swc-plugin-fbtee',
-        createFbteePluginOptions({
-          fbtCommon: {
-            Accept: 'Button label for accepting terms',
-          },
-          fbtEnumManifest: {},
-        }),
-      ],
-    ],
-  },
-};`}
-                  />
-                  <p className="text-sm text-slate-600 dark:text-slate-400">
-                    <fbt desc="SWC collect note">
-                      Do not pass collectFbt: true to the SWC plugin.
-                    </fbt>
-                  </p>
-                </TabsContent>
-                <TabsContent className="space-y-4" value="nextjs">
-                  <p className="">
-                    <fbt desc="Next.js setup instructions">
-                      With Next.js and Babel, create a babel.config.js file in
-                      your project root:
-                    </fbt>
-                  </p>
-                  <Code
-                    code={`export default {
-  presets: ['next/babel', '@nkzw/babel-preset-fbtee'],
-};`}
-                  />
-                  <div className="squircle border border-blue-200 bg-blue-50 p-4 dark:bg-blue-900">
-                    <p className="text-sm text-blue-800 dark:text-blue-50">
-                      <fbt desc="Next.js tip">
-                        <strong>Next.js Tip:</strong> Check out the{' '}
-                        <Link
-                          className="underline"
-                          href="https://github.com/cpojer/nextjs-fbtee-example"
-                          target="_blank"
-                        >
-                          Next.js App fbtee Example
-                        </Link>{' '}
-                        for a complete setup with App Router and Server
-                        Components.
-                      </fbt>
-                    </p>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">
-                    <fbt desc="Next.js SWC plugin note">
-                      For Turbopack, configure @nkzw/swc-plugin-fbtee through
-                      the Next.js SWC plugin list instead of using Babel.
-                    </fbt>
-                  </p>
                 </TabsContent>
               </Tabs>
             </div>
@@ -1267,7 +1217,7 @@ export default [
                   <p className="text-sm">
                     <fbt desc="Easier setup description">
                       Replace legacy fbt packages with fbtee and the matching
-                      Vite, Babel, or SWC compiler package.
+                      Vite, Next.js, or Babel compiler package.
                     </fbt>
                   </p>
                 </div>
@@ -1388,13 +1338,6 @@ export default [
                   target="_blank"
                 >
                   GitHub
-                </Link>
-                <Link
-                  className="block text-sm transition-colors hover:text-blue-600 dark:hover:text-blue-400"
-                  href="https://github.com/cpojer/nextjs-fbtee-example"
-                  target="_blank"
-                >
-                  <fbt desc="Link text">Next.js Example</fbt>
                 </Link>
               </div>
             </div>

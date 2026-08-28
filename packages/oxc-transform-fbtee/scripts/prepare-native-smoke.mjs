@@ -46,6 +46,7 @@ mkdirSync(outputDirectory);
 for (const directory of [
   platformDirectory,
   packageDirectory,
+  join(packageDirectory, '..', 'next-plugin-fbtee'),
   join(packageDirectory, '..', 'vite-plugin-fbtee'),
 ]) {
   const args = [

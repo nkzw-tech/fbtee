@@ -10,6 +10,7 @@ export default [
     ignores: [
       'packages/*/lib',
       'packages/fbtee/lib-tmp/',
+      'packages/next-plugin-fbtee/test/fixture/.next*/',
       'target/',
       'website/dist/',
       'website/vite.config.ts.timestamp-*',

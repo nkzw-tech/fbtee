@@ -5,6 +5,7 @@ packages:
   - packages/babel-preset-fbtee
   - packages/fbtee-cli
   - packages/fbtee
+  - packages/next-plugin-fbtee
   - packages/oxc-transform-fbtee
   - packages/oxc-transform-fbtee/npm/*
   - packages/swc-plugin-fbtee

@@ -38,7 +38,7 @@ describe('fbt', () => {
 
   it('should hint at the correct usage of fbt', () => {
     expect(() => fbtInternal('test')).toThrowErrorMatchingInlineSnapshot(
-      `"fbt must be compiled with the fbtee compiler integration. Please configure the Babel preset, SWC plugin, or Oxc transform and try again."`,
+      `"fbt must be compiled with the fbtee compiler integration. Please configure the Vite plugin, Next.js plugin, Babel preset, or Oxc transform and try again."`,
     );
   });
 
