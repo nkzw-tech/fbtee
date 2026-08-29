@@ -5,6 +5,15 @@ import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+const spawnInstalledBin = (command, args) => {
+  const isWindows = process.platform === 'win32';
+  return spawnSync(
+    isWindows ? (process.env.ComSpec ?? 'cmd.exe') : command,
+    isWindows ? ['/d', '/s', '/c', command, ...args] : args,
+    { encoding: 'utf8' },
+  );
+};
+
 const smokeInstalledPackages = async (consumer) => {
   const command = join(
     consumer,
@@ -12,7 +21,7 @@ const smokeInstalledPackages = async (consumer) => {
     '.bin',
     process.platform === 'win32' ? 'fbtee.cmd' : 'fbtee',
   );
-  const cli = spawnSync(command, ['--help'], { encoding: 'utf8' });
+  const cli = spawnInstalledBin(command, ['--help']);
   assert.equal(cli.status, 0, cli.error?.message || cli.stderr || cli.stdout);
   assert.match(cli.stdout, /Usage: fbtee/);
 
@@ -22,7 +31,7 @@ const smokeInstalledPackages = async (consumer) => {
     '.bin',
     process.platform === 'win32' ? 'fbtee-native.cmd' : 'fbtee-native',
   );
-  const nativeVersion = spawnSync(nativeCommand, ['--version'], { encoding: 'utf8' });
+  const nativeVersion = spawnInstalledBin(nativeCommand, ['--version']);
   assert.equal(
     nativeVersion.status,
     0,
