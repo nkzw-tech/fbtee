@@ -1,6 +1,6 @@
 [package]
 name = "oxc-transform-fbtee"
-version = "3.2.0"
+version = "4.0.0"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -9,10 +9,15 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 doctest = false
 
+[[bin]]
+name = "fbtee"
+path = "src/main.rs"
+
 [dependencies]
 base64 = "0.22.1"
 html-escape = "0.2.13"
-indexmap = "2.14.0"
+indexmap = { version = "2.14.0", features = ["serde"] }
+json5 = "0.4.1"
 md-5 = "0.10.6"
 napi = { version = "3.12.2", features = ["async", "object_indexmap"] }
 napi-derive = "3.6.3"
@@ -20,6 +25,7 @@ oxc = { version = "0.147.0", features = ["full"] }
 oxc_estree = "0.147.0"
 oxc_napi = "0.147.0"
 oxc_sourcemap = { version = "8.0.2", features = ["napi"] }
+pathdiff = "0.2.3"
 serde_json = { version = "1.0.145", features = ["preserve_order"] }
 
 [build-dependencies]

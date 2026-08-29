@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/fbtee-cli",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "description": "Command line tools for fbtee.",
   "keywords": [
     "fbt",
@@ -20,18 +20,21 @@
   },
   "files": [
     "bin.mjs",
-    "oxc-cli.mjs",
-    "oxc-locale.mjs",
-    "oxc-migrate-locales.mjs",
-    "oxc-prepare-translations.mjs",
-    "oxc-translate.mjs",
     "LICENSE",
     "README.md"
   ],
   "type": "module",
-  "dependencies": {
-    "@nkzw/babel-plugin-fbtee": "workspace:^",
-    "@nkzw/oxc-transform-fbtee": "workspace:^",
-    "yargs": "^18.0.0"
+  "optionalDependencies": {
+    "@nkzw/oxc-transform-fbtee-binding-darwin-arm64": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-darwin-x64": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-arm64-gnu": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-arm64-musl": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-x64-gnu": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-linux-x64-musl": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-win32-arm64-msvc": "workspace:*",
+    "@nkzw/oxc-transform-fbtee-binding-win32-x64-msvc": "workspace:*"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

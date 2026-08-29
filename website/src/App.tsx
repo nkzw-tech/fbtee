@@ -258,7 +258,7 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Easy setup description">
-                    Quick integration with Vite, Next.js, Babel, and Expo.
+                    Quick integration with Vite, Next.js, Oxc, and Expo.
                   </fbt>
                 </p>
               </CardContent>
@@ -410,8 +410,8 @@ export default function App() {
               </div>
               <p>
                 <fbt desc="Compiler setup recommendation">
-                  Choose the native Vite or Next.js plugin for the recommended setup, or select
-                  Babel when your framework requires it.
+                  Choose the native Vite or Next.js plugin, or use the low-level Oxc transform for a
+                  custom build integration.
                 </fbt>
               </p>
             </div>
@@ -427,10 +427,9 @@ export default function App() {
               </div>
 
               <Tabs className="w-full" defaultValue="vite">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="vite">Vite</TabsTrigger>
                   <TabsTrigger value="nextjs">Next.js</TabsTrigger>
-                  <TabsTrigger value="babel">Babel</TabsTrigger>
                 </TabsList>
                 <TabsContent className="space-y-4" value="vite">
                   <p className="">
@@ -476,19 +475,6 @@ export default withFbtee({
 })({
   // Your Next.js configuration.
 });`}
-                  />
-                </TabsContent>
-                <TabsContent className="space-y-4" value="babel">
-                  <p className="">
-                    <fbt desc="Babel setup instructions">
-                      If your build already uses Babel, add the fbtee preset:
-                    </fbt>
-                  </p>
-                  <Code code={`npm install -D @nkzw/babel-preset-fbtee @nkzw/fbtee-cli`} />
-                  <Code
-                    code={`export default {
-  presets: ['@nkzw/babel-preset-fbtee'],
-};`}
                   />
                 </TabsContent>
               </Tabs>
@@ -1143,7 +1129,7 @@ export default [
                   <p className="text-sm">
                     <fbt desc="Easier setup description">
                       Replace legacy fbt packages with fbtee and the matching Vite, Next.js, or
-                      Babel compiler package.
+                      low-level Oxc compiler package.
                     </fbt>
                   </p>
                 </div>

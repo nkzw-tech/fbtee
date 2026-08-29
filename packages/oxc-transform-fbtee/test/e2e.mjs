@@ -344,12 +344,3 @@ for (const sourceType of ['script', 'commonjs']) {
   assert.equal(result.code, '');
   assert.match(result.errors[0]?.message || '', /must be inside an fbt/);
 }
-
-{
-  const result = transformSync('source.tsx', `const x = fbt('A', 'B');`, {
-    collectFbt: true,
-    lang: 'tsx',
-  });
-  assert.equal(result.code, '');
-  assert.match(result.errors[0]?.message || '', /collectFbt/);
-}

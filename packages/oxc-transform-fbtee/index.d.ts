@@ -91,7 +91,6 @@ export interface TransformOptions {
   lang?: 'js' | 'jsx' | 'ts' | 'tsx' | 'dts';
   sourceType?: 'script' | 'module' | 'commonjs' | 'unambiguous';
   sourcemap?: boolean;
-  collectFbt?: boolean;
   collectPackager?: string;
   extraOptions?: Array<string>;
   fbtCommon?: Record<string, string>;

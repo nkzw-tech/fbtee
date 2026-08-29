@@ -10,14 +10,14 @@ const Greeting = ({ name }) => (
 );
 ```
 
-_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Next.js, Babel & Oxc.
+_fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ESM, React 19, Vite, Next.js, and Oxc.
 
 ## Features
 
 - **Inline translations for Better Developer Experience:** Embed translations directly into your code. No need to manage translation keys or wrap your code with `t()` functions. **fbtee** uses a compiler to extract strings from your code and prepare them for translation providers.
 - **Proven in Production:** Built on Facebook's `fbt`, with over a decade of production usage serving billions of users, plus years in production at [Athena Crisis](https://athenacrisis.com).
 - **Optimized Performance with IR:** Compiles translations into an Intermediate Representation (IR) for extracting strings, then optimizes the runtime output for performance.
-- **Easy Setup:** Quick integration with Vite, Next.js, Babel, Oxc, and Expo.
+- **Easy Setup:** Quick integration with Vite, Next.js, Oxc, and Expo.
 
 ## Getting Started
 
@@ -86,22 +86,6 @@ export default withFbtee({
 ```
 
 The plugin runs the native Oxc transform before Next.js compilation. It works with the default Turbopack compiler and with `next build --webpack`, so it does not require Babel or custom compiler configuration.
-
-### Babel
-
-Install the Babel preset and the CLI:
-
-```bash
-npm install -D @nkzw/babel-preset-fbtee @nkzw/fbtee-cli
-```
-
-Add the preset to your Babel configuration:
-
-```js
-export default {
-  presets: ['@nkzw/babel-preset-fbtee'],
-};
-```
 
 ### Low-level Oxc Transform
 
@@ -325,18 +309,16 @@ See the [Next.js fbtee example](https://github.com/cpojer/nextjs-fbtee-example) 
 
 ## Translation Workflow
 
-Every CLI command can use the native Oxc/Rust pipeline by adding `--oxc`:
+The CLI is a native Rust executable and uses the Oxc compiler pipeline by default:
 
 ```bash
-pnpm fbtee collect --oxc
-pnpm fbtee prepare-translations --oxc --source-strings source_strings.json --output-dir translations
-pnpm fbtee translate --oxc --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
-pnpm fbtee migrate-locales --oxc --to bcp47 --dir translations --dir src/translations
+pnpm fbtee collect
+pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations
+pnpm fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
+pnpm fbtee migrate-locales --to bcp47 --dir translations --dir src/translations
 ```
 
-The Babel pipeline remains the default during the parity rollout, so removing `--oxc` makes it easy to compare both implementations. Successful native outputs are tested byte-for-byte against Babel. The native collector intentionally cannot execute Babel-specific JavaScript extensions: `--custom-collector`, `--transform`, and `--generate-fbt-nodes` are unavailable with `--oxc`.
-
-The Oxc collector also cannot run plugins or presets from a Babel configuration file or apply `.babelignore`. If it detects Babel configuration or ignore rules, it stops instead of silently collecting different source. Use the Babel collector when that preprocessing is required, or pass `--disable-babel-config` to explicitly collect the unmodified source with Oxc. All other documented options are supported.
+fbtee 4 removes the legacy Babel compiler and JavaScript CLI. Babel-specific extensions (`--custom-collector`, `--transform`, `--generate-fbt-nodes`, and `--hash-module`) are no longer supported. The collector also cannot execute Babel configuration or apply `.babelignore`; it stops with a clear diagnostic if either is detected. Remove that legacy configuration, or pass `--disable-babel-config` to explicitly collect the unmodified source.
 
 Extract source strings:
 

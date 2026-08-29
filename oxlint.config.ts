@@ -31,11 +31,7 @@ export default defineConfig({
       },
     },
     {
-      files: [
-        'packages/babel-plugin-fbtee/src/bin/*.tsx',
-        'packages/fbtee/babel-build.config.js',
-        '**/__tests__/**/*.tsx',
-      ],
+      files: ['**/__tests__/**/*.tsx'],
       rules: {
         'no-console': 'off',
         'unicorn/consistent-function-scoping': 'off',
@@ -50,7 +46,6 @@ export default defineConfig({
       'error',
       {
         ignoredWords: [
-          'Babel',
           'Far Better Translations, Extended Edition',
           'fbtee',
           'GitHub',

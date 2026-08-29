@@ -13,7 +13,6 @@
     "fbtee:translate": "fbtee translate -o src/translatedFbts"
   },
   "dependencies": {
-    "@nkzw/babel-preset-fbtee": "workspace:*",
     "@nkzw/stack": "^2.3.2",
     "classnames": "^2.5.1",
     "fbtee": "workspace:*",
@@ -23,9 +22,9 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.1",
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
-    "@rolldown/plugin-babel": "^0.2.3",
+    "@nkzw/fbtee-cli": "workspace:*",
+    "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@vitejs/plugin-react": "^6.0.3",
     "invariant": "^2.2.4",
     "vite": "^8.1.5"

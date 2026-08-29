@@ -1,7 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from '@jest/globals';
-import { CollectFbtOutput } from '../../../../packages/babel-plugin-fbtee/src/bin/collect.tsx';
+
+type CollectFbtOutput = {
+  childParentMappings: Record<string, number>;
+  phrases: Array<{ filename: string }>;
+};
 
 const { childParentMappings, phrases } = JSON.parse(
   readFileSync(join(import.meta.dirname, '../../../source_strings.json'), 'utf8'),

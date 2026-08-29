@@ -17,6 +17,10 @@ for (const entry of packages) {
   if (!existsSync(join(directory, packageJson.main))) {
     missing.push(`${packageJson.name}: ${packageJson.main}`);
   }
+  const binary = entry.name.startsWith('win32-') ? 'fbtee.exe' : 'fbtee';
+  if (!existsSync(join(directory, binary))) {
+    missing.push(`${packageJson.name}: ${binary}`);
+  }
 }
 for (const packageName of expectedPackages) {
   missing.push(`${packageName}: package directory`);

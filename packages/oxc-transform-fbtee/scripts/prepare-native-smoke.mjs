@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { chmodSync, copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +29,20 @@ const { main } = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const sourceBinding = join(packageDirectory, main);
 assert.ok(existsSync(sourceBinding), `Built binding is missing: ${sourceBinding}`);
 copyFileSync(sourceBinding, join(platformDirectory, main));
+const binaryName = platform.startsWith('win32-') ? 'fbtee.exe' : 'fbtee';
+const artifactBinary = join(
+  packageDirectory,
+  `fbtee.${platform}${platform.startsWith('win32-') ? '.exe' : ''}`,
+);
+const sourceBinary = existsSync(artifactBinary)
+  ? artifactBinary
+  : join(packageDirectory, '..', '..', 'target', 'release', binaryName);
+assert.ok(existsSync(sourceBinary), `Built native CLI is missing: ${sourceBinary}`);
+const destinationBinary = join(platformDirectory, binaryName);
+copyFileSync(sourceBinary, destinationBinary);
+if (!platform.startsWith('win32-')) {
+  chmodSync(destinationBinary, 0o755);
+}
 
 const outputDirectory = join(packageDirectory, '.native-smoke');
 rmSync(outputDirectory, { force: true, recursive: true });
@@ -37,6 +51,7 @@ mkdirSync(outputDirectory);
 for (const directory of [
   platformDirectory,
   packageDirectory,
+  join(packageDirectory, '..', 'fbtee-cli'),
   join(packageDirectory, '..', 'next-plugin-fbtee'),
   join(packageDirectory, '..', 'vite-plugin-fbtee'),
 ]) {

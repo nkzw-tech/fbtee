@@ -1,8 +1,5 @@
 packages:
   - example
-  - packages/babel-plugin-fbtee-auto-import
-  - packages/babel-plugin-fbtee
-  - packages/babel-preset-fbtee
   - packages/fbtee-cli
   - packages/fbtee
   - packages/next-plugin-fbtee

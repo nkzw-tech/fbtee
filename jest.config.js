@@ -18,21 +18,9 @@ const root = process.cwd();
 export default {
   projects: [
     {
-      displayName: '@nkzw/babel-plugin-fbtee',
-      roots: ['<rootDir>/packages/babel-plugin-fbtee/src'],
-      transform: {
-        '\\.(j|t)sx?$': [
-          '<rootDir>/jest-preprocessor.js',
-          {
-            presets: [['./packages/babel-preset-fbtee', { fbtCommon: { Accept: '...' } }]],
-          },
-        ],
-      },
-    },
-    {
-      displayName: 'compiler-parity',
+      displayName: 'compiler',
       roots: ['<rootDir>/test'],
-      testMatch: ['<rootDir>/test/compiler-parity-test.mjs'],
+      testMatch: ['<rootDir>/test/compiler-test.mjs'],
       transform: {},
     },
     {
@@ -44,7 +32,7 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            presets: [['./packages/babel-preset-fbtee', { fbtCommon: { Accept: '...' } }]],
+            fbtee: { fbtCommon: { Accept: '...' } },
           },
         ],
       },
@@ -62,15 +50,10 @@ export default {
         '\\.(j|t)sx?$': [
           '<rootDir>/jest-preprocessor.js',
           {
-            presets: [
-              [
-                './packages/babel-preset-fbtee',
-                {
-                  fbtCommon: CommonStrings,
-                  fbtEnumManifest: EnumManifest,
-                },
-              ],
-            ],
+            fbtee: {
+              fbtCommon: CommonStrings,
+              fbtEnumManifest: EnumManifest,
+            },
           },
         ],
       },

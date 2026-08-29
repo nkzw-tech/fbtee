@@ -6,6 +6,30 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const smokeInstalledPackages = async (consumer) => {
+  const command = join(
+    consumer,
+    'node_modules',
+    '.bin',
+    process.platform === 'win32' ? 'fbtee.cmd' : 'fbtee',
+  );
+  const cli = spawnSync(command, ['--help'], { encoding: 'utf8' });
+  assert.equal(cli.status, 0, cli.error?.message || cli.stderr || cli.stdout);
+  assert.match(cli.stdout, /Usage: fbtee/);
+
+  const nativeCommand = join(
+    consumer,
+    'node_modules',
+    '.bin',
+    process.platform === 'win32' ? 'fbtee-native.cmd' : 'fbtee-native',
+  );
+  const nativeVersion = spawnSync(nativeCommand, ['--version'], { encoding: 'utf8' });
+  assert.equal(
+    nativeVersion.status,
+    0,
+    nativeVersion.error?.message || nativeVersion.stderr || nativeVersion.stdout,
+  );
+  assert.match(nativeVersion.stdout, /^\d+\.\d+\.\d+\s*$/);
+
   const entry = join(consumer, 'node_modules', '@nkzw', 'oxc-transform-fbtee', 'index.js');
   const {
     collectSync,
@@ -118,8 +142,8 @@ const run = async () => {
     .map((file) => join(resolvedPackageDirectory, file));
   assert.equal(
     tarballs.length,
-    4,
-    'Expected transform, Next.js, Vite, and platform package tarballs',
+    5,
+    'Expected CLI, transform, Next.js, Vite, and platform package tarballs',
   );
 
   const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));

@@ -1,6 +1,7 @@
 #![expect(clippy::needless_pass_by_value)]
 
 mod cli;
+pub mod native_cli;
 mod transform;
 mod translate;
 
@@ -29,7 +30,6 @@ pub struct TransformOptions {
     #[napi(ts_type = "'script' | 'module' | 'commonjs' | 'unambiguous'")]
     pub source_type: Option<String>,
     pub sourcemap: Option<bool>,
-    pub collect_fbt: Option<bool>,
     pub collect_packager: Option<String>,
     pub extra_options: Option<Vec<String>>,
     pub fbt_common: Option<HashMap<String, String>>,
@@ -39,7 +39,7 @@ pub struct TransformOptions {
 impl TransformOptions {
     fn fbtee_options(&self) -> FbteeOptions {
         FbteeOptions {
-            collect_fbt: self.collect_fbt.unwrap_or(false),
+            collect_fbt: false,
             collect_packager: self
                 .collect_packager
                 .clone()

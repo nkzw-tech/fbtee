@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/oxc-transform-fbtee-binding-darwin-arm64",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "description": "Native Rust Oxc transform for fbtee.",
   "keywords": [
     "fbt",
@@ -15,8 +15,12 @@
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
     "directory": "packages/oxc-transform-fbtee"
   },
+  "bin": {
+    "fbtee-native": "fbtee"
+  },
   "files": [
-    "oxc-transform-fbtee.darwin-arm64.node"
+    "oxc-transform-fbtee.darwin-arm64.node",
+    "fbtee"
   ],
   "os": [
     "darwin"
@@ -26,7 +30,7 @@
   ],
   "main": "oxc-transform-fbtee.darwin-arm64.node",
   "scripts": {
-    "prepack": "node -e \"const{existsSync}=require('node:fs');const{main}=require('./package.json');if(!existsSync(main))throw new Error('Missing native binding: '+main)\""
+    "prepack": "node -e \"const{existsSync}=require('node:fs');const{main}=require('./package.json');for(const file of[main,'fbtee'])if(!existsSync(file))throw new Error('Missing native artifact: '+file)\""
   },
   "engines": {
     "node": ">=22.12.0"

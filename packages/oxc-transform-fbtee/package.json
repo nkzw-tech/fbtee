@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/oxc-transform-fbtee",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "description": "Native Rust Oxc transform for fbtee.",
   "keywords": [
     "fbt",
@@ -37,8 +37,9 @@
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "assemble:artifacts": "napi artifacts --output-dir artifacts",
-    "build": "napi build --esm --platform --release && pnpm run format-generated",
+    "assemble:artifacts": "napi artifacts --output-dir artifacts && node scripts/assemble-cli-artifacts.mjs",
+    "build": "napi build --esm --platform --release && pnpm run build:cli && pnpm run format-generated",
+    "build:cli": "cargo build --release --bin fbtee && node scripts/copy-cli.mjs",
     "build:debug": "napi build --esm --platform && pnpm run format-generated",
     "download:artifacts": "node scripts/download-artifacts.mjs",
     "format-generated": "node scripts/normalize-generated-loader.mjs && oxfmt --write index.js index.d.ts",

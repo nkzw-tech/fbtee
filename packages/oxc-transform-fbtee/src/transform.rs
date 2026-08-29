@@ -91,9 +91,6 @@ pub fn transform_program<'a>(
     scoping: Scoping,
     options: FbteeOptions,
 ) -> Diagnostics {
-    if options.collect_fbt {
-        return OxcDiagnostic::error("Option 'collectFbt' is not supported by the fbtee Oxc runtime compiler. Use the Babel collector to extract phrases.").into();
-    }
     let default_call_options = match parse_fbt_docblock(program.source_text) {
         Ok(options) => options,
         Err(error) => {
@@ -4710,7 +4707,7 @@ mod tests {
     }
 
     #[test]
-    fn hashes_match_babel() {
+    fn hashes_match_expected_values() {
         assert_eq!(
             fbt_hash_key(&HashNode::Leaf(HashLeaf {
                 desc: "It's simple".into(),
@@ -4813,7 +4810,7 @@ mod tests {
     }
 
     #[test]
-    fn matches_babel_for_nested_implicit_aliases() {
+    fn preserves_nested_implicit_aliases() {
         let output = transform(
             "const x = <fbt desc='d'>\n  <div href='#'>\n    <div href='#'>this is</div>\n    a doubly\n  </div>\n  nested test\n</fbt>;",
             FbteeOptions::default(),
@@ -4944,7 +4941,7 @@ mod tests {
     }
 
     #[test]
-    fn matches_babel_for_three_level_implicit_descriptions() {
+    fn preserves_three_level_implicit_descriptions() {
         let output = transform(
             "import { fbt } from 'fbtee'; const x = <fbt desc='d'>
               <div href='#'>
@@ -5166,7 +5163,7 @@ mod tests {
     }
 
     #[test]
-    fn decodes_only_babel_jsx_entities() {
+    fn decodes_the_supported_jsx_entity_set() {
         let output = transform(
             "const x = <fbt desc='d'>&NotEqualTilde;</fbt>;",
             FbteeOptions::default(),
@@ -5677,7 +5674,7 @@ mod tests {
     }
 
     #[test]
-    fn normalizes_runtime_token_names_and_docblock_defaults_like_babel() {
+    fn normalizes_runtime_token_names_and_docblock_defaults() {
         let output = transform(
             "/** @fbt {\"preserveWhitespace\":true,\"subject\":\"gender\"} */\nconst x = <fbt desc='d'><fbt:param name='two\n lines'>{value}</fbt:param></fbt>;",
             FbteeOptions::default(),
@@ -5716,7 +5713,7 @@ mod tests {
     }
 
     #[test]
-    fn trims_descriptions_like_babel() {
+    fn trims_descriptions() {
         let functional =
             transform("const value = fbt('A', '  d  ');", FbteeOptions::default()).unwrap();
         let canonical = transform("const value = fbt('A', 'd');", FbteeOptions::default()).unwrap();

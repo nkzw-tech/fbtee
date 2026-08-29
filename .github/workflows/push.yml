@@ -74,13 +74,13 @@ jobs:
           targets: ${{ matrix.settings.target }}
 
       - name: Install Zig
-        if: ${{ contains(matrix.settings.target, 'musl') }}
+        if: ${{ contains(matrix.settings.target, 'linux') }}
         uses: mlugg/setup-zig@v2
         with:
           version: 0.15.2
 
       - name: Install cargo-zigbuild
-        if: ${{ contains(matrix.settings.target, 'musl') }}
+        if: ${{ contains(matrix.settings.target, 'linux') }}
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-zigbuild
@@ -90,6 +90,23 @@ jobs:
 
       - name: Build binding
         run: ${{ matrix.settings.build }}
+        shell: bash
+
+      - name: Build native CLI
+        run: |
+          target='${{ matrix.settings.target }}'
+          if [[ "$target" == *-linux-gnu ]]; then
+            cargo zigbuild --release --bin fbtee --target "$target.2.17"
+          elif [[ "$target" == *-linux-musl ]]; then
+            cargo zigbuild --release --bin fbtee --target "$target"
+          else
+            cargo build --release --bin fbtee --target "$target"
+          fi
+          extension=''
+          if [[ "$target" == *-windows-* ]]; then
+            extension='.exe'
+          fi
+          cp "target/$target/release/fbtee$extension" "packages/oxc-transform-fbtee/fbtee.${{ matrix.settings.package }}$extension"
         shell: bash
 
       - name: Smoke test binding
@@ -110,7 +127,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: oxc-binding-${{ matrix.settings.target }}
-          path: packages/oxc-transform-fbtee/oxc-transform-fbtee.*.node
+          path: |
+            packages/oxc-transform-fbtee/oxc-transform-fbtee.*.node
+            packages/oxc-transform-fbtee/fbtee.*
           if-no-files-found: error
 
   build:

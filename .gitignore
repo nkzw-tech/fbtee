@@ -16,6 +16,8 @@ packages/oxc-transform-fbtee/.native-smoke/
 packages/oxc-transform-fbtee/*.node
 packages/oxc-transform-fbtee/artifacts/
 packages/oxc-transform-fbtee/npm/**/*.node
+packages/oxc-transform-fbtee/npm/**/fbtee
+packages/oxc-transform-fbtee/npm/**/fbtee.exe
 target
 tsconfig.tsbuildinfo
 website/.enum_manifest.json

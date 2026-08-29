@@ -16,6 +16,18 @@ assert.match(loader, /const packageVersion = require\('\.\/package\.json'\)\.ver
 assert.equal(loader.includes(`bindingPackageVersion !== '${packageJson.version}'`), false);
 assert.equal(loader.includes(`expected ${packageJson.version} but got`), false);
 
+for (const entry of readdirSync(join(packageDirectory, 'npm'), { withFileTypes: true })) {
+  if (!entry.isDirectory()) {
+    continue;
+  }
+  const platformPackage = JSON.parse(
+    readFileSync(join(packageDirectory, 'npm', entry.name, 'package.json'), 'utf8'),
+  );
+  assert.deepEqual(platformPackage.bin, {
+    'fbtee-native': entry.name.startsWith('win32-') ? 'fbtee.exe' : 'fbtee',
+  });
+}
+
 const download = (source) =>
   spawnSync(process.execPath, [join(packageDirectory, 'scripts/download-artifacts.mjs')], {
     encoding: 'utf8',
@@ -35,7 +47,10 @@ try {
     .map((entry) =>
       JSON.parse(readFileSync(join(packageDirectory, 'npm', entry.name, 'package.json'), 'utf8')),
     )
-    .map((packageJson) => packageJson.main)
+    .flatMap((packageJson) => {
+      const platform = packageJson.name.replace('@nkzw/oxc-transform-fbtee-binding-', '');
+      return [packageJson.main, `fbtee.${platform}${platform.startsWith('win32-') ? '.exe' : ''}`];
+    })
     .sort();
   for (const name of expected) {
     writeFileSync(join(sourceDirectory, name), name);
