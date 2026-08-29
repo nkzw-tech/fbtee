@@ -9,4 +9,4 @@ for (const key in strings.phrases) {
   strings.phrases[key].filename = 'node_modules/fbtee/lib/index.mjs';
 }
 
-writeFileSync(fileName, JSON.stringify(strings, null, 2), 'utf8');
+writeFileSync(fileName, `${JSON.stringify(strings, null, 2)}\n`, 'utf8');
