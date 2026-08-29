@@ -176,6 +176,9 @@ jobs:
       - name: Run setup
         run: pnpm install && pnpm build:all
 
+      - name: Verify built-in strings are current
+        run: git diff --exit-code -- packages/fbtee/Strings.json
+
       - name: Run tests
         run: pnpm test
 

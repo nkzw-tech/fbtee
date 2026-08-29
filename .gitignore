@@ -11,7 +11,6 @@ packages/*/LICENSE
 packages/*/README.md
 packages/fbtee/.enum_manifest.json
 packages/fbtee/lib-tmp
-packages/fbtee/Strings.json
 packages/oxc-transform-fbtee/.native-smoke/
 packages/oxc-transform-fbtee/*.node
 packages/oxc-transform-fbtee/artifacts/

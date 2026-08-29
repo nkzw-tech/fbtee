@@ -683,6 +683,8 @@ fn extract_braced_object(source: &str, start: usize) -> Option<&str> {
 }
 
 fn append_default_strings(output: &mut Value) -> Result<(), String> {
+    // This checked-in file bootstraps clean native builds. `build:fbtee-strings`
+    // regenerates it after the CLI is available, and CI verifies that it stayed current.
     let defaults: Value = serde_json::from_str(include_str!("../../fbtee/Strings.json"))
         .map_err(|error| format!("Invalid embedded default strings: {error}"))?;
     let output = output
