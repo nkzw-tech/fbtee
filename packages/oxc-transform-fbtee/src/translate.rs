@@ -104,14 +104,25 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
     }
 
     let output = if use_jenkins {
+        let hash_keys = if translated_groups.is_empty() {
+            Vec::new()
+        } else {
+            phrases
+                .iter()
+                .enumerate()
+                .map(|(index, phrase)| {
+                    let tree = phrase
+                        .pointer("/jsfbt/t")
+                        .ok_or_else(|| format!("Phrase at index {index} is missing 'jsfbt.t'."))?;
+                    fbt_hash_key(tree)
+                })
+                .collect::<Result<Vec<_>, String>>()?
+        };
         let mut locales = Map::new();
         for (locale, translated_phrases) in translated_groups {
             let mut hash_to_translation = Map::new();
-            for (index, phrase) in phrases.iter().enumerate() {
-                let tree = phrase
-                    .pointer("/jsfbt/t")
-                    .ok_or_else(|| format!("Phrase at index {index} is missing 'jsfbt.t'."))?;
-                hash_to_translation.insert(fbt_hash_key(tree)?, translated_phrases[index].clone());
+            for (hash_key, translation) in hash_keys.iter().zip(translated_phrases) {
+                hash_to_translation.insert(hash_key.clone(), translation);
             }
             locales.insert(locale, Value::Object(hash_to_translation));
         }

@@ -51,6 +51,44 @@ const fakeRequire = (name) => {
 }
 
 {
+  const options = {
+    collectPackager: 'both',
+    fbtCommon: { Hello: 'Greeting' },
+    fbtEnumManifest: { Items$FbtEnum: { ONE: 'one', TWO: 'two' } },
+    lang: 'tsx',
+  };
+  const sourceText = `
+    import Items from './Items$FbtEnum';
+    fbt.c('Hello');
+    <fbt desc="Items"><b><fbt:enum enum-range={Items} value={item} /></b></fbt>;
+  `;
+  const first = { filename: 'first.tsx', sourceText };
+  const single = collectSync(first.filename, first.sourceText, options);
+  assert.deepEqual(single.errors, []);
+  assert.deepEqual(collectBatchSync([first], options), single);
+  assert.deepEqual(JSON.parse(collectBatchSync([], options).output), {
+    childParentMappings: {},
+    phrases: [],
+  });
+
+  const second = { filename: 'second.tsx', sourceText };
+  const batch = collectBatchSync([first, second], options);
+  assert.deepEqual(batch.errors, []);
+  const output = JSON.parse(batch.output);
+  assert.deepEqual(output.phrases, [
+    ...JSON.parse(single.output).phrases,
+    ...JSON.parse(collectSync(second.filename, second.sourceText, options).output).phrases,
+  ]);
+  assert.deepEqual(output.childParentMappings, { 2: 1, 5: 4 });
+
+  const invalid = { filename: 'invalid.tsx', sourceText: `fbt.c('Missing');` };
+  const error = collectSync(invalid.filename, invalid.sourceText, options);
+  assert.notEqual(error.errors.length, 0);
+  assert.deepEqual(collectBatchSync([invalid], options), error);
+  assert.deepEqual(collectBatchSync([first, invalid, second], options), error);
+}
+
+{
   const source = JSON.stringify({
     phrases: [{ hashToLeaf: { hash: { desc: 'd', text: 'Text' } } }],
   });

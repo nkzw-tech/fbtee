@@ -8,7 +8,9 @@ use std::{
 use indexmap::IndexMap;
 use serde_json::{Map, Value};
 
-use crate::{cli, collect_batch_sync, translate, CollectInput, TransformOptions};
+use crate::{
+    cli, collect_batch_impl, collected_output_json, translate, CollectInput, TransformOptions,
+};
 
 const ROOT_HELP: &str = r#"Usage: fbtee <command> [options]
 
@@ -339,7 +341,7 @@ fn collect(args: Vec<String>) -> Result<(), String> {
         .value("options")
         .map(|value| value.split(',').map(str::to_string).collect())
         .unwrap_or_default();
-    let result = collect_batch_sync(
+    let mut result = collect_batch_impl(
         files,
         Some(TransformOptions {
             collect_packager: Some(packager.into()),
@@ -349,22 +351,20 @@ fn collect(args: Vec<String>) -> Result<(), String> {
             source_type: Some("unambiguous".into()),
             ..TransformOptions::default()
         }),
-    );
-    if !result.errors.is_empty() {
-        return Err(result
-            .errors
+    )
+    .map_err(|errors| {
+        errors
             .into_iter()
             .map(|error| error.message)
             .collect::<Vec<_>>()
-            .join("\n"));
+            .join("\n")
+    })?;
+    for phrase in &mut result.phrases {
+        if let Some(subject) = phrase.get_mut("subject") {
+            normalize_collected_subject_numbers(subject);
+        }
     }
-    let mut output: Value = serde_json::from_str(
-        result
-            .output
-            .as_deref()
-            .ok_or("The native collector did not return output.")?,
-    )
-    .map_err(|error| error.to_string())?;
+    let mut output = collected_output_json(result);
     if args.boolean("include-default-strings", true) {
         append_default_strings(&mut output)?;
     }
@@ -373,6 +373,22 @@ fn collect(args: Vec<String>) -> Result<(), String> {
     }
     let output_path = resolve_from(&root, args.value("out").unwrap_or("source_strings.json"));
     write_text(&output_path, &json_pretty(output)?)
+}
+
+fn normalize_collected_subject_numbers(value: &mut Value) {
+    match value {
+        Value::Number(number) if number.is_f64() => {
+            // Preserve the float rounding of the CLI's former JSON parse.
+            *number = serde_json::from_str(&number.to_string()).expect("number must parse");
+        }
+        Value::Array(values) => values
+            .iter_mut()
+            .for_each(normalize_collected_subject_numbers),
+        Value::Object(object) => object
+            .values_mut()
+            .for_each(normalize_collected_subject_numbers),
+        _ => {}
+    }
 }
 
 fn discover_source_files(root: &Path, sources: &[String]) -> Result<Vec<PathBuf>, String> {
@@ -1509,8 +1525,19 @@ fn display_relative(root: &Path, path: &Path) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
-        canonicalize_locale, extract_braced_object, format_locale, locale_identity, LocaleStyle,
+        canonicalize_locale, extract_braced_object, format_locale, locale_identity,
+        normalize_collected_subject_numbers, LocaleStyle,
     };
+
+    #[test]
+    fn preserves_collected_subject_number_rounding() {
+        let mut subject = serde_json::from_str(r#"{"expression":[7.689563885870707e-29,9007199254740993],"text":"7.689563885870707e-29"}"#).unwrap();
+        normalize_collected_subject_numbers(&mut subject);
+        assert_eq!(
+            serde_json::to_string(&subject).unwrap(),
+            r#"{"expression":[7.689563885870705e-29,9007199254740993],"text":"7.689563885870707e-29"}"#
+        );
+    }
 
     #[test]
     fn extracts_static_objects() {

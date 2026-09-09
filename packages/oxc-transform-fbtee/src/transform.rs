@@ -41,7 +41,6 @@ const JSX_NAMED_ENTITIES: &str = "quot amp apos lt gt nbsp iexcl cent pound curr
 
 #[derive(Clone, Debug, Default)]
 pub struct FbteeOptions {
-    pub collect_fbt: bool,
     pub collect_packager: String,
     pub extra_options: Vec<String>,
     pub fbt_common: BTreeMap<String, String>,
@@ -57,19 +56,18 @@ pub fn collect_program<'a>(
     allocator: &'a Allocator,
     program: &mut Program<'a>,
     scoping: Scoping,
-    mut options: FbteeOptions,
+    options: &FbteeOptions,
     filename: &str,
 ) -> Result<CollectedFileOutput, String> {
-    options.collect_fbt = true;
     let default_call_options = parse_fbt_docblock(program.source_text)?;
-    let mut collector = BindingCollector::new(&options);
+    let mut collector = BindingCollector::new(options);
     collector.visit_program(program);
     let mut tx = FbteeTransform::new(
         allocator,
         program.source_text,
         program.source_type,
         scoping,
-        options.clone(),
+        true,
         default_call_options,
         collector,
     );
@@ -104,7 +102,7 @@ pub fn transform_program<'a>(
         program.source_text,
         program.source_type,
         scoping,
-        options.clone(),
+        false,
         default_call_options,
         collector,
     );
@@ -383,7 +381,7 @@ struct BindingCollector<'o> {
     fbtee_symbols: BTreeSet<SymbolId>,
     fbtee_runtime_symbols: BTreeSet<SymbolId>,
     top_level_fbtee: BTreeSet<String>,
-    imported_enums: BTreeMap<SymbolId, IndexMap<String, String>>,
+    imported_enums: BTreeMap<SymbolId, &'o IndexMap<String, String>>,
     depth: usize,
 }
 impl<'o> BindingCollector<'o> {
@@ -424,7 +422,7 @@ impl<'o> BindingCollector<'o> {
                     ident.symbol_id.get(),
                     self.options.fbt_enum_manifest.get(&key),
                 ) {
-                    self.imported_enums.insert(id, values.clone());
+                    self.imported_enums.insert(id, values);
                 }
             }
         }
@@ -491,18 +489,19 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
     }
 }
 
-struct FbteeTransform<'a> {
+struct FbteeTransform<'a, 'o> {
     allocator: &'a Allocator,
     source_text: &'a str,
-    source_locator: OnceLock<SourceLocator>,
+    source_locator: OnceLock<SourceLocator<'a>>,
     source_type: SourceType,
     scoping: Scoping,
-    options: FbteeOptions,
+    options: &'o FbteeOptions,
+    collect_fbt: bool,
     default_call_options: CallOptions,
     fbtee_symbols: BTreeSet<SymbolId>,
     fbtee_runtime_symbols: BTreeSet<SymbolId>,
     top_level_fbtee: BTreeSet<String>,
-    imported_enums: BTreeMap<SymbolId, IndexMap<String, String>>,
+    imported_enums: BTreeMap<SymbolId, &'o IndexMap<String, String>>,
     scopes: Vec<Option<ScopeId>>,
     needs_fbt_binding: bool,
     needs_fbs_binding: bool,
@@ -511,15 +510,15 @@ struct FbteeTransform<'a> {
     next_span_marker: u32,
     error: Option<String>,
 }
-impl<'a> FbteeTransform<'a> {
+impl<'a, 'o> FbteeTransform<'a, 'o> {
     fn new(
         allocator: &'a Allocator,
         source_text: &'a str,
         source_type: SourceType,
         scoping: Scoping,
-        options: FbteeOptions,
+        collect_fbt: bool,
         default_call_options: CallOptions,
-        collector: BindingCollector<'_>,
+        collector: BindingCollector<'o>,
     ) -> Self {
         Self {
             allocator,
@@ -527,7 +526,8 @@ impl<'a> FbteeTransform<'a> {
             source_locator: OnceLock::new(),
             source_type,
             scoping,
-            options,
+            options: collector.options,
+            collect_fbt,
             default_call_options,
             fbtee_symbols: collector.fbtee_symbols,
             fbtee_runtime_symbols: collector.fbtee_runtime_symbols,
@@ -548,7 +548,7 @@ impl<'a> FbteeTransform<'a> {
         }
         None
     }
-    fn source_locator(&self) -> &SourceLocator {
+    fn source_locator(&self) -> &SourceLocator<'_> {
         self.source_locator
             .get_or_init(|| SourceLocator::new(self.source_text))
     }
@@ -747,8 +747,13 @@ impl<'a> FbteeTransform<'a> {
                     expression,
                     &self.default_call_options,
                     &self.options.extra_options,
-                    self.source_text,
-                    self.source_locator(),
+                    |subject| {
+                        if self.collect_fbt {
+                            babel_subject_json(subject, self.source_text, self.source_locator())
+                        } else {
+                            None
+                        }
+                    },
                 ) {
                     Ok(options) => options,
                     Err(error) => return self.fail(error),
@@ -1305,8 +1310,10 @@ impl<'a> FbteeTransform<'a> {
         if let Some(subject) = attrs.expression("subject") {
             options.subject = Some(self.transformed_code(subject));
             options.subject_constraint = variation_constraint("subject", subject);
-            options.subject_json =
-                babel_subject_json(subject, self.source_text, self.source_locator());
+            if self.collect_fbt {
+                options.subject_json =
+                    babel_subject_json(subject, self.source_text, self.source_locator());
+            }
         }
         let desc = if is_common {
             let text = normalize_spaces(
@@ -1924,8 +1931,11 @@ impl<'a> FbteeTransform<'a> {
         if let Err(error) = validate_phrase(&phrase) {
             return self.fail(error);
         }
-        if self.options.collect_fbt && !phrase.options.do_not_extract {
-            self.collected_phrases.push(phrase.clone());
+        if self.collect_fbt {
+            if !phrase.options.do_not_extract {
+                self.collected_phrases.push(phrase);
+            }
+            return Some(String::new());
         }
         let mut variations = vec![];
         collect_variation_parts(&phrase.parts, &mut variations);
@@ -1967,7 +1977,7 @@ impl<'a> FbteeTransform<'a> {
     }
 }
 
-impl<'a> VisitMut<'a> for FbteeTransform<'a> {
+impl<'a> VisitMut<'a> for FbteeTransform<'a, '_> {
     fn enter_scope(&mut self, _: ScopeFlags, id: &std::cell::Cell<Option<ScopeId>>) {
         self.scopes.push(id.get());
     }
@@ -1980,6 +1990,9 @@ impl<'a> VisitMut<'a> for FbteeTransform<'a> {
         }
         let pure = matches!(expr, Expression::CallExpression(call) if call.pure);
         if let Some(code) = self.transform_expression(expr) {
+            if self.collect_fbt {
+                return;
+            }
             if let Some(capture) = self.replacement_captures.last_mut() {
                 capture.push((expr.span(), code));
             } else if let Some(mut next) = self.parse_generated(code, expr.span()) {
@@ -1996,6 +2009,9 @@ impl<'a> VisitMut<'a> for FbteeTransform<'a> {
         if let JSXChild::Element(element) = child {
             let original_start = element.span.start;
             if let Some(code) = self.transform_jsx_element(element) {
+                if self.collect_fbt {
+                    return;
+                }
                 if let Some(capture) = self.replacement_captures.last_mut() {
                     capture.push((element.span, format!("{{{code}}}")));
                     return;
@@ -2223,11 +2239,13 @@ enum ParamRuntimeKind {
     Implicit,
 }
 #[derive(Clone)]
-struct Variation {
+struct Variation<'a> {
     index: usize,
     keys: Vec<String>,
-    group: Option<String>,
+    group: Option<VariationGroup<'a>>,
 }
+
+type VariationGroup<'a> = (&'static str, &'a str);
 
 fn validate_phrase(phrase: &Phrase) -> Result<(), String> {
     if contains_nested_phrase(&phrase.parts) {
@@ -2316,16 +2334,16 @@ fn validate_nested_variation_constraints(parts: &[Part]) -> Result<(), String> {
     Ok(())
 }
 
-fn validate_enum_variations(
-    parts: &[Part],
-    used_enums: &mut BTreeMap<String, BTreeSet<String>>,
+fn validate_enum_variations<'a>(
+    parts: &'a [Part],
+    used_enums: &mut BTreeMap<VariationGroup<'a>, BTreeSet<&'a str>>,
 ) -> Result<(), String> {
     for part in parts {
         if let Part::Enum { range, .. } = part {
             let group = variation_group(part).expect("enum must have a variation group");
             let keys = range
                 .iter()
-                .map(|(key, _)| key.clone())
+                .map(|(key, _)| key.as_str())
                 .collect::<BTreeSet<_>>();
             if let Some(first_keys) = used_enums.get(&group) {
                 if let Some(key) = first_keys.iter().find(|key| !keys.contains(*key)) {
@@ -2529,18 +2547,28 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         }
     }
     fn validate_dynamic_tokens(&self) -> Result<(), String> {
+        if !self.phrase.parts.iter().any(|part| {
+            matches!(
+                part,
+                Part::Param {
+                    runtime_kind: ParamRuntimeKind::Implicit,
+                    ..
+                }
+            )
+        }) {
+            return Ok(());
+        }
         let variations = self.variations();
         self.validate_dynamic_tokens_branch(&variations, 0, &mut vec![])
     }
     fn validate_dynamic_tokens_branch(
         &self,
-        variations: &[Variation],
+        variations: &[Variation<'_>],
         depth: usize,
         selected: &mut Vec<(usize, String)>,
     ) -> Result<(), String> {
         if depth == variations.len() {
-            let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
-            return self.validate_dynamic_token_parts(&self.phrase.parts, &selected);
+            return self.validate_dynamic_token_parts(&self.phrase.parts, selected);
         }
         let variation = &variations[depth];
         for key in Self::keys(variations, depth, selected) {
@@ -2553,7 +2581,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
     fn validate_dynamic_token_parts(
         &self,
         parts: &[Part],
-        selected: &BTreeMap<usize, String>,
+        selected: &[(usize, String)],
     ) -> Result<(), String> {
         let explicit = parts
             .iter()
@@ -2614,13 +2642,13 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
             token_aliases: self.aliases(selected),
         })
     }
-    fn variations(&self) -> Vec<Variation> {
+    fn variations(&self) -> Vec<Variation<'_>> {
         let mut out = vec![];
         if self.phrase.options.subject.is_some() {
             out.push(Variation {
                 index: usize::MAX,
                 keys: vec!["*".into()],
-                group: Some("subject".into()),
+                group: Some(("subject", "")),
             });
         }
         for (index, part) in self.global_variations.iter().enumerate() {
@@ -2648,7 +2676,11 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         }
         out
     }
-    fn keys(variations: &[Variation], depth: usize, selected: &[(usize, String)]) -> Vec<String> {
+    fn keys(
+        variations: &[Variation<'_>],
+        depth: usize,
+        selected: &[(usize, String)],
+    ) -> Vec<String> {
         let v = &variations[depth];
         v.group
             .as_ref()
@@ -2663,7 +2695,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
     }
     fn branch(
         &self,
-        vars: &[Variation],
+        vars: &[Variation<'_>],
         depth: usize,
         selected: &mut Vec<(usize, String)>,
     ) -> RuntimeNode {
@@ -2685,7 +2717,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
     }
     fn hash_branch(
         &self,
-        vars: &[Variation],
+        vars: &[Variation<'_>],
         depth: usize,
         selected: &mut Vec<(usize, String)>,
     ) -> HashNode {
@@ -2706,15 +2738,9 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         )
     }
     fn pattern(&self, selected: &[(usize, String)], hash: bool) -> String {
-        let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
-        self.pattern_parts(&self.phrase.parts, &selected, hash)
+        self.pattern_parts(&self.phrase.parts, selected, hash)
     }
-    fn pattern_parts(
-        &self,
-        parts: &[Part],
-        selected: &BTreeMap<usize, String>,
-        hash: bool,
-    ) -> String {
+    fn pattern_parts(&self, parts: &[Part], selected: &[(usize, String)], hash: bool) -> String {
         let mut out = String::new();
         for part in parts {
             self.append_part_text(&mut out, part, selected, hash);
@@ -2727,7 +2753,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         &self,
         out: &mut String,
         part: &Part,
-        selected: &BTreeMap<usize, String>,
+        selected: &[(usize, String)],
         hash: bool,
     ) {
         match part {
@@ -2797,14 +2823,13 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         target: u32,
         selected: &[(usize, String)],
     ) -> String {
-        let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
-        self.description_parts_text(parts, target, &selected)
+        self.description_parts_text(parts, target, selected)
     }
     fn description_parts_text(
         &self,
         parts: &[Part],
         target: u32,
-        selected: &BTreeMap<usize, String>,
+        selected: &[(usize, String)],
     ) -> String {
         let mut out = String::new();
         self.append_description_parts(&mut out, parts, target, selected);
@@ -2817,7 +2842,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         out: &mut String,
         parts: &[Part],
         target: u32,
-        selected: &BTreeMap<usize, String>,
+        selected: &[(usize, String)],
     ) {
         for part in parts {
             if let Part::Param {
@@ -2837,19 +2862,19 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
             }
         }
     }
-    fn selected_key<'s>(
-        &self,
-        part: &Part,
-        selected: &'s BTreeMap<usize, String>,
-    ) -> Option<&'s String> {
+    fn selected_key<'s>(&self, part: &Part, selected: &'s [(usize, String)]) -> Option<&'s String> {
         let group = variation_group(part)?;
         self.global_variations
             .iter()
             .position(|candidate| variation_group(candidate).as_ref() == Some(&group))
-            .and_then(|index| selected.get(&index))
+            .and_then(|index| {
+                selected
+                    .iter()
+                    .find(|(selected_index, _)| *selected_index == index)
+                    .map(|(_, key)| key)
+            })
     }
     fn aliases(&self, selected: &[(usize, String)]) -> Option<IndexMap<String, String>> {
-        let selected = selected.iter().cloned().collect::<BTreeMap<_, _>>();
         let x = self
             .phrase
             .parts
@@ -2860,7 +2885,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
                     runtime_kind: ParamRuntimeKind::Implicit,
                     ..
                 } => {
-                    let hash_name = self.param_hash_name(p, &selected);
+                    let hash_name = self.param_hash_name(p, selected);
                     (name != &hash_name).then(|| (hash_name, name.clone()))
                 }
                 _ => None,
@@ -2869,7 +2894,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         (!x.is_empty()).then_some(x)
     }
 
-    fn param_hash_name(&self, part: &Part, selected: &BTreeMap<usize, String>) -> String {
+    fn param_hash_name(&self, part: &Part, selected: &[(usize, String)]) -> String {
         let Part::Param {
             name,
             hash_name,
@@ -2888,7 +2913,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
         }
     }
 
-    fn token_name_text(&self, parts: &[Part], selected: &BTreeMap<usize, String>) -> String {
+    fn token_name_text(&self, parts: &[Part], selected: &[(usize, String)]) -> String {
         let mut out = String::new();
         for part in parts {
             if let Part::Param {
@@ -2914,7 +2939,7 @@ impl<'a, 'v> RuntimeBuilder<'a, 'v> {
 
 fn build_collected_file_output(
     filename: &str,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
     phrases: &[Phrase],
     packager: &str,
 ) -> CollectedFileOutput {
@@ -2946,7 +2971,7 @@ fn build_collected_file_output(
 fn append_collected_phrase(
     output: &mut CollectedFileOutput,
     filename: &str,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
     phrase: &Phrase,
     global_variations: &[&Part],
     root_parts: &[Part],
@@ -2985,7 +3010,7 @@ fn append_collected_phrase(
 fn append_collected_children(
     output: &mut CollectedFileOutput,
     filename: &str,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
     phrase: &Phrase,
     global_variations: &[&Part],
     root_parts: &[Part],
@@ -3026,7 +3051,7 @@ fn append_collected_children(
 
 fn collected_phrase_json(
     filename: &str,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
     phrase: &Phrase,
     global_variations: &[&Part],
     builder: &RuntimeBuilder<'_, '_>,
@@ -3035,8 +3060,9 @@ fn collected_phrase_json(
     let mut object = serde_json::Map::new();
     let hash_tree = builder.hash_tree();
     if matches!(packager, "phrase" | "both") {
-        object.insert("hash_code".into(), fbt_hash(&hash_tree).into());
-        object.insert("hash_key".into(), fbt_hash_key(&hash_tree).into());
+        let hash = fbt_hash(&hash_tree);
+        object.insert("hash_code".into(), hash.into());
+        object.insert("hash_key".into(), base62(hash).into());
     }
     if matches!(packager, "text" | "both") {
         object.insert("hashToLeaf".into(), hash_to_leaf_json(&hash_tree));
@@ -3078,7 +3104,7 @@ fn hash_to_leaf_json(node: &HashNode) -> serde_json::Value {
     use md5::{Digest, Md5};
 
     let mut object = serde_json::Map::new();
-    for (_, leaf) in hash_leaves(node) {
+    for leaf in hash_leaves(node) {
         let mut hasher = Md5::new();
         hasher.update(leaf.text.as_bytes());
         hasher.update(leaf.desc.as_bytes());
@@ -3149,7 +3175,7 @@ fn hash_node_json(node: HashNode) -> serde_json::Value {
     }
 }
 
-fn span_location_json(source_locator: &SourceLocator, span: Span) -> serde_json::Value {
+fn span_location_json(source_locator: &SourceLocator<'_>, span: Span) -> serde_json::Value {
     serde_json::json!({
         "start": source_locator.position_json(span.start as usize),
         "end": source_locator.position_json(span.end as usize),
@@ -3159,7 +3185,7 @@ fn span_location_json(source_locator: &SourceLocator, span: Span) -> serde_json:
 fn babel_subject_json(
     expression: &Expression<'_>,
     source_text: &str,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
 ) -> Option<serde_json::Value> {
     let original_span = expression.span();
     let expression = unwrap_transparent_expression(expression);
@@ -3173,11 +3199,7 @@ fn babel_subject_json(
         && source_text.as_bytes().get(original_span.start as usize) == Some(&b'(')
     {
         if let serde_json::Value::Object(object) = &mut value {
-            let paren_start = source_locator
-                .position_json(original_span.start as usize)
-                .get("index")
-                .cloned()
-                .unwrap_or_default();
+            let paren_start = source_locator.utf16_offset(original_span.start as usize);
             object.insert(
                 "extra".into(),
                 serde_json::json!({"parenthesized": true, "parenStart": paren_start}),
@@ -3189,7 +3211,7 @@ fn babel_subject_json(
 
 fn normalize_babel_expression(
     value: &mut serde_json::Value,
-    source_locator: &SourceLocator,
+    source_locator: &SourceLocator<'_>,
     in_chain: bool,
 ) {
     let serde_json::Value::Object(object) = value else {
@@ -3378,42 +3400,59 @@ fn normalize_babel_expression(
     *value = serde_json::Value::Object(normalized);
 }
 
-struct SourceLocator {
-    line_starts: Vec<u32>,
-    utf16_offsets: Vec<u32>,
+struct SourceLocator<'a> {
+    source_text: &'a str,
+    line_starts: Vec<(u32, u32)>,
+    utf16_corrections: Vec<(u32, u32)>,
 }
 
-impl SourceLocator {
-    fn new(source_text: &str) -> Self {
-        let mut line_starts = vec![0];
-        let mut utf16_offsets = vec![0; source_text.len() + 1];
-        let mut utf16_offset = 0u32;
+impl<'a> SourceLocator<'a> {
+    fn new(source_text: &'a str) -> Self {
+        let mut line_starts = vec![(0, 0)];
+        let mut utf16_corrections = Vec::new();
+        let mut correction = 0u32;
         for (start, character) in source_text.char_indices() {
-            let end = start + character.len_utf8();
-            utf16_offsets[start..end].fill(utf16_offset);
-            utf16_offset += character.len_utf16() as u32;
-            utf16_offsets[end] = utf16_offset;
+            let end = (start + character.len_utf8()) as u32;
+            if !character.is_ascii() {
+                correction += (character.len_utf8() - character.len_utf16()) as u32;
+                utf16_corrections.push((end, correction));
+            }
             if character == '\n' {
-                line_starts.push(end as u32);
+                line_starts.push((end, end - correction));
             }
         }
         Self {
+            source_text,
             line_starts,
-            utf16_offsets,
+            utf16_corrections,
         }
     }
 
+    fn utf16_offset(&self, byte_offset: usize) -> u32 {
+        let mut byte_offset = byte_offset.min(self.source_text.len());
+        while !self.source_text.is_char_boundary(byte_offset) {
+            byte_offset -= 1;
+        }
+        let count = self
+            .utf16_corrections
+            .partition_point(|(end, _)| *end as usize <= byte_offset);
+        let correction = count
+            .checked_sub(1)
+            .map_or(0, |index| self.utf16_corrections[index].1);
+        byte_offset as u32 - correction
+    }
+
     fn position_json(&self, byte_offset: usize) -> serde_json::Value {
-        let byte_offset = byte_offset.min(self.utf16_offsets.len() - 1);
+        let byte_offset = byte_offset.min(self.source_text.len());
         let line_index = self
             .line_starts
-            .partition_point(|start| *start as usize <= byte_offset)
+            .partition_point(|(start, _)| *start as usize <= byte_offset)
             - 1;
-        let line_start = self.line_starts[line_index] as usize;
+        let index = self.utf16_offset(byte_offset);
         serde_json::json!({
             "line": line_index + 1,
-            "column": self.utf16_offsets[byte_offset] - self.utf16_offsets[line_start],
-            "index": self.utf16_offsets[byte_offset],
+            "column": index - self.line_starts[line_index].1,
+            "index": index,
         })
     }
 }
@@ -3439,7 +3478,7 @@ fn collect_variation_parts<'a>(parts: &'a [Part], output: &mut Vec<&'a Part>) {
 fn collect_variation_parts_impl<'a>(
     parts: &'a [Part],
     output: &mut Vec<&'a Part>,
-    used_enums: &mut BTreeSet<String>,
+    used_enums: &mut BTreeSet<VariationGroup<'a>>,
 ) {
     for part in parts {
         let collapsible_enum = matches!(part, Part::Enum { .. })
@@ -3584,13 +3623,13 @@ fn runtime_arg_with_context(
     runtime_arg(phrase.module, part)
 }
 
-fn variation_group(part: &Part) -> Option<String> {
+fn variation_group(part: &Part) -> Option<VariationGroup<'_>> {
     match part {
         Part::Param {
             variation_key: Some(key),
             variation: ParamVariation::Number(_),
             ..
-        } => Some(format!("number-param:{key}")),
+        } => Some(("number-param", key)),
         Part::Param {
             variation_key: Some(key),
             variation: ParamVariation::Gender(_),
@@ -3598,10 +3637,10 @@ fn variation_group(part: &Part) -> Option<String> {
         }
         | Part::Name {
             gender_key: key, ..
-        } => Some(format!("gender-param:{key}")),
-        Part::Enum { value_key, .. } => Some(format!("enum:{value_key}")),
-        Part::Plural { count_key, .. } => Some(format!("plural:{count_key}")),
-        Part::Pronoun { gender_key, .. } => Some(format!("pronoun:{gender_key}")),
+        } => Some(("gender-param", key)),
+        Part::Enum { value_key, .. } => Some(("enum", value_key)),
+        Part::Plural { count_key, .. } => Some(("plural", count_key)),
+        Part::Pronoun { gender_key, .. } => Some(("pronoun", gender_key)),
         _ => None,
     }
 }
@@ -4078,8 +4117,7 @@ fn parse_call_options(
     x: &Expression<'_>,
     defaults: &CallOptions,
     extra_options: &[String],
-    source_text: &str,
-    source_locator: &SourceLocator,
+    serialize_subject: impl FnOnce(&Expression<'_>) -> Option<serde_json::Value>,
 ) -> Result<CallOptions, String> {
     let mut allowed = FBT_OPTIONS.to_vec();
     allowed.extend(extra_options.iter().map(String::as_str));
@@ -4116,7 +4154,7 @@ fn parse_call_options(
             .and_then(|subject| variation_constraint("subject", subject))
             .or_else(|| defaults.subject_constraint.clone()),
         subject_json: subject
-            .and_then(|subject| babel_subject_json(subject, source_text, source_locator))
+            .and_then(serialize_subject)
             .or_else(|| defaults.subject_json.clone()),
     })
 }
@@ -4589,34 +4627,28 @@ fn fbt_hash_key(x: &HashNode) -> String {
 }
 fn fbt_hash(x: &HashNode) -> u32 {
     let leaves = hash_leaves(x);
-    let Some((_, first)) = leaves.first() else {
+    let Some(first) = leaves.first() else {
         return 0;
     };
-    if leaves.iter().all(|(_, leaf)| leaf.desc == first.desc) {
+    if leaves.iter().all(|leaf| leaf.desc == first.desc) {
         jenkins(&format!("{}|{}", json_text_tree(x), first.desc))
     } else {
         jenkins(&json_full_tree(x))
     }
 }
-fn hash_leaves(node: &HashNode) -> Vec<(Vec<String>, &HashLeaf)> {
-    fn walk<'a>(
-        n: &'a HashNode,
-        path: &mut Vec<String>,
-        out: &mut Vec<(Vec<String>, &'a HashLeaf)>,
-    ) {
+fn hash_leaves(node: &HashNode) -> Vec<&HashLeaf> {
+    fn walk<'a>(n: &'a HashNode, out: &mut Vec<&'a HashLeaf>) {
         match n {
-            HashNode::Leaf(x) => out.push((path.clone(), x)),
+            HashNode::Leaf(x) => out.push(x),
             HashNode::Object(x) => {
-                for (k, v) in x {
-                    path.push(k.clone());
-                    walk(v, path, out);
-                    path.pop();
+                for (_, v) in x {
+                    walk(v, out);
                 }
             }
         }
     }
     let mut out = vec![];
-    walk(node, &mut vec![], &mut out);
+    walk(node, &mut out);
     out
 }
 fn json_text_tree(node: &HashNode) -> String {
@@ -4686,6 +4718,37 @@ fn base62(mut x: u32) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn source_locations_preserve_utf16_offsets_and_line_boundaries() {
+        let locator = SourceLocator::new("aé😀\r\n中z");
+        for (byte, index) in [0, 1, 1, 2, 2, 2, 2, 4, 5, 6, 6, 6, 7, 8]
+            .into_iter()
+            .enumerate()
+        {
+            let (line, column) = if byte < 9 { (1, index) } else { (2, index - 6) };
+            assert_eq!(
+                locator.position_json(byte),
+                serde_json::json!({
+                    "line": line, "column": column, "index": index,
+                }),
+                "byte {byte}"
+            );
+        }
+        assert_eq!(locator.position_json(100), locator.position_json(13));
+        assert_eq!(
+            SourceLocator::new("").position_json(100),
+            serde_json::json!({
+                "line": 1, "column": 0, "index": 0,
+            })
+        );
+        assert_eq!(
+            SourceLocator::new("a\nb\n").position_json(4),
+            serde_json::json!({
+                "line": 3, "column": 0, "index": 4,
+            })
+        );
+    }
 
     fn transform(source: &str, options: FbteeOptions) -> Result<String, String> {
         let allocator = Allocator::default();

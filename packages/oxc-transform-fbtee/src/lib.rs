@@ -37,21 +37,20 @@ pub struct TransformOptions {
 }
 
 impl TransformOptions {
-    fn fbtee_options(&self) -> FbteeOptions {
+    fn take_fbtee_options(&mut self) -> FbteeOptions {
         FbteeOptions {
-            collect_fbt: false,
             collect_packager: self
                 .collect_packager
-                .clone()
+                .take()
                 .unwrap_or_else(|| "none".into()),
-            extra_options: self.extra_options.clone().unwrap_or_default(),
+            extra_options: self.extra_options.take().unwrap_or_default(),
             fbt_common: self
                 .fbt_common
-                .clone()
+                .take()
                 .unwrap_or_default()
                 .into_iter()
                 .collect(),
-            fbt_enum_manifest: self.fbt_enum_manifest.clone().unwrap_or_default(),
+            fbt_enum_manifest: self.fbt_enum_manifest.take().unwrap_or_default(),
         }
     }
 }
@@ -88,7 +87,7 @@ fn transform_impl(
     source_text: &str,
     options: Option<TransformOptions>,
 ) -> TransformResult {
-    let options = options.unwrap_or_default();
+    let mut options = options.unwrap_or_default();
     let source_type = get_source_type(
         filename,
         options.lang.as_deref(),
@@ -114,7 +113,7 @@ fn transform_impl(
         &allocator,
         &mut program,
         scoping,
-        options.fbtee_options(),
+        options.take_fbtee_options(),
     ));
     if diagnostics.has_errors() {
         return error_result(filename, source_text, diagnostics);
@@ -155,8 +154,9 @@ pub fn collect_sync(
     source_text: String,
     options: Option<TransformOptions>,
 ) -> CollectResult {
-    let options = options.unwrap_or_default();
-    match collect_impl(&filename, &source_text, &options) {
+    let mut options = options.unwrap_or_default();
+    let fbtee_options = options.take_fbtee_options();
+    match collect_impl(&filename, &source_text, &options, &fbtee_options) {
         Ok(output) => serialize_collected_output(output),
         Err(errors) => CollectResult {
             errors,
@@ -169,6 +169,7 @@ fn collect_impl(
     filename: &str,
     source_text: &str,
     options: &TransformOptions,
+    fbtee_options: &FbteeOptions,
 ) -> Result<CollectedFileOutput, Vec<OxcError>> {
     let source_type = get_source_type(
         filename,
@@ -196,13 +197,7 @@ fn collect_impl(
         ));
     }
     let scoping = semantic_return.semantic.into_scoping();
-    match collect_program(
-        &allocator,
-        &mut program,
-        scoping,
-        options.fbtee_options(),
-        filename,
-    ) {
+    match collect_program(&allocator, &mut program, scoping, fbtee_options, filename) {
         Ok(output) => Ok(output),
         Err(error) => Err(vec![OxcError::from_diagnostics(
             filename,
@@ -213,19 +208,26 @@ fn collect_impl(
     }
 }
 
-fn serialize_collected_output(output: CollectedFileOutput) -> CollectResult {
+fn collected_output_json(output: CollectedFileOutput) -> serde_json::Value {
     let child_parent_mappings = output
         .child_parent_mappings
         .into_iter()
         .map(|(child, parent)| (child.to_string(), parent.into()))
         .collect::<serde_json::Map<_, _>>();
+    serde_json::Value::Object(serde_json::Map::from_iter([
+        (
+            "childParentMappings".into(),
+            serde_json::Value::Object(child_parent_mappings),
+        ),
+        ("phrases".into(), serde_json::Value::Array(output.phrases)),
+    ]))
+}
+
+fn serialize_collected_output(output: CollectedFileOutput) -> CollectResult {
     CollectResult {
         output: Some(
-            serde_json::to_string(&serde_json::json!({
-                "childParentMappings": child_parent_mappings,
-                "phrases": output.phrases,
-            }))
-            .expect("collector output must serialize"),
+            serde_json::to_string(&collected_output_json(output))
+                .expect("collector output must serialize"),
         ),
         errors: vec![],
     }
@@ -236,7 +238,30 @@ pub fn collect_batch_sync(
     files: Vec<CollectInput>,
     options: Option<TransformOptions>,
 ) -> CollectResult {
-    let options = options.unwrap_or_default();
+    match collect_batch_impl(files, options) {
+        Ok(output) => serialize_collected_output(output),
+        Err(errors) => CollectResult {
+            errors,
+            ..CollectResult::default()
+        },
+    }
+}
+
+fn collect_batch_impl(
+    files: Vec<CollectInput>,
+    options: Option<TransformOptions>,
+) -> Result<CollectedFileOutput, Vec<OxcError>> {
+    if files.is_empty() {
+        return Ok(CollectedFileOutput {
+            child_parent_mappings: vec![],
+            phrases: vec![],
+        });
+    }
+    let mut options = options.unwrap_or_default();
+    let fbtee_options = options.take_fbtee_options();
+    if let [file] = files.as_slice() {
+        return collect_impl(&file.filename, &file.source_text, &options, &fbtee_options);
+    }
     let worker_count = std::thread::available_parallelism()
         .map(usize::from)
         .unwrap_or(1)
@@ -249,7 +274,14 @@ pub fn collect_batch_sync(
                 scope.spawn(|| {
                     chunk
                         .iter()
-                        .map(|file| collect_impl(&file.filename, &file.source_text, &options))
+                        .map(|file| {
+                            collect_impl(
+                                &file.filename,
+                                &file.source_text,
+                                &options,
+                                &fbtee_options,
+                            )
+                        })
                         .collect::<Vec<_>>()
                 })
             })
@@ -267,15 +299,7 @@ pub fn collect_batch_sync(
         phrases: vec![],
     };
     for result in collected {
-        let output = match result {
-            Ok(output) => output,
-            Err(errors) => {
-                return CollectResult {
-                    errors,
-                    ..CollectResult::default()
-                };
-            }
-        };
+        let output = result?;
         let offset = merged.phrases.len();
         merged.child_parent_mappings.extend(
             output
@@ -285,7 +309,7 @@ pub fn collect_batch_sync(
         );
         merged.phrases.extend(output.phrases);
     }
-    serialize_collected_output(merged)
+    Ok(merged)
 }
 
 #[napi]

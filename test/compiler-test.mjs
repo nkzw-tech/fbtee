@@ -917,6 +917,28 @@ describe('compiler collection', () => {
 });
 
 describe('native CLI', () => {
+  test('collect preserves floating-point subject metadata', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'fbtee-subject-'));
+    try {
+      writeFileSync(
+        join(directory, 'source.tsx'),
+        `fbt('Text', 'Description', {subject: 7.689563885870707e-29});`,
+      );
+      const result = spawnSync(
+        process.execPath,
+        [cli, 'collect', '--src', 'source.tsx', '--no-include-default-strings'],
+        { cwd: directory, encoding: 'utf8' },
+      );
+      assert.equal(result.status, 0, result.stderr);
+      const { phrases } = JSON.parse(readFileSync(join(directory, 'source_strings.json'), 'utf8'));
+      assert.equal(phrases[0].subject.value, 7.689563885870705e-29);
+      assert.equal(phrases[0].subject.extra.rawValue, 7.689563885870705e-29);
+      assert.equal(phrases[0].subject.extra.raw, '7.689563885870707e-29');
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
   test.each(['collect', 'translate', 'prepare-translations', 'migrate-locales'])(
     '%s --version exits without running the command',
     (command) => {

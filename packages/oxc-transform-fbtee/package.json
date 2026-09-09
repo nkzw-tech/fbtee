@@ -38,6 +38,8 @@
   "scripts": {
     "artifacts": "napi artifacts",
     "assemble:artifacts": "napi artifacts --output-dir artifacts && node scripts/assemble-cli-artifacts.mjs",
+    "bench": "node scripts/benchmark.mjs",
+    "bench:cli": "node scripts/benchmark-cli.mjs",
     "build": "napi build --esm --platform --release && pnpm run build:cli && pnpm run format-generated",
     "build:cli": "cargo build --release --bin fbtee && node scripts/copy-cli.mjs",
     "build:debug": "napi build --esm --platform && pnpm run format-generated",
