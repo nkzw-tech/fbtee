@@ -117,7 +117,8 @@ jobs:
           elif [[ "${{ matrix.settings.target }}" == *-linux-gnu ]]; then
             # The binding is linked with napi-rs's glibc 2.17 toolchain. Load and
             # execute it in Debian 11 (glibc 2.31), not on the Ubuntu 24.04 host.
-            docker run --rm -v "$PWD:/workspace" -w /workspace node:22-bullseye node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+            # npm 10 can omit the platform package's fbtee-native bin link.
+            docker run --rm -v "$PWD:/workspace" -w /workspace node:22-bullseye sh -c 'npm install --global npm@11 && node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke'
           else
             node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
           fi
