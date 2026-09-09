@@ -47,7 +47,7 @@ Options:
       --jenkins                      Emit Jenkins-hash dictionaries [default: true]
       --stdin                        Read a monolithic JSON payload from stdin
       --source-strings               Source strings file [default: source_strings.json]
-      --translations                 Translation JSON files [default: translations/*.json]
+      --translations                 Translation JSON files or globs [default: translations/*.json]
   -o, --output-dir                   Locale output directory [default: src/translations/]
       --output-file                  Combined translation output file
       --strict                       Fail on missing translations
@@ -817,17 +817,11 @@ fn translate_command(args: Vec<String>) -> Result<(), String> {
             .map_err(|error| format!("Could not read '{}': {error}", source_path.display()))?,
     )
     .map_err(|error| error.to_string())?;
-    let files = {
-        let values = args.values("translations");
-        if values.is_empty() {
-            list_json_files(&root.join("translations"))?
-        } else {
-            values
-                .into_iter()
-                .map(|value| resolve_from(&root, &value))
-                .collect()
-        }
-    };
+    let mut patterns = args.values("translations");
+    if patterns.is_empty() {
+        patterns.push("translations/*.json".into());
+    }
+    let files = discover_translation_files(&root, &patterns)?;
     throw_if_locale_file_conflicts(&files)?;
     let groups = files
         .iter()
@@ -853,6 +847,48 @@ fn translate_command(args: Vec<String>) -> Result<(), String> {
         args.value("output-dir").unwrap_or("src/translations/"),
     );
     write_translation_outputs(&output_directory, output, style)
+}
+
+fn discover_translation_files(root: &Path, patterns: &[String]) -> Result<Vec<PathBuf>, String> {
+    let mut files = Vec::new();
+    let mut seen = HashSet::new();
+    for pattern in patterns {
+        let path = resolve_from(root, pattern);
+        let matches = if path.is_file() || !pattern.contains(['*', '?', '[']) {
+            // Preserve literal paths, including filenames with glob characters,
+            // and report missing explicit files through the normal read error.
+            vec![path]
+        } else {
+            let absolute_pattern = if Path::new(pattern).is_absolute() {
+                pattern.clone()
+            } else {
+                // The working directory is a literal path, even when it has
+                // glob metacharacters in its name.
+                format!(
+                    "{}/{pattern}",
+                    glob::Pattern::escape(&root.to_string_lossy())
+                )
+            };
+            glob::glob(&absolute_pattern)
+                .map_err(|error| format!("Invalid translation glob '{pattern}': {error}"))?
+                .map(|entry| {
+                    entry.map_err(|error| {
+                        format!("Could not expand translation glob '{pattern}': {error}")
+                    })
+                })
+                .collect::<Result<Vec<_>, _>>()?
+                .into_iter()
+                .filter(|path| path.is_file())
+                .collect()
+        };
+        for path in matches {
+            let identity = fs::canonicalize(&path).unwrap_or_else(|_| path.clone());
+            if seen.insert(identity) {
+                files.push(path);
+            }
+        }
+    }
+    Ok(files)
 }
 
 fn process_translation_input(

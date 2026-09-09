@@ -4,6 +4,7 @@ import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { testCliWorkflow } from '../test/cli-workflow.mjs';
 
 const spawnInstalledBin = (command, args) => {
   const isWindows = process.platform === 'win32';
@@ -24,6 +25,10 @@ const smokeInstalledPackages = async (consumer) => {
   const cli = spawnInstalledBin(command, ['--help']);
   assert.equal(cli.status, 0, cli.error?.message || cli.stderr || cli.stdout);
   assert.match(cli.stdout, /Usage: fbtee/);
+
+  testCliWorkflow(process.execPath, [
+    join(consumer, 'node_modules', '@nkzw', 'fbtee-cli', 'bin.mjs'),
+  ]);
 
   const nativeCommand = join(
     consumer,
