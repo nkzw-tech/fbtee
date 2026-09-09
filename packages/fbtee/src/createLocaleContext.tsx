@@ -63,9 +63,15 @@ export const useLocaleContext = (() =>
       })();
 
 export default function createLocaleContext(props: LocaleContextProps) {
-  const { gender: initialGender, getLocale, setGender, setLocale } = setupLocaleContext(props);
+  const {
+    gender: initialGender,
+    getLocale,
+    preloadLocale,
+    setGender,
+    setLocale,
+  } = setupLocaleContext(props);
 
-  return function LocaleContext({ children }: { children: ReactNode }) {
+  function LocaleContext({ children }: { children: ReactNode }) {
     const [locale, _setLocale, localeChangeIsPending] = useActionState(
       async (previousLocale: string, newLocale: string) => {
         if (newLocale !== previousLocale) {
@@ -101,5 +107,9 @@ export default function createLocaleContext(props: LocaleContextProps) {
         <Fragment key={`${locale}-${gender}`}>{children}</Fragment>
       </Context>
     );
-  };
+  }
+
+  return Object.assign(LocaleContext, {
+    preload: () => preloadLocale(),
+  });
 }

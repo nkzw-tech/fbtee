@@ -50,23 +50,13 @@ const locale = storedLocale
 if (locale && locale !== storedLocale) {
   localStorage.setItem('fbtee:locale', locale);
 }
-const translations = locale
-  ? {
-      [locale]: await loadLocale(locale),
-    }
-  : {};
-
-// Preload all locales so that switching is fast. After all, this is a website about localization.
-for (const [locale] of AvailableLanguages) {
-  loadLocale(locale);
-}
-
 const LocaleContext = createLocaleContext({
   availableLanguages: AvailableLanguages,
   clientLocales: [locale, navigator.language, ...navigator.languages],
   loadLocale,
-  translations,
 });
+
+await LocaleContext.preload();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

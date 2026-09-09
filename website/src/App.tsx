@@ -524,6 +524,7 @@ export default withFbtee({
 
               <Code
                 code={`import { createLocaleContext } from 'fbtee';
+import { createRoot } from 'react-dom/client';
 
 // Define available languages
 const availableLanguages = new Map([
@@ -549,7 +550,9 @@ const LocaleContext = createLocaleContext({
   loadLocale,
 });
 
-export const Root = () => (
+await LocaleContext.preload();
+
+createRoot(document.getElementById('root')!).render(
   <LocaleContext>
     <App />
   </LocaleContext>
@@ -1012,11 +1015,17 @@ src/translations/`}
 
               <Code
                 code={`import { useLocaleContext } from 'fbtee';
+import { useTransition } from 'react';
 
 const LanguageButton = () => {
+  const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
 
-  return <button onClick={() => setLocale('de-DE')}>{locale}</button>;
+  return (
+    <button onClick={() => startTransition(() => setLocale('de-DE'))}>
+      {locale}
+    </button>
+  );
 };`}
               />
               <Separator />

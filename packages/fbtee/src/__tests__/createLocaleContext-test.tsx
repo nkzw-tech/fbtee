@@ -3,7 +3,8 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { useTransition } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
 import createLocaleContext, { useLocaleContext } from '../createLocaleContext.tsx';
-import setupLocaleContext, { TranslationPromise } from '../setupLocaleContext.tsx';
+import fbtInternal from '../fbt.tsx';
+import setupLocaleContext, { LocaleLoaderFn, TranslationPromise } from '../setupLocaleContext.tsx';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],
@@ -42,6 +43,64 @@ const InvalidLocaleButton = () => {
     </button>
   );
 };
+
+test.each([false, true])(
+  'rendering without preload keeps the existing behavior (supplied translations: %s)',
+  async (supplied) => {
+    const loadLocale = jest.fn<LocaleLoaderFn>(async () => ({ greeting: 'Hallo' }));
+    const LocaleContext = createLocaleContext({
+      availableLanguages,
+      clientLocales: ['de-AT'],
+      hooks,
+      loadLocale,
+      translations: supplied ? { de_AT: { greeting: 'Hallo' } } : undefined,
+    });
+
+    const Greeting = () => {
+      const { locale } = useLocaleContext();
+      return <p lang={locale}>{String(fbtInternal._('Hello', null, { hk: 'greeting' }))}</p>;
+    };
+
+    await act(async () => {
+      render(
+        <LocaleContext>
+          <Greeting />
+        </LocaleContext>,
+      );
+    });
+
+    expect(screen.getByText(supplied ? 'Hallo' : 'Hello').lang).toBe('de_AT');
+    expect(loadLocale).not.toHaveBeenCalled();
+  },
+);
+
+test('preloading the detected locale translates the first render', async () => {
+  const loadLocale = jest.fn<LocaleLoaderFn>(async () => ({ greeting: 'Hallo' }));
+  const LocaleContext = createLocaleContext({
+    availableLanguages,
+    clientLocales: ['de-AT'],
+    hooks,
+    loadLocale,
+  });
+
+  expect(loadLocale).not.toHaveBeenCalled();
+  await LocaleContext.preload();
+  await LocaleContext.preload();
+  expect(loadLocale).toHaveBeenCalledTimes(1);
+  expect(loadLocale).toHaveBeenCalledWith('de_AT');
+
+  const Greeting = () => {
+    const { locale } = useLocaleContext();
+    return <p lang={locale}>{String(fbtInternal._('Hello', null, { hk: 'greeting' }))}</p>;
+  };
+
+  render(
+    <LocaleContext>
+      <Greeting />
+    </LocaleContext>,
+  );
+  expect(screen.getByText('Hallo').lang).toBe('de_AT');
+});
 
 test('locale context allows setting up a full fbtee context', async () => {
   const loadLocale = jest.fn(async (locale: string) => ({}));

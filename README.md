@@ -253,10 +253,11 @@ Pass common strings to the compiler as `fbtCommon`:
 
 ## Runtime Setup
 
-Most React apps should use `createLocaleContext`:
+Most React apps should use `createLocaleContext`. In a browser entry point with asynchronously loaded translations, await `preload()` before the first render:
 
 ```tsx
 import { createLocaleContext } from 'fbtee';
+import { createRoot } from 'react-dom/client';
 
 const availableLanguages = new Map([
   ['en-US', 'English'],
@@ -281,25 +282,47 @@ const LocaleContext = createLocaleContext({
   loadLocale,
 });
 
-export const Root = () => (
+await LocaleContext.preload();
+
+createRoot(document.getElementById('root')!).render(
   <LocaleContext>
     <App />
-  </LocaleContext>
+  </LocaleContext>,
 );
 ```
+
+Creating the context remains synchronous and does not start loading translations. `preload()` loads the selected locale, including a browser-detected locale, without changing it. If you pass its translations through the `translations` option, you can render immediately and omit `preload()`. It also skips loading for the fallback locale, which uses the source strings.
+
+Repeated calls share in-flight loads with `setLocale()`. Loading errors reject the promise so your startup code can handle them; calling `preload()` again retries a failed load. Call it during application startup, before rendering translated content, rather than on every component render. Subsequent language changes load their translations through `setLocale()`.
 
 Use `useLocaleContext` to read or change the locale:
 
 ```tsx
 import { useLocaleContext } from 'fbtee';
+import { useTransition } from 'react';
 
 const LanguageButton = () => {
+  const [, startTransition] = useTransition();
   const { locale, setLocale } = useLocaleContext();
-  return <button onClick={() => setLocale('de-DE')}>{locale}</button>;
+  return <button onClick={() => startTransition(() => setLocale('de-DE'))}>{locale}</button>;
 };
 ```
 
-If you need full control, use `setupLocaleContext` or `setupFbtee` directly.
+If you need full control, use `setupLocaleContext` or `setupFbtee` directly. With `setupLocaleContext`, await `preloadLocale()` before evaluating translated strings:
+
+```tsx
+import { setupLocaleContext } from 'fbtee';
+
+const context = setupLocaleContext({
+  availableLanguages,
+  clientLocales: [navigator.language, ...navigator.languages],
+  loadLocale,
+});
+
+await context.preloadLocale();
+```
+
+You can also call `context.preloadLocale('ja-JP')` to load another locale without selecting it.
 
 ### Next.js App Router
 

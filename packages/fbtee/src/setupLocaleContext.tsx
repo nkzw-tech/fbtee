@@ -44,6 +44,7 @@ export default function setupLocaleContext({
 }: LocaleContextProps) {
   const availableLocales = new Map<string, string>();
   const resolvedLocales = new Map<string, string | null>();
+  const pendingLocales = new Map<string, Promise<void>>();
   let currentLocale: string | null;
   let gender = resolveGender(initialGender);
 
@@ -98,19 +99,39 @@ export default function setupLocaleContext({
     return resolvedFallbackLocale;
   };
 
-  const maybeLoadLocale = async (locale: string, loadLocale: LocaleLoaderFn) => {
-    const hasTranslations =
-      !!translations[locale] ||
-      getLocaleAliases(locale).some((localeAlias) => translations[localeAlias]);
-    if (availableLocales.has(locale) && !hasTranslations && locale !== resolvedFallbackLocale) {
-      translations[locale] = await loadLocale(locale);
+  const preloadLocale = async (locale: string = getLocale()): Promise<void> => {
+    const localeName = resolveLocale(locale);
+    if (!localeName || localeName === resolvedFallbackLocale) {
+      return;
     }
+
+    const hasTranslations =
+      !!translations[localeName] ||
+      getLocaleAliases(localeName).some((localeAlias) => translations[localeAlias]);
+    if (hasTranslations) {
+      return;
+    }
+
+    let pending = pendingLocales.get(localeName);
+    if (!pending) {
+      pending = new Promise<Awaited<TranslationPromise>>((resolve) => {
+        resolve(loadLocale(localeName));
+      })
+        .then((loadedTranslations) => {
+          translations[localeName] = loadedTranslations;
+        })
+        .finally(() => {
+          pendingLocales.delete(localeName);
+        });
+      pendingLocales.set(localeName, pending);
+    }
+    await pending;
   };
 
   const setLocale = async (locale: string) => {
     const localeName = resolveLocale(locale);
     if (localeName) {
-      await maybeLoadLocale(localeName, loadLocale);
+      await preloadLocale(localeName);
       if (localeName !== currentLocale) {
         currentLocale = localeName;
       }
@@ -133,5 +154,5 @@ export default function setupLocaleContext({
     translations,
   });
 
-  return { gender, getLocale, setGender, setLocale };
+  return { gender, getLocale, preloadLocale, setGender, setLocale };
 }
