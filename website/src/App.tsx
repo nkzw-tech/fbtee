@@ -204,8 +204,8 @@ export default function App() {
               <CardContent>
                 <p className="text-sm">
                   <fbt desc="Inline translations description">
-                    Write translatable text inline. No translation keys or t() wrappers; the
-                    compiler extracts strings for translation providers.
+                    Write translatable text inline. No translation keys or <code>t()</code>{' '}
+                    wrappers; the compiler extracts strings for translation providers.
                   </fbt>
                 </p>
               </CardContent>
@@ -518,7 +518,7 @@ export default withFbtee({
 
               <p className="mb-4">
                 <fbt desc="LocaleContext setup description">
-                  Most React apps should use createLocaleContext:
+                  Most React apps should use <code>createLocaleContext</code>:
                 </fbt>
               </p>
 
@@ -558,6 +558,36 @@ createRoot(document.getElementById('root')!).render(
   </LocaleContext>
 );`}
               />
+
+              <h4 className="mb-4 font-semibold">
+                <fbt desc="Headline">Server Rendering</fbt>
+              </h4>
+              <p className="mb-4">
+                <fbt desc="Server request isolation description">
+                  Use <code>runWithFbtee</code> from <code>fbtee/server</code> to give each server
+                  request its own locale, translations, and hooks, including asynchronous calls.
+                </fbt>
+              </p>
+              <Code
+                code={`import { runWithFbtee } from 'fbtee/server';
+import { renderToString } from 'react-dom/server';
+import App from './App.tsx';
+import german from './translations/de-DE.json' with { type: 'json' };
+
+export function renderPage() {
+  return runWithFbtee(
+    { locale: 'de-DE', translations: german },
+    () => renderToString(<App />),
+  );
+}`}
+              />
+              <p className="mb-4">
+                <fbt desc="Server request scope rendering boundary">
+                  Load translations before rendering and initialize the browser with the same locale
+                  for hydration. Wrapping a component&apos;s JSX return does not scope its
+                  descendants.
+                </fbt>
+              </p>
               <Separator />
             </div>
 
@@ -573,11 +603,9 @@ createRoot(document.getElementById('root')!).render(
 
               <p className="mb-4">
                 <fbt desc="Usage description">
-                  Every user-facing string should be wrapped in{' '}
-                  <code className="bg-muted rounded px-1">&lt;fbt&gt;</code>,{' '}
-                  <code className="bg-muted rounded px-1">fbt()</code>, or{' '}
-                  <code className="bg-muted rounded px-1">fbs()</code>. Descriptions are required
-                  because they are the translator&apos;s context.
+                  Every user-facing string should be wrapped in <code>&lt;fbt&gt;</code>,{' '}
+                  <code>fbt()</code>, or <code>fbs()</code>. Descriptions are required because they
+                  are the translator&apos;s context.
                 </fbt>
               </p>
 
@@ -612,7 +640,7 @@ createRoot(document.getElementById('root')!).render(
                 <p className="text-sm text-sky-800 dark:text-sky-50">
                   <fbt desc="Usage note">
                     <code>&lt;fbt&gt;</code> is auto-imported by the fbtee compiler integration. Use
-                    fbt() outside JSX.
+                    <code>fbt()</code> outside JSX.
                   </fbt>
                 </p>
               </div>
@@ -632,8 +660,8 @@ createRoot(document.getElementById('root')!).render(
 
               <p className="mb-4">
                 <fbt desc="Dynamic content description">
-                  Use <code className="bg-muted rounded px-1">&lt;fbt:param&gt;</code> for dynamic
-                  values. Token names should describe the value, not its current English position.
+                  Use <code>&lt;fbt:param&gt;</code> for dynamic values. Token names should describe
+                  the value, not its current English position.
                 </fbt>
               </p>
 
@@ -659,12 +687,12 @@ createRoot(document.getElementById('root')!).render(
                   />
                 </TabsContent>
                 <TabsContent value="components">
-                  <div className="mb-2">
+                  <p className="mb-2">
                     <fbt desc="Components explanation">
                       React elements inside <code>&lt;fbt&gt;</code> are automatically turned into
                       implicit params:
                     </fbt>
-                  </div>
+                  </p>
                   <Code
                     code={`const WelcomeMessage = ({ user }) => (
   <div>
@@ -680,8 +708,8 @@ createRoot(document.getElementById('root')!).render(
               <div className="squircle mt-4 border border-sky-200 bg-sky-50 p-4 dark:bg-sky-900">
                 <p className="text-sm text-sky-800 dark:text-sky-50">
                   <fbt desc="Same param note">
-                    Use fbt.sameParam() or &lt;fbt:same-param&gt; when the same token appears more
-                    than once.
+                    Use <code>fbt.sameParam()</code> or <code>&lt;fbt:same-param&gt;</code> when the
+                    same token appears more than once.
                   </fbt>
                 </p>
               </div>
@@ -700,8 +728,7 @@ createRoot(document.getElementById('root')!).render(
 
               <p className="mb-4">
                 <fbt desc="Lists description">
-                  <code className="bg-muted rounded px-1">&lt;fbt:list&gt;</code> builds
-                  locale-aware lists:
+                  <code>&lt;fbt:list&gt;</code> builds locale-aware lists:
                 </fbt>
               </p>
 
@@ -714,7 +741,7 @@ createRoot(document.getElementById('root')!).render(
 
               <p className="mb-4">
                 <fbt desc="List function description">
-                  The standalone list() helper is available for non-React code:
+                  The standalone <code>list()</code> helper is available for non-React code:
                 </fbt>
               </p>
 
@@ -739,8 +766,8 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 
               <p className="mb-4">
                 <fbt desc="Pluralization description">
-                  Use <code className="bg-muted rounded px-1">&lt;fbt:plural&gt;</code>
-                  when a count controls grammar. fbtee handles locale-specific plural rules.
+                  Use <code>&lt;fbt:plural&gt;</code> when a count controls grammar. fbtee handles
+                  locale-specific plural rules.
                 </fbt>
               </p>
 
@@ -792,8 +819,8 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
               />
               <p className="mb-4">
                 <fbt desc="Enum module note">
-                  For shared enum modules, use the $FbtEnum suffix so the collector can resolve
-                  them.
+                  For shared enum modules, use the <code>$FbtEnum</code> suffix so the collector can
+                  resolve them.
                 </fbt>
               </p>
               <Separator />
@@ -811,8 +838,8 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 
               <p className="mb-4">
                 <fbt desc="Pronouns description">
-                  Use <code className="bg-muted rounded px-1">&lt;fbt:pronoun&gt;</code>
-                  when a phrase depends on a person&apos;s gender:
+                  Use <code>&lt;fbt:pronoun&gt;</code> when a phrase depends on a person&apos;s
+                  gender:
                 </fbt>
               </p>
 
@@ -869,8 +896,7 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
 
               <p className="mb-4">
                 <fbt desc="Plain text usage description">
-                  Use <code className="bg-muted rounded px-1">fbs()</code> when you need a plain
-                  string, such as in HTML attributes:
+                  Use <code>fbs()</code> when you need a plain string, such as in HTML attributes:
                 </fbt>
               </p>
 
@@ -935,8 +961,9 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   />
                   <p className="mt-2">
                     <fbt desc="Prepare translations explanation">
-                      prepare-translations keeps existing translations, adds missing entries, and
-                      marks new work with <code>&quot;status&quot;: &quot;new&quot;</code>.
+                      <code>prepare-translations</code> keeps existing translations, adds missing
+                      entries, and marks new work with{' '}
+                      <code>&quot;status&quot;: &quot;new&quot;</code>.
                     </fbt>
                   </p>
                 </div>
@@ -1071,11 +1098,12 @@ export default [fbtee.configs.recommended];`}
                   />
                 </TabsContent>
                 <TabsContent value="strict">
-                  <div className="mb-2">
+                  <p className="mb-2">
                     <fbt desc="Strict configuration description">
-                      Use the strict config if you want every user-facing string to be wrapped.
+                      Use the <code>strict</code> config if you want every user-facing string to be
+                      wrapped.
                     </fbt>
-                  </div>
+                  </p>
                   <Code
                     code={`import fbtee from '@nkzw/eslint-plugin-fbtee';
 
@@ -1137,8 +1165,8 @@ export default [
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Easier setup description">
-                      Replace legacy fbt packages with fbtee and the matching Vite, Next.js, or
-                      low-level Oxc compiler package.
+                      Replace legacy <code>fbt</code> packages with <code>fbtee</code> and the
+                      matching Vite, Next.js, or low-level Oxc compiler package.
                     </fbt>
                   </p>
                 </div>
@@ -1186,8 +1214,8 @@ export default [
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Enhanced features description">
-                      Use fbtee collect, fbtee prepare-translations, and fbtee translate for the
-                      full translation workflow.
+                      Use <code>fbtee collect</code>, <code>fbtee prepare-translations</code>, and{' '}
+                      <code>fbtee translate</code> for the full translation workflow.
                     </fbt>
                   </p>
                 </div>
@@ -1202,8 +1230,8 @@ export default [
                   </h4>
                   <p className="text-sm">
                     <fbt desc="Modernized codebase description">
-                      Replace legacy setup calls with setupFbtee, setupLocaleContext, or
-                      createLocaleContext.
+                      Replace legacy setup calls with <code>setupFbtee</code>,{' '}
+                      <code>setupLocaleContext</code>, or <code>createLocaleContext</code>.
                     </fbt>
                   </p>
                 </div>

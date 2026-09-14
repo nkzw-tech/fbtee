@@ -13,7 +13,7 @@
     "dev:website": "pnpm --dir website dev",
     "format": "oxfmt --write .",
     "jest": "pnpm jest:oxc",
-    "jest:oxc": "pnpm --filter @nkzw/oxc-transform-fbtee test && pnpm --filter @nkzw/vite-plugin-fbtee test && pnpm --filter @nkzw/next-plugin-fbtee test && NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects compiler fbtee example @nkzw/eslint-plugin-fbtee --runInBand --no-cache",
+    "jest:oxc": "pnpm --filter @nkzw/oxc-transform-fbtee test && pnpm --filter fbtee test && pnpm --filter @nkzw/vite-plugin-fbtee test && pnpm --filter @nkzw/next-plugin-fbtee test && NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" node_modules/.bin/jest --selectProjects compiler fbtee example @nkzw/eslint-plugin-fbtee --runInBand --no-cache",
     "link-bins": "pnpm --dir packages/fbtee rebuild && pnpm --dir example rebuild && pnpm --dir website rebuild",
     "lint": "pnpm --dir packages/eslint-plugin-fbtee build && oxlint .",
     "lint:format": "oxfmt --check .",

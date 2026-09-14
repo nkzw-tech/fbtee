@@ -1,5 +1,7 @@
+import freezeTranslationsInDEV from './freezeTranslationsInDEV.tsx';
 import Hooks, { FbtRuntimeCallInput, FbtRuntimeInput, FbtTranslatedInput } from './Hooks.tsx';
 import { getLocaleAliases } from './localeIdentifier.tsx';
+import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 
 export type TranslationDictionary = {
   [locale: string]: {
@@ -7,18 +9,43 @@ export type TranslationDictionary = {
   };
 };
 
-let currentTranslations: TranslationDictionary = {};
-
 const defaultLocale = 'en-US';
+
+export function mergeTranslations(state: RuntimeState, newTranslations: TranslationDictionary) {
+  if (state.scoped) {
+    if (process.env.NODE_ENV !== 'production') {
+      freezeTranslationsInDEV(newTranslations);
+    }
+    const translations = { ...state.translations };
+    for (const locale of Object.keys(newTranslations)) {
+      translations[locale] = translations[locale]
+        ? { ...translations[locale], ...newTranslations[locale] }
+        : newTranslations[locale];
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      freezeTranslationsInDEV(translations);
+    }
+    state.translations = translations;
+    state.resultCaches.clear();
+  } else {
+    for (const locale of Object.keys(newTranslations)) {
+      state.translations[locale] = Object.assign(
+        state.translations[locale] ?? {},
+        newTranslations[locale],
+      );
+    }
+  }
+}
 
 export default {
   getRegisteredTranslations(): TranslationDictionary {
-    return currentTranslations;
+    return getRuntimeState().translations;
   },
 
   getTranslatedInput({ args, options }: FbtRuntimeCallInput): FbtTranslatedInput | null {
     const hashKey = options?.hk;
     const { locale } = Hooks.getViewerContext();
+    const currentTranslations = getRuntimeState().translations;
     const table = getLocaleAliases(locale)
       .map((localeAlias) => currentTranslations[localeAlias])
       .find(Boolean);
@@ -38,15 +65,17 @@ export default {
   },
 
   mergeTranslations(newTranslations: TranslationDictionary) {
-    Object.keys(newTranslations).forEach((locale) => {
-      currentTranslations[locale] = Object.assign(
-        currentTranslations[locale] ?? {},
-        newTranslations[locale],
-      );
-    });
+    mergeTranslations(getRuntimeState(), newTranslations);
   },
 
   registerTranslations(translations: TranslationDictionary) {
-    currentTranslations = translations;
+    const state = getRuntimeState();
+    if (state.scoped && process.env.NODE_ENV !== 'production') {
+      freezeTranslationsInDEV(translations);
+    }
+    state.translations = translations;
+    if (state.scoped) {
+      state.resultCaches.clear();
+    }
   },
 };

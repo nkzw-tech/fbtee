@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
 import fbtee, { fbtee as namedFbtee } from '../index.js';
 
@@ -49,3 +50,36 @@ const bundle = await build({
 });
 assert.match(bundle.output[0].code, /\._\("Hello"/);
 assert.match(bundle.output[0].code, /hk:/);
+
+const browserEntry = fileURLToPath(new URL('../../fbtee/test/browser-entry.tsx', import.meta.url));
+const browserBundle = await build({
+  build: {
+    minify: false,
+    rollupOptions: { input: browserEntry },
+    write: false,
+  },
+  logLevel: 'silent',
+  plugins: [
+    {
+      load(id) {
+        if (id === browserEntry) {
+          return `
+            import { fbs, setupFbtee } from 'fbtee/server';
+            setupFbtee({ translations: {} });
+            document.title = fbs('Browser server entry', 'Browser server entry');
+          `;
+        }
+      },
+      name: 'browser-entry',
+      resolveId(id) {
+        if (id === browserEntry) {
+          return id;
+        }
+      },
+    },
+    fbtee(),
+  ],
+});
+const browserCode = browserBundle.output.map((chunk) => chunk.code || '').join('\n');
+assert.match(browserCode, /Browser server entry/);
+assert.doesNotMatch(browserCode, /node:|AsyncLocalStorage/);

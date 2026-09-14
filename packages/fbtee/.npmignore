@@ -3,3 +3,4 @@ babel-build.config.js
 lib-tmp
 scripts
 src
+test

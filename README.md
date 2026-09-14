@@ -324,9 +324,62 @@ await context.preloadLocale();
 
 You can also call `context.preloadLocale('ja-JP')` to load another locale without selecting it.
 
+### Server Rendering
+
+Use `runWithFbtee` from `fbtee/server` when concurrent server requests need different locales. Existing `fbt`, `fbs`, and formatting calls automatically use the active request's state, including compiler-generated calls and calls outside React. Browser apps and server code outside a request scope keep the existing singleton behavior.
+
+Start the render inside the scope so asynchronous rendering, including Suspense retries, inherits it:
+
+```tsx
+import { createServer } from 'node:http';
+import { runWithFbtee } from 'fbtee/server';
+import { renderToPipeableStream } from 'react-dom/server';
+import App from './App.tsx';
+import german from './translations/de-DE.json' with { type: 'json' };
+
+const translations = { 'en-US': {}, ...german };
+
+createServer((request, response) => {
+  const locale = request.url?.startsWith('/de') ? 'de-DE' : 'en-US';
+
+  runWithFbtee({ locale, translations }, () => {
+    const stream = renderToPipeableStream(<App />, {
+      onShellReady() {
+        response.setHeader('Content-Type', 'text/html; charset=utf-8');
+        stream.pipe(response);
+      },
+      onShellError() {
+        response.statusCode = 500;
+        response.end('Unable to render page');
+      },
+      onError(error) {
+        console.error(error);
+      },
+    });
+    response.on('close', () => stream.abort());
+  });
+}).listen(3000);
+```
+
+`locale` and `translations` are required. `gender` defaults to `'unknown'`, and `hooks` accepts the same hooks as `setupFbtee`. Each scope starts with its own hooks, translations, and result caches; nested scopes do not inherit their parent's configuration. The callback's return value or promise is returned unchanged, and leaving the callback restores the caller's scope, including on errors.
+
+Promises, timers, and other asynchronous work created inside the scope retain it. Callbacks invoked by an external scheduler need to be bound inside the scope with Node's `AsyncLocalStorage.bind()`. A scope does not follow a React element: `runWithFbtee(options, () => <App />)` only creates an element and does not scope its later rendering. Strings evaluated at module initialization also keep the locale they were evaluated with.
+
+For asynchronous translation loading, load the catalog before starting the render. You can also create a `setupLocaleContext` inside the request callback and await its `preloadLocale()` there. Create that context per request. Calls to `setupFbtee` and `FbtTranslations` inside a scope affect only that scope.
+
+Scoped catalogs are shared by reference and must be treated as read-only, including the objects returned by `getRegisteredTranslations()`. In development and tests (`NODE_ENV !== 'production'`), scoped registration, merging, and loading automatically freeze translation data in place to catch accidental mutations. That check runs once per dictionary and also rejects accessors. There is no preparation API or extra startup step. In production, fbtee does not freeze, traverse, or copy catalogs when registering them.
+
+Use `registerTranslations()` to replace the catalog or `mergeTranslations()` to override entries. A merge creates a new outer dictionary and copies only existing locale dictionaries being changed; it shares the nested translation tables. Loading a new locale retains that locale dictionary by reference. Direct mutation of shared catalogs is unsupported and can affect other requests in production; use these APIs for updates. Ordinary singleton setup does not freeze or copy its input, even in development.
+
+Request isolation still requires a small state object, request-local result caches, and AsyncLocalStorage lookups. It does not duplicate translation catalogs per request.
+
+For hydration, initialize the browser with the same locale and translations used on the server. `runWithFbtee` is available from `fbtee/server` in Node.js. The existing translation exports remain available from `fbtee/server` in other environments; browsers continue to use one singleton runtime. It does not provide isolation between independent browser roots.
+
 ### Next.js App Router
 
-For App Router, put the locale context in a Client Component. If you render translated strings in Server Components, call `setupFbtee` on the server and re-render the route when the locale changes. Client-only strings can switch locale fully on the client.
+For App Router, put the browser locale context in a Client Component. Client-only strings can switch locale fully on the client; translated Server Components need a new server render when the locale changes.
+
+The Next.js plugin handles compilation and does not establish a request scope. Server Component isolation requires wrapping the actual server renderer with `runWithFbtee`; wrapping a page or layout's JSX return does not cover its descendants. In Node route handlers, you can use `runWithFbtee` for translation work performed inside its callback. Calling `setupFbtee` outside a scope remains process-global and is only suitable for shared server configuration, not different locales per request.
 
 See the [Next.js fbtee example](https://github.com/cpojer/nextjs-fbtee-example) for a complete setup.
 

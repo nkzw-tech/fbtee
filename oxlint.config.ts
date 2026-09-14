@@ -23,6 +23,12 @@ export default defineConfig({
   jsPlugins: ['@nkzw/eslint-plugin-fbtee', 'eslint-plugin-workspaces'],
   overrides: [
     {
+      files: ['packages/fbtee/test/**'],
+      rules: {
+        'workspaces/no-absolute-imports': 'off',
+      },
+    },
+    {
       files: ['packages/**/*.tsx'],
       rules: {
         '@nkzw/fbtee/no-empty-strings': 'off',

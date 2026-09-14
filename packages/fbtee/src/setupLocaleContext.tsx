@@ -1,7 +1,9 @@
+import FbtTranslations, { mergeTranslations } from './FbtTranslations.tsx';
 import { FbtRuntimeInput, Hooks } from './Hooks.tsx';
 import { TranslationDictionary } from './index.tsx';
 import IntlVariations from './IntlVariations.tsx';
 import { getLocaleAliases } from './localeIdentifier.tsx';
+import getRuntimeState from './RuntimeState.tsx';
 import setupFbtee from './setupFbtee.tsx';
 
 export type TranslationPromise = Promise<{
@@ -40,8 +42,10 @@ export default function setupLocaleContext({
   gender: initialGender = IntlVariations.GENDER_UNKNOWN,
   hooks,
   loadLocale,
-  translations,
+  translations: initialTranslations,
 }: LocaleContextProps) {
+  const runtimeState = getRuntimeState();
+  const { scoped } = runtimeState;
   const availableLocales = new Map<string, string>();
   const resolvedLocales = new Map<string, string | null>();
   const pendingLocales = new Map<string, Promise<void>>();
@@ -73,7 +77,7 @@ export default function setupLocaleContext({
   };
 
   const resolvedFallbackLocale = resolveLocale(fallbackLocale) || fallbackLocale;
-  translations = translations || { [resolvedFallbackLocale]: {} };
+  let translations = initialTranslations || { [resolvedFallbackLocale]: {} };
 
   const getLocales = (): ReadonlyArray<string> =>
     Array.from(
@@ -105,9 +109,10 @@ export default function setupLocaleContext({
       return;
     }
 
+    const currentTranslations = scoped ? runtimeState.translations : translations;
     const hasTranslations =
-      !!translations[localeName] ||
-      getLocaleAliases(localeName).some((localeAlias) => translations[localeAlias]);
+      !!currentTranslations[localeName] ||
+      getLocaleAliases(localeName).some((localeAlias) => currentTranslations[localeAlias]);
     if (hasTranslations) {
       return;
     }
@@ -118,7 +123,11 @@ export default function setupLocaleContext({
         resolve(loadLocale(localeName));
       })
         .then((loadedTranslations) => {
-          translations[localeName] = loadedTranslations;
+          if (scoped) {
+            mergeTranslations(runtimeState, { [localeName]: loadedTranslations });
+          } else {
+            translations[localeName] = loadedTranslations;
+          }
         })
         .finally(() => {
           pendingLocales.delete(localeName);
@@ -153,6 +162,7 @@ export default function setupLocaleContext({
     },
     translations,
   });
+  translations = FbtTranslations.getRegisteredTranslations();
 
   return { gender, getLocale, preloadLocale, setGender, setLocale };
 }

@@ -47,6 +47,16 @@ code {
   font-family: 'Fira Code', monospace;
 }
 
+:is(p, li, h4, h5) code {
+  background: var(--inline-code-background-color);
+  border-radius: 8px;
+  corner-shape: squircle;
+  font-size: 1em;
+  margin: 0 -2px;
+  overflow-wrap: anywhere;
+  padding: 0 3px;
+}
+
 @theme {
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
@@ -80,6 +90,7 @@ code {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
+    --inline-code-background-color: rgb(242, 242, 242);
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -116,6 +127,7 @@ code {
     :root {
       --background: 0 0% 3.9%;
       --foreground: 0 0% 98%;
+      --inline-code-background-color: rgb(39, 39, 39);
       --card: 0 0% 3.9%;
       --card-foreground: 0 0% 98%;
       --popover: 0 0% 3.9%;

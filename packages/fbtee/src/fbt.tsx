@@ -13,6 +13,7 @@ import Hooks, { FbtInputOpts, FbtRuntimeInput, FbtTableArgs, ResolverFn } from '
 import intlNumUtils from './intlNumUtils.tsx';
 import { getGenderVariations, getNumberVariations } from './IntlVariationResolver.tsx';
 import list from './list.tsx';
+import getRuntimeState from './RuntimeState.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
 import type { BaseResult, FbtConjunction, FbtDelimiter, NestedFbtContentItems } from './Types.ts';
 
@@ -69,7 +70,8 @@ export function createRuntime<P, T extends BaseResult | string>({
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
 }) {
-  const cachedResults = new Map<PatternString, Map<PatternHash | undefined, T>>();
+  const cacheKey = Symbol();
+  const defaultCachedResults = new Map<PatternString, Map<PatternHash | undefined, T>>();
   return Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
@@ -82,6 +84,18 @@ export function createRuntime<P, T extends BaseResult | string>({
         inputArgs?: FbtTableArgs | null,
         options?: FbtInputOpts | null,
       ): T => {
+        const state = getRuntimeState();
+        let cachedResults = defaultCachedResults;
+        if (state.scoped) {
+          const { resultCaches } = state;
+          const scopedResults = resultCaches.get(cacheKey) as
+            | Map<PatternString, Map<PatternHash | undefined, T>>
+            | undefined;
+          cachedResults = scopedResults ?? new Map();
+          if (!scopedResults) {
+            resultCaches.set(cacheKey, cachedResults);
+          }
+        }
         let { args, table } = Hooks.getTranslatedInput({
           args: inputArgs || null,
           options: options || null,

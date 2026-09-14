@@ -3,8 +3,8 @@ import FbtResult from './FbtResult.tsx';
 import FbtTranslations, { TranslationDictionary } from './FbtTranslations.tsx';
 import getFbsResult from './getFbsResult.tsx';
 import Hook, { Hooks } from './Hooks.tsx';
+import getRuntimeState from './RuntimeState.tsx';
 import type { IFbtErrorListener, NestedFbtContentItems } from './Types.js';
-import IntlViewerContext from './ViewerContext.tsx';
 
 const hasWindow = typeof window !== 'undefined';
 
@@ -33,7 +33,9 @@ export default function setupFbtee({
 }) {
   FbtTranslations.registerTranslations(translations);
 
-  if (!hooks) {
+  if (getRuntimeState().scoped) {
+    hooks = { ...hooks };
+  } else if (!hooks) {
     hooks = {};
   }
 
@@ -47,7 +49,7 @@ export default function setupFbtee({
     hooks.getTranslatedInput = FbtTranslations.getTranslatedInput;
   }
   if (!hooks.getViewerContext) {
-    hooks.getViewerContext = () => IntlViewerContext;
+    hooks.getViewerContext = () => getRuntimeState().viewerContext;
   }
 
   Hook.register(hooks);

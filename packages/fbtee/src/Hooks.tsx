@@ -1,6 +1,7 @@
 import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
+import getRuntimeState from './RuntimeState.tsx';
 import type {
   BaseResult,
   FbtErrorContext,
@@ -82,11 +83,9 @@ export type Hooks = Partial<{
   getViewerContext: () => typeof IntlViewerContext;
 }>;
 
-const _registrations: Hooks = {};
-
 export default {
   getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
-    return _registrations.errorListener?.(context) || null;
+    return getRuntimeState().hooks.errorListener?.(context) || null;
   },
 
   getFbsResult(
@@ -94,7 +93,7 @@ export default {
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
   ): PlainStringResult {
-    const { getFbsResult } = _registrations;
+    const { getFbsResult } = getRuntimeState().hooks;
     if (!getFbsResult) {
       throw new Error(`Hooks: 'getFbsResult' is not registered`);
     }
@@ -106,7 +105,7 @@ export default {
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
   ): FbtResult {
-    const { getFbtResult } = _registrations;
+    const { getFbtResult } = getRuntimeState().hooks;
     if (!getFbtResult) {
       throw new Error(`Hooks: 'getFbtResult' is not registered`);
     }
@@ -114,11 +113,11 @@ export default {
   },
 
   getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {
-    return _registrations.getTranslatedInput?.(input) ?? input;
+    return getRuntimeState().hooks.getTranslatedInput?.(input) ?? input;
   },
 
   getViewerContext(): typeof IntlViewerContext {
-    const { getViewerContext } = _registrations;
+    const { getViewerContext } = getRuntimeState().hooks;
     if (!getViewerContext) {
       throw new Error(`Hooks: 'getViewerContext' is not registered`);
     }
@@ -126,6 +125,10 @@ export default {
   },
 
   register(registrations: Hooks) {
-    Object.assign(_registrations, registrations);
+    const state = getRuntimeState();
+    Object.assign(state.hooks, registrations);
+    if (state.scoped) {
+      state.resultCaches.clear();
+    }
   },
 };

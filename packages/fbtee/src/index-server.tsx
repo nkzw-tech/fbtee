@@ -1,25 +1,29 @@
-import fbsInternal from './fbs.tsx';
-import fbtInternal from './fbt.tsx';
-import type { FbsAPI, FbtAPI } from './Types.ts';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import type { TranslationDictionary } from './FbtTranslations.tsx';
+import type { Hooks } from './Hooks.tsx';
+import { createRuntimeState, registerRequestStateProvider, RuntimeState } from './RuntimeState.tsx';
+import setupFbtee from './setupFbtee.tsx';
+import { Gender, resolveGender } from './setupLocaleContext.tsx';
 
-export { default as IntlVariations } from './IntlVariations.tsx';
-export { default as setupFbtee } from './setupFbtee.tsx';
-export { default as GenderConst } from './GenderConst.tsx';
-export { default as FbtTranslations } from './FbtTranslations.tsx';
-export { default as FbtResult } from './FbtResult.tsx';
-export { default as list, List } from './list.tsx';
+const storage = new AsyncLocalStorage<RuntimeState>();
+registerRequestStateProvider(() => storage.getStore());
 
-export const fbt = fbtInternal as unknown as FbtAPI;
-export const fbs = fbsInternal as unknown as FbsAPI;
+export type FbteeRequestOptions = Readonly<{
+  gender?: Gender;
+  hooks?: Hooks;
+  locale: string;
+  translations: TranslationDictionary;
+}>;
 
-export type { FbtRuntimeInput, FbtRuntimeInput as TranslationTable } from './Hooks.tsx';
-export type { FbtConjunction, FbtDelimiter, FbtWithoutString, TranslatedString } from './Types.ts';
-export type { TranslationDictionary } from './FbtTranslations.tsx';
+export function runWithFbtee<T>(
+  { gender = 'unknown', hooks, locale, translations }: FbteeRequestOptions,
+  callback: () => T,
+): T {
+  const state = createRuntimeState({ GENDER: resolveGender(gender), locale }, true);
+  return storage.run(state, () => {
+    setupFbtee({ hooks, translations });
+    return callback();
+  });
+}
 
-export {
-  type Gender,
-  type LocaleContextProps,
-  type LocaleLoaderFn,
-  type TranslationPromise,
-  default as setupLocaleContext,
-} from './setupLocaleContext.tsx';
+export * from './index-core.tsx';
