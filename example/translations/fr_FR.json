@@ -984,6 +984,90 @@
           "variations": {}
         }
       ]
+    },
+    "33rUvElOU9gDMJOd96PSwQ==": {
+      "description": "Scoped demo formatted amount",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Total : {amount}",
+          "variations": {}
+        }
+      ]
+    },
+    "QAHLJWMFVXCkSbleu9xRgw==": {
+      "description": "Scoped demo pending action",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Enregistrement…",
+          "variations": {}
+        }
+      ]
+    },
+    "qhCbuKMypyYCPP5auQjO9A==": {
+      "description": "Scoped demo save button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Enregistrer",
+          "variations": {}
+        }
+      ]
+    },
+    "jgnTWfAK2OJ8HVqt3NRewQ==": {
+      "description": "Scoped demo locale selector",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Langue de l’aperçu",
+          "variations": {}
+        }
+      ]
+    },
+    "WSLLgtkg/wv6OoW/5ZyVhw==": {
+      "description": "Scoped demo save confirmation",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{amount} enregistré.",
+          "variations": {}
+        }
+      ]
+    },
+    "9a82k5AUIXvoJaUQcVTCdQ==": {
+      "description": "Scoped demo heading",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Langues indépendantes",
+          "variations": {}
+        }
+      ]
+    },
+    "rcpGNCW6ncmtU7EVyAru+A==": {
+      "description": "Scoped demo instructions",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Affichez des composants qui utilisent des paramètres régionaux différents de ceux du reste de la page.",
+          "variations": {}
+        }
+      ]
     }
   }
 }

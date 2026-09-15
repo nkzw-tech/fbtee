@@ -1168,6 +1168,90 @@
         }
       ],
       "types": []
+    },
+    "33rUvElOU9gDMJOd96PSwQ==": {
+      "description": "Scoped demo formatted amount",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "סך הכול: {amount}",
+          "variations": {}
+        }
+      ]
+    },
+    "QAHLJWMFVXCkSbleu9xRgw==": {
+      "description": "Scoped demo pending action",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "שומר…",
+          "variations": {}
+        }
+      ]
+    },
+    "qhCbuKMypyYCPP5auQjO9A==": {
+      "description": "Scoped demo save button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "שמירה",
+          "variations": {}
+        }
+      ]
+    },
+    "jgnTWfAK2OJ8HVqt3NRewQ==": {
+      "description": "Scoped demo locale selector",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "שפת התצוגה המקדימה",
+          "variations": {}
+        }
+      ]
+    },
+    "9a82k5AUIXvoJaUQcVTCdQ==": {
+      "description": "Scoped demo heading",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "הגדרות אזוריות עצמאיות",
+          "variations": {}
+        }
+      ]
+    },
+    "rcpGNCW6ncmtU7EVyAru+A==": {
+      "description": "Scoped demo instructions",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "הציגו רכיבים שמשתמשים בהגדרות אזוריות שונות מאלה של שאר העמוד.",
+          "variations": {}
+        }
+      ]
+    },
+    "WSLLgtkg/wv6OoW/5ZyVhw==": {
+      "description": "Scoped demo save confirmation",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{amount} נשמר.",
+          "variations": {}
+        }
+      ]
     }
   }
 }

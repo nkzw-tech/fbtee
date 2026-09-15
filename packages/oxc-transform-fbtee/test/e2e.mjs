@@ -28,6 +28,35 @@ const fakeRequire = (name) => {
 };
 
 {
+  for (const factory of ['createFbteeRuntime', 'useFbt']) {
+    const source = `
+      const { ${factory}: create } = require('fbtee');
+      function message() {
+        const { fbt, fbs } = create();
+        return [fbt('Rich', 'Scoped CommonJS'), fbs('Plain', 'Scoped CommonJS')];
+      }
+    `;
+    const code = compile(source, { sourceType: 'script' });
+    const collected = collectSync('scoped.cjs', source, { sourceType: 'script' });
+    assert.deepEqual(collected.errors, []);
+    assert.equal(JSON.parse(collected.output).phrases.length, 2);
+    const result = Function(
+      'require',
+      `${code}\nreturn message();`,
+    )((name) => {
+      assert.equal(name, 'fbtee');
+      return {
+        [factory]: () => ({
+          fbs: { _: (text) => `plain: ${text}` },
+          fbt: { _: (text) => `rich: ${text}` },
+        }),
+      };
+    });
+    assert.deepEqual(result, ['rich: Rich', 'plain: Plain']);
+  }
+}
+
+{
   const options = { collectPackager: 'both', lang: 'tsx' };
   const files = [
     { filename: 'first.tsx', sourceText: `fbt('First', 'd');` },

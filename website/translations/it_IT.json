@@ -1,6 +1,42 @@
 {
   "fb-locale": "it_IT",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Runtime con ambito dedicato",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Assegna una lingua a una parte della pagina. I componenti usano il LocaleProvider più vicino tramite useFbt(), e le azioni asincrone mantengono le impostazioni locali con cui sono iniziate.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Le importazioni globali continuano a usare le impostazioni locali dell’app. Cambia il runtime del provider per cambiare lingua, oppure chiama mergeTranslations() per aggiungere traduzioni.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

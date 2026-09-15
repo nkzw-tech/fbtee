@@ -109,7 +109,7 @@ const fixtureSources = [
 const expectedHashes = (
   await Promise.all(fixtureSources.map(async (file) => runLoader(readFileSync(file, 'utf8'), file)))
 ).flatMap(({ code }) => Array.from(code.matchAll(/hk:\s*"([^"]+)"/g), (match) => match[1]));
-assert.equal(expectedHashes.length, 3);
+assert.equal(expectedHashes.length, 4);
 const bundledPhrases = ['App Router server phrase', 'Client clicks:', 'Pages Router phrase'];
 
 for (const mode of ['turbopack', 'webpack']) {
@@ -142,8 +142,11 @@ for (const mode of ['turbopack', 'webpack']) {
   const serverOutput = readBuildOutput(join(buildDirectory, 'server'));
   assert.equal(serverOutput.includes(expectedHashes[0]), true);
   assert.equal(serverOutput.includes(expectedHashes[1]), true);
+  const html = readFileSync(join(buildDirectory, 'server', 'app', 'index.html'), 'utf8');
+  assert.match(html, /Scoped amount:.*?1\.234,5/);
 
   const clientOutput = readBuildOutput(join(buildDirectory, 'static'));
   assert.equal(clientOutput.includes(expectedHashes[1]), true);
   assert.equal(clientOutput.includes(expectedHashes[2]), true);
+  assert.equal(clientOutput.includes(expectedHashes[3]), true);
 }

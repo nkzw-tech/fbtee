@@ -1,5 +1,6 @@
 import Hooks from './Hooks.tsx';
 import { getLocaleIdentity } from './localeIdentifier.tsx';
+import type { RuntimeState } from './RuntimeState.tsx';
 
 type FormatterOptions = Readonly<{
   decimals?: number | null;
@@ -58,8 +59,8 @@ function getFormatter(locale: string, options: FormatterOptions): Intl.NumberFor
   return formatter;
 }
 
-function formatNumber(value: number, decimals?: number | null): string {
-  return getFormatter(Hooks.getViewerContext().locale, {
+function formatNumber(value: number, decimals?: number | null, state?: RuntimeState): string {
+  return getFormatter(Hooks.getViewerContext(state).locale, {
     decimals,
     useGrouping: false,
   }).format(value);
@@ -68,8 +69,9 @@ function formatNumber(value: number, decimals?: number | null): string {
 function formatNumberWithThousandDelimiters(
   value: number | string,
   decimals?: number | null,
+  state?: RuntimeState,
 ): string {
-  return getFormatter(Hooks.getViewerContext().locale, {
+  return getFormatter(Hooks.getViewerContext(state).locale, {
     decimals,
     useGrouping: true,
   }).format(typeof value === 'number' ? value : Number(value));

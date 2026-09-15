@@ -21,105 +21,79 @@ _fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ES
 
 ## Getting Started
 
-Use one of the templates if you are starting fresh:
-
-- [Web App Template](https://github.com/nkzw-tech/web-app-template)
-- [Expo App Template](https://github.com/nkzw-tech/expo-app-template)
-
-For an existing app, install the runtime:
+For a new project, start with the [fate stack](https://stack.fate.technology) or the [Expo template](https://github.com/nkzw-tech/expo-app-template). For an existing app, install fbtee and its CLI:
 
 ```bash
 npm install fbtee
+npm install -D @nkzw/fbtee-cli
 ```
 
-_fbtee_ requires Node 22+. React apps should use React 19+.
+The toolchain requires Node 22.12+. React apps require React 19+.
 
 ### Vite
 
-Most projects should install the ready-to-use Vite plugin and the CLI:
-
 ```bash
-npm install -D @nkzw/vite-plugin-fbtee @nkzw/fbtee-cli
+npm install -D @nkzw/vite-plugin-fbtee
 ```
 
-Add the fbtee plugin before the React plugin:
+Place fbtee before the React plugin:
 
-```js
+```ts
 import fbtee from '@nkzw/vite-plugin-fbtee';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [
-    fbtee({
-      fbtCommon: {
-        Accept: 'Button label for accepting terms',
-      },
-      fbtEnumManifest: {},
-    }),
-    react(),
-  ],
+  plugins: [fbtee(), react()],
 });
 ```
 
 ### Next.js
 
-Next.js projects should use the native Oxc plugin and the CLI:
-
 ```bash
-npm install -D @nkzw/next-plugin-fbtee @nkzw/fbtee-cli
+npm install -D @nkzw/next-plugin-fbtee
 ```
 
-Wrap your Next configuration:
-
-```js
+```ts
 import withFbtee from '@nkzw/next-plugin-fbtee';
 
-export default withFbtee({
-  fbtCommon: {
-    Accept: 'Button label for accepting terms',
-  },
-  fbtEnumManifest: {},
-})({
-  // Your Next.js configuration.
-});
+export default withFbtee()({});
 ```
 
-The plugin runs the native Oxc transform before Next.js compilation. It works with the default Turbopack compiler and with `next build --webpack`, so it does not require Babel or custom compiler configuration.
+The plugin supports Turbopack and Webpack.
 
-### Low-level Oxc Transform
+<details>
+<summary>Custom builds with Oxc</summary>
 
-For custom build-system integrations, install the native Oxc transform:
+Run the fbtee transform before lowering TypeScript and JSX:
 
 ```bash
-npm install -D @nkzw/oxc-transform-fbtee @nkzw/fbtee-cli oxc-transform
+npm install -D @nkzw/oxc-transform-fbtee oxc-transform
 ```
 
-Apply the fbtee transform before the standard Oxc transform:
-
-```js
+```ts
 import { transformSync as transformFbtee } from '@nkzw/oxc-transform-fbtee';
 import { transformSync as transformOxc } from 'oxc-transform';
 
-const fbteeResult = transformFbtee(filename, sourceText, {
-  fbtCommon: {
-    Accept: 'Button label for accepting terms',
-  },
-  fbtEnumManifest: {},
-});
+export function compile(filename: string, source: string) {
+  const translated = transformFbtee(filename, source);
+  if (translated.errors.length) {
+    throw new Error(translated.errors.map(({ message }) => message).join('\n'));
+  }
 
-if (fbteeResult.errors.length > 0) {
-  throw new Error(fbteeResult.errors.map(({ message }) => message).join('\n'));
+  return transformOxc(filename, translated.code, {
+    jsx: { runtime: 'automatic' },
+  });
 }
-
-const result = transformOxc(filename, fbteeResult.code, {
-  jsx: { runtime: 'automatic' },
-});
 ```
 
-### TypeScript JSX Types
+The returned Oxc result contains the generated code and any downstream errors. See the [transform options](https://github.com/nkzw-tech/fbtee/blob/main/packages/oxc-transform-fbtee/index.d.ts) for common strings and enum configuration.
 
-React TypeScript projects should include the JSX declarations once in a global type file or app entry point:
+</details>
+
+### TypeScript
+
+Add the JSX declarations to a global type file or your app entry point:
 
 ```tsx
 /// <reference types="fbtee/ReactTypes.d.ts" />
@@ -127,31 +101,25 @@ React TypeScript projects should include the JSX declarations once in a global t
 
 ## Writing Strings
 
-Every user-facing string should be wrapped in `<fbt>`, `fbt()`, or `fbs()`. Descriptions are required because they are the translator's context.
+Wrap a sentence in `<fbt>` and describe where it appears. The description helps translators choose the right words:
 
 ```tsx
-<fbt desc="Empty state title when a project has no tasks">No tasks yet</fbt>
+<fbt desc="Empty state when a project has no tasks">No tasks yet</fbt>
 ```
 
-Use `fbt()` outside JSX:
+The compiler supplies the global `fbt` import for JSX. Use `fbt()` in JavaScript, or `fbs()` where an API requires a plain string:
 
 ```tsx
-import { fbt } from 'fbtee';
+import { fbs, fbt } from 'fbtee';
 
-const title = fbt('No tasks yet', 'Empty state title when a project has no tasks');
+const title = fbt('No tasks yet', 'Empty state when a project has no tasks');
+
+<input placeholder={fbs('Search projects', 'Project search placeholder')} />;
 ```
 
-Use `fbs()` when you need a plain string:
+### Dynamic Content
 
-```tsx
-import { fbs } from 'fbtee';
-
-<input placeholder={fbs('Search projects', 'Project search input placeholder')} />;
-```
-
-## Dynamic Content
-
-Use `<fbt:param>` for dynamic values. Token names should describe the value, not its current English position.
+Give dynamic values meaningful names with `<fbt:param>`. React elements inside a sentence become parameters automatically, as in the greeting above.
 
 ```tsx
 <fbt desc="Greeting with the viewer name">
@@ -159,127 +127,89 @@ Use `<fbt:param>` for dynamic values. Token names should describe the value, not
 </fbt>
 ```
 
-React elements inside `<fbt>` are automatically turned into implicit params:
+For repeated values, use `<fbt:same-param>` or `fbt.sameParam()`.
 
-```tsx
-<fbt desc="Greeting with a linked viewer name">
-  Hello, <UserLink user={viewer} />!
-</fbt>
-```
+### Plurals and Lists
 
-Use `fbt.sameParam()` or `<fbt:same-param>` when the same token appears more than once.
-
-## Plurals
-
-Use `<fbt:plural>` when a count controls grammar. _fbtee_ handles locale-specific plural rules.
+Describe the singular and plural forms in your source language. fbtee selects the translated form for the locale:
 
 ```tsx
 <fbt desc="Inbox unread count">
   You have{' '}
-  <fbt:plural count={count} many="unread messages" name="unreadCount" showCount="yes">
-    an unread message
-  </fbt:plural>
-  .
+  <fbt:plural count={count} many="unread messages" name="count" showCount="yes">
+    unread message
+  </fbt:plural>.
 </fbt>
 ```
 
-`showCount` can be `yes`, `ifMany`, or `no`.
-
-## Lists
-
-Use `<fbt:list>` for locale-aware lists:
+`showCount` accepts `yes`, `ifMany`, or `no`. For lists, use `<fbt:list>` or the standalone `list()` helper:
 
 ```tsx
 <fbt desc="People assigned to a task">
-  Assigned to <fbt:list items={assignees} name="assigneeList" />.
+  Assigned to <fbt:list items={assignees} name="assignees" />.
 </fbt>
 ```
 
-The standalone `list()` helper is available for non-React code:
+fbtee also supports enums, gender, and pronouns. See the [website examples](https://fbtee.dev) for each.
 
-```tsx
-import { list } from 'fbtee';
+### Common Strings
 
-const names = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
+Share a description for labels that mean the same thing throughout the app. Define them in `common_strings.json`:
+
+```json
+{
+  "Save": "Button label for saving changes"
+}
 ```
 
-## Enums
-
-Use enums when runtime values map to a fixed set of translatable labels:
-
-```tsx
-const StatusLabels = {
-  done: 'done',
-  open: 'open',
-};
-
-<fbt desc="Task status label">
-  This task is <fbt:enum enum-range={StatusLabels} value={status} />.
-</fbt>;
-```
-
-For shared enum modules, use the `$FbtEnum` suffix so the collector can resolve them.
-
-## Pronouns and Gender
-
-Use `<fbt:pronoun>` when a phrase depends on a person's gender:
-
-```tsx
-<fbt desc="Photo sharing notification">
-  <fbt:param name="name">{user.name}</fbt:param> shared{' '}
-  <fbt:pronoun gender={user.gender} human type="possessive" /> photo.
-</fbt>
-```
-
-Supported pronoun types are `subject`, `object`, `possessive`, and `reflexive`.
-
-## Common Strings
-
-Common strings are reusable source strings with shared descriptions:
+Pass this object as `fbtCommon` to your compiler plugin and add `--common common_strings.json` when collecting strings. Then use the label without repeating its description:
 
 ```tsx
 <fbt common>Save</fbt>
 ```
 
-Pass common strings to the compiler as `fbtCommon`:
+## Translation Workflow
 
-```js
-{
-  fbtCommon: {
-    Save: 'Button label for saving changes',
-  },
-}
+First, extract the strings and prepare a file for each language:
+
+```bash
+npx fbtee collect
+npx fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de-DE ja-JP
 ```
+
+Translate the entries marked `"status": "new"`, then remove that status. Existing translations are preserved when you run the command again. Compile the files for your app:
+
+```bash
+npx fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
+```
+
+Commit the editable files in `translations/`. Add generated files to `.gitignore`:
+
+```gitignore
+.enum_manifest.json
+source_strings.json
+src/translations/
+```
+
+Coding agents can help with translation: ask them to fill the new entries, match the vocabulary and tone of existing translations, and remove `"status": "new"` when finished. Review the resulting diff as you would any translation.
 
 ## Runtime Setup
 
-Most React apps should use `createLocaleContext`. In a browser entry point with asynchronously loaded translations, await `preload()` before the first render:
+For an app with one active language, use `createLocaleContext`. It selects a supported locale from the browser's preferences and loads translations when the language changes.
 
 ```tsx
 import { createLocaleContext } from 'fbtee';
 import { createRoot } from 'react-dom/client';
-
-const availableLanguages = new Map([
-  ['en-US', 'English'],
-  ['de-DE', 'Deutsch'],
-  ['ja-JP', '日本語'],
-]);
-
-const loadLocale = async (locale: string) => {
-  switch (locale) {
-    case 'de-DE':
-      return (await import('./translations/de-DE.json')).default['de-DE'];
-    case 'ja-JP':
-      return (await import('./translations/ja-JP.json')).default['ja-JP'];
-    default:
-      return {};
-  }
-};
+import App from './App.tsx';
 
 const LocaleContext = createLocaleContext({
-  availableLanguages,
-  clientLocales: [navigator.language, ...navigator.languages],
-  loadLocale,
+  availableLanguages: new Map([
+    ['en-US', 'English'],
+    ['de-DE', 'Deutsch'],
+  ]),
+  clientLocales: navigator.languages,
+  loadLocale: async (locale) =>
+    locale === 'de-DE' ? (await import('./translations/de-DE.json')).default['de-DE'] : {},
 });
 
 await LocaleContext.preload();
@@ -291,196 +221,112 @@ createRoot(document.getElementById('root')!).render(
 );
 ```
 
-Creating the context remains synchronous and does not start loading translations. `preload()` loads the selected locale, including a browser-detected locale, without changing it. If you pass its translations through the `translations` option, you can render immediately and omit `preload()`. It also skips loading for the fallback locale, which uses the source strings.
+Call `preload()` once before rendering to load the initial language. Creating the context does not load it automatically. You can skip preloading if you supply the translations at setup; the fallback locale uses your source strings.
 
-Repeated calls share in-flight loads with `setLocale()`. Loading errors reject the promise so your startup code can handle them; calling `preload()` again retries a failed load. Call it during application startup, before rendering translated content, rather than on every component render. Subsequent language changes load their translations through `setLocale()`.
+Preloading and language changes share pending loads. Loading failures reject the promise; calling again retries them.
 
-Use `useLocaleContext` to read or change the locale:
+Use `useLocaleContext()` to change the language in a React transition:
 
 ```tsx
 import { useLocaleContext } from 'fbtee';
 import { useTransition } from 'react';
 
-const LanguageButton = () => {
-  const [, startTransition] = useTransition();
+function LanguageButton() {
   const { locale, setLocale } = useLocaleContext();
+  const [, startTransition] = useTransition();
+
   return <button onClick={() => startTransition(() => setLocale('de-DE'))}>{locale}</button>;
-};
+}
 ```
 
-If you need full control, use `setupLocaleContext` or `setupFbtee` directly. With `setupLocaleContext`, await `preloadLocale()` before evaluating translated strings:
+Outside React, use `setupLocaleContext` and await `preloadLocale()`, or configure the runtime directly with `setupFbtee`.
+
+### Scoped Runtimes
+
+Use `LocaleProvider` when part of a page needs its own language. Create a runtime with its translations, then call `useFbt()` in the components that translate:
 
 ```tsx
-import { setupLocaleContext } from 'fbtee';
+import { createFbteeRuntime, LocaleProvider, useFbt } from 'fbtee';
+import german from './translations/de-DE.json' with { type: 'json' };
 
-const context = setupLocaleContext({
-  availableLanguages,
-  clientLocales: [navigator.language, ...navigator.languages],
-  loadLocale,
-});
+const germanRuntime = createFbteeRuntime({ locale: 'de-DE', translations: german });
 
-await context.preloadLocale();
+function SaveButton() {
+  const { fbt } = useFbt();
+  return <button>{fbt('Save', 'Save button')}</button>;
+}
+
+function Preview() {
+  return (
+    <LocaleProvider runtime={germanRuntime}>
+      <SaveButton />
+    </LocaleProvider>
+  );
+}
 ```
 
-You can also call `context.preloadLocale('ja-JP')` to load another locale without selecting it.
+Create runtimes once, outside rendering or with React state. Each translating component calls `useFbt()`, which requires a provider and also returns `fbs`, `list`, and `locale`. Nested providers and separate roots can use different runtimes. Global imports keep their existing behavior.
+
+A runtime's locale and gender are fixed; switch the provider's runtime to change them. Async actions keep the translator they captured, even across `await`. Pass it explicitly to helpers in other modules:
+
+```tsx
+import type { FbtAPI } from 'fbtee';
+
+export async function saveMessage(fbt: FbtAPI) {
+  await saveDocument();
+  return fbt('Saved', 'Save confirmation');
+}
+```
+
+Keep the local names `fbt` and `fbs`. For helper arguments and imported runtimes, annotate with the imported `FbtAPI`, `FbsAPI`, or `FbteeRuntime` type so the compiler recognizes them. If a linter reports a JSX-only translator as unused, keep the binding and suppress the warning or use the function form.
+
+Load more translations with `germanRuntime.mergeTranslations(bundle)`, using compiled bundles shaped as `{ locale: { hash: translation } }`. Mounted consumers update automatically. Load before displaying the relevant UI to avoid briefly showing source strings.
 
 ### Server Rendering
 
-Use `runWithFbtee` from `fbtee/server` when concurrent server requests need different locales. Existing `fbt`, `fbs`, and formatting calls automatically use the active request's state, including compiler-generated calls and calls outside React. Browser apps and server code outside a request scope keep the existing singleton behavior.
-
-Start the render inside the scope so asynchronous rendering, including Suspense retries, inherits it:
+In Node.js, wrap the render in `runWithFbtee` to give each request its own locale. Imported `fbt`, `fbs`, and `list` calls use that scope, including across asynchronous work:
 
 ```tsx
-import { createServer } from 'node:http';
 import { runWithFbtee } from 'fbtee/server';
-import { renderToPipeableStream } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import App from './App.tsx';
 import german from './translations/de-DE.json' with { type: 'json' };
 
-const translations = { 'en-US': {}, ...german };
-
-createServer((request, response) => {
-  const locale = request.url?.startsWith('/de') ? 'de-DE' : 'en-US';
-
-  runWithFbtee({ locale, translations }, () => {
-    const stream = renderToPipeableStream(<App />, {
-      onShellReady() {
-        response.setHeader('Content-Type', 'text/html; charset=utf-8');
-        stream.pipe(response);
-      },
-      onShellError() {
-        response.statusCode = 500;
-        response.end('Unable to render page');
-      },
-      onError(error) {
-        console.error(error);
-      },
-    });
-    response.on('close', () => stream.abort());
-  });
-}).listen(3000);
+export function renderPage() {
+  return runWithFbtee({ locale: 'de-DE', translations: german }, () => renderToString(<App />));
+}
 ```
 
-`locale` and `translations` are required. `gender` defaults to `'unknown'`, and `hooks` accepts the same hooks as `setupFbtee`. Each scope starts with its own hooks, translations, and result caches; nested scopes do not inherit their parent's configuration. The callback's return value or promise is returned unchanged, and leaving the callback restores the caller's scope, including on errors.
+Start the actual renderer inside the callback, including for streaming SSR. Wrapping a component's JSX return does not scope its descendants. Load translations before rendering, and use the same locale and translations for client hydration.
 
-Promises, timers, and other asynchronous work created inside the scope retain it. Callbacks invoked by an external scheduler need to be bound inside the scope with Node's `AsyncLocalStorage.bind()`. A scope does not follow a React element: `runWithFbtee(options, () => <App />)` only creates an element and does not scope its later rendering. Strings evaluated at module initialization also keep the locale they were evaluated with.
+Each request has its own hooks and caches. Calls to `setupFbtee` and `FbtTranslations` inside the callback affect only that scope; nested scopes start with their own configuration. Promises, timers, and Suspense retries created inside it retain the scope. Use Node's `AsyncLocalStorage.bind()` for callbacks handed to an external scheduler.
 
-For asynchronous translation loading, load the catalog before starting the render. You can also create a `setupLocaleContext` inside the request callback and await its `preloadLocale()` there. Create that context per request. Calls to `setupFbtee` and `FbtTranslations` inside a scope affect only that scope.
+The Next.js plugin handles compilation, not request isolation. Use `runWithFbtee` where you control the renderer or in Node route handlers. Server Components can use explicit runtimes; `LocaleProvider` and `useFbt()` belong in Client Components. Pass locale and translation data across that boundary, since runtime objects contain functions. Server-rendered translations need a new server render when the language changes.
 
-Scoped catalogs are shared by reference and must be treated as read-only, including the objects returned by `getRegisteredTranslations()`. In development and tests (`NODE_ENV !== 'production'`), scoped registration, merging, and loading automatically freeze translation data in place to catch accidental mutations. That check runs once per dictionary and also rejects accessors. There is no preparation API or extra startup step. In production, fbtee does not freeze, traverse, or copy catalogs when registering them.
+### Shared Translations
 
-Use `registerTranslations()` to replace the catalog or `mergeTranslations()` to override entries. A merge creates a new outer dictionary and copies only existing locale dictionaries being changed; it shares the nested translation tables. Loading a new locale retains that locale dictionary by reference. Direct mutation of shared catalogs is unsupported and can affect other requests in production; use these APIs for updates. Ordinary singleton setup does not freeze or copy its input, even in development.
+Scoped runtimes and requests share catalogs by reference. Treat them as read-only: use `runtime.mergeTranslations()` or, inside a request, `FbtTranslations.mergeTranslations()` and `registerTranslations()` for updates. Merges copy affected locale maps while sharing nested tables. Scoped catalogs are frozen automatically in development and tests; production registration does not freeze or copy them. Ordinary singleton catalogs remain mutable.
 
-Request isolation still requires a small state object, request-local result caches, and AsyncLocalStorage lookups. It does not duplicate translation catalogs per request.
+## Linting
 
-For hydration, initialize the browser with the same locale and translations used on the server. `runWithFbtee` is available from `fbtee/server` in Node.js. The existing translation exports remain available from `fbtee/server` in other environments; browsers continue to use one singleton runtime. It does not provide isolation between independent browser roots.
-
-### Next.js App Router
-
-For App Router, put the browser locale context in a Client Component. Client-only strings can switch locale fully on the client; translated Server Components need a new server render when the locale changes.
-
-The Next.js plugin handles compilation and does not establish a request scope. Server Component isolation requires wrapping the actual server renderer with `runWithFbtee`; wrapping a page or layout's JSX return does not cover its descendants. In Node route handlers, you can use `runWithFbtee` for translation work performed inside its callback. Calling `setupFbtee` outside a scope remains process-global and is only suitable for shared server configuration, not different locales per request.
-
-See the [Next.js fbtee example](https://github.com/cpojer/nextjs-fbtee-example) for a complete setup.
-
-## Translation Workflow
-
-The CLI is a native Rust executable and uses the Oxc compiler pipeline by default:
-
-```bash
-pnpm fbtee collect
-pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations
-pnpm fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
-pnpm fbtee migrate-locales --to bcp47 --dir translations --dir src/translations
-```
-
-fbtee 4 removes the legacy Babel compiler and JavaScript CLI. Babel-specific extensions (`--custom-collector`, `--transform`, `--generate-fbt-nodes`, and `--hash-module`) are no longer supported. The collector also cannot execute Babel configuration or apply `.babelignore`; it stops with a clear diagnostic if either is detected. Remove that legacy configuration, or pass `--disable-babel-config` to explicitly collect the unmodified source.
-
-Extract source strings:
-
-```bash
-pnpm fbtee collect
-```
-
-This writes `source_strings.json`.
-
-Prepare editable translation files:
-
-```bash
-pnpm fbtee prepare-translations --source-strings source_strings.json --output-dir translations --locales de-DE fr-FR ja-JP
-```
-
-`prepare-translations` merges source strings into existing locale files, preserves translated entries, and marks new work with `"status": "new"`. New files use BCP 47 locale identifiers by default, such as `de-DE.json` and `es-419.json`.
-
-Compile translations for the app:
-
-```bash
-pnpm fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
-```
-
-fbtee accepts both modern BCP 47 locale identifiers (`de-DE`, `es-419`) and legacy Facebook-style identifiers (`de_DE`, `es_LA`). If both aliasing files exist, for example `translations/de_DE.json` and `translations/de-DE.json`, fbtee throws and asks you to keep one. Existing legacy files are updated in place; new generated files default to BCP 47. To force a specific output style, pass `--output-locale-style=bcp47`, `--output-locale-style=legacy`, or `--output-locale-style=preserve`.
-
-To migrate editable translation files and generated runtime files to BCP 47 names:
-
-```bash
-pnpm fbtee migrate-locales --to bcp47 --dir translations --dir src/translations
-pnpm fbtee translate --output-locale-style=bcp47
-```
-
-Use `--dry-run` first to preview file renames.
-
-Commit the human-authored translation files. Ignore generated runtime output:
-
-```gitignore
-.enum_manifest.json
-source_strings.json
-src/translations/
-```
-
-## Translating Strings with Coding Agents
-
-Coding agents are great at updating _fbtee_ translation files because all the context is in the repository:
-
-1. `fbtee prepare-translations` adds every missing translation and marks it with `"status": "new"`.
-1. The agent edits only entries with `"status": "new"`.
-1. The agent removes `"status": "new"` after the translation is complete.
-1. Code review shows a clean diff of the new localized strings.
-
-This works best when the app already has translated strings. The agent can infer tone, voice, capitalization, punctuation, and product vocabulary from the existing locale files.
-
-### Coding Agent prompt:
-
-```md
-Run `fbtee prepare-translations --source-strings source_strings.json --output-dir ares/translations --locales de-DE fr-FR ja-JP pl-PL ru-RU zh-CN es-ES it-IT ko-KR pt-BR uk-UA` for all the translations the app supports.
-
-Look at all updated translation files. For every entry with `"status": "new"`, write a translation that matches the tone, voice, and language already used in the app and in the current locale.
-
-Remove `"status": "new"` from each completed translation entry.
-```
-
-## ESLint
-
-Install the optional ESLint plugin:
+The optional ESLint plugin checks strings and translator descriptions:
 
 ```bash
 npm install -D @nkzw/eslint-plugin-fbtee
 ```
 
-Use the recommended config:
-
 ```js
 import fbtee from '@nkzw/eslint-plugin-fbtee';
 
-export default [fbtee.configs.recommended];
+export default [
+  {
+    plugins: { '@nkzw/fbtee': fbtee },
+    rules: fbtee.configs.recommended.rules,
+  },
+];
 ```
 
-Use the strict config if you want every user-facing string to be wrapped:
-
-```js
-import fbtee from '@nkzw/eslint-plugin-fbtee';
-
-export default [fbtee.configs.strict];
-```
+Use `fbtee.configs.strict.rules` to also check for untranslated text.
 
 ## Migration from fbt
 
@@ -494,14 +340,14 @@ _fbtee_ is compatible with the core `fbt` programming model:
 
 Some archived `fbt` options and legacy behaviors were intentionally removed. The compiler errors should point to the modern replacement when one exists.
 
-## Examples
+fbtee 4 uses Oxc and a native CLI. Replace the Babel integration with the Vite or Next.js plugin above, or use `@nkzw/oxc-transform-fbtee` directly. Babel-specific extensions (`--custom-collector`, `--transform`, `--generate-fbt-nodes`, and `--hash-module`) are no longer supported. The collector cannot execute Babel configuration or apply `.babelignore`; remove that legacy configuration, or use `--disable-babel-config` to collect unmodified source.
 
-- [Example App](https://github.com/nkzw-tech/fbtee/tree/main/example)
-- [Next.js App Router Example](https://github.com/cpojer/nextjs-fbtee-example)
-- [Athena Crisis](https://github.com/nkzw-tech/athena-crisis)
+Both `de-DE` and legacy locale names such as `de_DE` work. To rename catalogs, run `npx fbtee migrate-locales --to bcp47 --dir translations --dir src/translations --dry-run`, then repeat without `--dry-run`. Keep one file per locale; new files use BCP 47 names by default.
 
-## Credits
+## Examples and Credits
 
-- `fbt` was originally created by [Facebook](https://github.com/facebook/fbt).
-- The auto-import plugin was created by [@alexandernanberg](https://github.com/alexandernanberg).
-- [Nakazawa Tech](https://nkzw.tech) rewrote `fbt` into _fbtee_ and maintains this project.
+- [Example app](https://github.com/nkzw-tech/fbtee/tree/main/example), including independent locale widgets.
+- [Next.js example](https://github.com/cpojer/nextjs-fbtee-example).
+- [Athena Crisis](https://github.com/nkzw-tech/athena-crisis).
+
+Originally created as [`fbt` at Facebook](https://github.com/facebook/fbt), with auto-import support by [@alexandernanberg](https://github.com/alexandernanberg). Rebuilt and maintained as fbtee by [Nakazawa Tech](https://nkzw.tech).

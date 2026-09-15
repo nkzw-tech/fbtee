@@ -7,7 +7,15 @@ import { beforeEach, test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 import { collectSync, transformSync, translateSync } from '@nkzw/oxc-transform-fbtee';
-import { fbs, fbt, FbtResult, FbtTranslations, setupFbtee, setupLocaleContext } from 'fbtee';
+import {
+  createFbteeRuntime,
+  fbs,
+  fbt,
+  FbtResult,
+  FbtTranslations,
+  setupFbtee,
+  setupLocaleContext,
+} from 'fbtee';
 import {
   fbs as serverFbs,
   fbt as serverFbt,
@@ -20,7 +28,8 @@ import { createElement, Suspense } from 'react';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const source = readFileSync(new URL('./fixtures/scoped.tsx', import.meta.url), 'utf8');
-const transformed = transformSync('scoped.tsx', source);
+const boundSource = readFileSync(new URL('./fixtures/bound.tsx', import.meta.url), 'utf8');
+const transformed = transformSync('scoped.tsx', source + '\n' + boundSource);
 assert.deepEqual(transformed.errors, []);
 const lowered = lowerSync('scoped.tsx', transformed.code, { jsx: { runtime: 'automatic' } });
 assert.deepEqual(lowered.errors, []);
@@ -39,7 +48,9 @@ const fixture = await (async () => {
   }
 })();
 
-const collected = collectSync('scoped.tsx', source, { collectPackager: 'text' });
+const collected = collectSync('scoped.tsx', source + '\n' + boundSource, {
+  collectPackager: 'text',
+});
 assert.deepEqual(collected.errors, []);
 const phrases = [
   ...JSON.parse(collected.output).phrases,
@@ -90,6 +101,22 @@ test('all public entry points share the same runtime', () => {
     runWithFbtee({ locale: 'de-DE', translations: german }, fixture.message),
     'Nachricht',
   );
+  assert.equal(fixture.message(), 'Message');
+});
+
+test('reusing singleton hook options does not bind new runtimes to the singleton', () => {
+  const hooks = {};
+  setupFbtee({ hooks, translations: {} });
+  const originalHooks = { ...hooks };
+  const bound = createFbteeRuntime({ hooks, locale: 'de-DE', translations: german });
+  assert.equal(fixture.messages(bound).message(), 'Nachricht');
+  assert.equal(fixture.messages(bound).plainMessage(), 'Nachricht');
+  runWithFbtee({ hooks, locale: 'fr-FR', translations: french }, () => {
+    assert.equal(fixture.message(), 'Message français');
+    assert.equal(fixture.number(1234.5), new Intl.NumberFormat('fr-FR').format(1234.5));
+    assert.equal(fixture.messages(bound).message(), 'Nachricht');
+  });
+  assert.deepEqual(hooks, originalHooks);
   assert.equal(fixture.message(), 'Message');
 });
 
@@ -507,6 +534,64 @@ test('compiled plural helpers and viewer gender use request state', async () => 
 });
 
 if (!process.execArgv.includes('--conditions=react-server')) {
+  test('LocaleProvider preserves independent trees during server Suspense retries', async () => {
+    const { LocaleProvider, useFbt } = await import('fbtee');
+    const { renderToPipeableStream } = await import('react-dom/server');
+    const gate = Promise.withResolvers();
+    const shell = Promise.withResolvers();
+    let ready = false;
+    function BoundMessage({ suspend = false }) {
+      const { fbt } = useFbt();
+      if (suspend && !ready) {
+        throw gate.promise;
+      }
+      return createElement('p', null, fixture.helper(fbt));
+    }
+    const output = new Promise((resolve, reject) => {
+      const destination = new PassThrough();
+      let html = '';
+      destination.on('data', (chunk) => {
+        html += chunk;
+      });
+      destination.on('end', () => resolve(html));
+      destination.on('error', reject);
+      const tree = createElement(
+        'main',
+        null,
+        ...[
+          ['de-DE', german],
+          ['fr-FR', french],
+        ].map(([locale, translations]) =>
+          createElement(
+            LocaleProvider,
+            {
+              key: locale,
+              runtime: createFbteeRuntime({ locale, translations }),
+            },
+            createElement(
+              Suspense,
+              { fallback: createElement(BoundMessage) },
+              createElement(BoundMessage, { suspend: true }),
+            ),
+          ),
+        ),
+      );
+      const stream = renderToPipeableStream(tree, {
+        onError: reject,
+        onShellReady() {
+          stream.pipe(destination);
+          shell.resolve();
+        },
+      });
+    });
+    await shell.promise;
+    ready = true;
+    gate.resolve();
+    const html = await output;
+    assert.equal(html.split('<p>Nachricht</p>').length - 1, 2);
+    assert.equal(html.split('<p>Message français</p>').length - 1, 2);
+  });
+
   test(
     'streaming SSR retains each request across Suspense retries',
     { timeout: 10_000 },
@@ -574,3 +659,112 @@ if (!process.execArgv.includes('--conditions=react-server')) {
     },
   );
 }
+
+test('bound runtimes preserve every operation across ambient scopes and async actions', async () => {
+  const de = createFbteeRuntime({ locale: 'de-DE', translations: german });
+  const fr = createFbteeRuntime({ locale: 'fr-FR', translations: french });
+  const deMessages = fixture.messages(de);
+  const frMessages = fixture.messages(fr);
+  const gate = Promise.withResolvers();
+  const deAction = deMessages.save(gate.promise);
+  const frAction = frMessages.save(gate.promise);
+  await runWithFbtee({ locale: 'fr-FR', translations: french }, async () => {
+    assert.equal(deMessages.message(), 'Nachricht');
+    assert.equal(deMessages.plainMessage(), 'Nachricht');
+    assert.equal(deMessages.plainNames(), 'People: Alice und Bob');
+    assert.equal(deMessages.names(), 'Alice und Bob');
+    assert.equal(deMessages.embeddedNames(), 'People: Alice und Bob');
+    assert.equal(deMessages.number(1234.5), '1.234,5');
+    assert.equal(frMessages.names(), 'Alice et Bob');
+    assert.equal(fixture.helper(de.fbt), 'Nachricht');
+    assert.equal(fixture.factory({ locale: 'de-DE', translations: german })(), 'Nachricht');
+    gate.resolve();
+    assert.deepEqual(await Promise.all([deAction, frAction]), ['Nachricht', 'Message français']);
+    assert.equal(fixture.message(), 'Message français');
+  });
+  assert.equal(fixture.message(), 'Message');
+  assert.equal(deMessages.message(), 'Nachricht');
+  assert.equal(frMessages.message(), 'Message français');
+});
+
+test('bound runtimes isolate merges and support loading after creation', async () => {
+  const first = createFbteeRuntime({ locale: 'de-DE', translations: german });
+  const second = createFbteeRuntime({ locale: 'de-DE', translations: german });
+  const lazy = createFbteeRuntime({ locale: 'en-US', translations: {} });
+  const firstMessages = fixture.messages(first);
+  const secondMessages = fixture.messages(second);
+  const lazyMessages = fixture.messages(lazy);
+  assert.equal(firstMessages.message(), 'Nachricht');
+  assert.equal(lazyMessages.message(), 'Message');
+  await Promise.resolve();
+  first.mergeTranslations({
+    'de-DE': Object.fromEntries(
+      Object.entries(catalog('de-DE', { Message: 'Aktualisiert' })['de-DE']).filter(
+        ([, value]) => value === 'Aktualisiert',
+      ),
+    ),
+  });
+  lazy.mergeTranslations(catalog('en-US', { Message: 'Loaded' }));
+  assert.equal(firstMessages.message(), 'Aktualisiert');
+  assert.equal(firstMessages.plainMessage(), 'Aktualisiert');
+  assert.equal(firstMessages.names(), 'Alice und Bob');
+  assert.equal(secondMessages.message(), 'Nachricht');
+  assert.equal(lazyMessages.message(), 'Loaded');
+  FbtTranslations.registerTranslations({});
+  assert.equal(secondMessages.message(), 'Nachricht');
+});
+
+test('bound runtimes use their own plural rules, viewer context, hooks and punctuation', () => {
+  const runtime = createFbteeRuntime({
+    gender: 'female',
+    hooks: {
+      getTranslatedInput: ({ args, table }) => ({
+        args,
+        table: table === 'Viewer' ? { __vcg: 1, '*': 'Unknown', 1: 'Male', 2: 'Female' } : table,
+      }),
+    },
+    locale: 'ru-RU',
+    translations: {},
+  });
+  const messages = fixture.messages(runtime);
+  assert.equal(messages.viewer(), 'Female');
+  const pluralRuntime = createFbteeRuntime({
+    hooks: {
+      getTranslatedInput: ({ args }) => ({
+        args,
+        table: { '*': 'other {count}', 12: 'many {count}', 20: 'few {count}' },
+      }),
+    },
+    locale: 'ru-RU',
+    translations: {},
+  });
+  assert.equal(fixture.messages(pluralRuntime).plural(2), 'few 2');
+  assert.equal(fixture.messages(pluralRuntime).plural(5), 'many 5');
+  const tr = createFbteeRuntime({ locale: 'tr-TR', translations: {} });
+  assert.equal(fixture.messages(tr).apostrophe('Ada'), "Ada'");
+  assert.equal(fixture.apostrophe('Ada'), 'Ada’');
+});
+
+test('bound result hooks and rich nested phrases keep their runtime', () => {
+  const events = [];
+  const runtime = createFbteeRuntime({
+    hooks: {
+      errorListener: (context) => {
+        events.push(context.translation);
+        return null;
+      },
+      getFbtResult: (contents) => {
+        assert.equal(fixture.message(), 'Message');
+        return new FbtResult(contents, null);
+      },
+    },
+    locale: 'de-DE',
+    translations: german,
+  });
+  assert.equal(String(fixture.messages(runtime).message()), 'Nachricht');
+  const rich = fixture.messages(runtime).rich();
+  assert.ok(rich instanceof FbtResult);
+  assert.equal(rich.getContents()[1].type, 'b');
+  assert.ok(events.includes('Nachricht'));
+  assert.ok(events.includes('world'));
+});

@@ -1,6 +1,7 @@
 import Hooks from './Hooks.tsx';
 import IntlPhonologicalRewrites from './IntlPhonologicalRewrites.tsx';
 import IntlRedundantStops from './IntlRedundantStops.tsx';
+import type { RuntimeState } from './RuntimeState.tsx';
 
 /**
  * Regular expression snippet containing all the characters that we
@@ -69,8 +70,8 @@ function _getRules(locale?: string | null): Rules {
  *        "{name}(y)i...")
  * Returns: String with phonological rules applied (e.g., "Ozguri...")
  */
-export function applyPhonologicalRules(text: string): string {
-  const rules = _getMemoizedRules(Hooks.getViewerContext().locale);
+export function applyPhonologicalRules(text: string, state?: RuntimeState): string {
+  const rules = _getMemoizedRules(Hooks.getViewerContext(state).locale);
   let result = text;
 
   for (const [regexp, replacement] of rules) {

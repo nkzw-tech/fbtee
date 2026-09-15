@@ -1,6 +1,42 @@
 {
   "fb-locale": "he_IL",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "סביבות ריצה עם תחום נפרד",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "אפשר להגדיר שפה נפרדת לחלק מהעמוד. רכיבים משתמשים ב-LocaleProvider הקרוב ביותר דרך useFbt(), ופעולות אסינכרוניות שומרות על ההגדרות האזוריות שבהן התחילו.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ייבואים גלובליים ממשיכים להשתמש בהגדרות האזוריות של האפליקציה. החליפו את סביבת הריצה של הספק כדי לשנות שפה, או קראו ל-mergeTranslations() כדי להוסיף תרגומים.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

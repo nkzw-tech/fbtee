@@ -1,0 +1,77 @@
+.scoped-example {
+  box-sizing: border-box;
+  margin: 16px auto 24px;
+  width: 600px;
+}
+
+.scoped-example h2 {
+  font-size: 1.6rem;
+  margin: 0 0 8px;
+}
+
+.scoped-example > p {
+  color: #737373;
+  font-size: 1.2rem;
+  margin: 0 0 16px;
+}
+
+.scoped-widgets {
+  align-items: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scoped-widget {
+  background: #f4f4f4;
+  border: 1px solid #c8c8c8;
+  border-radius: var(--corner-radius);
+  font-size: 1.2rem;
+  padding: 12px;
+}
+
+.scoped-widget select,
+.scoped-widget button {
+  border: 1px solid #bdc7d8;
+  border-radius: var(--corner-radius);
+  font: inherit;
+  padding: 6px 8px;
+}
+
+.scoped-widget select {
+  padding-inline-end: 32px;
+  width: 100%;
+}
+
+.scoped-widget button {
+  background: #67ae55;
+  border-color: #40ae25;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  padding-inline: 14px;
+}
+
+.scoped-widget button:hover {
+  background: #79bc64;
+}
+
+.scoped-widget button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.scoped-widget output {
+  display: block;
+  margin-top: 12px;
+}
+
+@media (max-width: 632px) {
+  .scoped-example {
+    width: calc(100% - 32px);
+  }
+
+  .scoped-widgets {
+    grid-template-columns: 1fr;
+  }
+}

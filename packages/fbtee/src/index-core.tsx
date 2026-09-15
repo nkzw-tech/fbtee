@@ -23,3 +23,10 @@ export {
   type TranslationPromise,
   default as setupLocaleContext,
 } from './setupLocaleContext.tsx';
+
+export {
+  default as createFbteeRuntime,
+  type FbteeRuntime,
+  type FbteeRuntimeOptions,
+} from './createFbteeRuntime.tsx';
+export type { FbtAPI, FbsAPI } from './Types.ts';

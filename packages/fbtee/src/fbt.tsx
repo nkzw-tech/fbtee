@@ -12,10 +12,16 @@ import getAllSubstitutions from './getAllSubstitutions.tsx';
 import Hooks, { FbtInputOpts, FbtRuntimeInput, FbtTableArgs, ResolverFn } from './Hooks.tsx';
 import intlNumUtils from './intlNumUtils.tsx';
 import { getGenderVariations, getNumberVariations } from './IntlVariationResolver.tsx';
-import list from './list.tsx';
-import getRuntimeState from './RuntimeState.tsx';
+import { listWithRuntime } from './list.tsx';
+import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
-import type { BaseResult, FbtConjunction, FbtDelimiter, NestedFbtContentItems } from './Types.ts';
+import type {
+  BaseResult,
+  FbtConjunction,
+  FbtDelimiter,
+  FbtAPI,
+  NestedFbtContentItems,
+} from './Types.ts';
 
 const ParamVariation: ParamVariationType = {
   gender: 1,
@@ -63,16 +69,20 @@ export type Variations =
 
 export function createRuntime<P, T extends BaseResult | string>({
   getResult,
+  listRuntime,
   param,
   plural,
+  state: boundState,
 }: {
-  getResult: ResolverFn<T>;
+  getResult: (...args: [...Parameters<ResolverFn<T>>, state?: RuntimeState]) => T;
+  listRuntime?: FbtAPI;
   param: (label: string, value: P, variations?: Variations) => FbtTableArg;
   plural: (count: number, label?: string | null, value?: P) => FbtTableArg;
+  state?: RuntimeState;
 }) {
   const cacheKey = Symbol();
   const defaultCachedResults = new Map<PatternString, Map<PatternHash | undefined, T>>();
-  return Object.assign(
+  const runtime = Object.assign(
     (_: string, __?: string, ___?: unknown) => {
       throw new Error(
         `fbt must be compiled with the fbtee compiler integration. Please configure the Vite plugin, Next.js plugin, Babel preset, or Oxc transform and try again.`,
@@ -84,7 +94,7 @@ export function createRuntime<P, T extends BaseResult | string>({
         inputArgs?: FbtTableArgs | null,
         options?: FbtInputOpts | null,
       ): T => {
-        const state = getRuntimeState();
+        const state = boundState ?? getRuntimeState();
         let cachedResults = defaultCachedResults;
         if (state.scoped) {
           const { resultCaches } = state;
@@ -96,11 +106,14 @@ export function createRuntime<P, T extends BaseResult | string>({
             resultCaches.set(cacheKey, cachedResults);
           }
         }
-        let { args, table } = Hooks.getTranslatedInput({
-          args: inputArgs || null,
-          options: options || null,
-          table: inputTable,
-        });
+        let { args, table } = Hooks.getTranslatedInput(
+          {
+            args: inputArgs || null,
+            options: options || null,
+            table: inputTable,
+          },
+          state,
+        );
 
         let substitutions: Substitutions | null = null;
 
@@ -110,7 +123,7 @@ export function createRuntime<P, T extends BaseResult | string>({
           }
           args.unshift(
             FbtTableAccessor.getGenderResult(
-              getGenderVariations(Hooks.getViewerContext().GENDER),
+              getGenderVariations(Hooks.getViewerContext(state).GENDER),
               null,
             ),
           );
@@ -141,14 +154,18 @@ export function createRuntime<P, T extends BaseResult | string>({
         if (cachedFbt && !substitutions) {
           return cachedFbt;
         } else {
-          const fbtContent = substituteTokens(patternString, substitutions);
+          const fbtContent = substituteTokens(patternString, substitutions, state);
           const result = getResult(
             typeof fbtContent === 'string' ? [fbtContent] : (fbtContent as NestedFbtContentItems),
             hashKey,
-            Hooks.getErrorListener({
-              hash: hashKey,
-              translation: patternString,
-            }),
+            Hooks.getErrorListener(
+              {
+                hash: hashKey,
+                translation: patternString,
+              },
+              state,
+            ),
+            state,
           );
           if (!substitutions) {
             let cachedResultsForPattern = cachedResults.get(patternString);
@@ -182,7 +199,13 @@ export function createRuntime<P, T extends BaseResult | string>({
       ) => [
         null,
         {
-          [label]: list(items, conjunction, delimiter),
+          [label]: listWithRuntime(
+            items,
+            conjunction,
+            delimiter,
+            undefined,
+            listRuntime ?? (runtime as unknown as FbtAPI),
+          ),
         },
       ],
 
@@ -212,43 +235,54 @@ export function createRuntime<P, T extends BaseResult | string>({
         FbtTableAccessor.getGenderResult(getGenderVariations(value), null),
     } as const,
   );
+  return runtime;
 }
 
-export default createRuntime<string | number, FbtResult>({
-  getResult: Hooks.getFbtResult,
-  param: (label: string, value: number | string, variations?: Variations) => {
-    const substitution = { [label]: value };
-    if (variations) {
-      if (variations[0] === ParamVariation.number) {
-        const number = variations.length > 1 ? variations[1] : value;
-        invariant(typeof number === 'number', 'fbt.param expected number');
+export function createFbtRuntime(state?: RuntimeState) {
+  return createRuntime<string | number, FbtResult>({
+    getResult: Hooks.getFbtResult,
+    param: (label: string, value: number | string, variations?: Variations) => {
+      const substitution = { [label]: value };
+      if (variations) {
+        if (variations[0] === ParamVariation.number) {
+          const number = variations.length > 1 ? variations[1] : value;
+          invariant(typeof number === 'number', 'fbt.param expected number');
 
-        const variation = getNumberVariations(number); // this will throw if `number` is invalid
-        if (typeof value === 'number') {
-          substitution[label] = intlNumUtils.formatNumberWithThousandDelimiters(value);
-        }
-        return FbtTableAccessor.getNumberResult(variation, substitution);
-      } else if (variations[0] === ParamVariation.gender) {
-        const gender = variations[1];
-        invariant(gender != null, 'expected gender value');
-        return FbtTableAccessor.getGenderResult(getGenderVariations(gender), substitution);
-      } else {
-        invariant(false, 'Unknown invariant mask');
-      }
-    } else {
-      return FbtTableAccessor.getSubstitution(substitution);
-    }
-  },
-  plural: (count: number, label?: string | null, value?: number | string) =>
-    FbtTableAccessor.getNumberResult(
-      getNumberVariations(count),
-      label
-        ? {
-            [label]:
-              typeof value === 'number'
-                ? intlNumUtils.formatNumberWithThousandDelimiters(value)
-                : value || intlNumUtils.formatNumberWithThousandDelimiters(count),
+          const variation = getNumberVariations(number, state); // this will throw if `number` is invalid
+          if (typeof value === 'number') {
+            substitution[label] = intlNumUtils.formatNumberWithThousandDelimiters(
+              value,
+              undefined,
+              state,
+            );
           }
-        : null,
-    ),
-});
+          return FbtTableAccessor.getNumberResult(variation, substitution);
+        } else if (variations[0] === ParamVariation.gender) {
+          const gender = variations[1];
+          invariant(gender != null, 'expected gender value');
+          return FbtTableAccessor.getGenderResult(getGenderVariations(gender), substitution);
+        } else {
+          invariant(false, 'Unknown invariant mask');
+        }
+      } else {
+        return FbtTableAccessor.getSubstitution(substitution);
+      }
+    },
+    plural: (count: number, label?: string | null, value?: number | string) =>
+      FbtTableAccessor.getNumberResult(
+        getNumberVariations(count, state),
+        label
+          ? {
+              [label]:
+                typeof value === 'number'
+                  ? intlNumUtils.formatNumberWithThousandDelimiters(value, undefined, state)
+                  : value ||
+                    intlNumUtils.formatNumberWithThousandDelimiters(count, undefined, state),
+            }
+          : null,
+      ),
+    state,
+  });
+}
+
+export default createFbtRuntime();

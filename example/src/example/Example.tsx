@@ -13,6 +13,7 @@ import jaJP from '../translatedFbts/ja-JP.json' with { type: 'json' };
 import ruRU from '../translatedFbts/ru-RU.json' with { type: 'json' };
 import ExampleEnum from './Example$FbtEnum.ts';
 import Locales, { Locale, updateDocumentLocale } from './Locales.tsx';
+import ScopedLocaleExample from './ScopedLocaleExample.tsx';
 
 const translations = {
   ar: ar.ar,
@@ -300,6 +301,7 @@ export default function Example() {
           </li>
         ))}
       </ul>
+      <ScopedLocaleExample />
     </div>
   );
 }

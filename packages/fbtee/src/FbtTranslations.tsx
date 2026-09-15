@@ -42,26 +42,8 @@ export default {
     return getRuntimeState().translations;
   },
 
-  getTranslatedInput({ args, options }: FbtRuntimeCallInput): FbtTranslatedInput | null {
-    const hashKey = options?.hk;
-    const { locale } = Hooks.getViewerContext();
-    const currentTranslations = getRuntimeState().translations;
-    const table = getLocaleAliases(locale)
-      .map((localeAlias) => currentTranslations[localeAlias])
-      .find(Boolean);
-    if (process.env.NODE_ENV === 'development') {
-      if (!table && !getLocaleAliases(defaultLocale).includes(locale)) {
-        // eslint-disable-next-line no-console
-        console.warn('Translations have not been provided.');
-      }
-    }
-
-    return hashKey == null || table?.[hashKey] == null
-      ? null
-      : {
-          args,
-          table: table[hashKey],
-        };
+  getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput | null {
+    return getTranslatedInput(input, getRuntimeState());
   },
 
   mergeTranslations(newTranslations: TranslationDictionary) {
@@ -69,13 +51,41 @@ export default {
   },
 
   registerTranslations(translations: TranslationDictionary) {
-    const state = getRuntimeState();
-    if (state.scoped && process.env.NODE_ENV !== 'production') {
-      freezeTranslationsInDEV(translations);
-    }
-    state.translations = translations;
-    if (state.scoped) {
-      state.resultCaches.clear();
-    }
+    registerTranslations(getRuntimeState(), translations);
   },
 };
+
+export function getTranslatedInput(
+  { args, options }: FbtRuntimeCallInput,
+  state: RuntimeState,
+): FbtTranslatedInput | null {
+  const hashKey = options?.hk;
+  const { locale } = Hooks.getViewerContext(state);
+  const currentTranslations = state.translations;
+  const table = getLocaleAliases(locale)
+    .map((localeAlias) => currentTranslations[localeAlias])
+    .find(Boolean);
+  if (process.env.NODE_ENV === 'development') {
+    if (!table && !getLocaleAliases(defaultLocale).includes(locale)) {
+      // eslint-disable-next-line no-console
+      console.warn('Translations have not been provided.');
+    }
+  }
+
+  return hashKey == null || table?.[hashKey] == null
+    ? null
+    : {
+        args,
+        table: table[hashKey],
+      };
+}
+
+export function registerTranslations(state: RuntimeState, translations: TranslationDictionary) {
+  if (state.scoped && process.env.NODE_ENV !== 'production') {
+    freezeTranslationsInDEV(translations);
+  }
+  state.translations = translations;
+  if (state.scoped) {
+    state.resultCaches.clear();
+  }
+}

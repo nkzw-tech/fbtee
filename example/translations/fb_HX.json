@@ -862,6 +862,90 @@
         }
       ],
       "types": []
+    },
+    "33rUvElOU9gDMJOd96PSwQ==": {
+      "description": "Scoped demo formatted amount",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "7074l: {amount}",
+          "variations": {}
+        }
+      ]
+    },
+    "QAHLJWMFVXCkSbleu9xRgw==": {
+      "description": "Scoped demo pending action",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "54v1ng…",
+          "variations": {}
+        }
+      ]
+    },
+    "qhCbuKMypyYCPP5auQjO9A==": {
+      "description": "Scoped demo save button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "54v3",
+          "variations": {}
+        }
+      ]
+    },
+    "jgnTWfAK2OJ8HVqt3NRewQ==": {
+      "description": "Scoped demo locale selector",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Pr3v13w l4ngu4g3",
+          "variations": {}
+        }
+      ]
+    },
+    "9a82k5AUIXvoJaUQcVTCdQ==": {
+      "description": "Scoped demo heading",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "1nd3p3nd3n7 l0c4l35",
+          "variations": {}
+        }
+      ]
+    },
+    "rcpGNCW6ncmtU7EVyAru+A==": {
+      "description": "Scoped demo instructions",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "R3nd3r c0mp0n3n75 7h47 u53 4 d1ff3r3n7 l0c4l3 fr0m 7h3 r357 0f 7h3 p4g3.",
+          "variations": {}
+        }
+      ]
+    },
+    "WSLLgtkg/wv6OoW/5ZyVhw==": {
+      "description": "Scoped demo save confirmation",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "54v3d {amount}.",
+          "variations": {}
+        }
+      ]
     }
   }
 }

@@ -898,6 +898,90 @@
         }
       ],
       "types": []
+    },
+    "33rUvElOU9gDMJOd96PSwQ==": {
+      "description": "Scoped demo formatted amount",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Итого: {amount}",
+          "variations": {}
+        }
+      ]
+    },
+    "QAHLJWMFVXCkSbleu9xRgw==": {
+      "description": "Scoped demo pending action",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Сохранение…",
+          "variations": {}
+        }
+      ]
+    },
+    "qhCbuKMypyYCPP5auQjO9A==": {
+      "description": "Scoped demo save button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Сохранить",
+          "variations": {}
+        }
+      ]
+    },
+    "jgnTWfAK2OJ8HVqt3NRewQ==": {
+      "description": "Scoped demo locale selector",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Язык предпросмотра",
+          "variations": {}
+        }
+      ]
+    },
+    "9a82k5AUIXvoJaUQcVTCdQ==": {
+      "description": "Scoped demo heading",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Независимые локали",
+          "variations": {}
+        }
+      ]
+    },
+    "rcpGNCW6ncmtU7EVyAru+A==": {
+      "description": "Scoped demo instructions",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "Отображайте компоненты, использующие локаль, отличную от остальной страницы.",
+          "variations": {}
+        }
+      ]
+    },
+    "WSLLgtkg/wv6OoW/5ZyVhw==": {
+      "description": "Scoped demo save confirmation",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "{amount} сохранено.",
+          "variations": {}
+        }
+      ]
     }
   }
 }

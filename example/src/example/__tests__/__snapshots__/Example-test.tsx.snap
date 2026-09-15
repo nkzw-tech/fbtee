@@ -331,6 +331,156 @@ exports[`Example.react renders the example 1`] = `
         </a>
       </li>
     </ul>
+    <section
+      class="scoped-example"
+    >
+      <h2>
+        Independent locales
+      </h2>
+      <p>
+        Render components that use a different locale from the rest of the page.
+      </p>
+      <div
+        class="scoped-widgets"
+      >
+        <div
+          class="scoped-widget"
+          dir="ltr"
+          lang="de"
+        >
+          <select
+            aria-label="Preview language"
+          >
+            <option
+              value="ar_AR"
+            >
+              العربية
+            </option>
+            <option
+              value="de_DE"
+            >
+              Deutsch
+            </option>
+            <option
+              value="en_US"
+            >
+              English (US)‎
+            </option>
+            <option
+              value="es_LA"
+            >
+              Español
+            </option>
+            <option
+              value="fb_HX"
+            >
+              l33t 5p34k
+            </option>
+            <option
+              value="fr_FR"
+            >
+              Français
+            </option>
+            <option
+              value="he_IL"
+            >
+              עברית
+            </option>
+            <option
+              value="it_IT"
+            >
+              Italiano
+            </option>
+            <option
+              value="ja_JP"
+            >
+              日本語
+            </option>
+            <option
+              value="ru_RU"
+            >
+              Русский
+            </option>
+          </select>
+          <p>
+            Summe: 1.234,5
+          </p>
+          <button
+            type="button"
+          >
+            Speichern
+          </button>
+        </div>
+        <div
+          class="scoped-widget"
+          dir="ltr"
+          lang="ja"
+        >
+          <select
+            aria-label="Preview language"
+          >
+            <option
+              value="ar_AR"
+            >
+              العربية
+            </option>
+            <option
+              value="de_DE"
+            >
+              Deutsch
+            </option>
+            <option
+              value="en_US"
+            >
+              English (US)‎
+            </option>
+            <option
+              value="es_LA"
+            >
+              Español
+            </option>
+            <option
+              value="fb_HX"
+            >
+              l33t 5p34k
+            </option>
+            <option
+              value="fr_FR"
+            >
+              Français
+            </option>
+            <option
+              value="he_IL"
+            >
+              עברית
+            </option>
+            <option
+              value="it_IT"
+            >
+              Italiano
+            </option>
+            <option
+              value="ja_JP"
+            >
+              日本語
+            </option>
+            <option
+              value="ru_RU"
+            >
+              Русский
+            </option>
+          </select>
+          <p>
+            合計: 1,234.5
+          </p>
+          <button
+            type="button"
+          >
+            保存
+          </button>
+        </div>
+      </div>
+    </section>
   </div>
 </DocumentFragment>
 `;

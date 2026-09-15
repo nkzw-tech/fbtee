@@ -1,7 +1,7 @@
 import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
 import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
-import getRuntimeState from './RuntimeState.tsx';
+import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 import type {
   BaseResult,
   FbtErrorContext,
@@ -84,16 +84,17 @@ export type Hooks = Partial<{
 }>;
 
 export default {
-  getErrorListener(context: FbtErrorContext): IFbtErrorListener | null {
-    return getRuntimeState().hooks.errorListener?.(context) || null;
+  getErrorListener(context: FbtErrorContext, state = getRuntimeState()): IFbtErrorListener | null {
+    return state.hooks.errorListener?.(context) || null;
   },
 
   getFbsResult(
     contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
+    state = getRuntimeState(),
   ): PlainStringResult {
-    const { getFbsResult } = getRuntimeState().hooks;
+    const { getFbsResult } = state.hooks;
     if (!getFbsResult) {
       throw new Error(`Hooks: 'getFbsResult' is not registered`);
     }
@@ -104,28 +105,28 @@ export default {
     contents: NestedFbtContentItems,
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
+    state = getRuntimeState(),
   ): FbtResult {
-    const { getFbtResult } = getRuntimeState().hooks;
+    const { getFbtResult } = state.hooks;
     if (!getFbtResult) {
       throw new Error(`Hooks: 'getFbtResult' is not registered`);
     }
     return getFbtResult(contents, hashKey, errorListener);
   },
 
-  getTranslatedInput(input: FbtRuntimeCallInput): FbtTranslatedInput {
-    return getRuntimeState().hooks.getTranslatedInput?.(input) ?? input;
+  getTranslatedInput(input: FbtRuntimeCallInput, state = getRuntimeState()): FbtTranslatedInput {
+    return state.hooks.getTranslatedInput?.(input) ?? input;
   },
 
-  getViewerContext(): typeof IntlViewerContext {
-    const { getViewerContext } = getRuntimeState().hooks;
+  getViewerContext(state = getRuntimeState()): typeof IntlViewerContext {
+    const { getViewerContext } = state.hooks;
     if (!getViewerContext) {
       throw new Error(`Hooks: 'getViewerContext' is not registered`);
     }
     return getViewerContext();
   },
 
-  register(registrations: Hooks) {
-    const state = getRuntimeState();
+  register(registrations: Hooks, state: RuntimeState = getRuntimeState()) {
     Object.assign(state.hooks, registrations);
     if (state.scoped) {
       state.resultCaches.clear();

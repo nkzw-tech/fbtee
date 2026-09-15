@@ -1,19 +1,16 @@
 /// <reference types="../ReactTypes.d.ts" />
 
 import type { ReactElement, ReactNode } from 'react';
-import fbt from './fbt.tsx';
-import type { FbtConjunction, FbtDelimiter } from './Types.ts';
+import defaultFbt from './fbt.tsx';
+import type { FbtAPI, FbtConjunction, FbtDelimiter } from './Types.ts';
 
-export default function list(
+export function listWithRuntime(
   items: ReadonlyArray<string | ReactElement | null | undefined>,
   conjunction: FbtConjunction = 'and',
   delimiter: FbtDelimiter = 'comma',
   options?: { serialComma?: boolean },
+  fbt: FbtAPI = defaultFbt as unknown as FbtAPI,
 ): ReactNode {
-  // Ensure the local version of `fbt` is used instead of auto-importing `fbtee`.
-  // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
-  fbt;
-
   items = items.filter(Boolean);
 
   const count = items.length;
@@ -126,6 +123,15 @@ export default function list(
       throw new Error(`Invalid conjunction ${conjunction} provided to '<fbt:list>'.`);
     }
   }
+}
+
+export default function list(
+  items: ReadonlyArray<string | ReactElement | null | undefined>,
+  conjunction?: FbtConjunction,
+  delimiter?: FbtDelimiter,
+  options?: { serialComma?: boolean },
+): ReactNode {
+  return listWithRuntime(items, conjunction, delimiter, options);
 }
 
 export function List({

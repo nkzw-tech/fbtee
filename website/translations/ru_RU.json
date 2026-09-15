@@ -1,6 +1,42 @@
 {
   "fb-locale": "ru_RU",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Изолированные среды выполнения",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Задайте отдельный язык для части страницы. Компоненты используют ближайший LocaleProvider через useFbt(), а асинхронные действия сохраняют локаль, с которой они были запущены.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Глобальные импорты продолжают использовать локаль приложения. Смените среду выполнения провайдера, чтобы изменить язык, или вызовите mergeTranslations(), чтобы добавить переводы.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

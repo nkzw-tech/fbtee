@@ -898,6 +898,90 @@
         }
       ],
       "types": []
+    },
+    "33rUvElOU9gDMJOd96PSwQ==": {
+      "description": "Scoped demo formatted amount",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "الإجمالي: {amount}",
+          "variations": {}
+        }
+      ]
+    },
+    "QAHLJWMFVXCkSbleu9xRgw==": {
+      "description": "Scoped demo pending action",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "جارٍ الحفظ…",
+          "variations": {}
+        }
+      ]
+    },
+    "qhCbuKMypyYCPP5auQjO9A==": {
+      "description": "Scoped demo save button",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "حفظ",
+          "variations": {}
+        }
+      ]
+    },
+    "jgnTWfAK2OJ8HVqt3NRewQ==": {
+      "description": "Scoped demo locale selector",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "لغة المعاينة",
+          "variations": {}
+        }
+      ]
+    },
+    "9a82k5AUIXvoJaUQcVTCdQ==": {
+      "description": "Scoped demo heading",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "لغات مستقلة",
+          "variations": {}
+        }
+      ]
+    },
+    "rcpGNCW6ncmtU7EVyAru+A==": {
+      "description": "Scoped demo instructions",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "اعرض مكونات تستخدم إعدادًا محليًا مختلفًا عن بقية الصفحة.",
+          "variations": {}
+        }
+      ]
+    },
+    "WSLLgtkg/wv6OoW/5ZyVhw==": {
+      "description": "Scoped demo save confirmation",
+      "tokens": [],
+      "types": [],
+      "status": "translated",
+      "translations": [
+        {
+          "translation": "تم حفظ {amount}.",
+          "variations": {}
+        }
+      ]
     }
   }
 }

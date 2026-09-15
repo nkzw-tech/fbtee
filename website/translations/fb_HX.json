@@ -1,6 +1,42 @@
 {
   "fb-locale": "fb_HX",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "5c0p3d Run71m35",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "G1v3 p4r7 0f 4 p4g3 175 0wn l4ngu4g3. C0mp0n3n75 u53 7h3 n34r357 LocaleProvider 7hr0ugh useFbt(), 4nd 45ync 4c710n5 k33p 7h3 l0c4l3 7h3y 574r73d w17h.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Gl0b4l 1mp0r75 k33p u51ng 7h3 4pp'5 l0c4l3. 5w17ch 7h3 pr0v1d3r'5 run71m3 70 ch4ng3 l4ngu4g35, 0r c4ll mergeTranslations() 70 4dd 7r4n5l4710n5.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

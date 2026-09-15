@@ -3,12 +3,13 @@ import type { FbtTableKey } from './CompilerTypes.ts';
 import Hooks from './Hooks.tsx';
 import IntlNumberType from './IntlNumberType.tsx';
 import IntlVariations from './IntlVariations.tsx';
+import type { RuntimeState } from './RuntimeState.tsx';
 
 // Same as `EXACTLY_ONE` from babel-plugin-fbtee/src/translate/IntlVariations.tsx
 export const EXACTLY_ONE = '_1';
 
-export function getNumberVariations(number: number): Array<FbtTableKey> {
-  const numType = IntlNumberType.get(Hooks.getViewerContext().locale).getVariation(number);
+export function getNumberVariations(number: number, state?: RuntimeState): Array<FbtTableKey> {
+  const numType = IntlNumberType.get(Hooks.getViewerContext(state).locale).getVariation(number);
   invariant(
     numType & IntlVariations.BITMASK_NUMBER,
     'Invalid number provided: %s (%s)',

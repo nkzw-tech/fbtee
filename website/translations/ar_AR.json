@@ -1,6 +1,42 @@
 {
   "fb-locale": "ar_AR",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "بيئات تشغيل ذات نطاق مستقل",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "امنح جزءًا من الصفحة لغته الخاصة. تستخدم المكوّنات أقرب LocaleProvider عبر useFbt()، وتحتفظ الإجراءات غير المتزامنة بالإعدادات المحلية التي بدأت بها.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "تستمر الاستيرادات العامة في استخدام الإعدادات المحلية للتطبيق. بدّل بيئة تشغيل الموفّر لتغيير اللغة، أو استدعِ mergeTranslations() لإضافة ترجمات.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

@@ -1,6 +1,42 @@
 {
   "fb-locale": "ja_JP",
   "translations": {
+    "viJDQYDZ8H2o8EWiGf/l7w==": {
+      "description": "Scoped runtime heading",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "スコープ付きランタイム",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6sCryEz2UyZVl1Kp6wq/kg==": {
+      "description": "Scoped runtime description",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ページの一部に独自の言語を設定できます。コンポーネントは useFbt() を通じて最も近い LocaleProvider を使用し、非同期アクションは開始時のロケールを保持します。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "NsFi6v/Y7pWw3DH04jeM2w==": {
+      "description": "Scoped runtime global behavior",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "グローバルなインポートは引き続きアプリのロケールを使用します。言語を切り替えるにはプロバイダーのランタイムを変更し、翻訳を追加するには mergeTranslations() を呼び出します。",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
     "6/ZbJcEx19aXKls64qknkg==": {
       "description": "Locale switcher button",
       "status": "translated",

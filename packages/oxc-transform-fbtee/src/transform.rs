@@ -62,6 +62,7 @@ pub fn collect_program<'a>(
     let default_call_options = parse_fbt_docblock(program.source_text)?;
     let mut collector = BindingCollector::new(options);
     collector.visit_program(program);
+    collector.collect_scoped(program, &scoping);
     let mut tx = FbteeTransform::new(
         allocator,
         program.source_text,
@@ -97,6 +98,7 @@ pub fn transform_program<'a>(
     };
     let mut collector = BindingCollector::new(&options);
     collector.visit_program(program);
+    collector.collect_scoped(program, &scoping);
     let mut tx = FbteeTransform::new(
         allocator,
         program.source_text,
@@ -157,6 +159,10 @@ fn promote_type_only_fbtee_imports<'a>(
         };
 
         if source_is_fbtee {
+            let declaration_will_be_promoted = declaration_is_type
+                && specifiers.iter().any(|specifier| {
+                    required.contains(&import_specifier_local_name(specifier).as_str())
+                });
             let mut declaration_promoted = false;
             for specifier in specifiers.iter_mut() {
                 let name = import_specifier_local_name(specifier);
@@ -173,7 +179,7 @@ fn promote_type_only_fbtee_imports<'a>(
                     *specifier = runtime_import_specifier(allocator, &name);
                     promoted.insert(name);
                     declaration_promoted = true;
-                } else if declaration_is_type {
+                } else if declaration_will_be_promoted {
                     if let ImportDeclarationSpecifier::ImportSpecifier(specifier) = specifier {
                         specifier.import_kind = ImportOrExportKind::Type;
                     }
@@ -376,6 +382,17 @@ impl<'a> VisitMut<'a> for GeneratedSpanAnchor {
     }
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum ScopedBinding {
+    Factory,
+    Runtime,
+    Fbt,
+    Fbs,
+    RuntimeType,
+    FbtType,
+    FbsType,
+}
+
 struct BindingCollector<'o> {
     options: &'o FbteeOptions,
     fbtee_symbols: BTreeSet<SymbolId>,
@@ -383,6 +400,7 @@ struct BindingCollector<'o> {
     top_level_fbtee: BTreeSet<String>,
     imported_enums: BTreeMap<SymbolId, &'o IndexMap<String, String>>,
     depth: usize,
+    scoped_symbols: BTreeMap<SymbolId, ScopedBinding>,
 }
 impl<'o> BindingCollector<'o> {
     fn new(options: &'o FbteeOptions) -> Self {
@@ -393,6 +411,23 @@ impl<'o> BindingCollector<'o> {
             top_level_fbtee: BTreeSet::new(),
             imported_enums: BTreeMap::new(),
             depth: 0,
+            scoped_symbols: BTreeMap::new(),
+        }
+    }
+    fn collect_scoped<'a>(&mut self, program: &Program<'a>, scoping: &Scoping) {
+        if self.scoped_symbols.is_empty() {
+            return;
+        }
+        loop {
+            let count = self.scoped_symbols.len();
+            ScopedBindingCollector {
+                collector: self,
+                scoping,
+            }
+            .visit_program(program);
+            if self.scoped_symbols.len() == count {
+                break;
+            }
         }
     }
     fn register(
@@ -438,6 +473,23 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
     fn visit_import_declaration(&mut self, import: &ImportDeclaration<'a>) {
         if let Some(specifiers) = &import.specifiers {
             for specifier in specifiers {
+                if let ImportDeclarationSpecifier::ImportSpecifier(specifier) = specifier {
+                    let kind = match specifier.imported.name().as_str() {
+                        "useFbt" | "createFbteeRuntime"
+                            if import.import_kind == ImportOrExportKind::Value
+                                && specifier.import_kind == ImportOrExportKind::Value =>
+                        {
+                            Some(ScopedBinding::Factory)
+                        }
+                        "FbteeRuntime" => Some(ScopedBinding::RuntimeType),
+                        "FbtAPI" => Some(ScopedBinding::FbtType),
+                        "FbsAPI" => Some(ScopedBinding::FbsType),
+                        _ => None,
+                    };
+                    if let (Some(id), Some(kind)) = (specifier.local.symbol_id.get(), kind) {
+                        self.scoped_symbols.insert(id, kind);
+                    }
+                }
                 let (local, specifier_is_type, enum_import, named_fbtee_import) = match specifier {
                     ImportDeclarationSpecifier::ImportSpecifier(x) => (
                         &x.local,
@@ -474,6 +526,16 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
                     for property in &pattern.properties {
                         if matches!(
                             property_key_string(&property.key).as_deref(),
+                            Some("useFbt" | "createFbteeRuntime")
+                        ) {
+                            for ident in property.value.get_binding_identifiers() {
+                                if let Some(id) = ident.symbol_id.get() {
+                                    self.scoped_symbols.insert(id, ScopedBinding::Factory);
+                                }
+                            }
+                        }
+                        if matches!(
+                            property_key_string(&property.key).as_deref(),
                             Some("fbt" | "fbs")
                         ) {
                             for ident in property.value.get_binding_identifiers() {
@@ -486,6 +548,112 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
             }
         }
         walk::walk_variable_declarator(self, declarator);
+    }
+}
+
+struct ScopedBindingCollector<'s, 'o> {
+    collector: &'s mut BindingCollector<'o>,
+    scoping: &'s Scoping,
+}
+
+impl ScopedBindingCollector<'_, '_> {
+    fn ident_kind(&self, ident: &IdentifierReference<'_>) -> Option<ScopedBinding> {
+        ident
+            .reference_id
+            .get()
+            .and_then(|id| self.scoping.get_reference(id).symbol_id())
+            .and_then(|id| self.collector.scoped_symbols.get(&id).copied())
+    }
+
+    fn expression_kind(&self, expr: &Expression<'_>) -> Option<ScopedBinding> {
+        match unwrap_transparent_expression(expr) {
+            Expression::Identifier(ident) => self.ident_kind(ident),
+            Expression::CallExpression(call)
+                if self.expression_kind(&call.callee) == Some(ScopedBinding::Factory) =>
+            {
+                Some(ScopedBinding::Runtime)
+            }
+            Expression::StaticMemberExpression(member)
+                if self.expression_kind(&member.object) == Some(ScopedBinding::Runtime) =>
+            {
+                match member.property.name.as_str() {
+                    "fbt" => Some(ScopedBinding::Fbt),
+                    "fbs" => Some(ScopedBinding::Fbs),
+                    _ => None,
+                }
+            }
+            _ => None,
+        }
+    }
+
+    fn annotation_kind(&self, annotation: Option<&TSTypeAnnotation<'_>>) -> Option<ScopedBinding> {
+        let TSType::TSTypeReference(reference) = &annotation?.type_annotation else {
+            return None;
+        };
+        let TSTypeName::IdentifierReference(ident) = &reference.type_name else {
+            return None;
+        };
+        match self.ident_kind(ident)? {
+            ScopedBinding::RuntimeType => Some(ScopedBinding::Runtime),
+            ScopedBinding::FbtType => Some(ScopedBinding::Fbt),
+            ScopedBinding::FbsType => Some(ScopedBinding::Fbs),
+            _ => None,
+        }
+    }
+
+    fn register_pattern(&mut self, pattern: &BindingPattern<'_>, kind: ScopedBinding) {
+        match pattern {
+            BindingPattern::BindingIdentifier(ident) => {
+                if let Some(id) = ident.symbol_id.get() {
+                    self.collector.scoped_symbols.insert(id, kind);
+                    if matches!(
+                        (kind, ident.name.as_str()),
+                        (ScopedBinding::Fbt, "fbt") | (ScopedBinding::Fbs, "fbs")
+                    ) {
+                        self.collector.fbtee_symbols.insert(id);
+                        self.collector.fbtee_runtime_symbols.insert(id);
+                    }
+                }
+            }
+            BindingPattern::ObjectPattern(pattern) if kind == ScopedBinding::Runtime => {
+                for property in &pattern.properties {
+                    let kind = match property_key_string(&property.key).as_deref() {
+                        Some("fbt") => ScopedBinding::Fbt,
+                        Some("fbs") => ScopedBinding::Fbs,
+                        _ => continue,
+                    };
+                    self.register_pattern(&property.value, kind);
+                }
+            }
+            BindingPattern::AssignmentPattern(pattern) => {
+                self.register_pattern(&pattern.left, kind)
+            }
+            _ => {}
+        }
+    }
+}
+
+impl<'a> Visit<'a> for ScopedBindingCollector<'_, '_> {
+    fn visit_variable_declarator(&mut self, declarator: &VariableDeclarator<'a>) {
+        if let Some(kind) = self
+            .annotation_kind(declarator.type_annotation.as_deref())
+            .or_else(|| {
+                declarator
+                    .init
+                    .as_ref()
+                    .and_then(|expr| self.expression_kind(expr))
+            })
+        {
+            self.register_pattern(&declarator.id, kind);
+        }
+        walk::walk_variable_declarator(self, declarator);
+    }
+
+    fn visit_formal_parameter(&mut self, parameter: &FormalParameter<'a>) {
+        if let Some(kind) = self.annotation_kind(parameter.type_annotation.as_deref()) {
+            self.register_pattern(&parameter.pattern, kind);
+        }
+        walk::walk_formal_parameter(self, parameter);
     }
 }
 
@@ -1232,7 +1400,10 @@ impl<'a, 'o> FbteeTransform<'a, 'o> {
         }
         if let JSXElementName::IdentifierReference(ident) = &element.opening_element.name {
             self.require_runtime_binding(module, ident);
-        } else if !self.top_level_fbtee.contains(module.name()) {
+        } else if self
+            .jsx_binding_symbol(module)
+            .is_none_or(|id| !self.fbtee_runtime_symbols.contains(&id))
+        {
             match module {
                 ModuleName::Fbt => self.needs_fbt_binding = true,
                 ModuleName::Fbs => self.needs_fbs_binding = true,
@@ -1354,12 +1525,15 @@ impl<'a, 'o> FbteeTransform<'a, 'o> {
             span: element.span,
         })
     }
-    fn jsx_binding_is_fbtee(&self, module: ModuleName) -> bool {
+    fn jsx_binding_symbol(&self, module: ModuleName) -> Option<SymbolId> {
         self.scopes
             .last()
             .copied()
             .flatten()
             .and_then(|scope| self.scoping.find_binding(scope, module.name().into()))
+    }
+    fn jsx_binding_is_fbtee(&self, module: ModuleName) -> bool {
+        self.jsx_binding_symbol(module)
             .is_none_or(|id| self.fbtee_symbols.contains(&id) || !self.symbol_is_value(id))
     }
 
@@ -5734,6 +5908,41 @@ mod tests {
         .unwrap();
         assert!(scoped.contains("return fbt._(\"A\""), "{scoped}");
         assert_eq!(scoped.matches("require(\"fbtee\")").count(), 1, "{scoped}");
+    }
+
+    #[test]
+    fn compiles_explicit_scoped_translators() {
+        for source in [
+            "import { useFbt } from 'fbtee'; function View() { const { fbt, fbs } = useFbt(); return [fbt('Hello', 'd'), <fbs desc='d'>Hello</fbs>, <fbt desc='rich'>Hello <b>world</b></fbt>]; }",
+            "import { createFbteeRuntime as create } from 'fbtee'; const runtime = create(options); const { fbt } = runtime; const x = () => fbt('Hello', 'd');",
+            "import { useFbt as useLocale } from './locale'; function useMessages() { const runtime = useLocale(); const fbt = runtime.fbt; return async () => { await save(); return <fbt desc='d'>Hello</fbt>; }; }",
+            "import type { FbteeRuntime } from 'fbtee'; function message({ fbt }: FbteeRuntime) { return fbt('Hello', 'd'); }",
+            "import type { FbteeRuntime as Runtime } from 'fbtee'; function message(runtime: Runtime) { const { fbt } = runtime; return <fbt desc='d'>Hello</fbt>; }",
+            "import type { FbtAPI } from 'fbtee'; const message = (fbt: FbtAPI) => fbt('Hello', 'd');",
+            "import type { FbtAPI } from './Types.ts'; function message(fbt: FbtAPI = fallback) { return <fbt desc='d'>Hello</fbt>; }",
+            "import type { FbteeRuntime } from 'fbtee'; const { fbt }: FbteeRuntime = importedRuntime; const message = fbt('Hello', 'd');",
+        ] {
+            let output = transform(source, FbteeOptions::default()).unwrap();
+            assert!(output.contains("fbt._("), "{output}");
+            assert!(!output.contains("import { fbt"), "{output}");
+            assert!(!output.contains("import { fbs"), "{output}");
+            assert!(!output.contains("__locale"), "{output}");
+            let allocator = Allocator::default();
+            let parsed = Parser::new(&allocator, &output, SourceType::tsx()).parse();
+            assert!(!parsed.diagnostics.has_errors(), "{output}");
+        }
+    }
+
+    #[test]
+    fn scoped_bindings_do_not_capture_unrelated_translators() {
+        let output = transform(
+            "import { useFbt } from 'fbtee'; function View() { const { fbt } = useFbt(); function helper(fbt) { return fbt('Untouched', 'd'); } return fbt('Translated', 'd'); } const global = <fbt desc='d'>Global</fbt>; function Other(useFbt) { const { fbt } = useFbt(); return fbt('Untouched', 'd'); }",
+            FbteeOptions::default(),
+        ).unwrap();
+        assert!(output.contains("fbt._(\"Translated\""), "{output}");
+        assert!(output.contains("fbt._(\"Global\""), "{output}");
+        assert_eq!(output.matches("fbt(\"Untouched\"").count(), 2, "{output}");
+        assert!(output.contains("import { fbt } from \"fbtee\""), "{output}");
     }
 
     #[test]

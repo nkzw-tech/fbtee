@@ -559,6 +559,41 @@ createRoot(document.getElementById('root')!).render(
 );`}
               />
 
+              <h4 className="mb-4 font-semibold" id="scoped-runtimes">
+                <fbt desc="Scoped runtime heading">Scoped Runtimes</fbt>
+              </h4>
+              <p className="mb-4">
+                <fbt desc="Scoped runtime description">
+                  Give part of a page its own language. Components use the nearest LocaleProvider
+                  through useFbt(), and async actions keep the locale they started with.
+                </fbt>
+              </p>
+              <Code
+                code={`import { createFbteeRuntime, LocaleProvider, useFbt } from 'fbtee';
+import german from './translations/de-DE.json' with { type: 'json' };
+
+const germanRuntime = createFbteeRuntime({ locale: 'de-DE', translations: german });
+
+function SaveButton() {
+  const { fbt } = useFbt();
+  return <button>{fbt('Save', 'Save button')}</button>;
+}
+
+function Preview() {
+  return (
+    <LocaleProvider runtime={germanRuntime}>
+      <SaveButton />
+    </LocaleProvider>
+  );
+}`}
+              />
+              <p className="mb-4">
+                <fbt desc="Scoped runtime global behavior">
+                  Global imports keep using the app&apos;s locale. Switch the provider&apos;s
+                  runtime to change languages, or call mergeTranslations() to add translations.
+                </fbt>
+              </p>
+
               <h4 className="mb-4 font-semibold">
                 <fbt desc="Headline">Server Rendering</fbt>
               </h4>
