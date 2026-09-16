@@ -1,4 +1,4 @@
-import { transformSync } from '@nkzw/oxc-transform-fbtee';
+import { transformSync } from '@nkzw/fbtee-compiler';
 
 const fbteeSourcePattern = /fbt|fbs/;
 

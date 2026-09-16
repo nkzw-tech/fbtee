@@ -51,7 +51,6 @@ mkdirSync(outputDirectory);
 for (const directory of [
   platformDirectory,
   packageDirectory,
-  join(packageDirectory, '..', 'fbtee-cli'),
   join(packageDirectory, '..', 'next-plugin-fbtee'),
   join(packageDirectory, '..', 'vite-plugin-fbtee'),
 ]) {

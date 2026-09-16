@@ -438,7 +438,7 @@ export default function App() {
                       plugin:
                     </fbt>
                   </p>
-                  <Code code={`npm install -D @nkzw/vite-plugin-fbtee @nkzw/fbtee-cli`} />
+                  <Code code={`npm install -D @nkzw/vite-plugin-fbtee @nkzw/fbtee-compiler`} />
                   <Code
                     code={`import fbtee from '@nkzw/vite-plugin-fbtee';
 import react from '@vitejs/plugin-react';
@@ -463,7 +463,7 @@ export default defineConfig({
                       Use the native Oxc plugin with either Turbopack or webpack:
                     </fbt>
                   </p>
-                  <Code code={`npm install -D @nkzw/next-plugin-fbtee @nkzw/fbtee-cli`} />
+                  <Code code={`npm install -D @nkzw/next-plugin-fbtee @nkzw/fbtee-compiler`} />
                   <Code
                     code={`import withFbtee from '@nkzw/next-plugin-fbtee';
 

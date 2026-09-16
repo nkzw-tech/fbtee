@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { transformSync as oxcTransformSync } from 'oxc-transform';
-import { transformSync as oxcFbteeTransformSync } from './packages/oxc-transform-fbtee/index.js';
+import { transformSync as oxcFbteeTransformSync } from './packages/fbtee-compiler/index.js';
 
 const createTransformer = (opts = {}) => ({
   getCacheKey: (source, filename, { configString }) =>

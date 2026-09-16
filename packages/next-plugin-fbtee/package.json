@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/next-plugin-fbtee",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Next.js plugin for fbtee powered by the native Oxc transform.",
   "keywords": [
     "fbt",
@@ -38,7 +38,7 @@
     "test": "node test/e2e.mjs && node --conditions=react-server --test test/request-scope.mjs"
   },
   "dependencies": {
-    "@nkzw/oxc-transform-fbtee": "workspace:*"
+    "@nkzw/fbtee-compiler": "workspace:*"
   },
   "devDependencies": {
     "fbtee": "workspace:*",

@@ -38,7 +38,7 @@ module.exports = function fbteeLoader(source, inputSourceMap) {
     return;
   }
 
-  transformModule ??= import('@nkzw/oxc-transform-fbtee');
+  transformModule ??= import('@nkzw/fbtee-compiler');
   transformModule.then(({ transformSync }) => {
     const options = this.getOptions?.() ?? {};
     const result = transformSync(this.resourcePath, source, {

@@ -23,6 +23,7 @@ for (const entry of readdirSync(join(packageDirectory, 'npm'), { withFileTypes: 
   const platformPackage = JSON.parse(
     readFileSync(join(packageDirectory, 'npm', entry.name, 'package.json'), 'utf8'),
   );
+  assert.equal(platformPackage.version, packageJson.version);
   assert.deepEqual(platformPackage.bin, {
     'fbtee-native': entry.name.startsWith('win32-') ? 'fbtee.exe' : 'fbtee',
   });

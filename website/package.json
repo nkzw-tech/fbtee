@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",
-    "@nkzw/fbtee-cli": "workspace:*",
+    "@nkzw/fbtee-compiler": "workspace:*",
     "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/vite": "^4.3.2",

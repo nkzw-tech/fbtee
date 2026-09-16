@@ -1,10 +1,9 @@
 packages:
   - example
-  - packages/fbtee-cli
   - packages/fbtee
   - packages/next-plugin-fbtee
-  - packages/oxc-transform-fbtee
-  - packages/oxc-transform-fbtee/npm/*
+  - packages/fbtee-compiler
+  - packages/fbtee-compiler/npm/*
   - packages/vite-plugin-fbtee
   - packages/eslint-plugin-fbtee
   - website

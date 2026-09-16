@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/oxc-transform-fbtee-binding-darwin-x64",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Native Rust Oxc transform for fbtee.",
   "keywords": [
     "fbt",
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
-    "directory": "packages/oxc-transform-fbtee"
+    "directory": "packages/fbtee-compiler"
   },
   "bin": {
     "fbtee-native": "fbtee"

@@ -1,5 +1,5 @@
 [workspace]
-members = ["packages/oxc-transform-fbtee"]
+members = ["packages/fbtee-compiler"]
 resolver = "2"
 
 [workspace.package]

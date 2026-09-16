@@ -1,6 +1,6 @@
 {
   "name": "fbtee",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "The JavaScript & React Internationalization Framework.",
   "keywords": [
     "fbt",
@@ -55,8 +55,7 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@nkzw/fbtee-cli": "workspace:*",
-    "@nkzw/oxc-transform-fbtee": "workspace:*"
+    "@nkzw/fbtee-compiler": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.0.0"

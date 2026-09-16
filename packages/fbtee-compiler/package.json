@@ -1,7 +1,7 @@
 {
-  "name": "@nkzw/oxc-transform-fbtee",
-  "version": "4.0.0",
-  "description": "Native Rust Oxc transform for fbtee.",
+  "name": "@nkzw/fbtee-compiler",
+  "version": "5.0.0",
+  "description": "Compiler and command line tools for fbtee.",
   "keywords": [
     "fbt",
     "fbtee",
@@ -13,9 +13,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nkzw-tech/fbtee.git",
-    "directory": "packages/oxc-transform-fbtee"
+    "directory": "packages/fbtee-compiler"
+  },
+  "bin": {
+    "fbtee": "bin.mjs"
   },
   "files": [
+    "bin.mjs",
     "Cargo.toml",
     "LICENSE",
     "README.md",

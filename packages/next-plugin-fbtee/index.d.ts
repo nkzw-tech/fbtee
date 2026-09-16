@@ -1,4 +1,4 @@
-import type { TransformOptions } from '@nkzw/oxc-transform-fbtee';
+import type { TransformOptions } from '@nkzw/fbtee-compiler';
 import type { NextConfig } from 'next';
 
 export type FbteeNextPluginOptions = Omit<TransformOptions, 'lang' | 'sourcemap' | 'sourceType'>;

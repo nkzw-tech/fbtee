@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/vite-plugin-fbtee",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Vite plugin for fbtee powered by the native Oxc transform.",
   "keywords": [
     "fbt",
@@ -36,7 +36,7 @@
     "test": "node test/e2e.mjs"
   },
   "dependencies": {
-    "@nkzw/oxc-transform-fbtee": "workspace:*"
+    "@nkzw/fbtee-compiler": "workspace:*"
   },
   "devDependencies": {
     "vite": "^8.1.5"

@@ -1,6 +1,6 @@
 import { globSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
-import { transformSync } from '@nkzw/oxc-transform-fbtee';
+import { transformSync } from '@nkzw/fbtee-compiler';
 
 const root = resolve(import.meta.dirname, '..');
 rmSync(resolve(root, 'lib-tmp'), { force: true, recursive: true });

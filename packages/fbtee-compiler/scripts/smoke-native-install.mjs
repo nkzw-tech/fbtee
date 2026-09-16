@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -16,6 +16,11 @@ const spawnInstalledBin = (command, args) => {
 };
 
 const smokeInstalledPackages = async (consumer) => {
+  const compilerDirectory = join(consumer, 'node_modules', '@nkzw', 'fbtee-compiler');
+  const compilerPackage = JSON.parse(readFileSync(join(compilerDirectory, 'package.json'), 'utf8'));
+  assert.deepEqual(compilerPackage.bin, { fbtee: 'bin.mjs' });
+  assert.equal(existsSync(join(consumer, 'node_modules', '@nkzw', 'fbtee-cli')), false);
+  assert.equal(existsSync(join(consumer, 'node_modules', 'fbtee')), false);
   const command = join(
     consumer,
     'node_modules',
@@ -26,9 +31,11 @@ const smokeInstalledPackages = async (consumer) => {
   assert.equal(cli.status, 0, cli.error?.message || cli.stderr || cli.stdout);
   assert.match(cli.stdout, /Usage: fbtee/);
 
-  testCliWorkflow(process.execPath, [
-    join(consumer, 'node_modules', '@nkzw', 'fbtee-cli', 'bin.mjs'),
-  ]);
+  const version = spawnInstalledBin(command, ['--version']);
+  assert.equal(version.status, 0, version.error?.message || version.stderr || version.stdout);
+  assert.equal(version.stdout.trim(), compilerPackage.version);
+
+  testCliWorkflow(process.execPath, [join(compilerDirectory, 'bin.mjs')]);
 
   const nativeCommand = join(
     consumer,
@@ -42,9 +49,9 @@ const smokeInstalledPackages = async (consumer) => {
     0,
     nativeVersion.error?.message || nativeVersion.stderr || nativeVersion.stdout,
   );
-  assert.match(nativeVersion.stdout, /^\d+\.\d+\.\d+\s*$/);
+  assert.equal(nativeVersion.stdout.trim(), compilerPackage.version);
 
-  const entry = join(consumer, 'node_modules', '@nkzw', 'oxc-transform-fbtee', 'index.js');
+  const entry = join(compilerDirectory, 'index.js');
   const {
     collectSync,
     migrateLocaleJsonSync,
@@ -156,8 +163,8 @@ const run = async () => {
     .map((file) => join(resolvedPackageDirectory, file));
   assert.equal(
     tarballs.length,
-    5,
-    'Expected CLI, transform, Next.js, Vite, and platform package tarballs',
+    4,
+    'Expected compiler, Next.js, Vite, and platform package tarballs',
   );
 
   const consumer = mkdtempSync(join(tmpdir(), 'fbtee-native-smoke-'));

@@ -16,7 +16,7 @@ import { describe, expect, test } from '@jest/globals';
 import {
   collectSync as oxcCollect,
   transformSync as oxcTransform,
-} from '../packages/oxc-transform-fbtee/index.js';
+} from '../packages/fbtee-compiler/index.js';
 
 const compileOxc = (source, options = {}) => {
   const result = oxcTransform('fixture.tsx', source, {
@@ -42,7 +42,7 @@ const collectOxc = (source, options = {}) => {
   return JSON.parse(result.output);
 };
 
-const cli = fileURLToPath(new URL('../packages/fbtee-cli/bin.mjs', import.meta.url));
+const cli = fileURLToPath(new URL('../packages/fbtee-compiler/bin.mjs', import.meta.url));
 
 const hashes = (code) =>
   [...code.matchAll(/\bhk\s*:\s*["']([^"']+)["']/g)].map((match) => match[1]);
@@ -948,7 +948,7 @@ describe('native CLI', () => {
         { encoding: 'utf8' },
       );
       const { version } = JSON.parse(
-        readFileSync(new URL('../packages/fbtee-cli/package.json', import.meta.url), 'utf8'),
+        readFileSync(new URL('../packages/fbtee-compiler/package.json', import.meta.url), 'utf8'),
       );
       assert.equal(result.status, 0, result.stderr);
       assert.equal(result.stdout, `${version}\n`);

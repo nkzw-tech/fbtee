@@ -6,7 +6,7 @@ import { PassThrough } from 'node:stream';
 import { beforeEach, test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
-import { collectSync, transformSync, translateSync } from '@nkzw/oxc-transform-fbtee';
+import { collectSync, transformSync, translateSync } from '@nkzw/fbtee-compiler';
 import {
   createFbteeRuntime,
   fbs,

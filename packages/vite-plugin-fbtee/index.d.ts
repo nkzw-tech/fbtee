@@ -1,4 +1,4 @@
-import type { TransformOptions } from '@nkzw/oxc-transform-fbtee';
+import type { TransformOptions } from '@nkzw/fbtee-compiler';
 import type { Plugin } from 'vite';
 
 export type FbteeVitePluginOptions = Omit<TransformOptions, 'lang' | 'sourcemap' | 'sourceType'>;

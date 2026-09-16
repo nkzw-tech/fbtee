@@ -20,35 +20,35 @@ jobs:
           - host: macos-14
             target: aarch64-apple-darwin
             package: darwin-arm64
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-apple-darwin
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target aarch64-apple-darwin
           - host: macos-15-intel
             target: x86_64-apple-darwin
             package: darwin-x64
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-apple-darwin
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target x86_64-apple-darwin
           - host: windows-11-arm
             target: aarch64-pc-windows-msvc
             package: win32-arm64-msvc
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-pc-windows-msvc
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target aarch64-pc-windows-msvc
           - host: windows-2025
             target: x86_64-pc-windows-msvc
             package: win32-x64-msvc
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-pc-windows-msvc
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target x86_64-pc-windows-msvc
           - host: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
             package: linux-arm64-gnu
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-unknown-linux-gnu --use-napi-cross
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target aarch64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-24.04-arm
             target: aarch64-unknown-linux-musl
             package: linux-arm64-musl
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target aarch64-unknown-linux-musl -x
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target aarch64-unknown-linux-musl -x
           - host: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             package: linux-x64-gnu
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-unknown-linux-gnu --use-napi-cross
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target x86_64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             package: linux-x64-musl
-            build: pnpm --filter @nkzw/oxc-transform-fbtee exec napi build --esm --platform --release --target x86_64-unknown-linux-musl -x
+            build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target x86_64-unknown-linux-musl -x
 
     steps:
       - uses: actions/checkout@v4
@@ -106,21 +106,21 @@ jobs:
           if [[ "$target" == *-windows-* ]]; then
             extension='.exe'
           fi
-          cp "target/$target/release/fbtee$extension" "packages/oxc-transform-fbtee/fbtee.${{ matrix.settings.package }}$extension"
+          cp "target/$target/release/fbtee$extension" "packages/fbtee-compiler/fbtee.${{ matrix.settings.package }}$extension"
         shell: bash
 
       - name: Smoke test binding
         run: |
-          node packages/oxc-transform-fbtee/scripts/prepare-native-smoke.mjs "${{ matrix.settings.package }}"
+          node packages/fbtee-compiler/scripts/prepare-native-smoke.mjs "${{ matrix.settings.package }}"
           if [[ "${{ matrix.settings.target }}" == *-musl ]]; then
-            docker run --rm -v "$PWD:/workspace" -w /workspace node:26-alpine node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+            docker run --rm -v "$PWD:/workspace" -w /workspace node:26-alpine node packages/fbtee-compiler/scripts/smoke-native-install.mjs packages/fbtee-compiler/.native-smoke
           elif [[ "${{ matrix.settings.target }}" == *-linux-gnu ]]; then
             # The binding is linked with napi-rs's glibc 2.17 toolchain. Load and
             # execute it in Debian 11 (glibc 2.31), not on the Ubuntu 24.04 host.
             # npm 10 can omit the platform package's fbtee-native bin link.
-            docker run --rm -v "$PWD:/workspace" -w /workspace node:22-bullseye sh -c 'npm install --global npm@11 && node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke'
+            docker run --rm -v "$PWD:/workspace" -w /workspace node:22-bullseye sh -c 'npm install --global npm@11 && node packages/fbtee-compiler/scripts/smoke-native-install.mjs packages/fbtee-compiler/.native-smoke'
           else
-            node packages/oxc-transform-fbtee/scripts/smoke-native-install.mjs packages/oxc-transform-fbtee/.native-smoke
+            node packages/fbtee-compiler/scripts/smoke-native-install.mjs packages/fbtee-compiler/.native-smoke
           fi
         shell: bash
 
@@ -129,8 +129,8 @@ jobs:
         with:
           name: oxc-binding-${{ matrix.settings.target }}
           path: |
-            packages/oxc-transform-fbtee/oxc-transform-fbtee.*.node
-            packages/oxc-transform-fbtee/fbtee.*
+            packages/fbtee-compiler/oxc-transform-fbtee.*.node
+            packages/fbtee-compiler/fbtee.*
           if-no-files-found: error
 
   build:
@@ -188,11 +188,11 @@ jobs:
         with:
           pattern: oxc-binding-*
           merge-multiple: true
-          path: packages/oxc-transform-fbtee/artifacts
+          path: packages/fbtee-compiler/artifacts
 
       - name: Assemble Oxc platform packages
-        working-directory: packages/oxc-transform-fbtee
+        working-directory: packages/fbtee-compiler
         run: pnpm assemble:artifacts && pnpm verify:artifacts
 
       - name: Publish
-        run: pnpx pkg-pr-new publish './packages/*' './packages/oxc-transform-fbtee/npm/*' --compact
+        run: pnpx pkg-pr-new publish './packages/*' './packages/fbtee-compiler/npm/*' --compact

@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
-    "@nkzw/fbtee-cli": "workspace:*",
+    "@nkzw/fbtee-compiler": "workspace:*",
     "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@vitejs/plugin-react": "^6.0.3",
     "invariant": "^2.2.4",

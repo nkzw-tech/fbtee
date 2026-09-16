@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { PassThrough } from 'node:stream';
 import { test } from 'node:test';
 import { pathToFileURL } from 'node:url';
-import { collectSync, transformSync, translateSync } from '@nkzw/oxc-transform-fbtee';
+import { collectSync, transformSync, translateSync } from '@nkzw/fbtee-compiler';
 import { runWithFbtee } from 'fbtee/server';
 import { renderToPipeableStream } from 'next/dist/compiled/react-server-dom-webpack/server.node.js';
 import { transformSync as lowerSync } from 'oxc-transform';

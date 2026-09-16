@@ -21,12 +21,14 @@ _fbtee_ is a modern continuation of Facebook's `fbt`, rebuilt for TypeScript, ES
 
 ## Getting Started
 
-For a new project, start with the [fate stack](https://stack.fate.technology) or the [Expo template](https://github.com/nkzw-tech/expo-app-template). For an existing app, install fbtee and its CLI:
+For a new project, start with the [fate stack](https://stack.fate.technology) or the [Expo template](https://github.com/nkzw-tech/expo-app-template). For an existing app, install the fbtee runtime and compiler:
 
 ```bash
 npm install fbtee
-npm install -D @nkzw/fbtee-cli
+npm install -D @nkzw/fbtee-compiler
 ```
+
+The compiler package includes the `fbtee` command and the JavaScript compiler API. Keep it in `devDependencies`; applications use `fbtee` at runtime.
 
 The toolchain requires Node 22.12+. React apps require React 19+.
 
@@ -68,11 +70,11 @@ The plugin supports Turbopack and Webpack.
 Run the fbtee transform before lowering TypeScript and JSX:
 
 ```bash
-npm install -D @nkzw/oxc-transform-fbtee oxc-transform
+npm install -D @nkzw/fbtee-compiler oxc-transform
 ```
 
 ```ts
-import { transformSync as transformFbtee } from '@nkzw/oxc-transform-fbtee';
+import { transformSync as transformFbtee } from '@nkzw/fbtee-compiler';
 import { transformSync as transformOxc } from 'oxc-transform';
 
 export function compile(filename: string, source: string) {
@@ -87,7 +89,7 @@ export function compile(filename: string, source: string) {
 }
 ```
 
-The returned Oxc result contains the generated code and any downstream errors. See the [transform options](https://github.com/nkzw-tech/fbtee/blob/main/packages/oxc-transform-fbtee/index.d.ts) for common strings and enum configuration.
+The returned Oxc result contains the generated code and any downstream errors. See the [transform options](https://github.com/nkzw-tech/fbtee/blob/main/packages/fbtee-compiler/index.d.ts) for common strings and enum configuration.
 
 </details>
 
@@ -361,6 +363,18 @@ export default [
 
 Use `fbtee.configs.strict.rules` to also check for untranslated text.
 
+## Migration from fbtee 4
+
+fbtee 5 combines `@nkzw/fbtee-cli` and `@nkzw/oxc-transform-fbtee` into `@nkzw/fbtee-compiler`:
+
+```sh
+npm uninstall @nkzw/fbtee-cli @nkzw/oxc-transform-fbtee
+npm install fbtee@^5
+npm install -D @nkzw/fbtee-compiler@^5
+```
+
+Update any installed fbtee Vite, Next.js, and ESLint plugins to v5. For custom compiler integrations, replace imports from `@nkzw/oxc-transform-fbtee` with `@nkzw/fbtee-compiler`. The compiler API and existing `fbtee` commands are unchanged. Runtime imports continue to use `fbtee`.
+
 ## Migration from fbt
 
 _fbtee_ is compatible with the core `fbt` programming model:
@@ -373,7 +387,7 @@ _fbtee_ is compatible with the core `fbt` programming model:
 
 Some archived `fbt` options and legacy behaviors were intentionally removed. The compiler errors should point to the modern replacement when one exists.
 
-fbtee 4 uses Oxc and a native CLI. Replace the Babel integration with the Vite or Next.js plugin above, or use `@nkzw/oxc-transform-fbtee` directly. Babel-specific extensions (`--custom-collector`, `--transform`, `--generate-fbt-nodes`, and `--hash-module`) are no longer supported. The collector cannot execute Babel configuration or apply `.babelignore`; remove that legacy configuration, or use `--disable-babel-config` to collect unmodified source.
+fbtee uses Oxc and a native CLI. Replace the Babel integration with the Vite or Next.js plugin above, or use `@nkzw/fbtee-compiler` directly. Babel-specific extensions (`--custom-collector`, `--transform`, `--generate-fbt-nodes`, and `--hash-module`) are no longer supported. The collector cannot execute Babel configuration or apply `.babelignore`; remove that legacy configuration, or use `--disable-babel-config` to collect unmodified source.
 
 Both `de-DE` and legacy locale names such as `de_DE` work. To rename catalogs, run `npx fbtee migrate-locales --to bcp47 --dir translations --dir src/translations --dry-run`, then repeat without `--dry-run`. Keep one file per locale; new files use BCP 47 names by default.
 

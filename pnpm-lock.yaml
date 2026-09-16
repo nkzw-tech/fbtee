@@ -116,9 +116,9 @@ importers:
       '@nkzw/eslint-plugin-fbtee':
         specifier: workspace:*
         version: link:../packages/eslint-plugin-fbtee
-      '@nkzw/fbtee-cli':
+      '@nkzw/fbtee-compiler':
         specifier: workspace:*
-        version: link:../packages/fbtee-cli
+        version: link:../packages/fbtee-compiler
       '@nkzw/vite-plugin-fbtee':
         specifier: workspace:*
         version: link:../packages/vite-plugin-fbtee
@@ -148,63 +148,11 @@ importers:
         specifier: ^19.1.1
         version: 19.2.7
     devDependencies:
-      '@nkzw/fbtee-cli':
+      '@nkzw/fbtee-compiler':
         specifier: workspace:*
-        version: link:../fbtee-cli
-      '@nkzw/oxc-transform-fbtee':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee
+        version: link:../fbtee-compiler
 
-  packages/fbtee-cli:
-    optionalDependencies:
-      '@nkzw/oxc-transform-fbtee-binding-darwin-arm64':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/darwin-arm64
-      '@nkzw/oxc-transform-fbtee-binding-darwin-x64':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/darwin-x64
-      '@nkzw/oxc-transform-fbtee-binding-linux-arm64-gnu':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/linux-arm64-gnu
-      '@nkzw/oxc-transform-fbtee-binding-linux-arm64-musl':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/linux-arm64-musl
-      '@nkzw/oxc-transform-fbtee-binding-linux-x64-gnu':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/linux-x64-gnu
-      '@nkzw/oxc-transform-fbtee-binding-linux-x64-musl':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/linux-x64-musl
-      '@nkzw/oxc-transform-fbtee-binding-win32-arm64-msvc':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/win32-arm64-msvc
-      '@nkzw/oxc-transform-fbtee-binding-win32-x64-msvc':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee/npm/win32-x64-msvc
-
-  packages/next-plugin-fbtee:
-    dependencies:
-      '@nkzw/oxc-transform-fbtee':
-        specifier: workspace:*
-        version: link:../oxc-transform-fbtee
-    devDependencies:
-      fbtee:
-        specifier: workspace:*
-        version: link:../fbtee
-      next:
-        specifier: ^16.3.3
-        version: 16.3.3(@babel/core@8.0.1)(@types/node@26.1.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react:
-        specifier: ^19.1.1
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.1.1
-        version: 19.2.7(react@19.2.7)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/oxc-transform-fbtee:
+  packages/fbtee-compiler:
     devDependencies:
       '@jridgewell/trace-mapping':
         specifier: ^0.3.31
@@ -241,27 +189,49 @@ importers:
         specifier: workspace:*
         version: link:npm/win32-x64-msvc
 
-  packages/oxc-transform-fbtee/npm/darwin-arm64: {}
+  packages/fbtee-compiler/npm/darwin-arm64: {}
 
-  packages/oxc-transform-fbtee/npm/darwin-x64: {}
+  packages/fbtee-compiler/npm/darwin-x64: {}
 
-  packages/oxc-transform-fbtee/npm/linux-arm64-gnu: {}
+  packages/fbtee-compiler/npm/linux-arm64-gnu: {}
 
-  packages/oxc-transform-fbtee/npm/linux-arm64-musl: {}
+  packages/fbtee-compiler/npm/linux-arm64-musl: {}
 
-  packages/oxc-transform-fbtee/npm/linux-x64-gnu: {}
+  packages/fbtee-compiler/npm/linux-x64-gnu: {}
 
-  packages/oxc-transform-fbtee/npm/linux-x64-musl: {}
+  packages/fbtee-compiler/npm/linux-x64-musl: {}
 
-  packages/oxc-transform-fbtee/npm/win32-arm64-msvc: {}
+  packages/fbtee-compiler/npm/win32-arm64-msvc: {}
 
-  packages/oxc-transform-fbtee/npm/win32-x64-msvc: {}
+  packages/fbtee-compiler/npm/win32-x64-msvc: {}
+
+  packages/next-plugin-fbtee:
+    dependencies:
+      '@nkzw/fbtee-compiler':
+        specifier: workspace:*
+        version: link:../fbtee-compiler
+    devDependencies:
+      fbtee:
+        specifier: workspace:*
+        version: link:../fbtee
+      next:
+        specifier: ^16.3.3
+        version: 16.3.3(@babel/core@8.0.1)(@types/node@26.1.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react:
+        specifier: ^19.1.1
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.1.1
+        version: 19.2.7(react@19.2.7)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
   packages/vite-plugin-fbtee:
     dependencies:
-      '@nkzw/oxc-transform-fbtee':
+      '@nkzw/fbtee-compiler':
         specifier: workspace:*
-        version: link:../oxc-transform-fbtee
+        version: link:../fbtee-compiler
     devDependencies:
       vite:
         specifier: ^8.1.5
@@ -309,9 +279,9 @@ importers:
       '@babel/core':
         specifier: ^8.0.1
         version: 8.0.1
-      '@nkzw/fbtee-cli':
+      '@nkzw/fbtee-compiler':
         specifier: workspace:*
-        version: link:../packages/fbtee-cli
+        version: link:../packages/fbtee-compiler
       '@nkzw/vite-plugin-fbtee':
         specifier: workspace:*
         version: link:../packages/vite-plugin-fbtee
