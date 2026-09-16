@@ -99,6 +99,48 @@ export const testCliWorkflow = (command, prefix = []) => {
         return [locale, output[locale]];
       }),
     );
+    // Strict mode checks every collected source entry before writing output.
+    write('strict-source.json', { phrases: [phrase] });
+    const strictArgs = [
+      'translate',
+      '--source-strings',
+      'strict-source.json',
+      '--translations',
+      'translations/de-DE.json',
+      '--output-file',
+      'strict.json',
+    ];
+    run(...strictArgs, '--strict');
+    const completed = read('translations/de-DE.json');
+    const strictOutput = read('strict.json');
+    assert.deepEqual(Object.values(strictOutput['de-DE']), [translated[0]]);
+    for (const entry of [
+      undefined,
+      null,
+      { ...completed.translations[hash], status: 'new' },
+      { ...completed.translations[hash], translations: [] },
+    ]) {
+      const incomplete = {
+        ...completed,
+        translations: { ...completed.translations, [hash]: entry },
+      };
+      write('translations/de-DE.json', incomplete);
+      fails([...strictArgs, '--strict'], /Missing de-DE translation for string/);
+      assert.deepEqual(read('strict.json'), strictOutput);
+
+      const stdin = spawnSync(command, [...prefix, 'translate', '--stdin', '--strict'], {
+        cwd,
+        encoding: 'utf8',
+        input: JSON.stringify({ phrases: [phrase], translationGroups: [incomplete] }),
+      });
+      assert.equal(stdin.status, 1, stdin.stderr || stdin.stdout);
+      assert.ok(stdin.stderr.includes(`Missing de-DE translation for string (${hash})`));
+      assert.equal(stdin.stdout, '');
+
+      run(...strictArgs, '--output-file', 'partial.json');
+      assert.deepEqual(read('partial.json'), { 'de-DE': {} });
+    }
+    write('translations/de-DE.json', completed);
     assert.deepEqual(
       readdirSync(join(cwd, 'src/translations')).sort(),
       locales.map((l) => `${l}.json`),

@@ -897,13 +897,25 @@ fn process_translation_input(
     strict: bool,
     style: LocaleStyle,
 ) -> Result<Value, String> {
+    let required_hashes = if strict {
+        input
+            .get("phrases")
+            .and_then(Value::as_array)
+            .ok_or("Translation input must contain a 'phrases' array.")?
+            .iter()
+            .filter_map(|phrase| phrase.get("hashToLeaf").and_then(Value::as_object))
+            .flat_map(|leaves| leaves.keys().cloned())
+            .collect::<Vec<_>>()
+    } else {
+        Vec::new()
+    };
     let groups = input
         .get_mut("translationGroups")
         .and_then(Value::as_array_mut)
         .ok_or("Translation input must contain a translationGroups array.")?;
     check_locale_groups(groups)?;
     for group in groups {
-        prepare_translation_group(group, strict, style)?;
+        prepare_translation_group(group, strict, &required_hashes, style)?;
     }
     let translated = translate::translate(
         &serde_json::to_string(&input).map_err(|error| error.to_string())?,
@@ -915,6 +927,7 @@ fn process_translation_input(
 fn prepare_translation_group(
     group: &mut Value,
     strict: bool,
+    required_hashes: &[String],
     style: LocaleStyle,
 ) -> Result<(), String> {
     let group = group
@@ -944,6 +957,17 @@ fn prepare_translation_group(
     if strict {
         if let Some((hash, _)) = translations.iter().find(|(_, value)| value.is_null()) {
             return Err(format!("Missing {locale} translation for string ({hash})"));
+        }
+        for hash in required_hashes {
+            if translations.get(hash).is_none_or(|value| {
+                value.get("status").and_then(Value::as_str) == Some("new")
+                    || value
+                        .get("translations")
+                        .and_then(Value::as_array)
+                        .is_some_and(Vec::is_empty)
+            }) {
+                return Err(format!("Missing {locale} translation for string ({hash})"));
+            }
         }
     }
     group.insert("__gender-fallback".into(), gender_fallback(&locale).into());
@@ -1562,8 +1586,56 @@ fn display_relative(root: &Path, path: &Path) -> String {
 mod tests {
     use super::{
         canonicalize_locale, extract_braced_object, format_locale, locale_identity,
-        normalize_collected_subject_numbers, LocaleStyle,
+        normalize_collected_subject_numbers, process_translation_input, LocaleStyle,
     };
+
+    #[test]
+    fn strict_translation_rejects_incomplete_source_entries() {
+        for translations in [
+            serde_json::json!({}),
+            serde_json::json!({"hash": null}),
+            serde_json::json!({"hash": {"status": "new", "translations": [{"translation": "A", "variations": {}}]}}),
+            serde_json::json!({"hash": {"translations": []}}),
+        ] {
+            let input = serde_json::json!({
+                "phrases": [{"hashToLeaf": {"hash": {"desc": "d", "text": "A"}}, "jsfbt": {"m": [], "t": {"desc": "d", "text": "A"}}}],
+                "translationGroups": [{"fb-locale": "de-DE", "translations": translations}],
+            });
+            for use_jenkins in [false, true] {
+                assert_eq!(
+                    process_translation_input(input.clone(), use_jenkins, true, LocaleStyle::Bcp47),
+                    Err("Missing de-DE translation for string (hash)".into()),
+                    "{input}"
+                );
+            }
+            assert_eq!(
+                process_translation_input(input, true, false, LocaleStyle::Bcp47).unwrap(),
+                serde_json::json!({"de-DE": {}})
+            );
+        }
+    }
+
+    #[test]
+    fn strict_translation_preserves_empty_and_source_equal_translations() {
+        for translation in ["", "A", "Ein A"] {
+            let input = serde_json::json!({
+                "phrases": [{"hashToLeaf": {"hash": {"desc": "d", "text": "A"}}, "jsfbt": {"m": [], "t": {"desc": "d", "text": "A"}}}],
+                "translationGroups": [{"fb-locale": "de-DE", "translations": {
+                    "hash": {"translations": [{"translation": translation, "variations": {}}]},
+                    "obsolete": {"status": "new", "translations": []}
+                }}],
+            });
+            let output = process_translation_input(input, true, true, LocaleStyle::Bcp47).unwrap();
+            assert_eq!(
+                output["de-DE"]
+                    .as_object()
+                    .unwrap()
+                    .values()
+                    .collect::<Vec<_>>(),
+                vec![&serde_json::json!(translation)]
+            );
+        }
+    }
 
     #[test]
     fn preserves_collected_subject_number_rounding() {

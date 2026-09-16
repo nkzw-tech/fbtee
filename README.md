@@ -187,6 +187,8 @@ npx fbtee translate --source-strings source_strings.json --translations 'transla
 
 Generated runtime catalogs omit messages with no completed translation, including entries still marked `"status": "new"`. This lets partial catalogs fall back to another language. After upgrading, recompile existing catalogs to enable this behavior. Explicit translations equal to the source text are preserved. Fallback applies to whole messages; a partially translated plural/gender table keeps its existing within-message fallback behavior.
 
+Use `fbtee translate --strict` to require a completed entry for every collected source hash in each supplied locale. Missing entries, entries marked `"status": "new"`, and empty translation lists fail before output is written. Explicit empty-string translations and translations equal to the source remain valid.
+
 Commit the editable files in `translations/`. Add generated files to `.gitignore`:
 
 ```gitignore
