@@ -78,6 +78,7 @@ describe('FbtTranslations', () => {
       }),
     ).toEqual({
       args: null,
+      locale: 'de_DE',
       table: 'Hallo',
     });
   });

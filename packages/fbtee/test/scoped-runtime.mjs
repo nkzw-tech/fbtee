@@ -200,13 +200,59 @@ test('browser entry points do not import the server adapter', () => {
 });
 
 test('phonological rewrites follow the request locale', () => {
-  runWithFbtee({ locale: 'tr-TR', translations: {} }, () => {
+  const translations = catalog('tr-TR', { '{name}’': '{name}’' });
+  runWithFbtee({ locale: 'tr-TR', translations }, () => {
     assert.equal(fixture.apostrophe('Ada'), "Ada'");
     runWithFbtee({ locale: 'de-DE', translations: {} }, () => {
       assert.equal(fixture.apostrophe('Ada'), 'Ada’');
     });
     assert.equal(fixture.apostrophe('Ada'), "Ada'");
   });
+});
+
+test('fallback rewrites follow the catalog while numbers retain viewer formatting', () => {
+  const options = {
+    fallbackLocales: ['tr-TR'],
+    locale: 'en-US',
+    translations: catalog('tr-TR', {
+      '{name}’': "\u0001{name}\u0001'(y)i",
+      '{number}': '{number}’',
+    }),
+  };
+  const bound = fixture.messages(createFbteeRuntime(options));
+  assert.equal(bound.apostrophe('Ada'), "Ada'i");
+  assert.equal(bound.number(1234.5), "1,234.5'");
+  runWithFbtee(options, () => {
+    assert.equal(fixture.apostrophe('Ada'), "Ada'i");
+    assert.equal(fixture.number(1234.5), "1,234.5'");
+  });
+});
+
+test('inline source rewrites follow the configured source locale', () => {
+  for (const [locale, sourceLocale, expected] of [
+    ['tr-TR', undefined, 'Ada’'],
+    ['en-US', 'tr-TR', "Ada'"],
+  ]) {
+    const options = { locale, sourceLocale, translations: {} };
+    assert.equal(fixture.messages(createFbteeRuntime(options)).apostrophe('Ada'), expected);
+    runWithFbtee(options, () => {
+      assert.equal(fixture.apostrophe('Ada'), expected);
+    });
+  }
+});
+
+test('custom translation hooks can choose a locale or retain the bound viewer locale', () => {
+  for (const [locale, expected] of [
+    [undefined, "Ada'"],
+    ['en-US', 'Ada’'],
+  ]) {
+    const runtime = createFbteeRuntime({
+      hooks: { getTranslatedInput: ({ args, table }) => ({ args, locale, table }) },
+      locale: 'tr-TR',
+      translations: {},
+    });
+    assert.equal(fixture.messages(runtime).apostrophe('Ada'), expected);
+  }
 });
 
 test('concurrent async operations use their own translations and formatting', async () => {
@@ -820,7 +866,10 @@ test('bound runtimes use their own plural rules, viewer context, hooks and punct
   });
   assert.equal(fixture.messages(pluralRuntime).plural(2), 'few 2');
   assert.equal(fixture.messages(pluralRuntime).plural(5), 'many 5');
-  const tr = createFbteeRuntime({ locale: 'tr-TR', translations: {} });
+  const tr = createFbteeRuntime({
+    locale: 'tr-TR',
+    translations: catalog('tr-TR', { '{name}’': '{name}’' }),
+  });
   assert.equal(fixture.messages(tr).apostrophe('Ada'), "Ada'");
   assert.equal(fixture.apostrophe('Ada'), 'Ada’');
 });

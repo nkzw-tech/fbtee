@@ -1,5 +1,4 @@
 import { applyPhonologicalRules, dedupeStops, PUNCT_CHAR_CLASS } from './IntlPunctuation.tsx';
-import type { RuntimeState } from './RuntimeState.tsx';
 import type { FbtContentItem, NestedFbtContentItems } from './Types.ts';
 
 // This pattern finds tokens inside a string: 'string with {token} inside'.
@@ -24,7 +23,7 @@ const TOKEN_VALUE_PLACEHOLDER_CHAR = '\u0017';
 export default function substituteTokens(
   template: string,
   args: Substitutions | null,
-  state?: RuntimeState,
+  locale?: string,
 ): FbtContentItem | NestedFbtContentItems {
   if (args == null) {
     return template;
@@ -51,7 +50,7 @@ export default function substituteTokens(
       return String(argument) + dedupeStops(String(argument), punctuation);
     })
     .split(TOKEN_VALUE_PLACEHOLDER_CHAR)
-    .map((text) => applyPhonologicalRules(text, state));
+    .map((text) => applyPhonologicalRules(text, locale));
 
   if (stringPieces.length === 1) {
     return stringPieces[0];

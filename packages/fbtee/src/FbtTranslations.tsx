@@ -89,6 +89,7 @@ export function getTranslatedInput(
           getLocaleIdentity(candidate) === getLocaleIdentity(locale)
             ? args
             : localizeNumberArgs(args, candidate),
+        locale: candidate,
         table,
       };
     }
@@ -105,7 +106,7 @@ export function getTranslatedInput(
     }
   }
   return args && getLocaleIdentity(locale) !== getLocaleIdentity(sourceLocale)
-    ? { args: localizeNumberArgs(args, sourceLocale), table: sourceTable }
+    ? { args: localizeNumberArgs(args, sourceLocale), locale: sourceLocale, table: sourceTable }
     : null;
 }
 

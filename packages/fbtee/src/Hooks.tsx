@@ -44,6 +44,8 @@ export type FbtInputTable = Record<
 export type FbtTableArgs = Array<FbtTableArg>;
 export type FbtTranslatedInput = {
   args: FbtTableArgs | null;
+  /** Locale supplying the message. Custom hooks can omit it to use the viewer locale. */
+  locale?: string;
   table: FbtRuntimeInput & { __vcg?: 1 };
 };
 

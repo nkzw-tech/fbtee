@@ -297,9 +297,9 @@ const runtime = createFbteeRuntime({
 });
 ```
 
-`fallbackLocales` also accepts an array, such as `['fr', 'en-GB']`, for every locale. Mappings can refer to other mapped locales; cycles and duplicate catalogs are ignored. Plural selection follows the language of the catalog supplying the message; interpolated numbers retain the viewer's number formatting.
+`fallbackLocales` also accepts an array, such as `['fr', 'en-GB']`, for every locale. Mappings can refer to other mapped locales; cycles and duplicate catalogs are ignored. Plural selection and phonological rewrites follow the language of the catalog supplying the message, or `sourceLocale` for inline source text; interpolated numbers retain the viewer's number formatting.
 
-`onMissingTranslation` runs only when no catalog in the chain contains the message and inline source text is used. It reports each locale/message once per runtime, resets when translations are registered or merged, and does not report normal source-locale rendering. No generic missing-catalog warning is emitted. Custom `hooks.getTranslatedInput` implementations remain responsible for their own fallback and reporting.
+`onMissingTranslation` runs only when no catalog in the chain contains the message and inline source text is used. It reports each locale/message once per runtime, resets when translations are registered or merged, and does not report normal source-locale rendering. No generic missing-catalog warning is emitted. Custom `hooks.getTranslatedInput` implementations remain responsible for their own fallback and reporting. They can return `locale` alongside `args` and `table` to select the message's phonological rewrites; omitting it preserves the viewer locale.
 
 For locale contexts, `fallbackLocale` controls the selected language when none of `clientLocales` is supported. It defaults to `sourceLocale`. Use `fallbackLocales` to configure per-message fallback, and set `sourceLocale` when the inline messages are not US English.
 

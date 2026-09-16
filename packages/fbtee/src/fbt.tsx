@@ -106,7 +106,7 @@ export function createRuntime<P, T extends BaseResult | string>({
             resultCaches.set(cacheKey, cachedResults);
           }
         }
-        let { args, table } = Hooks.getTranslatedInput(
+        const translatedInput = Hooks.getTranslatedInput(
           {
             args: inputArgs || null,
             options: options || null,
@@ -114,6 +114,8 @@ export function createRuntime<P, T extends BaseResult | string>({
           },
           state,
         );
+        const { locale } = translatedInput;
+        let { args, table } = translatedInput;
 
         let substitutions: Substitutions | null = null;
 
@@ -154,7 +156,13 @@ export function createRuntime<P, T extends BaseResult | string>({
         if (cachedFbt && !substitutions) {
           return cachedFbt;
         } else {
-          const fbtContent = substituteTokens(patternString, substitutions, state);
+          const fbtContent = substitutions
+            ? substituteTokens(
+                patternString,
+                substitutions,
+                locale ?? Hooks.getViewerContext(state).locale,
+              )
+            : patternString;
           const result = getResult(
             typeof fbtContent === 'string' ? [fbtContent] : (fbtContent as NestedFbtContentItems),
             hashKey,
