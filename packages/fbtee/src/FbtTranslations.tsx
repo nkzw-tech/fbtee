@@ -71,10 +71,13 @@ export function getTranslatedInput(
     return null;
   }
   const { locale } = Hooks.getViewerContext(state);
-  let chain = state.localeChains.get(locale);
+  // Singleton catalogs are mutable and can gain locales without an API call.
+  let chain = state.scoped ? state.localeChains.get(locale) : undefined;
   if (!chain) {
     chain = getAvailableLocaleChain(locale, Object.keys(state.translations), state.fallbackOptions);
-    state.localeChains.set(locale, chain);
+    if (state.scoped) {
+      state.localeChains.set(locale, chain);
+    }
   }
   for (const candidate of chain) {
     const table = state.translations[candidate]?.[hashKey];

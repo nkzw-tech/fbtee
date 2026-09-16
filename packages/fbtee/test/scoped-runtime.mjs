@@ -481,6 +481,27 @@ test('the singleton preserves catalog references for registration, merging, and 
   assert.equal(Object.isFrozen(loaded.existing['*']), false);
 });
 
+test('the singleton sees catalogs added or replaced after the first lookup', () => {
+  const translations = {};
+  setupFbtee({
+    hooks: { getViewerContext: () => ({ GENDER: 3, locale: 'fr-CA' }) },
+    translations,
+  });
+  assert.equal(fixture.message(), 'Message');
+
+  translations.fr = catalog('fr', { Message: 'Bonjour' }).fr;
+  assert.equal(fixture.message(), 'Bonjour');
+
+  const registered = FbtTranslations.getRegisteredTranslations();
+  registered['fr-CA'] = catalog('fr-CA', { Message: 'Allô' })['fr-CA'];
+  assert.equal(fixture.message(), 'Allô');
+
+  delete registered['fr-CA'];
+  assert.equal(fixture.message(), 'Bonjour');
+  registered.fr = catalog('fr', { Message: 'Salut' }).fr;
+  assert.equal(fixture.message(), 'Salut');
+});
+
 test('catalog freezing is not exposed in the public API', async () => {
   assert.equal('freezeTranslations' in (await import('fbtee')), false);
   assert.equal('freezeTranslations' in (await import('fbtee/server')), false);
