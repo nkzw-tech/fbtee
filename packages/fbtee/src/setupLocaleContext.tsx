@@ -1,8 +1,15 @@
-import FbtTranslations, { mergeTranslations } from './FbtTranslations.tsx';
+import { mergeTranslations } from './FbtTranslations.tsx';
 import { FbtRuntimeInput, Hooks } from './Hooks.tsx';
 import { TranslationDictionary } from './index.tsx';
 import IntlVariations from './IntlVariations.tsx';
-import { getLocaleAliases } from './localeIdentifier.tsx';
+import {
+  areEquivalentLocales,
+  getAvailableLocaleChain,
+  getLocaleHierarchy,
+  LocaleFallbackOptions,
+  negotiateLocale,
+} from './localeFallback.tsx';
+import { getLocaleIdentity } from './localeIdentifier.tsx';
 import getRuntimeState from './RuntimeState.tsx';
 import setupFbtee from './setupFbtee.tsx';
 
@@ -25,59 +32,45 @@ export function resolveGender(gender: Gender): IntlVariations {
   return gender;
 }
 
-export type LocaleContextProps = Readonly<{
-  availableLanguages: ReadonlyMap<string, string>;
-  clientLocales: ReadonlyArray<string | null>;
-  fallbackLocale?: string;
-  gender?: Gender;
-  hooks?: Hooks;
-  loadLocale: LocaleLoaderFn;
-  translations?: TranslationDictionary;
-}>;
+export type LocaleContextProps = LocaleFallbackOptions &
+  Readonly<{
+    availableLanguages: ReadonlyMap<string, string>;
+    clientLocales: ReadonlyArray<string | null>;
+    fallbackLocale?: string;
+    gender?: Gender;
+    hooks?: Hooks;
+    loadLocale: LocaleLoaderFn;
+    translations?: TranslationDictionary;
+  }>;
 
 export default function setupLocaleContext({
   availableLanguages,
   clientLocales,
-  fallbackLocale = 'en-US',
+  sourceLocale = 'en-US',
+  fallbackLocale = sourceLocale,
+  fallbackLocales,
   gender: initialGender = IntlVariations.GENDER_UNKNOWN,
   hooks,
   loadLocale,
+  onMissingTranslation,
   translations: initialTranslations,
 }: LocaleContextProps) {
   const runtimeState = getRuntimeState();
-  const { scoped } = runtimeState;
-  const availableLocales = new Map<string, string>();
+  const fallbackOptions = { fallbackLocales, onMissingTranslation, sourceLocale };
   const resolvedLocales = new Map<string, string | null>();
   const pendingLocales = new Map<string, Promise<void>>();
   let currentLocale: string | null;
   let gender = resolveGender(initialGender);
 
-  for (const [locale] of availableLanguages) {
-    for (const localeAlias of getLocaleAliases(locale)) {
-      availableLocales.set(localeAlias, locale);
-    }
-  }
-
   const resolveLocale = (locale: string): string | null => {
-    const directLocale = availableLocales.get(locale);
-    if (directLocale) {
-      return directLocale;
+    if (!resolvedLocales.has(locale)) {
+      resolvedLocales.set(locale, negotiateLocale(locale, availableLanguages.keys()));
     }
-
-    if (resolvedLocales.has(locale)) {
-      return resolvedLocales.get(locale) || null;
-    }
-
-    const resolvedLocale =
-      getLocaleAliases(locale)
-        .map((localeAlias) => availableLocales.get(localeAlias))
-        .find((locale): locale is string => !!locale) || null;
-    resolvedLocales.set(locale, resolvedLocale);
-    return resolvedLocale;
+    return resolvedLocales.get(locale) ?? null;
   };
 
   const resolvedFallbackLocale = resolveLocale(fallbackLocale) || fallbackLocale;
-  let translations = initialTranslations || { [resolvedFallbackLocale]: {} };
+  const translations = initialTranslations || {};
 
   const getLocales = (): ReadonlyArray<string> =>
     Array.from(
@@ -103,38 +96,45 @@ export default function setupLocaleContext({
     return resolvedFallbackLocale;
   };
 
-  const preloadLocale = async (locale: string = getLocale()): Promise<void> => {
-    const localeName = resolveLocale(locale);
-    if (!localeName || localeName === resolvedFallbackLocale) {
+  const loadCatalog = async (localeName: string): Promise<void> => {
+    if (
+      getLocaleHierarchy(sourceLocale).some((parent) => areEquivalentLocales(localeName, parent))
+    ) {
+      return;
+    }
+    // A parent catalog must not prevent loading a more specific regional catalog.
+    if (
+      Object.keys(runtimeState.translations).some((key) => areEquivalentLocales(key, localeName))
+    ) {
       return;
     }
 
-    const currentTranslations = scoped ? runtimeState.translations : translations;
-    const hasTranslations =
-      !!currentTranslations[localeName] ||
-      getLocaleAliases(localeName).some((localeAlias) => currentTranslations[localeAlias]);
-    if (hasTranslations) {
-      return;
-    }
-
-    let pending = pendingLocales.get(localeName);
+    const identity = getLocaleIdentity(localeName);
+    let pending = pendingLocales.get(identity);
     if (!pending) {
       pending = new Promise<Awaited<TranslationPromise>>((resolve) => {
         resolve(loadLocale(localeName));
       })
         .then((loadedTranslations) => {
-          if (scoped) {
-            mergeTranslations(runtimeState, { [localeName]: loadedTranslations });
-          } else {
-            translations[localeName] = loadedTranslations;
-          }
+          mergeTranslations(runtimeState, { [localeName]: loadedTranslations });
         })
         .finally(() => {
-          pendingLocales.delete(localeName);
+          pendingLocales.delete(identity);
         });
-      pendingLocales.set(localeName, pending);
+      pendingLocales.set(identity, pending);
     }
     await pending;
+  };
+
+  const preloadLocale = async (locale: string = getLocale()): Promise<void> => {
+    const localeName = resolveLocale(locale);
+    if (localeName) {
+      await Promise.all(
+        getAvailableLocaleChain(localeName, availableLanguages.keys(), fallbackOptions).map(
+          loadCatalog,
+        ),
+      );
+    }
   };
 
   const setLocale = async (locale: string) => {
@@ -153,6 +153,7 @@ export default function setupLocaleContext({
   };
 
   setupFbtee({
+    ...fallbackOptions,
     hooks: {
       ...hooks,
       getViewerContext: () => ({
@@ -162,7 +163,6 @@ export default function setupLocaleContext({
     },
     translations,
   });
-  translations = FbtTranslations.getRegisteredTranslations();
 
   return { gender, getLocale, preloadLocale, setGender, setLocale };
 }

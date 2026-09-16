@@ -123,7 +123,7 @@ export function getLocaleIdentity(locale: string): string {
     }
     return canonicalizeBCP47(legacyAlias.replaceAll('_', '-'));
   }
-  return canonicalizeBCP47(trimmed);
+  return canonicalizeBCP47(trimmed.replaceAll('_', '-'));
 }
 
 export function getLocaleLanguage(locale: string): string {

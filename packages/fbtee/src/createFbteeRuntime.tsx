@@ -3,17 +3,19 @@ import { createFbtRuntime } from './fbt.tsx';
 import { mergeTranslations, TranslationDictionary } from './FbtTranslations.tsx';
 import type { Hooks } from './Hooks.tsx';
 import list, { listWithRuntime } from './list.tsx';
+import type { LocaleFallbackOptions } from './localeFallback.tsx';
 import { createRuntimeState } from './RuntimeState.tsx';
 import { setupRuntime } from './setupFbtee.tsx';
 import { Gender, resolveGender } from './setupLocaleContext.tsx';
 import type { FbsAPI, FbtAPI } from './Types.ts';
 
-export type FbteeRuntimeOptions = Readonly<{
-  gender?: Gender;
-  hooks?: Omit<Hooks, 'getViewerContext'>;
-  locale: string;
-  translations: TranslationDictionary;
-}>;
+export type FbteeRuntimeOptions = LocaleFallbackOptions &
+  Readonly<{
+    gender?: Gender;
+    hooks?: Omit<Hooks, 'getViewerContext'>;
+    locale: string;
+    translations: TranslationDictionary;
+  }>;
 
 export type FbteeRuntime = Readonly<{
   fbs: FbsAPI;
@@ -50,9 +52,11 @@ export default function createFbteeRuntime({
   hooks,
   locale,
   translations,
+  ...fallbackOptions
 }: FbteeRuntimeOptions): FbteeRuntime {
   const state = createRuntimeState({ GENDER: resolveGender(gender), locale }, true);
   setupRuntime(state, {
+    ...fallbackOptions,
     hooks: { ...hooks, getViewerContext: () => state.viewerContext },
     translations,
   });

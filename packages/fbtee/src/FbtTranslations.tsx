@@ -1,6 +1,14 @@
+import { numberValues } from './FbtTableAccessor.tsx';
 import freezeTranslationsInDEV from './freezeTranslationsInDEV.tsx';
-import Hooks, { FbtRuntimeCallInput, FbtRuntimeInput, FbtTranslatedInput } from './Hooks.tsx';
-import { getLocaleAliases } from './localeIdentifier.tsx';
+import Hooks, {
+  FbtRuntimeCallInput,
+  FbtRuntimeInput,
+  FbtTranslatedInput,
+  FbtTableArgs,
+} from './Hooks.tsx';
+import { getNumberVariationsForLocale } from './IntlVariationResolver.tsx';
+import { getAvailableLocaleChain, getLocaleHierarchy } from './localeFallback.tsx';
+import { getLocaleIdentity } from './localeIdentifier.tsx';
 import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 
 export type TranslationDictionary = {
@@ -9,9 +17,9 @@ export type TranslationDictionary = {
   };
 };
 
-const defaultLocale = 'en-US';
-
 export function mergeTranslations(state: RuntimeState, newTranslations: TranslationDictionary) {
+  state.localeChains.clear();
+  state.missingTranslations.clear();
   if (state.scoped) {
     if (process.env.NODE_ENV !== 'production') {
       freezeTranslationsInDEV(newTranslations);
@@ -29,10 +37,9 @@ export function mergeTranslations(state: RuntimeState, newTranslations: Translat
     state.resultCaches.clear();
   } else {
     for (const locale of Object.keys(newTranslations)) {
-      state.translations[locale] = Object.assign(
-        state.translations[locale] ?? {},
-        newTranslations[locale],
-      );
+      state.translations[locale] = state.translations[locale]
+        ? Object.assign(state.translations[locale], newTranslations[locale])
+        : newTranslations[locale];
     }
   }
 }
@@ -56,31 +63,61 @@ export default {
 };
 
 export function getTranslatedInput(
-  { args, options }: FbtRuntimeCallInput,
+  { args, options, table: sourceTable }: FbtRuntimeCallInput,
   state: RuntimeState,
 ): FbtTranslatedInput | null {
   const hashKey = options?.hk;
+  if (hashKey == null) {
+    return null;
+  }
   const { locale } = Hooks.getViewerContext(state);
-  const currentTranslations = state.translations;
-  const table = getLocaleAliases(locale)
-    .map((localeAlias) => currentTranslations[localeAlias])
-    .find(Boolean);
-  if (process.env.NODE_ENV === 'development') {
-    if (!table && !getLocaleAliases(defaultLocale).includes(locale)) {
-      // eslint-disable-next-line no-console
-      console.warn('Translations have not been provided.');
+  let chain = state.localeChains.get(locale);
+  if (!chain) {
+    chain = getAvailableLocaleChain(locale, Object.keys(state.translations), state.fallbackOptions);
+    state.localeChains.set(locale, chain);
+  }
+  for (const candidate of chain) {
+    const table = state.translations[candidate]?.[hashKey];
+    if (table != null) {
+      return {
+        args:
+          !args ||
+          candidate === locale ||
+          getLocaleIdentity(candidate) === getLocaleIdentity(locale)
+            ? args
+            : localizeNumberArgs(args, candidate),
+        table,
+      };
     }
   }
+  const { onMissingTranslation, sourceLocale = 'en-US' } = state.fallbackOptions;
+  if (
+    onMissingTranslation &&
+    !getLocaleHierarchy(sourceLocale).includes(getLocaleIdentity(locale))
+  ) {
+    const key = JSON.stringify([locale, hashKey]);
+    if (!state.missingTranslations.has(key)) {
+      state.missingTranslations.add(key);
+      onMissingTranslation({ hashKey, locale, sourceLocale });
+    }
+  }
+  return args && getLocaleIdentity(locale) !== getLocaleIdentity(sourceLocale)
+    ? { args: localizeNumberArgs(args, sourceLocale), table: sourceTable }
+    : null;
+}
 
-  return hashKey == null || table?.[hashKey] == null
-    ? null
-    : {
-        args,
-        table: table[hashKey],
-      };
+function localizeNumberArgs(args: FbtTableArgs | null, locale: string): FbtTableArgs | null {
+  return (
+    args?.map((arg) => {
+      const number = numberValues.get(arg);
+      return number == null ? arg : [getNumberVariationsForLocale(number, locale), arg[1]];
+    }) ?? null
+  );
 }
 
 export function registerTranslations(state: RuntimeState, translations: TranslationDictionary) {
+  state.localeChains.clear();
+  state.missingTranslations.clear();
   if (state.scoped && process.env.NODE_ENV !== 'production') {
     freezeTranslationsInDEV(translations);
   }

@@ -15,6 +15,11 @@ export const fbs = fbsInternal as unknown as FbsAPI;
 export type { FbtRuntimeInput, FbtRuntimeInput as TranslationTable } from './Hooks.tsx';
 export type { FbtConjunction, FbtDelimiter, FbtWithoutString, TranslatedString } from './Types.ts';
 export type { TranslationDictionary } from './FbtTranslations.tsx';
+export type {
+  FallbackLocales,
+  LocaleFallbackOptions,
+  MissingTranslation,
+} from './localeFallback.tsx';
 
 export {
   type Gender,

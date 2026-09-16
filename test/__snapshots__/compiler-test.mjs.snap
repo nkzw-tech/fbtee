@@ -10305,9 +10305,7 @@ exports[`native CLI translate emits indexed stdin output 1`] = `
 
 exports[`native CLI translate handles missing translations ([]) 1`] = `
 "{
-  "de-DE": {
-    "AnvvH": "Source"
-  }
+  "de-DE": {}
 }"
 `;
 

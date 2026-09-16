@@ -6,6 +6,9 @@ export type FbtTableArg = [
   FbtSubstitution | null | undefined,
 ];
 
+// Preserve the original count so a fallback catalog can select its own plural rules.
+export const numberValues = new WeakMap<FbtTableArg, number>();
+
 export default {
   getEnumResult(value: FbtTableKey): FbtTableArg {
     return [[value], null];
@@ -21,8 +24,13 @@ export default {
   getNumberResult(
     variation: Array<FbtTableKey>,
     substitution?: FbtSubstitution | null,
+    number?: number,
   ): FbtTableArg {
-    return [variation, substitution];
+    const result: FbtTableArg = [variation, substitution];
+    if (number != null) {
+      numberValues.set(result, number);
+    }
+    return result;
   },
 
   getPronounResult(genderKey: number): FbtTableArg {

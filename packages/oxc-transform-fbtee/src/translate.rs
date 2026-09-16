@@ -81,7 +81,10 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
                     continue;
                 }
                 if let Some(value) = translations.get(hash) {
-                    parsed_translations.insert(hash.clone(), parse_translation_data(value)?);
+                    let data = parse_translation_data(value)?;
+                    if value.get("status").and_then(Value::as_str) != Some("new") {
+                        parsed_translations.insert(hash.clone(), data);
+                    }
                 }
             }
         }
@@ -95,6 +98,18 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
             .unwrap_or_else(|| gender_fallback(locale));
         let mut translated_phrases = Vec::with_capacity(sites.len());
         for site in &sites {
+            // Keep runtime dictionaries sparse so missing messages can fall back to
+            // another locale. Positional (non-Jenkins) output retains its source fallback.
+            if use_jenkins
+                && !site.hash_to_leaf.keys().any(|hash| {
+                    parsed_translations
+                        .get(hash)
+                        .is_some_and(|data| !data.translations.is_empty())
+                })
+            {
+                translated_phrases.push(Value::Null);
+                continue;
+            }
             translated_phrases.push(
                 Builder::new(site, &parsed_translations, number_fallback, gender_fallback)
                     .build()?,
@@ -122,7 +137,9 @@ pub fn translate(input_json: &str, use_jenkins: bool) -> Result<String, String> 
         for (locale, translated_phrases) in translated_groups {
             let mut hash_to_translation = Map::new();
             for (hash_key, translation) in hash_keys.iter().zip(translated_phrases) {
-                hash_to_translation.insert(hash_key.clone(), translation);
+                if !translation.is_null() {
+                    hash_to_translation.insert(hash_key.clone(), translation);
+                }
             }
             locales.insert(locale, Value::Object(hash_to_translation));
         }
@@ -810,6 +827,38 @@ fn base62(mut value: u32) -> String {
 #[cfg(test)]
 mod tests {
     use super::translate;
+
+    #[test]
+    fn runtime_catalogs_omit_untranslated_messages() {
+        for translations in [
+            serde_json::json!({}),
+            serde_json::json!({"hash": {"status": "new", "translations": [{"translation": "A", "variations": {}}]}}),
+            serde_json::json!({"hash": {"translations": []}}),
+        ] {
+            let input = serde_json::json!({
+                "phrases": [{"hashToLeaf": {"hash": {"desc": "d", "text": "A"}}, "jsfbt": {"m": [], "t": {"desc": "d", "text": "A"}}}],
+                "translationGroups": [{"fb-locale": "fr-CA", "translations": translations}],
+            });
+            assert_eq!(
+                translate(&input.to_string(), true).unwrap(),
+                r#"{"fr-CA":{}}"#
+            );
+        }
+    }
+
+    #[test]
+    fn explicit_translations_equal_to_source_are_preserved() {
+        let input = serde_json::json!({
+            "phrases": [{"hashToLeaf": {"hash": {"desc": "d", "text": "A"}}, "jsfbt": {"m": [], "t": {"desc": "d", "text": "A"}}}],
+            "translationGroups": [{"fb-locale": "fr", "translations": {"hash": {"translations": [{"translation": "A", "variations": {}}]}}}],
+        });
+        let output: serde_json::Value =
+            serde_json::from_str(&translate(&input.to_string(), true).unwrap()).unwrap();
+        assert_eq!(
+            output["fr"].as_object().unwrap().values().next(),
+            Some(&serde_json::json!("A"))
+        );
+    }
 
     #[test]
     fn translates_a_plain_phrase() {

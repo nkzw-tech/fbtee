@@ -169,6 +169,6 @@ describe('fbt', () => {
     ];
     tests.forEach(runTest);
 
-    expect(console.warn).toHaveBeenCalledWith('Translations have not been provided.');
+    expect(console.warn).not.toHaveBeenCalled();
   });
 });

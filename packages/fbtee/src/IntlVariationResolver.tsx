@@ -9,7 +9,11 @@ import type { RuntimeState } from './RuntimeState.tsx';
 export const EXACTLY_ONE = '_1';
 
 export function getNumberVariations(number: number, state?: RuntimeState): Array<FbtTableKey> {
-  const numType = IntlNumberType.get(Hooks.getViewerContext(state).locale).getVariation(number);
+  return getNumberVariationsForLocale(number, Hooks.getViewerContext(state).locale);
+}
+
+export function getNumberVariationsForLocale(number: number, locale: string): Array<FbtTableKey> {
+  const numType = IntlNumberType.get(locale).getVariation(number);
   invariant(
     numType & IntlVariations.BITMASK_NUMBER,
     'Invalid number provided: %s (%s)',

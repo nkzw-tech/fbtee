@@ -77,6 +77,11 @@ function catalog(locale, messages) {
   );
 }
 
+// Tests inspecting source table structure explicitly translate each message to itself.
+const sourceMessages = Object.fromEntries(
+  phrases.flatMap((phrase) => Object.values(phrase.hashToLeaf).map(({ text }) => [text, text])),
+);
+
 const german = catalog('de-DE', {
   '{list of items} and {last item}': '{list of items} und {last item}',
   Message: 'Nachricht',
@@ -91,6 +96,60 @@ beforeEach(() => {
     hooks: { getViewerContext: () => ({ GENDER: 3, locale: 'en-US' }) },
     translations: {},
   });
+});
+
+test('compiled partial catalogs fall back per message in bound and request runtimes', async () => {
+  const parent = catalog('fr', { Message: 'Bonjour' });
+  const regional = catalog('fr-CA', {});
+  assert.deepEqual(regional['fr-CA'], {});
+  const translations = { ...parent, ...regional };
+  const missing = [];
+  const runtime = createFbteeRuntime({
+    locale: 'fr-CA',
+    onMissingTranslation: (entry) => missing.push(entry),
+    translations,
+  });
+  assert.equal(fixture.messages(runtime).message(), 'Bonjour');
+  assert.equal(fixture.messages(runtime).plainMessage(), 'Bonjour');
+  assert.deepEqual(missing, []);
+  assert.equal(fixture.messages(runtime).viewer(), 'Viewer');
+  assert.equal(fixture.messages(runtime).viewer(), 'Viewer');
+  assert.equal(missing.length, 1);
+  assert.equal(missing[0].locale, 'fr-CA');
+
+  const results = await Promise.all([
+    runWithFbtee({ locale: 'fr-CA', translations }, async () => {
+      await delay(5);
+      return fixture.message();
+    }),
+    runWithFbtee(
+      { fallbackLocales: ['de-DE'], locale: 'fr-CA', translations: german },
+      async () => {
+        await delay(1);
+        return fixture.message();
+      },
+    ),
+  ]);
+  assert.deepEqual(results, ['Bonjour', 'Nachricht']);
+});
+
+test('locale context automatically loads parent catalogs for generated regional catalogs', async () => {
+  const parent = catalog('fr', { Message: 'Bonjour' }).fr;
+  const loads = [];
+  const missing = [];
+  const context = setupLocaleContext({
+    availableLanguages: new Map(['en-US', 'fr', 'fr-CA'].map((locale) => [locale, locale])),
+    clientLocales: ['fr-CA'],
+    loadLocale: async (locale) => {
+      loads.push(locale);
+      return locale === 'fr' ? parent : {};
+    },
+    onMissingTranslation: (entry) => missing.push(entry),
+  });
+  await context.preloadLocale();
+  assert.deepEqual(loads, ['fr-CA', 'fr']);
+  assert.equal(fixture.message(), 'Bonjour');
+  assert.deepEqual(missing, []);
 });
 
 test('all public entry points share the same runtime', () => {
@@ -277,7 +336,7 @@ for (const [name, install] of [
   ],
 ]) {
   test(`${name} shares nested tables and isolates updates through the API`, async () => {
-    const base = catalog('en-US', {})['en-US'];
+    const base = catalog('en-US', sourceMessages)['en-US'];
     const hash = Object.keys(base).find((hash) => base[hash]?.['*'] === '{count} items');
     assert.ok(hash);
     const shared = {
@@ -502,7 +561,7 @@ test('returned rich results retain their error listener after leaving the scope'
 });
 
 test('compiled plural helpers and viewer gender use request state', async () => {
-  const base = catalog('en-US', {});
+  const base = catalog('en-US', sourceMessages);
   const pluralHash = Object.keys(base['en-US']).find(
     (hash) => base['en-US'][hash]?.['*'] === '{count} items',
   );

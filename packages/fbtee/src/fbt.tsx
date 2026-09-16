@@ -256,7 +256,7 @@ export function createFbtRuntime(state?: RuntimeState) {
               state,
             );
           }
-          return FbtTableAccessor.getNumberResult(variation, substitution);
+          return FbtTableAccessor.getNumberResult(variation, substitution, number);
         } else if (variations[0] === ParamVariation.gender) {
           const gender = variations[1];
           invariant(gender != null, 'expected gender value');
@@ -280,6 +280,7 @@ export function createFbtRuntime(state?: RuntimeState) {
                     intlNumUtils.formatNumberWithThousandDelimiters(count, undefined, state),
             }
           : null,
+        count,
       ),
     state,
   });

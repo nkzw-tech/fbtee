@@ -183,6 +183,8 @@ Translate the entries marked `"status": "new"`, then remove that status. Existin
 npx fbtee translate --source-strings source_strings.json --translations 'translations/*.json' --output-dir src/translations
 ```
 
+Generated runtime catalogs omit messages with no completed translation, including entries still marked `"status": "new"`. This lets partial catalogs fall back to another language. After upgrading, recompile existing catalogs to enable this behavior. Explicit translations equal to the source text are preserved. Fallback applies to whole messages; a partially translated plural/gender table keeps its existing within-message fallback behavior.
+
 Commit the editable files in `translations/`. Add generated files to `.gitignore`:
 
 ```gitignore
@@ -221,7 +223,7 @@ createRoot(document.getElementById('root')!).render(
 );
 ```
 
-Call `preload()` once before rendering to load the initial language. Creating the context does not load it automatically. You can skip preloading if you supply the translations at setup; the fallback locale uses your source strings.
+Call `preload()` once before rendering to load the initial language and its available fallback catalogs. Creating the context does not load them automatically. You can skip preloading if you supply all those catalogs at setup; the source locale does not require a catalog.
 
 Preloading and language changes share pending loads. Loading failures reject the promise; calling again retries them.
 
@@ -240,6 +242,37 @@ function LanguageButton() {
 ```
 
 Outside React, use `setupLocaleContext` and await `preloadLocale()`, or configure the runtime directly with `setupFbtee`.
+
+### Locale Matching and Fallback
+
+Fallback works automatically for each message: `fr-CA` checks its Canadian French catalog, then `fr`, then the source locale's catalog if supplied, and finally the inline source text. A translated regional message always wins. An empty string counts as a translation.
+
+To use a shared French catalog, include `fr` alongside `fr-CA` in `availableLanguages` and return each catalog from `loadLocale`. `preload()` and language changes load the available fallback catalogs in parallel, share pending loads, and retry failed loads. A supplied `fr` catalog does not prevent loading `fr-CA`. With `setupFbtee`, `createFbteeRuntime`, or `runWithFbtee`, supply the fallback catalogs in `translations`.
+
+Matching accepts BCP 47 and legacy identifiers such as `fr-CA` and `fr_CA`. It prefers exact locales, then language/script parents. If none are available during language selection, it chooses a region with the same language and script, preferring the region inferred by `Intl.Locale` and using a stable order for ties. Catalog insertion order does not determine the selected language. Traditional Chinese falls back through `zh-Hant`; it does not automatically use a Simplified Chinese catalog. Per-message fallback does not choose arbitrary sibling regions.
+
+Most apps need no additional settings. All setup APIs accept these optional settings:
+
+```tsx
+const runtime = createFbteeRuntime({
+  locale: 'fr-CA',
+  translations,
+  sourceLocale: 'en-US', // Default; change this for non-English inline messages.
+  fallbackLocales: {
+    'fr-CA': ['fr-FR'], // After natural parents, before the source locale.
+    default: ['en-GB'], // Additional fallbacks for every locale.
+  },
+  onMissingTranslation: ({ locale, hashKey, sourceLocale }) => {
+    reportMissingTranslation({ locale, hashKey, sourceLocale });
+  },
+});
+```
+
+`fallbackLocales` also accepts an array, such as `['fr', 'en-GB']`, for every locale. Mappings can refer to other mapped locales; cycles and duplicate catalogs are ignored. Plural selection follows the language of the catalog supplying the message; interpolated numbers retain the viewer's number formatting.
+
+`onMissingTranslation` runs only when no catalog in the chain contains the message and inline source text is used. It reports each locale/message once per runtime, resets when translations are registered or merged, and does not report normal source-locale rendering. No generic missing-catalog warning is emitted. Custom `hooks.getTranslatedInput` implementations remain responsible for their own fallback and reporting.
+
+For locale contexts, `fallbackLocale` controls the selected language when none of `clientLocales` is supported. It defaults to `sourceLocale`. Use `fallbackLocales` to configure per-message fallback, and set `sourceLocale` when the inline messages are not US English.
 
 ### Scoped Runtimes
 

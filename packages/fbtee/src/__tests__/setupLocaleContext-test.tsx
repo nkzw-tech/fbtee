@@ -100,7 +100,7 @@ test('preloading another locale registers its translations without selecting it'
   expect(translations).toEqual({ de_AT: { greeting: 'Hallo' } });
 });
 
-test.each(['de_AT', 'de-AT', 'de'])(
+test.each(['de_AT', 'de-AT'])(
   'supplied translations under %s need no initial load',
   async (locale) => {
     const loadLocale = jest.fn(async () => ({}));
@@ -116,6 +116,79 @@ test.each(['de_AT', 'de-AT', 'de'])(
     expect(loadLocale).not.toHaveBeenCalled();
   },
 );
+
+test('a supplied parent catalog does not block loading the regional catalog', async () => {
+  const loadLocale = jest.fn<LocaleLoaderFn>(async () => ({ greeting: 'Servus' }));
+  const translations = { de: { greeting: 'Hallo' } };
+  const context = setupLocaleContext({
+    availableLanguages,
+    clientLocales: ['de-AT'],
+    loadLocale,
+    translations,
+  });
+  await context.preloadLocale();
+  expect(loadLocale).toHaveBeenCalledWith('de_AT');
+  expect(translations).toEqual({ de: { greeting: 'Hallo' }, de_AT: { greeting: 'Servus' } });
+});
+
+test('preloads exact, parent, and configured fallbacks once without loading unrelated locales', async () => {
+  const loadLocale = jest.fn(async () => ({}));
+  const context = setupLocaleContext({
+    availableLanguages: new Map(
+      ['en-US', 'fr-CA', 'fr', 'fr-FR', 'de'].map((locale) => [locale, locale]),
+    ),
+    clientLocales: ['fr-CA'],
+    fallbackLocales: ['de'],
+    loadLocale,
+  });
+  await Promise.all([context.preloadLocale(), context.setLocale('fr_CA')]);
+  expect(loadLocale.mock.calls).toEqual([['fr-CA'], ['fr'], ['de']]);
+  expect(context.getLocale()).toBe('fr-CA');
+});
+
+test('a failing parent load can be retried without reloading the regional catalog', async () => {
+  const loadLocale = jest.fn<LocaleLoaderFn>(async (locale) => {
+    if (locale === 'fr') {
+      throw new Error('offline');
+    }
+    return { greeting: 'Allô' };
+  });
+  const context = setupLocaleContext({
+    availableLanguages: new Map(['en-US', 'fr-CA', 'fr'].map((locale) => [locale, locale])),
+    clientLocales: ['en-US'],
+    loadLocale,
+  });
+  await expect(context.setLocale('fr-CA')).rejects.toThrow('offline');
+  expect(context.getLocale()).toBe('en-US');
+  loadLocale.mockResolvedValue({ greeting: 'Bonjour' });
+  await context.setLocale('fr-CA');
+  expect(loadLocale.mock.calls).toEqual([['fr-CA'], ['fr'], ['fr']]);
+});
+
+test('sourceLocale controls the default selection and does not require a catalog', async () => {
+  const loadLocale = jest.fn(async () => ({}));
+  const context = setupLocaleContext({
+    availableLanguages,
+    clientLocales: [],
+    loadLocale,
+    sourceLocale: 'de-AT',
+  });
+  await context.preloadLocale();
+  expect(context.getLocale()).toBe('de_AT');
+  expect(loadLocale).not.toHaveBeenCalled();
+});
+
+test('the generic source language does not require a catalog', async () => {
+  const loadLocale = jest.fn<LocaleLoaderFn>(async () => ({}));
+  const context = setupLocaleContext({
+    availableLanguages: new Map([['en', 'English']]),
+    clientLocales: ['en-US'],
+    loadLocale,
+  });
+  await context.preloadLocale();
+  expect(context.getLocale()).toBe('en');
+  expect(loadLocale).not.toHaveBeenCalled();
+});
 
 test('the fallback locale and unsupported locales do not load', async () => {
   const loadLocale = jest.fn(async () => ({}));
