@@ -195,7 +195,13 @@ source_strings.json
 src/translations/
 ```
 
-Coding agents can help with translation: ask them to fill the new entries, match the vocabulary and tone of existing translations, and remove `"status": "new"` when finished. Review the resulting diff as you would any translation.
+The npm package includes a [translation skill](https://github.com/nkzw-tech/fbtee/blob/main/packages/fbtee/skills/fbtee-translate/SKILL.md) for coding agents. It prepares translations, fills every new entry across the supported locales, and uses existing translations and source-code context to match terminology and tone. To use it, ask your agent:
+
+```text
+Read node_modules/fbtee/skills/fbtee-translate/SKILL.md and translate all new strings for all supported locales.
+```
+
+Review the resulting diff as you would any translation.
 
 ## Runtime Setup
 
