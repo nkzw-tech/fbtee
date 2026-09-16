@@ -245,6 +245,27 @@ function LanguageButton() {
 
 Outside React, use `setupLocaleContext` and await `preloadLocale()`, or configure the runtime directly with `setupFbtee`.
 
+### Formatting Numbers and Dates
+
+Use JavaScript's native `Intl` APIs for numbers, currencies, dates, times, and relative time. Pass fbtee's active locale to the formatter and insert the result with `<fbt:param>`:
+
+```tsx
+import { useLocaleContext } from 'fbtee';
+
+function Price({ amount, currency }: { amount: number; currency: string }) {
+  const { locale } = useLocaleContext();
+  const price = new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+
+  return (
+    <fbt desc="Product price">
+      Price: <fbt:param name="price">{price}</fbt:param>
+    </fbt>
+  );
+}
+```
+
+With scoped runtimes, use the `locale` returned by `useFbt()`. Reuse formatter instances when formatting many values with the same locale and options. For server-rendered dates and relative times, keep the locale, time zone, and reference time consistent between server and client; these settings belong to your application.
+
 ### Locale Matching and Fallback
 
 Fallback works automatically for each message: `fr-CA` checks its Canadian French catalog, then `fr`, then the source locale's catalog if supplied, and finally the inline source text. A translated regional message always wins. An empty string counts as a translation.
