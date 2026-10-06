@@ -13,25 +13,25 @@
       ],
       "types": []
     },
-    "6sCryEz2UyZVl1Kp6wq/kg==": {
+    "oP1BvO6gOmvt2bZwdqVuYA==": {
       "description": "Scoped runtime description",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Gib einem Teil der Seite eine eigene Sprache. Komponenten greifen über useFbt() auf den nächsten LocaleProvider zu, und asynchrone Aktionen behalten die Sprache bei, mit der sie gestartet wurden.",
+          "translation": "Gib einem Teil der Seite eine eigene Sprache. Komponenten greifen über {=useFbt()} auf den nächsten {=LocaleProvider} zu, und asynchrone Aktionen behalten die Sprache bei, mit der sie gestartet wurden.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "NsFi6v/Y7pWw3DH04jeM2w==": {
+    "Bto7Eh1kB2xmgMOuEERxMg==": {
       "description": "Scoped runtime global behavior",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Globale Imports verwenden weiterhin die Sprache der App. Wechsle die Runtime des Providers, um die Sprache zu ändern, oder rufe mergeTranslations() auf, um Übersetzungen hinzuzufügen.",
+          "translation": "Globale Imports verwenden weiterhin die Sprache der App. Wechsle die Runtime des Providers, um die Sprache zu ändern, oder rufe {=mergeTranslations()} auf, um Übersetzungen hinzuzufügen.",
           "variations": {}
         }
       ],
@@ -49,20 +49,20 @@
       ],
       "types": []
     },
-    "YXGG6IGB2IcE4Azra7zpCw==": {
+    "aVI6yiCOflajAlpyzOpoSA==": {
       "description": "fbtee tagline",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "A Internationalisierungs-Framework für JavaScript & React, g'macht um {=powerful}, {=flexible} und {=intuitive} z'sein.",
+          "translation": "A Internationalisierungs-Framework für {=JavaScript} & {=React}, g'macht um {=powerful}, {=flexible} und {=intuitive} z'sein.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "mKv/nNNGtziUDs2ICowcZA==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "wUX0dh/ypzDdoi+lbSRp/A==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -73,8 +73,8 @@
       ],
       "types": []
     },
-    "Y8tdcisumiuBSWlTlz1ToQ==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "J6Ly1cTOZ1hweP6YQHM+uQ==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -85,8 +85,8 @@
       ],
       "types": []
     },
-    "a3ruXfPRZE9V0OoG50TZsA==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "3yur0XxOcQCALHS2SL2Wow==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -109,13 +109,13 @@
       ],
       "types": []
     },
-    "MQD9HBoX6W0fWQVvw/tYqw==": {
+    "Jf+JcvbuAT/DPvOLRSm/9A==": {
       "description": "Button label",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Auf GitHub anschaun",
+          "translation": "Auf {=GitHub} anschaun",
           "variations": {}
         }
       ],
@@ -385,13 +385,13 @@
       ],
       "types": []
     },
-    "gdAiCCpPwzIulcmoDbooEg==": {
+    "21tQc945B8GUx21VqrgmGQ==": {
       "description": "Headline",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Expo-App-Template",
+          "translation": "{=Expo}-App-Template",
           "variations": {}
         }
       ],
@@ -421,20 +421,20 @@
       ],
       "types": []
     },
-    "y8rvXwPvHELbND3UCqRpYA==": {
+    "WOMth3J1JkwQrN77u4xw3Q==": {
       "description": "Manual installation description",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{=Requirements:} Node 22+, React 19+ (falls du React nutzt)",
+          "translation": "{=Requirements:} {=Node 22+}, {=React 19+} (falls du {=React} nutzt)",
           "variations": {}
         }
       ],
       "types": []
     },
-    "9NsZwnoMGl0KPYnzc3UAVg==": {
-      "description": "In the phrase: \"{=Requirements:} Node 22+, React 19+ (if using React)\"",
+    "b/imRridSx5DnrEDwwPDag==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -1153,13 +1153,13 @@
       ],
       "types": []
     },
-    "1ELjVsSsR+y3iUna1gK4sw==": {
+    "J5nwMikYV/gyrtN6N2FRuA==": {
       "description": "Headline",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "ESLint-Plugin",
+          "translation": "{=ESLint}-Plugin",
           "variations": {}
         }
       ],
@@ -1453,32 +1453,32 @@
       ],
       "types": []
     },
-    "2xjuG69JR0hAj0T9tzkDFA==": {
+    "aShOPf2MSQzG5dNIvk8agg==": {
       "description": "Link text",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Expo-App-Template",
+          "translation": "{=Expo}-App-Template",
           "variations": {}
         }
       ],
       "types": []
     },
-    "bu70QyRYJVrMa600vgiEuw==": {
+    "s54a04KmrJ0dJqyNsxX+8w==": {
       "description": "Footer credit",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Ursprünglich von Facebook gemacht • Betreut von {=Nakazawa Tech}",
+          "translation": "Ursprünglich von {=Facebook} gemacht • Betreut von {=Nakazawa Tech}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "VNNXf1SGDLLfoxNjWNMqrg==": {
-      "description": "In the phrase: \"Originally created by Facebook • Maintained by {=Nakazawa Tech}\"",
+    "Wp3aSfe9+2SxNg8MgnV3Tw==": {
+      "description": "In the phrase: \"Originally created by {=Facebook} • Maintained by {=Nakazawa Tech}\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -1489,13 +1489,13 @@
       ],
       "types": []
     },
-    "3p2EdDkpFI0G0wt2Q/55Aw==": {
+    "V3lWVDnCo6UXPODUKVmynA==": {
       "description": "Button label",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "Auf GitHub a Stern geben",
+          "translation": "Auf {=GitHub} a Stern geben",
           "variations": {}
         }
       ],
@@ -1640,6 +1640,162 @@
       "translations": [
         {
           "translation": "{list of items}, {last item}",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "K4Ya8tYsXiDh3L947zc1gg==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JavaScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bCYPcFvsRKfJ2p4aP7EDNQ==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dSMVY/LDtRElwIqfPhT4Gg==": {
+      "description": "In the phrase: \"View on {=GitHub}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dzrIE+VeiREJ7Iq1CsZ9lQ==": {
+      "description": "In the phrase: \"{=Expo} App Template\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CV7YYfL7hsjvWFL/FPR+Pw==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Node 22+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "YhefX9ULYjYRY0YMV8GGdg==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React 19+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MHK26i93R4KqTTM7JM+bQQ==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dxXWWptWP1Y2YNhouoGguQ==": {
+      "description": "In the phrase: \"Give part of a page its own language. Components use the nearest {=LocaleProvider} through {=useFbt()}, and async actions keep the locale they started with.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "LocaleProvider",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T2ddGVB26Qu+Li5x0M805g==": {
+      "description": "In the phrase: \"Give part of a page its own language. Components use the nearest {=LocaleProvider} through {=useFbt()}, and async actions keep the locale they started with.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "useFbt()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "kZFoRYgxkmLPnYrPtm/pZQ==": {
+      "description": "In the phrase: \"Global imports keep using the app's locale. Switch the provider's runtime to change languages, or call {=mergeTranslations()} to add translations.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "mergeTranslations()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "shICKhjOWpj19uomgG22uw==": {
+      "description": "In the phrase: \"{=ESLint} Plugin\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESLint",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XybqeQmkPb6TNCqPYqooEA==": {
+      "description": "In the phrase: \"Originally created by {=Facebook} • Maintained by {=Nakazawa Tech}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "BDk2zTDat3DMkjGe4cHa4w==": {
+      "description": "In the phrase: \"Star on {=GitHub}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub",
           "variations": {}
         }
       ],

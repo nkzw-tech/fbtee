@@ -13,25 +13,25 @@
       ],
       "types": []
     },
-    "6sCryEz2UyZVl1Kp6wq/kg==": {
+    "oP1BvO6gOmvt2bZwdqVuYA==": {
       "description": "Scoped runtime description",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "امنح جزءًا من الصفحة لغته الخاصة. تستخدم المكوّنات أقرب LocaleProvider عبر useFbt()، وتحتفظ الإجراءات غير المتزامنة بالإعدادات المحلية التي بدأت بها.",
+          "translation": "امنح جزءًا من الصفحة لغته الخاصة. تستخدم المكوّنات أقرب {=LocaleProvider} عبر {=useFbt()}، وتحتفظ الإجراءات غير المتزامنة بالإعدادات المحلية التي بدأت بها.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "NsFi6v/Y7pWw3DH04jeM2w==": {
+    "Bto7Eh1kB2xmgMOuEERxMg==": {
       "description": "Scoped runtime global behavior",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "تستمر الاستيرادات العامة في استخدام الإعدادات المحلية للتطبيق. بدّل بيئة تشغيل الموفّر لتغيير اللغة، أو استدعِ mergeTranslations() لإضافة ترجمات.",
+          "translation": "تستمر الاستيرادات العامة في استخدام الإعدادات المحلية للتطبيق. بدّل بيئة تشغيل الموفّر لتغيير اللغة، أو استدعِ {=mergeTranslations()} لإضافة ترجمات.",
           "variations": {}
         }
       ],
@@ -49,20 +49,20 @@
       ],
       "types": []
     },
-    "YXGG6IGB2IcE4Azra7zpCw==": {
+    "aVI6yiCOflajAlpyzOpoSA==": {
       "description": "fbtee tagline",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "إطار عمل لتدويل تطبيقات JavaScript وReact، يجمع بين {=powerful} و{=flexible} و{=intuitive}.",
+          "translation": "إطار عمل لتدويل تطبيقات {=JavaScript} و{=React}، يجمع بين {=powerful} و{=flexible} و{=intuitive}.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "mKv/nNNGtziUDs2ICowcZA==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "wUX0dh/ypzDdoi+lbSRp/A==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -73,8 +73,8 @@
       ],
       "types": []
     },
-    "Y8tdcisumiuBSWlTlz1ToQ==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "J6Ly1cTOZ1hweP6YQHM+uQ==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -85,8 +85,8 @@
       ],
       "types": []
     },
-    "a3ruXfPRZE9V0OoG50TZsA==": {
-      "description": "In the phrase: \"An internationalization framework for JavaScript & React designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+    "3yur0XxOcQCALHS2SL2Wow==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -109,13 +109,13 @@
       ],
       "types": []
     },
-    "MQD9HBoX6W0fWQVvw/tYqw==": {
+    "Jf+JcvbuAT/DPvOLRSm/9A==": {
       "description": "Button label",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "عرض على GitHub",
+          "translation": "عرض على {=GitHub}",
           "variations": {}
         }
       ],
@@ -241,13 +241,13 @@
       ],
       "types": []
     },
-    "gdAiCCpPwzIulcmoDbooEg==": {
+    "21tQc945B8GUx21VqrgmGQ==": {
       "description": "Headline",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "قالب تطبيق Expo",
+          "translation": "قالب تطبيق {=Expo}",
           "variations": {}
         }
       ],
@@ -265,20 +265,20 @@
       ],
       "types": []
     },
-    "y8rvXwPvHELbND3UCqRpYA==": {
+    "WOMth3J1JkwQrN77u4xw3Q==": {
       "description": "Manual installation description",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "{=Requirements:} Node 22+، React 19+ (إذا كنت تستخدم React)",
+          "translation": "{=Requirements:} {=Node 22+}، {=React 19+} (إذا كنت تستخدم {=React})",
           "variations": {}
         }
       ],
       "types": []
     },
-    "9NsZwnoMGl0KPYnzc3UAVg==": {
-      "description": "In the phrase: \"{=Requirements:} Node 22+, React 19+ (if using React)\"",
+    "b/imRridSx5DnrEDwwPDag==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -421,14 +421,14 @@
         }
       ]
     },
-    "1ELjVsSsR+y3iUna1gK4sw==": {
+    "J5nwMikYV/gyrtN6N2FRuA==": {
       "description": "Headline",
       "tokens": [],
       "types": [],
       "status": "translated",
       "translations": [
         {
-          "translation": "إضافة ESLint",
+          "translation": "إضافة {=ESLint}",
           "variations": {}
         }
       ]
@@ -517,32 +517,32 @@
       ],
       "types": []
     },
-    "2xjuG69JR0hAj0T9tzkDFA==": {
+    "aShOPf2MSQzG5dNIvk8agg==": {
       "description": "Link text",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "قالب تطبيق Expo",
+          "translation": "قالب تطبيق {=Expo}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "bu70QyRYJVrMa600vgiEuw==": {
+    "s54a04KmrJ0dJqyNsxX+8w==": {
       "description": "Footer credit",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "تم إنشاؤه في الأصل بواسطة Facebook • تتم صيانته من قبل {=Nakazawa Tech}",
+          "translation": "تم إنشاؤه في الأصل بواسطة {=Facebook} • تتم صيانته من قبل {=Nakazawa Tech}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "VNNXf1SGDLLfoxNjWNMqrg==": {
-      "description": "In the phrase: \"Originally created by Facebook • Maintained by {=Nakazawa Tech}\"",
+    "Wp3aSfe9+2SxNg8MgnV3Tw==": {
+      "description": "In the phrase: \"Originally created by {=Facebook} • Maintained by {=Nakazawa Tech}\"",
       "status": "translated",
       "tokens": [],
       "translations": [
@@ -553,13 +553,13 @@
       ],
       "types": []
     },
-    "3p2EdDkpFI0G0wt2Q/55Aw==": {
+    "V3lWVDnCo6UXPODUKVmynA==": {
       "description": "Button label",
       "status": "translated",
       "tokens": [],
       "translations": [
         {
-          "translation": "ضع نجمة على GitHub",
+          "translation": "ضع نجمة على {=GitHub}",
           "variations": {}
         }
       ],
@@ -731,12 +731,12 @@
       ],
       "types": []
     },
-    "GJbB5eHQxt/0WD2MVNbPxg==": {
+    "g5CDdZ9VXbj7rFl4/Q/x1g==": {
       "description": "Tagline",
       "tokens": [],
       "translations": [
         {
-          "translation": "الأدوات الأساسية لتوطين تطبيقات JavaScript وReact الحديثة.",
+          "translation": "الأدوات الأساسية لتوطين تطبيقات {=JavaScript} و{=React} الحديثة.",
           "variations": {}
         }
       ],
@@ -764,34 +764,34 @@
       ],
       "types": []
     },
-    "AOMeVcbbBKNig+5Tv9kUKA==": {
+    "rkamjYq24aBYmlNZE9XJmg==": {
       "description": "Proven in production description",
       "tokens": [],
       "translations": [
         {
-          "translation": "مبني على fbt من Facebook، المستخدم في بيئات الإنتاج منذ أكثر من عقد لخدمة مليارات المستخدمين، بالإضافة إلى سنوات من الاستخدام في Athena Crisis.",
+          "translation": "مبني على {=fbt} من {=Facebook}، المستخدم في بيئات الإنتاج منذ أكثر من عقد لخدمة مليارات المستخدمين، بالإضافة إلى سنوات من الاستخدام في {=Athena Crisis}.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "AQpZIiH5COG3Rpy9/oPR/A==": {
+    "x/8tx6Pn/41Ko3P7gefZjg==": {
       "description": "Optimized performance description",
       "tokens": [],
       "translations": [
         {
-          "translation": "يحوّل الترجمات إلى تمثيل وسيط (IR) لاستخراج النصوص، ثم يحسّن مخرجات وقت التشغيل لرفع الأداء.",
+          "translation": "يحوّل الترجمات إلى تمثيل وسيط ({=IR}) لاستخراج النصوص، ثم يحسّن مخرجات وقت التشغيل لرفع الأداء.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "qoSoXJF286KRcr7mizFwvQ==": {
+    "eZucWtEOs9Hto9e0JL34oQ==": {
       "description": "Easy setup description",
       "tokens": [],
       "translations": [
         {
-          "translation": "تكامل سريع مع Vite وNext.js وOxc وExpo.",
+          "translation": "تكامل سريع مع {=Vite} و{=Next.js} و{=Oxc} و{=Expo}.",
           "variations": {}
         }
       ],
@@ -830,56 +830,56 @@
       ],
       "types": []
     },
-    "jhlaM9Tv6Ls1uNgCd6kfJw==": {
+    "mDsGQhlQYI5yA/bnBAlL6A==": {
       "description": "Web app template description",
       "tokens": [],
       "translations": [
         {
-          "translation": "إعداد تطبيق باستخدام Vite وReact",
+          "translation": "إعداد تطبيق باستخدام {=Vite} و{=React}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "EVvRPCxAClyWnpeEWgbXjg==": {
+    "PxiFJp11vAHkn5TbKPEoWA==": {
       "description": "Expo app template description",
       "tokens": [],
       "translations": [
         {
-          "translation": "إعداد تطبيق باستخدام React Native وExpo",
+          "translation": "إعداد تطبيق باستخدام {=React Native} و{=Expo}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "aYjN9IswmJbRnJIVsRoiJw==": {
+    "0XmHhoUm+uuo/ueumDnNFQ==": {
       "description": "Compiler setup recommendation",
       "tokens": [],
       "translations": [
         {
-          "translation": "اختر الإضافة الأصلية لـVite أو Next.js، أو استخدم تحويل Oxc منخفض المستوى لتكامل مخصّص مع نظام البناء.",
+          "translation": "اختر الإضافة الأصلية لـ{=Vite} أو {=Next.js}، أو استخدم تحويل {=Oxc} منخفض المستوى لتكامل مخصّص مع نظام البناء.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "UDKXig+9VMPrW79uM/bSbQ==": {
+    "KfvzpHYlaIvO6A19uhXRHg==": {
       "description": "Vite setup instructions",
       "tokens": [],
       "translations": [
         {
-          "translation": "استخدم الإضافة الأصلية لـVite لأبسط إعداد. أضفها قبل إضافة React:",
+          "translation": "استخدم الإضافة الأصلية لـ{=Vite} لأبسط إعداد. أضفها قبل إضافة {=React}:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "wygaI13sgGZryr1YFMtRNg==": {
+    "uNgHdZcPe4/Q0lEjnv2iwQ==": {
       "description": "Next.js setup instructions",
       "tokens": [],
       "translations": [
         {
-          "translation": "استخدم إضافة Oxc الأصلية مع Turbopack أو webpack:",
+          "translation": "استخدم إضافة {=Oxc} الأصلية مع {=Turbopack} أو {=webpack}:",
           "variations": {}
         }
       ],
@@ -907,30 +907,30 @@
       ],
       "types": []
     },
-    "T78JEGpG09ZrZSnkIAijxA==": {
+    "ogqiYO01MAFvIjgol0yOCA==": {
       "description": "App setup description",
       "tokens": [],
       "translations": [
         {
-          "translation": "في مشاريع React التي تستخدم TypeScript، أضف تعريفات JSX مرة واحدة في ملف أنواع عام أو في نقطة دخول التطبيق:",
+          "translation": "في مشاريع {=React} التي تستخدم {=TypeScript}، أضف تعريفات {=JSX} مرة واحدة في ملف أنواع عام أو في نقطة دخول التطبيق:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "lQlUDFyyhoFEnKuZVDQDZQ==": {
+    "MqgROjpQdbc+zuB+bZPJww==": {
       "description": "LocaleContext setup description",
       "tokens": [],
       "translations": [
         {
-          "translation": "في معظم تطبيقات React، يُنصح باستخدام {=createLocaleContext}:",
+          "translation": "في معظم تطبيقات {=React}، يُنصح باستخدام {=createLocaleContext}:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "f8ykkIVF8w75P4mKApo7GA==": {
-      "description": "In the phrase: \"Most React apps should use {=createLocaleContext}:\"",
+    "rt0CfkI2jteh/cNu7gej9g==": {
+      "description": "In the phrase: \"Most {=React} apps should use {=createLocaleContext}:\"",
       "tokens": [],
       "translations": [
         {
@@ -984,12 +984,12 @@
       ],
       "types": []
     },
-    "b8ZcrLKiN+YiBMCYQb+epA==": {
+    "/PjMaw78n5rryUPVgpGRfg==": {
       "description": "Server request scope rendering boundary",
       "tokens": [],
       "translations": [
         {
-          "translation": "حمّل الترجمات قبل التصيير، وهيّئ المتصفح بالإعدادات المحلية نفسها لعملية الإماهة. تغليف JSX الذي يعيده المكوّن لا يضع المكوّنات التابعة له ضمن النطاق نفسه.",
+          "translation": "حمّل الترجمات قبل التصيير، وهيّئ المتصفح بالإعدادات المحلية نفسها لعملية الإماهة. تغليف {=JSX} الذي يعيده المكوّن لا يضع المكوّنات التابعة له ضمن النطاق نفسه.",
           "variations": {}
         }
       ],
@@ -1050,19 +1050,19 @@
       ],
       "types": []
     },
-    "fsM7JmF5v0sowKSsOeje2g==": {
+    "nG2EAImIr1IMj1mZVIm1bg==": {
       "description": "Usage note",
       "tokens": [],
       "translations": [
         {
-          "translation": "يستورد تكامل مُصرّف fbtee العنصر {=<fbt>} تلقائيًا. استخدم {=fbt()} خارج JSX.",
+          "translation": "يستورد تكامل مُصرّف {=fbtee} العنصر {=<fbt>} تلقائيًا. استخدم {=fbt()} خارج {=JSX}.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "jzMikL/0jm7vDF+PBXJLnw==": {
-      "description": "In the phrase: \"{=<fbt>} is auto-imported by the fbtee compiler integration. Use {=fbt()} outside JSX.\"",
+    "rc+jOVYhLPenXtYiLvOsZg==": {
+      "description": "In the phrase: \"{=<fbt>} is auto-imported by the {=fbtee} compiler integration. Use {=fbt()} outside {=JSX}.\"",
       "tokens": [],
       "translations": [
         {
@@ -1072,8 +1072,8 @@
       ],
       "types": []
     },
-    "aA0MJo29jJvm0Axkb2j8tA==": {
-      "description": "In the phrase: \"{=<fbt>} is auto-imported by the fbtee compiler integration. Use {=fbt()} outside JSX.\"",
+    "vtlLnUBerZc6yGmmaujxmQ==": {
+      "description": "In the phrase: \"{=<fbt>} is auto-imported by the {=fbtee} compiler integration. Use {=fbt()} outside {=JSX}.\"",
       "tokens": [],
       "translations": [
         {
@@ -1105,19 +1105,19 @@
       ],
       "types": []
     },
-    "80Dn0lnigKgiLTY2w1lTPA==": {
+    "bkj7S/9W2LlbFb54rs+a/Q==": {
       "description": "Components explanation",
       "tokens": [],
       "translations": [
         {
-          "translation": "تتحوّل عناصر React داخل {=<fbt>} تلقائيًا إلى معاملات ضمنية:",
+          "translation": "تتحوّل عناصر {=React} داخل {=<fbt>} تلقائيًا إلى معاملات ضمنية:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "qVp5UchuVR9giXH7u2/Xrg==": {
-      "description": "In the phrase: \"React elements inside {=<fbt>} are automatically turned into implicit params:\"",
+    "A4vaFSb69M6ywA6VTZIfFw==": {
+      "description": "In the phrase: \"{=React} elements inside {=<fbt>} are automatically turned into implicit params:\"",
       "tokens": [],
       "translations": [
         {
@@ -1193,19 +1193,19 @@
       ],
       "types": []
     },
-    "fk+sCM6WCnDkzlMr+FEqlw==": {
+    "Qbg9942auJX1PeOHDIT7pg==": {
       "description": "List function description",
       "tokens": [],
       "translations": [
         {
-          "translation": "تتوفر الدالة المستقلة {=list()} للكود الذي لا يستخدم React:",
+          "translation": "تتوفر الدالة المستقلة {=list()} للكود الذي لا يستخدم {=React}:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "LQV5oTSihsNSvg/iFl53WA==": {
-      "description": "In the phrase: \"The standalone {=list()} helper is available for non-React code:\"",
+    "TzjXDaB69xIC/x+5ckhDmw==": {
+      "description": "In the phrase: \"The standalone {=list()} helper is available for non-{=React} code:\"",
       "tokens": [],
       "translations": [
         {
@@ -1226,19 +1226,19 @@
       ],
       "types": []
     },
-    "dCuldu9BhLbI+yzdKMbn5w==": {
+    "kwY6sMKjYWM4EE15is4rBA==": {
       "description": "Pluralization description",
       "tokens": [],
       "translations": [
         {
-          "translation": "استخدم {=<fbt:plural>} عندما يحدّد العدد الصيغة النحوية. يتولى fbtee قواعد الجمع الخاصة بكل لغة.",
+          "translation": "استخدم {=<fbt:plural>} عندما يحدّد العدد الصيغة النحوية. يتولى {=fbtee} قواعد الجمع الخاصة بكل لغة.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "xGyn/eeS7mvW1OxNaTWzGQ==": {
-      "description": "In the phrase: \"Use {=<fbt:plural>} when a count controls grammar. fbtee handles locale-specific plural rules.\"",
+    "Ig70SaODpWqgSUn/Id+kSQ==": {
+      "description": "In the phrase: \"Use {=<fbt:plural>} when a count controls grammar. {=fbtee} handles locale-specific plural rules.\"",
       "tokens": [],
       "translations": [
         {
@@ -1358,19 +1358,19 @@
       ],
       "types": []
     },
-    "AjL3XwmmH1pcpNVy78NiJw==": {
+    "JpelxLsUiCAN8C7+7JA/Ng==": {
       "description": "Plain text usage description",
       "tokens": [],
       "translations": [
         {
-          "translation": "استخدم {=fbs()} عندما تحتاج إلى نص عادي، كما في سمات HTML:",
+          "translation": "استخدم {=fbs()} عندما تحتاج إلى نص عادي، كما في سمات {=HTML}:",
           "variations": {}
         }
       ],
       "types": []
     },
-    "pitBuO16JelcOjWoMDz8Zw==": {
-      "description": "In the phrase: \"Use {=fbs()} when you need a plain string, such as in HTML attributes:\"",
+    "nH/3YE+wi0Hl97K1O+P4Rw==": {
+      "description": "In the phrase: \"Use {=fbs()} when you need a plain string, such as in {=HTML} attributes:\"",
       "tokens": [],
       "translations": [
         {
@@ -1468,12 +1468,12 @@
       ],
       "types": []
     },
-    "JF7rIaD17X8pFGYdkSQdfQ==": {
+    "Y6cIyffZMghiJufy/ixhDw==": {
       "description": "Coding agent translation explanation",
       "tokens": [],
       "translations": [
         {
-          "translation": "يمكن لوكلاء البرمجة العمل بفعالية على ملفات ترجمة fbtee، لأن المستودع يتضمن سياق التطبيق والترجمات الموجودة ومصطلحات المنتج.",
+          "translation": "يمكن لوكلاء البرمجة العمل بفعالية على ملفات ترجمة {=fbtee}، لأن المستودع يتضمن سياق التطبيق والترجمات الموجودة ومصطلحات المنتج.",
           "variations": {}
         }
       ],
@@ -1556,12 +1556,12 @@
       ],
       "types": []
     },
-    "vzsSae7jXgkGJ47RMGmjZA==": {
+    "PWyyLknba+X90RGHrI21AA==": {
       "description": "ESLint plugin description",
       "tokens": [],
       "translations": [
         {
-          "translation": "ثبّت إضافة ESLint الاختيارية:",
+          "translation": "ثبّت إضافة {=ESLint} الاختيارية:",
           "variations": {}
         }
       ],
@@ -1589,23 +1589,23 @@
       ],
       "types": []
     },
-    "YQht5oehN+L+znv4grWwNg==": {
+    "Lekd5pjEhFotovKZXcfDhQ==": {
       "description": "Headline",
       "tokens": [],
       "translations": [
         {
-          "translation": "الانتقال من fbt",
+          "translation": "الانتقال من {=fbt}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "IIJ6rPUzSl0k8O3hxAPrTQ==": {
+    "nMa8sw/XB87tzBkHjUMK+g==": {
       "description": "Better about fbtee description",
       "tokens": [],
       "translations": [
         {
-          "translation": "يحافظ fbtee على نموذج البرمجة الأساسي لـfbt، ويحدّث الأدوات المحيطة به.",
+          "translation": "يحافظ {=fbtee} على نموذج البرمجة الأساسي لـ{=fbt}، ويحدّث الأدوات المحيطة به.",
           "variations": {}
         }
       ],
@@ -1622,19 +1622,19 @@
       ],
       "types": []
     },
-    "XVbYqweC/2xUQ7UD/LtNIQ==": {
+    "svaGWvgqhFh6iDmZo15sOQ==": {
       "description": "Easier setup description",
       "tokens": [],
       "translations": [
         {
-          "translation": "استبدل حزم {=fbt} القديمة بـ{=fbtee} وحزمة المُصرّف المناسبة لـVite أو Next.js أو Oxc منخفض المستوى.",
+          "translation": "استبدل حزم {=fbt} القديمة بـ{=fbtee} وحزمة المُصرّف المناسبة لـ{=Vite} أو {=Next.js} أو {=Oxc} منخفض المستوى.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "8UIyBe0JnC7IO2hstjss/g==": {
-      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching Vite, Next.js, or low-level Oxc compiler package.\"",
+    "URCK9IjBJ9K5Cgko2CMzFQ==": {
+      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching {=Vite}, {=Next.js}, or low-level {=Oxc} compiler package.\"",
       "tokens": [],
       "translations": [
         {
@@ -1644,8 +1644,8 @@
       ],
       "types": []
     },
-    "KEDHmZc7/PUrhQT2scZyLw==": {
-      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching Vite, Next.js, or low-level Oxc compiler package.\"",
+    "hQRBYHNvPpuCLAJL/6cVXA==": {
+      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching {=Vite}, {=Next.js}, or low-level {=Oxc} compiler package.\"",
       "tokens": [],
       "translations": [
         {
@@ -1655,56 +1655,56 @@
       ],
       "types": []
     },
-    "zRvEZIrDoq84/JIhxqZC0A==": {
+    "mhPxzOJcT5pt90XphDF3ag==": {
       "description": "Feature title",
       "tokens": [],
       "translations": [
         {
-          "translation": "TypeScript وESM",
+          "translation": "{=TypeScript} و{=ESM}",
           "variations": {}
         }
       ],
       "types": []
     },
-    "jYd0kwMk7VcTiQpmJV74RQ==": {
+    "7Q6v1Fn/K7vSqAUn0c4U6A==": {
       "description": "Statically typed description",
       "tokens": [],
       "translations": [
         {
-          "translation": "استخدم تعريفات JSX الخاصة بـTypeScript ووحدات ESM الحديثة لكود التطبيق والنصوص المشتركة والتعدادات.",
+          "translation": "استخدم تعريفات {=JSX} الخاصة بـ{=TypeScript} ووحدات {=ESM} الحديثة لكود التطبيق والنصوص المشتركة والتعدادات.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "PcVKIeHj1xiRwuh41G/WwA==": {
+    "dE+Ks+Cg5iLSv3vYZNVevA==": {
       "description": "Feature title",
       "tokens": [],
       "translations": [
         {
-          "translation": "دعم React الحديث",
+          "translation": "دعم {=React} الحديث",
           "variations": {}
         }
       ],
       "types": []
     },
-    "cL2Sl1qNrWTtLei3PgX/Mw==": {
+    "81yn24r/50Frjnd6sRmPXg==": {
       "description": "React compatibility description",
       "tokens": [],
       "translations": [
         {
-          "translation": "يعمل مع React 19 والأجزاء ومكوّنات الخادم وأنماط JSX الحالية.",
+          "translation": "يعمل مع {=React 19} والأجزاء ومكوّنات الخادم وأنماط {=JSX} الحالية.",
           "variations": {}
         }
       ],
       "types": []
     },
-    "ZDmGKah8AvlWpzWuRdv5iA==": {
+    "BWQ9xV/6ouGDGNuBkEc+3w==": {
       "description": "Feature title",
       "tokens": [],
       "translations": [
         {
-          "translation": "سير عمل أدوات سطر الأوامر الحالي",
+          "translation": "سير عمل {=CLI} الحالي",
           "variations": {}
         }
       ],
@@ -1820,12 +1820,780 @@
       ],
       "types": []
     },
-    "k40LfO6HbyW2robdDhMC5A==": {
+    "Q3H6d33eLDmyMg9dDW+yVw==": {
       "description": "Updated tooling description",
       "tokens": [],
       "translations": [
         {
-          "translation": "أُزيلت خيارات fbt القديمة، وتشير أخطاء المُصرّف إلى البدائل الحديثة عند توفرها.",
+          "translation": "أُزيلت خيارات {=fbt} القديمة، وتشير أخطاء المُصرّف إلى البدائل الحديثة عند توفرها.",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "K4Ya8tYsXiDh3L947zc1gg==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JavaScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bCYPcFvsRKfJ2p4aP7EDNQ==": {
+      "description": "In the phrase: \"An internationalization framework for {=JavaScript} & {=React} designed to be {=powerful}, {=flexible}, and {=intuitive}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dSMVY/LDtRElwIqfPhT4Gg==": {
+      "description": "In the phrase: \"View on {=GitHub}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "0AMfoPOWwUIF8cZtcQ3crQ==": {
+      "description": "In the phrase: \"The core pieces you need to localize modern {=JavaScript} and {=React} apps.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JavaScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CWsiz2dA6sACvZeMFTQN3w==": {
+      "description": "In the phrase: \"The core pieces you need to localize modern {=JavaScript} and {=React} apps.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "LMZ19V+vAPYHC7jDFvuFEA==": {
+      "description": "In the phrase: \"Built on {=Facebook}'s {=fbt}, with over a decade of production usage serving billions of users, plus years in production at {=Athena Crisis}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "xPwTkLq1Nz/Tsk6n1LeTaw==": {
+      "description": "In the phrase: \"Built on {=Facebook}'s {=fbt}, with over a decade of production usage serving billions of users, plus years in production at {=Athena Crisis}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "U3lKvCkVI3QOkXeGnmAbMw==": {
+      "description": "In the phrase: \"Built on {=Facebook}'s {=fbt}, with over a decade of production usage serving billions of users, plus years in production at {=Athena Crisis}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Athena Crisis",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "sp4iM+0D6bIwW0MWnt3OHg==": {
+      "description": "In the phrase: \"Compiles translations into an Intermediate Representation ({=IR}) for extraction, then optimizes the runtime output for performance.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "IR",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "fQbAEd1np8xZpitHHg98Fg==": {
+      "description": "In the phrase: \"Quick integration with {=Vite}, {=Next.js}, {=Oxc}, and {=Expo}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "wnFr8WAMNr3IpExEJ9C2Sw==": {
+      "description": "In the phrase: \"Quick integration with {=Vite}, {=Next.js}, {=Oxc}, and {=Expo}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CWQgHSS04/OAXvFLAnbUFA==": {
+      "description": "In the phrase: \"Quick integration with {=Vite}, {=Next.js}, {=Oxc}, and {=Expo}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Oxc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KlYPuMIl7OW86Q+Uki8S8Q==": {
+      "description": "In the phrase: \"Quick integration with {=Vite}, {=Next.js}, {=Oxc}, and {=Expo}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MiVcbnFroTw+6gY6FwKTFw==": {
+      "description": "In the phrase: \"{=Vite} and {=React} app setup\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "BzP+YJ6g/KQyooai6ZF3GQ==": {
+      "description": "In the phrase: \"{=Vite} and {=React} app setup\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dzrIE+VeiREJ7Iq1CsZ9lQ==": {
+      "description": "In the phrase: \"{=Expo} App Template\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "1zzXZUxT9A8Rdzx3EqwM4A==": {
+      "description": "In the phrase: \"{=React Native} and {=Expo} app setup\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React Native",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "jSrjq3yve3YxESEyTqGYGQ==": {
+      "description": "In the phrase: \"{=React Native} and {=Expo} app setup\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Expo",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CV7YYfL7hsjvWFL/FPR+Pw==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Node 22+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "YhefX9ULYjYRY0YMV8GGdg==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React 19+",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "MHK26i93R4KqTTM7JM+bQQ==": {
+      "description": "In the phrase: \"{=Requirements:} {=Node 22+}, {=React 19+} (if using {=React})\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "x6FjF/uVZfG30MUg9GdQwQ==": {
+      "description": "In the phrase: \"Choose the native {=Vite} or {=Next.js} plugin, or use the low-level {=Oxc} transform for a custom build integration.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QKOVOILKjpBXhadaCjW2OQ==": {
+      "description": "In the phrase: \"Choose the native {=Vite} or {=Next.js} plugin, or use the low-level {=Oxc} transform for a custom build integration.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "q+9BqJjpqsbEq4RwcPzc0g==": {
+      "description": "In the phrase: \"Choose the native {=Vite} or {=Next.js} plugin, or use the low-level {=Oxc} transform for a custom build integration.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Oxc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "PRazrwYfmuQL6sMIF2u4IA==": {
+      "description": "In the phrase: \"Use the native {=Vite} plugin for the simplest setup. Add it before the {=React} plugin:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ReC9PMQzyojdJYuBQUSnfQ==": {
+      "description": "In the phrase: \"Use the native {=Vite} plugin for the simplest setup. Add it before the {=React} plugin:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "UJJ79/v5Lwkbsgw6irvVWQ==": {
+      "description": "In the phrase: \"Use the native {=Oxc} plugin with either {=Turbopack} or {=webpack}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Oxc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "awiy29hqOedONi57Z1mMqg==": {
+      "description": "In the phrase: \"Use the native {=Oxc} plugin with either {=Turbopack} or {=webpack}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Turbopack",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "5Psz8J43IA2HfTWg4yRbwA==": {
+      "description": "In the phrase: \"Use the native {=Oxc} plugin with either {=Turbopack} or {=webpack}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "webpack",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "vFJjDw0nyGonJcFqP+DF4g==": {
+      "description": "In the phrase: \"{=React} {=TypeScript} projects should include the {=JSX} declarations once in a global type file or app entry point:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8kqLy3h9yghMWQE+zZDyxA==": {
+      "description": "In the phrase: \"{=React} {=TypeScript} projects should include the {=JSX} declarations once in a global type file or app entry point:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "TypeScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "HpuvLyCjM19J25ucFZ3JNw==": {
+      "description": "In the phrase: \"{=React} {=TypeScript} projects should include the {=JSX} declarations once in a global type file or app entry point:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JSX",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "f2DbQWocdjGSKMDD7+5V0w==": {
+      "description": "In the phrase: \"Most {=React} apps should use {=createLocaleContext}:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "dxXWWptWP1Y2YNhouoGguQ==": {
+      "description": "In the phrase: \"Give part of a page its own language. Components use the nearest {=LocaleProvider} through {=useFbt()}, and async actions keep the locale they started with.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "LocaleProvider",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "T2ddGVB26Qu+Li5x0M805g==": {
+      "description": "In the phrase: \"Give part of a page its own language. Components use the nearest {=LocaleProvider} through {=useFbt()}, and async actions keep the locale they started with.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "useFbt()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "kZFoRYgxkmLPnYrPtm/pZQ==": {
+      "description": "In the phrase: \"Global imports keep using the app's locale. Switch the provider's runtime to change languages, or call {=mergeTranslations()} to add translations.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "mergeTranslations()",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "fuHF7fzUzpPWpdVJN0qUFQ==": {
+      "description": "In the phrase: \"Load translations before rendering and initialize the browser with the same locale for hydration. Wrapping a component's {=JSX} return does not scope its descendants.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JSX",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "KtEbDzKNiuLCIIqM1bQj1g==": {
+      "description": "In the phrase: \"{=<fbt>} is auto-imported by the {=fbtee} compiler integration. Use {=fbt()} outside {=JSX}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "bdTdxAQZdn9lhOUneIXziQ==": {
+      "description": "In the phrase: \"{=<fbt>} is auto-imported by the {=fbtee} compiler integration. Use {=fbt()} outside {=JSX}.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JSX",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "+tQhQogtC6XpFe9dFCrWOg==": {
+      "description": "In the phrase: \"{=React} elements inside {=<fbt>} are automatically turned into implicit params:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "p/srQvtkQ3ZGnrFtXBAprQ==": {
+      "description": "In the phrase: \"The standalone {=list()} helper is available for non-{=React} code:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "aUjepG9ZHxWJldg82ptOWg==": {
+      "description": "In the phrase: \"Use {=<fbt:plural>} when a count controls grammar. {=fbtee} handles locale-specific plural rules.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "QNIngHSueU65m2AlHVs2FA==": {
+      "description": "In the phrase: \"Use {=fbs()} when you need a plain string, such as in {=HTML} attributes:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "HTML",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "hezC1jHitKsANGBGWu1euA==": {
+      "description": "In the phrase: \"Coding agents work well on {=fbtee} translation files because the app context, existing translations, and product vocabulary are in the repository.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "shICKhjOWpj19uomgG22uw==": {
+      "description": "In the phrase: \"{=ESLint} Plugin\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESLint",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "ElmtuxCW64uTDnNu1/T+NQ==": {
+      "description": "In the phrase: \"Install the optional {=ESLint} plugin:\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESLint",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "TySPOL0/DReKnVdTRx8bMQ==": {
+      "description": "In the phrase: \"Migration from {=fbt}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "CQGSUrkRcD0C33YXafxePA==": {
+      "description": "In the phrase: \"{=fbtee} keeps the core {=fbt} programming model and modernizes the toolchain around it.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbtee",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "6bYtveSPLFVsE80t6xwd3g==": {
+      "description": "In the phrase: \"{=fbtee} keeps the core {=fbt} programming model and modernizes the toolchain around it.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "oDbar/x05N/GwUb02iREDQ==": {
+      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching {=Vite}, {=Next.js}, or low-level {=Oxc} compiler package.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Vite",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "BXnte/NYxGoZtv4rkbBdGA==": {
+      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching {=Vite}, {=Next.js}, or low-level {=Oxc} compiler package.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Next.js",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "fj2ovLGx1Xum5IICJmejmg==": {
+      "description": "In the phrase: \"Replace legacy {=fbt} packages with {=fbtee} and the matching {=Vite}, {=Next.js}, or low-level {=Oxc} compiler package.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Oxc",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "oslH0KcE/X5k1s4PA595nQ==": {
+      "description": "In the phrase: \"{=TypeScript} and {=ESM}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "TypeScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "cGqxZ1OcorGZ0VlZYHbwKQ==": {
+      "description": "In the phrase: \"{=TypeScript} and {=ESM}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESM",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "05BS9sdIH5vhTTPHlk9TGA==": {
+      "description": "In the phrase: \"Use {=TypeScript} {=JSX} declarations and modern {=ESM} modules for app code, common strings, and enums.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "TypeScript",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "z2lNLYKUaW3goiquSQQVrA==": {
+      "description": "In the phrase: \"Use {=TypeScript} {=JSX} declarations and modern {=ESM} modules for app code, common strings, and enums.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JSX",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "10GRy7R0QSPGJ6pqKH3yVg==": {
+      "description": "In the phrase: \"Use {=TypeScript} {=JSX} declarations and modern {=ESM} modules for app code, common strings, and enums.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "ESM",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "nMdGMqpMt9IxkLq/Yjsfyw==": {
+      "description": "In the phrase: \"Modern {=React} Support\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "9xJ3/C7agV9iJE4sYrVOKw==": {
+      "description": "In the phrase: \"Works with {=React 19}, fragments, Server Components, and current {=JSX} patterns.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "React 19",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "tmAZHGxtXOtGM7N1grIepg==": {
+      "description": "In the phrase: \"Works with {=React 19}, fragments, Server Components, and current {=JSX} patterns.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "JSX",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "8UlJ08jZfyl5SxCHmlSQtw==": {
+      "description": "In the phrase: \"Current {=CLI} Workflow\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "أدوات سطر الأوامر",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XI0Ckxhu5iUd8YGdyfXWpQ==": {
+      "description": "In the phrase: \"Archived {=fbt} options were removed, and compiler errors point to modern replacements when one exists.\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "fbt",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "XybqeQmkPb6TNCqPYqooEA==": {
+      "description": "In the phrase: \"Originally created by {=Facebook} • Maintained by {=Nakazawa Tech}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "Facebook",
+          "variations": {}
+        }
+      ],
+      "types": []
+    },
+    "BDk2zTDat3DMkjGe4cHa4w==": {
+      "description": "In the phrase: \"Star on {=GitHub}\"",
+      "status": "translated",
+      "tokens": [],
+      "translations": [
+        {
+          "translation": "GitHub",
           "variations": {}
         }
       ],

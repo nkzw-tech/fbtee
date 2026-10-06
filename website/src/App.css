@@ -44,7 +44,9 @@ body {
 }
 
 code {
+  direction: ltr;
   font-family: 'Fira Code', monospace;
+  unicode-bidi: isolate;
 }
 
 html:lang(ar) body {
