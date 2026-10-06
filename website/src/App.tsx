@@ -16,8 +16,8 @@ import {
   Users,
   Zap,
 } from 'lucide-react';
-import { AnchorHTMLAttributes, useTransition } from 'react';
-import AvailableLanguages from './AvailableLanguages.tsx';
+import { AnchorHTMLAttributes, useLayoutEffect, useTransition } from 'react';
+import AvailableLanguages, { getLocaleDirection } from './AvailableLanguages.tsx';
 import { Badge } from './components/Badge.tsx';
 import { Button } from './components/Button.tsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/Card.tsx';
@@ -78,17 +78,22 @@ const LocaleSwitcher = () => {
               size="sm"
               variant="outline"
             >
-              <a
+              <button
+                aria-pressed={currentLocale === locale}
                 className="w-full flex-1 cursor-pointer p-2"
+                lang={locale === 'fb-HX' ? 'en' : locale}
                 onClick={() =>
                   startTransition(() => {
                     setLocale(locale);
                     localStorage.setItem('fbtee:locale', locale);
                   })
                 }
+                popoverTarget="locale-switcher"
+                popoverTargetAction="hide"
+                type="button"
               >
                 {name}
-              </a>
+              </button>
             </Button>
           ))}
         </VStack>
@@ -98,6 +103,14 @@ const LocaleSwitcher = () => {
 };
 
 export default function App() {
+  const { locale } = useLocaleContext();
+  const direction = getLocaleDirection(locale);
+
+  useLayoutEffect(() => {
+    document.documentElement.lang = locale === 'fb-HX' ? 'en' : locale;
+    document.documentElement.dir = direction;
+  }, [direction, locale]);
+
   return (
     <div className="bg-background min-h-screen">
       <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
@@ -131,8 +144,8 @@ export default function App() {
             className="mb-6 border-blue-200 bg-blue-100 hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-900 dark:hover:bg-blue-900"
             variant="secondary"
           >
-            <Sparkles className="mr-1 h-3 w-3" />
-            Far Better Translations, Extended Edition
+            <Sparkles className="me-1 h-3 w-3" />
+            <fbt desc="Tagline">Far Better Translations, Extended Edition</fbt>
           </Badge>
           <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl">
             <span className="bg-linear-to-r from-sky-500 to-blue-500 bg-clip-text font-semibold text-transparent">
@@ -402,7 +415,7 @@ export default function App() {
                   </fbt>
                 </p>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2 text-left" dir="ltr">
                     <code className="text-slate-200">$</code>
                     <code>npm install fbtee</code>
                   </div>
@@ -426,7 +439,7 @@ export default function App() {
                 </h3>
               </div>
 
-              <Tabs className="w-full" defaultValue="vite">
+              <Tabs className="w-full" defaultValue="vite" dir={direction}>
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="vite">Vite</TabsTrigger>
                   <TabsTrigger value="nextjs">Next.js</TabsTrigger>
@@ -650,7 +663,7 @@ export function renderPage() {
                     <fbt desc="Before example label">Before</fbt>
                   </h4>
                   <div className="squircle border border-red-200 bg-red-50 p-4 font-mono text-sm dark:bg-red-900">
-                    <pre>{`const Greeting = () => (
+                    <pre className="text-left" dir="ltr">{`const Greeting = () => (
   <div>Hello, World!</div>
 );`}</pre>
                   </div>
@@ -660,7 +673,7 @@ export function renderPage() {
                     <fbt desc="After example label">After</fbt>
                   </h4>
                   <div className="squircle border border-green-200 bg-green-50 p-4 font-mono text-sm dark:bg-green-900">
-                    <pre>{`const Greeting = () => (
+                    <pre className="text-left" dir="ltr">{`const Greeting = () => (
   <div>
     <fbt desc="Greeting">
       Hello, World!
@@ -700,7 +713,7 @@ export function renderPage() {
                 </fbt>
               </p>
 
-              <Tabs className="w-full" defaultValue="param">
+              <Tabs className="w-full" defaultValue="param" dir={direction}>
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="param">
                     <fbt desc="Tab label">Parameters</fbt>
@@ -968,7 +981,10 @@ const userList = list(['Alice', 'Bob', 'Charlie'], 'or', 'comma');
                   <h4 className="mb-2 font-semibold">
                     <fbt desc="Step number and description">1. Extract Strings</fbt>
                   </h4>
-                  <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
+                  <div
+                    className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-left text-white dark:from-blue-600 dark:to-sky-600"
+                    dir="ltr"
+                  >
                     <code>
                       <code className="text-slate-200">$</code> pnpm fbtee collect
                     </code>
@@ -1031,7 +1047,10 @@ Remove \`"status": "new"\` from each completed translation entry.`}
                   <h4 className="mb-2 font-semibold">
                     <fbt desc="Step number and description">4. Compile Translations</fbt>
                   </h4>
-                  <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
+                  <div
+                    className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-left text-white dark:from-blue-600 dark:to-sky-600"
+                    dir="ltr"
+                  >
                     <code>
                       <code className="text-slate-200">$</code> pnpm fbtee translate
                       --source-strings source_strings.json --translations
@@ -1107,13 +1126,16 @@ const LanguageButton = () => {
                 <fbt desc="ESLint plugin description">Install the optional ESLint plugin:</fbt>
               </p>
 
-              <div className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-white dark:from-blue-600 dark:to-sky-600">
+              <div
+                className="squircle mb-4 bg-gradient-to-r from-blue-500 to-sky-500 p-6 text-left text-white dark:from-blue-600 dark:to-sky-600"
+                dir="ltr"
+              >
                 <code>
                   <code className="text-slate-200">$</code> npm install -D @nkzw/eslint-plugin-fbtee
                 </code>
               </div>
 
-              <Tabs className="w-full" defaultValue="recommended">
+              <Tabs className="w-full" defaultValue="recommended" dir={direction}>
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="recommended">
                     <fbt desc="Tab label">Recommended</fbt>
@@ -1493,7 +1515,7 @@ export default [
                   href="https://github.com/nkzw-tech/fbtee"
                   target="_blank"
                 >
-                  <Github className="mr-2 h-4 w-4" />
+                  <Github className="me-2 h-4 w-4" />
                   <fbt desc="Button label">Star on GitHub</fbt>
                 </Link>
               </Button>

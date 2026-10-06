@@ -47,6 +47,23 @@ code {
   font-family: 'Fira Code', monospace;
 }
 
+html:lang(ar) body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  line-height: 1.75;
+}
+
+html:lang(he) body {
+  font-family: Arial, 'Segoe UI', sans-serif;
+}
+
+html:dir(rtl) .italic {
+  font-style: normal;
+}
+
+html:dir(rtl) .tracking-tight {
+  letter-spacing: normal;
+}
+
 :is(p, li, h4, h5) code {
   background: var(--inline-code-background-color);
   border-radius: 8px;
@@ -187,6 +204,9 @@ code {
 }
 
 [popover] {
+  max-height: calc(100dvh - 32px);
+  max-width: calc(100vw - 32px);
+  overflow-y: auto;
   transition:
     opacity 150ms ease-in-out,
     display 150ms ease-out allow-discrete,

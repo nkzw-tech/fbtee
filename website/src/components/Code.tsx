@@ -12,7 +12,10 @@ const highlighter = await createHighlighter({
 
 export default function Code({ code }: { code: string }) {
   return (
-    <div className="squircle mb-4 overflow-x-auto bg-[#fffefc] p-4 font-mono text-sm dark:bg-[#141414]">
+    <div
+      className="squircle mb-4 overflow-x-auto bg-[#fffefc] p-4 text-left font-mono text-sm dark:bg-[#141414]"
+      dir="ltr"
+    >
       <div
         dangerouslySetInnerHTML={{
           __html: highlighter.codeToHtml(code, {

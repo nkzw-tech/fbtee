@@ -14,6 +14,10 @@ const AvailableLanguageEntries = [
 
 export type AvailableLocale = (typeof AvailableLanguageEntries)[number][0];
 
+export function getLocaleDirection(locale: string): 'ltr' | 'rtl' {
+  return locale === 'ar' || locale === 'he-IL' ? 'rtl' : 'ltr';
+}
+
 export const LegacyLocaleAliases = new Map<string, AvailableLocale>([
   ['en_US', 'en-US'],
   ['ja_JP', 'ja-JP'],
