@@ -1,0 +1,2 @@
+# Keep Node.js executable shebangs valid when checking out on Windows.
+*.mjs text eol=lf
