@@ -168,7 +168,7 @@ declare module 'react' {
       fbs: PropsWithChildren<FbtProps>;
       'fbs:enum': FbtEnumProps;
       'fbs:name': PropsWithStringChild<FbtNameProps>;
-      'fbs:param': PropsWithStringChild<FbtParamProps>;
+      'fbs:param': FbtParamProps & { children?: string | number | Array<string | number> };
       'fbs:plural': PropsWithStringChild<FbtPluralProps>;
       'fbs:pronoun': FbtPronounProps;
       'fbs:same-param': FbtSameParamProps;

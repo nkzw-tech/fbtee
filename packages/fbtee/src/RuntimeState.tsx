@@ -1,11 +1,11 @@
+import type { ReactNode } from 'react';
 import type { PatternHash, PatternString } from './CompilerTypes.ts';
 import type { TranslationDictionary } from './FbtTranslations.tsx';
 import type { Hooks } from './Hooks.tsx';
 import type { LocaleFallbackOptions } from './localeFallback.tsx';
-import type { BaseResult } from './Types.ts';
 import IntlViewerContext from './ViewerContext.tsx';
 
-export type ResultCache = Map<PatternString, Map<PatternHash | undefined, BaseResult | string>>;
+export type ResultCache = Map<PatternString, Map<PatternHash | undefined, ReactNode>>;
 
 export type RuntimeState = {
   fallbackOptions: LocaleFallbackOptions;

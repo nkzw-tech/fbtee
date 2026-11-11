@@ -2,6 +2,7 @@ import packageJson from '../package.json' with { type: 'json' };
 import noEmptyStringsRule from './rules/no-empty-strings.tsx';
 import noUnhelpfulDesc from './rules/no-unhelpful-desc.tsx';
 import noUntranslatedStrings from './rules/no-untranslated-strings.tsx';
+import preferFbs from './rules/prefer-fbs.tsx';
 
 export default {
   configs: {
@@ -9,6 +10,7 @@ export default {
       rules: {
         '@nkzw/fbtee/no-empty-strings': 2,
         '@nkzw/fbtee/no-unhelpful-desc': 2,
+        '@nkzw/fbtee/prefer-fbs': 2,
       },
     },
     strict: {
@@ -16,6 +18,7 @@ export default {
         '@nkzw/fbtee/no-empty-strings': 2,
         '@nkzw/fbtee/no-unhelpful-desc': 2,
         '@nkzw/fbtee/no-untranslated-strings': 2,
+        '@nkzw/fbtee/prefer-fbs': 2,
       },
     },
   },
@@ -27,5 +30,6 @@ export default {
     'no-empty-strings': noEmptyStringsRule,
     'no-unhelpful-desc': noUnhelpfulDesc,
     'no-untranslated-strings': noUntranslatedStrings,
+    'prefer-fbs': preferFbs,
   },
 };

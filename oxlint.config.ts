@@ -10,6 +10,7 @@ export default defineConfig({
   },
   extends: [nkzw],
   ignorePatterns: [
+    'packages/.fbtee-compiler.napi-stage-*/',
     'packages/*/lib',
     'packages/fbtee/lib-tmp/',
     'packages/next-plugin-fbtee/test/fixture/.next*/',
@@ -60,6 +61,7 @@ export default defineConfig({
         ],
       },
     ],
+    '@nkzw/fbtee/prefer-fbs': 'error',
     '@nkzw/no-instanceof': 'off',
     'unicorn/prefer-dom-node-append': 'off',
     'workspaces/no-absolute-imports': 'error',

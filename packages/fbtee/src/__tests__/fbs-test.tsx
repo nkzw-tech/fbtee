@@ -1,7 +1,7 @@
 /// <reference types="../../ReactTypes.d.ts" />
 
 import { describe, expect, it } from '@jest/globals';
-import { fbs } from '../index.tsx';
+import { createFbteeRuntime, fbs } from '../index.tsx';
 import setupFbtee from '../setupFbtee.tsx';
 import IntlViewerContext from '../ViewerContext.tsx';
 
@@ -93,6 +93,41 @@ describe('fbs', () => {
     });
   });
 
+  describe('numeric parameters', () => {
+    it.each([
+      ['en-US', '1,234.5'],
+      ['de-DE', '1.234,5'],
+      ['fr-FR', '1\u202f234,5'],
+    ])('preserves number formatting in %s', (locale, expected) => {
+      const { fbs } = createFbteeRuntime({ locale, translations: {} });
+      expect(fbs([fbs.param('number', 1234.5, { number: true })], 'Formatted number')).toBe(
+        expected,
+      );
+      expect(fbs([fbs.param('number', 1234.5)], 'Unformatted number')).toBe('1234.5');
+      expect(fbs([fbs.param('number', 0)], 'Zero number')).toBe('0');
+      expect(
+        fbs(
+          [
+            fbs.plural('item', 2, {
+              many: 'items',
+              name: 'count',
+              showCount: 'yes',
+              value: 1234.5,
+            }),
+          ],
+          'Custom count',
+        ),
+      ).toBe(`${expected} items`);
+      expect(
+        <fbs desc="Formatted JSX number">
+          <fbs:param name="number" number>
+            {1234.5}
+          </fbs:param>
+        </fbs>,
+      ).toBe(expected);
+    });
+  });
+
   describe('when passing down rich contents', () => {
     describe('with fbs:param', () => {
       it('fbs() should throw an error', () => {
@@ -103,7 +138,7 @@ describe('fbs', () => {
             'some desc',
           ),
         ).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string or number; instead we got \`[object Object]\` (type: object)"`,
         );
       });
 
@@ -117,7 +152,7 @@ describe('fbs', () => {
             </fbs:param>
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string or number; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });
@@ -141,7 +176,7 @@ describe('fbs', () => {
             Hello <strong>world!</strong>
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
+          `"Expected fbs parameter value to be the result of fbs(), <fbs/>, or a string or number; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });
@@ -159,6 +194,7 @@ describe('fbs', () => {
               fbs.plural('a dream', count, {
                 many: 'dreams',
                 showCount: 'yes',
+                // @ts-expect-error fbs only accepts strings or numbers.
                 value: <strong>three</strong>,
               }),
               '.',
@@ -166,7 +202,7 @@ describe('fbs', () => {
             'desc',
           ),
         ).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
+          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string or number; instead we got \`[object Object]\` (type: object)"`,
         );
       });
 
@@ -180,7 +216,7 @@ describe('fbs', () => {
             {'.'}
           </fbs>
         )).toThrowErrorMatchingInlineSnapshot(
-          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string; instead we got \`[object Object]\` (type: object)"`,
+          `"Expected fbs plural UI value to be nullish or the result of fbs(), <fbs/>, or a string or number; instead we got \`[object Object]\` (type: object)"`,
         );
       });
     });

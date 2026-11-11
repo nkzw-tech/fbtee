@@ -5,7 +5,6 @@
 import { jest } from '@jest/globals';
 import createLocaleContext, { useLocaleContext } from '../createLocaleContext.tsx';
 import fbtInternal from '../fbt.tsx';
-import FbtResult from '../FbtResult.tsx';
 
 const availableLanguages = new Map([
   ['en_US', 'English'],
@@ -25,7 +24,7 @@ test('locale context does not crash on the server', async () => {
   ).not.toThrow();
 });
 
-test('returns an array or string instead of an `FbtResult`', () => {
+test('returns plain strings on the server', () => {
   const loadLocale = jest.fn(async (locale: string) => ({}));
 
   // It does not crash on the server.
@@ -36,7 +35,7 @@ test('returns an array or string instead of an `FbtResult`', () => {
     loadLocale,
   });
 
-  expect(fbtInternal._('sample string') instanceof FbtResult).toBe(false);
+  expect(fbtInternal._('sample string')).toBe('sample string');
   expect(fbtInternal._(['sample string', 'part 2'])).toEqual('sample string');
 });
 

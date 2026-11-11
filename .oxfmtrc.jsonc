@@ -8,6 +8,7 @@
     "sortScripts": true,
   },
   "ignorePatterns": [
+    "packages/.fbtee-compiler.napi-stage-*/",
     "example/.enum_manifest.json",
     "example/source_strings.json",
     "example/src/translatedFbts",

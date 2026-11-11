@@ -2,18 +2,17 @@
 
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
 import { render } from '@testing-library/react';
-import { Children, Component } from 'react';
+import { Component, Fragment, isValidElement } from 'react';
 import getFbtResult from '../__mocks__/getFbtResult.tsx';
-import type { PatternHash } from '../CompilerTypes.ts';
 import fbsInternal from '../fbs.tsx';
 import fbtInternal from '../fbt.tsx';
 import FbtTranslations from '../FbtTranslations.tsx';
 import GenderConst from '../GenderConst.tsx';
-import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput } from '../Hooks.tsx';
-import { fbt, FbtResult } from '../index.tsx';
+import Hooks, { FbtRuntimeCallInput, FbtTranslatedInput, ResolverFn } from '../Hooks.tsx';
+import { fbt } from '../index.tsx';
 import IntlVariations from '../IntlVariations.tsx';
 import setupFbtee from '../setupFbtee.tsx';
-import type { BaseResult, IFbtErrorListener, NestedFbtContentItems } from '../Types.ts';
+import type { FbtResult } from '../Types.ts';
 
 setupFbtee({
   translations: { en_US: {} },
@@ -38,39 +37,35 @@ describe('fbt', () => {
     );
   });
 
-  it('should memoize new strings', () => {
-    Hooks.register({
-      getFbtResult: (
-        contents: NestedFbtContentItems,
-        hashKey: PatternHash | null | undefined,
-        errorListener: IFbtErrorListener | null,
-      ) => new FbtResult(contents, errorListener, hashKey),
-    });
-
-    expect(fbtInternal._('sample string') instanceof FbtResult).toBe(true);
-    expect(fbtInternal._('sample string')).toBe(fbtInternal._('sample string'));
-    expect(fbtInternal._('sample string')).not.toBe(fbsInternal._('sample string'));
+  it('should memoize rich results without substitutions', () => {
+    const resolve = jest.fn<ResolverFn<FbtResult>>((contents, hash) => (
+      <Fragment key={hash}>{contents}</Fragment>
+    ));
+    Hooks.register({ getFbtResult: resolve });
+    const first = fbtInternal._('cached rich result');
+    expect(isValidElement(first)).toBe(true);
+    expect(fbtInternal._('cached rich result')).toBe(first);
+    expect(resolve).toHaveBeenCalledTimes(1);
+    expect(fbsInternal._('cached rich result')).toBe('cached rich result');
   });
 
-  it('should not reuse cached FbtResults with different hash keys', () => {
+  it('caches empty string results', () => {
+    const resolve = jest.fn<ResolverFn<FbtResult>>(() => '');
+    Hooks.register({ getFbtResult: resolve });
+    expect(fbtInternal._('empty cached result')).toBe('');
+    expect(fbtInternal._('empty cached result')).toBe('');
+    expect(resolve).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not reuse cached results with different hash keys', () => {
     Hooks.register({
-      getFbtResult: (
-        contents: NestedFbtContentItems,
-        hashKey: PatternHash | null | undefined,
-        errorListener: IFbtErrorListener | null,
-      ) => new FbtResult(contents, errorListener, hashKey),
+      getFbtResult: (contents, hash) => <Fragment key={hash}>{contents}</Fragment>,
     });
-
-    const first = fbtInternal._('same text with different hashes', null, {
-      hk: 'hash-a',
-    });
-    const second = fbtInternal._('same text with different hashes', null, {
-      hk: 'hash-b',
-    });
-
+    const first = fbtInternal._('same text with different hashes', null, { hk: 'hash-a' });
+    const second = fbtInternal._('same text with different hashes', null, { hk: 'hash-b' });
     expect(first).not.toBe(second);
-    expect(first.key).toBe('hash-a');
-    expect(second.key).toBe('hash-b');
+    expect(isValidElement(first) && first.key).toBe('hash-a');
+    expect(isValidElement(second) && second.key).toBe('hash-b');
   });
 
   it('should trivially handle tokenless strings', () => {
@@ -114,11 +109,12 @@ describe('fbt', () => {
     // We use this to preserve identity of nested React elements.
     const argument = <div key="test" />;
     const fragment = fbt('with token ' + fbt.param('token', argument) + ' here', 'test');
-    const items: Array<string | BaseResult> = [];
-    Children.forEach(fragment, (item) => {
-      items.push(item);
-    });
-    expect(items).toEqual(['with token ', argument, ' here']);
+    expect(isValidElement(fragment) && fragment.type).toBe(Fragment);
+    expect(isValidElement<{ children: unknown }>(fragment) && fragment.props.children).toEqual([
+      'with token ',
+      argument,
+      ' here',
+    ]);
   });
 
   it('should render input params for null values', () => {
@@ -147,14 +143,11 @@ describe('fbt', () => {
         B: 'preamble {tokenB} is after {tokenA}',
       },
       [
-        // @ts-expect-error
         fbtInternal._param('tokenA', childA),
-        // @ts-expect-error
         fbtInternal._param('tokenB', childB),
         fbtInternal._enum(value, { A: 'is before', B: 'is after' }),
       ],
     );
-    // @ts-expect-error
     return <div>{fbtFragment}</div>;
   }
 
@@ -368,12 +361,14 @@ describe('fbt', () => {
             describe(`where viewer=${viewer.name}, ownerGender=${ownerGender}, object=${object}, count=${count}\n`, () =>
               it(`should produce proper nested fbt results`, () => {
                 expect(
-                  getFbt({
-                    count,
-                    object,
-                    ownerGender,
-                    viewer,
-                  }),
+                  render(
+                    getFbt({
+                      count,
+                      object,
+                      ownerGender,
+                      viewer,
+                    }),
+                  ).container.innerHTML,
                 ).toMatchSnapshot();
               })),
           ),

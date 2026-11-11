@@ -1,9 +1,8 @@
 /// <reference types="../ReactTypes.d.ts" />
 
 import invariant from 'invariant';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
-import FbtResult from './FbtResult.tsx';
 import type { ParamVariationType, ValidPronounUsagesType } from './FbtRuntimeTypes.tsx';
 import FbtTable from './FbtTable.tsx';
 import FbtTableAccessor, { FbtTableArg } from './FbtTableAccessor.tsx';
@@ -16,7 +15,7 @@ import { listWithRuntime } from './list.tsx';
 import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 import substituteTokens, { Substitutions } from './substituteTokens.tsx';
 import type {
-  BaseResult,
+  FbtResult,
   FbtConjunction,
   FbtDelimiter,
   FbtAPI,
@@ -67,7 +66,7 @@ export type Variations =
   | [variation: ParamVariationType['number'], value?: number | null]
   | [variation: ParamVariationType['gender'], value: GenderConst];
 
-export function createRuntime<P, T extends BaseResult | string>({
+export function createRuntime<P, T extends ReactNode>({
   getResult,
   listRuntime,
   param,
@@ -153,7 +152,7 @@ export function createRuntime<P, T extends BaseResult | string>({
 
         const hashKey = options?.hk;
         const cachedFbt = cachedResults.get(patternString)?.get(hashKey);
-        if (cachedFbt && !substitutions) {
+        if (cachedFbt !== undefined && !substitutions) {
           return cachedFbt;
         } else {
           const fbtContent = substitutions
@@ -247,9 +246,9 @@ export function createRuntime<P, T extends BaseResult | string>({
 }
 
 export function createFbtRuntime(state?: RuntimeState) {
-  return createRuntime<string | number, FbtResult>({
+  return createRuntime<ReactNode, FbtResult>({
     getResult: Hooks.getFbtResult,
-    param: (label: string, value: number | string, variations?: Variations) => {
+    param: (label: string, value: ReactNode, variations?: Variations) => {
       const substitution = { [label]: value };
       if (variations) {
         if (variations[0] === ParamVariation.number) {
@@ -276,7 +275,7 @@ export function createFbtRuntime(state?: RuntimeState) {
         return FbtTableAccessor.getSubstitution(substitution);
       }
     },
-    plural: (count: number, label?: string | null, value?: number | string) =>
+    plural: (count: number, label?: string | null, value?: ReactNode) =>
       FbtTableAccessor.getNumberResult(
         getNumberVariations(count, state),
         label

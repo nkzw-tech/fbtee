@@ -45,11 +45,13 @@
   },
   "scripts": {
     "benchmark": "node --expose-gc scripts/benchmark-runtime.mjs",
+    "benchmark:results": "node scripts/benchmark-results.mjs",
     "build": "pnpm build:source && pnpm build:prepend && tsdown lib-tmp/index.tsx lib-tmp/index-server.tsx lib-tmp/index-core.tsx -d lib --target=node22 --format=esm --clean --dts",
     "build:fbtee-strings": "pnpm fbtee collect --include-default-strings=false --src src/*.tsx --out Strings.json && ./scripts/rewrite-filepaths.ts",
     "build:prepend": "node -e \"const file = './lib-tmp/list.tsx'; fs.writeFileSync(file, '// @ts-nocheck\\n' + fs.readFileSync(file, 'utf8'));\"",
     "build:source": "node scripts/build-source.mjs",
-    "test": "NODE_ENV=development node --test test/scoped-runtime.mjs && NODE_ENV=development node --conditions=react-server --test test/scoped-runtime.mjs && NODE_ENV=production node --test test/scoped-runtime.mjs && NODE_ENV=production node --conditions=react-server --test test/scoped-runtime.mjs"
+    "test": "NODE_ENV=development node --test test/scoped-runtime.mjs && NODE_ENV=development node --conditions=react-server --test test/scoped-runtime.mjs && NODE_ENV=production node --test test/scoped-runtime.mjs && NODE_ENV=production node --conditions=react-server --test test/scoped-runtime.mjs && pnpm test:react",
+    "test:react": "NODE_ENV=development node --test test/react-results.mjs && NODE_ENV=production node --test test/react-results.mjs"
   },
   "dependencies": {
     "invariant": "^2.2.4"

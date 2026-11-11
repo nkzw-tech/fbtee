@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { ReactNode, Suspense, use, useState } from 'react';
-import { createFbteeRuntime, fbt, FbtResult } from '../index-core.tsx';
+import { createFbteeRuntime, fbt } from '../index-core.tsx';
 import LocaleProvider, { useFbt } from '../LocaleProvider.tsx';
 import setupFbtee from '../setupFbtee.tsx';
 
@@ -16,7 +16,7 @@ function Number({ wait = Promise.resolve() }: { wait?: Promise<void> }) {
   const [saved, setSaved] = useState('');
   return (
     <article data-testid={locale}>
-      <p>{fbs([fbs.param('number', '1234.5')], 'Plain number')}</p>
+      <p>{fbt([fbt.param('number', '1234.5')], 'Plain number')}</p>
       <p>
         <fbt desc="Formatted number">
           <fbt:param name="number" number>
@@ -27,7 +27,7 @@ function Number({ wait = Promise.resolve() }: { wait?: Promise<void> }) {
       <button
         onClick={async () => {
           await wait;
-          setSaved(String(fbt([fbt.param('number', 1234.5, { number: true })], 'Saved number')));
+          setSaved(fbs([fbs.param('number', 1234.5, { number: true })], 'Saved number'));
         }}
         type="button"
       >
@@ -123,14 +123,24 @@ test('useFbt fails clearly without a provider', () => {
 });
 
 test('merging translations updates mounted consumers of only that runtime', async () => {
-  const runtime = createFbteeRuntime({ locale: 'en-US', translations: {} });
+  let hash = '';
+  const runtime = createFbteeRuntime({
+    hooks: {
+      errorListener: (context) => {
+        hash = context.hash!;
+        return null;
+      },
+    },
+    locale: 'en-US',
+    translations: {},
+  });
   const other = createFbteeRuntime({ locale: 'en-US', translations: {} });
   function Message() {
     const { fbt } = useFbt();
     return <p>{fbt('Message', 'Provider merge')}</p>;
   }
   const { fbt } = runtime;
-  const hash = (fbt('Message', 'Provider merge') as unknown as FbtResult).key!;
+  fbt('Message', 'Provider merge');
   render(
     <>
       <LocaleProvider runtime={runtime}>

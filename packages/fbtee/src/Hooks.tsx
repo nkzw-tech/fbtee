@@ -1,17 +1,16 @@
+import type { ReactNode } from 'react';
 import type { FbtTableKey, PatternHash, PatternString } from './CompilerTypes.ts';
-import FbtResult from './FbtResult.tsx';
 import type { FbtTableArg } from './FbtTableAccessor.tsx';
 import getRuntimeState, { RuntimeState } from './RuntimeState.tsx';
 import type {
-  BaseResult,
+  FbtResult,
   FbtErrorContext,
   IFbtErrorListener,
   NestedFbtContentItems,
-  PlainStringResult,
 } from './Types.ts';
 import IntlViewerContext from './ViewerContext.tsx';
 
-export type ResolverFn<T extends BaseResult | string> = (
+export type ResolverFn<T extends ReactNode> = (
   contents: NestedFbtContentItems,
   hashKey: PatternHash | null | undefined,
   errorListener: IFbtErrorListener | null,
@@ -79,7 +78,7 @@ export type FbtImpressionOptions = {
 
 export type Hooks = Partial<{
   errorListener: (context: FbtErrorContext) => IFbtErrorListener | null;
-  getFbsResult: ResolverFn<PlainStringResult>;
+  getFbsResult: ResolverFn<string>;
   getFbtResult: ResolverFn<FbtResult>;
   getTranslatedInput: (input: FbtRuntimeCallInput) => FbtTranslatedInput | null;
   getViewerContext: () => typeof IntlViewerContext;
@@ -95,7 +94,7 @@ export default {
     hashKey: PatternHash | null | undefined,
     errorListener: IFbtErrorListener | null,
     state = getRuntimeState(),
-  ): PlainStringResult {
+  ): string {
     const { getFbsResult } = state.hooks;
     if (!getFbsResult) {
       throw new Error(`Hooks: 'getFbsResult' is not registered`);

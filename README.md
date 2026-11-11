@@ -392,6 +392,10 @@ export default [
 
 Use `fbtee.configs.strict.rules` to also check for untranslated text.
 
+## Migration to fbtee 6
+
+`fbt()` now returns strings for text-only messages and real React Fragments for rich messages. Its return type is `string | ReactElement`; use `fbs()` for string-only props, attributes, and storage. The `FbtResult` runtime class and its custom serialization methods are removed. See the [React result migration guide](docs/react-results.md) for compatibility details, tests, and production benchmarks.
+
 ## Migration from fbtee 4
 
 fbtee 5 combines `@nkzw/fbtee-cli` and `@nkzw/oxc-transform-fbtee` into `@nkzw/fbtee-compiler`:

@@ -28,6 +28,7 @@
     "types": ["jest", "node"]
   },
   "exclude": [
+    "packages/.fbtee-compiler.napi-stage-*/",
     "packages/*/lib/",
     "packages/*/lib-tmp/",
     "packages/next-plugin-fbtee/test/fixture/",

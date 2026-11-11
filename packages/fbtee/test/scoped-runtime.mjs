@@ -16,7 +16,6 @@ import {
   createFbteeRuntime,
   fbs,
   fbt,
-  FbtResult,
   FbtTranslations,
   setupFbtee,
   setupLocaleContext,
@@ -28,7 +27,7 @@ import {
   runWithFbtee,
 } from 'fbtee/server';
 import { transformSync as lowerSync } from 'oxc-transform';
-import { createElement, Suspense } from 'react';
+import { createElement, Fragment, isValidElement, Suspense } from 'react';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -613,23 +612,21 @@ test('result caches and frozen hook configurations are isolated', () => {
   assert.equal(fixture.plainMessage(), 'Message');
 });
 
-test('returned rich results retain their error listener after leaving the scope', () => {
-  const errors = [];
+test('returned rich results resolve translations before leaving the scope', () => {
   const result = runWithFbtee(
-    {
-      hooks: {
-        errorListener: () => ({ onStringSerializationError: () => errors.push('German') }),
-        getFbtResult: (contents, hash, listener) => new FbtResult(contents, listener, hash),
-      },
-      locale: 'de-DE',
-      translations: german,
-    },
+    { locale: 'de-DE', translations: catalog('de-DE', { 'Hello, {name}': 'Hallo, {name}' }) },
     fixture.richMessage,
   );
   runWithFbtee({ locale: 'fr-FR', translations: french }, () => {
-    assert.equal(String(result), 'Hello, ');
+    assert.ok(isValidElement(result));
+    assert.equal(result.type, Fragment);
+    assert.deepEqual(
+      result.props.children.map((child) =>
+        typeof child === 'string' ? child : child.props.children,
+      ),
+      ['Hallo, ', 'Alice'],
+    );
   });
-  assert.deepEqual(errors, ['German']);
 });
 
 test('hidden plurals retain locale variations through collection, preparation and translation', () => {
@@ -1031,7 +1028,9 @@ test('bound result hooks and rich nested phrases keep their runtime', () => {
       },
       getFbtResult: (contents) => {
         assert.equal(fixture.message(), 'Message');
-        return new FbtResult(contents, null);
+        return contents.length === 1 && typeof contents[0] === 'string'
+          ? contents[0]
+          : createElement(Fragment, null, contents);
       },
     },
     locale: 'de-DE',
@@ -1039,8 +1038,8 @@ test('bound result hooks and rich nested phrases keep their runtime', () => {
   });
   assert.equal(String(fixture.messages(runtime).message()), 'Nachricht');
   const rich = fixture.messages(runtime).rich();
-  assert.ok(rich instanceof FbtResult);
-  assert.equal(rich.getContents()[1].type, 'b');
+  assert.ok(isValidElement(rich));
+  assert.equal(rich.props.children[1].type, 'b');
   assert.ok(events.includes('Nachricht'));
   assert.ok(events.includes('world'));
 });

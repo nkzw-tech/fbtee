@@ -1,3 +1,4 @@
+import { cloneElement, isValidElement } from 'react';
 import { applyPhonologicalRules, dedupeStops, PUNCT_CHAR_CLASS } from './IntlPunctuation.tsx';
 import type { FbtContentItem, NestedFbtContentItems } from './Types.ts';
 
@@ -31,15 +32,18 @@ export default function substituteTokens(
 
   // Splice in the arguments while keeping rich object ones separate.
   const objectPieces: Array<FbtContentItem> = [];
-  let index = 0;
+  let occurrences: Map<string, number> | undefined;
   const stringPieces = template
     .replace(parameterRegexp, (_match: string, name: string, punctuation: string): string => {
       let argument = args[name];
       // If token value is a React component.
       if (argument != null && typeof argument === 'object') {
         // Add an implicit "key" property to help React keep track of each array item.
-        if ('key' in argument && argument.key === null) {
-          argument = { ...argument, key: `$fbtee-${name}-${index++}$` };
+        if (isValidElement(argument) && argument.key === null) {
+          occurrences ??= new Map();
+          const occurrence = occurrences.get(name) ?? 0;
+          occurrences.set(name, occurrence + 1);
+          argument = cloneElement(argument, { key: `$fbtee-${name}-${occurrence}$` });
         }
         // Save the token value into objectPieces and replace its string with a placeholder.
         objectPieces.push(argument);

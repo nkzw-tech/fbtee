@@ -24,3 +24,4 @@ website/dist/
 website/source_strings.json
 website/src/translations
 website/vite.config.ts.timestamp-*
+packages/.fbtee-compiler.napi-stage-*/
