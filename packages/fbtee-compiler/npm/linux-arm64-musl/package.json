@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/oxc-transform-fbtee-binding-linux-arm64-musl",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Native Rust Oxc transform for fbtee.",
   "keywords": [
     "fbt",

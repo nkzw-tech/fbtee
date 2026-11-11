@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/next-plugin-fbtee",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Next.js plugin for fbtee powered by the native Oxc transform.",
   "keywords": [
     "fbt",
