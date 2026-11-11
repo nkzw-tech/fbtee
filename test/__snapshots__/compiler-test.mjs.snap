@@ -5947,8 +5947,16 @@ exports[`compiler collection collects duplicate plural names without runtime tok
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
-          null,
+          {
+            "singular": true,
+            "token": "__plural_0",
+            "type": 2,
+          },
+          {
+            "singular": true,
+            "token": "__plural_1",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -6264,7 +6272,11 @@ exports[`compiler collection collects extended JSX entity set in attributes 1`] 
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
+          {
+            "singular": true,
+            "token": "__plural_0",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -7703,8 +7715,16 @@ exports[`compiler collection collects parenthesized shared variation expression 
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
-          null,
+          {
+            "singular": true,
+            "token": "__plural_0",
+            "type": 2,
+          },
+          {
+            "singular": true,
+            "token": "__plural_1",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -8148,7 +8168,11 @@ exports[`compiler collection collects shared number parameter and plural variati
             "token": "a",
             "type": 2,
           },
-          null,
+          {
+            "singular": true,
+            "token": "__plural_1",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -8189,7 +8213,11 @@ exports[`compiler collection collects showCount no omits plural name and value 1
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
+          {
+            "singular": true,
+            "token": "n",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -8259,8 +8287,16 @@ exports[`compiler collection collects singular whitespace between consecutive JS
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
-          null,
+          {
+            "singular": true,
+            "token": "__plural_0",
+            "type": 2,
+          },
+          {
+            "singular": true,
+            "token": "__plural_1",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -8370,7 +8406,11 @@ exports[`compiler collection collects static concatenated plural many option 1`]
       "filename": "fixture.tsx",
       "jsfbt": {
         "m": [
-          null,
+          {
+            "singular": true,
+            "token": "__plural_0",
+            "type": 2,
+          },
         ],
         "t": {
           "*": {
@@ -9095,7 +9135,11 @@ exports[`compiler collection number, plural, enum, and gender variations 1`] = `
             "token": "count",
             "type": 2,
           },
-          null,
+          {
+            "singular": true,
+            "token": "__plural_1",
+            "type": 2,
+          },
           null,
           {
             "token": "person",

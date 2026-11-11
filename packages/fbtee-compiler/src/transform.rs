@@ -3266,7 +3266,11 @@ fn collected_phrase_json(
     let mut jsfbt = serde_json::Map::new();
     jsfbt.insert(
         "m".into(),
-        serde_json::Value::Array(collection_metadata(phrase, global_variations)),
+        serde_json::Value::Array(collection_metadata(
+            phrase,
+            global_variations,
+            builder.root_parts,
+        )),
     );
     jsfbt.insert("t".into(), hash_node_json(hash_tree));
     object.insert("jsfbt".into(), serde_json::Value::Object(jsfbt));
@@ -3291,33 +3295,80 @@ fn hash_to_leaf_json(node: &HashNode) -> serde_json::Value {
     serde_json::Value::Object(object)
 }
 
-fn collection_metadata(phrase: &Phrase, global_variations: &[&Part]) -> Vec<serde_json::Value> {
+fn collect_metadata_token_names(parts: &[Part], names: &mut BTreeMap<String, usize>) {
+    for part in parts {
+        let name = match part {
+            Part::Param {
+                name, nested_parts, ..
+            } => {
+                collect_metadata_token_names(nested_parts, names);
+                Some(name)
+            }
+            Part::Name { name, .. } | Part::List { name, .. } => Some(name),
+            Part::Plural { name, .. } => name.as_ref(),
+            _ => None,
+        };
+        if let Some(name) = name {
+            *names.entry(name.clone()).or_default() += 1;
+        }
+    }
+}
+
+fn collection_metadata(
+    phrase: &Phrase,
+    global_variations: &[&Part],
+    root_parts: &[Part],
+) -> Vec<serde_json::Value> {
+    // Variation identifiers need not be substitutions in the source text. Reserve
+    // all explicit names before allocating identifiers for hidden plural counts.
+    let mut names = BTreeMap::from([("__subject__".into(), 1), ("__viewing_user__".into(), 1)]);
+    collect_metadata_token_names(root_parts, &mut names);
+    let mut used_names = names.keys().cloned().collect::<BTreeSet<_>>();
     let mut metadata = vec![];
     if phrase.options.subject.is_some() {
         metadata.push(serde_json::json!({"token": "__subject__", "type": 1}));
     }
-    metadata.extend(global_variations.iter().map(|part| match part {
-        Part::Param {
-            name,
-            variation: ParamVariation::Number(_),
-            ..
-        } => serde_json::json!({"token": name, "type": 2}),
-        Part::Param {
-            name,
-            variation: ParamVariation::Gender(_),
-            ..
-        }
-        | Part::Name { name, .. } => serde_json::json!({"token": name, "type": 1}),
-        Part::Plural {
-            name, show_count, ..
-        } if show_count != "no" => serde_json::json!({
-            "singular": true,
-            "token": name.as_deref().unwrap_or("number"),
-            "type": 2,
-        }),
-        Part::Enum { .. } | Part::Plural { .. } | Part::Pronoun { .. } => serde_json::Value::Null,
-        _ => serde_json::Value::Null,
-    }));
+    metadata.extend(
+        global_variations
+            .iter()
+            .enumerate()
+            .map(|(index, part)| match part {
+                Part::Param {
+                    name,
+                    variation: ParamVariation::Number(_),
+                    ..
+                } => serde_json::json!({"token": name, "type": 2}),
+                Part::Param {
+                    name,
+                    variation: ParamVariation::Gender(_),
+                    ..
+                }
+                | Part::Name { name, .. } => serde_json::json!({"token": name, "type": 1}),
+                Part::Plural {
+                    name, show_count, ..
+                } => {
+                    let token = if show_count != "no" {
+                        name.as_deref().unwrap_or("number").to_string()
+                    } else if let Some(name) =
+                        name.as_ref().filter(|name| names.get(*name) == Some(&1))
+                    {
+                        name.clone()
+                    } else {
+                        let base = format!("__plural_{index}");
+                        let mut token = base.clone();
+                        let mut suffix = 0;
+                        while !used_names.insert(token.clone()) {
+                            suffix += 1;
+                            token = format!("{base}_{suffix}");
+                        }
+                        token
+                    };
+                    serde_json::json!({"singular": true, "token": token, "type": 2})
+                }
+                Part::Enum { .. } | Part::Pronoun { .. } => serde_json::Value::Null,
+                _ => serde_json::Value::Null,
+            }),
+    );
     metadata
 }
 

@@ -1,4 +1,5 @@
 use serde_json::{Map, Value};
+use std::collections::HashMap;
 
 pub fn prepare_translations(
     source_json: &str,
@@ -20,13 +21,97 @@ pub fn source_phrases(source_json: &str) -> Result<Map<String, Value>, String> {
         .ok_or("Source strings JSON must contain a 'phrases' array.")?
     {
         if let Some(hash_to_leaf) = phrase.get("hashToLeaf").and_then(Value::as_object) {
+            let mut leaf_hashes = HashMap::new();
             for (hash, leaf) in hash_to_leaf {
-                phrases.insert(hash.clone(), leaf.clone());
+                phrases.entry(hash.clone()).or_insert_with(|| leaf.clone());
+                if let (Some(text), Some(desc)) = (
+                    leaf.get("text").and_then(Value::as_str),
+                    leaf.get("desc").and_then(Value::as_str),
+                ) {
+                    leaf_hashes.insert((text, desc), hash.as_str());
+                }
+            }
+            if let (Some(table), Some(metadata)) = (
+                phrase.pointer("/jsfbt/t"),
+                phrase.pointer("/jsfbt/m").and_then(Value::as_array),
+            ) {
+                collect_leaf_variations(table, metadata, &mut vec![], &leaf_hashes, &mut phrases);
             }
         }
     }
 
     Ok(phrases)
+}
+
+fn collect_leaf_variations(
+    table: &Value,
+    metadata: &[Value],
+    active: &mut Vec<(String, u8)>,
+    leaf_hashes: &HashMap<(&str, &str), &str>,
+    phrases: &mut Map<String, Value>,
+) {
+    if let (Some(text), Some(desc)) = (
+        table.get("text").and_then(Value::as_str),
+        table.get("desc").and_then(Value::as_str),
+    ) {
+        if let Some(phrase) = leaf_hashes
+            .get(&(text, desc))
+            .and_then(|hash| phrases.get_mut(*hash))
+            .and_then(Value::as_object_mut)
+        {
+            for (token, mask) in active {
+                append_variation(phrase, token, (*mask).into());
+            }
+        }
+        return;
+    }
+    let Some(branches) = table.as_object() else {
+        return;
+    };
+    let Some((current, remaining)) = metadata.split_first() else {
+        return;
+    };
+    let variation = current.get("token").and_then(Value::as_str).zip(
+        match current.get("type").and_then(Value::as_u64) {
+            Some(1) => Some(3),
+            Some(2) => Some(28),
+            _ => None,
+        },
+    );
+    for (key, branch) in branches {
+        let previous_len = active.len();
+        // An exact-one source branch is fixed, unlike the wildcard branch from
+        // which the translator generates the target locale's plural categories.
+        if !(key == "_1" && current.get("singular").and_then(Value::as_bool) == Some(true)) {
+            if let Some((token, mask)) = variation {
+                active.push((token.to_string(), mask));
+            }
+        }
+        collect_leaf_variations(branch, remaining, active, leaf_hashes, phrases);
+        active.truncate(previous_len);
+    }
+}
+
+fn append_variation(entry: &mut Map<String, Value>, token: &str, variation_type: Value) {
+    let tokens = entry
+        .entry("tokens")
+        .or_insert_with(|| Value::Array(vec![]));
+    let Some(tokens) = tokens.as_array_mut() else {
+        return;
+    };
+    if tokens
+        .iter()
+        .any(|existing| existing.as_str() == Some(token))
+    {
+        return;
+    }
+    let index = tokens.len();
+    tokens.push(token.into());
+    let types = entry.entry("types").or_insert_with(|| Value::Array(vec![]));
+    if let Some(types) = types.as_array_mut() {
+        types.resize(index, Value::Null);
+        types.push(variation_type);
+    }
 }
 
 pub fn prepare_translations_with_phrases(
@@ -76,6 +161,20 @@ pub fn prepare_translations_with_phrases(
                     "types": [],
                 }),
             );
+        }
+        // Append newly collected dimensions without changing the indexes used by
+        // existing translations, including hand-authored catalog metadata.
+        if let Some(entry) = translations.get_mut(hash).and_then(Value::as_object_mut) {
+            if let (Some(tokens), Some(types)) = (
+                phrase.get("tokens").and_then(Value::as_array),
+                phrase.get("types").and_then(Value::as_array),
+            ) {
+                for (token, variation_type) in tokens.iter().zip(types) {
+                    if let Some(token) = token.as_str() {
+                        append_variation(entry, token, variation_type.clone());
+                    }
+                }
+            }
         }
     }
     if sort_by_hash {

@@ -6,7 +6,12 @@ import { PassThrough } from 'node:stream';
 import { beforeEach, test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
-import { collectSync, transformSync, translateSync } from '@nkzw/fbtee-compiler';
+import {
+  collectSync,
+  prepareTranslationsSync,
+  transformSync,
+  translateSync,
+} from '@nkzw/fbtee-compiler';
 import {
   createFbteeRuntime,
   fbs,
@@ -625,6 +630,148 @@ test('returned rich results retain their error listener after leaving the scope'
     assert.equal(String(result), 'Hello, ');
   });
   assert.deepEqual(errors, ['German']);
+});
+
+test('hidden plurals retain locale variations through collection, preparation and translation', () => {
+  for (const api of ['fbt', 'fbs']) {
+    for (const jsx of [false, true]) {
+      for (const named of [false, true]) {
+        for (const explicitShowCount of [false, true]) {
+          const expression = jsx
+            ? `<${api} desc="Books"><${api}:plural count={count} many="books"
+                ${named ? 'name="bookCount"' : ''}
+                ${explicitShowCount ? 'showCount="no"' : ''}
+                value={unexpectedValue()}>book</${api}:plural></${api}>`
+            : `${api}(${api}.plural('book', count, { many: 'books',
+                ${named ? "name: 'bookCount'," : ''}
+                ${explicitShowCount ? "showCount: 'no'," : ''}
+                value: unexpectedValue() }), 'Books')`;
+          const source = `const { ${api} } = require('fbtee');
+            function message(count) { return ${expression}; }`;
+          const collected = collectSync('plural.tsx', source, {
+            collectPackager: 'both',
+            sourceType: 'script',
+          });
+          assert.deepEqual(collected.errors, []);
+          const { phrases } = JSON.parse(collected.output);
+          const phrase = phrases[0];
+          const [{ singular, token, type }] = phrase.jsfbt.m;
+          assert.equal(type, 2);
+          assert.equal(singular, true);
+          if (named) {
+            assert.equal(token, 'bookCount');
+          }
+          const group = JSON.parse(prepareTranslationsSync(collected.output, undefined, 'pl-PL'));
+          for (const [hash, leaf] of Object.entries(phrase.hashToLeaf)) {
+            const entry = group.translations[hash];
+            entry.status = 'translated';
+            if (leaf.text === 'book') {
+              assert.deepEqual(entry.tokens, []);
+              assert.deepEqual(entry.types, []);
+              entry.translations = [{ translation: 'książka', variations: {} }];
+            } else {
+              assert.equal(leaf.text, 'books');
+              assert.deepEqual(entry.tokens, [token]);
+              assert.deepEqual(entry.types, [28]);
+              entry.translations = [
+                { translation: 'książek', variations: {} },
+                { translation: 'książki', variations: { 0: 20 } },
+                { translation: 'książki', variations: { 0: 24 } },
+              ];
+            }
+          }
+          const translations = JSON.parse(
+            translateSync(JSON.stringify({ phrases, translationGroups: [group] }), true),
+          );
+          assert.deepEqual(translations['pl-PL'][phrase.hash_key], {
+            _1: 'książka',
+            '*': 'książek',
+            20: 'książki',
+            24: 'książki',
+          });
+          const compiled = transformSync('plural.tsx', source, { sourceType: 'script' });
+          assert.deepEqual(compiled.errors, []);
+          assert.match(compiled.code, /\._plural\(count\)/);
+          assert.doesNotMatch(compiled.code, /unexpectedValue/);
+          const runtime = createFbteeRuntime({ locale: 'pl-PL', translations });
+          const message = Function('require', `${compiled.code}\nreturn message;`)(() => runtime);
+          for (const [count, expected] of [
+            [0, 'książek'],
+            [1, 'książka'],
+            [2, 'książki'],
+            [5, 'książek'],
+            [12, 'książek'],
+            [14, 'książek'],
+            [21, 'książek'],
+            [22, 'książki'],
+            [25, 'książek'],
+            [1.5, 'książki'],
+          ]) {
+            assert.equal(String(message(count)), expected);
+          }
+        }
+      }
+    }
+  }
+});
+
+test('multiple hidden counts have independent translation variations even with duplicate names', () => {
+  for (const names of [[], ['number', 'number'], ['bookCount', 'catCount']]) {
+    const source = `const { fbt } = require('fbtee');
+      function message(books, cats) {
+        return fbt([
+          fbt.plural('book', books, { many: 'books', ${names[0] ? `name: '${names[0]}',` : ''} }),
+          ', ',
+          fbt.plural('cat', cats, { many: 'cats', ${names[1] ? `name: '${names[1]}',` : ''} })
+        ], 'Books and cats');
+      }`;
+    const collected = collectSync('plurals.js', source, {
+      collectPackager: 'text',
+      sourceType: 'script',
+    });
+    assert.deepEqual(collected.errors, []);
+    const { phrases } = JSON.parse(collected.output);
+    const phrase = phrases[0];
+    const tokens = phrase.jsfbt.m.map(({ token }) => token);
+    assert.equal(new Set(tokens).size, 2);
+    const group = JSON.parse(prepareTranslationsSync(collected.output, undefined, 'pl-PL'));
+    for (const [hash, leaf] of Object.entries(phrase.hashToLeaf)) {
+      const entry = group.translations[hash];
+      const defaults = leaf.text.split(', ').map((word) => (word.endsWith('s') ? 'many' : 'one'));
+      entry.status = 'translated';
+      entry.translations = [];
+      for (let mask = 0; mask < 1 << entry.tokens.length; mask++) {
+        const forms = [...defaults];
+        const variations = {};
+        entry.tokens.forEach((token, index) => {
+          if (mask & (1 << index)) {
+            forms[tokens.indexOf(token)] = 'few';
+            variations[index] = 20;
+          }
+        });
+        entry.translations.push({ translation: forms.join('/'), variations });
+      }
+    }
+    const translations = JSON.parse(
+      translateSync(JSON.stringify({ phrases, translationGroups: [group] }), true),
+    );
+    const compiled = transformSync('plurals.js', source, { sourceType: 'script' });
+    assert.deepEqual(compiled.errors, []);
+    const runtime = createFbteeRuntime({ locale: 'pl-PL', translations });
+    const message = Function('require', `${compiled.code}\nreturn message;`)(() => runtime);
+    for (const [books, cats, expected] of [
+      [1, 1, 'one/one'],
+      [1, 2, 'one/few'],
+      [2, 1, 'few/one'],
+      [2, 2, 'few/few'],
+      [2, 5, 'few/many'],
+      [5, 2, 'many/few'],
+      [5, 5, 'many/many'],
+      [22, 25, 'few/many'],
+    ]) {
+      assert.equal(String(message(books, cats)), expected);
+    }
+  }
 });
 
 test('compiled plural helpers and viewer gender use request state', async () => {

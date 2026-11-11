@@ -129,6 +129,75 @@ const fakeRequire = (name) => {
 }
 
 {
+  const source = `<fbt desc="Hidden counts">
+    <fbt:plural count={a}>book</fbt:plural>
+    <b><fbt:plural count={b} name="__plural_0">cat</fbt:plural></b>
+    <fbt:plural count={c} name="number" showCount="no">bird</fbt:plural>
+    <fbt:plural count={d} name="number" showCount="yes">dog</fbt:plural>
+    <fbt:param name="__plural_0_1">{label}</fbt:param>
+  </fbt>`;
+  const options = { collectPackager: 'both' };
+  const result = collectSync('plural.tsx', source, options);
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(collectSync('plural.tsx', source, options), result);
+  const { phrases } = JSON.parse(result.output);
+  assert.equal(phrases.length, 2);
+  const tokens = phrases[0].jsfbt.m.map(({ token }) => token);
+  assert.equal(new Set(tokens).size, 4);
+  assert.equal(tokens[1], '__plural_0');
+  assert.equal(tokens[3], 'number');
+  assert.ok(!tokens.includes('__plural_0_1'));
+  assert.deepEqual(phrases[1].jsfbt.m, phrases[0].jsfbt.m);
+  const code = compile(source);
+  assert.match(code, /\._plural\(a\)/);
+  assert.match(code, /\._plural\(b\)/);
+  assert.match(code, /\._plural\(c\)/);
+  assert.match(code, /\._plural\(d, "number"\)/);
+  for (const phrase of phrases) {
+    assert.ok(code.includes(`hk: "${phrase.hash_key}"`));
+  }
+}
+
+{
+  // A shared leaf hash can occur in several sites with different count names.
+  const collected = collectBatchSync(
+    ['a', 'b'].map((name) => ({
+      filename: `${name}.tsx`,
+      sourceText: `<fbt desc="Books"><fbt:plural count={count} name="${name}">book</fbt:plural></fbt>`,
+    })),
+    { collectPackager: 'text' },
+  );
+  assert.deepEqual(collected.errors, []);
+  const { phrases } = JSON.parse(collected.output);
+  const manyHash = Object.entries(phrases[0].hashToLeaf).find(
+    ([, leaf]) => leaf.text === 'books',
+  )[0];
+  const group = JSON.parse(prepareTranslationsSync(collected.output, undefined, 'pl-PL'));
+  const entry = group.translations[manyHash];
+  assert.deepEqual(entry.tokens, ['a', 'b']);
+  assert.deepEqual(entry.types, [28, 28]);
+
+  // Existing indexes and translator-authored fields survive adding a dimension.
+  Object.assign(entry, {
+    notes: 'Reviewed translation',
+    status: 'translated',
+    tokens: ['b', 'gender'],
+    translations: [
+      { translation: 'książek', variations: {} },
+      { translation: 'książki', variations: { 0: 20 } },
+    ],
+    types: [28, 3],
+  });
+  const updated = prepareTranslationsSync(collected.output, JSON.stringify(group), 'pl-PL');
+  assert.deepEqual(JSON.parse(updated).translations[manyHash], {
+    ...entry,
+    tokens: ['b', 'gender', 'a'],
+    types: [28, 3, 28],
+  });
+  assert.equal(prepareTranslationsSync(collected.output, updated, 'pl-PL'), updated);
+}
+
+{
   const code = compile(`
     const fbt = require('fbtee');
     const x = fbt('A', 'B');
