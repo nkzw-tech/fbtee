@@ -46,8 +46,8 @@ function _getRules(locale?: string | null): Rules {
     for (const metaclass of Object.keys(rewrites.meta)) {
       const metaclassRegexp = new RegExp(metaclass.slice(1, -1), 'g');
       const characterClass = rewrites.meta[metaclass];
-      pattern = pattern.replace(metaclassRegexp, characterClass);
-      replacement = replacement.replace(metaclassRegexp, characterClass);
+      pattern = pattern.replaceAll(metaclassRegexp, characterClass);
+      replacement = replacement.replaceAll(metaclassRegexp, characterClass);
     }
     if (replacement === 'javascript') {
       replacement = (match) => match.slice(1).toLowerCase();

@@ -9,25 +9,12 @@ packages:
   - website
 
 allowBuilds:
+  '@parcel/watcher': true
+  '@tailwindcss/oxide': true
   esbuild: true
   unrs-resolver: true
 
-minimumReleaseAgeExclude:
-  - vite@8.1.5
-  - '@nkzw/oxlint-config@2.0.1'
-
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - esbuild
-  - unrs-resolver
-
 overrides:
-  react-dom@^19: ^19.1.1
-  react-is: ^19.1.1
-  react@^19: ^19.1.1
-
-updateConfig:
-  ignoreDependencies:
-    - '@babel/standalone'
-    - '@types/prettier'
-    - prettier
+  react-dom@^19: ^19.3.1
+  react-is: ^19.3.1
+  react@^19: ^19.3.1

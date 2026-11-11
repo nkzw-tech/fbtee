@@ -34,7 +34,7 @@ export default function substituteTokens(
   const objectPieces: Array<FbtContentItem> = [];
   let occurrences: Map<string, number> | undefined;
   const stringPieces = template
-    .replace(parameterRegexp, (_match: string, name: string, punctuation: string): string => {
+    .replaceAll(parameterRegexp, (_match: string, name: string, punctuation: string): string => {
       let argument = args[name];
       // If token value is a React component.
       if (argument != null && typeof argument === 'object') {

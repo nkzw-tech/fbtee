@@ -505,13 +505,9 @@ impl<'a> Visit<'a> for BindingCollector<'_> {
                     }
                 };
                 let runtime = import.import_kind == ImportOrExportKind::Value && !specifier_is_type;
-                self.register(
-                    local,
-                    import.source.value.as_str(),
-                    runtime,
-                    enum_import,
-                    named_fbtee_import,
-                );
+                if let Some(source) = import.source.value.as_str() {
+                    self.register(local, source, runtime, enum_import, named_fbtee_import);
+                }
             }
         }
         walk::walk_import_declaration(self, import);
@@ -960,7 +956,9 @@ impl<'a, 'o> FbteeTransform<'a, 'o> {
     ) -> Result<Vec<Part>, String> {
         match expr {
             Expression::StringLiteral(x) => Ok(vec![Part::Text(normalize_spaces(
-                x.value.as_str(),
+                x.value
+                    .as_str()
+                    .ok_or("Translation text must not contain lone surrogates.")?,
                 options.preserve_whitespace,
             ))]),
             Expression::ArrayExpression(x) => {
@@ -1013,11 +1011,12 @@ impl<'a, 'o> FbteeTransform<'a, 'o> {
             Expression::TemplateLiteral(x) => {
                 let mut out = vec![];
                 for (i, q) in x.quasis.iter().enumerate() {
-                    let text = q
-                        .value
-                        .cooked
-                        .as_ref()
-                        .map_or(q.value.raw.as_str(), |x| x.as_str());
+                    let text = match q.value.cooked {
+                        Some(value) => value
+                            .as_str()
+                            .ok_or("Translation text must not contain lone surrogates.")?,
+                        None => q.value.raw.as_str(),
+                    };
                     if !text.is_empty() {
                         out.push(Part::Text(normalize_spaces(
                             text,
@@ -2061,9 +2060,11 @@ impl<'a, 'o> FbteeTransform<'a, 'o> {
                         return Ok(None);
                     };
                     match attribute.value.as_ref() {
-                        Some(JSXAttributeValue::StringLiteral(value)) => {
-                            Ok(Some(quote(&decode_jsx_entities(value.value.as_str()))))
-                        }
+                        Some(JSXAttributeValue::StringLiteral(value)) => Ok(Some(quote(
+                            &decode_jsx_entities(value.value.as_str().ok_or(
+                                "Translation attributes must not contain lone surrogates.",
+                            )?),
+                        ))),
                         Some(JSXAttributeValue::ExpressionContainer(container)) => {
                             let expression =
                                 container.expression.as_expression().ok_or_else(|| {
@@ -4032,14 +4033,17 @@ fn argument_string(x: &Argument<'_>) -> Option<String> {
 }
 fn expression_string(x: &Expression<'_>) -> Option<String> {
     match x {
-        Expression::StringLiteral(x) => Some(x.value.to_string()),
-        Expression::TemplateLiteral(x) if x.expressions.is_empty() => x.quasis.first().map(|x| {
-            x.value
-                .cooked
-                .as_ref()
-                .map_or(x.value.raw.as_str(), |x| x.as_str())
-                .to_string()
-        }),
+        Expression::StringLiteral(x) => Some(x.value.as_str()?.to_string()),
+        Expression::TemplateLiteral(x) if x.expressions.is_empty() => {
+            let quasi = x.quasis.first()?;
+            Some(
+                match quasi.value.cooked {
+                    Some(value) => value.as_str()?,
+                    None => quasi.value.raw.as_str(),
+                }
+                .to_string(),
+            )
+        }
         Expression::BinaryExpression(x) if x.operator == BinaryOperator::Addition => Some(format!(
             "{}{}",
             expression_string(&x.left)?,
@@ -4057,7 +4061,7 @@ fn expression_string(x: &Expression<'_>) -> Option<String> {
 
 fn option_string(x: &Expression<'_>) -> Option<String> {
     match x {
-        Expression::StringLiteral(x) => Some(x.value.to_string()),
+        Expression::StringLiteral(x) => Some(x.value.as_str()?.to_string()),
         Expression::BinaryExpression(x) if x.operator == BinaryOperator::Addition => Some(format!(
             "{}{}",
             option_string(&x.left)?,
@@ -4075,7 +4079,7 @@ fn option_string(x: &Expression<'_>) -> Option<String> {
 
 fn string_literal_value(x: &Expression<'_>) -> Option<String> {
     match x {
-        Expression::StringLiteral(x) => Some(x.value.to_string()),
+        Expression::StringLiteral(x) => Some(x.value.as_str()?.to_string()),
         Expression::ParenthesizedExpression(x) => string_literal_value(&x.expression),
         Expression::TSAsExpression(x) => string_literal_value(&x.expression),
         Expression::TSSatisfiesExpression(x) => string_literal_value(&x.expression),
@@ -4386,7 +4390,7 @@ fn parse_call_options(
 fn property_key_string(x: &PropertyKey<'_>) -> Option<String> {
     match x {
         PropertyKey::StaticIdentifier(x) => Some(x.name.to_string()),
-        PropertyKey::StringLiteral(x) => Some(x.value.to_string()),
+        PropertyKey::StringLiteral(x) => Some(x.value.as_str()?.to_string()),
         PropertyKey::NumericLiteral(x) => Some(x.value.to_js_string()),
         _ => None,
     }
@@ -4411,7 +4415,7 @@ impl<'b, 'a> JsxAttrs<'b, 'a> {
         let attr = self.attr(key)?;
         match attr.value.as_ref() {
             Some(JSXAttributeValue::StringLiteral(x)) => {
-                Some(decode_jsx_entities(x.value.as_str()))
+                Some(decode_jsx_entities(x.value.as_str()?))
             }
             Some(JSXAttributeValue::ExpressionContainer(x)) => {
                 x.expression.as_expression().and_then(expression_string)
@@ -4424,7 +4428,7 @@ impl<'b, 'a> JsxAttrs<'b, 'a> {
         let attribute = self.attr(key)?;
         match attribute.value.as_ref() {
             None => Some(true),
-            Some(JSXAttributeValue::StringLiteral(value)) => match value.value.as_str() {
+            Some(JSXAttributeValue::StringLiteral(value)) => match value.value.as_str()? {
                 "true" => Some(true),
                 "false" => Some(false),
                 _ => None,
@@ -4432,7 +4436,7 @@ impl<'b, 'a> JsxAttrs<'b, 'a> {
             Some(JSXAttributeValue::ExpressionContainer(container)) => {
                 match container.expression.as_expression()? {
                     Expression::BooleanLiteral(value) => Some(value.value),
-                    Expression::StringLiteral(value) => match value.value.as_str() {
+                    Expression::StringLiteral(value) => match value.value.as_str()? {
                         "true" => Some(true),
                         "false" => Some(false),
                         _ => None,
@@ -4723,7 +4727,7 @@ fn expression_description_text(
 ) -> Option<String> {
     match expression {
         Expression::StringLiteral(value) => Some(normalize_spaces(
-            value.value.as_str(),
+            value.value.as_str()?,
             options.preserve_whitespace,
         )),
         Expression::TemplateLiteral(template) if template.expressions.is_empty() => {
@@ -4943,6 +4947,32 @@ fn base62(mut x: u32) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn unicode_literals_preserve_translation_hashes() {
+        for (escaped, literal) in [
+            (r#"fbt('\uD83D\uDE00', 'Unicode')"#, "fbt('😀', 'Unicode')"),
+            (r#"fbs(`\uD83D\uDE00`, 'Unicode')"#, "fbs(`😀`, 'Unicode')"),
+            (r#"fbt('Hello', '\uD83D\uDE00')"#, "fbt('Hello', '😀')"),
+        ] {
+            assert_eq!(
+                transform(escaped, FbteeOptions::default()).unwrap(),
+                transform(literal, FbteeOptions::default()).unwrap(),
+            );
+        }
+    }
+
+    #[test]
+    fn rejects_lone_surrogates_in_translation_text() {
+        for source in [
+            r#"fbt('\uD800', 'Unicode')"#,
+            r#"fbs(`\uDFFF`, 'Unicode')"#,
+            r#"<fbt desc='Unicode'>{'\uD800'}</fbt>"#,
+        ] {
+            let error = transform(source, FbteeOptions::default()).unwrap_err();
+            assert!(error.contains("lone surrogates"), "{error}");
+        }
+    }
 
     #[test]
     fn source_locations_preserve_utf16_offsets_and_line_boundaries() {

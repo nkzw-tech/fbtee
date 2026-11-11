@@ -51,17 +51,17 @@ jobs:
             build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target x86_64-unknown-linux-musl -x
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Use Node.js 26
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 26
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
-          version: 11.*
+          version: 12.*
           run_install: false
 
       - name: Install Rust
@@ -70,7 +70,7 @@ jobs:
           # Keep this exact version aligned with rust-toolchain.toml. Otherwise
           # rustup can install cross-target libraries for a newer patch release
           # while Cargo uses the repository override.
-          toolchain: '1.96.0'
+          toolchain: '1.99.1'
           targets: ${{ matrix.settings.target }}
 
       - name: Install Zig
@@ -125,7 +125,7 @@ jobs:
         shell: bash
 
       - name: Upload binding
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: oxc-binding-${{ matrix.settings.target }}
           path: |
@@ -148,18 +148,18 @@ jobs:
         node-version: [26]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         id: pnpm-install
         with:
-          version: 11.*
+          version: 12.*
           run_install: false
 
       - name: Get pnpm store directory
@@ -167,7 +167,7 @@ jobs:
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -184,7 +184,7 @@ jobs:
         run: pnpm test
 
       - name: Download Oxc bindings
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: oxc-binding-*
           merge-multiple: true

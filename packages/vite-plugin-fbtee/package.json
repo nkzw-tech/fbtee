@@ -39,7 +39,7 @@
     "@nkzw/fbtee-compiler": "workspace:*"
   },
   "devDependencies": {
-    "vite": "^8.1.5"
+    "vite": "^8.3.7"
   },
   "peerDependencies": {
     "vite": ">=6.3.0"

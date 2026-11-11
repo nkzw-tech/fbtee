@@ -136,6 +136,8 @@ export function negotiateLocale(locale: string, availableLocales: Iterable<strin
   const defaultRegion = new Intl.Locale(
     [requested.language, maximized.script].filter(Boolean).join('-'),
   ).maximize().region;
+  const score = (value: Intl.Locale | null) =>
+    value?.region === maximized.region ? 2 : value?.region === defaultRegion ? 1 : 0;
   return (
     available
       .map((name) => ({ locale: parseLocale(getLocaleIdentity(name)), name }))
@@ -146,8 +148,6 @@ export function negotiateLocale(locale: string, availableLocales: Iterable<strin
           locale.maximize().script === maximized.script,
       )
       .sort((a, b) => {
-        const score = (value: Intl.Locale | null) =>
-          value?.region === maximized.region ? 2 : value?.region === defaultRegion ? 1 : 0;
         return (
           score(b.locale) - score(a.locale) || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
         );

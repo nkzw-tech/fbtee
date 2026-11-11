@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@napi-rs/cli": "^3.8.6",
-    "oxc-transform": "^0.147.0"
+    "@napi-rs/cli": "^3.10.12",
+    "oxc-transform": "^0.158.0"
   },
   "optionalDependencies": {
     "@nkzw/oxc-transform-fbtee-binding-darwin-arm64": "workspace:*",

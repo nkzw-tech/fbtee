@@ -42,10 +42,10 @@
   },
   "devDependencies": {
     "fbtee": "workspace:*",
-    "next": "^16.3.3",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "typescript": "^5.9.3"
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
     "next": ">=16.0.0"

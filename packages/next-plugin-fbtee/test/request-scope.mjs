@@ -63,34 +63,34 @@ function catalog(locale, messages) {
   );
 }
 
+function render(locale, messages) {
+  const started = Promise.withResolvers();
+  const gate = Promise.withResolvers();
+  const output = runWithFbtee(
+    { locale, translations: catalog(locale, messages) },
+    () =>
+      new Promise((resolve, reject) => {
+        const destination = new PassThrough();
+        let chunks = '';
+        destination.on('data', (chunk) => {
+          chunks += chunk;
+        });
+        destination.on('end', () => resolve(chunks));
+        destination.on('error', reject);
+        renderToPipeableStream(
+          createElement(Page, { started: () => started.resolve(), wait: gate.promise }),
+          {},
+          { onError: reject },
+        ).pipe(destination);
+      }),
+  );
+  return { output, resume: () => gate.resolve(), started: started.promise };
+}
+
 test(
   'the RSC renderer retains scope across concurrent async Server Components',
   { timeout: 10_000 },
   async () => {
-    function render(locale, messages) {
-      const started = Promise.withResolvers();
-      const gate = Promise.withResolvers();
-      const output = runWithFbtee(
-        { locale, translations: catalog(locale, messages) },
-        () =>
-          new Promise((resolve, reject) => {
-            const destination = new PassThrough();
-            let chunks = '';
-            destination.on('data', (chunk) => {
-              chunks += chunk;
-            });
-            destination.on('end', () => resolve(chunks));
-            destination.on('error', reject);
-            renderToPipeableStream(
-              createElement(Page, { started: () => started.resolve(), wait: gate.promise }),
-              {},
-              { onError: reject },
-            ).pipe(destination);
-          }),
-      );
-      return { output, resume: () => gate.resolve(), started: started.promise };
-    }
-
     const german = render('de-DE', { Message: 'Nachricht', Title: 'Deutscher Titel' });
     const french = render('fr-FR', { Message: 'Message français', Title: 'Titre français' });
     await Promise.all([german.started, french.started]);
