@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         settings:
-          - host: macos-14
+          - host: macos-15
             target: aarch64-apple-darwin
             package: darwin-arm64
             build: pnpm --filter @nkzw/fbtee-compiler exec napi build --esm --platform --release --target aarch64-apple-darwin
