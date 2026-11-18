@@ -41,7 +41,7 @@ describe('fbs', () => {
             <fbs desc="some desc">
               Hello{' '}
               <fbs:param name="name">
-                {/* @ts-expect-error */}
+                {/* @ts-expect-error The uncompiled <fbs> wrapper appears as a JSX element. */}
                 <fbs desc="param text">world</fbs>
               </fbs:param>
             </fbs>
@@ -133,7 +133,7 @@ describe('fbs', () => {
       it('fbs() should throw an error', () => {
         expect(() =>
           fbs(
-            // @ts-expect-error
+            // @ts-expect-error Exercise runtime rejection of a React element.
             ['Hello ', fbs.param('name', <strong>world</strong>)],
             'some desc',
           ),
@@ -147,7 +147,7 @@ describe('fbs', () => {
           <fbs desc="some desc">
             Hello{' '}
             <fbs:param name="name">
-              {/* @ts-expect-error */}
+              {/* @ts-expect-error Exercise runtime rejection of a React element. */}
               <strong>world!</strong>
             </fbs:param>
           </fbs>

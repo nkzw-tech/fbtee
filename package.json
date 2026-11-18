@@ -28,7 +28,7 @@
     "@jest/globals": "30.5.2",
     "@nkzw/eslint-plugin": "^2.0.0",
     "@nkzw/eslint-plugin-fbtee": "workspace:*",
-    "@nkzw/oxlint-config": "^2.0.1",
+    "@nkzw/oxlint-config": "^3.0.0",
     "@testing-library/react": "^16.3.3",
     "@types/invariant": "^2.2.37",
     "@types/jest": "^30.0.0",
@@ -46,9 +46,10 @@
     "nullthrows": "^1.1.1",
     "oxc-transform": "^0.158.0",
     "oxfmt": "^0.78.0",
-    "oxlint": "^1.93.0",
+    "oxlint": "^1.94.0",
     "react-dom": "^19.3.1",
     "tsdown": "0.23.7",
+    "tsrs": "0.25.0-ts7.1.0-beta",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "engines": {

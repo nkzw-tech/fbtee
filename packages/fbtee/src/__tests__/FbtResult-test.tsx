@@ -17,8 +17,7 @@ import getFbtResult from '../getFbtResult.tsx';
 import type { FbsAPI, FbtAPI, FbtResult } from '../Types.ts';
 
 function runtime() {
-  return createFbteeRuntime({ locale: 'en-US', translations: {} })
-    .fbt as unknown as typeof fbtInternal;
+  return createFbteeRuntime({ locale: 'en-US', translations: {} }).fbt as typeof fbtInternal;
 }
 
 function children(result: FbtResult) {
@@ -84,7 +83,7 @@ describe('React translation results', () => {
 
   it('preserves repeated parameter instances when translations reorder tokens', () => {
     const runtime = createFbteeRuntime({ locale: 'en-US', translations: {} });
-    const fbt = runtime.fbt as unknown as typeof fbtInternal;
+    const fbt = runtime.fbt as typeof fbtInternal;
     const message = () =>
       fbt._(
         '{first} {second} {first}',

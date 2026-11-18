@@ -1,12 +1,12 @@
-import { createHighlighter, ThemeRegistrationResolved } from 'shiki';
+import { createHighlighter } from 'shiki';
 import Dunkel from '../themes/dunkel.json' with { type: 'json' };
 import Licht from '../themes/licht.json' with { type: 'json' };
 
 const highlighter = await createHighlighter({
   langs: ['js', 'ts', 'tsx'],
   themes: [
-    Licht as unknown as ThemeRegistrationResolved,
-    Dunkel as unknown as ThemeRegistrationResolved,
+    { ...Licht, type: 'light' },
+    { ...Dunkel, type: 'dark' },
   ],
 });
 

@@ -66,7 +66,7 @@ export type Variations =
   | [variation: ParamVariationType['number'], value?: number | null]
   | [variation: ParamVariationType['gender'], value: GenderConst];
 
-export function createRuntime<P, T extends ReactNode>({
+export function createRuntime<P extends ReactNode, T extends ReactNode>({
   getResult,
   listRuntime,
   param,
@@ -203,7 +203,7 @@ export function createRuntime<P, T extends ReactNode>({
         items: ReadonlyArray<string | ReactElement | null | undefined>,
         conjunction?: FbtConjunction,
         delimiter?: FbtDelimiter,
-      ) => [
+      ): FbtTableArg => [
         null,
         {
           [label]: listWithRuntime(
@@ -211,7 +211,8 @@ export function createRuntime<P, T extends ReactNode>({
             conjunction,
             delimiter,
             undefined,
-            listRuntime ?? (runtime as unknown as FbtAPI),
+            // The compiler uses the helpers on this runtime for the list JSX.
+            listRuntime ?? (runtime as typeof runtime & FbtAPI),
           ),
         },
       ],
@@ -246,7 +247,7 @@ export function createRuntime<P, T extends ReactNode>({
 }
 
 export function createFbtRuntime(state?: RuntimeState) {
-  return createRuntime<ReactNode, FbtResult>({
+  const runtime = createRuntime<ReactNode, FbtResult>({
     getResult: Hooks.getFbtResult,
     param: (label: string, value: ReactNode, variations?: Variations) => {
       const substitution = { [label]: value };
@@ -291,6 +292,8 @@ export function createFbtRuntime(state?: RuntimeState) {
       ),
     state,
   });
+  // The compiler replaces the public source syntax with the runtime methods above.
+  return runtime as typeof runtime & FbtAPI;
 }
 
 export default createFbtRuntime();

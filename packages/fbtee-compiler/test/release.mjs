@@ -52,7 +52,7 @@ try {
       const platform = packageJson.name.replace('@nkzw/oxc-transform-fbtee-binding-', '');
       return [packageJson.main, `fbtee.${platform}${platform.startsWith('win32-') ? '.exe' : ''}`];
     })
-    .sort();
+    .sort((a, b) => (a < b ? -1 : Number(a > b)));
   for (const name of expected) {
     writeFileSync(join(sourceDirectory, name), name);
   }

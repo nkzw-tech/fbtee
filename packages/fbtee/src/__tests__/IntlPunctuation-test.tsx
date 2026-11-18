@@ -97,8 +97,8 @@ describe('IntlPunctuation', () => {
         FW_BANG,
       ],
     } as const;
-    for (const prefix of Object.keys(expected)) {
-      for (const suffix of expected[prefix as unknown as keyof typeof expected]) {
+    for (const [prefix, suffixes] of Object.entries(expected)) {
+      for (const suffix of suffixes) {
         const result = dedupeStops(prefix, suffix);
         expect({ prefix, result, suffix }).toEqual({
           prefix,

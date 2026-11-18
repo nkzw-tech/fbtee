@@ -270,7 +270,7 @@ const Example = () => {
                 href={`#${loc}`}
                 onClick={(event: React.UIEvent) => {
                   event.preventDefault();
-                  updateLocale(loc as LocaleKey);
+                  void updateLocale(loc as LocaleKey);
                 }}
               >
                 {Locales[loc as LocaleKey].displayName}

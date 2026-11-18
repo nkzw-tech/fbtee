@@ -1,7 +1,6 @@
 import {
   createContext,
   Fragment,
-  Context as ReactContext,
   ReactNode,
   use,
   useActionState,
@@ -26,15 +25,16 @@ export type LocaleContext = {
 
 const hasWindow = typeof window !== 'undefined';
 
-export const Context = (() =>
-  hasWindow
-    ? createContext<LocaleContext>(null as unknown as LocaleContext)
-    : ((({ children }: { children: ReactNode }) =>
-        children) as unknown as ReactContext<LocaleContext>))();
+const browserContext = hasWindow ? createContext<LocaleContext | null>(null) : null;
+const Context =
+  browserContext ??
+  function ServerContext({ children }: { children: ReactNode; value: LocaleContext }) {
+    return children;
+  };
 
 export const useLocaleContext = (() =>
-  hasWindow
-    ? () => use(Context)
+  browserContext
+    ? () => use(browserContext)!
     : () => {
         const viewerContext = Hooks.getViewerContext();
         return {

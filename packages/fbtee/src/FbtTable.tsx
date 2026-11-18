@@ -1,9 +1,10 @@
 import invariant from 'invariant';
 import type { FbtTableKey } from './CompilerTypes.ts';
 import type { FbtRuntimeInput, FbtTableArgs } from './Hooks.tsx';
+import type { FbtContentItem } from './Types.ts';
 
 export type FbtSubstitution = {
-  [token: string]: unknown;
+  [token: string]: FbtContentItem;
 };
 
 const FbtTable = {

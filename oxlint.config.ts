@@ -1,4 +1,4 @@
-import nkzw from '@nkzw/oxlint-config';
+import nkzw from '@nkzw/oxlint-config/with-sorting';
 import { defineConfig } from 'oxlint';
 
 export default defineConfig({

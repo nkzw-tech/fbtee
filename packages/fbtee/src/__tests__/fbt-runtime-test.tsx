@@ -31,8 +31,7 @@ describe('fbt', () => {
       21: IntlVariations.NUMBER_ONE,
       22: IntlVariations.NUMBER_TWO,
     } as const;
-    for (const n of Object.keys(numToType)) {
-      const type = numToType[n as unknown as keyof typeof numToType];
+    for (const [n, type] of Object.entries(numToType)) {
       const displayNumber = intlNumUtils.formatNumberWithThousandDelimiters(Number.parseFloat(n));
       expect(fbtRuntime._param('num', Number.parseInt(n, 10), [0])).toEqual([
         [type, '*'],

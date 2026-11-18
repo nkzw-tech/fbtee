@@ -12,7 +12,7 @@ type PhonologicalRewriteMap = Readonly<{
   unknown?: StringToStringMap;
 }>;
 
-const REWRITES: Record<string, PhonologicalRewriteMap> = {
+const REWRITES = {
   ar_AR: {
     meta: {
       '/_Delim/': '(\u0001\u200f)',
@@ -225,7 +225,7 @@ const REWRITES: Record<string, PhonologicalRewriteMap> = {
       '/\u0001 de\\/da_E/': '\u0001 de$1',
     },
   },
-};
+} satisfies Record<string, PhonologicalRewriteMap>;
 const GLOBAL_REWRITES: PhonologicalRewriteMap = {
   meta: {
     '/_B/': String.raw`([.,!?\s]|^)`,
@@ -241,13 +241,13 @@ const DEFAULT_LOCALE = 'en-US';
 export default {
   get(localeTag?: string | null): PhonologicalRewriteMap {
     const key = localeTag == null ? DEFAULT_LOCALE : localeTag;
-    const rewrites =
-      getLocaleAliases(key)
-        .map((localeAlias) => REWRITES[localeAlias])
-        .find(Boolean) || EMPTY_REWRITES;
+    const rewrites = getLocaleAliases(key).find((localeAlias) =>
+      Object.hasOwn(REWRITES, localeAlias),
+    );
+    const rules = rewrites ? REWRITES[rewrites as keyof typeof REWRITES] : EMPTY_REWRITES;
     return {
-      meta: { ...rewrites.meta, ...GLOBAL_REWRITES.meta },
-      patterns: { ...rewrites.patterns, ...GLOBAL_REWRITES.patterns },
+      meta: { ...rules.meta, ...GLOBAL_REWRITES.meta },
+      patterns: { ...rules.patterns, ...GLOBAL_REWRITES.patterns },
     };
   },
 };

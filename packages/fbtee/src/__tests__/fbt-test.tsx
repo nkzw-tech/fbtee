@@ -326,15 +326,7 @@ describe('fbt', () => {
     // DEBUG: show the babel-plugin-fbt transform output
     // console.warn('getFbt = \n----\n%s\n----\n', getFbt + '');
 
-    const combinations: {
-      counts: Array<number>;
-      objects: Array<'photo' | 'comment'>;
-      ownerGenders: Array<keyof typeof GenderConst>;
-      viewers: Array<{
-        gender: IntlVariations;
-        name: string;
-      }>;
-    } = {
+    const combinations = {
       counts: [1, 10],
       objects: ['photo', 'comment'],
       ownerGenders: ['FEMALE_SINGULAR', 'MALE_SINGULAR', 'UNKNOWN_PLURAL'],
@@ -352,7 +344,7 @@ describe('fbt', () => {
           name: 'Kim',
         },
       ],
-    };
+    } as const;
 
     combinations.viewers.forEach((viewer) =>
       combinations.ownerGenders.forEach((ownerGender) =>

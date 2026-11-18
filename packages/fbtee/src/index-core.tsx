@@ -8,8 +8,8 @@ export { default as GenderConst } from './GenderConst.tsx';
 export { default as FbtTranslations } from './FbtTranslations.tsx';
 export { default as list, List } from './list.tsx';
 
-export const fbt = fbtInternal as unknown as FbtAPI;
-export const fbs = fbsInternal as unknown as FbsAPI;
+export const fbt: FbtAPI = fbtInternal;
+export const fbs: FbsAPI = fbsInternal;
 
 export type { FbtRuntimeInput, FbtRuntimeInput as TranslationTable } from './Hooks.tsx';
 export type {

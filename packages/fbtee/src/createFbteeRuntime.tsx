@@ -61,14 +61,13 @@ export default function createFbteeRuntime({
     translations,
   });
   const fbtRuntime = createFbtRuntime(state);
-  const fbt = fbtRuntime as unknown as FbtAPI;
   let revision = 0;
   let listeners: Set<() => void> | undefined;
   const runtime: FbteeRuntime = {
-    fbs: createFbsRuntime(fbtRuntime, state) as unknown as FbsAPI,
-    fbt,
+    fbs: createFbsRuntime(fbtRuntime, state),
+    fbt: fbtRuntime,
     list: (items, conjunction, delimiter, options) =>
-      listWithRuntime(items, conjunction, delimiter, options, fbt),
+      listWithRuntime(items, conjunction, delimiter, options, fbtRuntime),
     locale,
     mergeTranslations: (translations) => {
       mergeTranslations(state, translations);

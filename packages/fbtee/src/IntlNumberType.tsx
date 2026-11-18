@@ -16,7 +16,7 @@ const categoryToVariation: Readonly<Record<PluralCategory, IntlVariations>> = {
   zero: IntlVariations.NUMBER_ZERO,
 };
 
-const fallbackNumberTypes: Readonly<Record<string, IntlNumberType>> = {
+const fallbackNumberTypes = {
   ay: { getVariation: () => IntlVariations.NUMBER_OTHER },
   bh: {
     getVariation: (n) =>
@@ -75,7 +75,7 @@ const fallbackNumberTypes: Readonly<Record<string, IntlNumberType>> = {
   },
   tt: { getVariation: () => IntlVariations.NUMBER_OTHER },
   zza: { getVariation: (n) => getOneOtherVariation(n) },
-};
+} satisfies Readonly<Record<string, IntlNumberType>>;
 
 const pluralRulesCache = new Map<string, Intl.PluralRules>();
 const numberTypeCache = new Map<string, IntlNumberType>();
@@ -132,9 +132,12 @@ function getNumberTypeForLocale(locale: string): IntlNumberType {
   }
 
   const supportedLocale = getSupportedLocale(locale);
+  const language = getLocaleLanguage(locale);
   const numberType =
     supportedLocale == null
-      ? fallbackNumberTypes[getLocaleLanguage(locale)] || fallbackNumberTypes.root
+      ? Object.hasOwn(fallbackNumberTypes, language)
+        ? fallbackNumberTypes[language as keyof typeof fallbackNumberTypes]
+        : fallbackNumberTypes.root
       : {
           getVariation: (n: number): IntlVariations =>
             categoryToVariation[getPluralRules(supportedLocale)!.select(n)],

@@ -66,8 +66,6 @@ export default {
         '\\.(j|t)sx?$': ['<rootDir>/jest-preprocessor.js'],
       },
     },
-  ]
-    .filter(Boolean)
-    .map((project) => ({ ...globalConfig, ...project })),
+  ].map((project) => ({ ...globalConfig, ...project })),
   rootDir: root,
 };

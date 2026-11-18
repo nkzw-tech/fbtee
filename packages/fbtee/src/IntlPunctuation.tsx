@@ -77,8 +77,10 @@ export function applyPhonologicalRules(
   let result = text;
 
   for (const [regexp, replacement] of rules) {
-    // @ts-expect-error
-    result = result.replace(regexp, replacement);
+    result =
+      typeof replacement === 'string'
+        ? result.replace(regexp, replacement)
+        : result.replace(regexp, replacement);
   }
 
   return result.replaceAll('', '');

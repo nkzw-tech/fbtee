@@ -29,10 +29,12 @@ try {
     );
   }
   const results = [];
-  for (const [name, cwd, args] of [
+  /** @satisfies {Array<[string, string, Array<string>]>} */
+  const cases = [
     ['example', root, ['--src', 'example/src', '--common', 'example/common_strings.json']],
     ['nested-32-files', directory, ['--src', 'source']],
-  ]) {
+  ];
+  for (const [name, cwd, args] of cases) {
     const run = () => {
       const result = spawnSync(
         binary,

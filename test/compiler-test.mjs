@@ -1458,18 +1458,13 @@ describe('native CLI', () => {
         ['de_DE', 'Text'],
         ['es_LA', 'Texto'],
       ]) {
+        const catalog = { 'fb-locale': locale, [locale]: { hash: text } };
+        if (locale === 'de_DE') {
+          catalog.de = { hash: 'Base language text' };
+        }
         writeFileSync(
           join(directory, `${locale}.json`),
-          JSON.stringify(
-            {
-              'fb-locale': locale,
-              [locale]: { hash: text },
-              ...(locale === 'de_DE' ? { de: { hash: 'Base language text' } } : {}),
-              metadata: true,
-            },
-            null,
-            2,
-          ),
+          JSON.stringify({ ...catalog, metadata: true }, null, 2),
         );
       }
       const result = spawnSync(

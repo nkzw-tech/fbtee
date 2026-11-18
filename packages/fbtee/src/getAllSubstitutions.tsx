@@ -2,7 +2,6 @@ import invariant from 'invariant';
 import FbtTable from './FbtTable.tsx';
 import { FbtTableArgs } from './Hooks.tsx';
 import { Substitutions } from './substituteTokens.tsx';
-import type { FbtContentItem } from './Types.ts';
 
 export default function getAllSubstitutions(args: FbtTableArgs) {
   let substitutions: Substitutions | null = null;
@@ -20,7 +19,7 @@ export default function getAllSubstitutions(args: FbtTableArgs) {
         'Cannot register a substitution with token=`%s` more than once',
         tokenName,
       );
-      substitutions[tokenName] = substitution[tokenName] as FbtContentItem;
+      substitutions[tokenName] = substitution[tokenName];
     }
   }
   return substitutions;

@@ -9,7 +9,7 @@ export function listWithRuntime(
   conjunction: FbtConjunction = 'and',
   delimiter: FbtDelimiter = 'comma',
   options?: { serialComma?: boolean },
-  fbt: FbtAPI = defaultFbt as unknown as FbtAPI,
+  fbt: FbtAPI = defaultFbt,
 ): ReactNode {
   items = items.filter(Boolean);
 
