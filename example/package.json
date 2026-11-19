@@ -27,6 +27,6 @@
     "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@vitejs/plugin-react": "^6.3.0",
     "invariant": "^2.2.4",
-    "vite": "^8.3.7"
+    "vite": "^8.3.8"
   }
 }

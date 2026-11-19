@@ -21,7 +21,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fbtee": "workspace:*",
-    "lucide-react": "^1.71.0",
+    "lucide-react": "^1.74.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "shiki": "^4.6.0",
@@ -37,7 +37,7 @@
     "@vitejs/plugin-react": "^6.3.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "tailwindcss": "^4.3.5",
-    "vite": "^8.3.7"
+    "vite": "^8.3.8"
   },
   "browserslist": [
     ">0.2%",
