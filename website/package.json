@@ -28,7 +28,6 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
-    "@babel/core": "^8.1.0",
     "@nkzw/fbtee-compiler": "workspace:*",
     "@nkzw/vite-plugin-fbtee": "workspace:*",
     "@rolldown/plugin-babel": "^0.3.1",
