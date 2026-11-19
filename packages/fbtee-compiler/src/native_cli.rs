@@ -12,6 +12,8 @@ use crate::{
     cli, collect_batch_impl, collected_output_json, translate, CollectInput, TransformOptions,
 };
 
+const VERSION: &str = env!("FBTEE_VERSION");
+
 const ROOT_HELP: &str = r#"Usage: fbtee <command> [options]
 
 Commands:
@@ -110,7 +112,7 @@ pub fn run() -> Result<(), String> {
         return Ok(());
     }
     if command == "--version" {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{VERSION}");
         return Ok(());
     }
     args.remove(0);
@@ -278,7 +280,7 @@ fn collect(args: Vec<String>) -> Result<(), String> {
         &[],
     )?;
     if args.version {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{VERSION}");
         return Ok(());
     }
     if args.help {
@@ -785,7 +787,7 @@ fn translate_command(args: Vec<String>) -> Result<(), String> {
         &[("o", "output-dir"), ("locale-style", "output-locale-style")],
     )?;
     if args.version {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{VERSION}");
         return Ok(());
     }
     if args.help {
@@ -1044,7 +1046,7 @@ fn prepare_translations(args: Vec<String>) -> Result<(), String> {
         ],
     )?;
     if args.version {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{VERSION}");
         return Ok(());
     }
     if args.help {
@@ -1105,7 +1107,7 @@ fn prepare_translations(args: Vec<String>) -> Result<(), String> {
 fn migrate_locales(args: Vec<String>) -> Result<(), String> {
     let args = parse_arguments(args, &["to"], &["dir"], &["dry-run"], &[])?;
     if args.version {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{VERSION}");
         return Ok(());
     }
     if args.help {
